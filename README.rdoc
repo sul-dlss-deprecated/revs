@@ -16,11 +16,15 @@ This is a Blacklight Application for REVS Institute Digital Library.
 
     $ rails g blacklight:jetty
     $ rake solr:marc:index_test_data
+    
+4. Start solr (from your jetty directory)
 
-4. Start rails
+    $ java -jar start.jar
+
+5. Start rails
 
     $ rails s
     
-5. Go to http://localhost:3000
+6. Go to http://localhost:3000
 
 
