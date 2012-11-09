@@ -1,0 +1,26 @@
+== REVS Digital Library
+
+This is a Blacklight Application for REVS Institute Digital Library.
+
+== Getting Started
+
+1. Install dependencies via bundler
+
+    $ bundle install
+ 
+2. Migrate the database
+
+    $ rake db:migrate
+
+3. If you want to use Blacklight's default 30 record test index instead of pointing to a REVS specific index
+
+    $ rails g blacklight:jetty
+    $ rake solr:marc:index_test_data
+
+4. Start rails
+
+    $ rails s
+    
+5. Go to http://localhost:3000
+
+
