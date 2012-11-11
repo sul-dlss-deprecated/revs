@@ -1,0 +1,35 @@
+/*
+ The Revs logo image
+ TODO: reduce size of image file itself, rather than scaling in CSS
+*/
+.navbar .logo {
+  float: left;
+  text-align: center;
+  img {
+    width: 66%;
+  }
+}
+.navbar {
+  color: #000000;
+  h1 {
+    font-family: "news-gothic-std","Helvetica","Arial",sans-serif;
+    margin: 25px 0 5px;
+  }
+  .nav {
+    border-bottom: 1px solid #eee;
+    border-top: 1px solid #eee;
+    margin-top: 6px;
+    padding-bottom: 3px;
+  }
+}
+.navbar-inner {
+  background-color: white;
+  background-image: none;
+}
+.navbar .nav > .active > a, .navbar .nav > .active > a:hover, .navbar .nav > .active > a:focus {
+  background-color: white;
+  box-shadow: none;
+}
+.navbar .nav > li > a {
+  padding: 3px 25px 3px 3px;
+}

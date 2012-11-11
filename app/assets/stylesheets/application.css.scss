@@ -11,5 +11,10 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require_tree .
  */
+
+
+@import "layout.css.scss";
+@import "header.css.scss";
+
+@import "responsive.css.scss";
