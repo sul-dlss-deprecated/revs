@@ -3,4 +3,5 @@
     border-top: 3px solid #dddddd;
     padding-top: 10px;
   }
+  .featured-description { @include red-top_border;}
 }

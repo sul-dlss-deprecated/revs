@@ -1,5 +1,13 @@
 /* TODO: Refactor to use mix-ins, etc. */
 
+/* Mixins */
+@mixin red-top_border {
+  border-top: 5px solid #990000;
+  padding-top: 10px;
+}
+
+/* --- */
+
 html {
   font-size: 100%;
 	-webkit-text-size-adjust: 100%;
@@ -13,6 +21,8 @@ body {
   line-height: 18px;
   margin: 0;
 }
+
+#sidebar {@include red-top_border;}
 
 a:focus {
 	outline: thin dotted #333;
