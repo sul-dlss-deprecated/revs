@@ -13,8 +13,8 @@
  *= require_self
  */
 
-
+@import "global.css.scss";
 @import "layout.css.scss";
 @import "header.css.scss";
 
-@import "responsive.css.scss";
+@import "responsive.css.scss"; /* keep last in import order */

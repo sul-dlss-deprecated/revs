@@ -1,4 +1,10 @@
-/* This provides a fixed distance between the header and the main content */
+/* body padding provides a fixed distance between the header and the main content 
+   Will need to make adjustments for responsive 
+*/
 body {
   padding-top: 11em;
+}
+
+#main-container {
+  padding-bottom: 100px;
 }

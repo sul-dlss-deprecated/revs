@@ -1,0 +1,86 @@
+/* TODO: Refactor to use mix-ins, etc. */
+
+html {
+  background: #990000;
+  font-size: 100%;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+}
+
+body {
+	font-family: "Helvetica","Arial",sans-serif;
+	background: #f7f7f7;
+	font-size: 100%;
+	line-height: 18px;
+	margin: 0;
+	color: #999999;
+}
+
+a:focus {
+	outline: thin dotted #333;
+	outline: 5px auto -webkit-focus-ring-color;
+	outline-offset: -2px;
+}
+a:hover,a:active {
+	outline: 0;
+}
+
+img {
+	max-width: 100%;
+	height:auto !important;
+	vertical-align: middle;
+	border: 0;
+	-ms-interpolation-mode: bicubic;
+}
+
+a {
+	color: #8b59c2;
+	text-decoration: none;
+}
+a:hover {
+	color: #713eaa;
+	text-decoration: underline;
+}
+#news-gothic .normal {
+	font-family: "news-gothic-std","Helvetica","Arial",sans-serif;
+	font-weight: 400;
+}
+#news-gothic .bold {
+	font-family: "news-gothic-std","Helvetica","Arial",sans-serif;
+	font-weight: 700;
+}
+#chaparral-pro .normal {
+	font-family: "chaparral-pro","Georgia","Times New Roman",serif;
+	font-weight: 400;
+}
+#chaparral-pro .bold {
+	font-family: "chaparral-pro","Georgia","Times New Roman",serif;
+	font-weight: 700;
+}
+#helvetica {
+	font-family: "Helvetica","Arial",sans-serif;
+}
+h1 {
+	width: 99.99999998999999%;*width:99.94680850063828%;
+	display: block;
+	float: left;
+	margin-left: 2.127659574%;
+	margin-left: 0;
+	font-family: "news-gothic-std","Helvetica","Arial",sans-serif;
+	font-weight: 700;
+	font-size: 1.5em;
+	line-height: 1.5em;
+	color: #000000;
+	margin-top: 30px;
+	-webkit-font-smoothing: antialiased;
+	margin-bottom: 30px;
+	border-bottom: 2px solid #dddddd;
+	padding-bottom: 10px;
+}
+h2 {
+  margin: 0 0 30px;
+	font-size: 1.325em;
+	line-height: 1.5em;
+	color: #333333;
+}
+
