@@ -76,10 +76,13 @@ h1 {
 	padding-bottom: 10px;
 }
 h2 {
-  margin: 0 0 30px;
 	font-size: 1.325em;
 	line-height: 1.5em;
 	color: #333333;
+}
+h3 {
+	font-size: 1.125em;
+	line-height: 1.5em;
 }
 p {
   font-family: "Helvetica","Arial",sans-serif;
@@ -89,7 +92,7 @@ p {
   margin:12px 0;
 }
 span.content-type {
-	font-size: 0.675em;
+	font-size: 0.8em;
 	font-weight: bold;
 	display: block;
 	color: #990000;
@@ -97,7 +100,5 @@ span.content-type {
 	-webkit-font-smoothing: antialiased;
 }
 .slideshow {
-	border-bottom: 3px solid #dddddd;
-	margin-bottom: 20px;
-	padding-bottom: 20px;
+  margin-bottom: 20px;
 }
