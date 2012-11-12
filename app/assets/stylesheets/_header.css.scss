@@ -6,8 +6,36 @@
 
 #header-navbar-static-top {
   border-bottom: 1px solid #dddddd;
-  box-shadow: none;
-/*  margin-top: 15px;*/
+  /* The Revs logo image
+     TODO: reduce size of image file itself, rather than scaling in CSS */
+  &.navbar {
+    .logo {
+      float: left;
+      text-align: center;
+      img {width: 66%;}
+    }
+    .nav {
+      border-bottom: 1px solid #dddddd;
+      border-top: 1px solid #dddddd;
+      margin-top: 6px;
+      padding-bottom: 3px;
+      > li {
+        &.active > a {color: #990000;}
+        > a {
+          background-color: white;
+          box-shadow: none;
+          color: #000000;
+          font-family: "news-gothic-std","Helvetica","Arial",sans-serif;
+        	font-weight: 700;
+        	text-transform: uppercase;
+        	font-size: 0.965em;
+        	-webkit-font-smoothing: antialiased;
+          padding: 8px 25px 5px 3px;
+          &:hover, &:focus {color: #990000;}
+        }
+      }
+    }
+  }
   h1 {
     border-bottom: none;
     font-size: 2em;
@@ -26,41 +54,4 @@
   }
 }
 
-/*
- The Revs logo image
- TODO: reduce size of image file itself, rather than scaling in CSS
-*/
-.navbar .logo {
-  float: left;
-  text-align: center;
-  img {
-    width: 66%;
-  }
-}
-.navbar {
-  .nav {
-    border-bottom: 1px solid #dddddd;
-    border-top: 1px solid #dddddd;
-    margin-top: 6px;
-    padding-bottom: 3px;
-  }
-}
-
-.navbar .nav > .active > a, .navbar .nav > .active > a:hover, .navbar .nav > .active > a:focus {
-  background-color: white;
-  box-shadow: none;
-  color: #990000;
-}
-.navbar .nav > li > a {
-  color: #000000;
-  font-family: "news-gothic-std","Helvetica","Arial",sans-serif;
-	font-weight: 700;
-	text-transform: uppercase;
-	font-size: 0.965em;
-	-webkit-font-smoothing: antialiased;
-  padding: 8px 25px 5px 3px;
-  &:hover {
-    color: #990000;
-  }
-}
 
