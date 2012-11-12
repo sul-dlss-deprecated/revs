@@ -1,5 +1,14 @@
 #facets
 {
+  a {
+    color: #990000;
+    font-size: 14px;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+
   div.facet_limit {
     clear: both;
   }
