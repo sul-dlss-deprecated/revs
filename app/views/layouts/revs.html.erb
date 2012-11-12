@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!-- Conditional comment for mobile ie7 blogs.msdn.com/b/iemobile/ -->
+<!--[if IEMobile 7 ]>    <html class="no-js iem7" lang="en"> <![endif]-->
+<!--[if (gt IEMobile 7)|!(IEMobile)]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+
+    <!-- Mobile viewport optimization h5bp.com/ad -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+    <!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
+    <meta http-equiv="cleartype" content="on">
+
+    <title><%= h(@page_title || application_name) %></title>
+    <link href="<%= opensearch_catalog_path(:format => 'xml', :only_path => false) %>" title="<%= application_name%>" type="application/opensearchdescription+xml" rel="search"/>
+    <%= favicon_link_tag asset_path('favicon.ico') %>
+    <!-- Two stylesheets below are for Stanford Identity footer -->
+    <link href="https://www.stanford.edu/su-identity/css/su-identity.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700' rel='stylesheet' type='text/css'>
+    <%= stylesheet_link_tag    "application" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+    <%= raw(render_head_content) %> 
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <%= favicon_link_tag asset_path('favicon.ico') %>
+  </head>
+  <% onload_text = "$('input#q').focus();" if params[:q].to_s.empty? and params[:f].to_s.empty? and params[:id].nil? %>
+  <body onload="<%= onload_text %>" class="<%= render_body_class %>">
+
+    <div id="su-wrap"> <!-- #su-wrap start -->
+      <div id="su-content"> <!-- #su-content start -->
+        
+        <%= render :partial => 'shared/header_navbar' %>
+
+        <div id="ajax-modal" class="modal hide fade" tabindex="-1"></div>
+
+        <div id="main-container" class="container">
+                  <!-- Top bar -->
+                  <div id="search-found" class="row hidden-phone">
+                    <%= topbar_items.join('').html_safe %>
+                  </div>
+                  <!-- /Top bar -->
+                        <div class="row">
+                            <div class="span10">
+                              <div id="main-flashes">
+                                <%= render :partial=>'/flash_msg' %>
+                              </div>
+                            </div>    
+                        </div>              
+
+                        <div class="row">
+                             <%= yield %>
+                             </div>   
+      </div>
+
+      <%= render :partial => 'shared/footer' %>
+      
+        </div> <!-- #su-content end -->
+      </div> <!-- #su-wrap end -->
+
+      <!-- Stanford global footer snippet start -->
+      <div id="global-footer">
+        <div class="container">
+          <div class="row">
+            <div id="bottom-logo" class="span2">
+              <a href="http://www.stanford.edu">
+                <img src="https://www.stanford.edu/su-identity/images/footer-stanford-logo.png" alt="Stanford University" />
+              </a>
+            </div>
+            <!-- #bottom-logo end -->
+            <div id="bottom-text" class="span10">
+              <ul>
+                <li class="home"><a href="http://www.stanford.edu">SU Home</a></li>
+                <li class="maps alt"><a href="http://visit.stanford.edu/plan/maps.html">Maps &amp; Directions</a></li>
+                <li class="search-stanford"><a href="http://www.stanford.edu/search/">Search Stanford</a></li>
+                <li class="terms alt"><a href="http://www.stanford.edu/site/terms.html">Terms of Use</a></li>
+                <li class="copyright"><a href="http://www.stanford.edu/site/copyright.html">Copyright Complaints</a></li>
+              </ul>
+            </div> <!-- .bottom-text end -->
+            <div class="clear"></div>
+            <p class="copyright vcard">&copy; <span class="fn org">Stanford University</span>, <span class="adr"> <span class="locality">Stanford</span>, <span class="region">California</span> <span class="postal-code">94305</span> </span></p>
+          </div> <!-- .row end --> 
+        </div> <!-- .container end --> 
+      </div> <!-- global-footer end -->
+      <!-- Global footer snippet end -->
+    </body>
+</html>
