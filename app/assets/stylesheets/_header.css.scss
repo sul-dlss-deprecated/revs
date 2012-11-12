@@ -1,18 +1,18 @@
 /* TODO: Refactor to use mix-ins, etc. */
 
-/*
- The Revs logo image
- TODO: reduce size of image file itself, rather than scaling in CSS
-*/
+#brandbar {
+  min-height: 35px;
+}
 
-#header-navbar-fixed-top {
+#header-navbar-static-top {
   border-bottom: 1px solid #dddddd;
   box-shadow: none;
+/*  margin-top: 15px;*/
   h1 {
     border-bottom: none;
     font-size: 2em;
     font-family: "news-gothic-std","Helvetica","Arial",sans-serif;
-    margin: 20px 0 5px;
+    margin: 10px 0 5px;
   	line-height: 1.5em;
     padding-bottom: 0;
   }  
@@ -22,9 +22,14 @@
     border: none;
     box-shadow: none;
     padding-bottom: 15px;
+    padding-top: 15px;
   }
 }
 
+/*
+ The Revs logo image
+ TODO: reduce size of image file itself, rather than scaling in CSS
+*/
 .navbar .logo {
   float: left;
   text-align: center;
