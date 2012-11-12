@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/projectblacklight/blacklight.git
-  revision: 6e20f2649f4a5d62787fff461e4447b0899dad6e
+  revision: 6366cdee362244e5abf3ecbc5728792fdd25ae2f
   specs:
     blacklight (4.0.0.pre3)
       bootstrap-sass (~> 2.1.0)
@@ -77,6 +77,7 @@ GEM
     kaminari (0.14.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    libv8 (3.3.10.4)
     libwebsocket (0.1.5)
       addressable
     mail (2.4.4)
@@ -145,6 +146,8 @@ GEM
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
     sqlite3 (1.3.6)
+    therubyracer (0.10.2)
+      libv8 (~> 3.3.10)
     thor (0.16.0)
     tilt (1.3.3)
     treetop (1.4.12)
@@ -164,6 +167,7 @@ PLATFORMS
 DEPENDENCIES
   blacklight!
   bootstrap-sass
+  bundler (>= 1.2.0)
   capybara
   coffee-rails (~> 3.2.1)
   jquery-rails
@@ -171,4 +175,5 @@ DEPENDENCIES
   rspec-rails
   sass-rails (~> 3.2.3)
   sqlite3
+  therubyracer
   uglifier (>= 1.0.3)
