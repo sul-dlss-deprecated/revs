@@ -83,4 +83,23 @@ h2 {
 	line-height: 1.5em;
 	color: #333333;
 }
-
+p {
+  font-family: "Helvetica","Arial",sans-serif;
+	color: #333333;
+	font-size: 0.8em;
+	line-height: 1.5em;
+	margin:12px 0;
+}
+span.content-type {
+	font-size: 0.675em;
+	font-weight: bold;
+	display: block;
+	color: #990000;
+	text-transform: uppercase;
+	-webkit-font-smoothing: antialiased;
+}
+.slideshow {
+	border-bottom: 3px solid #dddddd;
+	margin-bottom: 20px;
+	padding-bottom: 20px;
+}
