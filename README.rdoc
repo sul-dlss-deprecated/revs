@@ -12,19 +12,35 @@ This is a Blacklight Application for REVS Institute Digital Library.
 
     $ rake db:migrate
 
-3. If you want to use Blacklight's default 30 record test index instead of pointing to a REVS specific index
+3. At the moment Revs comes with a jetty directory used for development and testing. To index the records into an environment's core
 
-    $ rails g blacklight:jetty
-    $ rake solr:marc:index_test_data
+    $ rake revs:index_fixtures
+
+or
+
+    $ rake revs:index_fixtures RAILS_ENV=test
     
 4. Start solr (from your jetty directory)
 
     $ java -jar start.jar
+  
+or
+
+    $ rake jetty:start
 
 5. Start rails
 
     $ rails s
     
 6. Go to http://localhost:3000
+
+
+== Development
+
+You can run the test suite by running
+
+    $ rake ci
+    
+This will force you into the test environment, start solr, delete all the records in the test solr core, index all fixtures in spec/fixtures, then run the tests.
 
 
