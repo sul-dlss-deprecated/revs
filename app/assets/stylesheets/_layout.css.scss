@@ -6,3 +6,21 @@ body {
   padding-bottom: 50px;
   padding-top: 30px;
 }
+
+body {
+  @media (max-width: 767px) {
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+}
+#header-navbar-static-top {
+  @media (max-width: 767px) {
+      margin-left: 0px;
+    }
+}
+#main-container {
+  @media (max-width: 767px) {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+}
