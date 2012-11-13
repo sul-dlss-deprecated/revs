@@ -4,5 +4,5 @@
   <field name="pub_date">1960</field>
   <field name="format">B&amp;W Negative</field>
   <field name="is_member_of_display">collection-1</field>
-  <field name="collection_display">Collection 1</field>
+  <field name="collection_facet">Collection 1</field>
 </doc>
