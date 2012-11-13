@@ -15,16 +15,8 @@ This is a Blacklight Application for REVS Institute Digital Library.
 3. At the moment Revs comes with a jetty directory used for development and testing. To index the records into an environment's core
 
     $ rake revs:index_fixtures
-
-or
-
-    $ rake revs:index_fixtures RAILS_ENV=test
     
-4. Start solr (from your jetty directory)
-
-    $ java -jar start.jar
-  
-or
+4. Start solr
 
     $ rake jetty:start
 
