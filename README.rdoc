@@ -12,13 +12,13 @@ This is a Blacklight Application for REVS Institute Digital Library.
 
     $ rake db:migrate
 
-3. At the moment Revs comes with a jetty directory used for development and testing. To index the records into an environment's core
-
-    $ rake revs:index_fixtures
-    
-4. Start solr
+3. Start solr
 
     $ rake jetty:start
+
+4. At the moment Revs comes with a jetty directory used for development and testing. To index the records into an environment's core (with jetty running)
+
+    $ rake revs:index_fixtures
 
 5. Start rails
 
