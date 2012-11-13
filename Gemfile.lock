@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/projectblacklight/blacklight.git
-  revision: 6366cdee362244e5abf3ecbc5728792fdd25ae2f
+  revision: bb9333226aa4a2875991712e0a18a42e5be25b77
   specs:
-    blacklight (4.0.0.pre3)
+    blacklight (4.0.0.pre4)
       bootstrap-sass (~> 2.1.0)
       kaminari (~> 0.13)
       marc (>= 0.4.3, < 1.1)
