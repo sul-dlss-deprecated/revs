@@ -1,0 +1,12 @@
+development:
+  jetty_port: 8983
+  java_opts:
+      - "-XX:MaxPermSize=128m"
+      - "-Xmx256m"
+
+test:
+  jetty_port: 8888
+  startup_wait: 200
+  java_opts:
+      - "-XX:MaxPermSize=128m"
+      - "-Xmx256m"

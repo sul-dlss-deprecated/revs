@@ -30,6 +30,11 @@ group :test do
   gem 'capybara'
 end
 
+group :development, :test do
+  gem 'jettywrapper'
+  gem 'rest-client'
+end
+
 gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password
