@@ -8,7 +8,7 @@ task :ci do
     system("rake ci RAILS_ENV=test")
   else
     Jettywrapper.wrap(Jettywrapper.load_config) do
-      Rake::Task["revs:refresh_fixtures"]
+      Rake::Task["revs:refresh_fixtures"].invoke
       Rake::Task["rspec"].invoke
     end
   end
