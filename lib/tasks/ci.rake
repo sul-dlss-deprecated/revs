@@ -10,7 +10,10 @@ task :ci do
       Rake::Task["revs:refresh_fixtures"]
       Rake::Task["rspec"].invoke
     end
-    raise "TEST FAILURES: #{error}" if error
+    if error
+      raise "TEST FAILURES: #{error}"
+      exit(1)
+    end
   else
     system("rake ci RAILS_ENV=test")
   end
