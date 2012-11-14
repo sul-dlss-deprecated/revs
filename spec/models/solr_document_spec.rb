@@ -33,4 +33,37 @@ describe SolrDocument do
       end
     end
   end
+  
+  describe "images" do
+    before(:all) do
+      @images = SolrDocument.new({:image_id_display => ["abc123", "cba321"]}).images
+    end
+    it "should point to the test URL" do
+      @images.each do |image|
+        image.should include Revs::Application.config.stacks_url
+      end
+    end
+    it "should link to the image identifier field " do
+      @images.each do |image|
+        image.should =~ /abc123|cba321/
+      end
+    end
+    it "should have the proper default image dimension when no size is specified" do
+      @images.each do |image|
+        image.should =~ /#{SolrDocument.image_dimensions[:default]}/
+      end
+    end
+    it "should return the requested dimentsion when one is specified" do
+      SolrDocument.new({:image_id_display => ["abc123", "cba321"]}).images(:large).each do |image|
+        image.should =~ /#{SolrDocument.image_dimensions[:large]}/
+      end
+    end
+    describe "image dimensions" do
+      it "should be a hash of configurations" do
+        SolrDocument.image_dimensions.should be_a Hash
+        SolrDocument.image_dimensions.should have_key :default
+      end
+    end
+  end
+  
 end

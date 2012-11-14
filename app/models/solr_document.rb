@@ -11,12 +11,20 @@ class SolrDocument
   end
   
   def collection_member?
-    self.has_key?(blacklight_config.collection_member_identifying_field) and !self[blacklight_config.collection_member_identifying_field].blank?
+    self.has_key?(blacklight_config.collection_member_identifying_field) and 
+      !self[blacklight_config.collection_member_identifying_field].blank?
   end
   
   def collection_members
     return nil unless collection?
     @collection_members ||= CollectionMembers.new(Blacklight.solr.select({:fq=>"#{blacklight_config.collection_member_identifying_field}:\"#{self[SolrDocument.unique_key]}\"", :rows=>"20"}))
+  end
+  
+  def images(size=:default)
+    stacks_url = Revs::Application.config.stacks_url
+    self[blacklight_config.image_identifier_field].map do |image_id|
+      "#{stacks_url}/#{self["id"]}/#{image_id}#{SolrDocument.image_dimensions[size]}"
+    end
   end
   
   # The following shows how to setup this blacklight document to display marc documents
@@ -44,6 +52,11 @@ class SolrDocument
                          :language => "language_facet",
                          :format => "format"
                          )
+     
+  def self.image_dimensions
+    options = {:default => "_square",
+               :large   => "_thumb" }
+  end
                          
   private
   
