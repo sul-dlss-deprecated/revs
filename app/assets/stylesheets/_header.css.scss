@@ -55,14 +55,29 @@
   }
 }
 
-
+/* Phones: reduce logo size and center site title and nav elements */
 @media (max-width: 767px) {
   #header-navbar-static-top {
-    &.navbar .logo {
+    .logo img {
       float: left;
+      max-width: 80px;
     }
-    h1 {
-      margin-left: 20px;
+    &.navbar {
+      .site-header-content {text-align: center;}
+      h1 {float: none;}
+    }
+  }
+}
+/* Tablets: reduce logo size and add some extra space between logo
+   and site title and nav elements */
+@media (min-width: 768px) and (max-width: 979px) {
+  #header-navbar-static-top {
+    .logo img {
+      float: right;
+      max-width: 100px;
+    }
+    &.navbar {
+      .site-header-content {margin-left: 30px;}
     }
   }
 }
