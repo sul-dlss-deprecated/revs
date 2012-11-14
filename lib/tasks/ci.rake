@@ -7,7 +7,7 @@ task :ci do
   unless Rails.env.test?  
     system("rake ci RAILS_ENV=test")
   else
-    Jettywrapper.wrap({}) do
+    Jettywrapper.wrap(Jettywrapper.load_config) do
       Rake::Task["revs:refresh_fixtures"]
       Rake::Task["rspec"].invoke
     end
