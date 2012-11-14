@@ -4,18 +4,15 @@ require 'rest_client'
 
 desc "Run continuous integration suite"
 task :ci do
-  if Rails.env.test?  
+  unless Rails.env.test?  
+    system("rake ci RAILS_ENV=test")
+  else
     error = nil
     error = Jettywrapper.wrap({}) do
       Rake::Task["revs:refresh_fixtures"]
       Rake::Task["rspec"].invoke
     end
-    if error
-      exit(1)
-      raise "TEST FAILURES: #{error}"
-    end
-  else
-    system("rake ci RAILS_ENV=test")
+    raise "TEST FAILURES: #{error}" if error
   end
 end
 
