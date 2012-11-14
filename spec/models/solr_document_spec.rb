@@ -58,6 +58,9 @@ describe SolrDocument do
         image.should =~ /#{SolrDocument.image_dimensions[:large]}/
       end
     end
+    it "should return nil when the document does not have an image identifier field" do
+      SolrDocument.new(:id => "12345").images.should be nil
+    end
     describe "image dimensions" do
       it "should be a hash of configurations" do
         SolrDocument.image_dimensions.should be_a Hash

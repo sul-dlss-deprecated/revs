@@ -21,6 +21,7 @@ class SolrDocument
   end
   
   def images(size=:default)
+    return nil unless self.has_key?(blacklight_config.image_identifier_field)
     stacks_url = Revs::Application.config.stacks_url
     self[blacklight_config.image_identifier_field].map do |image_id|
       "#{stacks_url}/#{self["id"]}/#{image_id}#{SolrDocument.image_dimensions[size]}"
