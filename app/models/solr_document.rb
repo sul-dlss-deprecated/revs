@@ -3,7 +3,21 @@ class SolrDocument
 
   include Blacklight::Solr::Document
 
-  # self.unique_key = 'id'
+  self.unique_key = 'id'
+
+  def collection?
+    self.has_key?(blacklight_config.collection_identifying_field) and 
+      self[blacklight_config.collection_identifying_field] == blacklight_config.collection_identifying_value
+  end
+  
+  def collection_member?
+    self.has_key?(blacklight_config.collection_member_identifying_field) and !self[blacklight_config.collection_member_identifying_field].blank?
+  end
+  
+  def collection_members
+    return nil unless collection?
+    @collection_members ||= CollectionMembers.new(Blacklight.solr.select({:fq=>"#{blacklight_config.collection_member_identifying_field}:\"#{self[SolrDocument.unique_key]}\"", :rows=>"20"}))
+  end
   
   # The following shows how to setup this blacklight document to display marc documents
   extension_parameters[:marc_source_field] = :marc_display
@@ -30,4 +44,10 @@ class SolrDocument
                          :language => "language_facet",
                          :format => "format"
                          )
+                         
+  private
+  
+  def blacklight_config
+    CatalogController.blacklight_config
+  end
 end

@@ -21,6 +21,11 @@ class CatalogController < ApplicationController
       :qt => 'search',
       :rows => 10 
     }
+    
+    config.collection_identifying_field = "format"
+    config.collection_identifying_value = "Collection"
+    
+    config.collection_member_identifying_field = "is_member_of_display"
 
     ## Default parameters to send on single-document requests to Solr. These settings are the Blackligt defaults (see SolrHelper#solr_doc_params) or 
     ## parameters included in the Blacklight-jetty document requestHandler.
