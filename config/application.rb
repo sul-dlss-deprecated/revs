@@ -64,3 +64,4 @@ module Revs
     config.assets.version = '1.0'
   end
 end
+Revs::Application.config.stacks_url = YAML.load_file("#{Rails.root}/config/stacks.yml")[Rails.env]["url"]
