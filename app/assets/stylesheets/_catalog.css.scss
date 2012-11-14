@@ -20,4 +20,7 @@
 		display: inline;
 	}
 }
-  
+
+@media (max-width: 767px) {
+  .slideshow img {margin-bottom: 20px;}
+}
