@@ -7,7 +7,7 @@ describe SolrDocument, :integration => true do
         doc = SolrDocument.new({:id => "collection-1", :format => "Collection"})
         doc.collection_members.should be_a CollectionMembers
         doc.collection_members.should_not be_blank
-        doc.collection_members.total.should > 0
+        doc.collection_members.total_members.should > 0
         doc.collection_members.documents.should be_a Array
         doc.collection_members.documents.each do |member|
           member.should be_a SolrDocument
