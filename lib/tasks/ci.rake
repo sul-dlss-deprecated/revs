@@ -7,12 +7,10 @@ task :ci do
   unless Rails.env.test?  
     system("rake ci RAILS_ENV=test")
   else
-    error = nil
-    error = Jettywrapper.wrap({}) do
+    Jettywrapper.wrap({}) do
       Rake::Task["revs:refresh_fixtures"]
       Rake::Task["rspec"].invoke
     end
-    raise "TEST FAILURES: #{error}" if error
   end
 end
 
