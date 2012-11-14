@@ -6,13 +6,13 @@
 
 #header-navbar-static-top {
   border-bottom: 1px solid #dddddd;
-  /* The Revs logo image
-     TODO: reduce size of image file itself, rather than scaling in CSS */
   &.navbar {
     .logo {
-      float: left;
       text-align: center;
-      img {width: 66%;}
+      img {
+        display: block;
+        margin: auto;
+      }
     }
     .nav {
       border-bottom: 1px solid #dddddd;
@@ -56,3 +56,13 @@
 }
 
 
+@media (max-width: 767px) {
+  #header-navbar-static-top {
+    &.navbar .logo {
+      float: left;
+    }
+    h1 {
+      margin-left: 20px;
+    }
+  }
+}
