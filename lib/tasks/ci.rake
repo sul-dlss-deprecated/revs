@@ -11,8 +11,8 @@ task :ci do
       Rake::Task["rspec"].invoke
     end
     if error
-      raise "TEST FAILURES: #{error}"
       exit(1)
+      raise "TEST FAILURES: #{error}"
     end
   else
     system("rake ci RAILS_ENV=test")
