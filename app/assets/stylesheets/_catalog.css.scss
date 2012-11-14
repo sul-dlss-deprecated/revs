@@ -4,4 +4,20 @@
     padding-top: 10px;
   }
   .featured-description { @include red-top_border;}
+  .documentHeader {
+	  .index_title {
+		  float: left;
+	  }
+	  .documentFunctions {
+		  float: right;
+	  }
+  }
 }
+
+.bookmark_toggle {
+	label {
+		cursor: pointer;
+		display: inline;
+	}
+}
+  
