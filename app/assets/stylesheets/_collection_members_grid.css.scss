@@ -1,0 +1,20 @@
+.collection-members {
+	margin-top: 5px;
+	h5 {
+		@media(max-width: 767px){
+			text-align: center;
+		}
+		margin:0;
+	}
+	.controls {
+		@media(max-width: 767px){
+			text-align: center;
+		}
+		text-align: right;
+	}
+	@include red-top_border;
+	.item {
+		float: left;
+		margin: 5px 8px;
+	}
+}

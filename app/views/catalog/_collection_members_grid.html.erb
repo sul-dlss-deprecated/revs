@@ -1,0 +1,18 @@
+<%- document ||= @document -%>
+<div class="row">
+  <div class="span9 collection-members">
+    <div class="row">
+      <div class="span4">
+        <h5>Collection Items <span class="muted">(<%= document.collection_members.total_members %>)</span></h5>
+      </div>
+      <div class="span4 offset1 controls">
+        Images | Text
+      </div>
+    </div>
+    <%- document.collection_members.each do |item| -%>
+      <div class="item">
+        <%= link_to(image_tag(item.images.first), catalog_path(item)) %>
+      </div>
+    <%- end -%>
+  </div>
+</div>
