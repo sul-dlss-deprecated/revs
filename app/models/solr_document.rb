@@ -10,6 +10,17 @@ class SolrDocument
       self[blacklight_config.collection_identifying_field] == blacklight_config.collection_identifying_value
   end
   
+  def collection
+    return nil unless collection_member?
+    @collection ||= SolrDocument.new(
+                      Blacklight.solr.select(
+                        :params => {
+                          :fq => "#{SolrDocument.unique_key}:\"#{self[blacklight_config.collection_member_identifying_field].first}\""
+                        }
+                      )["response"]["docs"].first
+                    )
+  end
+  
   def collection_member?
     self.has_key?(blacklight_config.collection_member_identifying_field) and 
       !self[blacklight_config.collection_member_identifying_field].blank?

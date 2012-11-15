@@ -18,8 +18,8 @@ describe SolrDocument do
         SolrDocument.new({:id => "12345"}).collection_member?.should be_false
         SolrDocument.new({:"is_member_of" => "collection-1"}).collection_member?.should be_true
       end
-      it "should memoize the solr request" do
-        response = {"response" => {"numFound" => 3, "docs" => [{:id=>"1234", :id =>"4321"}]}}
+      it "should memoize the solr request to get collection memers" do
+        response = {"response" => {"numFound" => 3, "docs" => [{:id=>"1234"}, {:id =>"4321"}]}}
         solr = mock("solr")
         solr.should_receive(:select).with(:params => {:fq => "is_member_of:\"collection-1\"", :rows => "20"}).once.and_return(response)
         Blacklight.should_receive(:solr).and_return(solr)
@@ -28,6 +28,17 @@ describe SolrDocument do
           doc.collection_members
         end
       end
+      it "should memoize the solr request to get a collection member's parent collection" do
+        response = {"response" => {"numFound" => 1, "docs" => [{:id=>"1234"}]}}
+        solr = mock("solr")
+        solr.should_receive(:select).with(:params => {:fq => "id:\"abc123\""}).once.and_return(response)
+        Blacklight.should_receive(:solr).and_return(solr)
+        doc = SolrDocument.new({:id => "item-1", :is_member_of => ["abc123"]})
+        5.times do
+          doc.collection
+        end
+      end
+      
       it "should return nil if the SolrDocument is not a collection" do
         SolrDocument.new(:id=>"1235").collection_members.should be nil
       end
