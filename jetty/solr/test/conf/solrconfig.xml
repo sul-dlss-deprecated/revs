@@ -841,6 +841,8 @@
          author_display,
          author_vern_display, 
          format, 
+         image_id_display,
+         is_member_of,
          isbn_t, 
          language_facet, 
          lc_callnum_display,
