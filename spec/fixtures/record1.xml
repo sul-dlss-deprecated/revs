@@ -3,7 +3,7 @@
   <field name="title_display">Record 1</field>
   <field name="pub_date">1960</field>
   <field name="format">Color Negative</field>
-  <field name="is_member_of_display">nt028fd5773</field>
+  <field name="is_member_of">nt028fd5773</field>
   <field name="collection_facet">Collection 1</field>
   <field name="image_id_display">2011-023Cham-3.0_0007</field>
 </doc>

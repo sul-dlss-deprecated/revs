@@ -27,7 +27,9 @@ class CatalogController < ApplicationController
     config.collection_identifying_field = "format"
     config.collection_identifying_value = "Collection"
     
-    config.collection_member_identifying_field = "is_member_of_display"
+    config.collection_member_identifying_field = "is_member_of"
+    
+    config.collection_member_grid_items = 20
     
     config.image_identifier_field = "image_id_display"
 
