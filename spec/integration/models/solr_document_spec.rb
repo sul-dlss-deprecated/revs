@@ -23,5 +23,17 @@ describe SolrDocument, :integration => true do
         end
       end
     end
+    describe "collection_siblings" do
+      it "should return a collection members class with an array of SolrDocuments" do
+        doc = SolrDocument.new({:id => "nt028fd5773", :is_member_of => ["nt028fd5773"]})
+        doc.collection_siblings.should be_a CollectionMembers
+        doc.collection_siblings.should_not be_blank
+        doc.collection_siblings.total_members.should > 0
+        doc.collection_siblings.documents.should be_a Array
+        doc.collection_siblings.documents.each do |sibling|
+          sibling.should be_a SolrDocument
+        end
+      end
+    end
   end
 end

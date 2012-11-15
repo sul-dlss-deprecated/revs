@@ -31,6 +31,18 @@ class SolrDocument
     @collection_members ||= CollectionMembers.new(Blacklight.solr.select(:params => {:fq => "#{blacklight_config.collection_member_identifying_field}:\"#{self[SolrDocument.unique_key]}\"", :rows => blacklight_config.collection_member_grid_items.to_s}))
   end
   
+  def collection_siblings
+    return nil unless collection_member?
+    @collection_siblings ||= CollectionMembers.new(
+                               Blacklight.solr.select(
+                                 :params => {
+                                   :fq => "#{blacklight_config.collection_member_identifying_field}:\"#{self[blacklight_config.collection_member_identifying_field].first}\"", 
+                                   :rows => blacklight_config.collection_member_grid_items.to_s
+                                 }
+                               )
+                             )
+  end
+  
   def images(size=:default)
     return nil unless self.has_key?(blacklight_config.image_identifier_field)
     stacks_url = Revs::Application.config.stacks_url
