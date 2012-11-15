@@ -1,0 +1,31 @@
+
+  <div id="sidebar" class="span3">
+   <%= render :partial=>'facets' %>
+  </div><!--/well -->
+
+<div id="content" class="span9">   
+
+    <% unless has_search_parameters? %>
+	    <%# if there are no input/search related params, display the "home" partial -%>
+	    <%= render 'home' %>
+    <% else %>
+
+      <% @page_title = t('blacklight.search.title', :application_name => application_name) %>
+
+      <% extra_head_content << render_opensearch_response_metadata.html_safe %>
+
+			<h2 class="search-results"><%= t('revs.search.search_results') %></h2>
+			
+			<div id="search-results-metadata" class="well">
+				<%= render 'sort_and_per_page' %>
+		    <%= render :partial => 'did_you_mean' %>
+	      <%= render :partial => 'constraints' %>
+			</div>
+
+	    <%= render :partial => 'document_list' %>
+
+	    <%= render 'results_pagination' %>
+
+    <% end %>
+
+</div>
