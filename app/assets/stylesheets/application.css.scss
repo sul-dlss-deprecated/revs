@@ -14,13 +14,26 @@
 @import "bootstrap";
 @import "bootstrap-responsive";
 
+@import 'blacklight/blacklight_defaults';
+
 @import "global.css.scss";
 @import "layout.css.scss";
 @import "header.css.scss";
+@import "blacklight/facets.css.scss";
 @import "facets.css.scss";
+@import "blacklight/catalog.css.scss";
 @import "catalog.css.scss";
 @import "blacklight/dropdown";
 
 @import "collection_members_grid.css.scss";
 
 @import "stanford_footer.css.scss";
+
+.hide-text {
+  width: 1px;
+  position: absolute;
+  display: inline-block;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}

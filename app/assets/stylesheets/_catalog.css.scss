@@ -21,6 +21,21 @@
 	}
 }
 
+.well-constraints, #sortAndPerPage {font-size: 0.85em;}
+
+.appliedFilter {
+  padding: 1px 2px 1px 1em;
+  .queryName,.filterName {
+    background: none; /* override the BL icon used as separator */
+    padding-right: 0;
+    &:after {
+      content: ">";   /* Facet > Value separator */
+      padding-left: 6px;
+    }
+  }
+}
+
+/* Responsive styles */
 @media (max-width: 767px) {
   .slideshow img {margin-bottom: 20px;}
 }

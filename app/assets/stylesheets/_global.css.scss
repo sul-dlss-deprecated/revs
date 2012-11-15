@@ -1,8 +1,19 @@
 /* TODO: Refactor to use mix-ins, etc. */
 
+/* Variables */
+/* constraint (you searched for:) details: */
+$constraint_bg_color: #F0AF00;
+$constraint_border_color: darken($constraint_bg_color, 20%);
+$constraint_border_active_color: #FFD27A !default;
+
 /* Mixins */
 @mixin red-top_border {
   border-top: 5px solid #990000;
+  padding-top: 10px;
+}
+
+@mixin gray-top_border {
+  border-top: 5px solid #DDDDDD;
   padding-top: 10px;
 }
 
@@ -42,11 +53,11 @@ img {
 }
 
 a {
-	color: #8b59c2;
+	color: #990000;
 	text-decoration: none;
 }
 a:hover {
-	color: #713eaa;
+	color: #660000;
 	text-decoration: underline;
 }
 #news-gothic .normal {
