@@ -5,7 +5,25 @@
 </div>
 
 <div class="row">
-  <div class="span5"><%= image_tag("http://placehold.it/400x300", :class => "posterframe collection") %></div>
+  <div class="span5">
+    <div id="collection_carousel" class="carousel slide">
+      <div class="carousel-inner">
+        <%- @document.collection_members.each_with_index do |member, index| -%>
+          <div class="item<%= " active" if index == 0 %>">
+            <%= image_tag(member.images(:large).first, :alt => member[blacklight_config.show.heading]) %>
+            <%- if member.has_key?(blacklight_config.show.heading) -%>
+              <div class="carousel-caption"><p><%= member[blacklight_config.show.heading]%></p></div>
+            <%- end -%>
+          </div>
+        <%- end -%>
+      </div>
+      <div class="carousel-controls">
+        <a class="carousel-control left" href="#collection_carousel" data-slide="prev">&lsaquo;</a>
+        <span class="number-of-items">(<span class="iterator">1</span><%= " - #{@document.collection_members.count}" if @document.collection_members.total_members > @document.collection_members.count %> of <%= @document.collection_members.total_members %>)</span>
+        <a class="carousel-control right" href="#collection_carousel" data-slide="next">&rsaquo;</a>
+      </div>
+    </div>
+  </div>
   <div class="span4">
     <%= render_document_heading.html_safe %>
     <%= render :partial => "show_default", :locals => {:document => @document} %>

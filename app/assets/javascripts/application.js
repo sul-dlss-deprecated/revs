@@ -15,4 +15,8 @@
 //
 // Required by Blacklight
 //= require blacklight/blacklight
+// 
+// Additional boostrap components not autoloaded by Blacklgiht
+//= require bootstrap-carousel
+//
 //= require_tree .

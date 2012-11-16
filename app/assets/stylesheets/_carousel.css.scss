@@ -1,0 +1,18 @@
+/* Not sure why we hvae to do some of these overrides.
+ * The carousel seems to have a 70 px right margin caused
+ * by the the dsiplay: block on the carousel.  
+**/
+.carousel {
+	display: inline-block;
+}
+.carousel-controls {
+	position: relative;
+	margin-top: 5px;
+	height: 45px;
+	.number-of-items {
+		@extend .muted;
+		position: absolute;
+		left: 40%;
+		top: 25%;
+	}
+}
