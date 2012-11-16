@@ -30,6 +30,10 @@ class CatalogController < ApplicationController
     config.collection_identifying_field = "format"
     config.collection_identifying_value = "Collection"
     
+    # needs to be stored so we can retreive it for display.
+    # needs to be in field list for all request handlers.
+    config.collection_description_field = "description_display"
+    
     # needs to be indexed so we can search it to return relationships.
     # needs to be in field list for all request handlers so we can identify collection members in the search results.
     config.collection_member_identifying_field = "is_member_of"
@@ -39,6 +43,8 @@ class CatalogController < ApplicationController
     
     config.collection_member_grid_items = 20
     
+    # needs to be sotred so we can retreive it
+    # needs to be in field list for all request handlers so we can get images the document anywhere in the app.
     config.image_identifier_field = "image_id_display"
 
     ## Default parameters to send on single-document requests to Solr. These settings are the Blackligt defaults (see SolrHelper#solr_doc_params) or 

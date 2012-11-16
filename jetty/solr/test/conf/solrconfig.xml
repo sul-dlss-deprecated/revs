@@ -840,6 +840,7 @@
          score,
          author_display,
          author_vern_display, 
+         description_display,
          format, 
          image_id_display,
          is_member_of,
