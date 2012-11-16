@@ -1,5 +1,15 @@
 <div class="row">
-  <div class="span5"><%= image_tag("http://placehold.it/400x300") %></div>
-  <div class="span4"><%= render :partial => "show_default", :locals => {:document => @document} %></div>
+  <div class="span9">
+    <h2><%= t('revs.collection.collection_detail') %></h2>
+  </div>
 </div>
+
+<div class="row">
+  <div class="span5"><%= image_tag("http://placehold.it/400x300", :class => "posterframe collection") %></div>
+  <div class="span4">
+    <%= render_document_heading.html_safe %>
+    <%= render :partial => "show_default", :locals => {:document => @document} %>
+  </div>
+</div>
+
 <%= render :partial => "collection_members_grid", :locals => {:collection_members => @document.collection_members} %>

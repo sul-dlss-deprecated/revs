@@ -4,5 +4,7 @@
 en:
   hello: "Hello world"
   revs:
+    collection:
+      collection_detail: 'Collection Detail'
     search:
       search_results: 'Results'
