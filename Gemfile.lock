@@ -1,6 +1,6 @@
 GIT
-  remote: git://github.com/projectblacklight/blacklight.git
-  revision: bb9333226aa4a2875991712e0a18a42e5be25b77
+  remote: http://github.com/projectblacklight/blacklight.git
+  revision: 70302ffe00346bc5b9c95ec010ba3043e92bb512
   specs:
     blacklight (4.0.0.pre4)
       bootstrap-sass (~> 2.1.0)
@@ -10,7 +10,6 @@ GIT
       rails (~> 3.2)
       rsolr (~> 1.0.6)
       sass-rails
-      unicode
 
 GEM
   remote: https://rubygems.org/
@@ -167,7 +166,6 @@ GEM
     uglifier (1.3.0)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
-    unicode (0.4.3)
     xpath (0.1.4)
       nokogiri (~> 1.3)
 

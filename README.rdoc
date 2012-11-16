@@ -1,6 +1,6 @@
-== REVS Digital Library
+== Revs Digital Library
 
-This is a Blacklight Application for REVS Institute Digital Library.
+This is a Blacklight Application for the Revs Digital Library at Stanford.
 
 == Getting Started
 
@@ -12,7 +12,7 @@ This is a Blacklight Application for REVS Institute Digital Library.
 
     $ rake db:migrate
 
-3. Start solr
+3. Start solr (stop any other jetty processes )
 
     $ rake jetty:start
 
@@ -31,8 +31,8 @@ This is a Blacklight Application for REVS Institute Digital Library.
 
 You can run the test suite by running
 
-    $ rake ci
+    $ rake local_ci
     
-This will force you into the test environment, start solr, delete all the records in the test solr core, index all fixtures in spec/fixtures, then run the tests.
+This will stop jetty, force you into the test environment, start jetty, start solr, delete all the records in the test solr core, index all fixtures in spec/fixtures, then run the tests, and then restart jetty
 
 

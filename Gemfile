@@ -11,7 +11,7 @@ gem 'rails', '3.2.9'
 
 gem 'sqlite3'
 
-gem 'blacklight', :git => "git://github.com/projectblacklight/blacklight.git" #"~> 4.0.0.pre3"
+gem 'blacklight', :git => "http://github.com/projectblacklight/blacklight.git" #"~> 4.0.0.pre3"
 
 # Gems used only for assets and not required
 # in production environments by default.

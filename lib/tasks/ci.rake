@@ -14,6 +14,18 @@ task :ci do
   end
 end
 
+desc "Stop jetty, run `rake ci`, db:migrate, start jetty."
+task :local_ci do
+  ENV['RAILS_ENV'] = 'test'
+  Rails.env = 'test'
+  Rake::Task["jetty:stop"]
+  Rake::Task["db:migrate"]
+  Rake::Task["ci"]
+  ENV['RAILS_ENV'] = 'development'
+  Rails.env = 'developmennt'
+  Rake::Task["jetty:start"]
+end
+
 RSpec::Core::RakeTask.new(:rspec) do |spec|
   spec.rspec_opts = ["-c", "-f progress", "-r ./spec/spec_helper.rb"]
 end
