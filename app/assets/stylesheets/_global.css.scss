@@ -17,6 +17,14 @@ $constraint_border_active_color: #FFD27A !default;
   padding-top: 10px;
 }
 
+@mixin page-header {
+  @include gray-top_border;
+  color: #990000;
+  margin-top: 0;
+  padding-top: 10px;
+  text-transform: uppercase;
+}
+
 /* --- */
 
 html {

@@ -1,9 +1,6 @@
 .blacklight-catalog-index {
   h2 {
-    border-top: 5px solid #dddddd;
-    color: #990000;
-    margin-top: 0;
-    padding-top: 10px;
+    @include page-header;
   }
   h3 {
     padding-top: 10px;
@@ -48,12 +45,18 @@
     span.constraints-label {margin-right: 0.5em;}
 }
 
+.index_title {color: #999999;}
 .bookmark_toggle {
 	label {
 		cursor: pointer;
 		display: inline;
 	}
 }
+
+.blacklight-catalog-show {
+  h2 {@include page-header;}
+}
+
 
 /* Responsive styles */
 @media (max-width: 767px) {
