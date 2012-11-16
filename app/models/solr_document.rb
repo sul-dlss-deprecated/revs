@@ -28,7 +28,14 @@ class SolrDocument
   
   def collection_members
     return nil unless collection?
-    @collection_members ||= CollectionMembers.new(Blacklight.solr.select(:params => {:fq => "#{blacklight_config.collection_member_identifying_field}:\"#{self[SolrDocument.unique_key]}\"", :rows => blacklight_config.collection_member_grid_items.to_s}))
+    @collection_members ||= CollectionMembers.new(
+                              Blacklight.solr.select(
+                                :params => {
+                                  :fq => "#{blacklight_config.collection_member_identifying_field}:\"#{self[SolrDocument.unique_key]}\"",
+                                  :rows => blacklight_config.collection_member_grid_items.to_s
+                                }
+                              )
+                            )
   end
   
   def collection_siblings
