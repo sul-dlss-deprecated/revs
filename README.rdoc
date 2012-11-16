@@ -27,7 +27,12 @@ This is a Blacklight Application for the Revs Digital Library at Stanford.
 6. Go to http://localhost:3000
 
 
-== Development
+== Deployment
+
+cd deploy
+cap ENVIRONMENT deploy # e.g. cap production deploy
+
+== Testing
 
 You can run the test suite by running
 
