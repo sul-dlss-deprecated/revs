@@ -9,8 +9,6 @@ gem 'rails', '3.2.9'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
-
 gem 'blacklight', :git => "http://github.com/projectblacklight/blacklight.git" #"~> 4.0.0.pre3"
 
 # Gems used only for assets and not required
@@ -30,12 +28,15 @@ group :test do
   gem 'capybara'
 end
 
-group :development, :test do
+group :development, :staging, :test do
   gem 'jettywrapper'
   gem 'rest-client'
+  gem 'sqlite3'
 end
 
 gem 'jquery-rails'
+
+gem "bootstrap-sass"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -46,10 +47,5 @@ gem 'jquery-rails'
 # Use unicorn as the app server
 # gem 'unicorn'
 
-# Deploy with Capistrano
-# gem 'capistrano'
-
 # To use debugger
 # gem 'debugger'
-
-gem "bootstrap-sass"

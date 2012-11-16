@@ -1,6 +1,6 @@
 set :rails_env, "production"
 set :deployment_host, "revs-prod.stanford.edu"
-set :bundle_without, [:deployment,:development,:test]
+set :bundle_without, [:deployment,:development,:test,:staging]
 
 DEFAULT_TAG='master'
 

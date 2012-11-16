@@ -55,7 +55,11 @@ rails s
 == Deployment
 
 cd deploy
-cap ENVIRONMENT deploy # e.g. cap production deploy
+cap production deploy # for production
+cap production staging # for staging
+cap production development # for development
+
+You need to specify a branch or tag to deploy.  You can deploy the latest by entering "master"
 
 == Testing
 
