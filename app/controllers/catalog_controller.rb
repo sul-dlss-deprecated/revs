@@ -24,10 +24,18 @@ class CatalogController < ApplicationController
     
     
     # various Revs specific collection field configurations
+    
+    # needs to be stored so we can retreive it
+    # needs to be in field list for all request handlers so we can identify collections in the search results.
     config.collection_identifying_field = "format"
     config.collection_identifying_value = "Collection"
     
+    # needs to be indexed so we can search it to return relationships.
+    # needs to be in field list for all request handlers so we can identify collection members in the search results.
     config.collection_member_identifying_field = "is_member_of"
+    
+    # needs to be stored so we can retreive it for display
+    config.collection_member_collection_title_field = "collection_facet"
     
     config.collection_member_grid_items = 20
     
