@@ -20,6 +20,13 @@
 #search-results-metadata.well {
     background-color: #eeeeee;
     padding: 12px 10px 6px;
+    #sortAndPerPage {
+      background-color: #eeeeee;
+      border: none;
+      box-shadow: none;
+      margin-bottom: 0;
+      padding: 0;
+    }
     .well-constraints, #sortAndPerPage {font-size: 0.85em;}
     .well-constraints {
       clear: right;
