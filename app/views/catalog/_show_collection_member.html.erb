@@ -2,3 +2,4 @@
   <div class="span5"><%= image_tag(@document.images(:large).first) %></div>
   <div class="span4"><%= render :partial => "show_default", :locals => {:document => @document} %></div>
 </div>
+<%= render :partial => "collection_members_grid", :locals => {:collection_members => @document.collection_siblings, :type => :siblings} %>
