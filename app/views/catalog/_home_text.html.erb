@@ -1,11 +1,29 @@
 <div class="row slideshow">
   <div class="span6">
-    <img src="http://placehold.it/400x300">
+    <div id="all_collections_carousel" class="carousel slide">
+      <div class="carousel-inner">
+        <%- SolrDocument.all_collections.each_with_index do |collection, index| -%>
+          <div class="item<%= " active" if index == 0 %>" data-collection-title="<%= collection[blacklight_config.show.heading] %>" data-collection-href="<%= catalog_path(collection) %>" data-collection-description="<%= collection[blacklight_config.collection_description_field].try(:first) %>">
+            <%= image_tag("http://placehold.it/400x300", :alt => collection[blacklight_config.show.heading])  %>
+            <%- if collection.has_key?(blacklight_config.show.heading) -%>
+              <div class="carousel-caption"><p><%= collection[blacklight_config.show.heading]%></p></div>
+            <%- end -%>
+          </div>
+        <%- end -%>
+      </div>
+    </div>
   </div>
   <div class="span3 featured-description">
+    <div class="all_collections carousel-controls">
+      <a class="carousel-control left" href="#all_collections_carousel" data-slide="prev">&lsaquo;</a>
+      <a class="carousel-control right" href="#all_collections_carousel" data-slide="next">&rsaquo;</a>
+    </div>
     <span class="content-type collection">Featured Collection</span>
-    <h3>George Phillips Collection</h3>
-    <p>Morbi rutrum, tellus dictum feugiat consequat, sem mauris posuere eros, sit amet viverra nibh eros vitae nisl. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum ac dui sit amet mauris dignissim vulputate.     <%= link_to "More", '#' %></p>
+    <h3 id="collection-title"><%= SolrDocument.all_collections.first[blacklight_config.show.heading] %></h3>
+    <p>
+      <span id="collection-description"><%= SolrDocument.all_collections.first[blacklight_config.collection_description_field].try(:first) %></span>
+      <%= link_to "More", catalog_path(SolrDocument.all_collections.first), :id => "collection-link" %>
+    </p>
   </div>
 </div>
 
