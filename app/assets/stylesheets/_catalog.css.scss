@@ -1,7 +1,10 @@
 .blacklight-catalog-index {
   h2 {
-    border-top: 3px solid #dddddd;
+    @include page-header;
+  }
+  h3 {
     padding-top: 10px;
+    &.section-heading {border-top: 3px solid #dddddd;}
   }
   .featured-description { @include red-top_border;}
   .documentHeader {
@@ -14,6 +17,35 @@
   }
 }
 
+#search-results-metadata.well {
+    background-color: #eeeeee;
+    padding: 12px 10px 6px;
+    .well-constraints, #sortAndPerPage {font-size: 0.85em;}
+    .well-constraints {
+      clear: right;
+      margin: 20px 8px 0 0;
+      .appliedFilter {
+        padding: 1px 2px 1px 1em;
+        .queryName,.filterName {
+          background: none; /* override the BL icon used as separator */
+          padding-right: 0;
+          &:after {
+            content: ">";   /* Facet > Value separator */
+            padding-left: 6px;
+          }
+        }
+      }
+    }
+    .css-dropdown li {
+      font-size: 12px;
+      padding: 2px 10px;
+      > a {padding: 2px;}
+    }
+    #sort-drowpdown, #per_page-dropdown {z-index: 9999;}
+    span.constraints-label {margin-right: 0.5em;}
+}
+
+.index_title {color: #999999;}
 .bookmark_toggle {
 	label {
 		cursor: pointer;
@@ -21,6 +53,12 @@
 	}
 }
 
+.blacklight-catalog-show {
+  h2 {@include page-header;}
+}
+
+
+/* Responsive styles */
 @media (max-width: 767px) {
   .slideshow img {margin-bottom: 20px;}
 }
