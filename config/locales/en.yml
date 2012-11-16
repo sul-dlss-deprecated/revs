@@ -8,3 +8,8 @@ en:
       collection_detail: 'Collection Detail'
     search:
       search_results: 'Results'
+    collection_members_grid:
+      collection_link: 'View this collection'
+      collection_text: 'Collection Items'
+      sibling_text: "Other items in the %{collection} collection"
+      
