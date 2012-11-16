@@ -55,6 +55,30 @@ describe SolrDocument do
         SolrDocument.new(:id=>"1235").collection_members.should be nil
       end
     end
+    describe "all_collections" do
+      it "should memoize the solr request to get all collections" do
+        response = {"response" => {"numFound" => 2, "docs" => [{:id=>"1234"}, {:id =>"4321"}]}}
+        solr = mock("solr")
+        solr.should_receive(:select).with(:params => {:fq => "format:\"Collection\"", :rows => "10"}).once.and_return(response)
+        Blacklight.should_receive(:solr).and_return(solr)
+        doc = SolrDocument.new
+        5.times do
+          doc.all_collections
+        end
+      end
+      it "should return an array of solr documents" do
+        response = {"response" => {"numFound" => 2, "docs" => [{:id=>"1234"}, {:id =>"4321"}]}}
+        solr = mock("solr")
+        solr.should_receive(:select).with(:params => {:fq => "format:\"Collection\"", :rows => "10"}).and_return(response)
+        Blacklight.should_receive(:solr).and_return(solr)
+        docs = SolrDocument.all_collections
+        docs.should be_a Array
+        docs.each do |doc|
+          doc.should be_a SolrDocument
+          ["1234", "4321"].should include(doc[:id])
+        end
+      end
+    end
   end
   
   describe "images" do

@@ -10,6 +10,12 @@ class SolrDocument
       self[blacklight_config.collection_identifying_field] == blacklight_config.collection_identifying_value
   end
   
+  def collection_member?
+    self.has_key?(blacklight_config.collection_member_identifying_field) and 
+      !self[blacklight_config.collection_member_identifying_field].blank?
+  end
+  
+  # Return a SolrDocument object of the parent collection of a collection member
   def collection
     return nil unless collection_member?
     @collection ||= SolrDocument.new(
@@ -21,11 +27,7 @@ class SolrDocument
                     )
   end
   
-  def collection_member?
-    self.has_key?(blacklight_config.collection_member_identifying_field) and 
-      !self[blacklight_config.collection_member_identifying_field].blank?
-  end
-  
+  # Return a CollectionMembers object of all the members of a collection
   def collection_members
     return nil unless collection?
     @collection_members ||= CollectionMembers.new(
@@ -38,6 +40,7 @@ class SolrDocument
                             )
   end
   
+  # Return a CollectionMembers object of all of the siblins a collection member (including self)
   def collection_siblings
     return nil unless collection_member?
     @collection_siblings ||= CollectionMembers.new(
@@ -48,6 +51,18 @@ class SolrDocument
                                  }
                                )
                              )
+  end
+  
+  # Return an Array of collection SolrDocuments
+  def all_collections
+    @all_collections ||= Blacklight.solr.select(
+      :params => {
+        :fq => "#{blacklight_config.collection_identifying_field}:\"#{blacklight_config.collection_identifying_value}\"",
+        :rows => "10"
+      }
+    )["response"]["docs"].map do |document|
+      SolrDocument.new(document)
+    end
   end
   
   def images(size=:default)
@@ -84,6 +99,11 @@ class SolrDocument
                          :format => "format"
                          )
      
+  # convenience class method to get all collections
+  def self.all_collections
+    @all_collections ||= SolrDocument.new.all_collections
+  end
+
   def self.image_dimensions
     options = {:default => "_square",
                :large   => "_thumb" }
