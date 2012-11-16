@@ -8,6 +8,7 @@
 /.bundle
 
 config/database.yml
+config/solr.yml
 
 # Ignore the default SQLite database.
 /db/*.sqlite3

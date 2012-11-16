@@ -2,5 +2,7 @@ development:
   url: https://stacks.stanford.edu/image
 test:
   url: https://stacks-test.stanford.edu/image
+staging:
+  url: https://stacks-test.stanford.edu/image
 production:
   url: https://stacks.stanford.edu/image

@@ -15,5 +15,9 @@ development:
   url: http://localhost:8983/solr/dev
 test: &test
   url: http://localhost:<%= ENV["TEST_JETTY_PORT"] || '8888' %>/solr/test
+staging: 
+  url: http://SOLR_URL/solr
+production: 
+  url: http://SOLR_URL/solr
 cucumber:
   <<: *test

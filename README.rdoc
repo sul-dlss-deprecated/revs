@@ -8,12 +8,16 @@ This is a Blacklight Application for the Revs Digital Library at Stanford.
 
 git clone https://github.com/sul-dlss/revs.git
 
-2. Copy the .rvmrc and database.yml example files
+2a. Copy the .yml example files
 
 cd revs
+cp config/database.yml.example config/database.yml
+cp config/solr.yml.example config/solr.yml
+
+2b. If you want to use rvmrc to manage gemsets, copy the .rvmrc example files
+
 cp .rvmrc.example .rvmrc
 cp deploy/.rvmrc.example deploy/.rvmrc
-cp config/database.yml.example config/database.yml
 
 3. Install dependencies via bundler for both the main and deploy directories
 

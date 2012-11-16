@@ -1,5 +1,5 @@
 set :rails_env, "staging"
-set :deployment_host, "revs-test.stanford.edu"
+set :deployment_host, "revs-stage.stanford.edu"
 set :bundle_without, [:deployment, :development]
 
 DEFAULT_TAG='master'
