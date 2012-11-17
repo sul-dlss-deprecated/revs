@@ -4,7 +4,7 @@
       <div class="carousel-inner">
         <%- SolrDocument.all_collections.each_with_index do |collection, index| -%>
           <div class="item<%= " active" if index == 0 %>" data-collection-title="<%= collection[blacklight_config.show.heading] %>" data-collection-href="<%= catalog_path(collection) %>" data-collection-description="<%= collection[blacklight_config.collection_description_field].try(:first) %>">
-            <%= image_tag("http://placehold.it/400x300", :alt => collection[blacklight_config.show.heading])  %>
+            <canvas height="300px" width="400px" class="image-stitch" id="image-stitch-<%= index %>" data-image-urls="<%= collection.collection_members.map{|c| c.images.first }.join(', ') %>"></canvas>
             <%- if collection.has_key?(blacklight_config.show.heading) -%>
               <div class="carousel-caption"><p><%= collection[blacklight_config.show.heading]%></p></div>
             <%- end -%>
