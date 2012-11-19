@@ -7,6 +7,8 @@ Revs::Application.routes.draw do
   match 'logout',  :to => 'catalog#index', :as => 'destroy_user_session'
   match 'account', :to => 'catalog#index', :as => 'edit_user_registration'
 
+  match 'about/:action',   :to => 'about#:action'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

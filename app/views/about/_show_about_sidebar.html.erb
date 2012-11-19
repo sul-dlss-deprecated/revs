@@ -1,0 +1,25 @@
+<div id="sidebar" class="span3">
+	<div id="sidebar-nav">
+	  <ul class="nav nav-list">
+	    <li class="nav-header">About</li>
+			<li><%= link_to 'About the Revs Digital Library', :controller => "about", :action => "project" %></li>
+			<li>Project History</li>
+			<li>Project Team: Stanford</li>
+			<li>Project Team: Revs Institute</li>
+			<li>Acknowledgements</li>
+	  </ul>
+
+	  <ul class="nav nav-list">
+	    <li class="nav-header">Contact</li>
+			<li><%= link_to 'Contact Us', :controller => "about", :action => "contact" %></li>
+			<li>Report a Problem</li>
+			<li>Use Policy</li>
+	  </ul>
+
+	  <ul class="nav nav-list">
+	    <li class="nav-header">Related Sites</li>
+			<li><%= link_to 'Revs Institute', 'http://www.revsinstitute.org' %></li>
+			<li><%= link_to 'Revs Program at Stanford', 'http://revs.stanford.edu/' %></li>
+	  </ul>
+	</div>
+</div>

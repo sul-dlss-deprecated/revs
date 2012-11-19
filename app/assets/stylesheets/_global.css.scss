@@ -115,9 +115,9 @@ h1 {
 	padding-bottom: 10px;
 }
 h2 {
+  @include page-header;
 	font-size: 1.325em;
 	line-height: 1.5em;
-	color: #333333;
 }
 h3 {
 	font-size: 1.125em;
@@ -127,6 +127,7 @@ p {
   font-family: "Helvetica","Arial",sans-serif;
   color: #333333;
   font-size: 0.8em;
+//  font-size: 13px;
   line-height: 1.5em;
   margin:12px 0;
 }

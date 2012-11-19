@@ -4,6 +4,9 @@
 en:
   hello: "Hello world"
   revs:
+    about:
+      project_title: 'About the Revs Digital Library'
+      contact_title: 'Contact Us'
     collection:
       collection_detail: 'Collection Detail'
       member_detail: 'Item Detail'
