@@ -9,8 +9,8 @@ $(document).ready(function(){
 	// Carousel on home page
 	$("#all_collections_carousel").bind('slid', function(){
 		var active_item = $(".active", $(this));
-		$(".featured-description #collection-title").text(active_item.attr("data-collection-title"));
-		$(".featured-description #collection-description").text(active_item.attr("data-collection-description"));
-		$(".featured-description #collection-link").attr("href", active_item.attr("data-collection-href"));
+		$("#featured-collection-nav #collection-title").text(active_item.attr("data-collection-title"));
+		$("#featured-collection-nav #collection-description").text(active_item.attr("data-collection-description"));
+		$("#featured-collection-nav #collection-link").attr("href", active_item.attr("data-collection-href"));
 	});
 });
