@@ -19,7 +19,7 @@
       </div>
       <div class="carousel-controls">
         <a class="carousel-control left" href="#collection_carousel" data-slide="prev">&lsaquo;</a>
-        <span class="number-of-items">(<span class="iterator">1</span><%= " - #{@document.collection_members.count}" if @document.collection_members.total_members > @document.collection_members.count %> of <%= @document.collection_members.total_members %>)</span>
+        <span class="number-of-items">(<span class="iterator">1</span><%= " - #{@document.collection_members.count}" if @document.collection_members.total_members > @document.collection_members.count %> of <%= @document.collection_members.total_members %> items)</span>
         <a class="carousel-control right" href="#collection_carousel" data-slide="next">&rsaquo;</a>
       </div>
     </div>

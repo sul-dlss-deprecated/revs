@@ -7,12 +7,12 @@
 }
 .carousel-controls {
 	position: relative;
-	margin-top: 5px;
+	margin-top: 20px;
 	height: 45px;
 	.number-of-items {
 		@extend .muted;
 		position: absolute;
-		left: 40%;
+		left: 36%;
 		top: 25%;
 	}
 }

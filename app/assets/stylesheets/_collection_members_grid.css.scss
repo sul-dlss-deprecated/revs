@@ -1,4 +1,5 @@
 .collection-members {
+	@include member-section-header;
 	margin-top: 5px;
 	h5 {
 		@media(max-width: 767px){
@@ -7,12 +8,14 @@
 		margin:0;
 	}
 	.controls {
+	  font-size: 12px;
+	  margin-bottom: 10px;
+	  text-transform: none;
 		@media(max-width: 767px){
 			text-align: center;
 		}
 		text-align: right;
 	}
-	@include red-top_border;
 	.item {
 		float: left;
 		margin: 5px 8px;
