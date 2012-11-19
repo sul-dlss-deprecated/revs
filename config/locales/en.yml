@@ -6,6 +6,7 @@ en:
   revs:
     collection:
       collection_detail: 'Collection Detail'
+      member_detail: 'Item Detail'
     collection_members:
       items_name: 'images'
     collection_members_grid:

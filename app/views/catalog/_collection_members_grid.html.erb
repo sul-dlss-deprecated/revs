@@ -4,17 +4,17 @@
   <div class="span9 collection-members">
     <div class="row">
       <%- if type == :collection -%>
-        <div class="span4">
+        <div class="span6">
           <h5><%= t('revs.collection_members_grid.collection_text') %> <span class="muted">(<%= collection_members.total_members %>)</span></h5>
         </div>
-        <div class="span4 offset1 controls">
+        <div class="span2 offset1 controls">
           Images | Text
         </div>
       <%- else -%>
-        <div class="span4">
+        <div class="span6">
           <h5><%= t('revs.collection_members_grid.sibling_text', :collection => document[blacklight_config.collection_member_collection_title_field]) %> <span class="muted">(<%= collection_members.total_members %>)</span></h5>
         </div>
-        <div class="span4 offset1 controls">
+        <div class="span2 offset1 controls">
           <%= link_to(t('revs.collection_members_grid.collection_link'), catalog_path(document[blacklight_config.collection_member_identifying_field])) %>
         </div>
       <%- end -%>

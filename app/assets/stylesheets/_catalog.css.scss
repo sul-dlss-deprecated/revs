@@ -62,6 +62,27 @@
 
 .blacklight-catalog-show {
   h2 {@include page-header;}
+  .member-image img {margin-bottom: 20px;}
+  .show-document-title {
+    margin-top: 0;
+    padding-top: 0;
+  }
+  .dl-horizontal {
+    dt {
+      float: left;
+      clear: left;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: left;
+      white-space: nowrap;
+      width: 80px;
+    }
+    dd {margin-left: 90px;}
+    @media (max-width: 767px) {
+      dt {float: none;}
+      dd {margin-left: 0;}
+    }
+  }
 }
 
 
