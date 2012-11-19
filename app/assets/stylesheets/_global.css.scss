@@ -42,6 +42,11 @@ body {
 }
 
 #sidebar {@include red-top_border;}
+#sidebar-nav > .nav-list {
+  margin-bottom: 20px;
+  padding-left: 5px;
+  li > a {padding: 1px 15px;}
+}
 
 a:focus {
 	outline: thin dotted #333;
