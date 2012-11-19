@@ -15,4 +15,11 @@
 		left: 36%;
 		top: 25%;
 	}
+  /* Deliberate overrides to reduce button size a bit */
+  .carousel-control {
+    font-size: 40px;
+    height: 30px;
+    width: 30px;
+    line-height: 22px;
+  }
 }
