@@ -23,3 +23,8 @@
     line-height: 22px;
   }
 }
+.blacklight-catalog-index .carousel-controls {
+  margin-top: 0;
+  a.left {left: 0;}
+  a.right {right: 0;}
+}

@@ -13,17 +13,20 @@
       </div>
     </div>
   </div>
-  <div class="span3 featured-description">
+  <div id="featured-collection-nav" class="span3">
     <div class="all_collections carousel-controls">
       <a class="carousel-control left" href="#all_collections_carousel" data-slide="prev">&lsaquo;</a>
       <a class="carousel-control right" href="#all_collections_carousel" data-slide="next">&rsaquo;</a>
     </div>
-    <span class="content-type collection">Featured Collection</span>
-    <h3 id="collection-title"><%= SolrDocument.all_collections.first[blacklight_config.show.heading] %></h3>
-    <p>
-      <span id="collection-description"><%= SolrDocument.all_collections.first[blacklight_config.collection_description_field].try(:first) %></span>
-      <%= link_to "More", catalog_path(SolrDocument.all_collections.first), :id => "collection-link" %>
-    </p>
+
+    <div id="featured-description">
+      <span class="content-type collection">Featured Collection</span>
+      <h3 id="collection-title"><%= SolrDocument.all_collections.first[blacklight_config.show.heading] %></h3>
+      <p>
+        <span id="collection-description"><%= SolrDocument.all_collections.first[blacklight_config.collection_description_field].try(:first) %></span>
+        <%= link_to "More", catalog_path(SolrDocument.all_collections.first), :id => "collection-link" %>
+      </p>
+    </div>
   </div>
 </div>
 

@@ -6,7 +6,9 @@
     padding-top: 10px;
     &.section-heading {border-top: 3px solid #dddddd;}
   }
-  .featured-description { @include red-top_border;}
+  #featured-collection-nav {
+    @include red-top_border;
+  }
   .documentHeader {
 	  .index_title {
 		  float: left;
