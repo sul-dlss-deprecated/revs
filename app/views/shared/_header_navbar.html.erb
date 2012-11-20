@@ -26,7 +26,7 @@
                 <a href="/" class="active">HOME</a>
               </li>
               <li>
-                <a href="#">COLLECTIONS</a>
+                <%= link_to("COLLECTIONS", all_collections_path)%>
               </li>
               <li><%= link_to 'ABOUT', :controller => "about", :action => "project" %></li>
               <li><%= link_to 'REVS PROGRAM AT STANFORD', 'http://revs.stanford.edu' %></li>

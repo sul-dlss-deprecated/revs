@@ -6,6 +6,8 @@ Revs::Application.routes.draw do
   match 'login',   :to => 'catalog#index', :as => 'new_user_session'
   match 'logout',  :to => 'catalog#index', :as => 'destroy_user_session'
   match 'account', :to => 'catalog#index', :as => 'edit_user_registration'
+  
+  match 'collections', :to => 'catalog#index', :as => 'all_collections', :defaults => {:f => {:format => ["Collection"]}}
 
   # Handles all About pages.
   match 'about/:action',   :to => 'about#:action'
