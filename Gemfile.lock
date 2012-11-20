@@ -30,7 +30,7 @@ GEM
       multi_json (~> 1.0)
     addressable (2.3.2)
     arel (3.0.2)
-    blacklight (4.0.0.pre6)
+    blacklight (4.0.0.pre7)
       bootstrap-sass (~> 2.1.0)
       kaminari (~> 0.13)
       marc (>= 0.4.3, < 1.1)
@@ -168,7 +168,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  blacklight (~> 4.0.0.pre6)
+  blacklight (~> 4.0.0.pre7)
   bootstrap-sass
   bundler (>= 1.2.0)
   capybara
