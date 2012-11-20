@@ -9,7 +9,7 @@ gem 'rails', '3.2.9'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'blacklight', '~> 4.0.0.pre7'
+gem 'blacklight', :git => 'git://github.com/projectblacklight/blacklight.git'# '~> 4.0.0.pre7'
 
 # Gems used only for assets and not required
 # in production environments by default.
