@@ -126,8 +126,8 @@ h3 {
 p {
   font-family: "Helvetica","Arial",sans-serif;
   color: #333333;
-  font-size: 0.8em;
-//  font-size: 13px;
+//  font-size: 0.8em;
+  font-size: 13px;
   line-height: 1.5em;
   margin:12px 0;
 }
@@ -138,6 +138,7 @@ span.content-type {
 	color: #990000;
 	text-transform: uppercase;
 	-webkit-font-smoothing: antialiased;
+	&.collection {color: #01835F;}
 }
 .slideshow {
   margin-bottom: 20px;

@@ -1,0 +1,42 @@
+.slideshow {
+  #featured-description h3 {
+    margin-top: 0;
+    padding-top: 0;
+  }
+}
+.about-dl {
+  p {width: 95%;}
+  img {
+    float: left;
+    margin-right: 20px;
+  }
+}
+
+.slideshow {
+  position: relative;
+}
+
+/* Position Featured slideshow nav and description column
+   below slideshow for tablet, because slideshow image
+   doesn't scale down to allow room for description column
+   to remain to the right of it. */
+#featured-collection-nav {
+  @media (min-width: 768px) and (max-width: 979px) {
+    clear: both;
+    width: 100%;
+  }
+}
+#featured-description {
+  float: left;
+  @media (min-width: 768px) and (max-width: 979px) {
+    width: 90%;
+  }
+  /* For desktop, position slideshow nav and description
+     next to slideshow image, with controls vertically positioned
+     at the top, and the text vertically positioned at the bottom */
+  @media (min-width: 980px) {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+}

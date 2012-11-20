@@ -31,8 +31,16 @@
     line-height: 22px;
   }
 }
-.blacklight-catalog-index .carousel-controls {
-  margin-top: 0;
-  a.left {left: 0;}
-  a.right {right: 0;}
+.blacklight-catalog-index {
+  .carousel-controls {
+    margin-top: 0;
+    a.left {left: 0;}
+    a.right {right: 0;}
+  }
+  .carousel-control {
+    /* Put nav buttons close together when tablet or smaller */
+    @media (max-width: 979px) {
+      left: 75px;
+    }
+  }
 }
