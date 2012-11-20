@@ -10,6 +10,13 @@
   }
   img {
     float: left;
-    padding-right: 20px;
+    padding: 5px 20px 5px 0;
+  }
+  span.slug {
+    display: block;
+    width: 10px;
+    height: 10px;
+    text-indent: -9999px;
+    background: #000000;
   }
 }

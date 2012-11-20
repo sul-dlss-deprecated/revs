@@ -1,0 +1,16 @@
+<div id="content" class="span9 about-content">
+	<div class="row">
+	  <div class="span9">
+	    <h2><%= t("revs.about.#{controller.action_name}_title") %></h2>
+	  </div>
+	</div>
+	
+	<div class="row">
+	  <div class="span9">
+			<%= render :partial => "#{controller.action_name}" %>
+		</div>
+	</div>
+
+</div>
+
+<%= render :partial => 'show_about_sidebar' %>
