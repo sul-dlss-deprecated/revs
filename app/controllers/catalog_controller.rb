@@ -57,6 +57,8 @@ class CatalogController < ApplicationController
     #  # :rows => 1
     #  # :q => '{!raw f=id v=$id}' 
     #}
+    
+    config.document_index_view_types = ["gallery", "brief"]
 
     # solr field configuration for search results/index views
     config.index.show_link = 'title_display'
