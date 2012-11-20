@@ -1,0 +1,7 @@
+<div class="<%= render_document_class document %> document">
+  <%= link_to_document(document, :label => image_tag(document.collection_members.first.images(:large).first, :alt => document[blacklight_config.index.show_link]), :counter => (document_counter + 1 + @response.params[:start].to_i))  %>
+  <h5 class="index_title">
+    <%= link_to_document document, :label=>document_show_link_field, :counter => (document_counter + 1 + @response.params[:start].to_i) %>
+  </h5>
+  <span class="muted">(<%= pluralize(document.collection_members.total_members, t('revs.collection_members.items_name')) %>)</span>
+</div>

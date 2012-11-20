@@ -1,0 +1,6 @@
+<div class="<%= render_document_class document %> document">
+  <%= link_to_document(document, :label => image_tag(document.images(:large).first, :alt => document[blacklight_config.index.show_link]), :counter => (document_counter + 1 + @response.params[:start].to_i))  %>
+  <h5 class="index_title">
+    <%= link_to_document document, :label=>document_show_link_field, :counter => (document_counter + 1 + @response.params[:start].to_i) %>
+  </h5>
+</div>

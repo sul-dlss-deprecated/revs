@@ -14,6 +14,8 @@
 @import "bootstrap";
 @import "bootstrap-responsive";
 
+@import 'blacklight/responsive';
+
 @import 'blacklight/blacklight_defaults';
 
 @import "global.css.scss";
@@ -29,6 +31,8 @@
 
 @import "collection_members_grid.css.scss";
 @import "carousel.css.scss";
+
+@import "search_results.css.scss";
 
 @import "stanford_footer.css.scss";
 

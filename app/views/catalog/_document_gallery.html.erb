@@ -1,0 +1,7 @@
+<%= render "gallery_toggle" %>
+
+<div id="documents" class="gallery">
+  <%- documents.each_with_index do |document, index| -%>
+    <%= render_document_partial document, :index, :document_counter => index %>
+  <%- end -%>
+</div>

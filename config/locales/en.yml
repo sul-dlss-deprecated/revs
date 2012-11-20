@@ -11,13 +11,16 @@ en:
       collection_detail: 'Collection Detail'
       member_detail: 'Item Detail'
     collection_members:
-      items_name: 'images'
+      items_name: 'image'
     collection_members_grid:
       collection_link: 'View this collection'
       collection_text: 'Collection Items'
       sibling_text: "Other items in the %{collection} collection"
     search:
       search_results: 'Results'
+      gallery_toggle:
+        gallery: 'images'
+        list: 'text'
     sidebar:
       navigation:
         title: 'Navigation'

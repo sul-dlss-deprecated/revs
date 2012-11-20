@@ -1,0 +1,4 @@
+<div class='gallery_toggle'>
+  <%= link_to(t('revs.search.gallery_toggle.gallery'), catalog_index_path(params.merge(:view => nil)), :class=>"#{'active' if params[:view].nil?}") %> | 
+  <%= link_to(t('revs.search.gallery_toggle.list'), catalog_index_path(params.merge(:view => 'brief')), :class=>"#{'active' unless params[:view].nil?}") %>
+</div>

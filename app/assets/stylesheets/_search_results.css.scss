@@ -1,0 +1,41 @@
+/* Gallery View */
+.gallery_toggle {
+	text-align: right;
+	.active {
+		color: black;
+		cursor: default;
+		&:hover{
+			text-decoration: none;
+		}
+	}
+}
+.gallery {
+	.document {
+		float: left;
+		clear: none;
+		display: inline;
+		margin: 2px;
+		border-bottom: none;
+		width: 212px;
+		height: 200px;
+		text-align: center;
+		.index_title {
+			float: none;
+		}
+		img {
+			display: block;
+			width: 200px;
+		}
+	}		
+}
+
+/* Brief/List View */
+.brief {
+  .document {
+	  border-bottom: none;
+	  .index_title {
+		  margin-top: 0;
+		  margin-right: 5px;
+	  }
+  }
+}
