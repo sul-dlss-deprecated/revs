@@ -4,6 +4,14 @@
 **/
 .carousel {
 	display: inline-block;
+	.carousel-caption {
+	  background: rgba(0, 0, 0, 0.6);
+	  padding: 0 0 10px 15px;
+	  p {
+	    color: #ddd;
+	    font-size: 14px;
+	  }
+	}
 }
 .carousel-controls {
 	position: relative;
