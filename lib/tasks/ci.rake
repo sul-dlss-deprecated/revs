@@ -3,7 +3,6 @@ require 'rest_client'
 
 desc "Run continuous integration suite"
 task :ci do
-  require 'rspec/core/rake_task'
   unless Rails.env.test?  
     system("rake ci RAILS_ENV=test")
   else
@@ -26,9 +25,6 @@ task :local_ci do
   Rake::Task["jetty:start"]
 end
 
-RSpec::Core::RakeTask.new(:rspec) do |spec|
-  spec.rspec_opts = ["-c", "-f progress", "-r ./spec/spec_helper.rb"]
-end
 
 namespace :revs do
   desc "Delete and index all fixtures in solr"
