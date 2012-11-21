@@ -23,12 +23,17 @@
 		left: 36%;
 		top: 25%;
 	}
-  /* Deliberate overrides to reduce button size a bit */
+  /* Deliberate overrides to change look of default buttons */
   .carousel-control {
-    font-size: 40px;
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 90px;
     height: 30px;
-    width: 30px;
+    width: 40px;
     line-height: 22px;
+    &.left {margin-left:-12px;}
+    &.right {margin-right:-12px;}
   }
 }
 .blacklight-catalog-index {
