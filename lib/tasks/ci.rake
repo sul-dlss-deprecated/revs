@@ -1,4 +1,3 @@
-require 'rspec/core/rake_task'
 require 'jettywrapper'
 require 'rest_client'
 
@@ -27,6 +26,7 @@ task :local_ci do
 end
 
 RSpec::Core::RakeTask.new(:rspec) do |spec|
+  require 'rspec/core/rake_task'
   spec.rspec_opts = ["-c", "-f progress", "-r ./spec/spec_helper.rb"]
 end
 
@@ -43,14 +43,14 @@ namespace :revs do
     Dir.glob("#{Rails.root}/spec/fixtures/*.xml") do |file|
       add_docs << File.read(file)
     end
-    puts "Adding #{add_docs.count} docs to #{Blacklight.solr.options[:url]}"
+    puts "Adding #{add_docs.count} documents to #{Blacklight.solr.options[:url]}"
     RestClient.post "#{Blacklight.solr.options[:url]}/update?commit=true", "<update><add>#{add_docs.join(" ")}</add></update>", :content_type => "text/xml"
   end
   
   desc "Delete all records in solr"
   task :delete_records_in_solr do
     if Rails.env.test?
-      puts "Deleting all sole document from #{Blacklight.solr.options[:url]}"
+      puts "Deleting all solr documents from #{Blacklight.solr.options[:url]}"
       RestClient.post "#{Blacklight.solr.options[:url]}/update?commit=true", "<delete><query>*:*</query></delete>" , :content_type => "text/xml"
     else
       puts "Did not delete since we're running under the #{Rails.env} environment and not under test. You know, for safety."
