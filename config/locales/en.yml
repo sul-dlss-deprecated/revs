@@ -21,6 +21,7 @@ en:
       gallery_toggle:
         gallery: 'Images'
         list: 'Text'
+      search_label: 'Search'
     sidebar:
       navigation:
         title: 'Navigation'

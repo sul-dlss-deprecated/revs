@@ -48,6 +48,7 @@
 	  }
   }
 }
+
 /* Results paging/controls */
 #search-results-metadata {
   &.well {
@@ -83,5 +84,21 @@
     }
     #sort-drowpdown, #per_page-dropdown {z-index: 9999;}
     span.constraints-label {margin-right: 0.5em;}
+  }
+}
+
+
+/* Search Form */
+#sidebar .search_form {
+	margin-bottom: 15px;
+	input.hide {
+		position:absolute;
+		left: -1000px;
+	}
+  input[type='text'] {
+	  width: 93%;
+		@media(max-width: 767px){
+		  width: 98%;
+		}
   }
 }
