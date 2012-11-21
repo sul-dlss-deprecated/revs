@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/projectblacklight/blacklight.git
+  remote: https://github.com/projectblacklight/blacklight.git
   revision: fbf3239b79e95cb5eb2ae3bdfcd3f3892963d960
   specs:
     blacklight (4.0.0.pre7)
