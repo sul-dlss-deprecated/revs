@@ -19,8 +19,8 @@ en:
     search:
       search_results: 'Results'
       gallery_toggle:
-        gallery: 'images'
-        list: 'text'
+        gallery: 'Images'
+        list: 'Text'
     sidebar:
       navigation:
         title: 'Navigation'
