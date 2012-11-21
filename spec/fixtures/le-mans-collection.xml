@@ -2,5 +2,7 @@
   <field name="id">le-mans-coll</field>
   <field name="title_display">Le Mans Collection</field>
   <field name="format">Collection</field>
+	<field name="subjects_display">Le Mans; Florida postwar racing; vintage race car research</field>
+	<field name="country_origin_display">U.S.</field>
   <field name="description_display">A collection of images from the historic 24 hour Le Mans race in Le Mans France.</field>
 </doc>

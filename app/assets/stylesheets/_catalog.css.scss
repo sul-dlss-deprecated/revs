@@ -74,11 +74,14 @@
       text-overflow: ellipsis;
       text-align: left;
       white-space: nowrap;
-      width: 80px;
+      width: 90px;
     }
-    dd {margin-left: 90px;}
+    dd {margin-left: 100px;}
     @media (max-width: 767px) {
-      dt {float: none;}
+      dt {
+        float: none;
+        width: 100%;
+      }
       dd {margin-left: 0;}
     }
   }
