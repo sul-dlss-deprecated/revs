@@ -22,6 +22,8 @@ en:
         gallery: 'Images'
         list: 'Text'
       search_label: 'Search'
+      facets:
+        title: 'Browse'
     sidebar:
       navigation:
         title: 'Navigation'

@@ -1,0 +1,18 @@
+<% # main container for facets/limits menu -%>
+<% if has_facet_values?  %>
+
+	<div id="facets-revs">
+    <h4><%= t('revs.search.facets.title') %></h4>
+    <div data-toggle="collapse" data-target=".facets-collapse">
+        <a class="btn btn-navbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+    </div>
+    <div id="facets" class="facets sidenav">
+      <div class="facets-collapse">
+        <%= render_facet_partials %>
+      </div>
+    </div>
+  </div>
+<% end %>&nbsp;
