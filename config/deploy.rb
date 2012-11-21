@@ -62,6 +62,9 @@ namespace :jetty do
 end
 
 namespace :db do
+  task :migrate do
+    run "cd #{deploy_to}/current && rake db:migrate RAILS_ENV=#{rails_env}"
+  end
   task :loadfixtures do
     run "cd #{deploy_to}/current && rake db:fixtures:load RAILS_ENV=#{rails_env}"
   end
