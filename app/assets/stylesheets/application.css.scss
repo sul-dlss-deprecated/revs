@@ -18,23 +18,24 @@
 
 @import 'blacklight/blacklight_defaults';
 
-@import "global.css.scss";
-@import "layout.css.scss";
-@import "header.css.scss";
-@import "homepage.css.scss";
-@import "about.css.scss";
-@import "blacklight/facets.css.scss";
-@import "facets.css.scss";
-@import "blacklight/catalog.css.scss";
-@import "catalog.css.scss";
+@import "global";
+@import "layout";
+@import "header";
+@import "homepage";
+@import "about";
+@import "blacklight/facets";
+@import "facets";
+@import "blacklight/catalog";
+@import "catalog";
+@import "blacklight/bookmark";
 @import "blacklight/dropdown";
 
-@import "collection_members_grid.css.scss";
-@import "carousel.css.scss";
+@import "collection_members_grid";
+@import "carousel";
 
-@import "search_results.css.scss";
+@import "search_results";
 
-@import "stanford_footer.css.scss";
+@import "stanford_footer";
 
 .hide-text {
   width: 1px;
