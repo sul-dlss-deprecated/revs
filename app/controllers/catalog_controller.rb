@@ -39,6 +39,7 @@ class CatalogController < ApplicationController
     config.collection_member_identifying_field = "is_member_of"
     
     # needs to be stored so we can retreive it for display
+    # needs to be in field list for all request handlers
     config.collection_member_collection_title_field = "collection_facet"
     
     config.collection_member_grid_items = 20
