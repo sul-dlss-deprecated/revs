@@ -3,17 +3,14 @@
 	  <ul class="nav nav-list">
 	    <li class="nav-header">About</li>
 			<li><%= link_to 'About the Revs Digital Library', :controller => "about", :action => "project" %></li>
-			<li>Project History</li>
-			<li>Project Team: Stanford</li>
-			<li>Project Team: Revs Institute</li>
-			<li>Acknowledgements</li>
+			<li><%= link_to 'Project Team', :controller => "about", :action => "team" %></li>
+			<li><%= link_to 'Acknowledgements', :controller => "about", :action => "acknowledgements" %></li>
 	  </ul>
 
 	  <ul class="nav nav-list">
 	    <li class="nav-header">Contact</li>
 			<li><%= link_to 'Contact Us', :controller => "about", :action => "contact" %></li>
-			<li>Report a Problem</li>
-			<li>Use Policy</li>
+			<li><%= link_to 'Use Policy', :controller => "about", :action => "terms_of_use" %></li>
 	  </ul>
 
 	  <ul class="nav nav-list">

@@ -10,8 +10,14 @@ Revs::Application.routes.draw do
   match 'collections', :to => 'catalog#index', :as => 'all_collections', :defaults => {:f => {:format => ["Collection"]}}
 
   # Handles all About pages.
-  match 'about/:action',   :to => 'about#:action'
-
+  match 'about', :to => 'about#project' # no page specified, go to project page
+  match 'about/contact', :to=> 'about#contact' # specific about pages
+  match 'about/project', :to=> 'about#project'
+  match 'about/terms_of_use', :to=> 'about#terms_of_use'
+  match 'about/team', :to=> 'about#team'
+  match 'about/acknowledgements', :to=> 'about#acknowledgements'  
+  match 'about/:id', :to => 'about#project' # catch anything else and direct to project page
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -68,4 +74,5 @@ Revs::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
+  
 end

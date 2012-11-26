@@ -14,15 +14,26 @@ task :ci do
 end
 
 desc "Stop jetty, run `rake ci`, db:migrate, start jetty."
-task :local_ci do
-  ENV['RAILS_ENV'] = 'test'
-  Rails.env = 'test'
-  Rake::Task["jetty:stop"]
-  Rake::Task["db:migrate"]
-  Rake::Task["ci"]
+task :local_ci do  
   ENV['RAILS_ENV'] = 'development'
-  Rails.env = 'developmennt'
-  Rake::Task["jetty:start"]
+  Rails.env = 'development'
+  Rake::Task['jetty:stop']  
+  ENV['RAILS_ENV'] = 'test'
+  Rails.env = 'test'  
+  Rake::Task["db:migrate"].invoke
+  jetty_params = Jettywrapper.load_config.merge({
+    :startup_wait => 200
+  })
+  error = nil
+  error = Jettywrapper.wrap(jetty_params) do
+    Rails.env = "test"
+    Rake::Task["revs:refresh_fixtures"].invoke
+    Rake::Task['rspec'].invoke
+  end
+  raise "TEST FAILURES: #{error}" if error
+  ENV['RAILS_ENV'] = 'development'
+  Rails.env = 'development'
+  Rake::Task['jetty:start']  
 end
 
 
@@ -45,7 +56,7 @@ namespace :revs do
   
   desc "Delete all records in solr"
   task :delete_records_in_solr do
-    if Rails.env.test?
+   unless Rails.env.production?
       puts "Deleting all solr documents from #{Blacklight.solr.options[:url]}"
       RestClient.post "#{Blacklight.solr.options[:url]}/update?commit=true", "<delete><query>*:*</query></delete>" , :content_type => "text/xml"
     else

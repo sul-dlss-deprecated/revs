@@ -11,7 +11,7 @@
 	    <%= render 'home' %>
     <% else %>
 
-      <% @page_title = t('blacklight.search.title', :application_name => application_name) %>
+      <% @page_title = t('revs.search.search_label') %>
 
       <% extra_head_content << render_opensearch_response_metadata.html_safe %>
 

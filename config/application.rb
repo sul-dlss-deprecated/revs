@@ -58,10 +58,11 @@ module Revs
     # Default SASS Configuration, check out https://github.com/rails/sass-rails for details
     config.assets.compress = !Rails.env.development?
 
-
-
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
   end
 end
+
 Revs::Application.config.stacks_url = YAML.load_file("#{Rails.root}/config/stacks.yml")[Rails.env]["url"]
+Revs::Application.config.contact_us_topics = {'terms of use'=>'Terms of Use Question', 'error'=>'Problem with the website','other'=>'Other questions'} # sets the list of topics shown in the contact us page
+Revs::Application.config.contact_us_recipients = {'error'=>'petucket@stanford.edu','terms of use'=>'petucket@stanford.edu','other'=>'petucket@stanford.edu'} # sets the email address for each contact us topic configed above

@@ -1,12 +1,8 @@
-<p>
-	Aliquam erat volutpat. Morbi at odio ac dui sodales dictum. Nam vestibulum lorem libero, quis imperdiet metus. In hac habitasse platea dictumst. Vestibulum tempor elit eget libero pretium eget pellentesque libero euismod. Morbi fringilla, augue ut gravida ultricies, ipsum velit mattis dolor, nec bibendum justo lorem nec justo. Mauris venenatis interdum arcu, vel congue diam accumsan eget. Integer vitae lorem non ante bibendum porttitor. Mauris eget eleifend dui. Duis dolor libero, rhoncus egestas suscipit sit amet, tristique non nibh. Quisque quis tortor et sem euismod scelerisque ac ac orci. Pellentesque cursus porta varius. Phasellus tempor felis sed arcu sodales vel faucibus ipsum imperdiet.
-</p>
-<p>
-	Ut nec posuere enim. In volutpat consequat lorem eget congue. Morbi in eros dolor. Cras posuere adipiscing ornare. Proin ante ligula, accumsan non lacinia ac, tincidunt et ipsum. Nam porttitor augue vel tortor accumsan tempus. Nunc pretium feugiat iaculis. Aenean molestie mauris vel ipsum rutrum ut viverra neque pharetra. Duis adipiscing aliquam mi, ac tincidunt magna ultricies dictum. Vivamus nec eros scelerisque ipsum faucibus imperdiet ac sed neque. Nulla in ligula at ligula euismod hendrerit vel vitae mauris. Aenean non diam in eros ornare interdum. Cras scelerisque sem eu tellus mollis imperdiet.
-</p>
-<p>
-	Ut sagittis quam nulla, ut dignissim erat. Ut leo lectus, euismod vel consectetur sed, laoreet quis elit. Suspendisse pellentesque laoreet cursus. Sed ullamcorper nisl at ante sagittis condimentum. Nulla feugiat magna id velit lacinia blandit. Proin ut ligula erat, ac consectetur ligula. Nam id nisi at lorem vehicula congue a sed felis.
-</p>
-<p>
-	<span class="slug">End</span>
-</p>
+<%= form_tag('contact', :method=>'post') do %>
+<p>Your name: <%=text_field_tag 'name'%><p>
+<p>Your email: <%=text_field_tag 'email'%></p>
+<p>Message: <%= text_area_tag 'message'%></p>
+<p>Subject: <%= select_tag 'subject',options_from_collection_for_select(Revs::Application.config.contact_us_topics, :first, :last, @subject)%></p>
+<p><%=submit_tag 'Send'%></p>
+
+<% end %>

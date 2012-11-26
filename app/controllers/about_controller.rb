@@ -1,18 +1,44 @@
 class AboutController < ApplicationController 
-  # Overriding the action in the params because we want to use the Show template
-  # to hold the common About page code and sidebar info. The Show template
-  # includes a call to a partial (name corresponding to the action in the params)
-  # with the actual page content.
-  before_filter :show
 
+  # Need a action for each About page, and a partial with the same name
+  # containing the actual page content. Call show to render the page
+    
+  def project
+    show
+  end
+  
+  def contact
+    if request.post?
+      @subject=params[:subject]
+      @name=params[:name]
+      @email=params[:email]
+      @message=params[:message]
+      unless @message.blank?
+        RevsMailer.contact_message(:subject=>@subject,:name=>@name,:email=>@email,:message=>@message).deliver 
+        flash.now[:notice]=t("revs.about.contact_message_sent")
+      else
+        flash.now[:error]=t("revs.about.contact_error")
+      end
+    end
+    show
+  end
+  
+  def terms_of_use
+    show
+  end
+  
+  def acknowledgements
+    show
+  end
+  
+  def team
+    show
+  end
+
+  private
   def show
+    @page_title=t("revs.about.#{action_name}_title")
     render :show
   end
-
-  # Need an empty action for each About page, and a partial with the same name
-  # containing the actual page content.
-  def project
-  end
-  def contact
-  end
+    
 end

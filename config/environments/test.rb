@@ -1,5 +1,7 @@
 Revs::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
+  config.exception_error_page = false # show a friendly 500 error page if true
+  config.exception_recipients = '' # list of email addresses, comma separated, that will be notified when an exception occurs - leave blank for no emails
 
   # The test environment is used exclusively to run your application's
   # test suite. You never need to work with it otherwise. Remember that

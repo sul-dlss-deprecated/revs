@@ -5,7 +5,7 @@
      TODO: make sure this removal doesn't cause problems elsewhere. gg -%>
   <div id="content" class="span9 show-document">
 
-  <% @page_title = t('blacklight.search.show.title', :document_title => document_show_html_title, :application_name => application_name) %>
+  <% @page_title = "#{document_show_html_title}"%>
   <% extra_head_content << render_link_rel_alternates %>
   <% sidebar_items << render_document_sidebar_partial %>
 
