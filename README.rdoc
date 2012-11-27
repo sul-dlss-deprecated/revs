@@ -63,10 +63,12 @@ You need to specify a branch or tag to deploy.  You can deploy the latest by ent
 
 == Testing
 
-You can run the test suite by running
+You can run the test suite locally by running
 
 rake local_ci
     
-This will stop jetty, force you into the test environment, start jetty, start solr, delete all the records in the test solr core, index all fixtures in spec/fixtures, then run the tests, and then restart jetty
+This will stop development jetty, force you into the test environment, start jetty, start solr, 
+delete all the records in the test solr core, index all fixtures in spec/fixtures, run db:migrate in test,
+then run the tests, and then restart development jetty.
 
 

@@ -13,27 +13,15 @@ task :ci do
   end
 end
 
-desc "Stop jetty, run `rake ci`, db:migrate, start jetty."
+desc "Stop dev jetty, run `rake ci`, start dev jetty."
 task :local_ci do  
-  ENV['RAILS_ENV'] = 'development'
-  Rails.env = 'development'
-  Rake::Task['jetty:stop']  
-  ENV['RAILS_ENV'] = 'test'
-  Rails.env = 'test'  
-  Rake::Task["db:migrate"].invoke
-  jetty_params = Jettywrapper.load_config.merge({
-    :startup_wait => 200
-  })
-  error = nil
-  error = Jettywrapper.wrap(jetty_params) do
-    Rails.env = "test"
-    Rake::Task["revs:refresh_fixtures"].invoke
-    Rake::Task['rspec'].invoke
-  end
-  raise "TEST FAILURES: #{error}" if error
-  ENV['RAILS_ENV'] = 'development'
-  Rails.env = 'development'
-  Rake::Task['jetty:start']  
+  system("rake jetty:stop")
+  system("rake db:migrate RAILS_ENV=test")  
+  system("rake jetty:start RAILS_ENV=test")
+  system("rake revs:refresh_fixtures RAILS_ENV=test")
+  system("bundle exec rspec")
+  system("rake jetty:stop RAILS_ENV=test")  
+  system("rake jetty:start")
 end
 
 
