@@ -22,7 +22,8 @@ class CatalogController < ApplicationController
       :facet => 'true',
       :rows => 10,
       :fl => "*",
-      :"facet.mincount" => 1
+      :"facet.mincount" => 1,
+      :echoParams => "all"
     }
     
     
