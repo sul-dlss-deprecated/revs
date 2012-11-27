@@ -4,7 +4,7 @@ describe SolrDocument, :integration => true do
   describe "collections" do
     describe "collection" do
       it "should return a the parend document as a SolrDocument" do
-        doc = SolrDocument.new({:id => "wp220cw0167", :is_member_of => ["nt028fd5773"]})
+        doc = SolrDocument.new({:id => "wp220cw0167", :is_member_of_ssim => ["nt028fd5773"]})
         doc.collection.should_not be_blank
         doc.collection.should be_a SolrDocument
         doc.collection.collection?.should be_true
@@ -13,7 +13,7 @@ describe SolrDocument, :integration => true do
     end
     describe "collection_members" do
       it "should return a collection members class with an array of SolrDocument" do
-        doc = SolrDocument.new({:id => "nt028fd5773", :format => "Collection"})
+        doc = SolrDocument.new({:id => "nt028fd5773", :format_ssim => "Collection"})
         doc.collection_members.should be_a CollectionMembers
         doc.collection_members.should_not be_blank
         doc.collection_members.total_members.should be > 0
@@ -25,7 +25,7 @@ describe SolrDocument, :integration => true do
     end
     describe "collection_siblings" do
       it "should return a collection members class with an array of SolrDocuments" do
-        doc = SolrDocument.new({:id => "nt028fd5773", :is_member_of => ["nt028fd5773"]})
+        doc = SolrDocument.new({:id => "nt028fd5773", :is_member_of_ssim => ["nt028fd5773"]})
         doc.collection_siblings.should be_a CollectionMembers
         doc.collection_siblings.should_not be_blank
         doc.collection_siblings.total_members.should be > 0

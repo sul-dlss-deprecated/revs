@@ -1,9 +1,9 @@
 <doc>
   <field name="id">xv326bg5757</field>
-  <field name="title_display">Le Mans, 1955 ; Mille Miglia 1956</field>
-  <field name="pub_date">1955</field>
-  <field name="format">Color Photograph</field>
-  <field name="is_member_of">le-mans-coll</field>
-  <field name="collection_facet">Le Mans Collection</field>
-  <field name="image_id_display">2011-023Cham-1.0_0012</field>
+  <field name="title_tsi">Le Mans, 1955 ; Mille Miglia 1956</field>
+  <field name="pub_date_itsim">1955</field>
+  <field name="format_ssim">Color Photograph</field>
+  <field name="is_member_of_ssim">le-mans-coll</field>
+  <field name="collection_ssim">Le Mans Collection</field>
+  <field name="image_id_ssm">2011-023Cham-1.0_0012</field>
 </doc>

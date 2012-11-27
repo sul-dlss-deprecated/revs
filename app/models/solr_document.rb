@@ -7,7 +7,7 @@ class SolrDocument
 
   def collection?
     self.has_key?(blacklight_config.collection_identifying_field) and 
-      self[blacklight_config.collection_identifying_field] == blacklight_config.collection_identifying_value
+      self[blacklight_config.collection_identifying_field].include?(blacklight_config.collection_identifying_value)
   end
   
   def collection_member?
@@ -93,10 +93,10 @@ class SolrDocument
   # Recommendation: Use field names from Dublin Core
   use_extension( Blacklight::Solr::Document::DublinCore)    
   field_semantics.merge!(    
-                         :title => "title_display",
+                         :title => "title_tsi",
                          :author => "author_display",
                          :language => "language_facet",
-                         :format => "format"
+                         :format => "format_ssim"
                          )
      
   # convenience class method to get all collections

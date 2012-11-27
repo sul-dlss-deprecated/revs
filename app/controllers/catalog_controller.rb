@@ -18,8 +18,11 @@ class CatalogController < ApplicationController
   configure_blacklight do |config|
     ## Default parameters to send to solr for all search-like requests. See also SolrHelper#solr_search_params
     config.default_solr_params = { 
-      :qt => 'search',
-      :rows => 10 
+      :qt => 'standard',
+      :facet => 'true',
+      :rows => 10,
+      :fl => "*",
+      :"facet.mincount" => 1
     }
     
     
@@ -27,48 +30,47 @@ class CatalogController < ApplicationController
     
     # needs to be stored so we can retreive it
     # needs to be in field list for all request handlers so we can identify collections in the search results.
-    config.collection_identifying_field = "format"
+    config.collection_identifying_field = "format_ssim"
     config.collection_identifying_value = "Collection"
     
     # needs to be stored so we can retreive it for display.
     # needs to be in field list for all request handlers.
-    config.collection_description_field = "description_display"
+    config.collection_description_field = "description_tsim"
     
     # needs to be indexed so we can search it to return relationships.
     # needs to be in field list for all request handlers so we can identify collection members in the search results.
-    config.collection_member_identifying_field = "is_member_of"
+    config.collection_member_identifying_field = "is_member_of_ssim"
     
     # needs to be stored so we can retreive it for display
     # needs to be in field list for all request handlers
-    config.collection_member_collection_title_field = "collection_facet"
+    config.collection_member_collection_title_field = "collection_ssim"
     
     config.collection_member_grid_items = 20
     
     # needs to be sotred so we can retreive it
     # needs to be in field list for all request handlers so we can get images the document anywhere in the app.
-    config.image_identifier_field = "image_id_display"
+    config.image_identifier_field = "image_id_ssm"
 
     ## Default parameters to send on single-document requests to Solr. These settings are the Blackligt defaults (see SolrHelper#solr_doc_params) or 
     ## parameters included in the Blacklight-jetty document requestHandler.
     #
-    #config.default_document_solr_params = {
-    #  :qt => 'document',
-    #  ## These are hard-coded in the blacklight 'document' requestHandler
-    #  # :fl => '*',
-    #  # :rows => 1
-    #  # :q => '{!raw f=id v=$id}' 
-    #}
+    config.default_document_solr_params = {
+     :qt => 'standard',
+     :fl => '*',
+     :rows => 1,
+     :q => '{!raw f=id v=$id}' 
+    }
     
     config.document_index_view_types = ["gallery", "brief"]
 
     # solr field configuration for search results/index views
-    config.index.show_link = 'title_display'
-    config.index.record_display_type = 'format'
+    config.index.show_link = 'title_tsi'
+    config.index.record_display_type = 'format_ssim'
 
     # solr field configuration for document/show views
-    config.show.html_title = 'title_display'
-    config.show.heading = 'title_display'
-    config.show.display_type = 'format'
+    config.show.html_title = 'title_tsi'
+    config.show.heading = 'title_tsi'
+    config.show.display_type = 'format_ssim'
 
     # solr fields that will be treated as facets by the blacklight application
     #   The ordering of the field names is the order of the display
@@ -89,16 +91,17 @@ class CatalogController < ApplicationController
     #
     # :show may be set to false if you don't want the facet to be drawn in the 
     # facet bar
-    config.add_facet_field 'pub_date', :label => 'Date', :single => true
-    config.add_facet_field 'format', :label => 'Format'
-    config.add_facet_field 'collection_facet', :label => "Collection"
+    config.add_facet_field 'pub_date_itsim', :label => 'Date', :single => true
+    config.add_facet_field 'format_ssim', :label => 'Format'
+    config.add_facet_field 'subjects_ssim', :label => "Subject"
+    config.add_facet_field 'collection_ssim', :label => "Collection"
 
 
-    config.add_facet_field 'example_query_facet_field', :label => 'Publish Date', :query => {
-       :years_5 => { :label => 'within 5 Years', :fq => "pub_date:[#{Time.now.year - 5 } TO *]" },
-       :years_10 => { :label => 'within 10 Years', :fq => "pub_date:[#{Time.now.year - 10 } TO *]" },
-       :years_25 => { :label => 'within 25 Years', :fq => "pub_date:[#{Time.now.year - 25 } TO *]" }
-    }
+    # config.add_facet_field 'example_query_facet_field', :label => 'Publish Date', :query => {
+    #    :years_5 => { :label => 'within 5 Years', :fq => "pub_date:[#{Time.now.year - 5 } TO *]" },
+    #    :years_10 => { :label => 'within 10 Years', :fq => "pub_date:[#{Time.now.year - 10 } TO *]" },
+    #    :years_25 => { :label => 'within 25 Years', :fq => "pub_date:[#{Time.now.year - 25 } TO *]" }
+    # }
 
 
     # Have BL send all facet field names to Solr, which has been the default
@@ -109,16 +112,16 @@ class CatalogController < ApplicationController
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display 
 
-    config.add_index_field 'pub_date', :label => 'Date:'
-    config.add_index_field 'format', :label => 'Format:'
+    config.add_index_field 'pub_date_itsim', :label => 'Date:'
+    config.add_index_field 'format_ssim', :label => 'Format:'
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display 
-    config.add_show_field 'pub_date', :label => 'Date:'
-    config.add_show_field 'format', :label => 'Format:'
-    config.add_show_field 'country_origin_display', :label => 'Country of orgin:'
-    config.add_show_field 'subjects_display', :label => 'Subjects:'
-    config.add_show_field 'description_display', :label => 'Description:'
+    config.add_show_field 'pub_date_itsim', :label => 'Date:'
+    config.add_show_field 'format_ssim', :label => 'Format:'
+    config.add_show_field 'country_origin_tsi', :label => 'Country of orgin:'
+    config.add_show_field 'subjects_ssim', :label => 'Subjects:'
+    config.add_show_field 'description_tsim', :label => 'Description:'
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields
@@ -183,10 +186,10 @@ class CatalogController < ApplicationController
     # label in pulldown is followed by the name of the SOLR field to sort by and
     # whether the sort is ascending or descending (it must be asc or desc
     # except in the relevancy case).
-    config.add_sort_field 'score desc, pub_date_sort desc, title_sort asc', :label => 'relevance'
-    config.add_sort_field 'pub_date_sort desc, title_sort asc', :label => 'year'
-    config.add_sort_field 'author_sort asc, title_sort asc', :label => 'author'
-    config.add_sort_field 'title_sort asc, pub_date_sort desc', :label => 'title'
+    #config.add_sort_field 'score desc, pub_date_sort desc, title_sort asc', :label => 'relevance'
+    #config.add_sort_field 'pub_date_sort desc, title_sort asc', :label => 'year'
+    #config.add_sort_field 'author_sort asc, title_sort asc', :label => 'author'
+    #config.add_sort_field 'title_sort asc, pub_date_sort desc', :label => 'title'
 
     # If there are more than this many search results, no spelling ("did you 
     # mean") suggestion is offered.

@@ -7,7 +7,7 @@ Revs::Application.routes.draw do
   match 'logout',  :to => 'catalog#index', :as => 'destroy_user_session'
   match 'account', :to => 'catalog#index', :as => 'edit_user_registration'
   
-  match 'collections', :to => 'catalog#index', :as => 'all_collections', :defaults => {:f => {:format => ["Collection"]}}
+  match 'collections', :to => 'catalog#index', :as => 'all_collections', :defaults => {:f => {:format_ssim => ["Collection"]}}
 
   # Handles all About pages.
   match 'about', :to => 'about#project' # no page specified, go to project page
