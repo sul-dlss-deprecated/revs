@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/projectblacklight/blacklight.git
-  revision: fbf3239b79e95cb5eb2ae3bdfcd3f3892963d960
+  revision: 41e928aaa712672f6da8b22b7f7927e87bbbe6e8
   specs:
     blacklight (4.0.0.pre7)
       bootstrap-sass (~> 2.1.0)
@@ -118,7 +118,7 @@ GEM
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
-    rake (10.0.0)
+    rake (10.0.2)
     rdoc (3.12)
       json (~> 1.4)
     rest-client (1.6.7)
