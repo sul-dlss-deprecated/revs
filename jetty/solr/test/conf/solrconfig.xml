@@ -26,8 +26,8 @@
         solr.StandardDirectoryFactory, the default, is filesystem based.
         solr.RAMDirectoryFactory is memory based, not persistent, and doesn't work with replication. -->
   <directoryFactory name="DirectoryFactory" class="${solr.directoryFactory:solr.StandardDirectoryFactory}"/>
-
-<lib dir="/Applications/eclipse/workbench/apache-solr-4.0.0/example/lib" /> 
+  
+  <lib dir="./lib" /> 
 
   <dataDir>${solr.core0.data.dir:}</dataDir>
 
