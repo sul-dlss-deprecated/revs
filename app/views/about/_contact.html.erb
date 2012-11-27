@@ -1,8 +1,35 @@
-<%= form_tag('contact', :method=>'post') do %>
-<p>Your name: <%=text_field_tag 'name'%><p>
-<p>Your email: <%=text_field_tag 'email'%></p>
-<p>Message: <%= text_area_tag 'message'%></p>
-<p>Subject: <%= select_tag 'subject',options_from_collection_for_select(Revs::Application.config.contact_us_topics, :first, :last, @subject)%></p>
-<p><%=submit_tag 'Send'%></p>
+<%= form_tag('contact', :method=>'post', :class => 'form-horizontal') do %>
+	<div class="control-group">
+	  <label class="control-label" for="name">Your name</label>
+	  <div class="controls">
+	    <%=text_field_tag 'name', nil, :placeholder => "Name" %>
+	  </div>
+	</div>
 
+	<div class="control-group">
+	  <label class="control-label" for="email">Your email</label>
+	  <div class="controls">
+	    <%=text_field_tag 'email', nil, :placeholder => 'Email address' %>
+	  </div>
+	</div>
+
+	<div class="control-group">
+	  <label class="control-label" for="subject">Subject</label>
+	  <div class="controls">
+	    <%= select_tag 'subject',options_from_collection_for_select(Revs::Application.config.contact_us_topics, :first, :last, @subject) %>
+	  </div>
+	</div>
+
+	<div class="control-group">
+	  <label class="control-label" for="message">Message</label>
+	  <div class="controls">
+	    <%=text_area_tag 'message', nil, :placeholder => 'Please describe your question or problem.', :rows => 10 %>
+	  </div>
+	</div>
+
+	<div class="control-group">
+	  <div class="controls">
+	    <%=submit_tag 'Send', :class => 'btn' %>
+	  </div>
+	</div>
 <% end %>

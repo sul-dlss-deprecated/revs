@@ -19,4 +19,15 @@
     text-indent: -9999px;
     background: #000000;
   }
+
+  // Make textarea wide as reasonable given viewport size
+  @media (min-width: 980px) {
+    textarea#message {width: 500px;}
+  }
+  @media (min-width: 768px) and (max-width: 979px) {
+    textarea#message {width: 320px;}
+  }
+  @media (max-width: 767px) {
+    textarea#message {}
+  }
 }
