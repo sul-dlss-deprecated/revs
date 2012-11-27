@@ -1,12 +1,8 @@
 class AboutController < ApplicationController 
 
-  # Need a action for each About page, and a partial with the same name
-  # containing the actual page content. Call show to render the page
-    
-  def project
-    show
-  end
-  
+  # To create a new about page, create a partial with the URL name you want containing the actul page content
+  # If your action has logic that needs to be run before the view, create a method, call "show" at the end of it, create a view partical o match,
+  # and add a custom route in the routes.rb file    
   def contact
     if request.post?
       @subject=params[:subject]
@@ -22,22 +18,11 @@ class AboutController < ApplicationController
     end
     show
   end
-  
-  def terms_of_use
-    show
-  end
-  
-  def acknowledgements
-    show
-  end
-  
-  def team
-    show
-  end
 
-  private
   def show
-    @page_title=t("revs.about.#{action_name}_title")
+    @page_name=params[:id] || action_name # see if the page to show is specified in the ID parameter (coming via a route) or custom method (via the action name)
+    @page_name='project' unless lookup_context.exists?(@page_name, 'about', true) # default to project page if requested partial doesn't exist
+    @page_title=t("revs.about.#{@page_name}_title") # set the page title
     render :show
   end
     

@@ -2,15 +2,15 @@
 	<div id="sidebar-nav">
 	  <ul class="nav nav-list">
 	    <li class="nav-header">About</li>
-			<li><%= link_to 'About the Revs Digital Library', :controller => "about", :action => "project" %></li>
-			<li><%= link_to 'Project Team', :controller => "about", :action => "team" %></li>
-			<li><%= link_to 'Acknowledgements', :controller => "about", :action => "acknowledgements" %></li>
+			<li><%= link_to 'About the Revs Digital Library', :controller => "about",  :action => "show", :id => "project" %></li>
+			<li><%= link_to 'Project Team', :controller => "about", :action => "show", :id => "team" %></li>
+			<li><%= link_to 'Acknowledgements', :controller => "about", :action => "show", :id => "acknowledgements" %></li>
 	  </ul>
 
 	  <ul class="nav nav-list">
 	    <li class="nav-header">Contact</li>
 			<li><%= link_to 'Contact Us', :controller => "about", :action => "contact" %></li>
-			<li><%= link_to 'Use Policy', :controller => "about", :action => "terms_of_use" %></li>
+			<li><%= link_to 'Use Policy', :controller => "about", :action => "show", :id=> "terms_of_use" %></li>
 	  </ul>
 
 	  <ul class="nav nav-list">

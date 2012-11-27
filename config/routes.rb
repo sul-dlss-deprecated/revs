@@ -10,13 +10,9 @@ Revs::Application.routes.draw do
   match 'collections', :to => 'catalog#index', :as => 'all_collections', :defaults => {:f => {:format_ssim => ["Collection"]}}
 
   # Handles all About pages.
-  match 'about', :to => 'about#project' # no page specified, go to project page
-  match 'about/contact', :to=> 'about#contact' # specific about pages
-  match 'about/project', :to=> 'about#project'
-  match 'about/terms_of_use', :to=> 'about#terms_of_use'
-  match 'about/team', :to=> 'about#team'
-  match 'about/acknowledgements', :to=> 'about#acknowledgements'  
-  match 'about/:id', :to => 'about#project' # catch anything else and direct to project page
+  match 'about', :to => 'about#show', :as => 'about_project', :defaults => {:id=>'project'} # no page specified, go to project page
+  match 'about/contact', :to=> 'about#contact' # specific contact us about page
+  match 'about/:id', :to => 'about#show' # catch anything else and direct to show page with ID parameter of partial to show
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

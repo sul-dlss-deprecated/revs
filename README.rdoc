@@ -69,6 +69,6 @@ rake local_ci
     
 This will stop development jetty, force you into the test environment, start jetty, start solr, 
 delete all the records in the test solr core, index all fixtures in spec/fixtures, run db:migrate in test,
-then run the tests, and then restart development jetty.
+then run the tests, and then restart development jetty
 
 
