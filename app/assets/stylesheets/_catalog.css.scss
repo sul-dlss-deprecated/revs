@@ -31,6 +31,11 @@
     margin-top: 0;
     padding-top: 0;
   }
+  .zoom-image-link {
+    display: block;
+    &.visible-phone {margin-bottom: 15px;}
+    &.hidden-phone {margin-top: 20px; margin-bottom: none;}
+  }
   .dl-horizontal {
     dt {
       float: left;

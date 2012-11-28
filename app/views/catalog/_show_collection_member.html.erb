@@ -5,10 +5,12 @@
 </div>
 
 <div class="row">
-  <div class="span5 member-image"><%= link_to(image_tag(@document.images(:large).first), "http://purl.stanford.edu/#{@document[:id]}", :"data-modal-selector" => '.zoom-modal') %></div>
+  <div class="span5 member-image"><%= link_to(image_tag(@document.images(:large).first), "http://purl.stanford.edu/#{@document[:id]}", :"data-modal-selector" => '.zoom-modal') %>
+			<%= link_to('<i class="icon-screenshot"></i> Zoom & pan full-size image'.html_safe, "http://purl.stanford.edu/#{@document[:id]}", :"data-modal-selector" => '.zoom-modal', :class => 'zoom-image-link visible-phone') %></div>
   <div class="span4">
     <%= render_document_heading.html_safe %>
     <%= render :partial => "show_default", :locals => {:document => @document} %>
+		<%= link_to('<i class="icon-screenshot"></i> Zoom & pan full-size image'.html_safe, "http://purl.stanford.edu/#{@document[:id]}", :"data-modal-selector" => '.zoom-modal', :class => 'zoom-image-link hidden-phone') %>
   </div>
 </div>
 <%= render :partial => "collection_members_grid", :locals => {:collection_members => @document.collection_siblings, :type => :siblings} %>
