@@ -13,6 +13,9 @@
 
 <script type="text/javascript">
   $(document).ready(function(){
-    $("#image_workspace").embedPurl('<%= document[:id] %>');  
+    $("#image_workspace").embedPurl({'server': 'test',
+                                     'druid': '<%= document[:id] %>',
+                                     'width': 650,
+                                     'height': 550});  
   });
 </script>
