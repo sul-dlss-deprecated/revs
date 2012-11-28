@@ -37,11 +37,11 @@
 	<div class="span9 about-dl">
 		<h3 class="section-heading">About the Digital Library</h3>
 		<p>
-			<%= link_to image_tag('revs-about-project-scanning.png', :width => '120'), :controller => "about", :action => "project" %>
+			<%= link_to image_tag('revs-about-project-scanning.png', :width => '120'), about_project_path %>
 			The Revs Digital Library is being built on top of the Stanford Digital Repository to provide a web based platform for discovery of automotive research and images. The Digital Library is developed in <a href="http://www.rubyonrails.org">Ruby on Rails</a> using open source technologies, including <a href="http://projectblacklight.org/">Blacklight</a>, <a href="http://projecthydra.org/">Hydra</a>, and <a href="http://fedora-commons.org/">Fedora Commons</a> and will allow for metadata editing, provide community features, and tools for researchers to further utilize the data.
 		</p>
 		<p>
-			<%= link_to 'More', :controller => "about", :action => "project" %>
+			<%= link_to 'More', about_project_path %>
 		</p>
 	</div>
 </div>
