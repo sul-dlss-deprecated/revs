@@ -54,7 +54,15 @@
   
   <requestHandler name="standard" class="solr.StandardRequestHandler" default="true">
     <lst name="defaults">
-      <str name="q">*:*</str>
+      <str name="defType">edismax</str>
+      <str name="q.alt">*:*</str>
+      <str name="qf">
+        id
+        title_tsi
+      </str>
+      <str name="pf">
+        title_tsi^20
+      </str>
     </lst>
   </requestHandler>
   

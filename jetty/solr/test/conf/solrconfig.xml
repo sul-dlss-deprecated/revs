@@ -26,8 +26,8 @@
         solr.StandardDirectoryFactory, the default, is filesystem based.
         solr.RAMDirectoryFactory is memory based, not persistent, and doesn't work with replication. -->
   <directoryFactory name="DirectoryFactory" class="${solr.directoryFactory:solr.StandardDirectoryFactory}"/>
-  
-  <lib dir="./lib" /> 
+
+<lib dir="./lib" /> 
 
   <dataDir>${solr.core0.data.dir:}</dataDir>
 
@@ -54,7 +54,15 @@
   
   <requestHandler name="standard" class="solr.StandardRequestHandler" default="true">
     <lst name="defaults">
-      <str name="q">*:*</str>
+      <str name="defType">edismax</str>
+      <str name="q.alt">*:*</str>
+      <str name="qf">
+        id
+        title_tsi
+      </str>
+      <str name="pf">
+        title_tsi^20
+      </str>
     </lst>
   </requestHandler>
   
