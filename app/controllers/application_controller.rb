@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
 
   rescue_from Exception, :with=>:exception_on_website
   helper_method :application_name
+  layout "revs"
+  
 
   def application_name
     "Revs Digital Library"
@@ -23,10 +25,6 @@ class ApplicationController < ActionController::Base
       else
         raise(@exception)
      end
-  end
-  
-  def layout_name
-    "revs"
   end
       
   protect_from_forgery
