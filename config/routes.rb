@@ -13,6 +13,10 @@ Revs::Application.routes.draw do
   match 'about', :to => 'about#show', :as => 'about_project', :defaults => {:id=>'project'} # no page specified, go to project page
   match 'about/contact', :to=> 'about#contact' # specific contact us about page
   match 'about/:id', :to => 'about#show' # catch anything else and direct to show page with ID parameter of partial to show
+
+  # helper routes to we can have a friendly URL for items and collections
+  match 'item/:id', :to=> 'catalog#show', :as =>'item'
+  match 'collection/:id', :to=> 'catalog#show', :as =>'collection'
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

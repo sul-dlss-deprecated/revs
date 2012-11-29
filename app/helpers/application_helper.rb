@@ -1,7 +1,7 @@
 module ApplicationHelper
 
   def on_home_page
-    request.path == '/'
+    request.path == '/' && params[:f].blank?
   end
 
   def on_collections_pages

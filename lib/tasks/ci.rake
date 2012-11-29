@@ -19,7 +19,7 @@ task :local_ci do
   system("rake db:migrate RAILS_ENV=test")  
   system("rake jetty:start RAILS_ENV=test")
   system("rake revs:refresh_fixtures RAILS_ENV=test")
-  system("bundle exec rspec")
+  system("rspec")
   system("rake jetty:stop RAILS_ENV=test")  
   system("rake jetty:start")
 end

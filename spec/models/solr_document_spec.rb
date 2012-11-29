@@ -71,7 +71,7 @@ describe SolrDocument do
         solr = mock("solr")
         solr.should_receive(:select).with(:params => {:fq => "format_ssim:\"Collection\"", :rows => "10"}).and_return(response)
         Blacklight.should_receive(:solr).and_return(solr)
-        docs = SolrDocument.all_collections
+        docs = SolrDocument.new.all_collections
         docs.should be_a Array
         docs.each do |doc|
           doc.should be_a SolrDocument

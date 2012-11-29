@@ -99,10 +99,6 @@ class SolrDocument
                          :format => "format_ssim"
                          )
      
-  # convenience class method to get all collections
-  def self.all_collections
-    @all_collections ||= SolrDocument.new.all_collections
-  end
 
   def self.image_dimensions
     options = {:default => "_square",
