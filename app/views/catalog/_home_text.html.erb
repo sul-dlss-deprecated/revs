@@ -4,7 +4,7 @@
       <div class="carousel-inner">
         <%- SolrDocument.all_collections.each_with_index do |collection, index| -%>
           <div class="item<%= " active" if index == 0 %>" data-collection-title="<%= collection[blacklight_config.show.heading] %>" data-collection-href="<%= catalog_path(collection) %>" data-collection-description="<%= collection[blacklight_config.collection_description_field].try(:first) %>">
-            <canvas height="300px" width="400px" class="image-stitch" id="image-stitch-<%= index %>" data-image-urls="<%= collection.collection_members.map{|c| c.images.first }.join(', ') %>"></canvas>
+            <a id="collection-image-link" href="<%=catalog_path(collection)%>"><canvas height="300px" width="400px" class="image-stitch" id="image-stitch-<%= index %>" data-image-urls="<%= collection.collection_members.map{|c| c.images.first }.join(', ') %>"></canvas></a>
           </div>
         <%- end -%>
       </div>
@@ -22,7 +22,7 @@
 		<div class="row">
 	    <div id="featured-description" class="span3">
 	      <span class="content-type collection">Featured Collection</span>
-	      <h3 id="collection-title"><%= SolrDocument.all_collections.first[blacklight_config.show.heading] %></h3>
+	      <h3><%= link_to SolrDocument.all_collections.first[blacklight_config.show.heading], catalog_path(SolrDocument.all_collections.first), :id => "collection-title-link" %></h3>
 	      <p>
 	        <span id="collection-description"><%= SolrDocument.all_collections.first[blacklight_config.collection_description_field].try(:first) %></span>
 	        <%= link_to "More", catalog_path(SolrDocument.all_collections.first), :id => "collection-link" %>

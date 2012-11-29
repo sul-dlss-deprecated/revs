@@ -2,5 +2,5 @@
   <li class="nav-header"><%= t('revs.sidebar.navigation.title') %></li>
   <li><%= link_to(t('revs.sidebar.navigation.all_collections'), all_collections_path)%></li>
   <li><%= link_back_to_catalog %></li>
-  <li><%=link_to "#{t('blacklight.search.start_over')}", catalog_index_path, :id=>"startOverLink" %></li>
+  <li><%=link_to "#{t('blacklight.search.start_over')}", root_path, :id=>"startOverLink" %></li>
 </ul>

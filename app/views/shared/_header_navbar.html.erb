@@ -22,13 +22,13 @@
           <h1>Revs Digital Library</h1>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="active">
-                <a href="/" class="active">HOME</a>
+              <li class="<%="active" if on_home_page%>">
+                <%= link_to 'HOME', root_path %>
               </li>
-              <li>
+              <li class="<%="active" if on_collections_pages%>">
                 <%= link_to 'COLLECTIONS', all_collections_path%>
               </li>
-              <li><%= link_to 'ABOUT', about_project_path %></li>
+              <li class="<%="active" if on_about_pages%>"><%= link_to 'ABOUT', about_project_path %></li>
               <li><%= link_to 'REVS PROGRAM AT STANFORD', 'http://revs.stanford.edu' %></li>
             </ul>
           </div>
