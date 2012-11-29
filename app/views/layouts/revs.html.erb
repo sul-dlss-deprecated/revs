@@ -14,8 +14,7 @@
 
     <!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
     <meta http-equiv="cleartype" content="on">
-
-    <title><%= h("#{application_name}: #{@page_title}") %></title>
+    <title><%= h([application_name, @page_title].compact.join(": ")) %></title>
     <link href="<%= opensearch_catalog_path(:format => 'xml', :only_path => false) %>" title="<%= application_name%>" type="application/opensearchdescription+xml" rel="search"/>
     <%= favicon_link_tag asset_path('favicon.ico') %>
     <!-- Two stylesheets below are for Stanford Identity footer -->
