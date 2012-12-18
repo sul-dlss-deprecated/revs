@@ -67,6 +67,11 @@
       margin: 20px 8px 0 0;
       .appliedFilter {
         padding: 1px 2px 1px 1em;
+        .btnRemove {
+          /* override the BL icon used as separator */
+          background: asset_url('remove.png', image) no-repeat center center;
+          background-size: 8px 8px;
+        }
         .queryName,.filterName {
           background: none; /* override the BL icon used as separator */
           padding-right: 0;
