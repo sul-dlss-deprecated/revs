@@ -37,3 +37,7 @@ Revs::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 end
+
+Revs::Application.config.purl_plugin_server = "test"
+Revs::Application.config.purl = "http://purl-test.stanford.edu"
+Revs::Application.config.purl_plugin_location = "http://purl-test.stanford.edu/javascripts/purl_embed_jquery_plugin.js"

@@ -1,7 +1,7 @@
 <doc>
   <field name="id">pv129jn7313</field>
   <field name="title_tsi">Le Mans, 1955 ; Mille Miglia 1956</field>
-  <field name="pub_date_itsim">1955</field>
+  <field name="pub_date_ssi">1955</field>
   <field name="format_ssim">Color Photograph</field>
   <field name="is_member_of_ssim">le-mans-coll</field>
   <field name="collection_ssim">Le Mans Collection</field>
