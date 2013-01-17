@@ -10,7 +10,7 @@
       <div class="carousel-inner">
         <%- @document.collection_members.each_with_index do |member, index| -%>
           <div class="item<%= " active" if index == 0 %>">
-            <%= image_tag(member.images(:large).first, :alt => member[blacklight_config.show.heading]) %>
+            <%= link_to(image_tag(member.images(:large).first, :alt => member[blacklight_config.show.heading]),item_path(member)) %>
             <%- if member.has_key?(blacklight_config.show.heading) -%>
               <div class="carousel-caption"><p><%= member[blacklight_config.show.heading]%></p></div>
             <%- end -%>

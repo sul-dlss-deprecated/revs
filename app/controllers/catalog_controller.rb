@@ -15,6 +15,14 @@ class CatalogController < ApplicationController
     guest_user
   end
   
+  def index
+    if on_home_page
+      @total_images=500
+      @total_collections=5
+    end
+    super
+  end
+  
   configure_blacklight do |config|
     ## Default parameters to send to solr for all search-like requests. See also SolrHelper#solr_search_params
     config.default_solr_params = { 
@@ -32,7 +40,7 @@ class CatalogController < ApplicationController
     # needs to be stored so we can retreive it
     # needs to be in field list for all request handlers so we can identify collections in the search results.
     config.collection_identifying_field = "format_ssim"
-    config.collection_identifying_value = "Collection"
+    config.collection_identifying_value = "collection"
     
     # needs to be stored so we can retreive it for display.
     # needs to be in field list for all request handlers.

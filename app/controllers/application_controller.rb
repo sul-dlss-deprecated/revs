@@ -5,12 +5,20 @@ class ApplicationController < ActionController::Base
   # these methods in order to perform user specific actions. 
 
   rescue_from Exception, :with=>:exception_on_website
-  helper_method :application_name
+  helper_method :application_name,:request_path,:on_home_page
   layout "revs"
   
 
   def application_name
     "Revs Digital Library"
+  end
+
+  def request_path
+    Rails.application.routes.recognize_path(request.path)
+  end
+  
+  def on_home_page
+    request_path[:controller] == 'catalog' && request_path[:action] == 'index' && params[:f].blank?
   end
     
   def exception_on_website(exception)
