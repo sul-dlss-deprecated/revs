@@ -1,7 +1,7 @@
 <doc>
   <field name="id">nt028fd5773</field>
   <field name="title_tsi">Collection 1</field>
-  <field name="format_ssim">Collection</field>
+  <field name="format_ssim">collection</field>
   <field name="subjects_ssim">Endurance racing</field>
 	<field name="subjects_ssim">vintage race car research</field>
 	<field name="country_origin_tsi">Great Britain</field>

@@ -1,7 +1,7 @@
 <doc>
   <field name="id">le-mans-coll</field>
   <field name="title_tsi">Le Mans Collection</field>
-  <field name="format_ssim">Collection</field>
+  <field name="format_ssim">collection</field>
 	<field name="subjects_ssim">Le Mans</field>
 	<field name="subjects_ssim">Florida postwar racing</field>
 	<field name="subjects_ssim">vintage race car research</field>
