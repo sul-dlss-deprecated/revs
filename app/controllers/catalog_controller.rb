@@ -17,8 +17,10 @@ class CatalogController < ApplicationController
   
   def index
     if on_home_page
-      @total_images=500
-      @total_collections=5
+      collections=Blacklight.solr.get 'select',:params=>{:q=>'format_ssim:collection'}
+      @total_collections=collections['response']['numFound']
+      items=Blacklight.solr.get 'select',:params=>{:q=>'-format_ssim:collection'}      
+      @total_images=items['response']['numFound']
     end
     super
   end

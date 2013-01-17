@@ -39,7 +39,9 @@
 		<h3 class="section-heading">About the Revs Digital Library</h3>
 		<p>
 			<%= link_to image_tag('revs-about-project-scanning.png', :width => '120'), about_project_path %>
-			The Revs Digital Library is built on top of the Stanford Digital Repository to provide a web based platform for discovery of automotive research and images.  The library currently contains <strong><%=@total_images%> images</strong> from <strong><%=@total_collections%> collections</strong>.
+			<p>The Revs Digital Library currently contains <strong><%=@total_images%> items</strong> from <strong><%=@total_collections%> collections</strong>.</p>
+
+			<p>The Digital Library is built on top of the Stanford Digital Repository to provide a web based platform for discovery of automotive research and images.  The Stanford Digital Repository ensures each digital object is preserved, made available via a permanent persistent URL (web address), enforces content rights and restrictions and provides a common storage mechanism for other applications to build upon.
 		</p>
 		<p>
 			<%= link_to 'More', about_project_path %>
