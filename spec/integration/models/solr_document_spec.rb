@@ -13,7 +13,7 @@ describe SolrDocument, :integration => true do
     end
     describe "collection_members" do
       it "should return a collection members class with an array of SolrDocument" do
-        doc = SolrDocument.new({:id => "nt028fd5773", :format_ssim => "Collection"})
+        doc = SolrDocument.new({:id => "nt028fd5773", :format_ssim => "collection"})
         doc.collection_members.should be_a CollectionMembers
         doc.collection_members.should_not be_blank
         doc.collection_members.total_members.should be > 0

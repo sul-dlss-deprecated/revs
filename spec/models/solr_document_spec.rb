@@ -11,7 +11,7 @@ describe SolrDocument do
   describe "collections" do
     it "should define themselves as such when they have the correct fields" do
       SolrDocument.new({:id=>"12345"}).collection?.should be_false
-      SolrDocument.new({:id=>"12345", :format_ssim => "Collection"}).collection?.should be_true
+      SolrDocument.new({:id=>"12345", :format_ssim => "collection"}).collection?.should be_true
     end
     describe "collection siblings" do
       it "should memoize the solr request to get the siblings of a collection member" do
@@ -35,7 +35,7 @@ describe SolrDocument do
         solr = mock("solr")
         solr.should_receive(:select).with(:params => {:fq => "is_member_of_ssim:\"collection-1\"", :rows => "20"}).once.and_return(response)
         Blacklight.should_receive(:solr).and_return(solr)
-        doc = SolrDocument.new({:id => "collection-1", :format_ssim => "Collection"})
+        doc = SolrDocument.new({:id => "collection-1", :format_ssim => "collection"})
         5.times do
           doc.collection_members
         end
@@ -59,7 +59,7 @@ describe SolrDocument do
       it "should memoize the solr request to get all collections" do
         response = {"response" => {"numFound" => 2, "docs" => [{:id=>"1234"}, {:id =>"4321"}]}}
         solr = mock("solr")
-        solr.should_receive(:select).with(:params => {:fq => "format_ssim:\"Collection\"", :rows => "10"}).once.and_return(response)
+        solr.should_receive(:select).with(:params => {:fq => "format_ssim:\"collection\"", :rows => "10"}).once.and_return(response)
         Blacklight.should_receive(:solr).and_return(solr)
         doc = SolrDocument.new
         5.times do
@@ -69,7 +69,7 @@ describe SolrDocument do
       it "should return an array of solr documents" do
         response = {"response" => {"numFound" => 2, "docs" => [{:id=>"1234"}, {:id =>"4321"}]}}
         solr = mock("solr")
-        solr.should_receive(:select).with(:params => {:fq => "format_ssim:\"Collection\"", :rows => "10"}).and_return(response)
+        solr.should_receive(:select).with(:params => {:fq => "format_ssim:\"collection\"", :rows => "10"}).and_return(response)
         Blacklight.should_receive(:solr).and_return(solr)
         docs = SolrDocument.new.all_collections
         docs.should be_a Array
