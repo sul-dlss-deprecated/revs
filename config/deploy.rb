@@ -59,6 +59,10 @@ namespace :jetty do
   task :ingest_fixtures do
     run "cd #{deploy_to}/current && rake revs:index_fixtures RAILS_ENV=#{rails_env}"
   end
+  task :symlink do
+    run "rm -fr #{release_path}/jetty"
+    run "ln -s #{shared_path}/jetty #{release_path}/jetty"
+  end
 end
 
 namespace :db do

@@ -19,6 +19,7 @@ end
 
 before "deploy", "jetty:stop"
 before "deploy:migrate", "db:symlink_sqlite"
+before "deploy:migrate", "jetty:symlink"
 after "deploy", "jetty:start"
-after "deploy", "db:loadfixtures"
-after "jetty:start", "jetty:ingest_fixtures"
+#after "deploy", "db:loadfixtures"  # no need to load fixtures of index because we share jetty between deploys
+#after "jetty:start", "jetty:ingest_fixtures"

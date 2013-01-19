@@ -10,6 +10,5 @@ role :db,  deployment_host, :primary => true
 
 before "deploy", "jetty:stop"
 before "deploy:migrate", "db:symlink_sqlite"
+before "deploy:migrate", "jetty:symlink"
 after "deploy", "jetty:start"
-after "deploy", "db:loadfixtures"
-after "jetty:start", "jetty:ingest_fixtures"
