@@ -1,9 +1,9 @@
-<%# Removed what seemed to be extraneous outer <div class="row"> here, 
-     even though it is in the default Blacklight view page. There is 
-     already an outer <div class="row"> surrounding the content below
-     from the layout file.
-     TODO: make sure this removal doesn't cause problems elsewhere. gg -%>
+<%# TODO - determine whether request is for an item in a better way -%>
+<% if @document[:format_ssim] == ["slides"] %>
+  <div id="content" class="span12 show-document">
+<% else %>
   <div id="content" class="span9 show-document">
+<% end %>
 
   <% @page_title = "#{document_show_html_title}"%>
   <% extra_head_content << render_link_rel_alternates %>
@@ -34,7 +34,9 @@
 
   </div>
 
-  <div id="sidebar" class="span3">
-    <%= render_document_sidebar_partial  %>
-  </div><!--/span -->
-
+  <%# TODO - determine whether request is for an item in a better way -%>
+  <% if @document[:format_ssim] == ["collection"] %>
+    <div id="sidebar" class="span3">
+      <%= render_document_sidebar_partial  %>
+    </div><!--/span -->
+  <% end %>

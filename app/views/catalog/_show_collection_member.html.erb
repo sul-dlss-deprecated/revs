@@ -9,21 +9,21 @@
 </script>
 
 <div class="row">
-  <div class="span9">
+  <div class="span12">
     <h2><%= t('revs.collection.member_detail') %></h2>
   </div>
 </div>
 
 <div class="row">
-  <div id="image_workspace" class="span5 member-image">
+  <div id="image_workspace" class="span7 member-image">
 			<noscript>
 				<%= link_to(image_tag(@document.images(:large).first), "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'new') %>
 			</noscript>
 	</div>
-  <div class="span4">
+  <div class="span5 metadata">
     <%= render_document_heading.html_safe %>
     <%= render :partial => "show_default", :locals => {:document => @document} %>
 		<%= link_to('<i class="icon-picture"></i> Full citation page with view/download'.html_safe, "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'new') %>
   </div>
 </div>
-<%= render :partial => "collection_members_grid", :locals => {:collection_members => @document.collection_siblings, :type => :siblings} %>
+<%= render :partial => "collection_members_grid", :locals => {:collection_members => @document.collection_siblings, :type => :siblings, :show_full_width => true} %>

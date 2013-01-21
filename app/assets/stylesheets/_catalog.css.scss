@@ -31,6 +31,9 @@
     margin-top: 0;
     padding-top: 0;
   }
+  .metadata {
+    margin-top: 43px;
+  }
   .zoom-image-link {
     display: block;
     &.visible-phone {margin-bottom: 15px;}
@@ -60,8 +63,14 @@
   }
 }
 
-
 /* Responsive styles */
+@media (max-width: 979px) {
+  .blacklight-catalog-show .metadata {
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+}
+
 @media (max-width: 767px) {
   .slideshow img {margin-bottom: 20px;}
 }
