@@ -59,7 +59,7 @@ describe SolrDocument do
       it "should memoize the solr request to get all collections" do
         response = {"response" => {"numFound" => 2, "docs" => [{:id=>"1234"}, {:id =>"4321"}]}}
         solr = mock("solr")
-        solr.should_receive(:select).with(:params => {:fq => "format_ssim:\"collection\"", :rows => "10"}).once.and_return(response)
+        solr.should_receive(:select).with(:params => {:fq => "format_ssim:\"collection\"", :rows => "1000"}).once.and_return(response)
         Blacklight.should_receive(:solr).and_return(solr)
         doc = SolrDocument.new
         5.times do
@@ -69,7 +69,7 @@ describe SolrDocument do
       it "should return an array of solr documents" do
         response = {"response" => {"numFound" => 2, "docs" => [{:id=>"1234"}, {:id =>"4321"}]}}
         solr = mock("solr")
-        solr.should_receive(:select).with(:params => {:fq => "format_ssim:\"collection\"", :rows => "10"}).and_return(response)
+        solr.should_receive(:select).with(:params => {:fq => "format_ssim:\"collection\"", :rows => "1000"}).and_return(response)
         Blacklight.should_receive(:solr).and_return(solr)
         docs = SolrDocument.new.all_collections
         docs.should be_a Array
