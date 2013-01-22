@@ -1,8 +1,8 @@
-
-  <div id="sidebar" class="span3">
-    <%= render "search_form" %>
-    <%= render :partial=>'facets' %>
-  </div><!--/well -->
+<div id="sidebar" class="span3">
+  <%= render "search_form" %>
+  <%= render :partial => 'constraints' if query_has_constraints? %>
+  <%= render :partial=>'facets' %>
+</div>
 
 <div id="content" class="span9">   
 
@@ -17,10 +17,10 @@
 
 			<h2 class="search-results"><%= t('revs.search.search_results') %></h2>
 			
-			<div id="search-results-metadata" class="well">
-				<%= render 'sort_and_per_page' %>
+			<div id="search-results-metadata">
+				<%#= render 'sort_and_per_page' %>
 		    <%= render :partial => 'did_you_mean' %>
-	      <%= render :partial => 'constraints' %>
+	      <%#= render :partial => 'constraints' %>
 			</div>
 
 	    <%= render_document_index %>

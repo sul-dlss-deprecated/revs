@@ -1,22 +1,12 @@
-/* Search results tabs/toggle */
-.gallery_toggle {
-  border-top: 2px dotted #dddddd;
-  font-size: 12px;
-  margin-top: 30px;
-  padding-top: 10px;
-	text-align: right;
-	.active {
-		color: black;
-		cursor: default;
-		&:hover{
-			text-decoration: none;
-		}
-	}
-}
-
-#documents .document {
-	border-bottom: none;
-	position: relative;
+#documents {
+  border-top: 2px dotted darken($container_bg_color, 10%);
+  margin-top: 0;
+  padding-top: 15px;
+  a {color: #333;}
+  .document {
+    border-bottom: none;
+    position: relative;
+  }
 }
 
 /* Gallery View */
@@ -53,48 +43,84 @@
 }
 
 /* Results paging/controls */
-#search-results-metadata {
-  &.well {
-    background-color: #eeeeee;
-    padding: 12px 10px 6px;
-    #sortAndPerPage {
-      background-color: #eeeeee;
-      border: none;
-      box-shadow: none;
-      margin-bottom: 0;
-      padding: 0;
+.row.results-controls {
+  margin-bottom: 5px;
+  margin-top: 10px;
+}
+.gallery_toggle {
+  font-size: 12px;
+  float: right;
+	.active {
+		color: black;
+		cursor: default;
+		&:hover{
+			text-decoration: none;
+		}
+	}
+	.nav-pills {
+    margin-bottom: 0;
+    li > a {
+      background-color: lighten($header_bg_color, 10%);
+      border: 1px solid darken($header_bg_color, 5%);
+      margin-left: 6px;
+      padding-top: 4px;
+      padding-bottom: 4px;
     }
-    .well-constraints, #sortAndPerPage {font-size: 0.85em;}
-    .well-constraints {
-      clear: right;
-      margin: 20px 8px 0 0;
-      .appliedFilter {
-        padding: 1px 2px 1px 1em;
-        .btnRemove {
-          /* override the BL icon used as separator */
-          background: asset_url('remove.png', image) no-repeat center center;
-          background-size: 8px 8px;
-        }
-        .queryName,.filterName {
-          background: none; /* override the BL icon used as separator */
-          padding-right: 0;
-          &:after {
-            content: ">";   /* Facet > Value separator */
-            padding-left: 6px;
-          }
-        }
-      }
+    li > a:hover {
+      background-color: lighten($header_bg_color, 5%);
     }
-    .css-dropdown li {
-      font-size: 12px;
-      padding: 2px 10px;
-      > a {padding: 2px;}
+    li > a.active, a.active:hover {
+      background-color: desaturate($active_link_color, 20%);
+      border: 1px solid darken($header_bg_color, 10%);
+      color: lighten($header_bg_color, 5%);
     }
-    #sort-drowpdown, #per_page-dropdown {z-index: 9999;}
-    span.constraints-label {margin-right: 0.5em;}
   }
 }
 
+.prev-next {
+  margin-top: 5px;
+}
+#sort-drowpdown, #per_page-dropdown {
+  margin-top: 3px;
+  z-index: 9999;
+}
+.css-dropdown li {
+  font-size: 12px;
+  padding: 2px 10px;
+  > a {padding: 2px;}
+}
+span.constraints-label {margin-right: 0.5em;}
+
+#sortAndPerPage {
+  background-color: $body_bg_color;
+  border: none;
+  box-shadow: none;
+  margin-bottom: 0;
+  padding: 0;
+}
+.constraints, #sortAndPerPage {font-size: 0.85em;}
+.constraints {
+  clear: right;
+  margin: 0 8px 0 0;
+  .appliedFilter {
+    color: $active_link_color;
+    padding: 1px 20px 1px 1em;
+    .btnRemove {
+      /* override the BL icon used as separator */
+      background: asset_url('remove.png', image) no-repeat center center;
+      background-size: 8px 8px;
+    }
+    .queryName,.filterName {
+      /* override the BL icon used as separator */
+      background: none;
+      padding-right: 0;
+      &:after {
+        content: ">";   /* Facet > Value separator */
+        padding-left: 6px;
+      }
+    }
+  }
+}
 
 /* Search Form */
 #sidebar .search_form {
@@ -108,5 +134,11 @@
 		@media(max-width: 767px){
 		  width: 98%;
 		}
+  }
+}
+
+@media (min-width: 768px) and (max-width: 979px) {
+  .constraints .appliedFilter {
+    padding: 1px 25px 1px 1em;
   }
 }

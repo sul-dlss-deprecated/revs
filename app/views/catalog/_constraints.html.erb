@@ -1,9 +1,9 @@
 <% if query_has_constraints? %>
-      <div class="well-constraints">
-        <span class="constraints-label"><%= t('blacklight.search.filters.title') %></span>
-  
-        <%=link_to t('blacklight.search.start_over'), url_for(:action=>'index'), :class => "catalog_startOverLink", :id=>"startOverLink" %>
-        <%= render_constraints(params) %>  
+  <div class="constraints">
+    <!-- <span class="constraints-label"><%= t('blacklight.search.filters.title') %></span> -->
 
-      </div>
+    <%#=link_to t('blacklight.search.start_over'), url_for(:action=>'index'), :class => "catalog_startOverLink", :id=>"startOverLink" %>
+    <%= render_constraints(params) %>
+
+  </div>
 <% end %>
