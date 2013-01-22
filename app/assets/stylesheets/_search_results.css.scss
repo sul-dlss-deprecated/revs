@@ -43,6 +43,17 @@
   }
 }
 
+/* Collection - Gallery View */
+#documents.gallery .blacklight-collection {
+  text-align: center;
+  min-height: 190px;
+  span.muted {
+    display: block;
+    margin-top: 6px;
+    font-weight: normal;
+  }
+}
+
 /* Results paging/controls */
 .row.results-controls {
   margin-bottom: 5px;
@@ -141,5 +152,14 @@ span.constraints-label {margin-right: 0.5em;}
 @media (min-width: 768px) and (max-width: 979px) {
   .constraints .appliedFilter {
     padding: 1px 25px 1px 1em;
+  }
+}
+@media (max-width: 767px) {
+  #documents.brief .blacklight-collection {
+    .index_title {margin-bottom: 3px;}
+    span.muted {
+      display: block;
+      clear: both;
+    }
   }
 }
