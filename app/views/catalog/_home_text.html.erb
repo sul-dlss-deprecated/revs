@@ -1,4 +1,6 @@
-<% all_collections=SolrDocument.new.all_collections%>
+<% all_collections=SolrDocument.new.all_collections
+	 random_collection_number=Random.new.rand(all_collections.size)
+%>
 <div class="row slideshow showOnLoad" style="display:none;">
   <div class="span6">
     <div id="all_collections_carousel" class="carousel slide">
@@ -38,7 +40,7 @@
 	  <div class="span6">
 	    <div id="all_collections_carousel" class="carousel slide">
 	      <div class="carousel-inner">
-	        <%- collection = all_collections[Random.new.rand(all_collections.size)] -%>
+	        <%- collection = all_collections[random_collection_number] -%>
 	          <div class="item active" " data-collection-title="<%= collection[blacklight_config.show.heading] %>" data-collection-href="<%= collection_path(collection) %>" data-collection-description="<%= collection[blacklight_config.collection_description_field] %>">
 	            <a id="collection-image-link" href="<%=collection_path(collection)%>"><img id="image-0" src="<%= collection.collection_members.documents[0].images(:large).first %>"></img></a>
 						</div>
@@ -79,3 +81,11 @@
 		</p>
 	</div>
 </div>
+
+<!-- show a random collection in slider -->
+<script language="JavaScript">
+	$(document).ready(function(){
+		$("#all_collections_carousel").carousel(<%=random_collection_number%>);
+	});
+</script>
+
