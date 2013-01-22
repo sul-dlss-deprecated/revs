@@ -1,9 +1,18 @@
 /* TODO: Refactor to use mix-ins, etc. */
 
 /* Variables */
+
+$body_bg_color: #f7f7f7;
+
+$header_bg_color: #DDDDDD;
+
+$active_link_color: #990000;
+
+$container_bg_color: #f7f7f7;
+
 /* constraint (you searched for:) details: */
-$constraint_bg_color: #F0AF00;
-$constraint_border_color: darken($constraint_bg_color, 20%);
+$constraint_bg_color: lighten($header_bg_color, 10%);
+$constraint_border_color: darken($header_bg_color, 5%);
 $constraint_border_active_color: #FFD27A !default;
 
 /* Mixins */
@@ -43,7 +52,7 @@ html {
 
 body {
   font-family: "Helvetica","Arial",sans-serif;
-  background: #f7f7f7;
+  background: $body_bg_color;
   font-size: 0.85em;
   line-height: 18px;
   margin: 0;
@@ -147,6 +156,7 @@ span.content-type {
 // Override Blacklight theme pagination styling
 .pagination {
   border-top: 1px solid #dddddd;
+  margin-top: 0;
   padding-top: 20px;
   ul {
     margin-left: -20px;
