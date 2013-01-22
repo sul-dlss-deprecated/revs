@@ -27,27 +27,27 @@ class SolrDocument
                     )
   end
   
-  # Return a CollectionMembers object of all the members of a collection
-  def collection_members
+  # Return a CollectionMembers object of just the members of a collection
+  def collection_members(num_results=blacklight_config.collection_member_grid_items)
     return nil unless collection?
     @collection_members ||= CollectionMembers.new(
                               Blacklight.solr.select(
                                 :params => {
                                   :fq => "#{blacklight_config.collection_member_identifying_field}:\"#{self[SolrDocument.unique_key]}\"",
-                                  :rows => blacklight_config.collection_member_grid_items.to_s
+                                  :rows => num_results.to_s
                                 }
                               )
                             )
   end
   
   # Return a CollectionMembers object of all of the siblins a collection member (including self)
-  def collection_siblings
+  def collection_siblings(num_results=blacklight_config.collection_member_grid_items)
     return nil unless collection_member?
     @collection_siblings ||= CollectionMembers.new(
                                Blacklight.solr.select(
                                  :params => {
                                    :fq => "#{blacklight_config.collection_member_identifying_field}:\"#{self[blacklight_config.collection_member_identifying_field].first}\"", 
-                                   :rows => blacklight_config.collection_member_grid_items.to_s
+                                   :rows => num_results.to_s
                                  }
                                )
                              )
@@ -58,7 +58,7 @@ class SolrDocument
     @all_collections ||= Blacklight.solr.select(
       :params => {
         :fq => "#{blacklight_config.collection_identifying_field}:\"#{blacklight_config.collection_identifying_value}\"",
-        :rows => "10"
+        :rows => "1000"
       }
     )["response"]["docs"].map do |document|
       SolrDocument.new(document)

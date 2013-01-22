@@ -11,6 +11,10 @@ class CollectionMembers
     @documents.each(&block)
   end
   
+  def size
+    total_members
+  end
+  
   private
   
   # Send all calls to Enumerable public methods on to the documents array.
