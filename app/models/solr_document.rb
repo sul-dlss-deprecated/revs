@@ -5,6 +5,10 @@ class SolrDocument
 
   self.unique_key = 'id'
 
+  def title
+    self[:title_tsi]
+  end
+
   def collection?
     self.has_key?(blacklight_config.collection_identifying_field) and 
       self[blacklight_config.collection_identifying_field].include?(blacklight_config.collection_identifying_value)
