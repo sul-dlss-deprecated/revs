@@ -1,5 +1,5 @@
 <% all_collections=SolrDocument.new.all_collections%>
-<div class="row slideshow">
+<div class="row slideshow showOnLoad" style="display:none;">
   <div class="span6">
     <div id="all_collections_carousel" class="carousel slide">
       <div class="carousel-inner">
@@ -32,6 +32,37 @@
 		</div>
   </div>
 </div>
+
+<noscript>
+	<div class="row slideshow">
+	  <div class="span6">
+	    <div id="all_collections_carousel" class="carousel slide">
+	      <div class="carousel-inner">
+	        <%- collection = all_collections[Random.new.rand(all_collections.size)] -%>
+	          <div class="item active" " data-collection-title="<%= collection[blacklight_config.show.heading] %>" data-collection-href="<%= collection_path(collection) %>" data-collection-description="<%= collection[blacklight_config.collection_description_field] %>">
+	            <a id="collection-image-link" href="<%=collection_path(collection)%>"><img id="image-0" src="<%= collection.collection_members.documents[0].images(:large).first %>"></img></a>
+						</div>
+	      </div>
+	    </div>
+	  </div>
+	  <div id="featured-collection-nav" class="span3">
+			<div class="row">
+				<div class="span3">
+				</div>
+			</div>
+			<div class="row">
+		    <div id="featured-description" class="span3">
+		      <span class="content-type collection">Featured Collection</span>
+		      <h3><%= link_to collection[blacklight_config.show.heading], collection_path(collection), :id => "collection-title-link" %></h3>
+		      <p>
+		        <span id="collection-description"><%= collection[blacklight_config.collection_description_field].try(:first) %></span>
+		        <%= link_to "More", collection_path(collection), :id => "collection-link" %>
+		      </p>
+		    </div>
+			</div>
+	  </div>
+	</div>
+</noscript>
 
 
 <div class="row">
