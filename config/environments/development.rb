@@ -39,6 +39,6 @@ Revs::Application.configure do
   config.assets.debug = true
 end
 
-Revs::Application.config.purl_plugin_server = "test"
-Revs::Application.config.purl_plugin_location = "http://purl-test.stanford.edu/javascripts/purl_embed_jquery_plugin.js"
-Revs::Application.config.purl = "http://purl-test.stanford.edu"
+Revs::Application.config.purl_plugin_server = "prod"
+Revs::Application.config.purl_plugin_location = "http://purl.stanford.edu/javascripts/purl_embed_jquery_plugin.js"
+Revs::Application.config.purl = "http://purl.stanford.edu"
