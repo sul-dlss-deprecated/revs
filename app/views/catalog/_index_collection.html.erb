@@ -8,7 +8,7 @@
     <%= link_to_document document, :label=>document_show_link_field,
         :counter => (document_counter + 1 + @response.params[:start].to_i) %>
     <span class="muted">
-      (<%= pluralize(document.collection_members.total_members,
+      (<%= pluralize(number_with_delimiter(document.collection_members.total_members),
           t('revs.collection_members.items_name')) %>)
     </span>
   </h5>

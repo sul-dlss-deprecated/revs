@@ -18,15 +18,16 @@
         <%- end -%>
       </div>
       <div class="carousel-controls">
-        <a class="carousel-control left" href="#collection_carousel" data-slide="prev">&lsaquo;</a>
-        <span class="number-of-items">(<span class="iterator">1</span><%= " - #{@document.collection_members.count}" if @document.collection_members.total_members > @document.collection_members.count %> of <%= pluralize(@document.collection_members.total_members, t('revs.collection_members.items_name')) %>)</span>
-        <a class="carousel-control right" href="#collection_carousel" data-slide="next">&rsaquo;</a>
+        <a style="display:none;" class="carousel-control left showOnLoad" href="#collection_carousel" data-slide="prev">&lsaquo;</a>
+        <span class="number-of-items">(<span class="iterator">1</span><%= " - #{number_with_delimiter(@document.collection_members.count)}" if @document.collection_members.total_members > @document.collection_members.count %> of <%= pluralize(number_with_delimiter(@document.collection_members.total_members), t('revs.collection_members.items_name')) %>)</span>
+        <a class="carousel-control right showOnLoad" style="display:none;" href="#collection_carousel" data-slide="next">&rsaquo;</a>
       </div>
     </div>
   </div>
   <div class="span4">
     <%= render_document_heading.html_safe %>
     <%= render :partial => "show_default", :locals => {:document => @document} %>
+		<dl class="dl-horizontal  dl-invert"><dt>Total Items:</dt> <dd><%=number_with_delimiter(@document.collection_members.total_members)%></dd></dl>
   </div>
 </div>
 

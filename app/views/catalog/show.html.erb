@@ -1,7 +1,7 @@
-<% if not @document.collection? %>
-  <div id="content" class="span12 show-document">
+<% if @document.collection? %>
+	<div id="content" class="span9 show-document">
 <% else %>
-  <div id="content" class="span9 show-document">
+	<div id="content" class="span12 show-document">
 <% end %>
 
   <% @page_title = "#{document_show_html_title}"%>
