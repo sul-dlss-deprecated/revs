@@ -57,8 +57,8 @@ This is a Blacklight Application for the Revs Digital Library at Stanford Univer
 
     cd deploy
     cap production deploy # for production
-    cap production staging # for staging
-    cap production development # for development
+    cap staging deploy # for staging
+    cap development deploy # for development
 
 You must specify a branch or tag to deploy.  You can deploy the latest by specifying "master"
 
