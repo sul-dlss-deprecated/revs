@@ -1,6 +1,8 @@
 <% all_collections=SolrDocument.new.all_collections
 	 random_collection_number=Random.new.rand(all_collections.size)
 %>
+
+<!-- begin collection carousel for JavaScript users -->
 <div class="row slideshow showOnLoad" style="display:none;">
   <div class="span6">
     <div id="all_collections_carousel" class="carousel slide">
@@ -34,7 +36,9 @@
 		</div>
   </div>
 </div>
+<!-- end carousel for JavaScript users -->
 
+<!-- begin single image for non JavaScript users -->
 <noscript>
 	<div class="row slideshow">
 	  <div class="span6">
@@ -65,6 +69,7 @@
 	  </div>
 	</div>
 </noscript>
+<!-- end single image for non JavaScript users -->
 
 
 <div class="row">
