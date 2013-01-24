@@ -19,7 +19,7 @@
       </div>
       <div class="carousel-controls">
         <a style="display:none;" class="carousel-control left showOnLoad" href="#collection_carousel" data-slide="prev">&lsaquo;</a>
-        <span class="number-of-items">(<span class="iterator">1</span><%= " - #{number_with_delimiter(@document.collection_members.count)}" if @document.collection_members.total_members > @document.collection_members.count %> of <%= pluralize(number_with_delimiter(@document.collection_members.total_members), t('revs.collection_members.items_name')) %>)</span>
+        <span class="number-of-items"><span class="iterator">1</span><%= " - #{number_with_delimiter(@document.collection_members.count)}" if @document.collection_members.total_members > @document.collection_members.count %> of <%= pluralize(number_with_delimiter(@document.collection_members.total_members), t('revs.collection_members.items_name')) %></span>
         <a class="carousel-control right showOnLoad" style="display:none;" href="#collection_carousel" data-slide="next">&rsaquo;</a>
       </div>
     </div>

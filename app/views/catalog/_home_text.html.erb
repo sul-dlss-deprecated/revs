@@ -8,7 +8,7 @@
     <div id="all_collections_carousel" class="carousel slide">
       <div class="carousel-inner">
         <%- all_collections.each_with_index do |collection, index| -%>
-          <div class="item<%= " active" if index == 0 %>" data-collection-title="<%= collection[blacklight_config.show.heading] %>" data-collection-href="<%= collection_path(collection) %>" data-collection-description="<%= collection[blacklight_config.collection_description_field].try(:first) %>">
+          <div class="item<%= " active" if index == 0 %>" data-collection-title="<%= collection[blacklight_config.show.heading] %>" data-collection-href="<%= collection_path(collection) %>" data-collection-description="<%= truncate(collection[blacklight_config.collection_description_field].try(:first),:length=>400) %>">
             <a id="collection-image-link" href="<%=collection_path(collection)%>"><canvas height="300px" width="400px" class="image-stitch" id="image-stitch-<%= index %>" data-image-urls="<%= collection.collection_members.map{|c| c.images.first }.join(', ') %>"></canvas></a>
           </div>
         <%- end -%>
@@ -29,7 +29,7 @@
 	      <span class="content-type collection">Featured Collection</span>
 	      <h3><%= link_to all_collections.first[blacklight_config.show.heading], collection_path(all_collections.first), :id => "collection-title-link" %></h3>
 	      <p>
-	        <span id="collection-description"><%= all_collections.first[blacklight_config.collection_description_field].try(:first) %></span>
+	        <span id="collection-description"><%= truncate(all_collections.first[blacklight_config.collection_description_field].try(:first),:length=>400) %></span>
 	        <%= link_to "More", collection_path(all_collections.first), :id => "collection-link" %>
 	      </p>
 	    </div>
@@ -45,7 +45,7 @@
 	    <div id="all_collections_carousel" class="carousel slide">
 	      <div class="carousel-inner">
 	        <%- collection = all_collections[random_collection_number] -%>
-	          <div class="item active" " data-collection-title="<%= collection[blacklight_config.show.heading] %>" data-collection-href="<%= collection_path(collection) %>" data-collection-description="<%= collection[blacklight_config.collection_description_field] %>">
+	          <div class="item active">
 	            <a id="collection-image-link" href="<%=collection_path(collection)%>"><img id="image-0" src="<%= collection.collection_members.documents[0].images(:large).first %>"></img></a>
 						</div>
 	      </div>
@@ -61,7 +61,7 @@
 		      <span class="content-type collection">Featured Collection</span>
 		      <h3><%= link_to collection[blacklight_config.show.heading], collection_path(collection), :id => "collection-title-link" %></h3>
 		      <p>
-		        <span id="collection-description"><%= collection[blacklight_config.collection_description_field].try(:first) %></span>
+		        <span id="collection-description"><%= truncate(collection[blacklight_config.collection_description_field].try(:first),:length=>400) %></span>
 		        <%= link_to "More", collection_path(collection), :id => "collection-link" %>
 		      </p>
 		    </div>
