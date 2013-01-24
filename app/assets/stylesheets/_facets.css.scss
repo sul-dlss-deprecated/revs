@@ -7,8 +7,12 @@
   }
   a:hover {text-decoration: underline;}
   span.selected {
-    background-color: #ddd;
+    background-color: #e6e6e6;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
     color: #990000;
+    padding: 3px 4px;
   }
 }
 
@@ -17,6 +21,7 @@
    move the Browse heading outside of the facet box (for Revs theme)
    and keep the responsive controls working as intended.
 */
+#facets-revs {margin-top: 15px;}
 #facets-revs .btn-navbar {
 // Navbar button for toggling navbar items in responsive layouts
 // These definitions need to come after '.navbar .btn'
