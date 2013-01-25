@@ -21,5 +21,4 @@ before "deploy", "jetty:stop"
 after "deploy:update_code", "db:symlink_sqlite"
 after "deploy:update_code", "jetty:symlink"
 after "deploy", "jetty:start"
-#after "deploy", "db:loadfixtures"  # no need to load fixtures of index because we share jetty between deploys
 #after "jetty:start", "jetty:ingest_fixtures"
