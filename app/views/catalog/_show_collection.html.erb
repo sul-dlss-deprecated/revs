@@ -1,3 +1,9 @@
+<script language="javascript">
+$(document).ready(function(){
+	$('#description').truncate({max_length: 700});
+});
+</script>
+
 <div class="row">
   <div class="span9">
     <h2><%= t('revs.collection.collection_detail') %></h2>
@@ -26,8 +32,13 @@
   </div>
   <div class="span4">
     <%= render_document_heading.html_safe %>
-    <%= render :partial => "show_default", :locals => {:document => @document} %>
-		<dl class="dl-horizontal  dl-invert"><dt>Total Items:</dt> <dd><%=number_with_delimiter(@document.collection_members.total_members)%></dd></dl>
+		<dl class="dl-horizontal  dl-invert">
+				<dt>Total Items:</dt> <dd><%=number_with_delimiter(@document.collection_members.total_members)%></dd>
+		</dl>
+		<%# default partial to display solr document fields in catalog show view -%>
+		<p id="description"><%= render_document_show_field_value :document => @document, :field => 'description_tsim' %></p>
+
+
   </div>
 </div>
 
