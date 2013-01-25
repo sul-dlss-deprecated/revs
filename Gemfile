@@ -30,11 +30,11 @@ end
 
 group :development, :staging, :test do
   gem 'jettywrapper'
-  gem 'rest-client'
   gem 'sqlite3'
 end
 
 gem 'jquery-rails'
+gem 'rest-client'
 
 gem "bootstrap-sass"
 
