@@ -9,6 +9,6 @@ role :app, deployment_host
 role :db,  deployment_host, :primary => true
 
 before "deploy", "jetty:stop"
-before "deploy:migrate", "db:symlink_sqlite"
-before "deploy:migrate", "jetty:symlink"
+after "deploy:update_code", "db:symlink_sqlite"
+after "deploy:update_code", "jetty:symlink"
 after "deploy", "jetty:start"
