@@ -18,7 +18,7 @@ end
 
 
 before "deploy", "jetty:stop"
-after "deploy:update_code", "db:symlink_sqlite"
-after "deploy:update_code", "jetty:symlink"
+after "deploy:finalize_update", "db:symlink_sqlite"
+after "deploy:finalize_update", "jetty:symlink"
 after "deploy", "jetty:start"
 #after "jetty:start", "jetty:ingest_fixtures"
