@@ -45,7 +45,7 @@ end
 
 namespace :app do
   task :add_date_to_version do
-    run "cd #{deploy_to}/current && date >> VERSION"
+    run "cd #{deploy_to}/current && echo 'Date deployed:' `date` >> VERSION"
   end
 end
 

@@ -1,2 +1,2 @@
 <h3><%=application_name%></h3>
-<strong>Current deployed version:</strong> <%=Revs::Application.config.version %>
+<strong>Current deployed version:</strong> <%= simple_format Revs::Application.config.version %>
