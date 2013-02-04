@@ -7,13 +7,15 @@ Revs::Application.routes.draw do
   match 'logout',  :to => 'catalog#index', :as => 'destroy_user_session'
   match 'account', :to => 'catalog#index', :as => 'edit_user_registration'
   
+  match 'version', :to=>'about#show', :defaults => {:id=>'version'}, :as => 'version'
+  
   match 'collections', :to => 'catalog#index', :as => 'all_collections', :defaults => {:f => {:format_ssim => ["collection"]}}
 
   # Handles all About pages.
   match 'about', :to => 'about#show', :as => 'about_project', :defaults => {:id=>'project'} # no page specified, go to project page
   match 'about/contact', :to=> 'about#contact' # specific contact us about page
   match 'about/:id', :to => 'about#show' # catch anything else and direct to show page with ID parameter of partial to show
-
+  
   # helper routes to we can have a friendly URL for items and collections
   match 'item/:id', :to=> 'catalog#show', :as =>'item'
   match 'collection/:id', :to=> 'catalog#show', :as =>'collection'

@@ -9,6 +9,8 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
+VERSION = File.read('VERSION')
+
 module Revs
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -59,10 +61,11 @@ module Revs
     config.assets.compress = !Rails.env.development?
 
     # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '1.0'
+    config.assets.version = VERSION
   end
 end
 
+Revs::Application.config.version = VERSION # read from VERSION file at base of website
 Revs::Application.config.stacks_url = YAML.load_file("#{Rails.root}/config/stacks.yml")[Rails.env]["url"]
 Revs::Application.config.contact_us_topics = {'default'=>'Select a topic...', 'terms of use'=>'Terms of Use question', 'error'=>'Problem with the website','other'=>'Other questions'} # sets the list of topics shown in the contact us page
 Revs::Application.config.contact_us_recipients = {'default'=>'petucket@stanford.edu', 'error'=>'petucket@stanford.edu','terms of use'=>'petucket@stanford.edu','other'=>'petucket@stanford.edu'} # sets the email address for each contact us topic configed above

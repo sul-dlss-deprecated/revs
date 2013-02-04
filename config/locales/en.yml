@@ -2,7 +2,6 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
   revs:
     about:
       project_title: 'About the Revs Digital Library'
@@ -12,6 +11,7 @@ en:
       terms_of_use_title: 'Terms of Use'
       acknowledgements_title: 'Acknowledgements'
       team_title: 'Project Team'
+      version_title: 'Application Version'
     collection:
       collection_detail: 'Collection Detail'
       member_detail: 'Item Detail'
