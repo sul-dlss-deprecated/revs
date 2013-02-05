@@ -103,7 +103,7 @@ class CatalogController < ApplicationController
     #
     # :show may be set to false if you don't want the facet to be drawn in the 
     # facet bar
-    config.add_facet_field 'pub_date_ssi', :label => 'Date', :single => true
+    config.add_facet_field 'pub_year_isim', :label => 'Year', :sort => 'index'
     config.add_facet_field 'format_ssim', :label => 'Format'
     # config.add_facet_field 'subjects_ssim', :label => "Subject" # we have this data, but its the same for every image, so ignore for now
     config.add_facet_field 'collection_ssim', :label => "Collection"
@@ -124,17 +124,18 @@ class CatalogController < ApplicationController
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display 
 
-    config.add_index_field 'pub_date_ssi', :label => 'Date:'
+    config.add_index_field 'pub_year_isim', :label => 'Year:'
     config.add_index_field 'format_ssim', :label => 'Format:'
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display 
-    config.add_show_field 'pub_date_ssi', :label => 'Date:'
+    config.add_show_field 'pub_year_isim', :label => 'Year:'
     config.add_show_field 'format_ssim', :label => 'Format:'
     config.add_show_field 'country_origin_tsi', :label => 'Country of origin:'
     #config.add_show_field 'subjects_ssim', :label => 'Subjects:'  # we have this data, but its the same for every image, so ignore for now
     config.add_show_field 'description_tsim', :label => 'Description:'
     config.add_show_field 'source_id_ssi', :label => "Identifier:"
+    config.add_show_field 'collection_ssim', :label => "Collection:"
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields

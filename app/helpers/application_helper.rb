@@ -11,5 +11,19 @@ module ApplicationHelper
   def on_about_pages
     Rails.application.routes.recognize_path(request.path)[:controller] == 'about'
   end
+
+  def show_linked_value(val,opts={})
+    opts[:facet].nil? ? val : link_to(val,catalog_index_path(:"f[#{opts[:facet]}][]"=>"#{val}"))
+  end
+  
+  def show_formatted_list(mvf,opts={})
+    mvf.collect do |val|
+      if opts[:facet]
+        output=link_to(val,catalog_index_path(:"f[#{opts[:facet]}][]"=>"#{val}"))
+      else
+        output=val
+      end
+    end.join(', ').html_safe
+  end
   
 end
