@@ -94,6 +94,7 @@ GEM
     mediashelf-loggable (0.4.9)
     mime-types (1.19)
     multi_json (1.5.0)
+    mysql (2.8.1)
     nokogiri (1.5.5)
     polyglot (0.3.3)
     rack (1.4.3)
@@ -180,6 +181,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   jettywrapper
   jquery-rails
+  mysql (= 2.8.1)
   rails (= 3.2.11)
   rest-client
   rspec-rails

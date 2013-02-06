@@ -34,7 +34,7 @@ group :development, :staging, :test do
 end
 
 group :staging, :production do
-  gem 'mysql'
+  gem 'mysql', "2.8.1"
 end
 
 gem 'jquery-rails'
