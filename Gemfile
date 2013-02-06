@@ -33,6 +33,10 @@ group :development, :staging, :test do
   gem 'sqlite3'
 end
 
+group :staging, :production do
+  gem 'mysql'
+end
+
 gem 'jquery-rails'
 gem 'rest-client'
 
