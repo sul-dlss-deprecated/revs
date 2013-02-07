@@ -69,3 +69,4 @@ Revs::Application.config.version = VERSION # read from VERSION file at base of w
 Revs::Application.config.stacks_url = YAML.load_file("#{Rails.root}/config/stacks.yml")[Rails.env]["url"]
 Revs::Application.config.contact_us_topics = {'default'=>'Select a topic...', 'terms of use'=>'Terms of Use question', 'error'=>'Problem with the website','other'=>'Other questions'} # sets the list of topics shown in the contact us page
 Revs::Application.config.contact_us_recipients = {'default'=>'petucket@stanford.edu', 'error'=>'petucket@stanford.edu','terms of use'=>'petucket@stanford.edu','other'=>'petucket@stanford.edu'} # sets the email address for each contact us topic configed above
+Revs::Application.config.contact_us_bcc_recipients = {'default'=>'peetucket@gmail.com', 'error'=>'peter@mangiafico.org','other'=>'petucket@stanford.edu'} # sets the BCC email address for each contact us topic configed above
