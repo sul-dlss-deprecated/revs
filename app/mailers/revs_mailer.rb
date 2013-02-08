@@ -7,8 +7,8 @@ class RevsMailer < ActionMailer::Base
     @name=opts[:name]
     @subject=opts[:subject]
     to=Revs::Application.config.contact_us_recipients[@subject]
-    bcc=Revs::Application.config.contact_us_bcc_recipients[@subject]
-    mail(:to=>to, :bcc=>bcc, :subject=>"Contact Message from Revs Digital Library - #{@subject}") 
+    cc=Revs::Application.config.contact_us_cc_recipients[@subject]
+    mail(:to=>to, :cc=>cc, :subject=>"Contact Message from Revs Digital Library - #{@subject}") 
   end
 
   def error_notification(opts={})
