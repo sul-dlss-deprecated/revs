@@ -15,13 +15,15 @@ end
 
 desc "Stop dev jetty, run `rake ci`, start dev jetty."
 task :local_ci do  
-  system("rake jetty:stop")
+  system("rake jetty:stop RAILS_ENV=development")
   system("rake db:migrate RAILS_ENV=test")  
-  system("rake jetty:start RAILS_ENV=test")
-  system("rake revs:refresh_fixtures RAILS_ENV=test")
-  system("rspec")
-  system("rake jetty:stop RAILS_ENV=test")  
-  system("rake jetty:start")
+  Rails.env='test'
+  ENV['RAILS_ENV']='test'
+  Jettywrapper.wrap(Jettywrapper.load_config) do
+    Rake::Task["revs:refresh_fixtures"].invoke
+    Rake::Task["rspec"].invoke
+  end
+  system("rake jetty:start RAILS_ENV=development")
 end
 
 
