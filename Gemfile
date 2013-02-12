@@ -43,6 +43,8 @@ end
 gem 'jquery-rails'
 gem 'rest-client'
 
+gem 'json', '~> 1.7.7'
+
 gem "bootstrap-sass"
 
 # To use ActiveModel has_secure_password
