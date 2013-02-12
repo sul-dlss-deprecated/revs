@@ -3,6 +3,19 @@
 
 en:
   revs:
+    nav:
+      report_problem: 'Report a problem'
+    contact:
+      select_topic: 'Select a topic..'
+      problem: 'Problem with the website'
+      other_questions: 'Other questions'
+      terms_of_use: 'Terms of use question'
+      name: 'Your name'
+      email: 'Your email'
+      email_address: 'Email address'
+      subject: 'Subject'
+      message: 'Message'
+      describe_problem: 'Please describe your question or problem.'    
     about:
       project_title: 'About the Revs Digital Library'
       contact_title: 'Contact Us'

@@ -4,6 +4,13 @@ module ApplicationHelper
     request.path == '/' && params[:f].blank?
   end
 
+  # take in a hash of options for the contact us form, and then pass the values of the hash through the translation engine
+  def translate_options(options)
+    result={}
+    options.each {|k,v| result.merge!({k=>I18n.t(v)})}
+    return result
+  end
+
   def on_collections_pages
     Rails.application.routes.recognize_path(request.path)[:controller] == "catalog" && !on_home_page
   end
