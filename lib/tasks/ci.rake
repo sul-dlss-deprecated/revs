@@ -28,6 +28,13 @@ end
 
 
 namespace :revs do
+
+  desc "Copy configuration files"
+  task :config do
+    cp("#{Rails.root}/config/database.yml.example", "#{Rails.root}/config/database.yml") unless File.exists?("#{Rails.root}/config/database.yml")
+    cp("#{Rails.root}/config/solr.yml.example", "#{Rails.root}/config/solr.yml") unless File.exists?("#{Rails.root}/config/solr.yml")
+  end  
+  
   desc "Delete and index all fixtures in solr"
   task :refresh_fixtures do
     Rake::Task["revs:delete_records_in_solr"].invoke

@@ -6,13 +6,9 @@ This is a Blacklight Application for the Revs Digital Library at Stanford Univer
 
 1. Checkout the code:
 
+				cd [ROOT FOLDER LOCATION OF WHERE YOU WANT THE CODE TO GO]
         git clone https://github.com/sul-dlss/revs.git
-
-1. Copy the .yml example files:
-
-        cd revs
-        cp config/database.yml.example config/database.yml
-        cp config/solr.yml.example config/solr.yml
+				cd revs
 
 1. [Optional] If you want to use rvmrc to manage gemsets, copy the .rvmrc example files:
 
@@ -25,6 +21,11 @@ This is a Blacklight Application for the Revs Digital Library at Stanford Univer
         cd deploy
         bundle install
         cd ..
+
+1. Copy the .yml example files:
+
+        cd revs
+        rake revs:config
  
 1. Migrate the database:
 
