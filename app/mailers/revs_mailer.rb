@@ -2,10 +2,13 @@ class RevsMailer < ActionMailer::Base
   default from: "no-reply@revslib.stanford.edu"
 
   def contact_message(opts={})
-    @message=opts[:message]
-    @email=opts[:email]
-    @name=opts[:name]
-    @subject=opts[:subject]
+    params=opts[:params]
+    @request=opts[:request]
+    @message=params[:message]
+    @email=params[:email]
+    @name=params[:name]
+    @subject=params[:subject]
+    @from=params[:from]
     to=Revs::Application.config.contact_us_recipients[@subject]
     cc=Revs::Application.config.contact_us_cc_recipients[@subject]
     mail(:to=>to, :cc=>cc, :subject=>"Contact Message from Revs Digital Library - #{@subject}") 
