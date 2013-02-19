@@ -1,2 +1,4 @@
 <h3><%=application_name%></h3>
-<strong>Current deployed version:</strong> <%= simple_format Revs::Application.config.version %>
+<p><strong>Current deployed version:</strong> <%=Revs::Application.config.version %></p>
+<p><strong>Last deployed time:</strong> <%=File.new('REVISION').mtime if File.exists?('REVISION')%></p>
+<p><strong>Last restart time:</strong> <%=File.new('tmp/restart.txt').mtime  if File.exists?('tmp/restart.txt')%></p>
