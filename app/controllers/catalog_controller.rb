@@ -16,25 +16,30 @@ class CatalogController < ApplicationController
   end
   
   def index
+
     if on_home_page
+          
+      unless fragment_exist?('home')
+        # get the collection highlights from the database
+        highlights = CollectionHighlight.find(:all)
 
-      # get the collection highlights from the database
-      highlights = CollectionHighlight.find(:all)
-
-      # get tht titles and descriptions from solr
-      highlight_collections_query=Blacklight.solr.get 'select',:params=>{:q=>highlights.map{|highlight| 'id:"' + highlight.druid + '"'}.join(' OR ')}
-      @highlight_collections=highlight_collections_query['response']['docs'].shuffle
-      @highlight_collections.each {|highlight| highlight.merge!('image_url'=>CollectionHighlight.find_by_druid(highlight['id']).image_url)} # add the URL for each highlight image to the solr documents
-      @random_collection_number=Random.new.rand(@highlight_collections.size) # pick a random one to start with for non-JS users
+        # get tht titles and descriptions from solr, but only for those which we find in solr (this allows us to have seeds in the database for items which may not be in solr, eg. in development)
+        highlight_collections_query=Blacklight.solr.get 'select',:params=>{:q=>highlights.map{|highlight| 'id:"' + highlight.druid + '"'}.join(' OR ')}
+        @highlight_collections=highlight_collections_query['response']['docs'].shuffle
+        @highlight_collections.each {|highlight| highlight.merge!('image_url'=>CollectionHighlight.find_by_druid(highlight['id']).image_url)} # add the URL for each highlight image to the solr documents
+        @random_collection_number=Random.new.rand(@highlight_collections.size) # pick a random one to start with for non-JS users
       
-      # get some information about all the collections and images we have so we can report on total numbers
-      collections=Blacklight.solr.get 'select',:params=>{:q=>'format_ssim:collection'}
-      @total_collections=collections['response']['numFound']
-      items=Blacklight.solr.get 'select',:params=>{:q=>'-format_ssim:collection'}      
-      @total_images=items['response']['numFound']
+        # get some information about all the collections and images we have so we can report on total numbers
+        collections=Blacklight.solr.get 'select',:params=>{:q=>'format_ssim:collection'}
+        @total_collections=collections['response']['numFound']
+        items=Blacklight.solr.get 'select',:params=>{:q=>'-format_ssim:collection'}      
+        @total_images=items['response']['numFound']
+      end
 
     end
+    
     super
+
   end
   
   configure_blacklight do |config|

@@ -1,8 +1,8 @@
 <dl class="dl-horizontal  dl-invert">
 	<% if document[:pub_year_isim] %>
   	<dt>Year:</dt><dd><%=show_formatted_list(document[:pub_year_isim],:facet=>'pub_year_isim')%>&nbsp;</dd>
-  <% elsif document[:pub_date_ssi] %>
-		<dt>Year:</dt><dd><%=document[:pub_date_ssi]%>&nbsp;</dd>
+  <% elsif document[:pub_year_isim] %>
+		<dt>Year:</dt><dd><%=document[:pub_year_isim]%>&nbsp;</dd>
 	<% end %>
 	<dt>Format:</dt><dd><%=show_formatted_list(document[:format_ssim],:facet=>'format_ssim')%>&nbsp;</dd>
   <dt>Collection:</dt><dd><%=show_formatted_list(document[:collection_ssim],:facet=>'collection_ssim')%>&nbsp;</dd>

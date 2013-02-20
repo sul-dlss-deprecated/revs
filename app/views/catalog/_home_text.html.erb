@@ -1,85 +1,86 @@
-<!-- begin collection carousel for JavaScript users -->
-<div class="row slideshow showOnLoad" style="display:none;">
-  <div class="span6">
-    <div id="all_collections_carousel" class="carousel slide">
-      <div class="carousel-inner">
-        <%- @highlight_collections.each_with_index do |collection, index| -%>
-          <div class="item<%= " active" if index == 0 %>" data-collection-title="<%= collection[blacklight_config.show.heading] %>" data-collection-href="<%= collection_path(collection) %>" data-collection-description="<%= truncate(collection[blacklight_config.collection_description_field].try(:first),:length=>250) %>">
-            <a id="collection-image-link" href="<%=collection_path(collection)%>"><%=image_tag collection['image_url']%></a>
-          </div>
-        <%- end -%>
-      </div>
-    </div>
-  </div>
-  <div id="featured-collection-nav" class="span3">
-		<div class="row">
-			<div class="span3">
-		    <div class="all_collections carousel-controls">
-		      <a class="carousel-control left" href="#all_collections_carousel" data-slide="prev">&lsaquo;</a>
-		      <a class="carousel-control right" href="#all_collections_carousel" data-slide="next">&rsaquo;</a>
-		    </div>
-			</div>
-		</div>
-		<div class="row">
-	    <div id="featured-description" class="span3">
-	      <span class="content-type collection">Featured Collection</span>
-	      <h3><%= link_to @highlight_collections.first[blacklight_config.show.heading], collection_path(@highlight_collections.first), :id => "collection-title-link" %></h3>
-	      <p>
-	        <span id="collection-description"><%= truncate(@highlight_collections.first[blacklight_config.collection_description_field].try(:first),:length=>250) %></span>
-	        <%= link_to "More", collection_path(@highlight_collections.first), :id => "collection-link" %>
-	      </p>
-	    </div>
-		</div>
-  </div>
-</div>
-<!-- end carousel for JavaScript users -->
-
-<!-- begin single image for non JavaScript users -->
-<noscript>
-	<div class="row slideshow">
+<% cache("home", :expires_in=>12.hours)  do %>
+	<!-- begin collection carousel for JavaScript users -->
+	<div class="row slideshow showOnLoad" style="display:none;">
 	  <div class="span6">
 	    <div id="all_collections_carousel" class="carousel slide">
 	      <div class="carousel-inner">
-	        <%- collection = @highlight_collections[@random_collection_number] -%>
-	          <div class="item active">
-	            <a id="collection-image-link" href="<%=collection_path(collection)%>"><img id="image-0" src="<%= collection['image_url'] %>"></img></a>
-						</div>
+	        <%- @highlight_collections.each_with_index do |collection, index| -%>
+	          <div class="item<%= " active" if index == 0 %>" data-collection-title="<%= collection[blacklight_config.show.heading] %>" data-collection-href="<%= collection_path(collection) %>" data-collection-description="<%= truncate(collection[blacklight_config.collection_description_field].try(:first),:length=>250) %>">
+	            <a id="collection-image-link" href="<%=collection_path(collection)%>"><%=image_tag collection['image_url']%></a>
+	          </div>
+	        <%- end -%>
 	      </div>
 	    </div>
 	  </div>
 	  <div id="featured-collection-nav" class="span3">
 			<div class="row">
 				<div class="span3">
+			    <div class="all_collections carousel-controls">
+			      <a class="carousel-control left" href="#all_collections_carousel" data-slide="prev">&lsaquo;</a>
+			      <a class="carousel-control right" href="#all_collections_carousel" data-slide="next">&rsaquo;</a>
+			    </div>
 				</div>
 			</div>
 			<div class="row">
 		    <div id="featured-description" class="span3">
 		      <span class="content-type collection">Featured Collection</span>
-		      <h3><%= link_to collection[blacklight_config.show.heading], collection_path(collection), :id => "collection-title-link" %></h3>
+		      <h3><%= link_to @highlight_collections.first[blacklight_config.show.heading], collection_path(@highlight_collections.first), :id => "collection-title-link" %></h3>
 		      <p>
-		        <span id="collection-description"><%= truncate(collection[blacklight_config.collection_description_field].try(:first),:length=>300) %></span>
-		        <%= link_to "More", collection_path(collection), :id => "collection-link" %>
+		        <span id="collection-description"><%= truncate(@highlight_collections.first[blacklight_config.collection_description_field].try(:first),:length=>250) %></span>
+		        <%= link_to "More", collection_path(@highlight_collections.first), :id => "collection-link" %>
 		      </p>
 		    </div>
 			</div>
 	  </div>
 	</div>
-</noscript>
-<!-- end single image for non JavaScript users -->
+	<!-- end carousel for JavaScript users -->
+
+	<!-- begin single image for non JavaScript users -->
+	<noscript>
+		<div class="row slideshow">
+		  <div class="span6">
+		    <div id="all_collections_carousel" class="carousel slide">
+		      <div class="carousel-inner">
+		        <%- collection = @highlight_collections[@random_collection_number] -%>
+		          <div class="item active">
+		            <a id="collection-image-link" href="<%=collection_path(collection)%>"><img id="image-0" src="<%= collection['image_url'] %>"></img></a>
+							</div>
+		      </div>
+		    </div>
+		  </div>
+		  <div id="featured-collection-nav" class="span3">
+				<div class="row">
+					<div class="span3">
+					</div>
+				</div>
+				<div class="row">
+			    <div id="featured-description" class="span3">
+			      <span class="content-type collection">Featured Collection</span>
+			      <h3><%= link_to collection[blacklight_config.show.heading], collection_path(collection), :id => "collection-title-link" %></h3>
+			      <p>
+			        <span id="collection-description"><%= truncate(collection[blacklight_config.collection_description_field].try(:first),:length=>300) %></span>
+			        <%= link_to "More", collection_path(collection), :id => "collection-link" %>
+			      </p>
+			    </div>
+				</div>
+		  </div>
+		</div>
+	</noscript>
+	<!-- end single image for non JavaScript users -->
 
 
-<div class="row">
-	<div class="span9 about-dl">
-		<h3 class="section-heading">About the Revs Digital Library</h3>
-		<p>
-			<%= link_to image_tag('revs-about-project-scanning.png', :width => '120'), about_project_path %>
-			<p>The Revs Digital Library currently contains <strong><%=number_with_delimiter(@total_images)%> items</strong> from <strong><%=link_to "#{number_with_delimiter(@total_collections)} collections",all_collections_path%></strong>.</p>
+	<div class="row">
+		<div class="span9 about-dl">
+			<h3 class="section-heading">About the Revs Digital Library</h3>
+			<p>
+				<%= link_to image_tag('revs-about-project-scanning.png', :width => '120'), about_project_path %>
+				<p>The Revs Digital Library currently contains <strong><%=number_with_delimiter(@total_images)%> items</strong> from <strong><%=link_to "#{number_with_delimiter(@total_collections)} collections",all_collections_path%></strong>.</p>
 
-			<p>The Digital Library is built on top of the Stanford Digital Repository to provide a web based platform for discovery of automotive research and images.  The Stanford Digital Repository ensures each digital object is preserved, made available via a permanent persistent URL (web address), enforces content rights and restrictions and provides a common storage mechanism for other applications to build upon.
-		</p>
-		<p>
-			<%= link_to 'More', about_project_path %>
-		</p>
+				<p>The Digital Library is built on top of the Stanford Digital Repository to provide a web based platform for discovery of automotive research and images.  The Stanford Digital Repository ensures each digital object is preserved, made available via a permanent persistent URL (web address), enforces content rights and restrictions and provides a common storage mechanism for other applications to build upon.
+			</p>
+			<p>
+				<%= link_to 'More', about_project_path %>
+			</p>
+		</div>
 	</div>
-</div>
-
+<% end %>

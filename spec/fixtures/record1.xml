@@ -1,8 +1,8 @@
 <doc>
   <field name="id">yt907db4998</field>
   <field name="title_tsi">Record 1</field>
-  <field name="pub_date_ssi">1960</field>
-  <field name="format_ssim">Color Negative</field>
+  <field name="pub_year_isim">1960</field>
+  <field name="format_ssim">slides</field>
   <field name="is_member_of_ssim">wn860zc7322</field>
   <field name="collection_ssim">John Dugdale Collection</field>
   <field name="image_id_ssm">2011-023DUG-3.0_0017</field>
