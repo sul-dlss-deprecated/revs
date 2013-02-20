@@ -85,4 +85,5 @@ namespace :deploy do
   end
 end
 
-after "deploy", "deploy:migrate"
+after "deploy:create_symlink", "deploy:migrate"
+after "deploy:create_symlink", "db:loadseeds"
