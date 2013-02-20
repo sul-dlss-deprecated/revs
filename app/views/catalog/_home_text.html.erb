@@ -1,15 +1,11 @@
-<% all_collections=SolrDocument.new.all_collections
-	 random_collection_number=Random.new.rand(all_collections.size)
-%>
-
 <!-- begin collection carousel for JavaScript users -->
 <div class="row slideshow showOnLoad" style="display:none;">
   <div class="span6">
     <div id="all_collections_carousel" class="carousel slide">
       <div class="carousel-inner">
-        <%- all_collections.each_with_index do |collection, index| -%>
-          <div class="item<%= " active" if index == 0 %>" data-collection-title="<%= collection[blacklight_config.show.heading] %>" data-collection-href="<%= collection_path(collection) %>" data-collection-description="<%= truncate(collection[blacklight_config.collection_description_field].try(:first),:length=>300) %>">
-            <a id="collection-image-link" href="<%=collection_path(collection)%>"><canvas height="300px" width="400px" class="image-stitch" id="image-stitch-<%= index %>" data-image-urls="<%= collection.collection_members.map{|c| c.images.first }.join(', ') %>"></canvas></a>
+        <%- @highlight_collections.each_with_index do |collection, index| -%>
+          <div class="item<%= " active" if index == 0 %>" data-collection-title="<%= collection[blacklight_config.show.heading] %>" data-collection-href="<%= collection_path(collection) %>" data-collection-description="<%= truncate(collection[blacklight_config.collection_description_field].try(:first),:length=>250) %>">
+            <a id="collection-image-link" href="<%=collection_path(collection)%>"><%=image_tag collection['image_url']%></a>
           </div>
         <%- end -%>
       </div>
@@ -27,10 +23,10 @@
 		<div class="row">
 	    <div id="featured-description" class="span3">
 	      <span class="content-type collection">Featured Collection</span>
-	      <h3><%= link_to all_collections.first[blacklight_config.show.heading], collection_path(all_collections.first), :id => "collection-title-link" %></h3>
+	      <h3><%= link_to @highlight_collections.first[blacklight_config.show.heading], collection_path(@highlight_collections.first), :id => "collection-title-link" %></h3>
 	      <p>
-	        <span id="collection-description"><%= truncate(all_collections.first[blacklight_config.collection_description_field].try(:first),:length=>300) %></span>
-	        <%= link_to "More", collection_path(all_collections.first), :id => "collection-link" %>
+	        <span id="collection-description"><%= truncate(@highlight_collections.first[blacklight_config.collection_description_field].try(:first),:length=>250) %></span>
+	        <%= link_to "More", collection_path(@highlight_collections.first), :id => "collection-link" %>
 	      </p>
 	    </div>
 		</div>
@@ -44,9 +40,9 @@
 	  <div class="span6">
 	    <div id="all_collections_carousel" class="carousel slide">
 	      <div class="carousel-inner">
-	        <%- collection = all_collections[random_collection_number] -%>
+	        <%- collection = @highlight_collections[@random_collection_number] -%>
 	          <div class="item active">
-	            <a id="collection-image-link" href="<%=collection_path(collection)%>"><img id="image-0" src="<%= collection.collection_members.documents[0].images(:large).first %>"></img></a>
+	            <a id="collection-image-link" href="<%=collection_path(collection)%>"><img id="image-0" src="<%= collection['image_url'] %>"></img></a>
 						</div>
 	      </div>
 	    </div>
@@ -86,11 +82,4 @@
 		</p>
 	</div>
 </div>
-
-<!-- show a random collection in slider -->
-<script language="JavaScript">
-	$(document).ready(function(){
-		$("#all_collections_carousel").carousel(<%=random_collection_number%>);
-	});
-</script>
 

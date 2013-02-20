@@ -3,9 +3,9 @@ require 'spec_helper'
 describe("Search Pages",:type=>:request,:integration=>true) do
   
   before(:each) do
-    @collection1="Collection 1"
-    @collection2="Le Mans Collection"
-    @collection1_pid='nt028fd5773'
+    @collection1="Marcus Chambers Collection"
+    @collection2="John Dugdale Collection"
+    @collection1_pid='wz243gf4151'
   end
     
   it "should show the first two collections on the collections page" do
@@ -18,8 +18,8 @@ describe("Search Pages",:type=>:request,:integration=>true) do
     visit catalog_path(@collection1_pid)
     page.should have_content(@collection1)
     page.should have_content("Collection Detail")  
-    page.should have_selector("img[alt$='Record 1']")
-    page.should have_selector("img[alt$='A Somewhat Longer Than Average Title']")
+    page.should have_selector("img[alt$='Le Mans, 1955 ; Mille Miglia 1956  -  A REALLY long title with lots of characters in it to see how it looks. It also has some @daso odd char~!@ characters.']")
+    page.should have_selector("img[alt$='Le Mans, 1955 ; Mille Miglia 1956']")
   end
   
 end

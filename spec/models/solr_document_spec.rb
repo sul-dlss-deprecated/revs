@@ -30,7 +30,7 @@ describe SolrDocument do
         SolrDocument.new({:id => "12345"}).collection_member?.should be_false
         SolrDocument.new({:"is_member_of_ssim" => "collection-1"}).collection_member?.should be_true
       end
-      it "should memoize the solr request to get collection memers" do
+      it "should memoize the solr request to get collection members" do
         response = {"response" => {"numFound" => 3, "docs" => [{:id=>"1234"}, {:id =>"4321"}]}}
         solr = mock("solr")
         solr.should_receive(:select).with(:params => {:fq => "is_member_of_ssim:\"collection-1\"", :rows => "20"}).once.and_return(response)

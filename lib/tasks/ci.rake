@@ -8,6 +8,7 @@ task :ci do
   else
     Jettywrapper.wrap(Jettywrapper.load_config) do
       Rake::Task["revs:refresh_fixtures"].invoke
+      Rake::Task["db:seed"].invoke
       Rake::Task["rspec"].invoke
     end
   end
@@ -21,6 +22,7 @@ task :local_ci do
   ENV['RAILS_ENV']='test'
   Jettywrapper.wrap(Jettywrapper.load_config) do
     Rake::Task["revs:refresh_fixtures"].invoke
+    Rake::Task["db:seed"].invoke
     Rake::Task["rspec"].invoke
   end
   system("rake jetty:start RAILS_ENV=development")

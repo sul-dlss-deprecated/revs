@@ -17,10 +17,22 @@ class CatalogController < ApplicationController
   
   def index
     if on_home_page
+
+      # get the collection highlights from the database
+      highlights = CollectionHighlight.find(:all)
+
+      # get tht titles and descriptions from solr
+      highlight_collections_query=Blacklight.solr.get 'select',:params=>{:q=>highlights.map{|highlight| 'ID:"' + highlight.druid + '"'}.join(' OR ')}
+      @highlight_collections=highlight_collections_query['response']['docs'].shuffle
+      @highlight_collections.each {|highlight| highlight.merge!('image_url'=>CollectionHighlight.find_by_druid(highlight['id']).image_url)} # add the URL for each highlight image to the solr documents
+      @random_collection_number=Random.new.rand(@highlight_collections.size) # pick a random one to start with for non-JS users
+      
+      # get some information about all the collections and images we have so we can report on total numbers
       collections=Blacklight.solr.get 'select',:params=>{:q=>'format_ssim:collection'}
       @total_collections=collections['response']['numFound']
       items=Blacklight.solr.get 'select',:params=>{:q=>'-format_ssim:collection'}      
       @total_images=items['response']['numFound']
+
     end
     super
   end
