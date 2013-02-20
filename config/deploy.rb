@@ -38,6 +38,7 @@ set :deploy_to, "#{destination}/#{application}"
 
 set :branch do
   # DEFAULT_TAG = `git tag`.split("\n").last
+  DEFAULT_TAG = "master"
   tag = Capistrano::CLI.ui.ask "Tag or branch to deploy (make sure to push the tag or branch first): [#{DEFAULT_TAG}] "
   tag = DEFAULT_TAG if tag.empty?
   tag
