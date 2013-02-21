@@ -3,6 +3,10 @@ module ApplicationHelper
   def on_home_page
     request.path == '/' && params[:f].blank?
   end
+  
+  def title_no_revs(title)
+    title.gsub(" of the Revs Institute","")
+  end
 
   # take in a hash of options for the contact us form, and then pass the values of the hash through the translation engine
   def translate_options(options)
