@@ -2,9 +2,10 @@
   $(document).ready(function(){
     $("#image_workspace").embedPurl({'server': '<%=Revs::Application.config.purl_plugin_server%>',
                                      'druid': '<%= document[:id] %>',
-																		 'size': 'thumb',
-                                     'width': 450,
-                                     'height': 460});  
+                                     'size': 'thumb',
+                                     'layout': 'thin-nav-bottom',
+                                     'width': 425,
+                                     'height': 460});
   });
 </script>
 
@@ -16,14 +17,14 @@
 
 <div class="row">
   <div id="image_workspace" class="span7 member-image">
-			<noscript>
-				<%= link_to(image_tag(@document.images(:large).first), "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'new') %>
-			</noscript>
-	</div>
+      <noscript>
+        <%= link_to(image_tag(@document.images(:large).first), "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'new') %>
+      </noscript>
+  </div>
   <div class="span5 metadata">
     <%= render_document_heading.html_safe %>
     <%= render :partial => "show_default_collection_member", :locals => {:document => @document} %>
-		<%= link_to('<i class="icon-picture"></i> Full citation page with view/download'.html_safe, "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'new') %>
+    <%= link_to('<i class="icon-picture"></i> Full citation page with view/download'.html_safe, "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'new') %>
   </div>
 </div>
 <%= render :partial => "collection_members_grid", :locals => {:collection_members => @document.collection_siblings, :type => :siblings, :show_full_width => true} %>

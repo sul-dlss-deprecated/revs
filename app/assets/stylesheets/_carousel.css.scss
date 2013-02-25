@@ -49,3 +49,11 @@
     }
   }
 }
+
+@media (max-width: 979px) {
+  .carousel {margin-bottom: 5px;}
+}
+
+@media (max-width: 768px) {
+  .carousel {margin-bottom: 0;}
+}

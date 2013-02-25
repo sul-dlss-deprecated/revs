@@ -25,7 +25,6 @@ ActiveRecord::Schema.define(:version => 20130219212006) do
   create_table "collection_highlights", :force => true do |t|
     t.string   "druid"
     t.string   "image_url"
-    t.integer  "sort_order"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

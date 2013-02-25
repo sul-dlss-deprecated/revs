@@ -32,7 +32,7 @@
     padding-top: 0;
   }
   .metadata {
-    margin-top: 43px;
+    margin-top: 5px;
   }
   .zoom-image-link {
     display: block;
@@ -69,8 +69,29 @@
     margin-bottom: 20px;
     margin-top: 20px;
   }
+  .blacklight-catalog-index #featured-collection-nav {
+    border-top: none;
+  }
+}
+
+@media (max-width: 979px) and (min-width: 768px) {
+  .blacklight-catalog-show .metadata {
+    float: none;
+    margin-top: 5px;
+    width: 100%;
+    .dl-horizontal {
+      dt {
+        float: none;
+        clear: none;
+      }
+    }
+  }
 }
 
 @media (max-width: 767px) {
   .slideshow img {margin-bottom: 20px;}
+  .blacklight-catalog-index #featured-collection-nav {
+    border-top: none;
+    padding-top: 0;
+  }
 }
