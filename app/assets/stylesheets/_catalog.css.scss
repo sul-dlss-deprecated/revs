@@ -69,6 +69,9 @@
     margin-bottom: 20px;
     margin-top: 20px;
   }
+  .blacklight-catalog-index #featured-collection-nav {
+    border-top: none;
+  }
 }
 
 @media (max-width: 979px) and (min-width: 768px) {

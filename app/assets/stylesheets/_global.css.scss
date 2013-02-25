@@ -192,6 +192,13 @@ span.content-type {
     }
   }
 }
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .pagination {clear: both;}
+  #sidebar {
+    border-top: none;
+    padding-top: 0;
+  }
+}
+@media (max-width: 979px) and (min-width: 768px) {
+  #content {@include gray-top_border;}
 }
