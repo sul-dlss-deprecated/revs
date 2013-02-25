@@ -42,6 +42,11 @@ $constraint_border_active_color: #FFD27A !default;
   text-transform: uppercase;
 }
 
+@mixin image_border_thumbnail {
+  border: 1px solid #bbb;
+  box-shadow: 2px 2px #ddd;
+}
+
 /* --- */
 
 html {
