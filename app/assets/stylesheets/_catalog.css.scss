@@ -71,6 +71,20 @@
   }
 }
 
+@media (max-width: 979px) and (min-width: 768px) {
+  .blacklight-catalog-show .metadata {
+    float: none;
+    margin-top: 5px;
+    width: 100%;
+    .dl-horizontal {
+      dt {
+        float: none;
+        clear: none;
+      }
+    }
+  }
+}
+
 @media (max-width: 767px) {
   .slideshow img {margin-bottom: 20px;}
 }
