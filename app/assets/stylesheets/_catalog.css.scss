@@ -87,4 +87,8 @@
 
 @media (max-width: 767px) {
   .slideshow img {margin-bottom: 20px;}
+  .blacklight-catalog-index #featured-collection-nav {
+    border-top: none;
+    padding-top: 0;
+  }
 }
