@@ -8,6 +8,8 @@ Revs::Application.routes.draw do
   match 'account', :to => 'catalog#index', :as => 'edit_user_registration'
   
   match 'version', :to=>'about#show', :defaults => {:id=>'version'}, :as => 'version'
+
+  match 'search', :to=> 'catalog#index', :as=>'search'
   
   match 'collections', :to => 'catalog#index', :as => 'all_collections', :defaults => {:f => {:format_ssim => ["collection"]}}
 
