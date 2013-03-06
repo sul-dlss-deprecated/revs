@@ -10,9 +10,13 @@ class CollectionMembers
   def each(&block)
     @documents.each(&block)
   end
+
+  def each_with_index(&block)
+    @documents.each_with_index(&block)
+  end
   
   def size
-    total_members
+    @documents.size
   end
   
   private

@@ -13,6 +13,8 @@ Revs::Application.routes.draw do
   
   match 'collections', :to => 'catalog#index', :as => 'all_collections', :defaults => {:f => {:format_ssim => ["collection"]}}
 
+  match 'update_carousel', :to => 'catalog#update_carousel', :as => 'update_carousel'
+  
   # Handles all About pages.
   match 'about', :to => 'about#show', :as => 'about_project', :defaults => {:id=>'project'} # no page specified, go to project page
   match 'about/contact', :to=> 'about#contact', :as=>'contact_us' # specific contact us about page

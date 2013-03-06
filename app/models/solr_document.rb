@@ -31,27 +31,39 @@ class SolrDocument
                     )
   end
   
-  # Return a CollectionMembers object of just the members of a collection
-  def collection_members(num_results=blacklight_config.collection_member_grid_items)
+  # Return a CollectionMembers object of just the members of a collection, and cache the result in the object so we can use on the page over again
+  def collection_members(params={})
     return nil unless collection?
-    @collection_members ||= CollectionMembers.new(
+    @collection_members ||= get_members(params)
+  end
+  
+  # this can be called when you don't want the result to be cached in the object (so you update the counts or start for paging)
+  def get_members(params={})
+
+    rows=params[:rows] || blacklight_config.collection_member_grid_items
+    start=params[:start] || 0    
+    return CollectionMembers.new(
                               Blacklight.solr.select(
                                 :params => {
                                   :fq => "#{blacklight_config.collection_member_identifying_field}:\"#{self[SolrDocument.unique_key]}\"",
-                                  :rows => num_results.to_s
+                                  :rows => rows.to_s,
+                                  :start => start.to_s
                                 }
                               )
                             )
   end
-  
   # Return a CollectionMembers object of all of the siblins a collection member (including self)
-  def collection_siblings(num_results=blacklight_config.collection_member_grid_items)
+  def collection_siblings(params={})
     return nil unless collection_member?
+
+    rows=params[:rows] || blacklight_config.collection_member_grid_items
+    start=params[:start] || 0
     @collection_siblings ||= CollectionMembers.new(
                                Blacklight.solr.select(
                                  :params => {
                                    :fq => "#{blacklight_config.collection_member_identifying_field}:\"#{self[blacklight_config.collection_member_identifying_field].first}\"", 
-                                   :rows => num_results.to_s
+                                   :rows => rows.to_s,
+                                  :start => start.to_s                                   
                                  }
                                )
                              )

@@ -13,21 +13,8 @@ $(document).ready(function(){
 <div class="row">
   <div class="span5">
     <div id="collection_carousel" class="carousel slide">
-      <div class="carousel-inner">
-        <%- @document.collection_members.each_with_index do |member, index| -%>
-          <div class="item<%= " active" if index == 0 %>">
-            <%= link_to(image_tag(member.images(:large).first, :alt => member[blacklight_config.show.heading]),item_path(member)) %>
-            <%- if member.has_key?(blacklight_config.show.heading) -%>
-              <div class="carousel-caption"><p><%= member[blacklight_config.show.heading]%></p></div>
-            <%- end -%>
-          </div>
-        <%- end -%>
-      </div>
-      <div class="carousel-controls">
-        <a style="display:none;" class="carousel-control left showOnLoad" href="#collection_carousel" data-slide="prev">&lsaquo;</a>
-        <span class="number-of-items"><span class="iterator">1</span><%= " - #{number_with_delimiter(@document.collection_members.count)}" if @document.collection_members.total_members > @document.collection_members.count %> of <%= pluralize(number_with_delimiter(@document.collection_members.total_members), t('revs.collection_members.items_name')) %></span>
-        <a class="carousel-control right showOnLoad" style="display:none;" href="#collection_carousel" data-slide="next">&rsaquo;</a>
-      </div>
+		  <% @carousel_members = @document.get_members(:rows=>blacklight_config.collection_member_carousel_items,:start=>0)%>
+			<%= render :partial=> "collection_member_carousel", :locals => {:rows=>blacklight_config.collection_member_carousel_items,:start=>0}%>
     </div>
   </div>
   <div class="span4">

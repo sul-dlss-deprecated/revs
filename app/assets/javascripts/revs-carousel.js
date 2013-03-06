@@ -2,8 +2,14 @@ $(document).ready(function(){
 	// Carousel on Collection show page
   $("#collection_carousel").bind('slid', function(){
 	  var carousel = $(this);
-	  var index = $('.active', carousel).index('#' + carousel.attr("id") + ' .item');
-	  $(".iterator", carousel).text(parseInt(index) + 1);
+	  var index = parseInt($('.active', carousel).attr('image-number'));
+	  var rows = parseInt($('.carousel-inner', carousel).attr('rows'));
+	  var start = parseInt($('.carousel-inner', carousel).attr('start'));
+	  var end=parseInt(start)+parseInt(rows)
+	  $(".iterator", carousel).text(index);
+	  if (index == end) {
+		// fetch next set
+		}
 	});	
 	
 	// Carousel on home page

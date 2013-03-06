@@ -42,6 +42,15 @@ class CatalogController < ApplicationController
 
   end
   
+  # an ajax call to get the next set of images to show in a carousel on the collection detail page
+  def update_carousel
+    druid=params[:druid]
+    @rows=params[:rows] || blacklight_config.collection_member_carousel_items
+    @start=params[:start] || 0
+    result,@document = get_solr_response_for_doc_id(druid)
+    @carousel_members = @document.get_members(:rows=>@rows,:start=>@start)
+  end
+  
   configure_blacklight do |config|
     ## Default parameters to send to solr for all search-like requests. See also SolrHelper#solr_search_params
     config.default_solr_params = { 
@@ -74,6 +83,7 @@ class CatalogController < ApplicationController
     config.collection_member_collection_title_field = "collection_ssim"
     
     config.collection_member_grid_items = 20
+    config.collection_member_carousel_items = 5
     
     # needs to be sotred so we can retreive it
     # needs to be in field list for all request handlers so we can get images the document anywhere in the app.

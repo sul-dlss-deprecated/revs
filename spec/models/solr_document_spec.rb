@@ -17,7 +17,7 @@ describe SolrDocument do
       it "should memoize the solr request to get the siblings of a collection member" do
         response = {"response" => {"numFound" => 3, "docs" => [{:id=>"1234"}, {:id =>"4321"}]}}
         solr = mock("solr")
-        solr.should_receive(:select).with(:params => {:fq => "is_member_of_ssim:\"collection-1\"", :rows => "20"}).once.and_return(response)
+        solr.should_receive(:select).with(:params => {:fq => "is_member_of_ssim:\"collection-1\"", :rows => "20", :start=>"0"}).once.and_return(response)
         Blacklight.should_receive(:solr).and_return(solr)
         doc = SolrDocument.new({:id => "abc123", :is_member_of_ssim => ["collection-1"]})
         5.times do
@@ -33,7 +33,7 @@ describe SolrDocument do
       it "should memoize the solr request to get collection members" do
         response = {"response" => {"numFound" => 3, "docs" => [{:id=>"1234"}, {:id =>"4321"}]}}
         solr = mock("solr")
-        solr.should_receive(:select).with(:params => {:fq => "is_member_of_ssim:\"collection-1\"", :rows => "20"}).once.and_return(response)
+        solr.should_receive(:select).with(:params => {:fq => "is_member_of_ssim:\"collection-1\"", :rows => "20",:start=>"0"}).once.and_return(response)
         Blacklight.should_receive(:solr).and_return(solr)
         doc = SolrDocument.new({:id => "collection-1", :format_ssim => "collection"})
         5.times do
