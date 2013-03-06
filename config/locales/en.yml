@@ -33,7 +33,7 @@ en:
     collection_members_grid:
       members_link: 'View All Collection Items'
       collection_link: 'View the collection'
-      collection_text: 'Collection Items'
+      collection_text: 'Other Collection Items'
       sibling_text: "Other items in %{collection}"
     search:
       search_results: 'Results'
