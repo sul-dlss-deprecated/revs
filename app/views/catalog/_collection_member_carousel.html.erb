@@ -1,10 +1,10 @@
-<div start="<%=start%>" rows="<%=rows%>" druid="<%=@document.id%>" id="carousel-items" class="carousel-inner">
+<div start="<%=start%>" rows="<%=rows%>" druid="<%=@document.id%>" total="<%=@carousel_members.total_members%>" id="carousel-items" class="carousel-inner">
 	<%= render :partial=> "collection_member_carousel_items", :locals => {:rows=>rows,:start=>start}%>
 </div>
 
 <div class="hidden showOnLoad carousel-controls">
-	 <a class="carousel-control left" href="#collection_carousel" data-slide="prev">&lsaquo;</a>
+	 <a id="back-carousel-button" class="carousel-control left" style="display:none;" href="#collection_carousel" data-slide="prev">&lsaquo;</a>
 	 <span class="number-of-items">
 		<span class="iterator"><%=start.to_i+1%></span> of <%= pluralize(number_with_delimiter(@carousel_members.total_members), t('revs.collection_members.items_name')) %></span>
-	 <a class="carousel-control right"  href="#collection_carousel" data-slide="next">&rsaquo;</a>
+	 <a id="forward-carousel-button"  class="carousel-control right"  href="#collection_carousel" data-slide="next">&rsaquo;</a>
 </div>

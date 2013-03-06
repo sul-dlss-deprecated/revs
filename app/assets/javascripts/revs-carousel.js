@@ -6,9 +6,16 @@ $(document).ready(function(){
 	  var index = parseInt($('.active', carousel).attr('image-number'));
 	  var rows = parseInt($('.carousel-inner', carousel).attr('rows'));
 	  var start = parseInt($('.carousel-inner', carousel).attr('start'));
+	  var total = parseInt($('.carousel-inner', carousel).attr('total'));
 	  var end=parseInt(start)+parseInt(rows)
-	  $(".iterator", carousel).text(index);
-	  if (index == end - 2) {
+	  $(".iterator", carousel).text(index);	
+		if (index == 1) { $('#back-carousel-button').hide();}
+			else
+			{$('#back-carousel-button').show();}// enable back button unless we are on the first image
+		if (index == total) { $('#forward-carousel-button').hide();}
+			else
+			{$('#forward-carousel-button').show();}// enable forward button unless we are on the last image			
+	  if (index == end - 2) { // fetch more items when we get close to the end of our set
 		  $.getScript("/update_carousel?druid=" + druid + "&rows=" + rows + "&start=" + end)
 		}
 	});	
