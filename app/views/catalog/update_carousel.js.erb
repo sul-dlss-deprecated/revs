@@ -1,2 +1,4 @@
-$('#collection_carousel').html("<%= escape_javascript(render( :partial => "collection_member_carousel", :locals => {:rows=>@rows,:start=>@start})).html_safe %>");
-showOnLoad();
+$('#carousel-items').append("<%= escape_javascript(render( :partial => "collection_member_carousel_items", :locals => {:rows=>@rows,:start=>@start})).html_safe %>");
+var carousel=$("#collection_carousel");
+$('.carousel-inner', carousel).attr('rows','<%=@rows%>');
+$('.carousel-inner', carousel).attr('start','<%=@start%>');

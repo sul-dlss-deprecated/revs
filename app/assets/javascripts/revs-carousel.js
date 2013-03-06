@@ -2,13 +2,14 @@ $(document).ready(function(){
 	// Carousel on Collection show page
   $("#collection_carousel").bind('slid', function(){
 	  var carousel = $(this);
+	  var druid= $('.carousel-inner', carousel).attr('druid');
 	  var index = parseInt($('.active', carousel).attr('image-number'));
 	  var rows = parseInt($('.carousel-inner', carousel).attr('rows'));
 	  var start = parseInt($('.carousel-inner', carousel).attr('start'));
 	  var end=parseInt(start)+parseInt(rows)
 	  $(".iterator", carousel).text(index);
-	  if (index == end) {
-		// fetch next set
+	  if (index == end - 2) {
+		  $.getScript("/update_carousel?druid=" + druid + "&rows=" + rows + "&start=" + end)
 		}
 	});	
 	

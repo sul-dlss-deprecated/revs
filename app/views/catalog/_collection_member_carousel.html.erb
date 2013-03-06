@@ -1,24 +1,10 @@
-<div start="<%=start%>" rows="<%=rows%>" class="carousel-inner">
-	<%- @carousel_members.each_with_index do |member, index| -%>
-	 <div image-number="<%=index+start.to_i+1%>" class="item<%= " active" if index == 0 %>">
-	   <%= link_to(image_tag(member.images(:large).first, :alt => member[blacklight_config.show.heading]),item_path(member)) %>
-	   <%- if member.has_key?(blacklight_config.show.heading) -%>
-	     <div class="carousel-caption"><p><%= member[blacklight_config.show.heading]%></p></div>
-	   <%- end -%>
-	 </div>
-	<%- end -%>
+<div start="<%=start%>" rows="<%=rows%>" druid="<%=@document.id%>" id="carousel-items" class="carousel-inner">
+	<%= render :partial=> "collection_member_carousel_items", :locals => {:rows=>rows,:start=>start}%>
 </div>
 
 <div class="hidden showOnLoad carousel-controls">
 	 <a class="carousel-control left" href="#collection_carousel" data-slide="prev">&lsaquo;</a>
 	 <span class="number-of-items">
-		<span class="iterator"><%=start.to_i+1%></span><%= " - #{number_with_delimiter(@carousel_members.size + start.to_i)}" if @carousel_members.total_members > @carousel_members.size %> of <%= pluralize(number_with_delimiter(@carousel_members.total_members), t('revs.collection_members.items_name')) %></span>
+		<span class="iterator"><%=start.to_i+1%></span> of <%= pluralize(number_with_delimiter(@carousel_members.total_members), t('revs.collection_members.items_name')) %></span>
 	 <a class="carousel-control right"  href="#collection_carousel" data-slide="next">&rsaquo;</a>
 </div>
-
-<% if (start.to_i-rows.to_i) >= 0 %>
-		<%#= link_to "previous images",update_carousel_path(:druid=>@document.id,:rows=>rows,:start=>(start.to_i-rows.to_i)),:remote=>true,:class=>'hidden showOnLoad left' %>
-<% end %>
-<% if (start.to_i+rows.to_i) < @carousel_members.total_members %>
-		<%#= link_to "more images",update_carousel_path(:druid=>@document.id,:rows=>rows,:start=>(start.to_i+rows.to_i)),:remote=>true,:class=>'hidden showOnLoad right' %>
-<% end %>
