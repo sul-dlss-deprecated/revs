@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe("Search Pages",:type=>:request,:integration=>true) do
+describe("Catalog Controller Pages",:type=>:request,:integration=>true) do
   
   before(:each) do
     @collection1="David Nadig Collection"
@@ -32,7 +32,7 @@ describe("Search Pages",:type=>:request,:integration=>true) do
     page.should have_xpath("//a/@href['/catalog?f%5Bformat_ssim%5D%5B%5D=slides']")
     page.should have_xpath("//a/@href['catalog?f%5Bcollection_ssim%5D%5B%5D=John+Dugdale+Collection']")
     page.should have_xpath("//a/@href['/catalog?f%5Bpub_year_isim%5D%5B%5D=1960']")
-    page.should have_content('Other items in John Dugdale Collection (2)')
+    page.should have_content('Other items in John Dugdale Collection (2 of 2)')
     page.should have_xpath("//img/@src['https://stacks.stanford.edu/image/qb957rw1430/2011-023DUG-3.0_0015_square']")
   end
   
