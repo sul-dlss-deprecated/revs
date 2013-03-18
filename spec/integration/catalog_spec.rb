@@ -28,12 +28,11 @@ describe("Catalog Controller Pages",:type=>:request,:integration=>true) do
     page.should have_content('slides')
     page.should have_content('1960')
     page.should have_content('John Dugdale Collection')
-    page.should have_xpath("//img/@src['https://stacks.stanford.edu/image/yt907db4998/2011-023DUG-3.0_0017_thumb']")
-    page.should have_xpath("//a/@href['/catalog?f%5Bformat_ssim%5D%5B%5D=slides']")
-    page.should have_xpath("//a/@href['catalog?f%5Bcollection_ssim%5D%5B%5D=John+Dugdale+Collection']")
-    page.should have_xpath("//a/@href['/catalog?f%5Bpub_year_isim%5D%5B%5D=1960']")
-    page.should have_content('Other items in John Dugdale Collection (2 of 2)')
-    page.should have_xpath("//img/@src['https://stacks.stanford.edu/image/qb957rw1430/2011-023DUG-3.0_0015_square']")
+    page.should have_xpath("//img[contains(@src, \"image/yt907db4998/2011-023DUG-3.0_0017_thumb\")]")
+    page.should have_xpath("//a[contains(@href, \"/catalog?f%5Bformat_ssim%5D%5B%5D=slides\")]")    
+    page.should have_xpath("//a[contains(@href, \"/catalog?f%5Bcollection_ssim%5D%5B%5D=John+Dugdale+Collection\")]")    
+    page.should have_xpath("//a[contains(@href, \"/catalog?f%5Bpub_year_isim%5D%5B%5D=1960\")]")    
+    page.should have_xpath("//img[contains(@src, \"image/qb957rw1430/2011-023DUG-3.0_0015_square\")]")
   end
   
   it "should show a search result after searching for a title" do
@@ -41,7 +40,7 @@ describe("Catalog Controller Pages",:type=>:request,:integration=>true) do
     page.should have_content('Results')
     page.should have_content('1 - 4 of 4')
     page.should have_content('Marlboro 12 Hour, August 12-14')
-    page.should have_xpath("//img/@src['https://stacks.stanford.edu/image/yh093pt9555/2012-027NADI-1966-b1_6.4_0011_thumb']")
+    page.should have_xpath("//img[contains(@src, \"image/yh093pt9555/2012-027NADI-1966-b1_6.4_0011_thumb\")]")
     page.should have_content('black-and-white negatives')
   end
   
@@ -50,7 +49,7 @@ describe("Catalog Controller Pages",:type=>:request,:integration=>true) do
     page.should have_content('Results')
     page.should have_content('1 - 5 of 5')
     page.should have_content('Lime Rock Continental, September 1')
-    page.should have_xpath("//img/@src['https://stacks.stanford.edu/image/dd482qk0417/2012-027NADI-1969-b4_12.2_0021_thumb']")
+    page.should have_xpath("//img[contains(@src, \"image/dd482qk0417/2012-027NADI-1969-b4_12.2_0021_thumb\")]")
     page.should have_content('black-and-white negatives')
   end
     
