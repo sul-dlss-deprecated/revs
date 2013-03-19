@@ -42,4 +42,4 @@ end
 
 Revs::Application.config.purl_plugin_server = "test"
 Revs::Application.config.purl = "http://purl-test.stanford.edu"
-Revs::Application.config.purl_plugin_location = "http://image-viewer.stanford.edu/javascripts/purl_embed_jquery_plugin.js"
+Revs::Application.config.purl_plugin_location = "//image-viewer.stanford.edu/javascripts/purl_embed_jquery_plugin.js"
