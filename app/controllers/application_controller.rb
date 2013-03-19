@@ -7,7 +7,12 @@ class ApplicationController < ActionController::Base
   rescue_from Exception, :with=>:exception_on_website
   helper_method :application_name,:request_path,:on_home_page
   layout "revs"
+
+  before_filter :require_http
   
+  def require_http
+    redirect_to :protocol => "http://" if (request.ssl?) 
+  end  
 
   def application_name
     "Revs Digital Library"
