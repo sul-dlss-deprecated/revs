@@ -39,8 +39,12 @@ namespace :revs do
   
   desc "Delete and index all fixtures in solr"
   task :refresh_fixtures do
-    Rake::Task["revs:delete_records_in_solr"].invoke
-    Rake::Task["revs:index_fixtures"].invoke
+    unless Blacklight.solr.uri.port == 8080
+      Rake::Task["revs:delete_records_in_solr"].invoke
+      Rake::Task["revs:index_fixtures"].invoke
+    else
+      puts "Refusing to refresh fixtures since you are connecting on port 8080.  You know, for safety."
+    end
   end
   
   desc "Index all fixutres into solr"
@@ -55,11 +59,11 @@ namespace :revs do
   
   desc "Delete all records in solr"
   task :delete_records_in_solr do
-   unless Rails.env.production?
+   unless Rails.env.production? || Blacklight.solr.uri.port == 8080
       puts "Deleting all solr documents from #{Blacklight.solr.options[:url]}"
       RestClient.post "#{Blacklight.solr.options[:url]}/update?commit=true", "<delete><query>*:*</query></delete>" , :content_type => "text/xml"
     else
-      puts "Did not delete since we're running under the #{Rails.env} environment and not under test. You know, for safety."
+      puts "Refusing to delete since we're running under the #{Rails.env} environment or connecting on port 8080. You know, for safety."
     end
   end
 end
