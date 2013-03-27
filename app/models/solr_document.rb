@@ -8,6 +8,26 @@ class SolrDocument
   def title
     self[:title_tsi]
   end
+  
+  def description
+    self[blacklight_config.collection_description_field.to_sym]
+  end
+  
+  def years
+    self[:pub_year_isim]
+  end
+  
+  def formats
+    self[:format_ssim]
+  end
+  
+  def identifier
+    self[:source_id_ssi]
+  end
+  
+  def collection_names
+    self[blacklight_config.collection_member_collection_title_field.to_sym]
+  end
 
   def collection?
     self.has_key?(blacklight_config.collection_identifying_field) and 

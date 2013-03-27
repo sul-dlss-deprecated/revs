@@ -1,10 +1,13 @@
 <dl class="dl-horizontal  dl-invert">
-	<% if document[:pub_year_isim] %>
-  	<dt>Year:</dt><dd><%=show_formatted_list(document[:pub_year_isim],:facet=>'pub_year_isim')%>&nbsp;</dd>
-  <% elsif document[:pub_year_isim] %>
-		<dt>Year:</dt><dd><%=document[:pub_year_isim]%>&nbsp;</dd>
+	<% if document.description %>
+		<dt>Description:</dt><dd><%=show_formatted_list document.description%></dd>
 	<% end %>
-	<dt>Format:</dt><dd><%=show_formatted_list(document[:format_ssim],:facet=>'format_ssim')%>&nbsp;</dd>
-  <dt>Collection:</dt><dd><%=show_formatted_list(document[:collection_ssim],:facet=>'collection_ssim')%>&nbsp;</dd>
-  <dt>Identifier:</dt><dd><%=document[:source_id_ssi]%>&nbsp;</dd>
+	<% if document.years %>
+  	<dt>Year:</dt><dd><%=show_formatted_list(document.years,:facet=>'pub_year_isim')%>&nbsp;</dd>
+	<% end %>
+	<% if document.formats %>
+		<dt>Format:</dt><dd><%=show_formatted_list(document.formats,:facet=>'format_ssim')%>&nbsp;</dd>
+	<% end %>
+  <dt>Collection:</dt><dd><%=show_formatted_list(document.collection_names,:facet=>'collection_ssim')%>&nbsp;</dd>
+	<dt>Identifier:</dt><dd><%=document.identifier%>&nbsp;</dd>
 </dl>
