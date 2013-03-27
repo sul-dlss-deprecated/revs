@@ -59,6 +59,7 @@
       <str name="qf">
         id
         title_tsi
+				description_tsim
       </str>
       <str name="pf">
         title_tsi^20

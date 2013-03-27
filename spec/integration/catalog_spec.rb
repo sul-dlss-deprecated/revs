@@ -48,6 +48,21 @@ describe("Catalog Controller Pages",:type=>:request,:integration=>true) do
     visit search_path(:q=>'Marlboro')
     page.should have_content('Results')
     page.should have_content('1 - 4 of 4')
+    page.should have_content('Marlboro Governor\'s Cup, April 2-3')
+    page.should have_xpath("//img[contains(@src, \"image/bg152pb0116/2012-027NADI-1966-b1_1.0_0013_thumb\")]")
+    page.should have_content('black-and-white negatives')
+  end
+
+  it "should not show a search result after searching for a non existent string" do
+    visit search_path(:q=>'bogus')
+    page.should have_content('Results')
+    page.should have_content('No entries found')
+  end
+  
+  it "should show a search result after searching for a description" do
+    visit search_path(:q=>'description of this')
+    page.should have_content('Results')
+    page.should have_content('1 to 1 of 1')
     page.should have_content('Marlboro 12 Hour, August 12-14')
     page.should have_xpath("//img[contains(@src, \"image/yh093pt9555/2012-027NADI-1966-b1_6.4_0011_thumb\")]")
     page.should have_content('black-and-white negatives')
