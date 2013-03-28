@@ -61,6 +61,16 @@
       dd {margin-left: 0;}
     }
   }
+  #feedback_link a {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: block;
+    font-size: 13px;
+    margin-top: 60px;
+    padding: 4px;
+    text-align: center;
+  }
 }
 
 /* Responsive styles */
