@@ -3,9 +3,12 @@
     $("#image_workspace").embedPurl({'server': '<%=Revs::Application.config.purl_plugin_server%>',
                                      'druid': '<%= document[:id] %>',
                                      'size': 'thumb',
-                                     'layout': 'thin-nav-bottom',
                                      'width': 425,
-                                     'height': 460});
+                                     'height': 460,
+													           'layout': 'thumbs-nav-bottom',
+  													         'availableSizes': [<%=raw available_sizes%>],
+	  												         'zoomOnClick': true
+																	});
   });
 </script>
 

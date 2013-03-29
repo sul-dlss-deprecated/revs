@@ -4,6 +4,12 @@ module ApplicationHelper
     request.path == '/' && params[:f].blank?
   end
   
+  def available_sizes
+   sizes=["'thumb'","'zoom'"]
+   sizes+=["'small'","'medium'","'large'","'xlarge'","'full'"] unless sunet_user.blank?
+   return sizes.join(',')    
+  end
+  
   def title_no_revs(title)
     title.gsub(" of the Revs Institute","")
   end

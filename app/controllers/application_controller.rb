@@ -5,13 +5,17 @@ class ApplicationController < ActionController::Base
   # these methods in order to perform user specific actions. 
 
   rescue_from Exception, :with=>:exception_on_website
-  helper_method :application_name,:request_path,:on_home_page,:show_terms_dialog?
+  helper_method :application_name,:request_path,:on_home_page,:show_terms_dialog?, :sunet_user
   layout "revs"
 
   def application_name
     "Revs Digital Library"
   end
 
+  def sunet_user
+    request.env["WEBAUTH_USER"] || ""
+  end
+    
   def request_path
     Rails.application.routes.recognize_path(request.path)
   end
