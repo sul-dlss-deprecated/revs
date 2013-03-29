@@ -8,12 +8,6 @@ class ApplicationController < ActionController::Base
   helper_method :application_name,:request_path,:on_home_page,:show_terms_dialog?
   layout "revs"
 
-  before_filter :require_http
-  
-  def require_http
-    redirect_to :protocol => "http://" if (request.ssl?) 
-  end  
-
   def application_name
     "Revs Digital Library"
   end
