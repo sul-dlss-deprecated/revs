@@ -53,6 +53,15 @@ This is a Blacklight Application for the Revs Digital Library at Stanford Univer
     
 1. Go to <http://localhost:3000>
 
+## Terms Dialog Box
+
+Configuration for the terms dialog box is in the application_controller.rb.
+
+The "show_terms_dialog?" method defines when and if the terms dialog needs to be shown (it should return true or false based on whatever
+logic you want).
+
+The "accept_terms" method defines what happens when the user accepts.  It can set a cookie with a specific expiration if you don't 
+want the user to see the terms dialog box again for a specific period of time (which could be very long if you essentially want never again).
 
 ## Deployment
 

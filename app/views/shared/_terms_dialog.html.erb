@@ -1,0 +1,25 @@
+<script>$(function() {
+  $('#terms-dialog').modal({keyboard: false, backdrop: 'static'},'show')});
+	// click agree on modal terms window sends ajax event
+	$(document).ready(function(){
+  
+		$(".tod-agree").each(function(){
+    	$(this).click(function(){
+      	$.post($(this).attr("data-url") + "?format=js");
+    	});
+  	});
+});
+</script>
+
+<div class="modal fade" id="terms-dialog">
+  <div class="modal-header">
+    <h3><%=t('revs.about.terms_dialog_title')%></h3>
+  </div>
+  <div class="modal-body">
+    <p><%=t('revs.about.terms_of_use_message')%></p>
+  </div>
+  <div class="modal-footer">
+    <a href="http://www.stanford.edu" class="btn"><%=t('revs.about.terms_disagree')%></a>
+    <button class="tod-agree btn btn-primary" data-url="<%=accept_terms_path%>" data-dismiss="modal"><%=t('revs.about.terms_continue')%></button>
+  </div>
+</div>

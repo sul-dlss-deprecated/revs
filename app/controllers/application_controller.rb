@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   # these methods in order to perform user specific actions. 
 
   rescue_from Exception, :with=>:exception_on_website
-  helper_method :application_name,:request_path,:on_home_page
+  helper_method :application_name,:request_path,:on_home_page,:show_terms_dialog?
   layout "revs"
 
   before_filter :require_http
@@ -25,7 +25,25 @@ class ApplicationController < ActionController::Base
   def on_home_page
     request_path[:controller] == 'catalog' && request_path[:action] == 'index' && params[:f].blank?
   end
-    
+
+  def seen_terms_dialog?
+    cookies[:seen_terms] || false
+  end
+  
+  def show_terms_dialog?
+    true && !seen_terms_dialog?
+#    %w{production staging}.include?(Rails.env) && !seen_terms_dialog?   # we are using the terms dialog to show a warning to users who are viewing the site on production or staging
+  end
+
+  def accept_terms
+    cookies[:seen_terms] = { :value => true, :expires => 1.day.from_now } # they've seen it now, don't show it for another day
+    if params[:return_to].blank?
+      render :nothing=>true
+    else
+      redirect_to params[:return_to]
+    end
+  end
+        
   def exception_on_website(exception)
     @exception=exception
 

@@ -38,6 +38,11 @@
   <% onload_text = "$('input#q').focus();" if params[:q].to_s.empty? and params[:f].to_s.empty? and params[:id].nil? %>
   <body onload="<%= onload_text %>" class="<%= render_body_class %>">
 
+    <%= render(:partial => 'shared/terms_dialog') if show_terms_dialog?%>
+    <noscript>
+      <% if show_terms_dialog? %><meta http-equiv="refresh" content="0; URL=/about/terms_dialog?return_to=<%=request.path%>"><% end %>
+    </noscript>
+
     <div id="su-wrap"> <!-- #su-wrap start -->
       <div id="su-content"> <!-- #su-content start -->
         

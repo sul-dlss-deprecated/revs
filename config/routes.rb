@@ -26,6 +26,8 @@ Revs::Application.routes.draw do
   match 'item/:id', :to=> 'catalog#show', :as =>'item'
   match 'collection/:id', :to=> 'catalog#show', :as =>'collection'
   
+  match 'accept_terms', :to=> 'application#accept_terms', :as=> 'accept_terms', :via=>:post
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
