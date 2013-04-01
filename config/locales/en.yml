@@ -29,7 +29,7 @@ en:
       team_title: 'Project Team'
       version_title: 'Application Version'
       terms_dialog_title: 'Notice'
-      terms_of_use_message: 'The Digital Library is under development and contains content that has not been reviewed by curators. By continuing, I acknowledge I understand and that I can provide feedback about the site and about content.'
+      terms_of_use_message: 'The Revs Digital Library is under development and contains content that has not been reviewed by curators. By continuing, I acknowledge I understand and that I can provide feedback about the site and about content.'
       terms_continue: 'Continue'
       terms_disagree: 'Do not continue'
     collection:

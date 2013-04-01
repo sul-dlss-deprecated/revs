@@ -160,6 +160,17 @@ span.content-type {
 
 .search_form .btn {float: right;}
 
+#terms-dialog .modal-header {
+  background-color: #990000;
+  border-bottom: 1px solid #dddddd;
+  h3 {
+    color: #fff;
+    font-size: 1.25em;
+    padding-top: 0;
+    text-align: center;
+  }
+}
+
 // Override Blacklight theme pagination styling
 .pagination {
   border-top: 1px solid #dddddd;
