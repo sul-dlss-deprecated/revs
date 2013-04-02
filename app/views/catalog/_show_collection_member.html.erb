@@ -26,6 +26,26 @@
 	  </noscript>
 	</div>
   <div class="span5 metadata">
+
+    <div class="row results-nav">
+      <div class="span2 back-to-results">
+        <%= link_back_to_catalog(:label => '&laquo; search results'.html_safe) %>
+      </div>
+      <div class="span3 results-pagination">
+        <% if @previous_document || @next_document %>
+          <span class="previousNextDocument">
+            <%= link_to_previous_document @previous_document %> |
+
+            <%= item_page_entry_info %> |
+
+            <%= link_to_next_document @next_document %>
+        </span>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span5">
     <%= render_document_heading.html_safe %>
     <%= render :partial => "show_default_collection_member", :locals => {:document => @document} %>
     <%= link_to('<i class="icon-picture"></i> Full citation page with view/download'.html_safe, "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'new') %>
@@ -33,6 +53,9 @@
     <span id="feedback_link">
       <%= link_to t('revs.nav.content_corrections'),contact_us_path(:subject=>'metadata',:from=>request.path) %>
     </span>
+
+    </div>
+  </div>
 
   </div>
 </div>

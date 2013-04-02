@@ -1,9 +1,14 @@
 <div class="<%= render_document_class document %> document">
-  <%= link_to(image_tag(document.images(:large).first,
-        :alt => document.title, :title => document.title, :border => 0),
-        catalog_path(document[:id])) %>
+  <%= link_to_document document,
+        :label => image_tag(document.images(:large).first,
+        :alt => document.title,
+        :title => document.title,
+        :border => 0),
+        :counter => (document_counter + 1 + @response.params[:start].to_i) %>
+
   <h5 class="index_title">
-    <%= link_to(truncate(document.title, :length => 40),
-          catalog_path(document[:id])) %>
+    <%= link_to_document document,
+        :label => document_show_link_field,
+        :counter => (document_counter + 1 + @response.params[:start].to_i) %>
   </h5>
 </div>
