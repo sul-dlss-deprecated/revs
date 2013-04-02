@@ -43,4 +43,8 @@ module ApplicationHelper
     end.join(', ').html_safe
   end
   
+  def render_locale_class
+    "lang-#{I18n.locale}"
+  end
+
 end
