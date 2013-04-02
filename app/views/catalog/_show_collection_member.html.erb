@@ -7,8 +7,14 @@
                                      'height': 460,
 													           'layout': 'thumbs-nav-bottom',
   													         'availableSizes': [<%=raw available_sizes%>],
-	  												         'zoomOnClick': true
-																	});
+  												           'zoomOnClick': true,
+                                     'tooltipTexts': {
+                                     '<%= I18n.locale %>': {
+                                       'OpenInFullScreen': '<%= t('revs.show.open_in_full_screen') %>',
+                                       'Close': '<%= t('revs.show.close') %>'
+                                       }
+                                     }
+                                   });
   });
 </script>
 
@@ -20,7 +26,7 @@
 
 <div class="row">
 	<div class="span7 member-image">
-	  <div id="image_workspace" class="showOnLoad hidden">One moment please...</div>
+	  <div id="image_workspace" class="showOnLoad hidden"><%= t('revs.show.wait') %></div>
 	  <noscript>
 	    	<%= link_to(image_tag(@document.images(:large).first), "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'new') %>
 	  </noscript>

@@ -57,3 +57,7 @@ en:
       history:
         title: 'History'
         search_history: 'Search History'
+    show:
+      wait: 'One moment please...'
+      open_in_full_screen: 'Open in full screen'
+      close: 'Close'
