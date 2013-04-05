@@ -6,14 +6,14 @@ module ApplicationHelper
   
   def available_sizes
    sizes=["'thumb'","'zoom'"]
-   sizes+=["'small'","'medium'","'large'","'xlarge'","'full'"] unless sunet_user.blank?
+   sizes+=["'small'","'medium'","'large'","'xlarge'","'full'"] if sunet_user_signed_in?
    return sizes.join(',')    
   end
   
   def title_no_revs(title)
     title.gsub(" of the Revs Institute","")
   end
-
+  
   # take in a hash of options for the contact us form, and then pass the values of the hash through the translation engine
   def translate_options(options)
     result={}

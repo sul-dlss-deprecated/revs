@@ -1,12 +1,10 @@
 Revs::Application.routes.draw do
+  devise_for :users
+
   root :to => "catalog#index"
 
   Blacklight.add_routes(self)
-  
-  match 'login',   :to => 'catalog#index', :as => 'new_user_session'
-  match 'logout',  :to => 'catalog#index', :as => 'destroy_user_session'
-  match 'account', :to => 'catalog#index', :as => 'edit_user_registration'
-  
+    
   match 'version', :to=>'about#show', :defaults => {:id=>'version'}, :as => 'version'
 
   match 'search', :to=> 'catalog#index', :as=>'search'
@@ -74,10 +72,6 @@ Revs::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
 
   # See how all your routes lay out with "rake routes"
 

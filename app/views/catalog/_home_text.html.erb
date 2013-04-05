@@ -1,3 +1,7 @@
+<% if user_signed_in?  %>
+	Welcome
+<% end %>
+
 <% cache("home", :expires_in=>12.hours)  do %>
 	<!-- begin collection carousel for JavaScript users -->
 	<div class="row slideshow showOnLoad" style="display:none;">

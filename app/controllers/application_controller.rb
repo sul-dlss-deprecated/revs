@@ -5,15 +5,24 @@ class ApplicationController < ActionController::Base
   # these methods in order to perform user specific actions. 
 
   rescue_from Exception, :with=>:exception_on_website
-  helper_method :application_name,:request_path,:on_home_page,:show_terms_dialog?, :sunet_user
+  helper_method :application_name,:request_path,:on_home_page,:show_terms_dialog?, :sunet_user_signed_in?
   layout "revs"
+
+  before_filter :set_sunet_user
 
   def application_name
     "Revs Digital Library"
   end
 
-  def sunet_user
-    request.env["WEBAUTH_USER"] || ""
+  def set_sunet_user
+    if request.env["WEBAUTH_USER"] && !user_signed_in? # if we have a webauthed user who is not yet signed in, let's sign them in or create them a new user role if needed
+      user=User.where(:sunet=>request.env["WEBAUTH_USER"]) || User.create(:sunet=>request.env["WEBAUTH_USER"],:password => 'password', :password_confirmation => 'password')
+      sign_in user
+    end
+  end
+  
+  def sunet_user_signed_in?
+    !request.env["WEBAUTH_USER"].blank?
   end
     
   def request_path
