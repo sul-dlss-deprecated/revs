@@ -9,11 +9,7 @@
 						:id=>'contact_us_link'
           )
       %>
-			<% if user_signed_in? %>
-				| Welcome <%=current_user.to_s%> | <%=link_to "Sign out",destroy_user_session_path, :method=>:delete%>
-			<% else %>
-			 | <%=link_to "Sign in",new_user_session_path%> | <%=link_to "Sign up",new_user_registration_path%>
-			<% end %>
+			<%= render :partial=>'shared/user_navigation' %>
 		</span>		
   </div> <!-- .container end -->
 </div> <!-- #brandbar end -->

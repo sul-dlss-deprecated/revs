@@ -10,12 +10,19 @@ class User < ActiveRecord::Base
   
   include Blacklight::User
   
+  def self.create_new_sunet_user(sunet)
+    user = User.new(:email=>"#{sunet}@stanford.edu",:sunet=>sunet,:password => 'password', :password_confirmation => 'password')
+    user.skip_confirmation!
+    user.save!
+    user
+  end
+  
   # Blacklight uses #to_s on your user class to get
   # a user-displayable login/identifier for the account.
   def to_s
     return email || sunet
   end
-
+  
   def is_webauth?
     !sunet.blank?
   end

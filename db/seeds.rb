@@ -9,3 +9,9 @@ CollectionHighlight.create(id:2,druid:'kh678dr8608',image_url:'https://stacks.st
 CollectionHighlight.create(id:3,druid:'xw162vm3550',image_url:'https://stacks.stanford.edu/image/fc048tp5530/2012-006MANO-1963-b1_2.0_0010_thumb') # Duke Manor
 CollectionHighlight.create(id:4,druid:'wn860zc7322',image_url:'https://stacks.stanford.edu/image/qb957rw1430/2011-023DUG-3.0_0015_thumb') # Dugdale
 CollectionHighlight.create(id:5,druid:'kz071cg8658',image_url:'https://stacks.stanford.edu/image/bg152pb0116/2012-027NADI-1966-b1_1.0_0013_thumb') # Nadig
+
+unless User.where(:email=>'archivist1@example.com').first
+  user=User.new(:email=>'archivist1@example.com',:password=>'beatcal',:password_confirmation=>'beatcal')
+  user.skip_confirmation!
+  user.save!
+end
