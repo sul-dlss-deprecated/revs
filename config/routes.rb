@@ -28,6 +28,8 @@ Revs::Application.routes.draw do
   
   match 'accept_terms', :to=> 'application#accept_terms', :as=> 'accept_terms', :via=>:post
   
+  resources :annotations
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -15,6 +15,7 @@
                                        }
                                      }
                                    });
+		$('#annotate_link').click(function() { annotateImage(); });
   });
 </script>
 
@@ -56,6 +57,8 @@
     <%= render :partial => "show_default_collection_member", :locals => {:document => @document} %>
     <%= link_to('<i class="icon-picture"></i> Full citation page with view/download'.html_safe, "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'new') %>
 
+		<p><%= link_to('Annotate Image','#',:id=>'annotate_link',:"data-druid"=>document[:id],:class=>"showOnLoad hidden") %></p>
+		
     <span id="feedback_link">
       <%= link_to t('revs.nav.content_corrections'),contact_us_path(:subject=>'metadata',:from=>request.path) %>
     </span>
