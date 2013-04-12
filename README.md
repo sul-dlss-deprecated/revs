@@ -31,6 +31,8 @@ This is a Blacklight Application for the Revs Digital Library at Stanford Univer
 
         rake db:migrate
         rake db:migrate RAILS_ENV=test
+				rake db:seed
+        rake db:seed RAILS_ENV=test				
 
 1. Load the test fixtures:
 

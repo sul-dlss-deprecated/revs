@@ -5,23 +5,42 @@ class ApplicationController < ActionController::Base
   # these methods in order to perform user specific actions. 
 
   rescue_from Exception, :with=>:exception_on_website
-  helper_method :application_name,:request_path,:on_home_page,:show_terms_dialog?, :sunet_user
+  helper_method :application_name,:on_home_page,:on_collections_pages,:on_about_pages,:show_terms_dialog?, :sunet_user_signed_in?
   layout "revs"
 
+  prepend_before_filter :simulate_sunet, :if=>Revs::Application.config.simulate_sunet_user
+  before_filter :set_sunet_user 
+
+  def simulate_sunet
+    request.env["WEBAUTH_USER"]='sunetuser'
+  end
+  
   def application_name
     "Revs Digital Library"
   end
 
-  def sunet_user
-    request.env["WEBAUTH_USER"] || ""
-  end
-    
-  def request_path
-    Rails.application.routes.recognize_path(request.path)
+  def set_sunet_user
+    if request.env["WEBAUTH_USER"] && !user_signed_in? # if we have a webauthed user who is not yet signed in, let's sign them in or create them a new user role if needed
+      user=(User.where(:sunet=>request.env["WEBAUTH_USER"]).first || User.create_new_sunet_user(request.env["WEBAUTH_USER"])) # passwords are irrelvant and never used for SUNET users
+      sign_in user unless request.path==user_session_path
+    end
   end
   
+  def sunet_user_signed_in?
+    !request.env["WEBAUTH_USER"].blank?
+  end
+    
+  
   def on_home_page
-    request_path[:controller] == 'catalog' && request_path[:action] == 'index' && params[:f].blank?
+    request.path==root_path && params[:f].blank?
+  end
+
+  def on_collections_pages
+    controller_path=="catalog" && !on_home_page
+  end
+  
+  def on_about_pages
+    controller_path == 'about'
   end
 
   def seen_terms_dialog?

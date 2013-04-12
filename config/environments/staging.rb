@@ -68,7 +68,7 @@ Revs::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 end
-
+Revs::Application.config.simulate_sunet_user = false # SET TO FALSE IN PRODUCTION!!! if true, then this will simulate you being logged in as a sunet userRevs::Application.config.purl_plugin_server = "prod"
 Revs::Application.config.purl_plugin_server = "prod"
 Revs::Application.config.purl = "//purl.stanford.edu"
 Revs::Application.config.purl_plugin_location = "//image-viewer.stanford.edu/javascripts/purl_embed_jquery_plugin.js"

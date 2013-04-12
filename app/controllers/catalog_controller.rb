@@ -4,26 +4,16 @@ require 'blacklight/catalog'
 class CatalogController < ApplicationController  
 
   include Blacklight::Catalog
-  
-  def current_user; nil; end
-  
-  def guest_user
-    User.find(session[:guest_user_id].nil? ? session[:guest_user_id] = create_guest_user.id : session[:guest_user_id])
-  end
-  
-  def current_or_guest_user
-    guest_user
-  end
-  
+    
   def index
 
     if on_home_page
           
       unless fragment_exist?('home')
         # get the collection highlights from the database
-        highlights = CollectionHighlight.find(:all)
+        highlights = CollectionHighlight.all
 
-        # get tht titles and descriptions from solr, but only for those which we find in solr (this allows us to have seeds in the database for items which may not be in solr, eg. in development)
+        # get the titles and descriptions from solr, but only for those which we find in solr (this allows us to have seeds in the database for items which may not be in solr, eg. in development)
         highlight_collections_query=Blacklight.solr.get 'select',:params=>{:q=>highlights.map{|highlight| 'id:"' + highlight.druid + '"'}.join(' OR ')}
         @highlight_collections=highlight_collections_query['response']['docs'].shuffle
         @highlight_collections.each {|highlight| highlight.merge!('image_url'=>CollectionHighlight.find_by_druid(highlight['id']).image_url)} # add the URL for each highlight image to the solr documents
@@ -273,10 +263,4 @@ class CatalogController < ApplicationController
     end
   end
 
-  private
-  def create_guest_user
-    u = User.create
-    u.save
-    u
-  end
 end 

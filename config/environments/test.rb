@@ -39,7 +39,7 @@ Revs::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 end
-
+Revs::Application.config.simulate_sunet_user = false # SET TO FALSE IN PRODUCTION!!! if true, then this will simulate you being logged in as a sunet userRevs::Application.config.purl_plugin_server = "prod"
 Revs::Application.config.purl_plugin_server = "test"
 Revs::Application.config.purl = "//purl-test.stanford.edu"
 Revs::Application.config.purl_plugin_location = "//image-viewer.stanford.edu/javascripts/purl_embed_jquery_plugin.js"

@@ -41,6 +41,7 @@ Revs::Application.configure do
   config.assets.debug = true
 end
 
+Revs::Application.config.simulate_sunet_user = true # if true, then this will simulate you being logged in as a sunet user
 Revs::Application.config.purl_plugin_server = "prod"
 Revs::Application.config.purl_plugin_location = "//image-viewer.stanford.edu/javascripts/purl_embed_jquery_plugin.js"
 Revs::Application.config.purl = "//purl.stanford.edu"

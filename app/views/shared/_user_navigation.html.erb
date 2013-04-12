@@ -1,0 +1,7 @@
+			<% if user_signed_in? && !sunet_user_signed_in?%>
+				| <%=link_to current_user.to_s, edit_user_registration_path%> | <%=link_to "Sign out",destroy_user_session_path, :method=>:delete%>
+			<% elsif sunet_user_signed_in? %>
+  			| <%=current_user.to_s%>
+			<% else %>
+	  		| <%=link_to "Sign in",new_user_session_path%> | <%=link_to "Sign up",new_user_registration_path%>
+			<% end %>
