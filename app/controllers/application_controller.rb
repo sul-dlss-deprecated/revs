@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   helper_method :application_name,:on_home_page,:on_collections_pages,:on_about_pages,:show_terms_dialog?, :sunet_user_signed_in?
   layout "revs"
 
-  prepend_before_filter :simulate_sunet, :if=>Revs::Application.config.simulate_sunet_user
+  prepend_before_filter :simulate_sunet, :if=>lambda{Revs::Application.config.simulate_sunet_user}
   before_filter :set_sunet_user 
 
   def simulate_sunet

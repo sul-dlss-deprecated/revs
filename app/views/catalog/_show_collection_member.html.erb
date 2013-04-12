@@ -7,17 +7,18 @@
                                      'height': 460,
 													           'layout': 'thumbs-nav-bottom',
   													         'availableSizes': [<%=raw available_sizes%>],
-  												           'zoomOnClick': true,
+  												           'zoomOnClick': false,
                                      'tooltipTexts': {
                                      '<%= I18n.locale %>': {
                                        'OpenInFullScreen': '<%= t('revs.show.open_in_full_screen') %>',
                                        'Close': '<%= t('revs.show.close') %>'
                                        }
                                      }
-                                   });
-		$('#annotate_link').click(function() { annotateImage(); });
+                                   });		
   });
 </script>
+
+<span class="hidden" id="druid" data-druid="<%=@document[:id]%>"></span>
 
 <div class="row">
   <div class="span12">
@@ -57,8 +58,10 @@
     <%= render :partial => "show_default_collection_member", :locals => {:document => @document} %>
     <%= link_to('<i class="icon-picture"></i> Full citation page with view/download'.html_safe, "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'new') %>
 
-		<% if user_signed_in%>
-			<p><%= link_to('Annotate Image','#',:id=>'annotate_link',:"data-druid"=>document[:id],:class=>"showOnLoad hidden") %></p>
+		<% if user_signed_in? %>
+			<p><%= link_to('View and add annotations','#',:id=>'annotate_link',:class=>"showOnLoad hidden") %></p>
+		<% else %>
+			<p><%= link_to('View annotations','#',:id=>'view_annotations_link',:class=>"showOnLoad hidden") %></p>
 		<% end %>
 		
     <span id="feedback_link">
