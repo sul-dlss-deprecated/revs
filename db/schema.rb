@@ -15,12 +15,15 @@ ActiveRecord::Schema.define(:version => 20130412181942) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "user_id"
-    t.text     "annotation"
-    t.string   "annotation_text"
+    t.text     "json"
+    t.string   "text"
     t.string   "druid"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
+
+  add_index "annotations", ["druid"], :name => "index_annotations_on_druid"
+  add_index "annotations", ["user_id"], :name => "index_annotations_on_user_id"
 
   create_table "bookmarks", :force => true do |t|
     t.integer  "user_id",     :null => false

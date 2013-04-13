@@ -40,7 +40,7 @@ function annotateImage() {
 function loadAnnotations() {
 	jQuery.getJSON("/annotations/"+jQuery("#druid").attr('data-druid') + ".json",function(data) {
 		for (var i = 0; i < data.length; i++) {
-				annotation=JSON.parse(data[i].annotation)
+				annotation=JSON.parse(data[i].json)
         anno.addAnnotation(annotation);
 			}
 	});
