@@ -5,16 +5,29 @@ class Annotation < ActiveRecord::Base
   belongs_to :user  
   attr_accessible :text, :json, :user_id, :druid
 
-  after_save :update_solr
+  after_create :add_annotation_to_solr
+  after_update :update_annotation_in_solr
 
-    def update_solr
+    def add_annotation_to_solr
 
-      id=self.druid
-      text=self.text
+      druid=self.druid
+      text=self.text.gsub('"','\"')
 
-      #RestClient.post "#{Blacklight.solr.options[:url]}/update?commit=true", "[{'id':'#{id}','annotations_tsim':{'add':'#{text}'}}]", :content_type => "application/json"
+      RestClient.post "#{Blacklight.solr.options[:url]}/update?commit=true", "[{\"id\":\"#{druid}\",\"annotations_tsim\":{\"add\":\"#{text}\"}}]",:content_type => :json, :accept=>:json
       
-  #    curl 'localhost:8983/solr/dev/update?commit=true' -H 'Content-type:application/json' -d '[{"id":"wn860zc7322","annotations_tsim":{"add":"!!another annotation"}}]'
+    end
+    
+    def update_annotation_in_solr
+      
+      # get all annotations for this image and update the solr document (its easier than trying to figure out exactly which annotation changed)
+      
+      druid=self.druid
+      
+      annotations=Annotation.where(:druid=>druid)
+      text_array = annotations.map {|annotation| annotation.text.gsub('"','\"')}
+      
+      RestClient.post "#{Blacklight.solr.options[:url]}/update?commit=true", "[{\"id\":\"#{druid}\",\"annotations_tsim\":{\"set\":[\"#{text_array.join('","')}\"]}}]", :content_type => :json, :accept=>:json
+            
     end
     
 end
