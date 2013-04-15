@@ -7,8 +7,8 @@ class AnnotationsController < ApplicationController
     @annotations=Annotation.includes(:user).where(:druid=>params[:id])
     @annotations.each do |annotation| # loop through all annotations
       annotation_hash=JSON.parse(annotation.json) # parse the annotation json into a ruby object
-      annotation_hash[:editable]=(annotation.user_id==current_user.id) # the annotation is editable if it belongs to the logged in user
-      annotation_hash[:username]=(annotation.user_id==current_user.id ? "me" : annotation.user.to_s) # add the username (or "me" if current user)
+      annotation_hash[:editable]=(user_signed_in? && (annotation.user_id==current_user.id)) # the annotation is editable if it belongs to the logged in user
+      annotation_hash[:username]=(user_signed_in? && (annotation.user_id==current_user.id) ? "me" : annotation.user.to_s) # add the username (or "me" if current user)
       annotation_hash[:updated_at]=annotation.updated_at.strftime('%B %d, %Y')
       annotation_hash[:id]=annotation.id
       annotation.json=annotation_hash.to_json # convert back to json

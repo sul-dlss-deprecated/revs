@@ -27,8 +27,10 @@
 </div>
 
 <div class="row">
-	<div class="span7 member-image">
+	<div class="span7">
 	  <div id="image_workspace" class="showOnLoad hidden"><%= t('revs.show.wait') %></div>
+		<%= image_tag(@document.images(:large).first,:id=>'annotatable_image',:class=>'hidden') %>
+  
 	  <noscript>
 	    	<%= link_to(image_tag(@document.images(:large).first), "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'new') %>
 	  </noscript>
@@ -59,10 +61,11 @@
     <%= link_to('<i class="icon-picture"></i> Full citation page with view/download'.html_safe, "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'new') %>
 
 		<% if user_signed_in? %>
-			<p><%= link_to('View and add annotations','#',:id=>'annotate_link',:class=>"showOnLoad hidden") %></p>
+			<p><%= link_to('View and add annotations','#',:id=>'annotate_link',:class=>"annotation_links showOnLoad hidden") %></p>
 		<% else %>
-			<p><%= link_to('View annotations','#',:id=>'view_annotations_link',:class=>"showOnLoad hidden") %></p>
+			<p><%= link_to('View annotations','#',:id=>'view_annotations_link',:class=>"annotation_links showOnLoad hidden") %></p>
 		<% end %>
+		<p><%= link_to('Hide annotations','#',:id=>'hide_annotations_link',:class=>"hidden") %></p>
 		
     <span id="feedback_link">
       <%= link_to t('revs.nav.content_corrections'),contact_us_path(:subject=>'metadata',:from=>request.path) %>

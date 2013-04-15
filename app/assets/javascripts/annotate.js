@@ -30,11 +30,21 @@ annotorious.plugin.addUsernamePlugin.prototype.onInitAnnotator = function(annota
   });
 }
 
-anno.addPlugin('addUsernamePlugin', {});
-
-function annotateImage() {	
-	anno.makeAnnotatable(jQuery('.pe-img-canvas')[0]);	
+function showAnnotations() {	
+	togglePURLEmbed();
+	toggleThumbImage();
+	enableAnnotations();
 	loadAnnotations();
+}
+
+function hideAnnotations() {
+	togglePURLEmbed();
+	toggleThumbImage();
+}
+	 
+function enableAnnotations() {
+	anno.makeAnnotatable(jQuery('#annotatable_image')[0]);	
+	anno.addPlugin('addUsernamePlugin', {});	
 }
 
 function loadAnnotations() {
@@ -46,28 +56,42 @@ function loadAnnotations() {
 	});
 }
 
+function togglePURLEmbed() {
+	jQuery('#image_workspace').toggleClass('hidden');	
+}
+
+function toggleThumbImage() {
+	jQuery('#annotatable_image').toggleClass('hidden');	
+}
+
 function disableNewAnnotations() {
 	anno.setSelectionEnabled(false);	
 }
 
 function toggleLinks() {
-	$('#annotate_link').hide();
-	$('#view_annotations_link').hide();
+ $('.annotation_links').toggleClass('hidden');
+ $('#hide_annotations_link').toggleClass('hidden');
 }
 
 $(document).ready(function(){
 	
 	$('#annotate_link').click(function() { 
-		annotateImage(); 
-		toggleLinks();
+		showAnnotations(); 
+    toggleLinks();
 		return false;
 	 });
 	
 	$('#view_annotations_link').click(function() {
-		 annotateImage(); 
+		 showAnnotations(); 
 		 disableNewAnnotations(); 
 		 toggleLinks();
 		 return false;
 	 });
 
+	$('#hide_annotations_link').click(function() {
+		 hideAnnotations(); 
+		 toggleLinks();
+		 return false;
+	 });
+	
 });

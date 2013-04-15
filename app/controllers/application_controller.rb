@@ -30,7 +30,6 @@ class ApplicationController < ActionController::Base
     !request.env["WEBAUTH_USER"].blank?
   end
     
-  
   def on_home_page
     request.path==root_path && params[:f].blank?
   end
