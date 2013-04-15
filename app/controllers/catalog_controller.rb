@@ -25,11 +25,18 @@ class CatalogController < ApplicationController
         items=Blacklight.solr.get 'select',:params=>{:q=>'-format_ssim:collection'}      
         @total_images=items['response']['numFound']
       end
-
+      
     end
     
     super
 
+  end
+  
+  def show
+    
+    @annotations=Annotation.includes(:user).where(:druid=>params[:id])
+    super
+    
   end
   
   # an ajax call to get the next set of images to show in a carousel on the collection detail page

@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   # these methods in order to perform user specific actions. 
 
   rescue_from Exception, :with=>:exception_on_website
-  helper_method :application_name,:on_home_page,:on_collections_pages,:on_about_pages,:show_terms_dialog?, :sunet_user_signed_in?
+  helper_method :application_name,:on_home_page,:on_collections_page,:on_about_pages,:on_detail_page,:show_terms_dialog?, :sunet_user_signed_in?
   layout "revs"
 
   prepend_before_filter :simulate_sunet, :if=>lambda{Revs::Application.config.simulate_sunet_user}
@@ -34,8 +34,12 @@ class ApplicationController < ActionController::Base
     request.path==root_path && params[:f].blank?
   end
 
-  def on_collections_pages
-    controller_path=="catalog" && !on_home_page
+  def on_detail_page
+    controller_path=='catalog' && action_name='show'
+  end
+  
+  def on_collections_page
+    controller_path=='catalog' && !on_home_page
   end
   
   def on_about_pages
