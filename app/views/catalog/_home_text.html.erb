@@ -6,7 +6,7 @@
 	      <div class="carousel-inner">
 	        <%- @highlight_collections.each_with_index do |collection, index| -%>
 	          <div class="item<%= " active" if index == 0 %>" data-collection-title="<%= title_no_revs(collection[blacklight_config.show.heading]) %>" data-collection-href="<%= collection_path(collection) %>" data-collection-description="<%= truncate(collection[blacklight_config.collection_description_field].try(:first),:length=>250) %>">
-	            <a id="collection-image-link" href="<%=collection_path(collection)%>"><%=image_tag collection['image_url']%></a>
+	            <a id="collection-image-link" href="<%=collection_path(collection['id'])%>"><%=image_tag collection['image_url']%></a>
 	          </div>
 	        <%- end -%>
 	      </div>
