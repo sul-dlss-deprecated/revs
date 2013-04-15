@@ -30,6 +30,8 @@ annotorious.plugin.addUsernamePlugin.prototype.onInitAnnotator = function(annota
   });
 }
 
+anno.addPlugin('addUsernamePlugin', {});	
+
 function showAnnotations() {	
 	togglePURLEmbed();
 	toggleThumbImage();
@@ -44,7 +46,6 @@ function hideAnnotations() {
 	 
 function enableAnnotations() {
 	anno.makeAnnotatable(jQuery('#annotatable_image')[0]);	
-	anno.addPlugin('addUsernamePlugin', {});	
 }
 
 function loadAnnotations() {
