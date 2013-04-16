@@ -62,7 +62,7 @@ function togglePURLEmbed() {
 }
 
 function toggleThumbImage() {
-	jQuery('#annotatable_image').toggleClass('hidden');	
+	jQuery('#annotatable_workspace').toggleClass('hidden');	
 }
 
 function disableNewAnnotations() {

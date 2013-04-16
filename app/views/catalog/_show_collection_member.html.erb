@@ -29,7 +29,7 @@
 <div class="row">
 	<div class="span7">
 	  <div id="image_workspace" class="showOnLoad hidden"><%= t('revs.show.wait') %></div>
-		<%= image_tag(@document.images(:large).first,:id=>'annotatable_image',:class=>'hidden') %>
+		<div id="annotatable_workspace" class="hidden"><%= image_tag(@document.images(:large).first,:id=>'annotatable_image') %></div>
   
 	  <noscript>
 	    	<%= link_to(image_tag(@document.images(:large).first), "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'new') %>
