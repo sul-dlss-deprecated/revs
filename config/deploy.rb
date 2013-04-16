@@ -88,3 +88,4 @@ end
 
 after "deploy:create_symlink", "deploy:migrate"
 after "deploy:create_symlink", "db:loadseeds"
+after "deploy:update", "deploy:cleanup" 
