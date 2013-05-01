@@ -33,12 +33,12 @@
 	</div>
   <div class="span5 metadata">
 
-    <div class="row results-nav">
-      <div class="span2 back-to-results">
-        <%= link_back_to_catalog(:label => '&laquo; search results'.html_safe) %>
-      </div>
+		<% if  @previous_document || @next_document %>
+    <div class="row results-nav">			
+	      <div class="span2 back-to-results">
+	        <%= link_back_to_catalog(:label => '&laquo; search results'.html_safe) %>
+	      </div>
       <div class="span3 results-pagination">
-        <% if @previous_document || @next_document %>
           <span class="previousNextDocument">
             <%= link_to_previous_document @previous_document %> |
 
@@ -46,10 +46,10 @@
 
             <%= link_to_next_document @next_document %>
         </span>
-        <% end %>
       </div>
     </div>
-
+		<% end %>
+		
     <div class="row">
       <div class="span5">
     <%= render_document_heading.html_safe %>

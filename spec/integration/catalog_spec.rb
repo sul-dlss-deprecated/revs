@@ -59,13 +59,17 @@ describe("Catalog Controller Pages",:type=>:request,:integration=>true) do
     page.should have_content('No entries found')
   end
   
+  it "should immediately go to the item page if the search produces a single result" do
+    visit search_path(:q=>'A Somewhat Shorter Than Average Title')
+    current_path.should == item_path('qb957rw1430')
+  end
+
   it "should show a search result after searching for a description" do
-    visit search_path(:q=>'description of this')
+    visit search_path(:q=>'photo')
     page.should have_content('Results')
-    page.should have_content('1 to 1 of 1')
-    page.should have_content('Marlboro 12 Hour, August 12-14')
-    page.should have_xpath("//img[contains(@src, \"image/yh093pt9555/2012-027NADI-1966-b1_6.4_0011_thumb\")]")
-    page.should have_content('black-and-white negatives')
+    page.should have_content('1 - 2 of 2')
+    page.should have_content('The David Nadig Collection of the Revs Institute')
+    page.should have_content('The John Dugdale Collection of the Revs Institute')
   end
   
   it "should show a facet search result for 1955" do
