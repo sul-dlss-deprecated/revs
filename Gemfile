@@ -10,6 +10,7 @@ gem 'google-analytics-rails'
 
 gem 'devise'
 gem 'omniauth'
+gem 'cancan'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

@@ -6,10 +6,11 @@ class User < ActiveRecord::Base
          :lockable, :timeoutable, :omniauthable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :sunet, :password, :password_confirmation, :remember_me
+  attr_accessible :email, :sunet, :password, :password_confirmation, :remember_me, :role_id, :bio, :first_name, :last_name
   
   has_many :annotations
-  
+  belongs_to :role
+    
   include Blacklight::User
   
   def self.create_new_sunet_user(sunet)
@@ -25,8 +26,20 @@ class User < ActiveRecord::Base
     return email || sunet
   end
   
+  def full_name
+    first_name + ' ' + last_name
+  end
+  
   def is_webauth?
     !sunet.blank?
   end
     
+  def role?(role)
+      self.no_role? ? false : role.to_s.camelize == self.role.name
+  end
+
+  def no_role?
+      return !!self.role_id.nil?
+  end
+  
 end

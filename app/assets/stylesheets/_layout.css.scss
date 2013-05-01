@@ -24,3 +24,28 @@ body {
       padding-right: 20px;
     }
 }
+
+
+.hide-text {
+  width: 1px;
+  position: absolute;
+  display: inline-block;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.field_with_errors {
+	color: red;
+	display: inline;
+}
+
+#error_explanation {
+  @extend .alert;
+  @extend .alert-error;
+  @extend .alert-block; /* optional */
+}
+
+.field_with_errors {
+  @extend .control-group.error
+}

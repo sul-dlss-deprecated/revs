@@ -34,5 +34,5 @@ module ApplicationHelper
   def render_locale_class
     "lang-#{I18n.locale}"
   end
-
+  
 end

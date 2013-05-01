@@ -9,7 +9,7 @@ en:
     failure:
       already_authenticated: "You are already signed in."
       inactive: "Your account was not activated yet."
-      invalid: "Invalid email or password."
+      invalid: "Your account was not found or your password was incorrect."
       invalid_token: "Invalid authentication token."
       locked: "Your account is locked."
       not_found_in_database: "Invalid email or password."
@@ -54,6 +54,4 @@ en:
       expired: "has expired, please request a new one"
       not_found: "not found"
       not_locked: "was not locked"
-      not_saved:
-        one: "1 error prohibited this %{resource} from being saved:"
-        other: "%{count} errors prohibited this %{resource} from being saved:"
+      not_saved: "Please correct the following problems to continue:"

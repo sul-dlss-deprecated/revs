@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130412181942) do
+ActiveRecord::Schema.define(:version => 20130501212655) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "user_id"
@@ -37,6 +37,12 @@ ActiveRecord::Schema.define(:version => 20130412181942) do
   create_table "collection_highlights", :force => true do |t|
     t.string   "druid"
     t.string   "image_url"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "roles", :force => true do |t|
+    t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -73,6 +79,10 @@ ActiveRecord::Schema.define(:version => 20130412181942) do
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.string   "authentication_token"
+    t.integer  "role_id"
+    t.text     "bio",                    :default => "", :null => false
+    t.string   "first_name",             :default => "", :null => false
+    t.string   "last_name",              :default => "", :null => false
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

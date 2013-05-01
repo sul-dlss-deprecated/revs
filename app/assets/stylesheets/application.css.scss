@@ -38,12 +38,3 @@
 @import "search_results";
 
 @import "stanford_footer";
-
-.hide-text {
-  width: 1px;
-  position: absolute;
-  display: inline-block;
-  text-indent: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-}
