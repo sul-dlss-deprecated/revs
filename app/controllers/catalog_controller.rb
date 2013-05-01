@@ -27,8 +27,10 @@ class CatalogController < ApplicationController
       end
       
     end
-    
+        
     super
+
+    redirect_to item_path(@response['response']['docs'].first['id']) if @response['response']['numFound'] == 1 
 
   end
   
