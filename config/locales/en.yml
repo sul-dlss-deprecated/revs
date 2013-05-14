@@ -4,6 +4,7 @@
 en:
   revs:
     nav:
+      go_back: 'Go back'
       report_problem: 'Report a problem'
       content_corrections: 'Are there problems with the metadata above? Let us know!'
     contact:

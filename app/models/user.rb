@@ -35,8 +35,12 @@ class User < ActiveRecord::Base
     !sunet.blank?
   end
     
-  def role?(role)
-      self.no_role? ? false : role.to_s.camelize == self.role.name
+  def role?(test_role)
+    no_role? ? false : test_role.to_s.camelize == role.name
+  end
+  
+  def role_name
+    no_role? ? "" : role.name
   end
 
   def no_role?

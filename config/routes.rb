@@ -10,12 +10,13 @@ Revs::Application.routes.draw do
   match 'search', :to=> 'catalog#index', :as=>'search'
   
   match 'collections', :to => 'catalog#index', :as => 'all_collections', :defaults => {:f => {:format_ssim => ["collection"]}}
-
   match 'update_carousel', :to => 'catalog#update_carousel', :as => 'update_carousel'
+  
+  match 'user/:id', :to=>'user#show', :as=>'user_profile', :via=>:get, :constraints => {:id => /\d+/}
+  match 'user/:name', :to=>'user#show', :as=>'user_profile', :via=>:get, :constraints => {:name => /\S+[.]\S+/}
   
   # Handles all About pages.
   match 'about', :to => 'about#show', :as => 'about_project', :defaults => {:id=>'project'} # no page specified, go to project page
-
   match 'contact', :to=> 'about#contact', :as=>'contact_us'
   match 'about/contact', :to=> 'about#contact' # specific contact us about page
   match 'about/:id', :to => 'about#show' # catch anything else and direct to show page with ID parameter of partial to show

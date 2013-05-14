@@ -1,0 +1,8 @@
+<%=home_or_back %>
+
+<h2><%=@user.full_name%></h2>
+<%=link_to @user.url,@user.url, :target=>'_new' unless @user.url.blank?%>
+
+<% unless @user.bio.blank? %>
+	<div><%=@user.bio%></div>
+<% end %>

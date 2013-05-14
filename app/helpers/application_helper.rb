@@ -6,6 +6,11 @@ module ApplicationHelper
    return sizes.join(',')    
   end
   
+  def home_or_back
+    url = request.referrer || root_path
+    link_to t('revs.nav.go_back'),url
+  end
+  
   def title_no_revs(title)
     title.gsub(" of the Revs Institute","")
   end
