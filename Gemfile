@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+source 'http://sul-gems.stanford.edu'
 
 gem 'bundler', '>= 1.2.0'
 
@@ -16,6 +17,7 @@ gem 'cancan'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem "blacklight", :git => 'https://github.com/projectblacklight/blacklight.git'
+gem 'druid-tools', '>= 0.2.0'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -56,15 +58,3 @@ gem 'rest-client'
 gem 'json', '~> 1.7.7'
 
 gem "bootstrap-sass"
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# To use debugger
-# gem 'debugger'

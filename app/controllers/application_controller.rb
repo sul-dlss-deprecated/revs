@@ -10,14 +10,20 @@ class ApplicationController < ActionController::Base
 
   prepend_before_filter :simulate_sunet, :if=>lambda{Revs::Application.config.simulate_sunet_user}
   before_filter :set_sunet_user 
-  before_filter :store_current_page, :if=>lambda{!current_user} 
+  before_filter :store_referred_page, :if=>lambda{!current_user && is_devise_path?(request.path)} # only if user not logged in and we are on the login pages
 
-  def store_current_page
-    session[:login_redirect] = request.path unless request.path==new_user_session_path # store the current page a user is on before they go to the login page so we can redirect after they login
+  def store_referred_page
+    unless is_devise_path?(request.referrer) # only store the referred page if its not another login page
+      session[:login_redirect] = request.referrer # store the current page a user is on before they go to the login page so we can redirect after they login
+    end
+  end
+
+  def is_devise_path?(path)
+    Rails.application.routes.recognize_path(path)[:controller].include?("devise")
   end
   
   def after_sign_in_path_for(resource)
-    session[:login_redirect] || root_path # redirect to the right place after login
+    session[:login_redirect] || root_path
   end
 
   def after_sign_out_path_for(resource_or_scope)

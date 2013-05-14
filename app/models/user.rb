@@ -6,9 +6,10 @@ class User < ActiveRecord::Base
          :lockable, :timeoutable, :omniauthable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :sunet, :password, :password_confirmation, :remember_me, :role_id, :bio, :first_name, :last_name
+  attr_accessible :email, :sunet, :password, :password_confirmation, :remember_me, :role_id, :bio, :first_name, :last_name, :public, :url
   
   has_many :annotations
+  has_many :flags
   belongs_to :role
     
   include Blacklight::User

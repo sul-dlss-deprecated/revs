@@ -8,26 +8,30 @@ class Annotation < ActiveRecord::Base
   after_create :add_annotation_to_solr
   after_update :update_annotation_in_solr
 
-    def add_annotation_to_solr
+  validates :druid, :is_druid=>true
+  validates :text, :presence=>true
+  validates :user_id, :numericality => { :only_integer => true }
 
-      druid=self.druid
-      text=self.text.gsub('"','\"')
+  def add_annotation_to_solr
 
-      RestClient.post "#{Blacklight.solr.options[:url]}/update?commit=true", "[{\"id\":\"#{druid}\",\"annotations_tsim\":{\"add\":\"#{text}\"}}]",:content_type => :json, :accept=>:json
-      
-    end
+    druid=self.druid
+    text=self.text.gsub('"','\"')
+
+    RestClient.post "#{Blacklight.solr.options[:url]}/update?commit=true", "[{\"id\":\"#{druid}\",\"annotations_tsim\":{\"add\":\"#{text}\"}}]",:content_type => :json, :accept=>:json
     
-    def update_annotation_in_solr
-      
-      # get all annotations for this image and update the solr document (its easier than trying to figure out exactly which annotation changed)
-      
-      druid=self.druid
-      
-      annotations=Annotation.where(:druid=>druid)
-      text_array = annotations.map {|annotation| annotation.text.gsub('"','\"')}
-      
-      RestClient.post "#{Blacklight.solr.options[:url]}/update?commit=true", "[{\"id\":\"#{druid}\",\"annotations_tsim\":{\"set\":[\"#{text_array.join('","')}\"]}}]", :content_type => :json, :accept=>:json
-            
-    end
+  end
+  
+  def update_annotation_in_solr
+    
+    # get all annotations for this image and update the solr document (its easier than trying to figure out exactly which annotation changed)
+    
+    druid=self.druid
+    
+    annotations=Annotation.where(:druid=>druid)
+    text_array = annotations.map {|annotation| annotation.text.gsub('"','\"')}
+    
+    RestClient.post "#{Blacklight.solr.options[:url]}/update?commit=true", "[{\"id\":\"#{druid}\",\"annotations_tsim\":{\"set\":[\"#{text_array.join('","')}\"]}}]", :content_type => :json, :accept=>:json
+          
+  end
     
 end

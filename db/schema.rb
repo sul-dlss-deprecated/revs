@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130501212655) do
+ActiveRecord::Schema.define(:version => 20130513235921) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "user_id"
@@ -41,6 +41,20 @@ ActiveRecord::Schema.define(:version => 20130501212655) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "flags", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "druid",                           :null => false
+    t.string   "flag_type",  :default => "error", :null => false
+    t.text     "comment"
+    t.datetime "cleared"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+  end
+
+  add_index "flags", ["druid"], :name => "index_flags_on_druid"
+  add_index "flags", ["flag_type"], :name => "index_flags_on_flag_type"
+  add_index "flags", ["user_id"], :name => "index_flags_on_user_id"
+
   create_table "roles", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
@@ -58,11 +72,11 @@ ActiveRecord::Schema.define(:version => 20130501212655) do
   add_index "searches", ["user_id"], :name => "index_searches_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
-    t.string   "sunet",                  :default => "", :null => false
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+    t.string   "sunet",                  :default => "",    :null => false
+    t.string   "email",                  :default => "",    :null => false
+    t.string   "encrypted_password",     :default => "",    :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -80,9 +94,11 @@ ActiveRecord::Schema.define(:version => 20130501212655) do
     t.datetime "locked_at"
     t.string   "authentication_token"
     t.integer  "role_id"
-    t.text     "bio",                    :default => "", :null => false
-    t.string   "first_name",             :default => "", :null => false
-    t.string   "last_name",              :default => "", :null => false
+    t.text     "bio",                    :default => "",    :null => false
+    t.string   "first_name",             :default => "",    :null => false
+    t.string   "last_name",              :default => "",    :null => false
+    t.boolean  "public",                 :default => false, :null => false
+    t.string   "url",                    :default => ""
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
