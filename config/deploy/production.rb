@@ -5,3 +5,5 @@ set :bundle_without, [:deployment,:development,:test,:staging]
 role :web, deployment_host
 role :app, deployment_host
 role :db,  deployment_host, :primary => true
+
+after "deploy:finalize_update", "jetty:remove"

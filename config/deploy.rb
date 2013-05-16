@@ -51,15 +51,21 @@ namespace :jetty do
   task :stop do
     run "if [ -d #{deploy_to}/current ]; then cd #{deploy_to}/current && rake jetty:stop RAILS_ENV=#{rails_env}; fi"
   end
-  task :ingest_fixtures do
-    run "cd #{deploy_to}/current && rake revs:index_fixtures RAILS_ENV=#{rails_env}"
-  end
-  task :refresh_fixtures do
-    run "cd #{deploy_to}/current && rake revs:refresh_fixtures RAILS_ENV=#{rails_env}"
+  task :remove do
+    run "rm -fr #{release_path}/jetty"
   end  
   task :symlink do
     run "rm -fr #{release_path}/jetty"
     run "ln -s #{shared_path}/jetty #{release_path}/jetty"
+  end
+end
+
+namespace :fixtures do
+  task :ingest do
+    run "cd #{deploy_to}/current && rake revs:index_fixtures RAILS_ENV=#{rails_env}"
+  end
+  task :refresh do
+    run "cd #{deploy_to}/current && rake revs:refresh_fixtures RAILS_ENV=#{rails_env}"
   end
 end
 
@@ -87,5 +93,4 @@ namespace :deploy do
 end
 
 after "deploy:create_symlink", "deploy:migrate"
-after "deploy:create_symlink", "db:loadseeds"
 after "deploy:update", "deploy:cleanup" 

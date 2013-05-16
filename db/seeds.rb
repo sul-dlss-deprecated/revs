@@ -17,7 +17,7 @@ unless User.where(:email=>'archivist1@example.com').first
 end
 
 Role.delete_all
-# note: role names should be store in CamelizedFormat
+# note: role names should be stored in CamelizedFormat
 # role names are referenced in the 'Ability' model
 admin=Role.create(:id=>1,:name=>'Admin')
 Role.create(:id=>2,:name=>'Curator')    

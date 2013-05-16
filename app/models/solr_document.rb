@@ -5,6 +5,14 @@ class SolrDocument
 
   self.unique_key = 'id'
 
+  def flags
+    Flag.includes(:user).where(:druid=>id)
+  end
+  
+  def annotations
+    Annotation.includes(:user).where(:druid=>id)
+  end
+  
   def title
     self[:title_tsi]
   end

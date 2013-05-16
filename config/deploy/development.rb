@@ -14,9 +14,7 @@ namespace :deploy do
   end
 end
 
-
-before "deploy", "jetty:stop"
 after "deploy:finalize_update", "db:symlink_sqlite"
-after "deploy:finalize_update", "jetty:symlink"
-after "jetty:symlink", "jetty:start"
-after "jetty:start", "jetty:refresh_fixtures"
+after "deploy:finalize_update", "jetty:remove"
+after "deploy:finalize_update", "fixtures:refresh"
+after "deploy:create_symlink", "db:loadseeds"

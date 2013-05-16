@@ -5,16 +5,20 @@ class ApplicationController < ActionController::Base
   # these methods in order to perform user specific actions. 
 
   rescue_from Exception, :with=>:exception_on_website
-  helper_method :application_name,:on_home_page,:on_collections_page,:on_about_pages,:on_detail_page,:show_terms_dialog?, :sunet_user_signed_in?
+  helper_method :application_name,:on_home_page,:on_collections_page,:on_about_pages,:on_detail_page,:show_terms_dialog?, :sunet_user_signed_in?, :show_as_date
   layout "revs"
 
   prepend_before_filter :simulate_sunet, :if=>lambda{Revs::Application.config.simulate_sunet_user}
   before_filter :set_sunet_user 
   before_filter :store_referred_page, :if=>lambda{!current_user && is_devise_path?(request.path)} # only if user not logged in and we are on the login pages
 
+  def previous_page
+    request.referrer || root_path
+  end
+  
   def store_referred_page
-    unless is_devise_path?(request.referrer) # only store the referred page if its not another login page
-      session[:login_redirect] = request.referrer # store the current page a user is on before they go to the login page so we can redirect after they login
+    unless is_devise_path?(previous_page) # only store the referred page if its not another login page
+      session[:login_redirect] = previous_page # store the current page a user is on before they go to the login page so we can redirect after they login
     end
   end
 
@@ -27,7 +31,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_out_path_for(resource_or_scope)
-    request.referrer # redirect back where they were from after loginout
+    previous_page # redirect back where they were from after loginout
   end
 
   def not_authorized
@@ -97,7 +101,11 @@ class ApplicationController < ActionController::Base
       redirect_to params[:return_to]
     end
   end
-        
+
+  def show_as_date(datetime)
+    datetime.strftime('%B %d, %Y')  
+  end
+  
   def exception_on_website(exception)
     @exception=exception
 

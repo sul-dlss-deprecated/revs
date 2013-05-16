@@ -36,7 +36,6 @@ class CatalogController < ApplicationController
   
   def show
     
-    @annotations=Annotation.includes(:user).where(:druid=>params[:id])
     super
     
   end

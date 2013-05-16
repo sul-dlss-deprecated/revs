@@ -61,15 +61,15 @@
     <%= link_to('<i class="icon-picture"></i> Full citation page with view/download'.html_safe, "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'new') %>
 
 		<% if user_signed_in? %>
-			<p><%= link_to("View and add annotations (#{@annotations.size} existing)",'#',:id=>'annotate_link',:class=>"annotation_links showOnLoad hidden") %></p>
-		<% elsif @annotations.size > 0 %>
-			<p><%= link_to("View #{@annotations.size} existing annotations",'#',:id=>'view_annotations_link',:class=>"annotation_links showOnLoad hidden") %></p>
+			<p><%= link_to("View and add annotations (#{@document.annotations.size} existing)",'#',:id=>'annotate_link',:class=>"annotation_links showOnLoad hidden") %></p>
+		<% elsif @document.annotations.size > 0 %>
+			<p><%= link_to("View #{@document.annotations.size} existing annotations",'#',:id=>'view_annotations_link',:class=>"annotation_links showOnLoad hidden") %></p>
 		<% end %>
 		<p><%= link_to('Hide annotations','#',:id=>'hide_annotations_link',:class=>"hidden") %></p>
 		
     <span id="feedback_link">
-      <%= link_to t('revs.nav.content_corrections'),contact_us_path(:subject=>'metadata',:from=>request.path) %>
-    </span>
+			<%= render :partial=>"flag",:locals=>{:druid=>@document.id}%>
+		</span>
 
     </div>
   </div>
