@@ -8,6 +8,7 @@
     													           'layout': 'thumbs-nav-bottom',
       													         'availableSizes': [<%=raw available_sizes%>],
       												           'zoomOnClick': false,
+ 																				 'disableKeyboardShortcuts': true, 
                                      'tooltipTexts': {
                                      '<%= I18n.locale %>': {
                                        'OpenInFullScreen': '<%= t('revs.show.open_in_full_screen') %>',
@@ -67,9 +68,13 @@
 		<% end %>
 		<p><%= link_to('Hide annotations','#',:id=>'hide_annotations_link',:class=>"hidden") %></p>
 		
-    <span id="feedback_link">
-			<%= render :partial=>"flag",:locals=>{:druid=>@document.id}%>
-		</span>
+    <div id="flagging">
+			<%= render :partial=>"flags/new",:locals=>{:druid=>@document.id}%>
+		</div>
+		
+		<div id="all_flags">
+		  <%= render :partial=>"flags/all",:locals=>{:flags=>@document.flags}	%>
+		</div>
 
     </div>
   </div>

@@ -2,17 +2,15 @@
 	current_flags=current_user.flags.where(:druid=>druid)%>
 	<% if current_flags.count == 0 # they have not already flagged it, give them the new form%>
 		<%= form_for(Flag.new, :remote=>true) do |f| %>
-			<%= f.hidden_field :druid, :value=>@document.id %>
+			<%= f.hidden_field :druid, :value=>druid %>
 			<%= f.hidden_field :flag_type, :value=>'error' %>
 			<%= f.label :comment, 'Comment (optional)'%> <%= f.text_field :comment %>
 			<%= f.submit 'Flag this item' %>
 		<% end %>
-	<% else # they have already flagged it
-		current_flags.each do |flag|%>
-			You flagged this item on <%=show_as_date(flag.created_at)%>
-			<%="with comment '#{flag.comment}'" if flag.comment%>
-			<% end %>
 	<% end %>
 <% else %>
+	<span id="feedback_link">
    	<%= link_to t('revs.nav.content_corrections'),new_user_session_path %>
+	</span>
 <% end %>
+

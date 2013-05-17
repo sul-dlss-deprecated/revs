@@ -9,9 +9,13 @@ gem 'rails', '3.2.11'
 
 gem 'google-analytics-rails'
 
+# user authentication and roles
 gem 'devise'
 gem 'omniauth'
 gem 'cancan'
+
+# paging
+gem 'kaminari'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

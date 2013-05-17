@@ -1,0 +1,2 @@
+module Curator::TasksHelper
+end

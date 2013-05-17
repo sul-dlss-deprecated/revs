@@ -5,13 +5,18 @@ class ApplicationController < ActionController::Base
   # these methods in order to perform user specific actions. 
 
   rescue_from Exception, :with=>:exception_on_website
-  helper_method :application_name,:on_home_page,:on_collections_page,:on_about_pages,:on_detail_page,:show_terms_dialog?, :sunet_user_signed_in?, :show_as_date
+  helper_method :application_name,:on_home_page,:on_collections_page,:on_about_pages,:on_detail_page,:show_terms_dialog?, :sunet_user_signed_in?, :show_as_date, :show_as_datetime
   layout "revs"
 
   prepend_before_filter :simulate_sunet, :if=>lambda{Revs::Application.config.simulate_sunet_user}
   before_filter :set_sunet_user 
   before_filter :store_referred_page, :if=>lambda{!current_user && is_devise_path?(request.path)} # only if user not logged in and we are on the login pages
 
+  
+  def application_name
+    "Revs Digital Library"
+  end
+  
   def previous_page
     request.referrer || root_path
   end
@@ -23,7 +28,7 @@ class ApplicationController < ActionController::Base
   end
 
   def is_devise_path?(path)
-    Rails.application.routes.recognize_path(path)[:controller].include?("devise")
+    path.include?("users") || Rails.application.routes.recognize_path(path)[:controller].include?("devise")
   end
   
   def after_sign_in_path_for(resource)
@@ -45,17 +50,10 @@ class ApplicationController < ActionController::Base
     return
 
   end
-
-  def check_for_admin_logged_in
-    not_authorized unless can? :administer, :all
-  end
   
+  # only used for testing in development
   def simulate_sunet
     request.env["WEBAUTH_USER"]='sunetuser'
-  end
-  
-  def application_name
-    "Revs Digital Library"
   end
 
   def set_sunet_user
@@ -105,7 +103,11 @@ class ApplicationController < ActionController::Base
   def show_as_date(datetime)
     datetime.strftime('%B %d, %Y')  
   end
-  
+
+  def show_as_datetime(datetime)
+    datetime.strftime('%B %d, %Y at %l:%M %P %Z')  
+  end
+    
   def exception_on_website(exception)
     @exception=exception
 

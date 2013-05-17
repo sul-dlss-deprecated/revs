@@ -2,7 +2,7 @@ class Flag < ActiveRecord::Base
 
   belongs_to :user
   
-  FLAG_TYPES=%w{error inappropriate}
+  FLAG_TYPES=%w{error inappropriate bookmark}
   
   attr_accessible :druid, :comment, :type, :flag_type, :user_id
   

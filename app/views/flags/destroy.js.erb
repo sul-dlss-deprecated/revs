@@ -1,0 +1,4 @@
+$('.flash_messages').append("<%= escape_javascript(render :partial => 'shared/flash_success_message') %>");
+$('#flagging').html("<%= escape_javascript(render :partial => 'new',:locals=>{:druid=>@druid}) %>");
+$('#all_flags').html("<%= escape_javascript(render :partial => 'all',:locals=>{:flags=>@all_flags}) %>");
+

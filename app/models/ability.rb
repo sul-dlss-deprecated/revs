@@ -13,12 +13,12 @@ class Ability
     user ||= User.new # guest user
 
     if user.role? :admin # administrator can do everything, and can enter admin area
-      can :manage, :all
       can :administer, :all
+      can :curate, :all
     end
     
-    if user.role? :curator # curator role can update and create any model but not delete
-      can [:update,:create], :all
+    if user.role? :curator # curator role
+      can :curate, :all
     end
             
     # The first argument to `can` is the action you are giving the user permission to do.

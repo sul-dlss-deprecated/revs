@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130513235921) do
+ActiveRecord::Schema.define(:version => 20130513171118) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "user_id"
@@ -93,7 +93,7 @@ ActiveRecord::Schema.define(:version => 20130513235921) do
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.string   "authentication_token"
-    t.integer  "role_id"
+    t.integer  "role_id",                :default => 1
     t.text     "bio",                    :default => "",    :null => false
     t.string   "first_name",             :default => "",    :null => false
     t.string   "last_name",              :default => "",    :null => false

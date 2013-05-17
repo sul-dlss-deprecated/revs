@@ -66,7 +66,8 @@ function toggleThumbImage() {
 }
 
 function disableNewAnnotations() {
-	anno.setSelectionEnabled(false);	
+	try{anno.setSelectionEnabled(false);}	
+	catch(err) {}
 }
 
 function toggleLinks() {
@@ -85,7 +86,7 @@ $(document).ready(function(){
 	$('#view_annotations_link').click(function() {
 		 showAnnotations(); 
 		 disableNewAnnotations(); 
-		 toggleLinks();
+     toggleLinks();
 		 return false;
 	 });
 

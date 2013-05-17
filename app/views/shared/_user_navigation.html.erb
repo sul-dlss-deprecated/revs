@@ -1,3 +1,12 @@
+			<% if user_signed_in? %>
+				<% if can? :administer, :all  %>
+						| <%=link_to "Admin",admin_users_path%>
+				<% end %>
+				<% if can? :curate, :all %>
+						| <%=link_to "Curator",curator_tasks_path%>		
+				<% end %>
+			<% end %>
+			
 			<% if user_signed_in? && !sunet_user_signed_in?%>
 				| <%=link_to current_user.to_s, edit_user_registration_path%> | <%=link_to "Sign out",destroy_user_session_path, :method=>:delete%>
 			<% elsif sunet_user_signed_in? %>

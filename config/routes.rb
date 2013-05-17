@@ -12,8 +12,8 @@ Revs::Application.routes.draw do
   match 'collections', :to => 'catalog#index', :as => 'all_collections', :defaults => {:f => {:format_ssim => ["collection"]}}
   match 'update_carousel', :to => 'catalog#update_carousel', :as => 'update_carousel'
   
-  match 'user/:id', :to=>'user#show', :as=>'user_profile', :via=>:get, :constraints => {:id => /\d+/}
-  match 'user/:name', :to=>'user#show', :as=>'user_profile', :via=>:get, :constraints => {:name => /\S+[.]\S+/}
+  match 'user/:id', :to=>'user#show', :as=>'user_profile_id', :via=>:get, :constraints => {:id => /\d+/}
+  match 'user/:name', :to=>'user#show', :as=>'user_profile_name', :via=>:get, :constraints => {:name => /\S+[.]\S+/}
   
   # Handles all About pages.
   match 'about', :to => 'about#show', :as => 'about_project', :defaults => {:id=>'project'} # no page specified, go to project page
@@ -29,7 +29,13 @@ Revs::Application.routes.draw do
   
   resources :annotations
   resources :flags
-  
+  namespace :admin do
+    resources :users
+  end
+  namespace :curator do
+    resources :tasks
+  end
+    
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

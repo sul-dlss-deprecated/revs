@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+    
   # Include default devise modules. Others available are:
   # :token_authenticatable
   devise :database_authenticatable, :registerable,
@@ -27,8 +28,12 @@ class User < ActiveRecord::Base
     return email || sunet
   end
   
+  def no_name_entered?
+    first_name.blank? && last_name.blank?  
+  end
+  
   def full_name
-    first_name + ' ' + last_name
+    no_name_entered? ? 'unidentified' : [first_name,last_name].join(' ').squeeze(' ')
   end
   
   def is_webauth?

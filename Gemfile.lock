@@ -217,6 +217,7 @@ DEPENDENCIES
   jettywrapper
   jquery-rails
   json (~> 1.7.7)
+  kaminari
   launchy
   meta_request
   mysql (= 2.8.1)

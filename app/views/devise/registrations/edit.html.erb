@@ -12,7 +12,7 @@
   <div><%= f.label :last_name %><br />
   <%= f.text_field :last_name, :size=>"80" %></div>
 
-  <div><%= f.check_box :public, :size=>"80" %> Create public profile page at <%=user_profile_url(resource.id)%>
+  <div><%= f.check_box :public, :size=>"80" %> Create public profile page at <%=user_profile_id_url(resource.id)%>
 	(Will include your name, bio and website.  Will NOT include your email address.)</div>
 
   <div><%= f.label :url, 'Website' %><br />

@@ -16,9 +16,4 @@ unless User.where(:email=>'archivist1@example.com').first
   user.save!
 end
 
-Role.delete_all
-# note: role names should be stored in CamelizedFormat
-# role names are referenced in the 'Ability' model
-admin=Role.create(:id=>1,:name=>'Admin')
-Role.create(:id=>2,:name=>'Curator')    
-user=User.where(:email=>'archivist1@example.com').each {|u| u.update_attributes(:role_id=>admin.id)} #default user is an admin
+user=User.where(:email=>'archivist1@example.com').each {|u| u.update_attributes(:role_id=>"3")} #default user is an admin
