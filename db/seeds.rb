@@ -12,8 +12,7 @@ CollectionHighlight.create(id:5,druid:'kz071cg8658',image_url:'https://stacks.st
 
 unless User.where(:email=>'archivist1@example.com').first
   user=User.new(:email=>'archivist1@example.com',:password=>'password',:password_confirmation=>'password')
+  user.role=Role.admin
   user.skip_confirmation!
   user.save!
 end
-
-user=User.where(:email=>'archivist1@example.com').each {|u| u.update_attributes(:role_id=>"3")} #default user is an admin

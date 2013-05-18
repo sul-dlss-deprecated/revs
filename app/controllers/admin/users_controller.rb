@@ -5,7 +5,7 @@ class Admin::UsersController < Admin::AdminController
     @order=params[:order] || 'email'
     
     if !@email.blank?
-      @users=User.where(['email like ?',"#{@email}%"]).page
+      @users=User.where(['email like ?',"#{@email}%"]).order(@order).page params[:page]
     else
       @users=User.order(@order).page params[:page]
     end

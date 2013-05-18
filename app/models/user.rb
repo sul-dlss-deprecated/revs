@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   has_many :annotations
   has_many :flags
   belongs_to :role
+  before_save :assign_default_role
     
   include Blacklight::User
   
@@ -49,7 +50,11 @@ class User < ActiveRecord::Base
   end
 
   def no_role?
-      return !!self.role_id.nil?
+      return !!self.role_id.blank?
+  end
+  
+  def assign_default_role
+    role=Role.user if no_role?
   end
   
 end
