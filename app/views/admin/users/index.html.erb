@@ -8,9 +8,9 @@
 <% if @users.size > 0 %>
 	<%= paginate @users, :params => {:order=>@order} %>
 	<table border='1'>
-		<tr><th><%=link_to 'Email',admin_users_path(:order=>'email',:email=>@email)%></th><th><%=link_to 'Name',admin_users_path(:order=>'last_name',:email=>@email)%></th><th><%=link_to 'Role',admin_users_path(:order=>'role_id desc',:email=>@email)%></th><th><%=link_to 'Registered',admin_users_path(:order=>'created_at desc',:email=>@email)%></th><th>Actions</th></tr>
+		<tr><th><%=link_to 'Email',admin_users_path(:order=>'email',:email=>@email)%></th><th><%=link_to 'Name',admin_users_path(:order=>'last_name',:email=>@email)%></th><th><%=link_to 'Role',admin_users_path(:order=>'role_id desc',:email=>@email)%></th><th><%=link_to 'Registered',admin_users_path(:order=>'created_at desc',:email=>@email)%></th><th><%=link_to 'Account Confirmed',admin_users_path(:order=>'confirmed_at desc',:email=>@email)%></th><th>Actions</th></tr>
 	<% @users.each do |user|%>
-		<tr><td><%=user.email%></td><td><%=user.full_name%></td><td><%=user.role_name%></td><td><%=show_as_datetime(user.created_at.in_time_zone)%></td><td><%=link_to '[edit]',edit_admin_user_path(user.id)%></tr>
+		<tr><td><%=user.email%></td><td><%=user.full_name%></td><td><%=user.role_name%></td><td><%=show_as_datetime(user.created_at.in_time_zone)%></td><td><%=user.confirmed_at.blank? ? "no" : "yes"%></td><td><%=link_to '[edit]',edit_admin_user_path(user.id)%></td></tr>
 	<% end %>
 	</table>
 <% else %>

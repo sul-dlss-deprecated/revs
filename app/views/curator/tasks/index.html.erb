@@ -1,0 +1,9 @@
+<h2>Flagged Items</h2>
+
+	<%= paginate @flags, :params => {:order=>@order} %>
+	<table border='1'>
+		<tr><th>Item</th><th><%=link_to 'Number of Flags',curator_tasks_path(:order=>'num_flags DESC')%></th><th><%=link_to 'Date Flagged',curator_tasks_path(:order=>'created_at desc')%></th></tr>
+	<% @flags.each do |flag|%>
+		<tr><td><%=link_to flag.item.title,catalog_path(flag.druid)%></td><td><%=flag.num_flags%></td><td><%=show_as_datetime(flag.created_at.in_time_zone)%></td></tr>
+	<% end %>
+	</table>

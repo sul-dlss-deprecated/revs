@@ -1,28 +1,46 @@
 <h2><%=@user.email%></h2>
+<% if current_user == @user %>This is your account.  You cannot update your own role.  To update your password, visit <%= link_to 'your profile page',edit_user_registration_path(@user)%>.<% end %>
+
+<% if @user.confirmed_at.blank? || @user.pending_reconfirmation?%>
+  <strong>Currently waiting confirmation from user of their email address.</strong>
+<% end %>
 
 <%= form_for(@user, :url => admin_user_path, :html => { :method => :put }) do |f| %>
 
-  <div><%= f.label :first_name %><br />
+	<%= validation_errors(@user) %>
+
+  <div><%= f.label :last_sign_in %> <%=@user.last_sign_in_at.blank? ? "never" : show_as_datetime(@user.last_sign_in_at.in_time_zone)%></div>
+
+  <div><%= f.label :first_name %>
   <%= f.text_field :first_name, :size=>"80" %></div>
 
-  <div><%= f.label :last_name %><br />
+  <div><%= f.label :last_name %>
   <%= f.text_field :last_name, :size=>"80" %></div>
-
-	<div><%= f.label :role %><br />
-	<%= f.collection_select :role_id,Role.all,:id,:name %></div>
-
+		
   <div><%= f.check_box :public, :size=>"80" %> Create public profile page at <%=user_profile_id_url(@user.id)%>
 	(Will include name, bio and website.  Will NOT include email address.)</div>
 
-  <div><%= f.label :url, 'Website' %><br />
+  <div><%= f.label :url, 'Website' %>
   <%= f.text_field :url, :size=>"80" %></div>
 
   <div><%= f.label :bio,'Biography' %><br />
   <%= f.text_area :bio, :size=>"80x20" %></div>
 
-  <% if @user.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= @user.unconfirmed_email %></div>
-  <% end %>
+
+	<% unless current_user==@user%>
+
+	<div><%= f.label :role %>
+	<%= f.collection_select :role_id,Role.all,:id,:name %></div>
+
+  <div><%= f.label :password %> <i>(leave blank if you don't want to change it)</i>
+  <%= f.password_field :password, :autocomplete => "off" %></div>
+
+  <div><%= f.label :password_confirmation %>
+  <%= f.password_field :password_confirmation %></div>
+
+  	<div><%=check_box_tag :lock, true,!@user.locked_at.blank?%> Account is locked due to too many invalid login attempts.  Lock the account immediately by checking the box.  The user can unlock by verifying their email address or you can unlock by unchecking this box.</div>
+	<% end %>
+	
 
   <div><%= f.submit "Update" %></div>
 <% end %>

@@ -1,8 +1,9 @@
 class Curator::TasksController < Curator::CuratorController
 
-    # get all flags
+    # get all flags grouped by druid with counts
    def index
-     @flags=Flag.order('created at DESC').page params[:page]
+     @order=params[:order] || 'num_flags DESC'
+     @flags=Flag.select('*,COUNT("druid") as num_flags').group("druid").order(@order).page(params[:page])
    end
    
 end

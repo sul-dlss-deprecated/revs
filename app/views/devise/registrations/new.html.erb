@@ -12,6 +12,8 @@
   <div><%= f.label :password_confirmation %><br />
   <%= f.password_field :password_confirmation %></div>
 
+  <div>  <%= f.check_box :subscribe_to_mailing_list %><%= f.label :subscribe_to_mailing_list,'Subscribe to the Revs Program Email List' %></div>
+
   <div><%= f.submit "Sign up" %></div>
 <% end %>
 

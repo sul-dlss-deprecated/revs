@@ -7,12 +7,14 @@ class User < ActiveRecord::Base
          :lockable, :timeoutable, :omniauthable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :sunet, :password, :password_confirmation, :remember_me, :role_id, :bio, :first_name, :last_name, :public, :url
+  attr_accessible :email, :sunet, :password, :password_confirmation, :remember_me, :role_id, :bio, :first_name, :last_name, :public, :url, :subscribe_to_mailing_list 
+  attr_accessor :subscribe_to_mailing_list # not persisted, just used on the signup form
   
-  has_many :annotations
-  has_many :flags
+  has_many :annotations, :dependent => :destroy
+  has_many :flags, :dependent => :destroy
   belongs_to :role
   before_save :assign_default_role
+  after_create :signup_for_mailing_list, :if=>lambda{subscribe_to_mailing_list=='1'}
     
   include Blacklight::User
   
@@ -21,6 +23,10 @@ class User < ActiveRecord::Base
     user.skip_confirmation!
     user.save!
     user
+  end
+  
+  def signup_for_mailing_list
+    RevsMailer.mailing_list_signup(:from=>email).deliver 
   end
   
   # Blacklight uses #to_s on your user class to get
@@ -55,6 +61,15 @@ class User < ActiveRecord::Base
   
   def assign_default_role
     role=Role.user if no_role?
+  end
+  
+  # update the lock status if needed
+  def update_lock_status(lock)
+    if lock && locked_at.blank?
+      lock_access!
+    elsif !locked_at.blank?
+      unlock_access!
+    end
   end
   
 end

@@ -1,17 +1,9 @@
 module DeviseHelper
 
- def devise_error_messages!
-  return '' if resource.errors.empty?
+  def devise_error_messages!
 
-   messages = resource.errors.full_messages.map { |msg| content_tag(:li, msg) }.join
+   return validation_errors(resource) # defined in application helper so we can use it for any model
 
-   html = <<-HTML
-   <div class="alert alert-error alert-block"> <a class="close" href="#" data-dismiss="alert">x</a>
-    #{messages}
-   </div>
-   HTML
-
-   html.html_safe
  end
 
 end

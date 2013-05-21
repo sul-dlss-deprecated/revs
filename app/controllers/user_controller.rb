@@ -4,6 +4,7 @@ class UserController < ApplicationController
   def show
     id=params[:id]
     name=params[:name]
+    
     if id # the user sent in an ID
       users=User.where('id=? AND public=?',params[:id],true)
     else # the user sent in a name
@@ -21,6 +22,7 @@ class UserController < ApplicationController
     else
       @user=users.first
     end
+    
   end
   
 end

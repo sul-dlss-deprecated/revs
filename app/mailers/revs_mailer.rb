@@ -14,6 +14,10 @@ class RevsMailer < ActionMailer::Base
     mail(:to=>to, :cc=>cc, :subject=>"Contact Message from Revs Digital Library - #{@subject}") 
   end
 
+  def mailing_list_signup(opts={})
+    mail(:to=>"revs-program-join@lists.stanford.edu",:from=>opts[:from],:subject=>"Request to be added to Revs Mailing List",:body=>"Subscribe")
+  end
+  
   def error_notification(opts={})
     @exception=opts[:exception]
     @mode=Rails.env

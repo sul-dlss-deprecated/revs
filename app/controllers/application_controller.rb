@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
   end
   
   def store_referred_page
-    unless is_devise_path?(previous_page) # only store the referred page if its not another login page
+    unless is_devise_path?(previous_page) # only store the referred page if its not another login page 
       session[:login_redirect] = previous_page # store the current page a user is on before they go to the login page so we can redirect after they login
     end
   end
@@ -35,8 +35,12 @@ class ApplicationController < ActionController::Base
     session[:login_redirect] || root_path
   end
 
-  def after_sign_out_path_for(resource_or_scope)
-    previous_page # redirect back where they were from after loginout
+  def after_sign_out_path_for(resource_or_scope) # redirect back where they were from after logout, unless it was an admin page
+    if Rails.application.routes.recognize_path(previous_page)[:controller].include?("admin") 
+      root_path
+    else
+      previous_page 
+    end
   end
 
   def not_authorized

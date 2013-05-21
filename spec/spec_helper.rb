@@ -37,3 +37,21 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 end
+
+def login_pw
+  'password'
+end
+
+def login_as(email, password = nil)
+  password ||= login_pw
+  email += '@example.com' unless email.include?('@')
+  logout
+  visit new_user_session_path
+  fill_in "Email", :with => email
+  fill_in "Password", :with => password
+  click_button "Sign in"
+end
+
+def logout
+  visit destroy_user_session_path
+end

@@ -12,6 +12,11 @@ class Annotation < ActiveRecord::Base
   validates :text, :presence=>true
   validates :user_id, :numericality => { :only_integer => true }
 
+  # head to solr to get the actual item, so we can access its attributes, like the title
+  def item
+    @item ||= Item.find(druid)
+  end
+
   def add_annotation_to_solr
 
     druid=self.druid
