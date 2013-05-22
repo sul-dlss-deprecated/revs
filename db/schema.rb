@@ -55,12 +55,6 @@ ActiveRecord::Schema.define(:version => 20130513171118) do
   add_index "flags", ["flag_type"], :name => "index_flags_on_flag_type"
   add_index "flags", ["user_id"], :name => "index_flags_on_user_id"
 
-  create_table "roles", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
   create_table "searches", :force => true do |t|
     t.text     "query_params"
     t.integer  "user_id"
@@ -93,7 +87,7 @@ ActiveRecord::Schema.define(:version => 20130513171118) do
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.string   "authentication_token"
-    t.integer  "role_id"
+    t.string   "role",                   :default => "",    :null => false
     t.text     "bio",                    :default => "",    :null => false
     t.string   "first_name",             :default => "",    :null => false
     t.string   "last_name",              :default => "",    :null => false

@@ -11,8 +11,7 @@ CollectionHighlight.create(id:4,druid:'wn860zc7322',image_url:'https://stacks.st
 CollectionHighlight.create(id:5,druid:'kz071cg8658',image_url:'https://stacks.stanford.edu/image/bg152pb0116/2012-027NADI-1966-b1_1.0_0013_thumb') # Nadig
 
 unless User.where(:email=>'archivist1@example.com').first
-  user=User.new(:email=>'archivist1@example.com',:password=>'password',:password_confirmation=>'password')
-  user.role=Role.admin
+  user=User.new(:email=>'archivist1@example.com',:password=>'password',:password_confirmation=>'password',:role=>'admin')
   user.skip_confirmation!
   user.save!
 end

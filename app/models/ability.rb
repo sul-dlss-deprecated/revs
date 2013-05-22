@@ -3,59 +3,43 @@ class Ability
 
   def initialize(user)
     # Define abilities for the passed in user here.
+    # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
 
     # NOTE: only certain actions are actually checked for permissions, therefore most actions are allowed by default
     # and do not need to be defined here.  Update, create and destroy actions are checked for permissions via the resourceful.rb
-    # file, which acts as the superclass for most controllers.  All other actions by default are not checked and are fully allowed.   
+    # file, which acts as the superclass for most controllers.  All other actions by default are not checked and are fully allowed.  
     
-    # by design, each user can only be in one role -- however, this file is coded so that if this is changed in the future, multiple roles support is possible
+    # Check the controllers to see which actions are protected.  Some UI elements are also not shown based on abilities 
     
-    user ||= User.new # guest user
+    # By design, each user can only be in one role -- however, this file is coded so that if this is changed in the future, multiple roles support is possible
+    
+    # There are methods defined below as ROLENAME_actions that define what ROLENAME can do
+    
+    user ||= User.new # non-logged in user
 
-    if user.role? :admin # administrator can do everything, and can enter admin area
-      admin_actions(user)
-      curator_actions(user)
-      user_actions(user)      
-    end
+    send("#{user.role.downcase}_actions",user) unless user.no_role?
     
-    if user.role? :curator # curator role 
-      curator_actions(user)
-      user_actions(user)
-    end
-    
-    if user.role? :user # logged in user
-      user_actions(user)
-    end
-    
+    # any user of the website (even those not logged in) can perform these actions
     can :read, [Annotation,Flag]
             
-    # The first argument to `can` is the action you are giving the user permission to do.
-    # If you pass :manage it will apply to every action. Other common actions here are
-    # :read, :create, :update and :destroy.
-    #
-    # The second argument is the resource the user can perform the action on. If you pass
-    # :all it will apply to every resource. Otherwise pass a Ruby class of the resource.
-    #
-    # The third argument is an optional hash of conditions to further filter the objects.
-    # For example, here the user can only update published articles.
-    #
-    #   can :update, Article, :published => true
-    #
-    # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
- 
   end
   
+   # administrator can enter admin area and curator area and can peform all user actions
   def admin_actions(user)
+    curator_actions(user)
     can :administer, :all
   end
   
+  # curator role can enter curator area and can perform all user actions
   def curator_actions(user)
+    user_actions(user)
     can :curate, :all
   end
   
+  # logged in user
   def user_actions(user)
-    can [:update,:destroy], [Annotation,Flag], :user_id => user.id
-    can :create, [Annotation,Flag]
+    can [:update,:destroy], [Annotation,Flag], :user_id => user.id # can update and destroy their own annotations and flags
+    can :create, [Annotation,Flag] # can create new annotations and flags
   end
   
   

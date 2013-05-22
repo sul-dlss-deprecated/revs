@@ -10,7 +10,7 @@ admin:
   confirmed_at: <%=Time.now%>
   first_name: Archivist
   last_name: Stanford
-  role_id: 3 # admin
+  role: 'admin'
 
 curator:
   email: curator1@example.com
@@ -18,12 +18,12 @@ curator:
   confirmed_at: <%=Time.now%>
   first_name: Curator
   last_name: Revs
-  role_id: 2 # curator
-
+  role: 'curator'
+  
 user:
   email: user1@example.com
   encrypted_password: <%= User.new.send(:password_digest, 'password') %>
   confirmed_at: <%=Time.now%>
   first_name: User
   last_name: Web
-  role_id: 1 # user
+  role: 'user'

@@ -30,7 +30,7 @@
 	<% unless current_user==@user%>
 
 	<div><%= f.label :role %>
-	<%= f.collection_select :role_id,Role.all,:id,:name %></div>
+	<%= f.select :role,User.roles %></div>
 
   <div><%= f.label :password %> <i>(leave blank if you don't want to change it)</i>
   <%= f.password_field :password, :autocomplete => "off" %></div>
