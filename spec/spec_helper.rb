@@ -56,3 +56,49 @@ def logout
   sign_out_button="Sign out"
   click_button(sign_out_button) if has_button?(sign_out_button)
 end
+
+# some helper methods to do some quick checks
+
+# Annotations
+def should_allow_annotations  
+  page.should have_content('View and add annotations')
+end
+
+def should_not_allow_annotations  
+  page.should_not have_content('View and add annotations')
+end
+
+# Flags
+def should_allow_flagging
+  page.should have_button('Flag this item')
+end
+
+def should_not_allow_flagging
+  page.should_not have_button('Flag this item')
+end
+
+
+# Admin section
+def should_not_allow_admin_section
+  visit admin_users_path
+  current_path.should == root_path
+  page.should have_content('You are not authorized to perform this action.')
+end
+
+def should_allow_admin_section
+  visit admin_users_path
+  page.should have_content('Administer Users')
+  current_path.should == admin_users_path  
+end
+
+# Curator section
+def should_not_allow_curator_section
+  visit curator_tasks_path
+  current_path.should == root_path
+  page.should have_content('You are not authorized to perform this action.')
+end
+
+def should_allow_curator_section
+  visit curator_tasks_path
+  page.should have_content('Flagged Items')
+end

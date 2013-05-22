@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe("About Pages",:type=>:request,:integration=>true) do
   
-  before(:each) do
+  before :each do
     @about_page_title=I18n.t("revs.about.project_title")
     @project_team_title=I18n.t("revs.about.team_title")
     @acknowledgements_title=I18n.t("revs.about.acknowledgements_title")
