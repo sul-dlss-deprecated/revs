@@ -1,0 +1,21 @@
+.forgot-password {
+  margin-top: 12px;
+}
+.btn.signin {
+  margin-right: 20px;
+}
+
+
+// Responsive styles
+@media screen and (min-width: 980px) {
+  .forgot-password {
+    display: inline-block;
+    margin-left: 12px;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 979px) {
+
+}
+@media screen and (max-width: 767px) {
+
+}
