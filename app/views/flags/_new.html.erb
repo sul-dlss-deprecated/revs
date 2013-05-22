@@ -1,4 +1,4 @@
-<% if user_signed_in? # if user is signed in, let them flag the item
+<% if can? :create, Flag
 	current_flags=current_user.flags.where(:druid=>druid)%>
 	<% if current_flags.count == 0 # they have not already flagged it, give them the new form%>
 		<%= form_for(Flag.new, :remote=>true) do |f| %>

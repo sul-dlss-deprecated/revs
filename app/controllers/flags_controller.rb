@@ -1,5 +1,7 @@
 class FlagsController < ApplicationController
 
+  load_and_authorize_resource
+  
   def index
     druid=params[:druid]
     @flags=Flag.where(:druid=>druid)
@@ -11,7 +13,7 @@ class FlagsController < ApplicationController
   def create
     
     flag_info=params[:flag]
-    @flag=Flag.create(:flag_type=>flag_info[:flag_type],:comment=>flag_info[:comment],:druid=>flag_info[:druid],:user_id=>current_user.id)
+    @flag.update_attributes(:flag_type=>flag_info[:flag_type],:comment=>flag_info[:comment],:druid=>flag_info[:druid],:user_id=>current_user.id)
     @all_flags=Flag.where(:druid=>flag_info[:druid])
     @message='The item was flagged.'
     respond_to do |format|
@@ -23,21 +25,18 @@ class FlagsController < ApplicationController
   end
 
   def show
-    @flag=Flag.find(params[:id])
     respond_to do |format|
       format.js { render }
     end 
   end
   
   def update
-    flag_info=params[:flag]
-    @message='The flag was updated.'
-    
-    @flag=Flag.find(params[:id])
+    flag_info=params[:flag]    
     @flag.comment=flag_info[:comment]
     @flag.flag_type=flag_info[:flag_type] if flag_info[:flag_type]
     @flag.cleared=Time.now if flag_info[:cleared]
     @flag.save
+    @message='The flag was updated.'
     @all_flags=Flag.where(:druid=>flag_info[:druid])
     respond_to do |format|
       format.html { flash[:success]=@message

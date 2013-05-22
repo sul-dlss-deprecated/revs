@@ -3,8 +3,8 @@
 
 	<% flags.each do |flag| %>
 		<p><%=flag.user == current_user ? "You" : flag.user.full_name%> flagged it on <%=show_as_date(flag.created_at)%>
-		<%="with comment '#{flag.comment}'" if flag.comment%>
-		<% if flag.user == current_user%><%= button_to '[remove]',flag_path(flag.id), :method=>:delete,:remote=>true, :confirm=>"Are you sure?"%><% end %></p>
+		<%="with comment '#{flag.comment}'" unless flag.comment.blank?%>
+		<% if can? :destroy, flag%><%= button_to '[remove]',flag_path(flag.id), :method=>:delete,:remote=>true, :confirm=>"Are you sure?"%><% end %></p>
 	<% end %>
 
 <% end %>

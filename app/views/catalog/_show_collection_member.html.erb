@@ -61,9 +61,9 @@
     <%= render :partial => "show_default_collection_member", :locals => {:document => @document} %>
     <%= link_to('<i class="icon-picture"></i> Full citation page with view/download'.html_safe, "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'new') %>
 
-		<% if user_signed_in? %>
+		<% if can? :create, Annotation %>
 			<p><%= link_to("View and add annotations (#{@document.annotations.size} existing)",'#',:id=>'annotate_link',:class=>"annotation_links showOnLoad hidden") %></p>
-		<% elsif @document.annotations.size > 0 %>
+		<% elsif can?(:read, Annotation) && @document.annotations.size > 0 %>
 			<p><%= link_to("View #{@document.annotations.size} existing annotations",'#',:id=>'view_annotations_link',:class=>"annotation_links showOnLoad hidden") %></p>
 		<% end %>
 		<p><%= link_to('Hide annotations','#',:id=>'hide_annotations_link',:class=>"hidden") %></p>

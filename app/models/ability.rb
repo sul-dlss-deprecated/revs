@@ -13,13 +13,21 @@ class Ability
     user ||= User.new # guest user
 
     if user.role? :admin # administrator can do everything, and can enter admin area
-      can :administer, :all
-      can :curate, :all
+      admin_actions(user)
+      curator_actions(user)
+      user_actions(user)      
     end
     
-    if user.role? :curator # curator role
-      can :curate, :all
+    if user.role? :curator # curator role 
+      curator_actions(user)
+      user_actions(user)
     end
+    
+    if user.role? :user # logged in user
+      user_actions(user)
+    end
+    
+    can :read, [Annotation,Flag]
             
     # The first argument to `can` is the action you are giving the user permission to do.
     # If you pass :manage it will apply to every action. Other common actions here are
@@ -36,5 +44,19 @@ class Ability
     # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
  
   end
+  
+  def admin_actions(user)
+    can :administer, :all
+  end
+  
+  def curator_actions(user)
+    can :curate, :all
+  end
+  
+  def user_actions(user)
+    can [:update,:destroy], [Annotation,Flag], :user_id => user.id
+    can :create, [Annotation,Flag]
+  end
+  
   
 end

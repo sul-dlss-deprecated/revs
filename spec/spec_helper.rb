@@ -53,5 +53,6 @@ def login_as(email, password = nil)
 end
 
 def logout
-  visit destroy_user_session_path
+  sign_out_button="Sign out"
+  click_button(sign_out_button) if has_button?(sign_out_button)
 end

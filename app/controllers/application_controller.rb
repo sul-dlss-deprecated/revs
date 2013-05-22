@@ -12,6 +12,9 @@ class ApplicationController < ActionController::Base
   before_filter :set_sunet_user 
   before_filter :store_referred_page, :if=>lambda{!current_user && is_devise_path?(request.path)} # only if user not logged in and we are on the login pages
 
+  rescue_from CanCan::AccessDenied do |exception|
+    not_authorized(exception.message)
+  end
   
   def application_name
     "Revs Digital Library"
@@ -43,9 +46,18 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def not_authorized
+  def check_for_admin_logged_in
+    not_authorized unless can? :administer, :all
+  end
+
+  def check_for_curator_logged_in
+    not_authorized unless can? :curate, :all
+  end
+    
+  def not_authorized(additional_message=nil)
     
     message="You are not authorized to perform this action."
+    message+=additional_message unless additional_message.blank?
     respond_to do |format|
       format.html { redirect_to :root, :alert=>message}
       format.xml  { render :xml => message, :status=>401 }

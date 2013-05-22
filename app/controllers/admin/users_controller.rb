@@ -1,4 +1,6 @@
-class Admin::UsersController < Admin::AdminController
+class Admin::UsersController < ApplicationController 
+
+  before_filter :check_for_admin_logged_in
 
   def index
     @email=params[:email]

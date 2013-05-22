@@ -1,4 +1,6 @@
-class Curator::TasksController < Curator::CuratorController
+class Curator::TasksController < ApplicationController
+
+  before_filter :check_for_curator_logged_in
 
     # get all flags grouped by druid with counts
    def index

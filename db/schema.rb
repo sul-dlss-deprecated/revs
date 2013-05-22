@@ -93,7 +93,7 @@ ActiveRecord::Schema.define(:version => 20130513171118) do
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.string   "authentication_token"
-    t.integer  "role_id",                :default => 1
+    t.integer  "role_id"
     t.text     "bio",                    :default => "",    :null => false
     t.string   "first_name",             :default => "",    :null => false
     t.string   "last_name",              :default => "",    :null => false
