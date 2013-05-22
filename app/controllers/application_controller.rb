@@ -38,8 +38,8 @@ class ApplicationController < ActionController::Base
     session[:login_redirect] || root_path
   end
 
-  def after_sign_out_path_for(resource_or_scope) # redirect back where they were from after logout, unless it was an admin page
-    if Rails.application.routes.recognize_path(previous_page)[:controller].include?("admin") 
+  def after_sign_out_path_for(resource_or_scope) # redirect back where they were from after logout, unless it was an admin or curator page
+    if /admin|curator/ =~ Rails.application.routes.recognize_path(previous_page)[:controller]
       root_path
     else
       previous_page 
