@@ -33,6 +33,14 @@ en:
       terms_of_use_message: 'The Revs Digital Library is under development and contains content that has not been reviewed by curators. By continuing, I acknowledge I understand and that I can provide feedback about the site and about content.'
       terms_continue: 'Continue'
       terms_disagree: 'Do not continue'
+    authentication:
+      new_user: 'New user?'
+      sign_in: 'Sign in'
+      remember_me: 'Remember me'
+      password: 'Password'
+      email: 'Email'
+      sidebar:
+        actions: 'Actions'
     collection:
       collection_detail: 'Collection Detail'
       member_detail: 'Item Detail'
