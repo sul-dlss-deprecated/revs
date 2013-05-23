@@ -28,4 +28,25 @@ describe("Logged in users",:type=>:request,:integration=>true) do
       should_not_allow_curator_section   
     end
     
+    it "should not show the public profile of a user who does not want their profile public" do
+      admin_account=User.find_by_email(admin_login)
+      user_account=User.find_by_email(user_login)
+      admin_account.public.should == false
+      user_account.public.should == true
+
+      # admin user profile is not public
+      visit user_profile_id_path(admin_account.id)
+      current_path.should == root_path
+      page.should have_content 'The user was not found or their profile is not public.'
+
+      # regular user profile is public and should be available via ID or full name
+      visit user_profile_id_path(user_account.id)
+      current_path.should == user_profile_id_path(user_account.id)
+      [user_account.full_name,user_account.bio].each {|content| page.should have_content content}
+      visit user_profile_name_path(user_account.first_name + '.' + user_account.last_name)
+      current_path.should == user_profile_name_path(user_account.first_name + '.' + user_account.last_name)
+      [user_account.full_name,user_account.bio].each {|content| page.should have_content content}
+            
+    end
+    
 end

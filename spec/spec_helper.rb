@@ -38,6 +38,7 @@ RSpec.configure do |config|
   config.order = "random"
 end
 
+# the following must match what are in the users.yml fixtures
 def user_login
   'user1@example.com'   
 end
