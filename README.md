@@ -76,8 +76,8 @@ You must specify a branch or tag to deploy.  You can deploy the latest by specif
 
 You can run the test suite locally by running:
 
-    rake local_ci
+  rake local_ci
     
-This will stop development jetty, force you into the test environment, start jetty, start solr, 
-delete all the records in the test solr core, index all fixtures in `spec/fixtures`, run `db:migrate` in test,
-then run the tests, and then restart development jetty.
+Your local development jetty must be started for this to work.  If your local jetty is stopped, start it with:
+
+	rake jetty:start
