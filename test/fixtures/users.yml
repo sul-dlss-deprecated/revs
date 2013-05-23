@@ -12,7 +12,9 @@ admin:
   confirmed_at: <%=Time.now%>
   first_name: Admin
   last_name: Stanford
+  bio: 'I am an administrator'
   role: 'admin'
+  public: false
 
 curator:
   email: curator1@example.com
@@ -20,7 +22,9 @@ curator:
   confirmed_at: <%=Time.now%>
   first_name: Curator
   last_name: Revs
+  bio: 'I am a curator'
   role: 'curator'
+  public: true
   
 user:
   email: user1@example.com
@@ -28,4 +32,6 @@ user:
   confirmed_at: <%=Time.now%>
   first_name: User
   last_name: Web
+  bio: 'I am a web user'
   role: 'user'
+  public: true

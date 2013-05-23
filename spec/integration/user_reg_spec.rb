@@ -7,7 +7,7 @@ describe("User Registration",:type=>:request,:integration=>true) do
     RevsMailer.stub_chain(:mailing_list_signup,:deliver).and_return('a mailer')
   end
   
-  it "should register a new user with the default role" do
+  it "should register a new user with the default role and defaulting to public profile as hidden" do
 
     RevsMailer.should_not_receive(:mailing_list_signup)
 
@@ -23,6 +23,7 @@ describe("User Registration",:type=>:request,:integration=>true) do
     user=User.last
     user.role.should == 'user'
     user.email.should == @email_address
+    user.public.should == false
 
   end
 
