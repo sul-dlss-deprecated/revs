@@ -4,4 +4,14 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+flag1:
+  user: user  # this is the named "user" fixture object from the users table
+  flag_type: 'error'
+  comment: 'user comment'
+  druid: 'sc411ff4198'
 
+flag2:
+  user: curator  # this is the named "curator" fixture object from the users table
+  flag_type: 'error'
+  comment: 'curator comment'
+  druid: 'yt907db4998'

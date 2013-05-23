@@ -13,8 +13,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
       comment_field='flag_comment'
       default_flag_type='error'
       druid='qb957rw1430'
-      
-      Flag.count.should == 0
+      initial_flag_count=Flag.count
             
       # login and visit an item as a regular user
       login_as(user_login)
@@ -35,7 +34,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
       
       # check the database
       user=User.find_by_email(user_login)
-      Flag.count.should == 1
+      Flag.count.should == initial_flag_count + 1
       flag=Flag.last
       flag.comment.should == user_comment
       flag.flag_type.should == default_flag_type
@@ -61,7 +60,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
       
       # check the database
       curator=User.find_by_email(curator_login)
-      Flag.count.should == 2
+      Flag.count.should == initial_flag_count + 2
       flag=Flag.last
       flag.comment.should == curator_comment
       flag.flag_type.should == default_flag_type
@@ -70,7 +69,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
       # remove and confirm deletion of the curator's flag in the database
       click_button remove_button
       page.should have_content('The flag was removed.')
-      Flag.count.should == 1
+      Flag.count.should == initial_flag_count + 1
       Flag.last.user.should == user
            
     end

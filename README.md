@@ -9,6 +9,9 @@ This is a Blacklight Application for the Revs Digital Library at Stanford Univer
 				cd [ROOT FOLDER LOCATION OF WHERE YOU WANT THE CODE TO GO]
         git clone https://github.com/sul-dlss/revs.git
 				cd revs
+				
+				The master branch is what is deployed in production.	
+				The develop branch is what is actively under development.
 
 1. [Optional] If you want to use rvmrc to manage gemsets, copy the .rvmrc example files:
 
@@ -28,17 +31,12 @@ This is a Blacklight Application for the Revs Digital Library at Stanford Univer
         rake revs:config
  
 1. Migrate the database:
-
+	
+		    rake db:create:all
         rake db:migrate
-        rake db:migrate RAILS_ENV=test
-				rake db:seed
-        rake db:seed RAILS_ENV=test				
-
-1. Load the test fixtures:
-
-        rake jetty:start RAILS_ENV=test
-        rake revs:index_fixtures RAILS_ENV=test
-        rake jetty:stop RAILS_ENV=test
+				rake db:seed          # this will give you collection highlights for the home page and MUST BE/IS SAFE to run in all environments for the site to work
+				rake db:fixtures:load # this will give you a few test users to work with and should only be used in development
+															# see the test/fixtures/users.yml files for usernames/paswords
 
 1. Start the development solr (you should first stop any other jetty processes if you have 
    multiple jetty-related projects):
@@ -82,4 +80,4 @@ You can run the test suite locally by running:
     
 This will stop development jetty, force you into the test environment, start jetty, start solr, 
 delete all the records in the test solr core, index all fixtures in `spec/fixtures`, run `db:migrate` in test,
-then run the tests, and then restart development jetty
+then run the tests, and then restart development jetty.

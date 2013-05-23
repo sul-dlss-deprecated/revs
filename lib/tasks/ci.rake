@@ -6,6 +6,7 @@ task :ci do
   unless Rails.env.test?  
     system("rake ci RAILS_ENV=test")
   else
+    system("rake db:migrate RAILS_ENV=test")  
     Jettywrapper.wrap(Jettywrapper.load_config) do
       Rake::Task["revs:refresh_fixtures"].invoke
       Rake::Task["db:fixtures:load"].invoke
