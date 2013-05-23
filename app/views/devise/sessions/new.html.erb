@@ -4,43 +4,43 @@
 
   <%= form_tag({:controller=>'sessions', :action=>'create'}, :method=>'post', :id => 'new_user', :class => 'form-horizontal') do %>
 
-  <div class="control-group">
-    <label class="control-label" for="email"><%= t('revs.authentication.email') %></label>
-    <div class="controls">
-      <%= text_field_tag 'user[email]', @email, :autofocus => true, :placeholder => "your email address" %>
-    </div>
-  </div>
-
-  <div class="control-group">
-    <label class="control-label" for="password"><%= t('revs.authentication.password') %></label>
-    <div class="controls">
-      <%= password_field_tag 'user[password]', @password, :placeholder => "your password" %>
-      <%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
-        <div class="forgot-password">
-          <%= link_to "Forgot your password?", new_password_path(resource_name) %>
-        </div>
-      <% end -%>
-    </div>
-  </div>
-
-  <% if devise_mapping.rememberable? -%>
     <div class="control-group">
+      <label class="control-label" for="user_email"><%= t('revs.authentication.email') %></label>
       <div class="controls">
-        <label class="checkbox">
-          <%= check_box_tag 'user[remember_me]', @remember_me %> <%= t('revs.authentication.remember_me') %>
-        </label>
+        <%= text_field_tag 'user[email]', @email, :autofocus => true, :placeholder => "your email address" %>
       </div>
     </div>
-  <% end -%>
 
-  <div class="control-group">
-    <div class="controls">
-      <%= submit_tag "#{t('revs.authentication.sign_in')}", :class => 'btn signin' %>
-      <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-        <%= link_to t('revs.authentication.new_user'), new_registration_path(resource_name) %><br />
-      <% end -%>
+    <div class="control-group compact">
+      <label class="control-label" for="user_password"><%= t('revs.authentication.password') %></label>
+      <div class="controls">
+        <%= password_field_tag 'user[password]', @password, :placeholder => "your password" %>
+        <%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
+          <div class="forgot-password">
+            <%= link_to "Forgot your password?", new_password_path(resource_name) %>
+          </div>
+        <% end -%>
+      </div>
     </div>
-  </div>
+
+    <% if devise_mapping.rememberable? -%>
+      <div class="control-group compact">
+        <div class="controls">
+          <label class="checkbox">
+            <%= check_box_tag 'user[remember_me]', @remember_me %> <%= t('revs.authentication.remember_me') %>
+          </label>
+        </div>
+      </div>
+    <% end -%>
+
+    <div class="control-group">
+      <div class="controls">
+        <%= submit_tag "#{t('revs.authentication.sign_in')}", :class => 'btn signin' %>
+        <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+          <%= link_to t('revs.authentication.new_user'), new_registration_path(resource_name) %><br />
+        <% end -%>
+      </div>
+    </div>
 
   <% end %>
 </div>

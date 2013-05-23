@@ -6,7 +6,22 @@
     float: right;
     font-size: 0.85em;
     margin-top: 9px;
-    a {color: #ddd;}
+    a, input[type="submit"] {color: #ddd;}
+  }
+  form.button_to {
+    display: inline-block;
+    margin-bottom: 0;
+    input[type="submit"] {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1em;
+      margin-top: -2px;
+      padding: 0;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 }
 

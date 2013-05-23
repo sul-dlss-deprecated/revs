@@ -3,13 +3,13 @@
   <div class="container">
     <%= link_to(image_tag("SUL-Logo-white-text-h25.png", :alt => "Stanford University Libraries"), "http://library.stanford.edu/")%>
     <span id="report-problem">
+      <%= render :partial=>'shared/user_navigation' %>
 	    <%= link_to(
             t('revs.nav.report_problem'),
             contact_us_path(:from=>request.path),
 						:id=>'contact_us_link'
           )
       %>
-			<%= render :partial=>'shared/user_navigation' %>
 		</span>		
   </div> <!-- .container end -->
 </div> <!-- #brandbar end -->
