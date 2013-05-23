@@ -1,20 +1,44 @@
-<h2>Create a New Account</h2>
+<div id="content" class="span9">
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+  <h2><%= t('revs.authentication.new_account') %></h2>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
+  <%= form_tag({:controller=>'registrations', :action=>'create'}, :method=>'post', :id => 'new_user', :class => 'form-horizontal') do %>
+    <%= devise_error_messages! %>
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
+    <div class="control-group">
+      <label class="control-label" for="user_email"><%= t('revs.authentication.email') %></label>
+      <div class="controls">
+        <%= email_field_tag 'user[email]', @email, :autofocus => true, :tabindex => "1", :placeholder => "your email address" %>
+      </div>
+    </div>
 
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
+    <div class="control-group">
+      <label class="control-label" for="user_password"><%= t('revs.authentication.password') %></label>
+      <div class="controls">
+        <%= password_field_tag 'user[password]', @password, :tabindex => "2", :placeholder => "set password" %>
+      </div>
+    </div>
 
-  <div>  <%= f.check_box :subscribe_to_mailing_list %><%= f.label :subscribe_to_mailing_list,'Subscribe to the Revs Program Email List' %></div>
+    <div class="control-group">
+      <label class="control-label" for="user_password_confirmation"><%= t('revs.authentication.password_confirmation') %></label>
+      <div class="controls">
+        <%= password_field_tag 'user[password_confirmation]', @password_confirmation, :tabindex => "3", :placeholder => "confirm password" %>
+      </div>
+    </div>
 
-  <div><%= f.submit "Sign up" %></div>
-<% end %>
+    <div class="control-group">
+      <div class="controls ">
+        <%= submit_tag "#{t('revs.authentication.sign_up')}", :tabindex => "5", :class => 'btn signup' %>
+        <div class="register">
+          <label class="checkbox" tabindex="4">
+            <%= check_box 'user', 'subscribe_to_mailing_list' %> <%= t('revs.authentication.sub_mailing_list') %>
+          </label>
+        </div>
+      </div>
+    </div>
 
-<%= render "devise/shared/links" %>
+  <% end %>
+
+</div>
+
+<%= render :partial => 'devise/shared/show_devise_sidebar' %>

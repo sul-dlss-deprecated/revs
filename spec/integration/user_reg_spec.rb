@@ -16,7 +16,7 @@ describe("User Registration",:type=>:request,:integration=>true) do
     visit new_user_registration_path
     fill_in 'user_email', :with=> @email_address
     fill_in 'user_password', :with=> @password
-    fill_in 'user_password_confirmation', :with=> @password    
+    fill_in 'user_password_confirmation', :with=> @password
     click_button 'Sign up'
     
     # check the database

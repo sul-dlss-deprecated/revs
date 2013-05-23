@@ -1,16 +1,29 @@
-.forgot-password {
-  margin-top: 12px;
-}
-.btn.signin {
-  margin-right: 20px;
+#new_user {
+  margin-top: 20px;
+  .forgot-password {
+    margin-top: 12px;
+  }
+  .btn.signin, .btn.signup {
+    margin-right: 20px;
+  }
+  .register {
+    margin-top: 20px;
+  }
 }
 
 
 // Responsive styles
 @media screen and (min-width: 980px) {
-  .forgot-password {
-    display: inline-block;
-    margin-left: 12px;
+  #new_user {
+    .forgot-password {
+      display: inline-block;
+      margin-left: 12px;
+    }
+    .register {
+      display: inline-block;
+      margin-top: 0;
+      vertical-align: middle;
+    }
   }
 }
 @media screen and (min-width: 768px) and (max-width: 979px) {
@@ -18,4 +31,9 @@
 }
 @media screen and (max-width: 767px) {
 
+}
+@media screen and (max-width: 479px) {
+  #new_user {
+    margin-top: 10px;
+  }
 }

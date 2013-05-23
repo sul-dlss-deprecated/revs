@@ -36,9 +36,13 @@ en:
     authentication:
       new_user: 'New user?'
       sign_in: 'Sign in'
+      sign_up: 'Sign up'
       remember_me: 'Remember me'
       password: 'Password'
+      password_confirmation: 'Password confirmation'
       email: 'Email'
+      new_account: 'Sign up for a user account'
+      sub_mailing_list: 'Subscribe to the Revs Program Mailing List'
       sidebar:
         actions: 'Actions'
     collection:
