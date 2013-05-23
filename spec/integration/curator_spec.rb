@@ -1,16 +1,15 @@
 require 'spec_helper'
 
-describe("Curator users",:type=>:request,:integration=>true) do
+describe("Curators",:type=>:request,:integration=>true) do
   
   before :each do
     logout
-    @curator='curator1@example.com'    
   end
   
   it "should allow a curator to login" do
-      login_as(@curator)
+      login_as(curator_login)
       current_path.should == root_path
-      page.should have_content(@curator)    # username at top of page  
+      page.should have_content(curator_login)    # username at top of page  
       page.should have_content('Signed in successfully.') # sign in message
       page.should_not have_content('Admin') # no admin menu on top of page
       page.should have_content('Curator') # curator menu on top of page
@@ -21,7 +20,7 @@ describe("Curator users",:type=>:request,:integration=>true) do
       visit starting_page
       should_not_allow_flagging
       should_not_allow_annotations
-      login_as(@curator)
+      login_as(curator_login)
       current_path.should == starting_page
       should_allow_flagging
       should_allow_annotations    

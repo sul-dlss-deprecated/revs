@@ -38,6 +38,18 @@ RSpec.configure do |config|
   config.order = "random"
 end
 
+def user_login
+  'user1@example.com'   
+end
+
+def curator_login
+  'curator1@example.com'
+end
+
+def admin_login
+  'admin1@example.com'
+end
+
 def login_pw
   'password'
 end
