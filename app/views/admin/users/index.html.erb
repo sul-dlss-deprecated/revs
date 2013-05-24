@@ -11,7 +11,7 @@
 
   <% if @users.size > 0 %>
     <%= paginate @users, :params => {:order=>@order} %>
-    <table class="admin-users table table-bordered table-condensed table-hover table-striped">
+    <table class="admin table table-bordered table-condensed table-hover table-striped">
       <tr>
         <th><%= link_to 'Email address', admin_users_path(:order=>'email',:email=>@email) %></th>
         <th><%= link_to 'Name', admin_users_path(:order=>'last_name',:email=>@email) %></th>

@@ -5,7 +5,7 @@ h3 {
   padding-top: 6px;
 }
 
-table.admin-users {
+table.admin.table {
   font-size: 0.9em;
 }
 
@@ -22,7 +22,7 @@ td.centered, th.centered {
 
 // Responsive styles
 @media screen and (min-width: 980px) {
-  table.admin-users {
+  table.admin.table {
     font-size: 0.95em;
   }
 }
