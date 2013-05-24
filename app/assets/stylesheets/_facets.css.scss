@@ -45,7 +45,7 @@
   }
 }
 
-@media (max-width: 767px) {
+@media screen and (max-width: 767px) {
   #facets-revs .btn-navbar {
     display: block;
     margin: 5px;

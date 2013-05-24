@@ -78,7 +78,7 @@
 }
 
 /* Phones: reduce logo size and center site title and nav elements */
-@media (max-width: 767px) {
+@media screen and (max-width: 767px) {
   #header-navbar-static-top {
     .logo img {
       float: left;
@@ -92,7 +92,7 @@
 }
 /* Tablets: reduce logo size and add some extra space between logo
    and site title and nav elements */
-@media (min-width: 768px) and (max-width: 979px) {
+@media screen and (min-width: 768px) and (max-width: 979px) {
   #header-navbar-static-top {
     .logo img {
       float: right;

@@ -8,18 +8,18 @@ body {
 }
 
 body {
-  @media (max-width: 767px) {
+  @media screen and (max-width: 767px) {
       padding-left: 0px;
       padding-right: 0px;
     }
 }
 #header-navbar-static-top {
-  @media (max-width: 767px) {
+  @media screen and (max-width: 767px) {
       margin-left: 0px;
     }
 }
 #main-container {
-  @media (max-width: 767px) {
+  @media screen and (max-width: 767px) {
       padding-left: 20px;
       padding-right: 20px;
     }

@@ -44,24 +44,24 @@
   }
   .carousel-control {
     /* Put nav buttons close together when tablet or smaller */
-    @media (max-width: 979px) {
+    @media screen and (max-width: 979px) {
       left: 75px;
     }
   }
 }
 
-@media (max-width: 979px) {
+@media screen and (max-width: 979px) {
   .carousel {margin-bottom: 5px;}
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .carousel {margin-bottom: 0;}
 }
 
-@media (min-width: 980px) and (max-width: 1199px) {
+@media screen and (min-width: 980px) and (max-width: 1199px) {
  .carousel-inner {max-width: 380px;}
 }
 
-@media (min-width: 769px) and (max-width: 979px) {
+@media screen and (min-width: 769px) and (max-width: 979px) {
  .carousel-inner {max-width: 290px;}
 }

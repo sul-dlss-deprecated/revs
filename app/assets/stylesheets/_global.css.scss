@@ -217,7 +217,7 @@ span.content-type {
     }
   }
 }
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .pagination {clear: both;}
   #sidebar {
     border-top: none;
