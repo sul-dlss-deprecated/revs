@@ -89,7 +89,7 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     visit my_user_profile_path
     current_path.should == my_user_profile_path
     [admin_account.full_name,admin_account.bio].each {|content| page.should have_content content}
-    page.should have_content 'Your profile is currently private.'
+    page.should have_content 'Profile page Private'
   end
   
 end

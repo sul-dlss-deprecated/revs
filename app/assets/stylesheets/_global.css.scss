@@ -180,6 +180,13 @@ span.content-type {
   text-transform: lowercase;
 }
 
+.nav > li > a.inline-link {
+  display: inline;
+}
+#sidebar-nav span.label {
+  font-weight: normal;
+}
+
 // Override Blacklight theme pagination styling
 .pagination {
   border-top: 1px solid #dddddd;

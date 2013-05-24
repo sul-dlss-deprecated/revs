@@ -1,5 +1,20 @@
 <div id="sidebar" class="span3">
   <div id="sidebar-nav">
+
+    <% if @user == current_user %>
+      <ul class="nav nav-list">
+        <li class="nav-header"><%= t('revs.authentication.sidebar.account') %></li>
+          <li>Joined on <%= show_as_date(@user.created_at) %></li>
+          <% unless @user.role == 'user' %>
+            <li>Role: <%= @user.role.capitalize %></li>
+          <% end %>
+          <li>
+              <%= link_to 'Profile page', user_profile_url, :class => "inline-link" %>
+              <span class="label"><%= @user.public ? "Public" : "Private"%></span>
+          </li>
+      </ul>
+    <% end %>
+
     <ul class="nav nav-list">
       <li class="nav-header"><%= t('revs.authentication.sidebar.actions') %></li>
       <li>
@@ -10,5 +25,6 @@
         <% end %>
       </li>
     </ul>
+
   </div>
 </div>
