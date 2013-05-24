@@ -4,7 +4,7 @@
       <li class="nav-header"><%= t('revs.authentication.sidebar.actions') %></li>
       <li>
         <% if params[:action] == "edit" %>
-          <%= link_to 'View your profile', user_profile_id_path(resource.id) %>
+          <%= link_to 'View your profile', my_user_profile_path %>
         <% else %>
           <%= link_to 'Edit your profile', edit_user_registration_path %>
         <% end %>

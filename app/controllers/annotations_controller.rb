@@ -53,4 +53,16 @@ class AnnotationsController < ApplicationController
            
   end
   
+  def destroy
+    
+    @annotation=Annotation.find(params[:id])
+    @annotation.destroy
+    
+    respond_to do |format|
+      format.xml  { render :xml => @annotation.to_xml }
+      format.json { render :json=> @annotation.to_json }
+    end
+    
+  end
+  
 end

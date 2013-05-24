@@ -46,6 +46,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def check_for_any_user_logged_in
+    not_authorized unless user_signed_in?
+  end
+
+  def check_for_user_logged_in
+    not_authorized unless user_signed_in? && current_user.role?(:user)
+  end
+  
   def check_for_admin_logged_in
     not_authorized unless can? :administer, :all
   end

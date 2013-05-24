@@ -1,6 +1,4 @@
 anno.addHandler('onAnnotationCreated', function(annotation) {
-	annotation.username='me';
-	annotation.updated_at='today';
 	jQuery.ajax({
 		type: "POST",
 		url: "/annotations",
@@ -10,6 +8,10 @@ anno.addHandler('onAnnotationCreated', function(annotation) {
 	    annotation.id=data.id; // the annotation ID should match the database row ID
 	  }
 		});
+		
+		// these are added so the display to the user is correct for the new annotation; they will be set on the server when the page loads for all annotations
+		annotation.username='me';
+		annotation.updated_at='today';
 });
 
 anno.addHandler('onAnnotationUpdated', function(annotation) {
@@ -18,6 +20,21 @@ anno.addHandler('onAnnotationUpdated', function(annotation) {
 		dataType: "JSON",
 	  url: "/annotations/" + annotation.id,
 	  data: "annotation="+JSON.stringify(annotation)
+	});
+});
+
+// this gets called when the user clicks the delete icon
+anno.addHandler('beforeAnnotationRemoved', function(annotation) {
+	var r=confirm("Are you sure you want to delete this annotation?");
+	if (r==false) {	return false;}
+});
+
+// this is what gets called when the annotation is actually deleted (assuming the user clicks OK to the confirmation dialog
+anno.addHandler('onAnnotationRemoved', function(annotation) {
+	jQuery.ajax({
+	  type: "DELETE",
+		dataType: "JSON",
+	  url: "/annotations/" + annotation.id,
 	});
 });
 

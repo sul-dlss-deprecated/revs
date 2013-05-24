@@ -1,6 +1,8 @@
 class UserController < ApplicationController
+
+  before_filter :check_for_any_user_logged_in, :only=>'preview'
   
-  # user profile page
+  # public user profile page
   def show
     id=params[:id]
     name=params[:name]
@@ -16,13 +18,18 @@ class UserController < ApplicationController
       flash[:error]='The user was not found or their profile is not public.'
       redirect_to request.referrer || root_path
       return
-    elsif users.size > 1
+    elsif users.size > 1 # TODO for REVS-336: show a disambiguation page instead
       flash[:error]='More than one user was found with that name.'
       redirect_to request.referrer || root_path    
     else
       @user=users.first
     end
-    
+  end
+  
+  # current logged in user profile page, always visible regardless of public visibility setting
+  def preview
+    @user=current_user
+    render :show
   end
   
 end

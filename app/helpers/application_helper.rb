@@ -56,4 +56,13 @@ module ApplicationHelper
     "lang-#{I18n.locale}"
   end
   
+  def user_profile_url
+    return "" unless user_signed_in?
+    if current_user.no_name_entered?
+      user_profile_id_url(current_user.id)
+    else
+      user_profile_name_url([current_user.first_name,current_user.last_name].join('.'))
+    end
+  end
+  
 end

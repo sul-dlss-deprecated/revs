@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
   has_many :annotations, :dependent => :destroy
   has_many :flags, :dependent => :destroy
   before_validation :assign_default_role
+  before_save :trim_names
   after_create :signup_for_mailing_list, :if=>lambda{subscribe_to_mailing_list=='1'}
   validate :check_role_name
   
@@ -26,7 +27,7 @@ class User < ActiveRecord::Base
   def self.roles
     ROLES
   end
-  
+    
   def self.create_new_sunet_user(sunet)
     user = User.new(:email=>"#{sunet}@stanford.edu",:sunet=>sunet,:password => 'password', :password_confirmation => 'password', :role=>DEFAULT_ROLE)
     user.skip_confirmation!
@@ -53,9 +54,9 @@ class User < ActiveRecord::Base
   end
   
   def full_name
-    no_name_entered? ? 'unidentified' : [first_name,last_name].join(' ').squeeze(' ')
+    no_name_entered? ? 'unidentified' : [first_name,last_name].join(' ')
   end
-  
+    
   def is_webauth?
     !sunet.blank?
   end
@@ -70,6 +71,11 @@ class User < ActiveRecord::Base
   
   def assign_default_role
     self.role=DEFAULT_ROLE if no_role?
+  end
+
+  def trim_names
+    first_name.strip!
+    last_name.strip!
   end
   
   # update the lock status if needed

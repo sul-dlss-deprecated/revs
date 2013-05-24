@@ -2,6 +2,13 @@
 
   <h2><%= @user.full_name %><span class="lowercase">'s</span> Profile</h2>
 
+	<% if @user == current_user%><div>Your profile is currently <strong><%=@user.public ? "publically visible" : "private"%></strong>.</div><% end %>
+	
+	<% unless @user.role == 'user' %>
+		<h3><%=@user.role.capitalize%></h3>
+	<% end %>
+
+	<div>Joined <%= show_as_date(@user.created_at) %></div>
   <% unless @user.bio.blank? %>
     <div><%= @user.bio %></div>
   <% end %>

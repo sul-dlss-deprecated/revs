@@ -48,5 +48,32 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
     item['annotations_tsim'].should == [updated_comment1,comment2]
     
   end
+
+  it "should remove the annotation from the right field in solr when destroying an annotation" do
+
+     druid='yt907db4998'
+     original_annotation_from_fixture='Nazi symbol'
+     
+     # find the solr doc and confirm there is no annotation listed
+     item=Item.find(druid)
+     item['annotations_tsim'].should == [original_annotation_from_fixture]
+
+     # create an annotation
+     comment='some comment'
+     user_account=User.find_by_email(user_login)
+     annotation=Annotation.create(:druid=>druid,:text=>comment,:json=>'{a bunch of json would go here}',:user_id=>user_account.id)
+
+     # confirm that solr has been updated
+     item=Item.find(druid)
+     item['annotations_tsim'].should == [original_annotation_from_fixture,comment]
+
+     # delete the annotation
+     annotation.destroy
+
+     # confirm that solr has been updated
+     item=Item.find(druid)
+     item['annotations_tsim'].should == [original_annotation_from_fixture]
+
+   end
     
 end

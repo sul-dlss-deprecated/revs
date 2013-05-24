@@ -48,5 +48,23 @@ describe("Logged in users",:type=>:request,:integration=>true) do
       [user_account.full_name,user_account.bio].each {|content| page.should have_content content}
             
     end
+
+    it "should not show my user profile page is there is no user logged in" do
+      visit my_user_profile_path
+      current_path.should == root_path
+      page.should have_content 'You are not authorized to perform this action.'
+    end
+
+    it "should show my user profile page when logged in, even if your profile is marked as private" do
+      # admin user profile is not public
+      admin_account=User.find_by_email(admin_login)
+      admin_account.public.should == false
+      login_as(admin_login)
+
+      visit my_user_profile_path
+      current_path.should == my_user_profile_path
+      [admin_account.full_name,admin_account.bio].each {|content| page.should have_content content}
+      page.should have_content 'Your profile is currently private.'
+    end
     
 end

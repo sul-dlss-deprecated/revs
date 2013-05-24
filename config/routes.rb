@@ -14,6 +14,7 @@ Revs::Application.routes.draw do
   
   match 'user/:id', :to=>'user#show', :as=>'user_profile_id', :via=>:get, :constraints => {:id => /\d+/}
   match 'user/:name', :to=>'user#show', :as=>'user_profile_name', :via=>:get, :constraints => {:name => /\S+[.]\S+/}
+  match 'user/me', :to=>'user#preview', :as=>'my_user_profile', :via=>:get
   
   # Handles all About pages.
   match 'about', :to => 'about#show', :as => 'about_project', :defaults => {:id=>'project'} # no page specified, go to project page

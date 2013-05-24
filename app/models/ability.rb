@@ -18,10 +18,15 @@ class Ability
     user ||= User.new # non-logged in user
 
     send("#{user.role.downcase}_actions",user) unless user.no_role?
-    
+
+    guest_actions(user)
+            
+  end
+  
+  # unlogged in users
+  def guest_actions(user)
     # any user of the website (even those not logged in) can perform these actions
     can :read, [Annotation,Flag]
-            
   end
   
    # administrator can enter admin area and curator area and can peform all user actions

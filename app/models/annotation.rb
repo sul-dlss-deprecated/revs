@@ -7,6 +7,7 @@ class Annotation < ActiveRecord::Base
 
   after_create :add_annotation_to_solr
   after_update :update_annotation_in_solr
+  after_destroy :update_annotation_in_solr
 
   validates :druid, :is_druid=>true
   validates :text, :presence=>true
