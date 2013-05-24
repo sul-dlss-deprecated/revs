@@ -176,6 +176,10 @@ span.content-type {
   padding: 4px;
 }
 
+.lowercase {
+  text-transform: lowercase;
+}
+
 // Override Blacklight theme pagination styling
 .pagination {
   border-top: 1px solid #dddddd;

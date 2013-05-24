@@ -1,8 +1,13 @@
-<%=home_or_back %>
+<div id="content" class="span9">
 
-<h2><%=@user.full_name%></h2>
-<%=link_to @user.url,@user.url, :target=>'_new' unless @user.url.blank?%>
+  <h2><%= @user.full_name %><span class="lowercase">'s</span> Profile</h2>
 
-<% unless @user.bio.blank? %>
-	<div><%=@user.bio%></div>
-<% end %>
+  <% unless @user.bio.blank? %>
+    <div><%= @user.bio %></div>
+  <% end %>
+
+  <%=link_to "http://#{@user.url} <i class='icon-share-alt'></i>".html_safe, "http://#{@user.url}", :target=>'_new', :class => "user-website" unless @user.url.blank? %>
+
+</div>
+
+<%= render :partial => 'devise/shared/show_user_sidebar' %>
