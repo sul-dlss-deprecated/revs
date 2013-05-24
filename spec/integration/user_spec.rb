@@ -35,7 +35,7 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     should_not_allow_curator_section   
   end
   
-  it "should not show the public profile of a user who does not want their profile public" do
+  it "should not show the public profile of a user who does not want their profile public, but should show the public profile page for users who do have it set as public" do
     admin_account=User.find_by_email(admin_login)
     user_account=User.find_by_email(user_login)
     admin_account.public.should == false
@@ -52,10 +52,28 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     [user_account.full_name,user_account.bio].each {|content| page.should have_content content}
     visit user_profile_name_path(user_account.first_name + '.' + user_account.last_name)
     current_path.should == user_profile_name_path(user_account.first_name + '.' + user_account.last_name)
-    [user_account.full_name,user_account.bio].each {|content| page.should have_content content}
-          
+    [user_account.full_name,user_account.bio].each {|content| page.should have_content content}    
   end
 
+  it "should show a disambiguation page when two users with public profiles have exactly the same first name and last name" do
+    admin_account=User.find_by_email(admin_login)
+    user_account=User.find_by_email(user_login)
+    admin_account.public.should == false
+    user_account.public.should == true
+
+    # update the admin account so they have the same first name/last name as the regular user and their profile is public
+    admin_account.public = true
+    admin_account.first_name=user_account.first_name
+    admin_account.last_name=user_account.last_name
+    admin_account.save!
+    
+    # now visit the named path public profile and see if we get the disambiguation page
+    visit user_profile_name_path(user_account.first_name + '.' + user_account.last_name)
+    current_path.should == user_profile_name_path(user_account.first_name + '.' + user_account.last_name)
+    page.should have_content('Please select a user')
+    page.should have_content("2 users were found with the name #{user_account.full_name}")
+  end
+  
   it "should not show my user profile page is there is no user logged in" do
     visit my_user_profile_path
     current_path.should == root_path
