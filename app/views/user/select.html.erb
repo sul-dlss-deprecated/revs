@@ -1,0 +1,7 @@
+<h2>Please select a user</h2>
+<p><%=@users.count%> users were found with the name <strong><%=@users.first.full_name%></strong>.  Please select the user whose profile you wish to view:</p>
+<ul>
+	<% @users.each do |user| %>
+		<li><%=link_to user.full_name,user_profile_id_path(user.id)%> (<%=user.role%> joined <%=show_as_date(user.created_at)%>)  <%=truncate(user.bio)%></li>
+	<% end %>
+</ul>

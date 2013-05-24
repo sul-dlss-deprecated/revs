@@ -35,7 +35,7 @@ user:
   bio: 'I am a web user'
   role: 'user'
   public: true
-
+    
 sunet_user:
   email: sunetuser@stanford.edu
   sunet: 'sunetuser'

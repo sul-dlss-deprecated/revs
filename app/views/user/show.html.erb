@@ -17,4 +17,6 @@
 
 </div>
 
-<%= render :partial => 'devise/shared/show_user_sidebar' %>
+<% if user_signed_in? && @user == current_user %>
+	<%= render :partial => 'devise/shared/show_user_sidebar' %>
+<% end %>
