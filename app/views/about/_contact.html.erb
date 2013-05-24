@@ -1,4 +1,4 @@
-<%= form_tag(:controller=>'about',:action=>'contact', :method=>'post', :class => 'form-horizontal') do %>
+<%= form_tag({:controller=>'about',:action=>'contact'}, :method=>'post', :class => 'form-horizontal') do %>
 	<%= hidden_field_tag 'from',@from%>
 
 	<div class="control-group">
