@@ -7,4 +7,9 @@
   <field name="source_id_ssi">2012-027NADI-1967-b1_1.0_0008</field>
   <field name="collection_ssim">David Nadig Collection</field>
   <field name="image_id_ssm">2012-027NADI-1967-b1_1.0_0008</field>
+  <field name="subjects_ssim">Automobile</field>
+  <field name="subjects_ssim">History</field>
+  <field name="marque_ssim">Ford</field>
+  <field name="entrant_ssi">Clinton, Bill</field>
+  <field name="location_ssi">Canada</field>
 </doc>

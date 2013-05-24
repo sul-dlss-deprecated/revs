@@ -7,4 +7,11 @@
   <field name="source_id_ssi">2012-027NADI-1966-b1_2.0_0021</field>
   <field name="collection_ssim">David Nadig Collection</field>
   <field name="image_id_ssm">2012-027NADI-1966-b1_2.0_0021</field>
+  <field name="subjects_ssim">Automobile</field>
+  <field name="subjects_ssim">History</field>
+  <field name="marque_ssim">Jaguar</field>
+  <field name="entrant_ssi">Gonzales, Speedy</field>
+  <field name="venue_ssi">Indy 500 Speedway</field>
+  <field name="location_ssi">Indianapolis, IN, USA</field>
+  <field name="vehicle_markings_tsi">Oil streaks</field>
 </doc>

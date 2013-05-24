@@ -8,4 +8,23 @@
   <field name="collection_ssim">David Nadig Collection</field>
   <field name="image_id_ssm">2012-027NADI-1966-b1_6.4_0011</field>
   <field name="description_tsim">This is the description of this image</field>
+  <field name="subjects_ssim">Automobile</field>
+  <field name="subjects_ssim">History</field>
+  <field name="marque_ssim">Ford</field>
+  <field name="marque_ssim">Chevrolet</field>
+  <field name="people_ssim">Flintstone, Fred</field>
+  <field name="people_ssim">Rubble, Barney</field>
+  <field name="entrant_ssi">Gonzales, Speedy</field>
+  <field name="current_owner_ssi">Squarepants, Spongebob</field>
+  <field name="venue_ssi">Indy 500 Speedway</field>
+  <field name="track_ssi">The racetrack</field>
+  <field name="event_ssi">Indy Race</field>
+  <field name="location_ssi">Indianapolis, IN, USA</field>
+  <field name="has_more_metadata_ssi">yes</field>
+  <field name="inst_notes_tsi">Institution notes</field>
+  <field name="prod_notes_tsi">Production notes</field>
+  <field name="group_class_tsi">The group or class these cars are in</field>
+  <field name="race_data_tsi">This is who won, who lost, other bits about the race.</field>
+  <field name="metadata_sources_tsi">Where the metadata came from</field>
+  <field name="vehicle_markings_tsi">Oil on hood</field>
 </doc>

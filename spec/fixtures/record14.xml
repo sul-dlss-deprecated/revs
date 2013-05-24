@@ -7,4 +7,17 @@
   <field name="source_id_ssi">2012-027NADI-1969-b4_12.0_0005</field>
   <field name="collection_ssim">David Nadig Collection</field>
   <field name="image_id_ssm">2012-027NADI-1969-b4_12.0_0005</field>
+  <field name="subjects_ssim">Automobile</field>
+  <field name="subjects_ssim">History</field>
+  <field name="marque_ssim">Ferrari</field>
+  <field name="marque_ssim">Chevrolet</field>
+  <field name="entrant_ssi">Jackson, Samuel</field>
+  <field name="track_ssi">Laguna Seca</field>
+  <field name="location_ssi">Monterey, CA, USA</field>
+  <field name="inst_notes_tsi">Some institution notes</field>
+  <field name="prod_notes_tsi">Some production notes</field>
+  <field name="group_class_tsi">Fast cars</field>
+  <field name="race_data_tsi">It was hot that day.</field>
+  <field name="metadata_sources_tsi">Just made it up</field>
+  <field name="vehicle_markings_tsi">Driver door scratched</field>
 </doc>
