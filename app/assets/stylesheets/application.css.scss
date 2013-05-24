@@ -24,8 +24,10 @@
 @import "layout";
 @import "header";
 @import "homepage";
-@import "authentication";
+@import "user";
+@import "admin";
 @import "about";
+@import "annotations";
 @import "blacklight/facets";
 @import "facets";
 @import "blacklight/catalog";
