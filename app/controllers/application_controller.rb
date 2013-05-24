@@ -8,9 +8,11 @@ class ApplicationController < ActionController::Base
   helper_method :application_name,:on_home_page,:on_collections_page,:on_about_pages,:on_detail_page,:show_terms_dialog?, :sunet_user_signed_in?, :show_as_date, :show_as_datetime
   layout "revs"
 
-  prepend_before_filter :simulate_sunet, :if=>lambda{Revs::Application.config.simulate_sunet_user}
-  before_filter :set_sunet_user 
-  before_filter :store_referred_page, :if=>lambda{!current_user && is_devise_path?(request.path)} # only if user not logged in and we are on the login pages
+  protect_from_forgery
+
+  prepend_before_filter :simulate_sunet, :if=>lambda{Revs::Application.config.simulate_sunet_user} # to simulate sunet login in development, set this parameter in config/environments/ENVIRONMENT.rb
+  before_filter :signin_sunet_user, :if=>lambda{sunet_user_signed_in? && !user_signed_in?} # signin a sunet user if they are webauthed but not yet logged into the site
+  before_filter :store_referred_page, :if=>lambda{!user_signed_in? && is_devise_path?(request.path)} # store referred page only if user not logged in and we are on the login pages
 
   rescue_from CanCan::AccessDenied do |exception|
     not_authorized(exception.message)
@@ -80,11 +82,10 @@ class ApplicationController < ActionController::Base
     request.env["WEBAUTH_USER"]='sunetuser'
   end
 
-  def set_sunet_user
-    if request.env["WEBAUTH_USER"] && !user_signed_in? # if we have a webauthed user who is not yet signed in, let's sign them in or create them a new user role if needed
-      user=(User.where(:sunet=>request.env["WEBAUTH_USER"]).first || User.create_new_sunet_user(request.env["WEBAUTH_USER"])) # passwords are irrelvant and never used for SUNET users
-      sign_in user unless request.path==user_session_path
-    end
+  def signin_sunet_user
+     # if we have a webauthed user who is not yet signed in, let's sign them in or create them a new user account if needed
+    user=(User.where(:sunet=>request.env["WEBAUTH_USER"]).first || User.create_new_sunet_user(request.env["WEBAUTH_USER"])) 
+    sign_in user unless request.path==user_session_path    
   end
   
   def sunet_user_signed_in?
@@ -146,5 +147,4 @@ class ApplicationController < ActionController::Base
      end
   end
       
-  protect_from_forgery
 end

@@ -43,6 +43,10 @@ def user_login
   'user1@example.com'   
 end
 
+def sunet_login
+  'sunetuser@stanford.edu'
+end
+
 def curator_login
   'curator1@example.com'
 end

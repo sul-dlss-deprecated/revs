@@ -1,5 +1,4 @@
 Revs::Application.routes.draw do
-  devise_for :users
 
   root :to => "catalog#index"
 
@@ -27,6 +26,8 @@ Revs::Application.routes.draw do
   match 'collection/:id', :to=> 'catalog#show', :as =>'collection'
   
   match 'accept_terms', :to=> 'application#accept_terms', :as=> 'accept_terms', :via=>:post
+  
+  devise_for :users, :controllers => { :sessions => "sessions" } # extend the default devise session controller with our own
   
   resources :annotations
   resources :flags

@@ -35,3 +35,14 @@ user:
   bio: 'I am a web user'
   role: 'user'
   public: true
+
+sunet_user:
+  email: sunetuser@stanford.edu
+  sunet: 'sunetuser'
+  encrypted_password: <%= User.new.send(:password_digest, 'password') %>
+  confirmed_at: <%=Time.now%>
+  first_name: Stanford
+  last_name: User
+  bio: 'I am a Stanford web user'
+  role: 'user'
+  public: true

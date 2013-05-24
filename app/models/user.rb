@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
   
   has_many :annotations, :dependent => :destroy
   has_many :flags, :dependent => :destroy
-  before_validation :assign_default_role
+  before_validation :assign_default_role, :if=>lambda{no_role?}
   before_save :trim_names
   after_create :signup_for_mailing_list, :if=>lambda{subscribe_to_mailing_list=='1'}
   validate :check_role_name
@@ -29,12 +29,26 @@ class User < ActiveRecord::Base
   end
     
   def self.create_new_sunet_user(sunet)
-    user = User.new(:email=>"#{sunet}@stanford.edu",:sunet=>sunet,:password => 'password', :password_confirmation => 'password', :role=>DEFAULT_ROLE)
+    user = User.new(:email=>"#{sunet}@stanford.edu",:sunet=>sunet,:password => default_sunet_user_password, :password_confirmation => default_sunet_user_password, :role=>DEFAULT_ROLE)
     user.skip_confirmation!
     user.save!
     user
   end
   
+  # passwords are irrelvant and never used for SUNET users, but we need to set one in the user table to make devise happy
+  # we override the sign_in method from devise to prevent SUNET users from using this password to login via the normal sign in form
+  def default_sunet_user_password
+    "password"
+  end
+  
+  def sunet_user?
+    !sunet.blank?
+  end
+
+  def is_webauth?
+    sunet_user?
+  end
+      
   def signup_for_mailing_list
     RevsMailer.mailing_list_signup(:from=>email).deliver 
   end
@@ -57,25 +71,12 @@ class User < ActiveRecord::Base
     no_name_entered? ? 'unidentified' : [first_name,last_name].join(' ')
   end
     
-  def is_webauth?
-    !sunet.blank?
-  end
-    
   def role?(test_role)
     test_role.to_s.camelize == role
   end
 
   def no_role?
     role.blank?
-  end
-  
-  def assign_default_role
-    self.role=DEFAULT_ROLE if no_role?
-  end
-
-  def trim_names
-    first_name.strip!
-    last_name.strip!
   end
   
   # update the lock status if needed
@@ -85,6 +86,16 @@ class User < ActiveRecord::Base
     elsif !locked_at.blank?
       unlock_access!
     end
+  end
+  
+  protected
+  def assign_default_role
+    self.role=DEFAULT_ROLE 
+  end
+
+  def trim_names
+    first_name.strip!
+    last_name.strip!
   end
   
 end

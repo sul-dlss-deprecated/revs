@@ -3,7 +3,7 @@
     <ul class="nav nav-list">
       <li class="nav-header"><%= t('revs.authentication.sidebar.actions') %></li>
       <li>
-        <% if params[:action] == "edit" %>
+        <% if on_edit_page %>
           <%= link_to 'View your profile', my_user_profile_path %>
         <% else %>
           <%= link_to 'Edit your profile', edit_user_registration_path %>

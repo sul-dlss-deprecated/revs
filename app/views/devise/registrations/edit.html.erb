@@ -8,7 +8,11 @@
     <div class="control-group">
       <%= f.label :email, :class => 'control-label' %>
       <div class="controls">
-        <%= f.email_field :email, :size=>"80", :autofocus => true %>
+			  <% if current_user.sunet_user? %>
+					<%= resource.email %>
+				<% else %>
+        	<%= f.email_field :email, :size=>"80", :autofocus => true %>
+				<% end %>
       </div>
     </div>
 
@@ -88,7 +92,7 @@
     <div class="control-group">
       <%= f.label :current_password, :class => 'control-label' %>
         <div class="controls">
-          <%= f.password_field :current_password %>
+          <%= f.password_field :current_password, :value=>(resource.sunet_user? ? resource.default_sunet_user_password : '') %>
           <span class="help-block first">
             <small>
               We need your current password to confirm your changes.

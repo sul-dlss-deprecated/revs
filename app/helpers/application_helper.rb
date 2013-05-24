@@ -65,4 +65,8 @@ module ApplicationHelper
     end
   end
   
+  def on_edit_page
+    ["edit","update"].include? action_name
+  end
+  
 end

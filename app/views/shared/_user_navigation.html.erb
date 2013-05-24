@@ -1,27 +1,25 @@
 <% if user_signed_in? %>
-  <% if can? :administer, :all  %>
-      <%=link_to "Admin",admin_users_path%>
-      <span class="nav-element-divider">|</span>
-  <% end %>
-  <% if can? :curate, :all %>
-      <%=link_to "Curator",curator_tasks_path%>
-      <span class="nav-element-divider">|</span>
-  <% end %>
-<% end %>
 
-<% if user_signed_in? && !sunet_user_signed_in?%>
+	<% if can? :administer, :all  %>
+	    <%=link_to "Admin",admin_users_path%>
+	    <span class="nav-element-divider">|</span>
+	<% end %>
+	<% if can? :curate, :all %>
+	    <%=link_to "Curator",curator_tasks_path%>
+	    <span class="nav-element-divider">|</span>
+	<% end %>
+
   <%=link_to current_user.to_s, edit_user_registration_path%>
   <span class="nav-element-divider">|</span>
-  <%=button_to "Sign out",destroy_user_session_path, :method=>:delete%>
-  <span class="nav-element-divider">|</span>
 
-<% elsif sunet_user_signed_in? %>
-  | <%=current_user.to_s%>
+	<% unless current_user.sunet_user? %>
+	  <%=button_to "Sign out",destroy_user_session_path, :method=>:delete%>
+	  <span class="nav-element-divider">|</span>
+  <% end %>
 
 <% else %>
   <%=link_to "Sign in",new_user_session_path%>
   <span class="nav-element-divider">|</span>
   <%=link_to "Sign up",new_user_registration_path%>
   <span class="nav-element-divider">|</span>
-
 <% end %>

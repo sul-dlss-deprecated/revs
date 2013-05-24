@@ -2,13 +2,15 @@
 
   <h2><%= t('revs.authentication.new_account') %></h2>
 
+	<p><strong>Important:</strong> Stanford users should not create a new account.  Login to webauth first and an account will be created for you.</p>
+	
   <%= form_tag({:controller=>'registrations', :action=>'create'}, :method=>'post', :id => 'new_user', :class => 'form-horizontal') do %>
     <%= devise_error_messages! %>
 
     <div class="control-group">
       <label class="control-label" for="user_email"><%= t('revs.authentication.email') %></label>
       <div class="controls">
-        <%= email_field_tag 'user[email]', @email, :autofocus => true, :tabindex => "1", :placeholder => "your email address" %>
+        <%= email_field_tag 'user[email]', @email, :autofocus => true, :tabindex => "1", :class=>'user-login-email', :"data-trigger"=>"manual", :placeholder => "your email address" %>
       </div>
     </div>
 
