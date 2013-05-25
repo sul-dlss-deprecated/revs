@@ -1,8 +1,12 @@
 <div id="sidebar" class="span3">
   <div id="sidebar-nav">
-    <ul class="nav nav-list">
-      <li class="nav-header"><%= t('revs.admin.sidebar.actions') %></li>
-      <li>Placeholder</li>
-    </ul>
+    <% if user_signed_in? %>
+      <% if can? :administer, :all  %>
+        <ul class="nav nav-list">
+          <li class="nav-header"><%= t('revs.admin.sidebar.actions') %></li>
+          <li><%= link_to "Administrator Dashboard", admin_users_path %></li>
+        </ul>
+      <% end %>
+    <% end %>
   </div>
 </div>

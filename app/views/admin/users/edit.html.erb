@@ -1,48 +1,133 @@
-<h2><%=@user.email%></h2>
-<% if current_user == @user %>This is your account.  You cannot update your own role.  To update your password, visit <%= link_to 'your profile page',edit_user_registration_path(@user)%>.<% end %>
+<div id="content" class="span9">
 
-<% if @user.confirmed_at.blank? || @user.pending_reconfirmation?%>
-  <strong>Currently waiting confirmation from user of their email address.</strong>
-<% end %>
+  <h2>Edit Profile: <%=@user.email%></h2>
 
-<%= form_for(@user, :url => admin_user_path, :html => { :method => :put }) do |f| %>
+  <% if current_user == @user %>
+    <div class="notice">
+      <p class="text-info">
+        This is your account.
+        To update your password, visit
+        <%= link_to 'your profile page', edit_user_registration_path(@user) %>.
+        You cannot update your own role.
+      </p>
+    </div>
+  <% end %>
 
-	<%= validation_errors(@user) %>
+  <% if @user.confirmed_at.blank? || @user.pending_reconfirmation? %>
+    <strong>Currently waiting confirmation from user of their email address.</strong>
+  <% end %>
 
-  <div><%= f.label :last_sign_in %> <%=@user.last_sign_in_at.blank? ? "never" : show_as_datetime(@user.last_sign_in_at.in_time_zone)%></div>
+  <%= form_for(@user, :url => admin_user_path, :html => { :method => :put, :class => "form-horizontal" }) do |f| %>
 
-  <div><%= f.label :first_name %>
-  <%= f.text_field :first_name, :size=>"80" %></div>
+    <%= validation_errors(@user) %>
 
-  <div><%= f.label :last_name %>
-  <%= f.text_field :last_name, :size=>"80" %></div>
-		
-  <div><%= f.check_box :public, :size=>"80" %> Create public profile page at <%=user_profile_id_url(@user.id)%>
-	(Will include name, bio and website.  Will NOT include email address.)</div>
+    <div class="control-group">
+      <div class="controls">
+        Last sign in:
+        <%=@user.last_sign_in_at.blank? ? "never" : show_as_datetime(@user.last_sign_in_at.in_time_zone)%>
+      </div>
+    </div>
 
-  <div><%= f.label :url, 'Website' %>
-  <%= f.text_field :url, :size=>"80" %></div>
+    <div class="control-group">
+      <%= f.label :first_name, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :first_name, :size=>"80" %>
+      </div>
+    </div>
 
-  <div><%= f.label :bio,'Biography' %><br />
-  <%= f.text_area :bio, :size=>"80x20" %></div>
+    <div class="control-group">
+      <%= f.label :last_name, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :last_name, :size=>"80" %>
+      </div>
+    </div>
 
+    <div class="control-group">
+      <div class="controls">
+        <%= f.check_box :public %>
+        <%= f.label :public, "Create a public profile page.", :class => "checkbox inline" %>
+        <span class="help-block first">
+          <small>
+            This page will include your name, bio, and website URL.
+            It will <strong>not</strong> include your email address.
+          </small>
+        </span>
+        <span class="help-block">
+          <small>
+            Your page will be accessible at
+            <%= link_to user_profile_id_url(@user.id), user_profile_id_url(@user.id) %>
+          </small>
+        </span>
+      </div>
+    </div>
 
-	<% unless current_user==@user%>
+    <div class="control-group">
+      <%= f.label :url, 'Website URL', :class => 'control-label' %>
+      <div class="controls">
+        <div class="input-prepend">
+          <span class="add-on">http://</span>
+          <%= f.text_field :url, :class => "input-xlarge" %>
+        </div>
+      </div>
+    </div>
 
-	<div><%= f.label :role %>
-	<%= f.select :role,User.roles %></div>
+    <div class="control-group">
+      <%= f.label :bio,'Biography', :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_area :bio, :rows => "5", :class => "input-xxlarge" %>
+      </div>
+    </div>
 
-  <div><%= f.label :password %> <i>(leave blank if you don't want to change it)</i>
-  <%= f.password_field :password, :autocomplete => "off" %></div>
+    <% unless current_user==@user%>
+      <div class="control-group">
+        <%= f.label :role, :class => 'control-label' %>
+        <div class="controls">
+          <%= f.select :role, User.roles, {}, :class => "span2" %>
+        </div>
+      </div>
 
-  <div><%= f.label :password_confirmation %>
-  <%= f.password_field :password_confirmation %></div>
+      <div class="control-group">
+        <%= f.label :password, :class => 'control-label' %>
+        <div class="controls">
+          <%= f.password_field :password, :autocomplete => "off" %>
+          <span class="help-block first">
+            <small>
+              Leave blank if you don't want to change it.
+            </small>
+          </span>
+        </div>
+      </div>
 
-  	<div><%=check_box_tag :lock, true,!@user.locked_at.blank?%> Account is locked due to too many invalid login attempts.  Lock the account immediately by checking the box.  The user can unlock by verifying their email address or you can unlock by unchecking this box.</div>
-	<% end %>
-	
+      <div class="control-group">
+        <%= f.label :password_confirmation, :class => 'control-label' %>
+        <div class="controls">
+          <%= f.password_field :password_confirmation %>
+        </div>
+      </div>
 
-  <div><%= f.submit "Update" %></div>
-<% end %>
+      <div class="control-group">
+        <div class="controls">
+          <%= check_box_tag :lock, true, !@user.locked_at.blank? %>
+          <%= f.label :lock, "Lock account", :class => "checkbox inline" %>
+          <span class="help-block first">
+            <small>
+              Account is locked due to too many invalid login attempts.
+              Lock the account immediately by checking the box.
+              The user can unlock by verifying their email address or you can unlock by unchecking this box.
+            </small>
+          </span>
+        </div>
+      </div>
+    <% end %>
 
-<%= link_to "Back", :back %>
+    <div class="control-group">
+      <div class="controls">
+        <%= f.submit "Update", :class => "btn" %>
+      </div>
+    </div>
+
+  <% end %>
+
+</div>
+
+<%= render :partial => 'devise/shared/show_admin_sidebar' %>
