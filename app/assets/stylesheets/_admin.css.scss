@@ -1,43 +1,49 @@
-h3 {
-  color: #555;
-  border-top: 2px dotted #ddd;
-  margin-top: 20px;
-  padding-top: 6px;
-}
-
-table.admin.table {
-  font-size: 0.9em;
-}
-
-td.centered, th.centered {
-  text-align: center;
-}
-
-.form-search {
-  margin-bottom: 16px;
-  input#email {
-    margin-bottom: 10px;
+.admin {
+  h3 {
+    color: #555;
+    border-top: 2px dotted #ddd;
+    margin-top: 20px;
+    padding-top: 6px;
   }
-}
 
-.notice {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  margin: 0 0 20px;
-  padding: 0 12px;
+  table.admin.table {
+    font-size: 0.9em;
+  }
+
+  td.centered, th.centered {
+    text-align: center;
+  }
+
+  .form-search {
+    margin-bottom: 16px;
+    input#email {
+      margin-bottom: 10px;
+    }
+  }
+
+  .notice {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin: 0 0 20px;
+    padding: 0 12px;
+  }
 }
 
 // Responsive styles
 @media screen and (min-width: 980px) {
-  table.admin.table {
-    font-size: 0.95em;
+  .admin {
+    table.admin.table {
+      font-size: 0.95em;
+    }
   }
 }
 @media screen and (min-width: 768px) {
-  .form-search {
-    input#email {
-      margin-bottom: 0;
+  .admin {
+    .form-search {
+      input#email {
+        margin-bottom: 0;
+      }
     }
   }
 }
