@@ -14,7 +14,11 @@
   <% end %>
 
   <% if @user.confirmed_at.blank? || @user.pending_reconfirmation? %>
-    <strong>Currently waiting confirmation from user of their email address.</strong>
+    <div class="notice">
+      <p class="text-info">
+        Currently waiting confirmation from user of their email address.
+      </p>
+    </div>
   <% end %>
 
   <%= form_for(@user, :url => admin_user_path, :html => { :method => :put, :class => "form-horizontal" }) do |f| %>
