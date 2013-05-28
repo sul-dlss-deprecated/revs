@@ -7,20 +7,35 @@
     font-size: 0.85em;
     margin-top: 9px;
     a, input[type="submit"] {color: #ddd;}
+    .caret {
+      border-top-color: #ddd;
+    }
+    .dropdown {
+      display: inline-block;
+      .dropdown-menu {
+        background-color: #eee;
+        left: auto;
+        right: 0;
+        li .button_to input[type="submit"], li > a, li > a:visited {
+          color: $active_link_color;
+          padding: 2px 12px;
+        }
+          li > a:hover, li > a:focus,
+          li:hover, li:focus {
+           background-color: #fff;
+           background-image: none;
+          }
+      }
+    }
   }
   form.button_to {
-    display: inline-block;
     margin-bottom: 0;
     input[type="submit"] {
-      background: none;
-      border: none;
-      cursor: pointer;
       font-size: 1em;
-      margin-top: -2px;
-      padding: 0;
-      &:hover {
-        text-decoration: underline;
-      }
+    }
+    .btn-link {
+      border: none;
+      text-decoration: none;
     }
   }
 }
