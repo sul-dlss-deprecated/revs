@@ -118,4 +118,17 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     page.should have_content 'Annotations 1'
   end
 
+  it "should show a profile preview link on edit profile page, but only if user profile is private" do
+    login_as(admin_login) # profile page is private
+    visit edit_user_registration_path
+    current_path.should == edit_user_registration_path
+    page.should have_link('Preview', href: my_user_profile_path)
+    logout
+
+    login_as(user_login) # profile page is public
+    visit edit_user_registration_path
+    current_path.should == edit_user_registration_path
+    page.should_not have_link('Preview', href: my_user_profile_path)
+  end
+
 end

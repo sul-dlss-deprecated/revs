@@ -31,30 +31,6 @@
     </div>
 
     <div class="control-group">
-      <div class="controls">
-        <%= f.label :public, "My profile page is", :class => "checkbox inline" %>
-        <%= f.radio_button :public, false %> private
-        <%= f.radio_button :public, true %> public.
-        <span class="help-block first">
-          <small>
-            Your public profile page includes your name, bio, and website URL.
-            It will <strong>not</strong> include your email address.
-          </small>
-        </span>
-        <span class="help-block">
-          <small>
-				<% if resource.public %>
-	            Your profile page is accessible at
-	            <%= link_to user_profile_url, user_profile_url %>
-				<% else %>
-					    Your profile page would be accessible at <%=user_profile_url%>, but can be <%=link_to 'previewed now', my_user_profile_path%>. 
-				<% end %>
-        </small>
-      </span>
-      </div>
-    </div>
-
-    <div class="control-group">
       <%= f.label :url, 'Website URL', :class => 'control-label' %>
       <div class="controls">
         <div class="input-prepend">
@@ -68,6 +44,31 @@
       <%= f.label :bio,'Biography', :class => 'control-label' %>
       <div class="controls">
         <%= f.text_area :bio, :rows => "5", :class => "input-xxlarge" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :public, "My profile page is", :class => 'control-label' %>
+      <div class="controls">
+        <label class="radio">
+          <%= f.radio_button :public, true, :class => "radio" %>
+          Public
+        </label>
+        <label class="radio">
+          <%= f.radio_button :public, false, :class => "radio" %>
+          Private
+          <span class="inline-help-block">
+            <small>
+              <%= link_to '(Preview)', my_user_profile_path unless resource.public %>
+            </small>
+          </span>
+        </label>
+        <span class="help-block first">
+          <small>
+            Your profile page includes your name, bio, and website URL.
+            It does <strong>not</strong> include your email address.
+          </small>
+        </span>
       </div>
     </div>
 
