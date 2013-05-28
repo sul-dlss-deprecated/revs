@@ -51,7 +51,9 @@
   }
 }
 @media screen and (min-width: 768px) and (max-width: 979px) {
-
+  #sidebar-nav .nav-header .label {
+    margin-left: 6px;
+  }
 }
 @media screen and (max-width: 767px) {
 

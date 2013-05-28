@@ -2,15 +2,23 @@
   <div id="sidebar-nav">
 
     <% if @user == current_user %>
-      <ul class="nav nav-list">
-        <li class="nav-header"><%= t('revs.authentication.sidebar.account') %></li>
-          <li>Joined on <%= show_as_date(@user.created_at) %></li>
+      <ul class="nav nav-list account">
+        <li class="nav-header">
+          <%= t('revs.authentication.sidebar.account') %>
           <% unless @user.role == 'user' %>
-            <li>Role: <%= @user.role.capitalize %></li>
-          <% end %>
+            <span class="label label-info lowercase"><%= @user.role.capitalize %></span>
+            <% end %>
+          </li>
+          <li>Joined on <%= show_as_date(@user.created_at) %></li>
           <li>
-              <%= link_to 'Profile page', my_user_profile_path, :class => "inline-link" %>
-              <span class="label"><%= @user.public ? "Public" : "Private"%></span>
+            Profile page
+            <span class="label <%= @user.public ? 'label-success' : '' %>">
+              <%= @user.public ? "public" : "private"%>
+            </span>
+          </li>
+          <li>
+            Annotations
+            <span class="badge badge-info"><%= user_annotations_count(@user) %></span>
           </li>
       </ul>
     <% end %>
@@ -19,11 +27,15 @@
       <li class="nav-header"><%= t('revs.authentication.sidebar.actions') %></li>
       <li>
         <% if on_edit_page %>
-          <%= link_to 'View your profile', my_user_profile_path %>
+          <%= link_to 'View your profile page', my_user_profile_path %>
         <% else %>
           <%= link_to 'Edit your profile', edit_user_registration_path %>
         <% end %>
       </li>
+      <li><%= link_to 'Update your password', "#" %></li>
+      <% if user_annotations_count(@user) > 0 %>
+        <li><%= link_to 'View your annotations', "#" %></li>
+      <% end %>
     </ul>
 
   </div>

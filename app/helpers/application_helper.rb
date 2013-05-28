@@ -64,7 +64,11 @@ module ApplicationHelper
       user_profile_name_url([current_user.first_name,current_user.last_name].join('.'))
     end
   end
-  
+
+  def user_annotations_count(user)
+    user.annotations.count
+  end
+
   def on_edit_page
     ["edit","update"].include? action_name
   end

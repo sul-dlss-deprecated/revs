@@ -89,7 +89,33 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     visit my_user_profile_path
     current_path.should == my_user_profile_path
     [admin_account.full_name,admin_account.bio].each {|content| page.should have_content content}
-    page.should have_content 'Profile page Private'
+    page.should have_content 'Profile page private'
   end
-  
+
+  it "should show link to annotations made by user on that user's profile page, only if user has made annotations " do
+    login_as(user_login) # this user has annotations
+    visit my_user_profile_path
+    current_path.should == my_user_profile_path
+    page.should have_content 'View your annotations'
+    logout
+
+    login_as(curator_login) # this user does not have annotations
+    visit my_user_profile_path
+    current_path.should == my_user_profile_path
+    page.should_not have_content 'View your annotations'
+  end
+
+  it "should show correct number of annotations made by user on that user's profile page" do
+    login_as(admin_login)
+    visit my_user_profile_path
+    current_path.should == my_user_profile_path
+    page.should have_content 'Annotations 2'
+    logout
+
+    login_as(user_login)
+    visit my_user_profile_path
+    current_path.should == my_user_profile_path
+    page.should have_content 'Annotations 1'
+  end
+
 end

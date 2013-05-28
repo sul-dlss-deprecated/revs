@@ -183,9 +183,24 @@ span.content-type {
 .nav > li > a.inline-link {
   display: inline;
 }
-#sidebar-nav span.label {
-  font-weight: normal;
+#sidebar-nav {
+  span.label, span.badge {
+    font-weight: normal;
+    margin-left: 6px;
+  }
+  .nav-header .label {
+    margin-left: 12px;
+  }
+  .nav-list.account {
+    li {
+      margin-bottom: 3px;
+      &.nav-header {
+        margin-bottom: 0;
+      }
+    }
+  }
 }
+
 
 // Override Blacklight theme pagination styling
 .pagination {
