@@ -4,17 +4,26 @@ Revs::Application.routes.draw do
 
   Blacklight.add_routes(self)
     
+  # version page
   match 'version', :to=>'about#show', :defaults => {:id=>'version'}, :as => 'version'
 
   match 'search', :to=> 'catalog#index', :as=>'search'
   
+  # all collections pages helper route
   match 'collections', :to => 'catalog#index', :as => 'all_collections', :defaults => {:f => {:format_ssim => ["collection"]}}
+
+  # ajax call from home page
   match 'update_carousel', :to => 'catalog#update_carousel', :as => 'update_carousel'
   
-  match 'user/:id', :to=>'user#show', :as=>'user_profile_id', :via=>:get, :constraints => {:id => /\d+/}
-  match 'user/:name', :to=>'user#show', :as=>'user_profile_name', :via=>:get, :constraints => {:name => /\S+[.]\S+/}
-  match 'user/me', :to=>'user#preview', :as=>'my_user_profile', :via=>:get
-  match 'user/select', :to=>'user#select', :as=>'user_profile_selection', :via=>:get
+  # helper routes to we can have a friendly URL for items and collections
+  match 'item/:id', :to=> 'catalog#show', :as =>'item'
+  match 'collection/:id', :to=> 'catalog#show', :as =>'collection'
+  
+  # public user profile pages
+  match 'user/me', :to=>'user#me', :as=>'my_user_profile', :via=>:get # profile page for logged in user
+  match 'user/select', :to=>'user#select', :as=>'user_profile_selection', :via=>:get # disambiguation page
+  match 'user/:id', :to=>'user#show', :as=>'user_profile_id', :via=>:get, :constraints => {:id => /\d+/} # all digits is assumed to be an ID
+  match 'user/:name', :to=>'user#show_by_name', :as=>'user_profile_name', :via=>:get, :constraints => {:name => /\D+.+/} # any non digit followed by any other characters is assumed to be a name
   
   # Handles all About pages.
   match 'about', :to => 'about#show', :as => 'about_project', :defaults => {:id=>'project'} # no page specified, go to project page
@@ -22,19 +31,21 @@ Revs::Application.routes.draw do
   match 'about/contact', :to=> 'about#contact' # specific contact us about page
   match 'about/:id', :to => 'about#show' # catch anything else and direct to show page with ID parameter of partial to show
   
-  # helper routes to we can have a friendly URL for items and collections
-  match 'item/:id', :to=> 'catalog#show', :as =>'item'
-  match 'collection/:id', :to=> 'catalog#show', :as =>'collection'
-  
+  # term acceptance dialog
   match 'accept_terms', :to=> 'application#accept_terms', :as=> 'accept_terms', :via=>:post
   
+  # override devise controllers as needed
   devise_for :users, :controllers => { :sessions => "sessions" } # extend the default devise session controller with our own
   
   resources :annotations
   resources :flags
+  
+  # admin pages
   namespace :admin do
     resources :users
   end
+  
+  # curator pages
   namespace :curator do
     resources :tasks
   end

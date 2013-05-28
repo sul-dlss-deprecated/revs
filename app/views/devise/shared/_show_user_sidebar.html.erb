@@ -9,7 +9,7 @@
             <li>Role: <%= @user.role.capitalize %></li>
           <% end %>
           <li>
-              <%= link_to 'Profile page', user_profile_url, :class => "inline-link" %>
+              <%= link_to 'Profile page', my_user_profile_path, :class => "inline-link" %>
               <span class="label"><%= @user.public ? "Public" : "Private"%></span>
           </li>
       </ul>

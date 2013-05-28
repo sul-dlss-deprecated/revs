@@ -32,20 +32,25 @@
 
     <div class="control-group">
       <div class="controls">
-        <%= f.check_box :public %>
-        <%= f.label :public, "Create a public profile page.", :class => "checkbox inline" %>
+        <%= f.label :public, "My profile page is", :class => "checkbox inline" %>
+        <%= f.radio_button :public, false %> private
+        <%= f.radio_button :public, true %> public.
         <span class="help-block first">
           <small>
-            This page will include your name, bio, and website URL.
+            Your public profile page includes your name, bio, and website URL.
             It will <strong>not</strong> include your email address.
           </small>
         </span>
         <span class="help-block">
           <small>
-            Your page will be accessible at
-            <%= link_to user_profile_url, user_profile_url %>
-          </small>
-        </span>
+				<% if resource.public %>
+	            Your profile page is accessible at
+	            <%= link_to user_profile_url, user_profile_url %>
+				<% else %>
+					    Your profile page would be accessible at <%=user_profile_url%>, but can be <%=link_to 'previewed now', my_user_profile_path%>. 
+				<% end %>
+        </small>
+      </span>
       </div>
     </div>
 
