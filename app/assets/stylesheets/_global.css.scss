@@ -67,7 +67,30 @@ body {
 #sidebar-nav > .nav-list {
   margin-bottom: 20px;
   padding-left: 5px;
-  li > a {padding: 1px 15px;}
+  li > a, li .button_to input[type="submit"] {
+    padding: 1px 15px;
+  }
+  li {
+    form.button_to {
+      margin: 0;
+      input[type="submit"] {
+        color: $active_link_color;
+        font-size: 1em;
+        padding: 1px 0 2px;
+      }
+      .btn-link {
+        border: none;
+        text-decoration: none;
+        &:hover {
+          color: #660000;
+        }
+      }
+      &:hover {
+        background-color: #eee;
+        color: #660000;
+      }
+    }
+  }
 }
 
 a:focus {
