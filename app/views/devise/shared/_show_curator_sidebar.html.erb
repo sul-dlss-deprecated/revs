@@ -1,8 +1,27 @@
 <div id="sidebar" class="span3">
   <div id="sidebar-nav">
-    <ul class="nav nav-list">
-      <li class="nav-header"><%= t('revs.curator.sidebar.actions') %></li>
-      <li>Placeholder</li>
-    </ul>
+
+    <% if user_signed_in? %>
+
+      <% if can? :curate, :all  %>
+        <ul class="nav nav-list">
+          <li class="nav-header"><%= t('revs.admin.sidebar.actions') %></li>
+          <li><%= link_to "View flagged items", curator_tasks_path %></li>
+        </ul>
+      <% end %>
+
+      <ul class="nav nav-list">
+        <li class="nav-header"><%= t('revs.dashboards') %></li>
+        <li><%= link_to "User Dashboard", user_profile_name_path(current_user.username) %></li>
+        <% if can? :administer, :all  %>
+          <li><%= link_to "Admin Dashboard", admin_users_path %></li>
+        <% end %>
+        <% if can? :curate, :all %>
+          <li><%= link_to "Curator Dashboard", curator_tasks_path %></li>
+        <% end %>
+      </ul>
+
+    <% end %>
+
   </div>
 </div>

@@ -43,7 +43,7 @@
 
     <ul class="nav nav-list">
       <li class="nav-header"><%= t('revs.dashboards') %></li>
-      <li><%= link_to "User Dashboard", "#" %></li>
+      <li><%= link_to "User Dashboard", user_profile_name_path(current_user.username) %></li>
       <% if can? :administer, :all  %>
         <li><%= link_to "Admin Dashboard", admin_users_path %></li>
       <% end %>
