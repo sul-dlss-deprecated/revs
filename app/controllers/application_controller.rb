@@ -12,7 +12,6 @@ class ApplicationController < ActionController::Base
 
   prepend_before_filter :simulate_sunet, :if=>lambda{!Revs::Application.config.simulate_sunet_user.blank?} # to simulate sunet login in development, set this parameter in config/environments/ENVIRONMENT.rb
   before_filter :signin_sunet_user, :if=>lambda{sunet_user_signed_in? && !user_signed_in?} # signin a sunet user if they are webauthed but not yet logged into the site
-  before_filter :store_referred_page, :if=>lambda{!user_signed_in? && is_protected_path?(request.path)} # store referred page only if user not logged in and we are on the login pages
 
   rescue_from CanCan::AccessDenied do |exception|
     not_authorized(exception.message)
@@ -27,19 +26,15 @@ class ApplicationController < ActionController::Base
   end
   
   def store_referred_page
-    session[:login_redirect] = previous_page unless is_protected_path?(previous_page) # only store the referred page if its not another login page
-  end
-
-  def is_protected_path?(path)
-    path.include?("user") || /admin|curator/ =~ Rails.application.routes.recognize_path(path)[:controller] || Rails.application.routes.recognize_path(path)[:controller].include?("devise")
+    session[:login_redirect] = previous_page unless previous_page == new_user_session_url
   end
   
   def after_sign_in_path_for(resource)
-    session[:login_redirect] || root_path
+    session[:login_redirect]  || root_path
   end
-  
-  def after_sign_out_path_for(resource_or_scope) # redirect back where they were from after logout, unless it was an admin or curator page
-    is_protected_path?(previous_page) ? root_path : previous_page
+     
+  def after_sign_out_path_for(resource_or_scope) # back to home page after sign out
+    root_path
   end
 
   def check_for_any_user_logged_in

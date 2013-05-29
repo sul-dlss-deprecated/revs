@@ -15,7 +15,7 @@ describe("User Registration",:type=>:request,:integration=>true) do
     @email="#{@username}@test.com"
     # regsiter a new user
     visit new_user_registration_path
-    fill_in 'user_email', :with=> @email
+    fill_in 'register-email', :with=> @email
     fill_in 'user_username', :with=> @username
     fill_in 'user_password', :with=> @password
     fill_in 'user_password_confirmation', :with=> @password
@@ -41,7 +41,7 @@ describe("User Registration",:type=>:request,:integration=>true) do
       @email="#{@username}@test.com" 
       # regsiter a new user
       visit new_user_registration_path
-      fill_in 'user_email', :with=> @email
+      fill_in 'register-email', :with=> @email
       fill_in 'user_username', :with=> @username
       fill_in 'user_password', :with=> @password
       fill_in 'user_password_confirmation', :with=> @password    
@@ -67,7 +67,7 @@ describe("User Registration",:type=>:request,:integration=>true) do
         @email="#{@username}@stanford.edu" 
         # regsiter a new stanford user
         visit new_user_registration_path
-        fill_in 'user_email', :with=> @email
+        fill_in 'register-email', :with=> @email
         fill_in 'user_username', :with=> @username
         fill_in 'user_password', :with=> @password
         fill_in 'user_password_confirmation', :with=> @password    

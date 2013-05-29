@@ -9,7 +9,7 @@ describe("Admin Section",:type=>:request,:integration=>true) do
   it "should allow an admin user to login" do
       login_as(admin_login)
       current_path.should == root_path
-      page.should have_content(admin_login)    # username at top of page  
+      page.should have_content('Admin Stanford')    # name at top of page  
       page.should have_content('Signed in successfully.') # sign in message
       page.should have_content('Admin') # admin menu on top of page
       page.should have_content('Curator') # curator menu on top of page

@@ -9,7 +9,7 @@ describe("Logged in users",:type=>:request,:integration=>true) do
   it "should allow a user to login" do
     login_as(user_login)
     current_path.should == root_path
-    page.should have_content(user_login) # username at top of page  
+    page.should have_content('User Web') # username at top of page  
     page.should have_content('Signed in successfully.') # sign in message
     page.should_not have_content('Admin') # no admin menu on top of page
     page.should_not have_content('Curator') # no curator menu on top of page

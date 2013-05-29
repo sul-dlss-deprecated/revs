@@ -10,7 +10,7 @@
     <div class="control-group">
       <label class="control-label" for="user_email"><%= t('revs.authentication.email') %></label>
       <div class="controls">
-        <%= email_field_tag 'user[email]', @email, :autofocus => true, :tabindex => "1", :class=>'user-login-email', :"data-trigger"=>"manual", :placeholder => "your email address" %>
+        <%= email_field_tag 'user[email]', @email, :autofocus => true, :tabindex => "1", :class=>'user-login-email', :id=>'register-email', :"data-trigger"=>"manual", :placeholder => "your email address" %>
 				<div id="stanford-user-warning" class="hidden notice">
 					<p class="text-info">
 					<strong>IMPORTANT!</strong> Stanford users should <strong>NOT</strong> register with a new account here.  Please use webauth to login with your SunetID first, and an account will be created for you automatically.</p>

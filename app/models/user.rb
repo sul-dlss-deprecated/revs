@@ -31,6 +31,12 @@ class User < ActiveRecord::Base
     ROLES
   end
 
+  # Blacklight uses #to_s on your user class to get
+  # a user-displayable login/identifier for the account.
+  def to_s
+    self.public ? full_name : (username || sunet) 
+  end
+  
   # override devise behavior for signs so that it allows the user to signin with either username or email
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
@@ -69,19 +75,13 @@ class User < ActiveRecord::Base
   def check_role_name
     errors.add(:role, "is not valid") unless ROLES.include? role.to_s
   end
-  
-  # Blacklight uses #to_s on your user class to get
-  # a user-displayable login/identifier for the account.
-  def to_s
-    return username || sunet
-  end
-  
+    
   def no_name_entered?
     first_name.blank? && last_name.blank?  
   end
   
   def full_name
-    no_name_entered? ? 'unidentified' : [first_name,last_name].join(' ')
+    no_name_entered? ? username : [first_name,last_name].join(' ')
   end
     
   def role?(test_role)

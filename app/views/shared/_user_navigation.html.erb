@@ -1,6 +1,6 @@
 <% if user_signed_in? %>
   <div class="dropdown">
-    <%= link_to "#{current_user.to_s} <span class='caret'></span>".html_safe, user_profile_name_path(current_user.username),
+    <%= link_to "#{current_user.full_name} <span class='caret'></span>".html_safe, user_profile_name_path(current_user.username),
         :id => "dLabel", :role => "button", :class => "dropdown-toggle",
         :data => {:toggle => "dropdown", :target =>"#"} %>
     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">

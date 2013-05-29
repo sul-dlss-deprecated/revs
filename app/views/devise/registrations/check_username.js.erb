@@ -1,0 +1,4 @@
+<% if @user.size != 0 
+	@message='That username has already beent taken.'%>
+	$('.flash_messages').append("<%= escape_javascript(render :partial => 'shared/flash_warning_message') %>");
+<% end %>

@@ -9,7 +9,7 @@ describe("Curator Section",:type=>:request,:integration=>true) do
   it "should allow a curator to login" do
       login_as(curator_login)
       current_path.should == root_path
-      page.should have_content(curator_login)    # username at top of page  
+      page.should have_content('Curator Revs')    # username at top of page  
       page.should have_content('Signed in successfully.') # sign in message
       page.should_not have_content('Admin') # no admin menu on top of page
       page.should have_content('Curator') # curator menu on top of page

@@ -18,10 +18,20 @@ $(document).ready(function(){
 
 $(document).on('blur',".user-login-email",function(){
 	  var email=$(this).val();
+	  var id=$(this).attr('id');
 		if (email.indexOf('@stanford.edu') != -1) {
 			$('#stanford-user-warning').removeClass('hidden');
 			}
+		else if (email != "" && id == "register-email")
+		{
+			$.ajax({
+			        type: "POST",
+			        url: "/check_email",
+							data: "email=" + email
+			});		
 		}
+	//window.alert($(this).id);
+	}
 );
 	
 function showOnLoad() {
