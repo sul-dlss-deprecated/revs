@@ -19,7 +19,7 @@ $(document).ready(function(){
 $(document).on('blur',".user-login-email",function(){
 	  var email=$(this).val();
 		if (email.indexOf('@stanford.edu') != -1) {
-			window.alert('Stanford users should not use the sign in or sign up pages!  If you are webauthed via SunetID, you already have an account. If you are not webauthed, please do that first. Do not enter your SUNET password here!');
+			$('#stanford-user-warning').removeClass('hidden');
 			}
 		}
 );

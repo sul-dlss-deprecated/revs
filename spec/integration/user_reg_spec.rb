@@ -58,5 +58,30 @@ describe("User Registration",:type=>:request,:integration=>true) do
       user.email.should == @email
 
     end
+    
+    it "should NOT register a new user via the web page if they have a Stanford email address" do
+
+        RevsMailer.should_not_receive(:mailing_list_signup)
+
+        @username='testguy'
+        @email="#{@username}@stanford.edu" 
+        # regsiter a new stanford user
+        visit new_user_registration_path
+        fill_in 'user_email', :with=> @email
+        fill_in 'user_username', :with=> @username
+        fill_in 'user_password', :with=> @password
+        fill_in 'user_password_confirmation', :with=> @password    
+        click_button 'Sign up'
+
+        current_path.should == root_path
+        page.should have_content 'Stanford users should not create a new account.'
+
+        # check the database
+        user=User.last
+        user.username.should_not == @username
+        user.email.should_not == @email
+
+      end
+      
   
 end

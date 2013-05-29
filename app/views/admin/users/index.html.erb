@@ -14,7 +14,9 @@
     <table class="admin table table-bordered table-condensed table-hover table-striped">
       <tr>
         <th><%= link_to 'Email address', admin_users_path(:order=>'email',:email=>@email) %></th>
+        <th><%= link_to 'Username', admin_users_path(:order=>'username',:email=>@email) %></th>
         <th><%= link_to 'Name', admin_users_path(:order=>'last_name',:email=>@email) %></th>
+        <th><%= link_to 'Stanford?', admin_users_path(:order=>'sunet',:email=>@email) %></th>
         <th><%= link_to 'Role', admin_users_path(:order=>'role asc',:email=>@email) %></th>
         <th><%= link_to 'Registered on', admin_users_path(:order=>'created_at desc',:email=>@email) %></th>
         <th class="centered"><%= link_to 'Confirmed?', admin_users_path(:order=>'confirmed_at desc',:email=>@email) %></th>
@@ -22,7 +24,10 @@
       </tr>
       <% @users.each do |user|%>
        <tr>
-         <td><%= user.email%></td><td><%= user.full_name %></td>
+         <td><%= user.email%></td>
+				 <td><%= user.username %></td>
+				 <td><%= user.full_name %></td>
+				 <td><%= user.sunet_user? ? "yes" : "no"%></td>
          <td><%= user.role %></td>
          <td><%= show_as_datetime(user.created_at.in_time_zone) %></td>
          <td class="centered"><%= user.confirmed_at.blank? ? "no" : "yes" %></td>

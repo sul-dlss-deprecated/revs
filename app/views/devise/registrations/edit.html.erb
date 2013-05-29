@@ -20,6 +20,11 @@
 	      <%= f.label :username, :class => 'control-label' %>
 	      <div class="controls">
 	        <%= f.text_field :username, :size=>"80" %>
+		      <span class="help-block first">
+		        <small>
+		          This will be visible to all users and is used to identify you, unless your profile is public, in which case we will use your full name to identify you.
+		        </small>
+		      </span>
 	      </div>
 	    </div>
 		
@@ -72,7 +77,7 @@
         </label>
         <span class="help-block first">
           <small>
-            Your profile page includes your name, bio, and website URL.
+            Your profile page includes your username, full name, bio, and website URL.
             It does <strong>not</strong> include your email address.
           </small>
         </span>
