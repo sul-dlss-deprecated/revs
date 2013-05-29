@@ -6,7 +6,7 @@
     <%= devise_error_messages! %>
 
     <div class="control-group">
-      <%= f.label :email, :class => 'control-label' %>
+      <%= f.label :email, "Email Address", :class => 'control-label' %>
       <div class="controls">
 			  <% if current_user.sunet_user? %>
 					<%= resource.email %>
@@ -22,7 +22,12 @@
 	        <%= f.text_field :username, :size=>"80" %>
 		      <span class="help-block first">
 		        <small>
-		          This will be visible to all users and is used to identify you, unless your profile is public, in which case we will use your full name to identify you.
+		          Your username is publicly visible on the Revs site.
+		        </small>
+		      </span>
+		      <span class="help-block first">
+		        <small>
+		          If you make your profile page public, your name (instead of your username) is used to identify you on the site.
 		        </small>
 		      </span>
 	      </div>

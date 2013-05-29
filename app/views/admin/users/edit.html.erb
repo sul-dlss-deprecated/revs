@@ -33,7 +33,7 @@
     </div>
 
     <div class="control-group">
-      <%= f.label :email, :class => 'control-label' %>
+      <%= f.label :email, "Email Address", :class => 'control-label' %>
       <div class="controls">
 			  <% if @user.sunet_user? %>
 					<%= @user.email %>
@@ -49,7 +49,12 @@
         <%= f.text_field :username, :size=>"80" %>
 	      <span class="help-block first">
 	        <small>
-	          This will be visible to all users and is used to identify the user, unless the profile is public, in which case we will use the full name to identify the user.
+	          The user's username is publicly visible on the Revs site.
+	        </small>
+	      </span>
+	      <span class="help-block first">
+	        <small>
+	          If the user's profile page is public, the user's name (instead of username) is used to identify the user on the site.
 	        </small>
 	      </span>
       </div>
