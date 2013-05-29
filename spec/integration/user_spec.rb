@@ -106,4 +106,29 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     page.should_not have_link('Preview', href: user_profile_name_path(user_login))
   end
 
+  it "should show only the dashboard links appropriate for role of user" do
+    login_as(admin_login)
+    visit user_profile_name_path(admin_login)
+    current_path.should == user_profile_name_path(admin_login)
+    page.should have_content 'User Dashboard'
+    page.should have_content 'Curator Dashboard'
+    page.should have_content 'Admin Dashboard'
+    logout
+
+    login_as(curator_login)
+    visit user_profile_name_path(curator_login)
+    current_path.should ==  user_profile_name_path(curator_login)
+    page.should have_content 'User Dashboard'
+    page.should have_content 'Curator Dashboard'
+    page.should_not have_content 'Admin Dashboard'
+    logout
+
+    login_as(user_login)
+    visit user_profile_name_path(user_login)
+    current_path.should ==  user_profile_name_path(user_login)
+    page.should have_content 'User Dashboard'
+    page.should_not have_content 'Curator Dashboard'
+    page.should_not have_content 'Admin Dashboard'
+  end
+
 end
