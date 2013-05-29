@@ -1,10 +1,10 @@
 <% if user_signed_in? %>
   <div class="dropdown">
-    <%= link_to "#{current_user.to_s} <span class='caret'></span>".html_safe, my_user_profile_path,
+    <%= link_to "#{current_user.to_s} <span class='caret'></span>".html_safe, user_profile_name_path(current_user.username),
         :id => "dLabel", :role => "button", :class => "dropdown-toggle",
         :data => {:toggle => "dropdown", :target =>"#"} %>
     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-      <li><%= link_to "Your Revs profile page", my_user_profile_path %></li>
+      <li><%= link_to "Your Revs profile page", user_profile_name_path(current_user.username) %></li>
       <% if can? :administer, :all  %>
         <li><%= link_to "Admin Dashboard", admin_users_path %></li>
       <% end %>
