@@ -36,14 +36,14 @@ describe("Admin Section",:type=>:request,:integration=>true) do
        new_role='curator'
        
        # user role should be "user"
-       user=User.find_by_email(user_login)
+       user=User.find_by_username(user_login)
        user.role.should == 'user'
 
        login_as(admin_login)
        visit admin_users_path
        ["#{user_login}","#{curator_login}","#{admin_login}"].each {|account| page.should have_content(account)} # all accounts should be displayed
        page.should have_content(user.full_name) # should show the current user's last name
-       page.should_not have_content(new_lastname) # show not show the new last name we are about to enter
+       page.should_not have_content(new_lastname) # show not show the new last name we are about to +enter+
        
        # let's edit them to make them a curator
        click_link "edit-#{user.id}"

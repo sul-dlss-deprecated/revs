@@ -3,6 +3,9 @@ Revs::Application.routes.draw do
   root :to => "catalog#index"
 
   Blacklight.add_routes(self)
+
+  # override devise controllers as needed
+   devise_for :users, :controllers => { :sessions => "sessions" } # extend the default devise session controller with our own
     
   # version page
   match 'version', :to=>'about#show', :defaults => {:id=>'version'}, :as => 'version'
@@ -20,8 +23,6 @@ Revs::Application.routes.draw do
   match 'collection/:id', :to=> 'catalog#show', :as =>'collection'
   
   # public user profile pages
-  match 'user/me', :to=>'user#me', :as=>'my_user_profile', :via=>:get # profile page for logged in user
-  match 'user/select', :to=>'user#select', :as=>'user_profile_selection', :via=>:get # disambiguation page
   match 'user/:id', :to=>'user#show', :as=>'user_profile_id', :via=>:get, :constraints => {:id => /\d+/} # all digits is assumed to be an ID
   match 'user/:name', :to=>'user#show_by_name', :as=>'user_profile_name', :via=>:get, :constraints => {:name => /\D+.+/} # any non digit followed by any other characters is assumed to be a name
   
@@ -33,9 +34,6 @@ Revs::Application.routes.draw do
   
   # term acceptance dialog
   match 'accept_terms', :to=> 'application#accept_terms', :as=> 'accept_terms', :via=>:post
-  
-  # override devise controllers as needed
-  devise_for :users, :controllers => { :sessions => "sessions" } # extend the default devise session controller with our own
   
   resources :annotations
   resources :flags

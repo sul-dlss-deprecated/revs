@@ -2,7 +2,7 @@
 class SessionsController < Devise::SessionsController
   
   def create
-    user=User.where(:email=>params[:user][:email])
+    user=User.where('email=? or username=?',params[:user][:login],params[:user][:login])
     if user.size == 1 && user.first.sunet_user?
       sign_out
       redirect_to :root, :alert=>'Stanford users must use webauth via SunetID to access their accounts.'

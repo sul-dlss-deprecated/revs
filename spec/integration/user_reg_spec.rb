@@ -11,18 +11,24 @@ describe("User Registration",:type=>:request,:integration=>true) do
 
     RevsMailer.should_not_receive(:mailing_list_signup)
 
-    @email_address='test@test.com'    
+    @username='testing'
+    @email="#{@username}@test.com"
     # regsiter a new user
     visit new_user_registration_path
-    fill_in 'user_email', :with=> @email_address
+    fill_in 'user_email', :with=> @email
+    fill_in 'user_username', :with=> @username
     fill_in 'user_password', :with=> @password
     fill_in 'user_password_confirmation', :with=> @password
     click_button 'Sign up'
     
+    current_path.should == root_path
+    page.should have_content 'A message with a confirmation link has been sent to your email address. Please open the link to activate your account.'
+    
     # check the database
     user=User.last
     user.role.should == 'user'
-    user.email.should == @email_address
+    user.username.should == @username
+    user.email.should == @email
     user.public.should == false
 
   end
@@ -31,19 +37,25 @@ describe("User Registration",:type=>:request,:integration=>true) do
 
       RevsMailer.should_receive(:mailing_list_signup)
         
-      @email_address='test2@test.com'    
+      @username='testing2'
+      @email="#{@username}@test.com" 
       # regsiter a new user
       visit new_user_registration_path
-      fill_in 'user_email', :with=> @email_address
+      fill_in 'user_email', :with=> @email
+      fill_in 'user_username', :with=> @username
       fill_in 'user_password', :with=> @password
       fill_in 'user_password_confirmation', :with=> @password    
       check 'user_subscribe_to_mailing_list'
       click_button 'Sign up'
 
+      current_path.should == root_path
+      page.should have_content 'A message with a confirmation link has been sent to your email address. Please open the link to activate your account.'
+
       # check the database
       user=User.last
       user.role.should == 'user'
-      user.email.should == @email_address
+      user.username.should == @username
+      user.email.should == @email
 
     end
   

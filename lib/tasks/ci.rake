@@ -9,6 +9,7 @@ task :ci do
     system("rake db:migrate RAILS_ENV=test")  
     Jettywrapper.wrap(Jettywrapper.load_config) do
       Rake::Task["revs:refresh_fixtures"].invoke
+      Rake::Task["db:migrate"].invoke
       Rake::Task["db:fixtures:load"].invoke
       Rake::Task["db:seed"].invoke      
       Rake::Task["rspec"].invoke
@@ -21,6 +22,7 @@ task :local_ci do
   Rails.env='test'
   ENV['RAILS_ENV']='test'
   Rake::Task["revs:refresh_fixtures"].invoke
+  Rake::Task["db:migrate"].invoke
   Rake::Task["db:fixtures:load"].invoke
   Rake::Task["db:seed"].invoke
   Rake::Task["rspec"].invoke

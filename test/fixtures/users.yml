@@ -8,6 +8,7 @@
 # NOTE: if you change username/passwords below, be sure to update spec/spec_helper.rb to update the usernames/passwords referenced there
 admin:
   email: admin1@example.com
+  username: admin1
   encrypted_password: <%= User.new.send(:password_digest, 'password') %>
   confirmed_at: <%=Time.now%>
   first_name: Admin
@@ -18,6 +19,7 @@ admin:
 
 curator:
   email: curator1@example.com
+  username: curator1
   encrypted_password: <%= User.new.send(:password_digest, 'password') %>
   confirmed_at: <%=Time.now%>
   first_name: Curator
@@ -28,6 +30,7 @@ curator:
   
 user:
   email: user1@example.com
+  username: user1
   encrypted_password: <%= User.new.send(:password_digest, 'password') %>
   confirmed_at: <%=Time.now%>
   first_name: User
@@ -38,7 +41,8 @@ user:
     
 sunet_user:
   email: sunetuser@stanford.edu
-  sunet: 'sunetuser'
+  username: sunetuser
+  sunet: sunetuser
   encrypted_password: <%= User.new.send(:password_digest, 'password') %>
   confirmed_at: <%=Time.now%>
   first_name: Stanford

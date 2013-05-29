@@ -12,8 +12,9 @@ class User < ActiveRecord::Base
          :lockable, :timeoutable, :omniauthable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :sunet, :password, :password_confirmation, :remember_me, :role, :bio, :first_name, :last_name, :public, :url, :subscribe_to_mailing_list 
+  attr_accessible :username, :email, :sunet, :password, :password_confirmation, :remember_me, :role, :bio, :first_name, :last_name, :public, :url, :login, :subscribe_to_mailing_list
   attr_accessor :subscribe_to_mailing_list # not persisted, just used on the signup form
+  attr_accessor :login # virtual method that will refer to either email or username
   
   has_many :annotations, :dependent => :destroy
   has_many :flags, :dependent => :destroy
@@ -21,22 +22,34 @@ class User < ActiveRecord::Base
   before_save :trim_names
   after_create :signup_for_mailing_list, :if=>lambda{subscribe_to_mailing_list=='1'}
   validate :check_role_name
-  
+  validates :username, :uniqueness => { :case_sensitive => false }
+  validates :username, :length => { :in => 5..50}
+  validates :username, :format => { :with => /\A\D.+/,:message => "must start with a letter" }
   include Blacklight::User
   
   def self.roles
     ROLES
   end
-    
+
+  # override devise behavior for signs so that it allows the user to signin with either username or email
+  def self.find_first_by_auth_conditions(warden_conditions)
+    conditions = warden_conditions.dup
+    if login = conditions.delete(:login)
+      where(conditions).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
+    else
+      where(conditions).first
+    end
+  end
+      
   def self.create_new_sunet_user(sunet)
-    user = User.new(:email=>"#{sunet}@stanford.edu",:sunet=>sunet,:password => default_sunet_user_password, :password_confirmation => default_sunet_user_password, :role=>DEFAULT_ROLE)
+    user = User.new(:email=>"#{sunet}@stanford.edu",:sunet=>sunet,:username=>"#{sunet}@stanford.edu",:password => default_sunet_user_password, :password_confirmation => default_sunet_user_password, :role=>DEFAULT_ROLE)
     user.skip_confirmation!
     user.save!
     user
   end
   
   # passwords are irrelvant and never used for SUNET users, but we need to set one in the user table to make devise happy
-  # we override the sign_in method from devise to prevent SUNET users from using this password to login via the normal sign in form
+  # we override the sign_in method from devise (in controllers/sessions_controller) to prevent SUNET users from using this password to login via the normal sign in form
   def default_sunet_user_password
     "password"
   end
@@ -60,7 +73,7 @@ class User < ActiveRecord::Base
   # Blacklight uses #to_s on your user class to get
   # a user-displayable login/identifier for the account.
   def to_s
-    return email || sunet
+    return username || sunet
   end
   
   def no_name_entered?

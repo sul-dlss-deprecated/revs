@@ -33,7 +33,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
       page.should have_button(remove_button)
       
       # check the database
-      user=User.find_by_email(user_login)
+      user=User.find_by_username(user_login)
       Flag.count.should == initial_flag_count + 1
       flag=Flag.last
       flag.comment.should == user_comment
@@ -59,7 +59,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
       page.should have_button(remove_button)
       
       # check the database
-      curator=User.find_by_email(curator_login)
+      curator=User.find_by_username(curator_login)
       Flag.count.should == initial_flag_count + 2
       flag=Flag.last
       flag.comment.should == curator_comment

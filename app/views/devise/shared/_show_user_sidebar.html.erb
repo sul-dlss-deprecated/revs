@@ -27,7 +27,7 @@
       <li class="nav-header"><%= t('revs.authentication.sidebar.actions') %></li>
       <li>
         <% if on_edit_page %>
-          <%= link_to 'View your profile page', my_user_profile_path %>
+          <%= link_to 'View your profile page', user_profile_name_path(@user.username) %>
         <% else %>
           <%= link_to 'Edit your profile', edit_user_registration_path %>
         <% end %>

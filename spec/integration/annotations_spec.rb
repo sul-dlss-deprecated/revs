@@ -23,7 +23,7 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
   
     # create an annotation
     comment1='some comment'
-    user_account=User.find_by_email(user_login)
+    user_account=User.find_by_username(user_login)
     annotation1=Annotation.create(:druid=>druid,:text=>comment1,:json=>'{a bunch of json would go here}',:user_id=>user_account.id)
 
     # confirm that solr has been updated
@@ -60,7 +60,7 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
 
      # create an annotation
      comment='some comment'
-     user_account=User.find_by_email(user_login)
+     user_account=User.find_by_username(user_login)
      annotation=Annotation.create(:druid=>druid,:text=>comment,:json=>'{a bunch of json would go here}',:user_id=>user_account.id)
 
      # confirm that solr has been updated

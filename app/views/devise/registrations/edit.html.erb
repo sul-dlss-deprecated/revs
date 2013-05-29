@@ -16,6 +16,15 @@
       </div>
     </div>
 
+	  <% if !current_user.sunet_user? %>
+	    <div class="control-group">
+	      <%= f.label :username, :class => 'control-label' %>
+	      <div class="controls">
+	        <%= f.text_field :username, :size=>"80" %>
+	      </div>
+	    </div>
+		<% end %>
+		
     <div class="control-group">
       <%= f.label :first_name, :class => 'control-label' %>
       <div class="controls">
@@ -59,7 +68,7 @@
           Private
           <span class="inline-help-block">
             <small>
-              <%= link_to '(Preview)', my_user_profile_path unless resource.public %>
+              <%= link_to '(Preview)', user_profile_name_path(resource.username) unless resource.public %>
             </small>
           </span>
         </label>

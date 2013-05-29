@@ -93,6 +93,8 @@ ActiveRecord::Schema.define(:version => 20130513171118) do
     t.string   "last_name",              :default => "",    :null => false
     t.boolean  "public",                 :default => false, :null => false
     t.string   "url",                    :default => ""
+    t.string   "username",               :default => "",    :null => false
+    t.string   "string",                 :default => "",    :null => false
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
@@ -100,5 +102,6 @@ ActiveRecord::Schema.define(:version => 20130513171118) do
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["sunet"], :name => "index_users_on_sunet"
   add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
+  add_index "users", ["username"], :name => "index_users_on_username"
 
 end

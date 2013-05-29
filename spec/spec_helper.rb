@@ -40,31 +40,30 @@ end
 
 # the following must match what are in the users.yml fixtures
 def user_login
-  'user1@example.com'   
+  'user1'   
 end
 
 def sunet_login
-  'sunetuser@stanford.edu'
+  'sunetuser'
 end
 
 def curator_login
-  'curator1@example.com'
+  'curator1'
 end
 
 def admin_login
-  'admin1@example.com'
+  'admin1'
 end
 
 def login_pw
   'password'
 end
 
-def login_as(email, password = nil)
+def login_as(login, password = nil)
   password ||= login_pw
-  email += '@example.com' unless email.include?('@')
   logout
   visit new_user_session_path
-  fill_in "user_email", :with => email
+  fill_in "user_login", :with => login
   fill_in "user_password", :with => password
   click_button "Sign in"
 end

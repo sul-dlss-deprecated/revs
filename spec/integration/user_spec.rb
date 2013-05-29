@@ -36,8 +36,8 @@ describe("Logged in users",:type=>:request,:integration=>true) do
   end
   
   it "should not show the public profile of a user who does not want their profile public, but should show the public profile page for users who do have it set as public" do
-    admin_account=User.find_by_email(admin_login)
-    user_account=User.find_by_email(user_login)
+    admin_account=User.find_by_username(admin_login)
+    user_account=User.find_by_username(user_login)
     admin_account.public.should == false
     user_account.public.should == true
 
@@ -50,71 +50,46 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     visit user_profile_id_path(user_account.id)
     current_path.should == user_profile_id_path(user_account.id)
     [user_account.full_name,user_account.bio].each {|content| page.should have_content content}
-    visit user_profile_name_path(user_account.first_name + '.' + user_account.last_name)
-    current_path.should == user_profile_name_path(user_account.first_name + '.' + user_account.last_name)
+    visit user_profile_name_path(user_account.username)
+    current_path.should == user_profile_name_path(user_account.username)
     [user_account.full_name,user_account.bio].each {|content| page.should have_content content}    
   end
-
-  it "should show a disambiguation page when two users with public profiles have exactly the same first name and last name" do
-    admin_account=User.find_by_email(admin_login)
-    user_account=User.find_by_email(user_login)
-    admin_account.public.should == false
-    user_account.public.should == true
-
-    # update the admin account so they have the same first name/last name as the regular user and their profile is public
-    admin_account.public = true
-    admin_account.first_name=user_account.first_name
-    admin_account.last_name=user_account.last_name
-    admin_account.save!
-    
-    # now visit the named path public profile and see if we get the disambiguation page
-    visit user_profile_name_path(user_account.first_name + '.' + user_account.last_name)
-    current_path.should == user_profile_name_path(user_account.first_name + '.' + user_account.last_name)
-    page.should have_content('Please select a user')
-    page.should have_content("2 users were found with the name #{user_account.full_name}")
-  end
   
-  it "should not show my user profile page is there is no user logged in" do
-    visit my_user_profile_path
-    current_path.should == root_path
-    page.should have_content 'You are not authorized to perform this action.'
-  end
-
   it "should show my user profile page when logged in, even if your profile is marked as private" do
     # admin user profile is not public
-    admin_account=User.find_by_email(admin_login)
+    admin_account=User.find_by_username(admin_login)
     admin_account.public.should == false
     login_as(admin_login)
 
-    visit my_user_profile_path
-    current_path.should == my_user_profile_path
+    visit user_profile_name_path(admin_account.username)
+    current_path.should == user_profile_name_path(admin_account.username)
     [admin_account.full_name,admin_account.bio].each {|content| page.should have_content content}
-    page.should have_content 'Profile page private'
+    page.should have_content 'private'
   end
 
   it "should show link to annotations made by user on that user's profile page, only if user has made annotations " do
     login_as(user_login) # this user has annotations
-    visit my_user_profile_path
-    current_path.should == my_user_profile_path
+    visit user_profile_name_path(user_login)
+    current_path.should == user_profile_name_path(user_login)
     page.should have_content 'View your annotations'
     logout
 
     login_as(curator_login) # this user does not have annotations
-    visit my_user_profile_path
-    current_path.should == my_user_profile_path
+    visit user_profile_name_path(curator_login)
+    current_path.should == user_profile_name_path(curator_login)
     page.should_not have_content 'View your annotations'
   end
 
   it "should show correct number of annotations made by user on that user's profile page" do
     login_as(admin_login)
-    visit my_user_profile_path
-    current_path.should == my_user_profile_path
+    visit user_profile_name_path(admin_login)
+    current_path.should == user_profile_name_path(admin_login)
     page.should have_content 'Annotations 2'
     logout
 
     login_as(user_login)
-    visit my_user_profile_path
-    current_path.should == my_user_profile_path
+    visit  user_profile_name_path(user_login)
+    current_path.should ==  user_profile_name_path(user_login)
     page.should have_content 'Annotations 1'
   end
 
@@ -122,13 +97,13 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     login_as(admin_login) # profile page is private
     visit edit_user_registration_path
     current_path.should == edit_user_registration_path
-    page.should have_link('Preview', href: my_user_profile_path)
+    page.should have_link('Preview', href: user_profile_name_path(admin_login))
     logout
 
     login_as(user_login) # profile page is public
     visit edit_user_registration_path
     current_path.should == edit_user_registration_path
-    page.should_not have_link('Preview', href: my_user_profile_path)
+    page.should_not have_link('Preview', href: user_profile_name_path(user_login))
   end
 
 end
