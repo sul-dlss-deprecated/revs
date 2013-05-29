@@ -41,7 +41,7 @@ user:
     
 sunet_user:
   email: sunetuser@stanford.edu
-  username: sunetuser
+  username: sunetuser@stanford.edu
   sunet: sunetuser
   encrypted_password: <%= User.new.send(:password_digest, 'password') %>
   confirmed_at: <%=Time.now%>

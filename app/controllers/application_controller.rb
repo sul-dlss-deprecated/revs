@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
 
-  prepend_before_filter :simulate_sunet, :if=>lambda{Revs::Application.config.simulate_sunet_user} # to simulate sunet login in development, set this parameter in config/environments/ENVIRONMENT.rb
+  prepend_before_filter :simulate_sunet, :if=>lambda{!Revs::Application.config.simulate_sunet_user.blank?} # to simulate sunet login in development, set this parameter in config/environments/ENVIRONMENT.rb
   before_filter :signin_sunet_user, :if=>lambda{sunet_user_signed_in? && !user_signed_in?} # signin a sunet user if they are webauthed but not yet logged into the site
   before_filter :store_referred_page, :if=>lambda{!user_signed_in? && is_protected_path?(request.path)} # store referred page only if user not logged in and we are on the login pages
 
@@ -71,9 +71,9 @@ class ApplicationController < ActionController::Base
 
   end
   
-  # only used for testing in development
+  # only used for testing sunet in development
   def simulate_sunet
-    request.env["WEBAUTH_USER"]='sunetuser'
+    request.env["WEBAUTH_USER"]=Revs::Application.config.simulate_sunet_user
   end
 
   def signin_sunet_user

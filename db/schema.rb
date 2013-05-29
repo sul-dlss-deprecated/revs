@@ -94,7 +94,6 @@ ActiveRecord::Schema.define(:version => 20130513171118) do
     t.boolean  "public",                 :default => false, :null => false
     t.string   "url",                    :default => ""
     t.string   "username",               :default => "",    :null => false
-    t.string   "string",                 :default => "",    :null => false
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

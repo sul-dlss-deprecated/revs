@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
   end
       
   def self.create_new_sunet_user(sunet)
-    user = User.new(:email=>"#{sunet}@stanford.edu",:sunet=>sunet,:username=>"#{sunet}@stanford.edu",:password => default_sunet_user_password, :password_confirmation => default_sunet_user_password, :role=>DEFAULT_ROLE)
+    user = User.new(:email=>"#{sunet}@stanford.edu",:sunet=>sunet,:username=>"#{sunet}@stanford.edu",:password => self.default_sunet_user_password, :password_confirmation => self.default_sunet_user_password, :role=>DEFAULT_ROLE)
     user.skip_confirmation!
     user.save!
     user
@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
   
   # passwords are irrelvant and never used for SUNET users, but we need to set one in the user table to make devise happy
   # we override the sign_in method from devise (in controllers/sessions_controller) to prevent SUNET users from using this password to login via the normal sign in form
-  def default_sunet_user_password
+  def self.default_sunet_user_password
     "password"
   end
   

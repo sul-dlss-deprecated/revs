@@ -7,7 +7,7 @@ class UpdateUserModel < ActiveRecord::Migration
       t.string :last_name, :null => false, :default => ""
       t.boolean :public,              :null => false, :default => false
       t.string :url, :null=>true, :default => ''   
-      t.string :username, :string, :null=>false,:default => ""
+      t.string :username, :null=>false,:default => ""
     end
     add_index :users, :username
   end

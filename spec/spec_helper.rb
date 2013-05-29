@@ -44,7 +44,7 @@ def user_login
 end
 
 def sunet_login
-  'sunetuser'
+  'sunetuser@stanford.edu'
 end
 
 def curator_login
