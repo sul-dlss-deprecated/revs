@@ -7,13 +7,22 @@ $(document).ready(function(){
 		$($(this).attr("data-modal-selector")).modal('show');
 	  return false;
 	});
-	
+
+  // Swap icon used in Item Details accordion when toggling metadata sections
+  $('#item-details-accordion').collapse({
+     toggle: false
+   }).on('show',function (e) {
+     $(e.target).parent().find(".icon-chevron-right").removeClass("icon-chevron-right").addClass("icon-chevron-down");
+   }).on('hide', function (e) {
+     $(e.target).parent().find(".icon-chevron-down").removeClass("icon-chevron-down").addClass("icon-chevron-right");
+   });
+
 	// elements defined with the class "showOnLoad" and "hidden" classes will be hidden by default and then show when the page loads
 	//  useful when you have non javascript friendly DOM elements you need to hide for no JS browsers so you can include a <noscript> tag with
 	//   non JS versions
 	showOnLoad();
 
-		
+
 });
 
 $(document).on('blur',".user-login-email",function(){

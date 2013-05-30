@@ -42,7 +42,8 @@
     &.hidden-phone {margin-top: 20px; margin-bottom: none;}
   }
   .dl-horizontal {
-    margin-bottom: 18px;
+    margin-bottom: 12px;
+    font-size: 0.95em;
     dt {
       float: left;
       clear: left;
@@ -80,6 +81,40 @@
       padding-bottom: 2px;
     }
   }
+  #item-details-accordion {
+    margin-left: 1px;
+    .accordion-group {
+      border: none;
+      margin-bottom: 3px;
+    }
+    .nav-header {
+      border-bottom: 1px solid #e5e5e5;
+      padding: 6px 0 0;
+      a {
+        color: #999;
+        text-decoration: none;
+      }
+    }
+    .accordion-toggle {
+      padding: 0;
+      i {
+        vertical-align: top;
+      }
+      .accordion-icon {
+        float: right;
+      }
+    }
+    .accordion-inner {
+      background: #f8f8f8;
+      border-top: none;
+      box-shadow: inset 0 0 10px #eee, inset 0 0 10px #eee, inset 0 0 10px #eee;
+      padding: 12px 9px 3px 15px;
+      dt {
+        color: #777;
+      }
+    }
+  }
+
   .pe-img-viewer-thumbs-nav-bottom .pe-purl-url {
     border-top-style: none;
     margin-left: 3px;

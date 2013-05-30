@@ -97,6 +97,16 @@ class SolrDocument
     self[:race_data_tsi]
   end
 
+  def has_vehicle_metadata?
+    return true if
+      self.current_owner || self.marque || self.vehicle_markings || self.group_class
+  end
+
+  def has_race_metadata?
+    return true if
+      self.entrant || self.venue || self.track || self.event || self.race_data
+  end
+
   def collection_names
     self[blacklight_config.collection_member_collection_title_field.to_sym]
   end
