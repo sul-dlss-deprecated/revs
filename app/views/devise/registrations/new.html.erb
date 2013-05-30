@@ -11,6 +11,7 @@
       <label class="control-label" for="user_email"><%= t('revs.authentication.email') %></label>
       <div class="controls">
         <%= email_field_tag 'user[email]', @email, :autofocus => true, :tabindex => "1", :class=>'user-login-email', :id=>'register-email', :"data-trigger"=>"manual", :placeholder => "your email address" %>
+				<p id="duplicate-email-warning" class="hidden text-info">That email address is already registered. <%=link_to 'Reset your password',new_user_password_path%> if you forgot it.</p>				
 				<div id="stanford-user-warning" class="hidden notice">
 					<p class="text-info">
 					<strong>IMPORTANT!</strong> Stanford users should <strong>NOT</strong> register with a new account here.  Please use webauth to login with your SunetID first, and an account will be created for you automatically.</p>
@@ -21,8 +22,9 @@
     <div class="control-group">
       <label class="control-label" for="user_username"><%= t('revs.authentication.username') %></label>
       <div class="controls">
-        <%= text_field_tag 'user[username]', @username, :autofocus => true, :tabindex => "2", :class=>'user-login-email', :"data-trigger"=>"manual", :placeholder => "username for public display" %>
-      </div>
+        <%= text_field_tag 'user[username]', @username, :autofocus => true, :tabindex => "2", :class=>'user-login-email', :id=>'register-username', :"data-trigger"=>"manual", :placeholder => "username for public display" %>
+      	<p id="duplicate-username-warning" class="hidden text-info">Username is taken - please select a new one. <%=link_to 'Reset your password',new_user_password_path%> if you forgot it.</p>				
+			</div>
     </div>
 
     <div class="control-group">

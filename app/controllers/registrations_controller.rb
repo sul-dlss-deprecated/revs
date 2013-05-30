@@ -21,6 +21,7 @@ class RegistrationsController < Devise::RegistrationsController
     @user=User.where('username=?',params[:username])    
   end
   
+  # ajax call to check emails
   def check_email
     return unless request.xhr?
     @user=User.where('email=?',params[:email])    

@@ -1,4 +1,5 @@
-<% if @user.size != 0 
-	@message='That username has already beent taken.'%>
-	$('.flash_messages').append("<%= escape_javascript(render :partial => 'shared/flash_warning_message') %>");
+<% if @user.size != 0 %>
+	$('#duplicate-username-warning').removeClass('hidden');
+<% else %>
+	$('#duplicate-username-warning').addClass('hidden');
 <% end %>

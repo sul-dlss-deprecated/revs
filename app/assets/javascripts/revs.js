@@ -20,9 +20,9 @@ $(document).on('blur',".user-login-email",function(){
 	  var email=$(this).val();
 	  var id=$(this).attr('id');
 		if (email.indexOf('@stanford.edu') != -1) {
-			$('#stanford-user-warning').removeClass('hidden');
+			$('#stanford-user-warning').removeClass('hidden'); // if the user is logging in or regisering with a stanford email address, warn them
 			}
-		else if (email != "" && id == "register-email")
+		else if (email != "" && id == "register-email") // if the user is on the registration form, do an ajax call to verify the email address is unique
 		{
 			$.ajax({
 			        type: "POST",
@@ -30,7 +30,20 @@ $(document).on('blur',".user-login-email",function(){
 							data: "email=" + email
 			});		
 		}
-	//window.alert($(this).id);
+	}
+);
+
+$(document).on('blur',"#register-username",function(){
+	  var username=$(this).val();
+	  var id=$(this).attr('id');
+		if (username != "") // do an ajax call to verify the username is unique
+		{
+			$.ajax({
+			        type: "POST",
+			        url: "/check_username",
+							data: "username=" + username
+			});		
+		}
 	}
 );
 	
