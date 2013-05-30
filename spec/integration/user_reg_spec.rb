@@ -16,7 +16,7 @@ describe("User Registration",:type=>:request,:integration=>true) do
     # regsiter a new user
     visit new_user_registration_path
     fill_in 'register-email', :with=> @email
-    fill_in 'user_username', :with=> @username
+    fill_in 'register-username', :with=> @username
     fill_in 'user_password', :with=> @password
     fill_in 'user_password_confirmation', :with=> @password
     click_button 'Sign up'
@@ -42,7 +42,7 @@ describe("User Registration",:type=>:request,:integration=>true) do
       # regsiter a new user
       visit new_user_registration_path
       fill_in 'register-email', :with=> @email
-      fill_in 'user_username', :with=> @username
+      fill_in 'register-username', :with=> @username
       fill_in 'user_password', :with=> @password
       fill_in 'user_password_confirmation', :with=> @password    
       check 'user_subscribe_to_mailing_list'
@@ -68,7 +68,7 @@ describe("User Registration",:type=>:request,:integration=>true) do
         # regsiter a new stanford user
         visit new_user_registration_path
         fill_in 'register-email', :with=> @email
-        fill_in 'user_username', :with=> @username
+        fill_in 'register-username', :with=> @username
         fill_in 'user_password', :with=> @password
         fill_in 'user_password_confirmation', :with=> @password    
         click_button 'Sign up'
