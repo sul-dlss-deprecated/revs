@@ -81,28 +81,18 @@
             <%= link_to('Hide annotations','#',:id=>'hide_annotations_link',:class=>"hidden") %>
           </li>
 
-          <% if can? :create, Flag
-            current_flags=current_user.flags.where(:druid => @document.id)%>
+          <% if can? :create, Flag %>
             <li>
-              <div class="accordion" id="flagging">
-                <div class="accordion-group">
-                  <div id="flagging-toggle">
-                    <% if current_flags.count > 0 %>
-                      <a href='#collapseFlagging' class='accordion-toggle' data-toggle="collapse" data-parent="#flagging" data-collapse-flagging="true"><i class='icon-flag'></i> Flagged <span class="badge badge-info"><%= current_flags.count %></span></a>
-                    <% else %>
-                      <a href='#collapseFlagging' class='accordion-toggle' data-toggle="collapse" data-parent="#flagging"><i class='icon-flag'></i> Flag this item</a>
-                    <% end %>
-                  </div>
-                  <div id="collapseFlagging" class="accordion-body collapse">
-                    <div class="accordion-inner">
-                      <%= render :partial=>"flags/new",:locals=>{:druid=>@document.id}%>
-                      <div id="all_flags">
-                        <%= render :partial=>"flags/all",:locals=>{:flags=>@document.flags} %>
-                      </div>
-                    </div>
-                  </div>
+              <%= render :partial=>"flags/new",:locals=>{:druid=>@document.id, :flags=>@document.flags}%>
+                <div id="all_flags">
+                  <%= render :partial=>"flags/all",:locals=>{:flags=>@document.flags} %>
                 </div>
-              </div>
+            </li>
+          <% else %>
+            <li>
+              <span id="feedback_link">
+                <%= link_to t('revs.nav.content_corrections'),new_user_session_path %>
+              </span>
             </li>
           <% end %>
 

@@ -8,8 +8,8 @@ describe("Flagging",:type=>:request,:integration=>true) do
     
   it "should allow multiple logged in users to flag an item, show all flags, and then allow the user remove the flag" do
       
-      remove_button='[remove]'
-      flag_button='Flag this item'
+      remove_button='Remove Flag'
+      flag_button='Flag Item'
       comment_field='flag_comment'
       default_flag_type='error'
       druid='qb957rw1430'
@@ -29,7 +29,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
       current_path.should == item_page
       page.should have_content('The item was flagged.')
       page.should have_content('This item has been flagged 1 time.')
-      page.should have_content("You flagged it on #{ApplicationController.new.show_as_date(Date.today)} with comment '#{user_comment}'")
+      page.should have_content("You flagged it on #{ApplicationController.new.show_as_date(Date.today)} with this comment: #{user_comment}")
       page.should have_button(remove_button)
       
       # check the database
@@ -54,8 +54,8 @@ describe("Flagging",:type=>:request,:integration=>true) do
       current_path.should == item_page
       page.should have_content('The item was flagged.')
       page.should have_content('This item has been flagged 2 times.')
-      page.should have_content("You flagged it on #{ApplicationController.new.show_as_date(Date.today)} with comment '#{curator_comment}'")
-      page.should have_content("#{user.full_name} flagged it on #{ApplicationController.new.show_as_date(Date.today)} with comment '#{user_comment}'")
+      page.should have_content("You flagged it on #{ApplicationController.new.show_as_date(Date.today)} with this comment: #{curator_comment}")
+      page.should have_content("#{user.full_name} flagged it on #{ApplicationController.new.show_as_date(Date.today)} with this comment: #{user_comment}")
       page.should have_button(remove_button)
       
       # check the database

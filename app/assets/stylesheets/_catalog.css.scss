@@ -84,9 +84,7 @@
     border-radius: 5px;
     display: block;
     font-size: 13px;
-    margin-top: 60px;
-    padding: 4px;
-    text-align: center;
+    padding: 4px 9px;
   }
   .results-nav {
     border-bottom: 1px solid #ccc;
@@ -135,19 +133,36 @@
     }
   }
   .item-actions {
-    .accordion {
-      margin-bottom: 0;
-      .accordion-group {
-        border: none;
-        margin-bottom: 3px;
+    #all_flags {
+      color: #555;
+      .flag-info {
+        border-top: 1px dashed #ccc;
+        margin: 12px 0;
+        padding: 6px 0 0;
+        blockquote {
+          margin-top: 9px;
+        }
       }
+    }
+    .badge {
+      font-weight: normal;
+      margin-left: 3px;
+    }
+    form.new_flag, div#all_flags {
+      margin: 6px 0 0 25px;
       label {
         font-size: 0.95em;
         margin-left: 2px;
       }
+      .flag-button {
+        display: block;
+      }
     }
-    .flag-button {
-      display: block;
+    form.new_flag {
+      margin-bottom: 24px;
+    }
+    a.flag-details:hover, a.flag-details.flagged {
+      i {color: #990000;}
     }
   }
   .pe-img-viewer-thumbs-nav-bottom .pe-purl-url {

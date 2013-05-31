@@ -17,6 +17,14 @@ $(document).ready(function(){
      $(e.target).parent().find(".icon-caret-down").removeClass("icon-caret-down").addClass("icon-caret-right");
    });
 
+   // Collapse Item Details flag details if JavaScript.
+   $('#new_flag, #all_flags').hide();
+   // Toggle details (new flag form and posted flags) when Flag action is selected.
+   $('.flag-details').click(function(){
+     $('#new_flag, #all_flags').toggle();
+     return false;
+   });
+
 	// elements defined with the class "showOnLoad" and "hidden" classes will be hidden by default and then show when the page loads
 	//  useful when you have non javascript friendly DOM elements you need to hide for no JS browsers so you can include a <noscript> tag with
 	//   non JS versions
