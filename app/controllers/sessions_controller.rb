@@ -1,11 +1,13 @@
-# this overrides the Devise Session Controller, so we can do some specific things as login time
+# this overrides the Devise Session Controller, so we can do some specific things at login time
 class SessionsController < Devise::SessionsController
   
+  # sign in form
   def new
     store_referred_page
     super
   end
   
+  # sign in form submit method
   def create
     user=User.where('email=? or username=?',params[:user][:login],params[:user][:login])
     if user.size == 1 && user.first.sunet_user?

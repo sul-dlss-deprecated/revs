@@ -115,7 +115,7 @@
     <div class="control-group">
       <%= f.label :current_password, :class => 'control-label' %>
         <div class="controls">
-          <%= f.password_field :current_password, :value=>(resource.sunet_user? ? User.default_sunet_user_password : '') %>
+          <%= f.password_field :current_password %>
           <span class="help-block first">
             <small>
               We need your current password to confirm your changes.

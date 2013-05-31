@@ -5,7 +5,7 @@ Revs::Application.routes.draw do
   Blacklight.add_routes(self)
 
   # override devise controllers as needed
-  devise_for :users, :controllers => { :sessions => "sessions", :registrations=>"registrations" } # extend the default devise session controller with our own
+  devise_for :users, :controllers => { :sessions => "sessions", :registrations=>"registrations", :passwords=>"passwords" } # extend the default devise session controller with our own to override some methods
 
   # ajax calls to confirm uniqueness of email and username as a convience to user before they submit the form
   devise_scope :user do

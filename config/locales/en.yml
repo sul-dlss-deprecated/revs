@@ -42,7 +42,7 @@ en:
       password_confirmation: 'Password confirmation'
       email: 'Email'
       username: 'Username'
-      login: 'Email address or username'
+      login: 'Email or username'
       new_account: 'Sign up for a user account'
       sub_mailing_list: 'Subscribe to the Revs Program Mailing List'
       sidebar:

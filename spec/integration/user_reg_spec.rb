@@ -65,7 +65,7 @@ describe("User Registration",:type=>:request,:integration=>true) do
 
         @username='testguy'
         @email="#{@username}@stanford.edu" 
-        # regsiter a new stanford user
+        # try to register a new stanford user
         visit new_user_registration_path
         fill_in 'register-email', :with=> @email
         fill_in 'register-username', :with=> @username
@@ -82,6 +82,17 @@ describe("User Registration",:type=>:request,:integration=>true) do
         user.email.should_not == @email
 
       end
-      
+
+      it "should NOT allow a user to reset their password if they have a Stanford email address" do
+
+          # try to reset the password of an existing stanford user
+          visit new_user_password_path
+          fill_in 'user_login', :with=> sunet_login
+          click_button 'submit'
+
+          current_path.should == root_path
+          page.should have_content 'Stanford users need to login via webauth with their SunetID to access their account. You cannot reset your SunetID password here.'
+
+        end      
   
 end

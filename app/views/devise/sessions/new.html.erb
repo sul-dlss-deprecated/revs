@@ -9,8 +9,7 @@
       <div class="controls">
         <%= text_field_tag 'user[login]', @login, :autofocus => true, :class=>'user-login-email', :placeholder => "your email address or username" %>
 				<div id="stanford-user-warning" class="hidden notice">
-					<p class="text-info">
-					<strong>IMPORTANT!</strong> Stanford users should <strong>NOT</strong> enter their SUNET ID and password here.  Please use webauth to login with your SunetID first, and your will be logged into your account automatically.</p>
+					<%= render :partial=>'/shared/stanford_webauth_reminder' %>
 				</div>
       </div>
     </div>

@@ -1,12 +1,28 @@
+<div id="content" class="span9">
+
 <h2>Resend unlock instructions</h2>
 
 <%= form_for(resource, :as => resource_name, :url => unlock_path(resource_name), :html => { :method => :post }) do |f| %>
   <%= devise_error_messages! %>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
+  <div class="control-group">
+    <label class="control-label" for="user_login"><%= t('revs.authentication.email') %></label>
+    <div class="controls">
+		  <%= f.email_field :email, :autofocus => true, :class=>'user-login-email', :placeholder => "your email address" %>
+			<div id="stanford-user-warning" class="hidden notice">
+				<%= render :partial=>'/shared/stanford_webauth_reminder' %>
+			</div>
+    </div>
+  </div>
 
-  <div><%= f.submit "Resend unlock instructions" %></div>
+  <div class="control-group">
+    <div class="controls">
+  		<%= f.submit "Resend unlock instructions", :id=>'submit' %>
+   </div>
+  </div>
+
 <% end %>
 
-<%= render "devise/shared/links" %>
+</div>
+
+<%= render :partial => 'devise/shared/show_devise_sidebar' %>

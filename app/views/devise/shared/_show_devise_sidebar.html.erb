@@ -11,6 +11,10 @@
         <li><%= link_to "Resend unlock instructions", new_unlock_path(resource_name) %><li>
       <% end -%>
 
+			<%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'sessions' %>
+			  <li><%= link_to "Forgot your password?", new_password_path(resource_name) %><li>
+			<% end -%>
+			
     </ul>
   </div>
 </div>
