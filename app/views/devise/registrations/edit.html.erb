@@ -16,7 +16,8 @@
     <div class="control-group">
       <%= f.label :username, :class => 'control-label' %>
       <div class="controls">
-        <%= f.text_field :username, :size=>"80" %>
+        <%= f.text_field :username, :size=>"80",:id=>'register-username' %>
+      	<p id="duplicate-username-warning" class="hidden text-info">Username is taken - please select a new one.</p>				
 	      <span class="help-block first">
 	        <small>
 	          Your username is publicly visible on the Revs site.

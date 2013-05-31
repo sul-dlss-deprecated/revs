@@ -39,7 +39,7 @@ $(document).on('blur',".user-login-email",function(){
 		if (email.indexOf('@stanford.edu') != -1) {
 			$('#stanford-user-warning').removeClass('hidden'); // if the user is logging in or regisering with a stanford email address, warn them
 			}
-		else if (email != "" && id == "register-email") // if the user is on the registration form, do an ajax call to verify the email address is unique
+		else if (email != "" && id == "register-email") // if the user is on the registration form or edit form, do an ajax call to verify the email address is unique
 		{
 			$.ajax({
 			        type: "POST",

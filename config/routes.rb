@@ -13,6 +13,8 @@ Revs::Application.routes.draw do
     match 'check_email', :to=>"registrations#check_email", :via=>:post
     match 'users/edit_account', :to=>"registrations#edit_account", :as=>'edit_user_account', :via=>:get
     match 'users/update_account', :to=>"registrations#update_account", :as=>'update_user_account', :via=>:put
+    match "users/auth/webauth" => "sessions#webauth_login", :as => "webauth_login", :via=>:get
+    match "users/auth/webauth/logout" => "sessions#webauth_logout", :as => "webauth_logout", :via=>:delete
   end
     
   # version page

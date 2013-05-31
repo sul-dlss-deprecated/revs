@@ -8,7 +8,9 @@
     <div class="control-group">
       <%= f.label :email, "Email Address", :class => 'control-label' %>
       <div class="controls">
-        <%= f.email_field :email, :size=>"80" %>
+        <%= f.email_field :email, :size=>"80", :class=>'user-login-email', :id=>'register-email' %>
+				<p id="duplicate-email-warning" class="hidden text-info">That email address is already registered.</p>				
+
       </div>
     </div>
 		

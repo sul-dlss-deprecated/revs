@@ -12,8 +12,10 @@
         <li><%= link_to "Curator Dashboard", curator_tasks_path %></li>
       <% end %>
 
-      <% unless current_user.sunet_user? %>
-        <li><%= button_to "Sign out", destroy_user_session_path, :method=>:delete, :class => "btn-link" %></li>
+      <% if current_user.sunet_user? %>
+				<li><%= button_to "Sign out", webauth_logout_path, :method=>:delete, :class => "btn-link" %></li>
+			<% else %>
+  			<li><%= button_to "Sign out", destroy_user_session_path, :method=>:delete, :class => "btn-link" %></li>
       <% end %>
     </ul>
       <span class="nav-element-divider">|</span>

@@ -67,4 +67,44 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     
   end
 
+  it "should allow a sunet user to login and edit their profile but should not let them edit their email or password" do
+
+    new_bio='I work at Stanford. That makes me smart.'
+    new_last_name='Professor'
+    
+    visit webauth_login_path
+    sunet_account=User.find_by_username(sunet_login)
+    
+    visit user_profile_name_path(sunet_account.username) # user profile page
+    page.should have_content sunet_account.full_name
+    page.should_not have_content 'Edit your account info' # we shouldn't have the edit account info link
+    
+    click_link 'Edit your profile'
+
+    fill_in 'user_bio', :with=>new_bio
+    fill_in 'user_last_name', :with=>new_last_name
+    click_button 'submit'
+    
+    current_path.should == user_profile_name_path(sunet_account.username)
+    page.should have_content(new_bio)
+    page.should have_content(new_last_name)
+    
+    # check database
+    user_account=User.find_by_username(sunet_login)
+    user_account.bio.should == new_bio
+    user_account.last_name.should == new_last_name   
+     
+    # confirm we can't get to the edit password/email page via the URL either
+    visit edit_user_account_path
+    current_path.should == root_path
+    page.should have_content 'You are not authorized to perform this action.'
+    
+    # sign out
+    visit user_profile_name_path(sunet_account.username) # user profile page
+    logout
+    current_path.should == root_path
+    page.should_not have_content sunet_account.full_name
+    
+  end
+
 end

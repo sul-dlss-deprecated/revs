@@ -67,21 +67,14 @@ class RegistrationsController < Devise::RegistrationsController
   def check_username
     return unless request.xhr?
     @user=User.where('username=?',params[:username])    
+    @user=[] if user_signed_in? && @user && @user.first==current_user  # this means they are editing their username and its themselves, that is ok
   end
   
   # ajax call to check emails
   def check_email
     return unless request.xhr?
     @user=User.where('email=?',params[:email])    
-  end
-
-  private
-
-  # check if we need password to update user data
-  # ie if password or email was changed
-  # extend this as needed
-  def needs_password?(user, params)
-    user.email != params[:user][:email] || !params[:user][:password].blank?
+    @user=[] if user_signed_in? && @user && @user.first==current_user  # this means they are editing their email address and its themselves, that is ok
   end
       
 end

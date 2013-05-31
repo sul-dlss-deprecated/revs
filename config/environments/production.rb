@@ -71,6 +71,6 @@ Revs::Application.configure do
   GA.tracker = "UA-7219229-17" # revs digital library
   
 end
-Revs::Application.config.simulate_sunet_user = false # SET TO BLANK OR FALSE IN PRODUCTION!!! if this has a value, then this will simulate you being logged in as a sunet userRevs::Application.config.purl_plugin_server = "prod"
+Revs::Application.config.simulate_sunet_user = false # SET TO BLANK OR FALSE IN PRODUCTION (it should be ignored in production anyway) if this has a value, then this will simulate you being logged in as a sunet userRevs::Application.config.purl_plugin_server = "prod"
 Revs::Application.config.purl = "//purl.stanford.edu"
 Revs::Application.config.purl_plugin_location = "//image-viewer.stanford.edu/javascripts/purl_embed_jquery_plugin.js"

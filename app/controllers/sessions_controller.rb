@@ -18,5 +18,21 @@ class SessionsController < Devise::SessionsController
       super
     end
   end
-  
+
+  def webauth_login
+    if Revs::Application.config.simulate_sunet_user && Rails.env != 'production' # if we are simulating sunet logins and we are not in production, set a fake webauth cookie manually for testing
+      session["WEBAUTH_USER"]=Revs::Application.config.simulate_sunet_user
+    end
+    redirect_to params[:referrer] || root_url
+  end
+
+  def webauth_logout
+    if Revs::Application.config.simulate_sunet_user && Rails.env != 'production' # if we are simulating sunet logins and we are not in production, kill the fake webauth cookie manually for testing
+     session["WEBAUTH_USER"]=nil
+    end
+    sign_out
+    flash[:notice] = "You have successfully logged out of WebAuth." unless request.env["WEBAUTH_USER"]
+    redirect_to root_url
+  end
+    
 end

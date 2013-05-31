@@ -27,9 +27,8 @@
 
     <ul class="nav nav-list">
       <li class="nav-header"><%= t('revs.authentication.sidebar.actions') %></li>
-      <% unless @user.sunet_user? %>
-        <li><%= button_to "Sign out", destroy_user_session_path, :method=>:delete, :class => "btn-link" %></li>
-      <% end %>
+
+
       <li>
         <% if on_edit_page %>
           <%= link_to 'View your profile page', user_profile_name_path(@user.username) %>
@@ -45,6 +44,11 @@
       <% end %>
 			<% if user_flags_count(@user) > 0 %>
         <li><%= link_to "View your flags", user_flags_path(@user.username) %></li>
+      <% end %>
+      <% if current_user.sunet_user? %>
+				<li><%= button_to "Sign out", webauth_logout_path, :method=>:delete, :class => "btn-link" %></li>
+			<% else %>
+  			<li><%= button_to "Sign out", destroy_user_session_path, :method=>:delete, :class => "btn-link" %></li>
       <% end %>
     </ul>
 

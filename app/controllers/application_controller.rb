@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
 
-  prepend_before_filter :simulate_sunet, :if=>lambda{!Revs::Application.config.simulate_sunet_user.blank?} # to simulate sunet login in development, set this parameter in config/environments/ENVIRONMENT.rb
+  prepend_before_filter :simulate_sunet, :if=>lambda{Rails.env !='production' && !session["WEBAUTH_USER"].blank?} # to simulate sunet login in development, set a parameter in config/environments/ENVIRONMENT.rb
   before_filter :signin_sunet_user, :if=>lambda{sunet_user_signed_in? && !user_signed_in?} # signin a sunet user if they are webauthed but not yet logged into the site
 
   rescue_from CanCan::AccessDenied do |exception|
@@ -73,12 +73,12 @@ class ApplicationController < ActionController::Base
     return
 
   end
-  
-  # only used for testing sunet in development
-  def simulate_sunet
-    request.env["WEBAUTH_USER"]=Revs::Application.config.simulate_sunet_user
-  end
 
+  # only used for testing sunet in development; sets the environment variable manually for testing purposes
+  def simulate_sunet
+    request.env["WEBAUTH_USER"]=session["WEBAUTH_USER"] unless Rails.env=='production'
+  end
+  
   def signin_sunet_user
      # if we have a webauthed user who is not yet signed in, let's sign them in or create them a new user account if needed
     user=(User.where(:sunet=>request.env["WEBAUTH_USER"]).first || User.create_new_sunet_user(request.env["WEBAUTH_USER"])) 
