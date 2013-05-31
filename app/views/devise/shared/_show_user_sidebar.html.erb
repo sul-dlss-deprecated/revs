@@ -37,7 +37,9 @@
           <%= link_to 'Edit your profile', edit_user_registration_path %>
         <% end %>
       </li>
-      <li><%= link_to 'Update your password', "#" %></li>
+			<% unless current_user.sunet_user? %>
+	      <li><%= link_to 'Edit your account info', edit_user_account_path%></li>
+			<% end %>
       <% if user_annotations_count(@user) > 0 %>
         <li><%= link_to 'View your annotations', user_annotations_path(@user.username) %></li>
       <% end %>

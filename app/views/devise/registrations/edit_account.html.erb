@@ -1,0 +1,60 @@
+<div id="content" class="span9">
+
+  <h2>Edit Your Account</h2>
+
+  <%= form_for(resource, :as => resource_name, :url => update_user_account_path, :html => { :method => :put, :class => "form-horizontal" }) do |f| %>
+    <%= devise_error_messages! %>
+
+    <div class="control-group">
+      <%= f.label :email, "Email Address", :class => 'control-label' %>
+      <div class="controls">
+        <%= f.email_field :email, :size=>"80" %>
+      </div>
+    </div>
+		
+    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+      <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+    <% end %>
+
+    <div class="control-group">
+      <%= f.label :new_password, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.password_field :password, :autocomplete => "off" %>
+        <span class="help-block first">
+          <small>
+            Leave blank if you don't want to change it.
+          </small>
+        </span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :confirm_new_password, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.password_field :password_confirmation %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :current_password, :class => 'control-label' %>
+        <div class="controls">
+          <%= f.password_field :current_password %>
+          <span class="help-block first">
+            <small>
+              We need your current password to confirm your changes.
+            </small>
+          </span>
+        </div>
+    </div>
+
+    <div class="control-group">
+      <div class="controls">
+        <%= f.submit "Update",  :id=>'submit', :class => "btn" %>
+      </div>
+    </div>
+
+  <% end %>
+
+</div>
+
+<%= render :partial => 'devise/shared/show_user_sidebar' %>
