@@ -6,7 +6,7 @@ en:
     nav:
       go_back: 'Go back'
       report_problem: 'Report a problem'
-      content_corrections: 'Are there problems with the metadata above? If you create an account and login, you can flag this item with a comment.'
+      content_corrections: 'Are there problems with the metadata for this item? If you create an account and login, you can flag this item with a comment.'
     contact:
       select_topic: 'Select a topic...'
       problem: 'Problem with the website'

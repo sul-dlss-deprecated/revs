@@ -5,17 +5,17 @@
                                      'size': 'thumb',
                                      'width': 425,
                                      'height': 460,
-    													           'layout': 'thumbs-nav-bottom',
-      													         'availableSizes': [<%=raw available_sizes%>],
-      												           'zoomOnClick': false,
- 																				 'disableKeyboardShortcuts': true, 
+                                         'layout': 'thumbs-nav-bottom',
+                                         'availableSizes': [<%=raw available_sizes%>],
+                                         'zoomOnClick': false,
+                                         'disableKeyboardShortcuts': true,
                                      'tooltipTexts': {
                                      '<%= I18n.locale %>': {
                                        'OpenInFullScreen': '<%= t('revs.show.open_in_full_screen') %>',
                                        'Close': '<%= t('revs.show.close') %>'
                                        }
                                      }
-                                   });		
+                                   });
   });
 </script>
 
@@ -28,57 +28,79 @@
 </div>
 
 <div class="row">
-	<div class="span7">
-	  <div id="image_workspace" class="showOnLoad hidden"><%= t('revs.show.wait') %></div>
-		<div id="annotatable_workspace" class="hidden"><%= image_tag(@document.images(:large).first,:id=>'annotatable_image') %></div>
-  
-	  <noscript>
-	    	<%= link_to(image_tag(@document.images(:large).first), "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'new') %>
-	  </noscript>
-	</div>
+  <div class="span7">
+    <div id="image_workspace" class="showOnLoad hidden"><%= t('revs.show.wait') %></div>
+    <div id="annotatable_workspace" class="hidden"><%= image_tag(@document.images(:large).first,:id=>'annotatable_image') %></div>
+
+    <noscript>
+        <%= link_to(image_tag(@document.images(:large).first), "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'new') %>
+    </noscript>
+  </div>
+
   <div class="span5 metadata">
 
-		<% if  @previous_document || @next_document %>
-    <div class="row results-nav">			
-	      <div class="span2 back-to-results">
-	        <%= link_back_to_catalog(:label => '&laquo; search results'.html_safe) %>
-	      </div>
-      <div class="span3 results-pagination">
-          <span class="previousNextDocument">
-            <%= link_to_previous_document @previous_document %> |
+    <% if  @previous_document || @next_document %>
+      <div class="row results-nav">
+        <div class="span2 back-to-results">
+          <%= link_back_to_catalog(:label => '&laquo; search results'.html_safe) %>
+        </div>
+        <div class="span3 results-pagination">
+            <span class="previousNextDocument">
+              <%= link_to_previous_document @previous_document %> |
 
-            <%= item_page_entry_info %> |
+              <%= item_page_entry_info %> |
 
-            <%= link_to_next_document @next_document %>
-        </span>
+              <%= link_to_next_document @next_document %>
+          </span>
+        </div>
       </div>
-    </div>
-		<% end %>
-		
+    <% end %>
+
     <div class="row">
       <div class="span5">
-    <%= render_document_heading.html_safe %>
-    <%= render :partial => "show_default_collection_member", :locals => {:document => @document} %>
-    <%= link_to('<i class="icon-picture"></i> Full citation page with view/download'.html_safe, "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'new') %>
+        <%= render_document_heading.html_safe %>
+        <%= render :partial => "show_default_collection_member", :locals => {:document => @document} %>
 
-		<% if can? :create, Annotation %>
-			<p><%= link_to("View and add annotations (#{@document.annotations.size} existing)",'#',:id=>'annotate_link',:class=>"annotation_links showOnLoad hidden") %></p>
-		<% elsif can?(:read, Annotation) && @document.annotations.size > 0 %>
-			<p><%= link_to("View #{@document.annotations.size} existing annotations",'#',:id=>'view_annotations_link',:class=>"annotation_links showOnLoad hidden") %></p>
-		<% end %>
-		<p><%= link_to('Hide annotations','#',:id=>'hide_annotations_link',:class=>"hidden") %></p>
-		
-    <div id="flagging">
-			<%= render :partial=>"flags/new",:locals=>{:druid=>@document.id}%>
-		</div>
-		
-		<div id="all_flags">
-		  <%= render :partial=>"flags/all",:locals=>{:flags=>@document.flags}	%>
-		</div>
+        <ul class="nav nav-list item-actions">
+          <li class="nav-header">Actions</li>
+          <li>
+            <%= link_to('<i class="icon-picture"></i> View full citation page with image download'.html_safe,
+            "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'new') %>
+          </li>
 
+          <% if can? :create, Annotation %>
+            <li>
+              <%= link_to("<i class='icon-edit'></i> View and add annotations (#{@document.annotations.size} existing)".html_safe, '#', :id=>'annotate_link', :class=>"annotation_links showOnLoad hidden") %>
+            </li>
+          <% elsif can?(:read, Annotation) && @document.annotations.size > 0 %>
+            <li>
+              <%= link_to("View #{@document.annotations.size} existing annotations",'#',:id=>'view_annotations_link',:class=>"annotation_links showOnLoad hidden") %>
+            </li>
+          <% end %>
+          <li>
+            <%= link_to('Hide annotations','#',:id=>'hide_annotations_link',:class=>"hidden") %>
+          </li>
+
+          <% if can? :create, Flag %>
+            <li>
+              <%= render :partial=>"flags/new",:locals=>{:druid=>@document.id, :flags=>@document.flags}%>
+                <div id="all_flags">
+                  <%= render :partial=>"flags/all",:locals=>{:flags=>@document.flags} %>
+                </div>
+            </li>
+          <% else %>
+            <li>
+              <span id="feedback_link">
+                <%= link_to t('revs.nav.content_corrections'),new_user_session_path %>
+              </span>
+            </li>
+          <% end %>
+
+        </ul>
+      </div>
     </div>
-  </div>
 
   </div>
 </div>
+
 <%= render :partial => "collection_members_grid", :locals => {:collection_members => @document.collection_siblings, :type => :siblings, :show_full_width => true} %>

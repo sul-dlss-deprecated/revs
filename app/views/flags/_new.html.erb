@@ -1,15 +1,27 @@
 <% if can? :create, Flag
-	current_flags=current_user.flags.where(:druid=>druid)%>
-	<% if current_flags.count == 0 # they have not already flagged it, give them the new form%>
-		<%= form_for(Flag.new, :remote=>true) do |f| %>
-			<%= f.hidden_field :druid, :value=>druid %>
-			<%= f.hidden_field :flag_type, :value=>'error' %>
-			<%= f.label :comment, 'Comment (optional)'%> <%= f.text_field :comment %>
-			<%= f.submit 'Flag this item' %>
-		<% end %>
-	<% end %>
-<% else %>
-	<span id="feedback_link">
-   	<%= link_to t('revs.nav.content_corrections'),new_user_session_path %>
-	</span>
+  current_flags=current_user.flags.where(:druid=>druid)%>
+
+  <% if current_flags.count == 0 # they have not already flagged it, give them the new form %>
+    <a href='#' class='flag-details'>
+      <i class='icon-flag'></i> Flag this item
+      <span class="badge badge-info">
+        <%= flags.size unless flags.size == 0 %>
+      </span>
+    </a>
+    <%= form_for(Flag.new, :remote=>true) do |f| %>
+      <%= f.hidden_field :druid, :value=>druid %>
+      <%= f.hidden_field :flag_type, :value=>'error' %>
+      <%= f.label :comment, 'Comment (optional)'%>
+      <%= f.text_area :comment, :rows => '2', :class => "input-xlarge" %>
+      <%= f.submit 'Flag Item', :class => "flag-button btn btn-small" %>
+    <% end %>
+
+  <% else %>
+     <a href='#' class='flag-details flagged'><i class='icon-flag'></i> Flagged
+       <span class="badge badge-info">
+          <%= flags.size unless flags.size == 0 %>
+        </span>
+      </a>
+  <% end %>
+
 <% end %>

@@ -1,13 +1,141 @@
-<dl class="dl-horizontal  dl-invert">
-	<% if document.description %>
-		<dt>Description:</dt><dd><%=show_formatted_list document.description%></dd>
-	<% end %>
-	<% if document.years %>
-  	<dt>Year:</dt><dd><%=show_formatted_list(document.years,:facet=>'pub_year_isim')%>&nbsp;</dd>
-	<% end %>
-	<% if document.formats %>
-		<dt>Format:</dt><dd><%=show_formatted_list(document.formats,:facet=>'format_ssim')%>&nbsp;</dd>
-	<% end %>
-  <dt>Collection:</dt><dd><%=show_formatted_list(document.collection_names,:facet=>'collection_ssim')%>&nbsp;</dd>
-	<dt>Identifier:</dt><dd><%=document.identifier%>&nbsp;</dd>
-</dl>
+<div class="accordion" id="item-details-accordion">
+  <div class="accordion-group">
+    <div class="accordion-heading nav-header">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#item-details-accordion" href="#item-default">
+        General Information
+        <span class="accordion-icon"><i class="icon-caret-down icon-2x"></i></span>
+      </a>
+    </div>
+    <div id="item-default" class="accordion-body collapse in">
+      <div class="accordion-inner">
+        <dl class="dl-horizontal  dl-invert">
+          <% if document.description %>
+            <dt>Description:</dt>
+            <dd><%= show_formatted_list document.description %></dd>
+          <% end %>
+          <% if document.years %>
+            <dt>Year:</dt>
+            <dd><%= show_formatted_list(document.years, :facet=>'pub_year_isim') %></dd>
+          <% end %>
+          <dt>Collection:</dt>
+          <dd><%=show_formatted_list(document.collection_names,:facet=>'collection_ssim')%></dd>
+          <% if document.location %>
+            <dt>Location:</dt>
+            <dd><%= document.location %></dd>
+          <% end %>
+          <% if document.subjects %>
+            <dt>Subjects:</dt>
+            <dd><%= show_formatted_list document.subjects %></dd>
+          <% end %>
+          <% if document.people %>
+            <dt>People:</dt>
+            <dd><%= show_formatted_list document.people %></dd>
+          <% end %>
+        </dl>
+      </div>
+    </div>
+  </div>
+
+<% if document.has_vehicle_metadata? %>
+  <div class="accordion-group">
+    <div class="accordion-heading nav-header">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#item-details-accordion" href="#item-auto">
+        Vehicle Information
+        <span class="accordion-icon"><i class="icon-caret-right icon-2x"></i></span>
+      </a>
+    </div>
+    <div id="item-auto" class="accordion-body collapse">
+      <div class="accordion-inner">
+        <dl class="dl-horizontal  dl-invert">
+          <% if document.current_owner %>
+            <dt>Owner:</dt>
+            <dd><%= document.current_owner %></dd>
+          <% end %>
+          <% if document.marque %>
+            <dt>Marque:</dt>
+            <dd><%= show_formatted_list document.marque %></dd>
+          <% end %>
+          <% if document.group_class %>
+            <dt>Group/Class:</dt>
+            <dd><%= document.group_class %></dd>
+          <% end %>
+          <% if document.vehicle_markings %>
+            <dt>Vehicle Markings:</dt>
+            <dd><%= document.vehicle_markings %></dd>
+          <% end %>
+        </dl>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% if document.has_race_metadata? %>
+  <div class="accordion-group">
+    <div class="accordion-heading nav-header">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#item-details-accordion" href="#item-race">
+        Race Information
+        <span class="accordion-icon"><i class="icon-caret-right icon-2x"></i></span>
+      </a>
+    </div>
+    <div id="item-race" class="accordion-body collapse">
+      <div class="accordion-inner">
+        <dl class="dl-horizontal  dl-invert">
+          <% if document.event %>
+            <dt>Event:</dt>
+            <dd><%= document.event %></dd>
+          <% end %>
+          <% if document.venue %>
+            <dt>Venue:</dt>
+            <dd><%= document.venue %></dd>
+          <% end %>
+          <% if document.track %>
+            <dt>Track:</dt>
+            <dd><%= document.track %></dd>
+          <% end %>
+          <% if document.entrant %>
+            <dt>Entrant:</dt>
+            <dd><%= document.entrant %></dd>
+          <% end %>
+          <% if document.race_data %>
+            <dt>Race Data:</dt>
+            <dd><%= document.race_data %></dd>
+          <% end %>
+        </dl>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+  <div class="accordion-group">
+    <div class="accordion-heading nav-header">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#item-details-accordion" href="#item-sources">
+        Sources, Notes, &amp; Technical Information
+        <span class="accordion-icon"><i class="icon-caret-right icon-2x"></i></span>
+      </a>
+    </div>
+    <div id="item-sources" class="accordion-body collapse">
+      <div class="accordion-inner">
+        <dl class="dl-horizontal  dl-invert">
+          <% if document.formats %>
+            <dt>Format:</dt>
+            <dd><%= show_formatted_list(document.formats, :facet=>'format_ssim') %></dd>
+          <% end %>
+          <dt>Identifier:</dt>
+          <dd><%=document.identifier%></dd>
+          <% if document.institutional_notes %>
+            <dt>Institutional Notes:</dt>
+            <dd><%= document.institutional_notes %></dd>
+          <% end %>
+          <% if document.production_notes %>
+            <dt>Production Notes:</dt>
+            <dd><%= document.production_notes %></dd>
+          <% end %>
+          <% if document.metadata_sources %>
+            <dt>Metadata Sources:</dt>
+            <dd><%= document.metadata_sources %></dd>
+          <% end %>
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>

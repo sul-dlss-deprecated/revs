@@ -28,6 +28,26 @@
   h2 {
     @include page-header;
   }
+  ul.nav-list {
+    color: #999;
+    font-size: 0.95em;
+    padding-left: 1px;
+    .nav-header {
+      border-bottom: 1px solid #e5e5e5;
+      margin: 0 0 6px;
+      padding: 0;
+    }
+    > li >, > li > div {
+      a, a:visited {
+        color: #333;
+        text-decoration: none;
+        i {
+          font-weight: 200;
+          margin-right: 9px;
+        }
+      }
+    }
+  }
   .item-nav {
     float: right;
   }
@@ -42,7 +62,8 @@
     &.hidden-phone {margin-top: 20px; margin-bottom: none;}
   }
   .dl-horizontal {
-    margin-bottom: 18px;
+    margin-bottom: 12px;
+    font-size: 0.95em;
     dt {
       float: left;
       clear: left;
@@ -63,9 +84,7 @@
     border-radius: 5px;
     display: block;
     font-size: 13px;
-    margin-top: 60px;
-    padding: 4px;
-    text-align: center;
+    padding: 4px 9px;
   }
   .results-nav {
     border-bottom: 1px solid #ccc;
@@ -78,6 +97,72 @@
       float: right;
       margin-right: -20px;
       padding-bottom: 2px;
+    }
+  }
+  #item-details-accordion {
+    margin-left: 1px;
+    .accordion-group {
+      border: none;
+      margin-bottom: 3px;
+    }
+    .nav-header {
+      border-bottom: 1px solid #e5e5e5;
+      padding: 6px 0 0;
+      a {
+        color: #999;
+        text-decoration: none;
+      }
+      i {
+        font-weight: 200;
+      }
+    }
+    .accordion-toggle {
+      padding: 0;
+      .accordion-icon {
+        float: right;
+      }
+    }
+    .accordion-inner {
+      background: #f8f8f8;
+      border-top: none;
+      box-shadow: inset 0 0 10px #eee, inset 0 0 10px #eee, inset 0 0 10px #eee;
+      padding: 12px 9px 3px 15px;
+      dt {
+        color: #777;
+      }
+    }
+  }
+  .item-actions {
+    #all_flags {
+      color: #555;
+      .flag-info {
+        border-top: 1px dashed #ccc;
+        margin: 12px 0;
+        padding: 6px 0 0;
+        blockquote {
+          margin-top: 9px;
+        }
+      }
+    }
+    .badge {
+      font-weight: normal;
+      margin-left: 3px;
+    }
+    form.new_flag, div#all_flags {
+      margin: 6px 0 0 25px;
+      label {
+        font-size: 0.95em;
+        margin-left: 2px;
+      }
+      .flag-button {
+        display: block;
+      }
+    }
+    form.new_flag {
+      margin-bottom: 24px;
+    }
+    a.flag-details:hover, a.flag-details.flagged {
+      i {color: #990000;}
     }
   }
   .pe-img-viewer-thumbs-nav-bottom .pe-purl-url {
