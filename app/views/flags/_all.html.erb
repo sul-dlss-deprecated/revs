@@ -1,10 +1,14 @@
 <% if flags.size > 0 %>
-	<p>This item has been flagged <strong><%=pluralize(flags.size, 'time') %></strong>.</p>
+	This item has been flagged <strong><%=pluralize(flags.size, 'time') %></strong>.
 
 	<% flags.each do |flag| %>
-		<p><%=flag.user == current_user ? "You" : flag.user.full_name%> flagged it on <%=show_as_date(flag.created_at)%>
-		<%="with comment '#{flag.comment}'" unless flag.comment.blank?%>
-		<% if can? :destroy, flag%><%= button_to '[remove]',flag_path(flag.id), :method=>:delete,:remote=>true, :confirm=>"Are you sure?"%><% end %></p>
+		<p class="muted">
+		  <%=flag.user == current_user ? "You" : flag.user.full_name%> flagged it on <%=show_as_date(flag.created_at)%>
+		  <%= "with the following comment: <blockquote>#{flag.comment}</blockquote>".html_safe unless flag.comment.blank? %>
+		  <% if can? :destroy, flag%>
+		    <%= button_to 'Remove Flag',flag_path(flag.id), :method=>:delete,:remote=>true, :confirm=>"Are you sure you want to remove this flag?", :class => "btn btn-small btn-danger" %>
+		  <% end %>
+		</p>
 	<% end %>
 
 <% end %>

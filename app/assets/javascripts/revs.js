@@ -12,9 +12,9 @@ $(document).ready(function(){
   $('#item-details-accordion').collapse({
      toggle: false
    }).on('show',function (e) {
-     $(e.target).parent().find(".icon-chevron-right").removeClass("icon-chevron-right").addClass("icon-chevron-down");
+     $(e.target).parent().find(".icon-caret-right").removeClass("icon-caret-right").addClass("icon-caret-down");
    }).on('hide', function (e) {
-     $(e.target).parent().find(".icon-chevron-down").removeClass("icon-chevron-down").addClass("icon-chevron-right");
+     $(e.target).parent().find(".icon-caret-down").removeClass("icon-caret-down").addClass("icon-caret-right");
    });
 
 	// elements defined with the class "showOnLoad" and "hidden" classes will be hidden by default and then show when the page loads

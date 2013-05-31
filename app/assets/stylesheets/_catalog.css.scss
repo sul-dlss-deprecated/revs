@@ -28,6 +28,26 @@
   h2 {
     @include page-header;
   }
+  ul.nav-list {
+    color: #999;
+    font-size: 0.95em;
+    padding-left: 1px;
+    .nav-header {
+      border-bottom: 1px solid #e5e5e5;
+      margin: 0 0 6px;
+      padding: 0;
+    }
+    > li >, > li > div {
+      a, a:visited {
+        color: #333;
+        text-decoration: none;
+        i {
+          font-weight: 200;
+          margin-right: 9px;
+        }
+      }
+    }
+  }
   .item-nav {
     float: right;
   }
@@ -94,12 +114,12 @@
         color: #999;
         text-decoration: none;
       }
+      i {
+        font-weight: 200;
+      }
     }
     .accordion-toggle {
       padding: 0;
-      i {
-        vertical-align: top;
-      }
       .accordion-icon {
         float: right;
       }
@@ -114,7 +134,22 @@
       }
     }
   }
-
+  .item-actions {
+    .accordion {
+      margin-bottom: 0;
+      .accordion-group {
+        border: none;
+        margin-bottom: 3px;
+      }
+      label {
+        font-size: 0.95em;
+        margin-left: 2px;
+      }
+    }
+    .flag-button {
+      display: block;
+    }
+  }
   .pe-img-viewer-thumbs-nav-bottom .pe-purl-url {
     border-top-style: none;
     margin-left: 3px;

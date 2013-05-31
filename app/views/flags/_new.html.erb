@@ -4,8 +4,9 @@
 		<%= form_for(Flag.new, :remote=>true) do |f| %>
 			<%= f.hidden_field :druid, :value=>druid %>
 			<%= f.hidden_field :flag_type, :value=>'error' %>
-			<%= f.label :comment, 'Comment (optional)'%> <%= f.text_field :comment %>
-			<%= f.submit 'Flag this item' %>
+			<%= f.label :comment, 'Comment (optional)'%>
+			<%= f.text_area :comment, :rows => '2', :class => "input-xlarge" %>
+			<%= f.submit 'Flag Item', :class => "flag-button btn btn-small" %>
 		<% end %>
 	<% end %>
 <% else %>

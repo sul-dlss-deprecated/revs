@@ -60,23 +60,53 @@
       <div class="span5">
         <%= render_document_heading.html_safe %>
         <%= render :partial => "show_default_collection_member", :locals => {:document => @document} %>
-        <%= link_to('<i class="icon-picture"></i> Full citation page with view/download'.html_safe, "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'new') %>
 
-        <% if can? :create, Annotation %>
-          <p><%= link_to("View and add annotations (#{@document.annotations.size} existing)",'#',:id=>'annotate_link',:class=>"annotation_links showOnLoad hidden") %></p>
-        <% elsif can?(:read, Annotation) && @document.annotations.size > 0 %>
-          <p><%= link_to("View #{@document.annotations.size} existing annotations",'#',:id=>'view_annotations_link',:class=>"annotation_links showOnLoad hidden") %></p>
-        <% end %>
-        <p><%= link_to('Hide annotations','#',:id=>'hide_annotations_link',:class=>"hidden") %></p>
+        <ul class="nav nav-list item-actions">
+          <li class="nav-header">Actions</li>
+          <li>
+            <%= link_to('<i class="icon-picture"></i> View full citation page with image download'.html_safe,
+            "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'new') %>
+          </li>
 
-        <div id="flagging">
-          <%= render :partial=>"flags/new",:locals=>{:druid=>@document.id}%>
-        </div>
+          <% if can? :create, Annotation %>
+            <li>
+              <%= link_to("<i class='icon-edit'></i> View and add annotations (#{@document.annotations.size} existing)".html_safe, '#', :id=>'annotate_link', :class=>"annotation_links showOnLoad hidden") %>
+            </li>
+          <% elsif can?(:read, Annotation) && @document.annotations.size > 0 %>
+            <li>
+              <%= link_to("View #{@document.annotations.size} existing annotations",'#',:id=>'view_annotations_link',:class=>"annotation_links showOnLoad hidden") %>
+            </li>
+          <% end %>
+          <li>
+            <%= link_to('Hide annotations','#',:id=>'hide_annotations_link',:class=>"hidden") %>
+          </li>
 
-        <div id="all_flags">
-          <%= render :partial=>"flags/all",:locals=>{:flags=>@document.flags} %>
-        </div>
+          <% if can? :create, Flag
+            current_flags=current_user.flags.where(:druid => @document.id)%>
+            <li>
+              <div class="accordion" id="flagging">
+                <div class="accordion-group">
+                  <div id="flagging-toggle">
+                    <% if current_flags.count > 0 %>
+                      <a href='#collapseFlagging' class='accordion-toggle' data-toggle="collapse" data-parent="#flagging" data-collapse-flagging="true"><i class='icon-flag'></i> Flagged <span class="badge badge-info"><%= current_flags.count %></span></a>
+                    <% else %>
+                      <a href='#collapseFlagging' class='accordion-toggle' data-toggle="collapse" data-parent="#flagging"><i class='icon-flag'></i> Flag this item</a>
+                    <% end %>
+                  </div>
+                  <div id="collapseFlagging" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                      <%= render :partial=>"flags/new",:locals=>{:druid=>@document.id}%>
+                      <div id="all_flags">
+                        <%= render :partial=>"flags/all",:locals=>{:flags=>@document.flags} %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          <% end %>
 
+        </ul>
       </div>
     </div>
 
