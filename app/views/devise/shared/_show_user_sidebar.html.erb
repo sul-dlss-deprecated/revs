@@ -19,6 +19,10 @@
             Annotations
             <span class="badge badge-info"><%= user_annotations_count(@user) %></span>
           </li>
+          <li>
+            Flags
+            <span class="badge badge-info"><%= user_flags_count(@user) %></span>
+          </li>
       </ul>
 
     <ul class="nav nav-list">
@@ -36,6 +40,9 @@
       <li><%= link_to 'Update your password', "#" %></li>
       <% if user_annotations_count(@user) > 0 %>
         <li><%= link_to 'View your annotations', user_annotations_path(@user.username) %></li>
+      <% end %>
+			<% if user_flags_count(@user) > 0 %>
+        <li><%= link_to "View your flags", user_flags_path(@user.username) %></li>
       <% end %>
     </ul>
 

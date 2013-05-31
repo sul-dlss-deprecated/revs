@@ -24,7 +24,19 @@ class UserController < ApplicationController
       profile_not_found
     end
   end
-  
+
+  # the user's flags
+  def flags
+    @name=params[:name]
+    @user=User.find_by_username(@name)
+    if @user
+      @order=params[:order] || 'druid'    
+      @flags=Flag.where(:user_id=>@user.id).order(@order).page params[:page] 
+    else
+      profile_not_found
+    end
+  end
+    
   # public user profile page by name
   def show_by_name
     @name=params[:name]

@@ -79,6 +79,10 @@ module ApplicationHelper
     user.annotations.count
   end
 
+  def user_flags_count(user)
+    user.flags.count
+  end
+  
   def on_edit_page
     ["edit","update"].include? action_name
   end
