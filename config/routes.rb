@@ -29,6 +29,7 @@ Revs::Application.routes.draw do
   match 'collection/:id', :to=> 'catalog#show', :as =>'collection'
   
   # public user profile pages
+  match 'user/:name/annotations', :to=>'user#annotations', :as=>'user_annotations', :via=>:get, :constraints => {:name => /\D+.+/} 
   match 'user/:id', :to=>'user#show', :as=>'user_profile_id', :via=>:get, :constraints => {:id => /\d+/} # all digits is assumed to be an ID
   match 'user/:name', :to=>'user#show_by_name', :as=>'user_profile_name', :via=>:get, :constraints => {:name => /\D+.+/} # any non digit followed by any other characters is assumed to be a name
   

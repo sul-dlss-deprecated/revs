@@ -2,8 +2,16 @@ require 'json'
 
 class AnnotationsController < ApplicationController
 
-  authorize_resource
-    
+  authorize_resource # ensures only people who have access via cancan (defined in ability.rb) can do this
+
+  def index
+    druid=params[:druid]
+    @annotations=Annotation.includes(:user).where(:druid=>druid)
+    respond_to do |format|
+      format.js { render }
+    end
+  end
+      
   def show
     
     @annotations=Annotation.includes(:user).where(:druid=>params[:id])

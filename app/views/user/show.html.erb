@@ -1,6 +1,6 @@
 <div id="content" class="span9">
 
-  <h2><%= @user.full_name %><span class="lowercase">'s</span> Profile</h2>
+  <h2><%= display_user_name(@user) %><span class="lowercase">'s</span> Profile</h2>
 
   <% unless @user.bio.blank? %>
     <div><%= @user.bio %></div>
@@ -10,6 +10,8 @@
 
 </div>
 
-<% if user_signed_in? && @user == current_user %>
+<% if is_logged_in_user?(@user) %>
 	<%= render :partial => 'devise/shared/show_user_sidebar' %>
+<% else %>
+	<%= render :partial => 'devise/shared/show_public_profile_user_sidebar' %>
 <% end %>

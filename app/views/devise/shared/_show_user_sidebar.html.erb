@@ -1,49 +1,47 @@
 <div id="sidebar" class="span3">
   <div id="sidebar-nav">
 
-    <% if @user == current_user %>
       <ul class="nav nav-list account">
         <li class="nav-header">
           <%= t('revs.authentication.sidebar.account') %>
-          <% unless current_user.role == 'user' %>
-            <span class="label label-info lowercase"><%= current_user.role.capitalize %></span>
+          <% unless @user.role == 'user' %>
+            <span class="label label-info lowercase"><%= @user.role.capitalize %></span>
             <% end %>
           </li>
-          <li>Joined on <%= show_as_date(current_user.created_at) %></li>
+          <li>Joined on <%= show_as_date(@user.created_at) %></li>
           <li>
             Profile page
-            <span class="label <%= current_user.public ? 'label-success' : '' %>">
-              <%= current_user.public ? "public" : "private"%>
+            <span class="label <%= @user.public ? 'label-success' : '' %>">
+              <%= @user.public ? "public" : "private"%>
             </span>
           </li>
           <li>
             Annotations
-            <span class="badge badge-info"><%= user_annotations_count(current_user) %></span>
+            <span class="badge badge-info"><%= user_annotations_count(@user) %></span>
           </li>
       </ul>
-    <% end %>
 
     <ul class="nav nav-list">
       <li class="nav-header"><%= t('revs.authentication.sidebar.actions') %></li>
-      <% unless current_user.sunet_user? %>
+      <% unless @user.sunet_user? %>
         <li><%= button_to "Sign out", destroy_user_session_path, :method=>:delete, :class => "btn-link" %></li>
       <% end %>
       <li>
         <% if on_edit_page %>
-          <%= link_to 'View your profile page', user_profile_name_path(current_user.username) %>
+          <%= link_to 'View your profile page', user_profile_name_path(@user.username) %>
         <% else %>
           <%= link_to 'Edit your profile', edit_user_registration_path %>
         <% end %>
       </li>
       <li><%= link_to 'Update your password', "#" %></li>
-      <% if user_annotations_count(current_user) > 0 %>
-        <li><%= link_to 'View your annotations', "#" %></li>
+      <% if user_annotations_count(@user) > 0 %>
+        <li><%= link_to 'View your annotations', user_annotations_path(@user.username) %></li>
       <% end %>
     </ul>
 
     <ul class="nav nav-list">
       <li class="nav-header"><%= t('revs.dashboards') %></li>
-      <li><%= link_to "User Dashboard", user_profile_name_path(current_user.username) %></li>
+      <li><%= link_to "User Dashboard", user_profile_name_path(@user.username) %></li>
       <% if can? :administer, :all  %>
         <li><%= link_to "Admin Dashboard", admin_users_path %></li>
       <% end %>
@@ -51,6 +49,7 @@
         <li><%= link_to "Curator Dashboard", curator_tasks_path %></li>
       <% end %>
     </ul>
+    
 
   </div>
 </div>

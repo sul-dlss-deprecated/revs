@@ -1,0 +1,16 @@
+<div id="sidebar" class="span3">
+  <div id="sidebar-nav">
+
+
+    <ul class="nav nav-list">
+      <li class="nav-header"><%= t('revs.authentication.sidebar.actions') %></li>
+      <% if @user.public %>
+				<li><%= link_to "View profile", user_profile_name_path(@user.username) %></li>
+      <% end %>
+			<% if user_annotations_count(@user) > 0 %>
+        <li><%= link_to "View annotations", user_annotations_path(@user.username) %></li>
+      <% end %>
+    </ul>
+    
+  </div>
+</div>

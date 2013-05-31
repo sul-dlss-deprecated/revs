@@ -1,11 +1,25 @@
 class UserController < ApplicationController
   
+  # user profile pages
+  
   # public user profile page by ID
   def show
     @id=params[:id]
     @user=User.find_by_id(@id)
     if (@user && (@user==current_user || @user.public == true)) # if this is the currently logged in user or the profile is public, show the profile
       render :show
+    else
+      profile_not_found
+    end
+  end
+  
+  # the user's annotations
+  def annotations
+    @name=params[:name]
+    @user=User.find_by_username(@name)
+    if @user
+      @order=params[:order] || 'druid'    
+      @annotations=Annotation.where(:user_id=>@user.id).order(@order).page params[:page] 
     else
       profile_not_found
     end

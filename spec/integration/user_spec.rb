@@ -106,6 +106,32 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     page.should_not have_link('Preview', href: user_profile_name_path(user_login))
   end
 
+  it "show the logged in users annotations with their full name, even if the profile is private" do
+    login_as(admin_login)
+    admin_account=User.find_by_username(admin_login)
+    admin_account.public.should == false
+    visit user_annotations_path(admin_account.username)
+    page.should have_content "#{admin_account.full_name}'s Annotations"
+    page.should have_content "Guy in the background looking sideways"
+  end
+
+  it "show a non logged in users annotations with just their username, even if the profile is private" do
+    admin_account=User.find_by_username(admin_login)
+    admin_account.public.should == false
+    visit user_annotations_path(admin_account.username)
+    page.should_not have_content admin_account.full_name
+    page.should have_content "#{admin_account.username}'s Annotations"
+    page.should have_content "Guy in the background looking sideways"
+  end
+
+  it "show a non logged in users annotations with just their full name if their profile is public" do
+    user_account=User.find_by_username(user_login)
+    user_account.public.should == true
+    visit user_annotations_path(user_account.username)    
+    page.should have_content "#{user_account.full_name}'s Annotations"
+    page.should have_content "air intake?"
+  end
+  
   it "should show only the dashboard links appropriate for role of user" do
     login_as(admin_login)
     visit user_profile_name_path(admin_login)
