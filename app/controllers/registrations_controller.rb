@@ -12,22 +12,36 @@ class RegistrationsController < Devise::RegistrationsController
     
   # sign up form submit method  
   def create
-    if params[:user][:email].include?("@stanford.edu") # anyone who tries to register with a stanford email address will get an error
-      redirect_to :root, :alert=>'Stanford users should not create a new account.  Use webauth via SunetID to access your account.'
+    if params[:user][:email].include?("@stanford.edu") || params[:user][:username].include?("@stanford.edu") # anyone who tries to register with a stanford email address or username will get an error
+      redirect_to :root, :alert=>"Stanford users should not create a new account.  Login via webauth using your SunetID to access your account."
       return false
     else
       super
     end
   end
 
+  # override devise update profile page so that user is not required to enter the current password
   def update
     
     @user = User.find(current_user.id)
 
+    params[:user].delete(:password)  # these aren't on the form, but let's remove them anyway to prevent hacking attempt
+    params[:user].delete(:password_confirmation)  # these aren't on the form, but let's remove them anyway to prevent hacking attempt
     params[:user].delete(:current_password)  # these aren't on the form, but let's remove them anyway to prevent hacking attempt
     params[:user].delete(:email)
-
-    successfully_updated = @user.update_without_password(params[:user])
+    
+    # check to be sure they aren't changing their username to something that includes @stanford.edu
+    
+    if params[:user][:username].include?('@stanford.edu') && params[:user][:username] != @user.username
+      if @user.sunet_user?
+        @user.errors.add(:base,"Your username cannot be a Stanford email address other than your own.")
+      else
+        @user.errors.add(:base,"Your username cannot be a Stanford email address.")
+      end
+      successfully_updated = false
+    else
+      successfully_updated = @user.update_without_password(params[:user])      
+    end
 
     if successfully_updated
       set_flash_message :notice, :updated
@@ -40,12 +54,12 @@ class RegistrationsController < Devise::RegistrationsController
 
   end    
   
-  # logged in user edit password form
+  # logged in user edit email/password form
   def edit_account
     @user = User.find(current_user.id)
   end
 
-  # logged in user edit password submit method
+  # logged in user edit email/password submit method
   def update_account
 
     @user = User.find(current_user.id)

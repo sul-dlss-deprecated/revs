@@ -32,6 +32,27 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     
   end
 
+  it "should not allow a logged in user to update their username to a Stanford email address" do
+   
+    new_username='somemail@stanford.edu'
+    
+    login_as(user_login)
+    user_account=User.find_by_username(user_login)
+    visit user_profile_name_path(user_account.username)
+    page.should have_content("#{user_account.full_name}'s Profile")
+    click_link 'Edit your profile'
+
+    fill_in 'register-username', :with=>new_username
+    click_button 'submit'
+    
+    page.should have_content("Your username cannot be a Stanford email address.")
+    
+    # check database
+    user_account=User.find_by_username(user_login)
+    user_account.username.should_not == new_username
+    
+  end
+  
   it "should allow a logged in user to update their password" do
    
     new_password='new_password'

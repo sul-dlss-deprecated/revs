@@ -59,7 +59,7 @@ describe("User Registration",:type=>:request,:integration=>true) do
 
     end
     
-    it "should NOT register a new user via the web page if they have a Stanford email address" do
+    it "should NOT register a new user via the web page if they have a Stanford email address or try a username with a Stanford email address" do
 
         RevsMailer.should_not_receive(:mailing_list_signup)
 
@@ -81,6 +81,22 @@ describe("User Registration",:type=>:request,:integration=>true) do
         user.username.should_not == @username
         user.email.should_not == @email
 
+        # try to register a new stanford user
+        visit new_user_registration_path
+        fill_in 'register-email', :with=> "#{@username}@example.com"
+        fill_in 'register-username', :with=> @email
+        fill_in 'user_password', :with=> @password
+        fill_in 'user_password_confirmation', :with=> @password    
+        click_button 'Sign up'
+
+        current_path.should == root_path
+        page.should have_content 'Stanford users should not create a new account.'
+
+        # check the database
+        user=User.last
+        user.username.should_not == @email
+        user.email.should_not == "#{@username}@example.com"
+        
       end
 
       it "should NOT allow a user to reset their password if they have a Stanford email address" do
