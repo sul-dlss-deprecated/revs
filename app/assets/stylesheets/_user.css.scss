@@ -1,4 +1,4 @@
-#new_user {
+#new_user, #edit_user {
   margin-top: 20px;
   .control-group.compact {
     margin-bottom: 12px;
@@ -11,6 +11,9 @@
   }
   .register {
     margin-top: 20px;
+  }
+  #user_bio {
+    width: 90%;
   }
 }
 

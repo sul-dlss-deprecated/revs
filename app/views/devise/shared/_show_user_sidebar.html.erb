@@ -33,11 +33,12 @@
         <% if on_edit_page %>
           <%= link_to 'View your profile page', user_profile_name_path(@user.username) %>
         <% else %>
-          <%= link_to 'Edit your profile', edit_user_registration_path %>
+          <%= link_to 'Update your profile', edit_user_registration_path %>
         <% end %>
       </li>
 			<% unless current_user.sunet_user? %>
-	      <li><%= link_to 'Edit your account info', edit_user_account_path%></li>
+	      <li><%= link_to 'Change your password', edit_user_account_path%></li>
+	      <li><%= link_to 'Change your email address', edit_user_account_path%></li>
 			<% end %>
       <% if user_annotations_count(@user) > 0 %>
         <li><%= link_to 'View your annotations', user_annotations_path(@user.username) %></li>

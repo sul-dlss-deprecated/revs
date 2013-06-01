@@ -1,28 +1,28 @@
 <div id="content" class="span9">
 
-<h2>Resend confirmation instructions</h2>
+  <h2>Resend confirmation instructions</h2>
 
-<%= form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post }) do |f| %>
-  <%= devise_error_messages! %>
+  <%= form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post, :class => 'form-horizontal' }) do |f| %>
+    <%= devise_error_messages! %>
 
-  <div class="control-group">
-    <label class="control-label" for="user_login"><%= t('revs.authentication.login') %></label>
-    <div class="controls">
-		  <%= f.text_field :login, :autofocus => true, :class=>'user-login-email', :placeholder => "your email address or username" %>
-			<div id="stanford-user-warning" class="hidden notice">
-				<%= render :partial=>'/shared/stanford_webauth_reminder' %>
-			</div>
+    <div class="control-group">
+      <label class="control-label" for="user_login"><%= t('revs.authentication.login') %></label>
+      <div class="controls">
+        <%= f.text_field :login, :autofocus => true, :class=>'user-login-email', :placeholder => "your email address or username" %>
+        <div id="stanford-user-warning" class="hidden notice">
+          <%= render :partial=>'/shared/stanford_webauth_reminder' %>
+        </div>
+      </div>
     </div>
+
+    <div class="control-group">
+      <div class="controls">
+        <%= f.submit "Resend confirmation instructions", :id=>'submit', :class => "btn" %>
+     </div>
+    </div>
+
+  <% end %>
+
   </div>
-
-  <div class="control-group">
-    <div class="controls">
-  		<%= f.submit "Resend confirmation instructions", :id=>'submit' %>
-   </div>
-  </div>
-
-<% end %>
-
-</div>
 
 <%= render :partial => 'devise/shared/show_devise_sidebar' %>

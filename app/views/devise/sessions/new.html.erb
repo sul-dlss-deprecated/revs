@@ -2,7 +2,7 @@
 
   <h2><%= t('revs.authentication.sign_in') %></h2>
 
-	<p class="text-info"><strong>Important:</strong> Stanford users should <%= link_to 'login via webauth', webauth_login_path%>.</p>
+	<p><strong>Important:</strong> Stanford users should <%= link_to 'login via webauth', webauth_login_path%>.</p>
 
   <%= form_tag({:controller=>'sessions', :action=>'create'}, :method=>'post', :id => 'new_user', :class => 'form-horizontal') do %>
 

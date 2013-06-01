@@ -1,18 +1,10 @@
 <div id="content" class="span9">
 
-  <h2>Edit Your Profile</h2>
+  <h2>Update Your Profile</h2>
 
   <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => "form-horizontal" }) do |f| %>
     <%= devise_error_messages! %>
 
-		<% unless current_user.sunet_user? %>
-	    <div class="control-group">
-	      <div class="controls">
-						To change your email address or password, please visit your <%=link_to 'edit account info page',edit_user_account_path%>.
-	      </div>
-	    </div>
-		<% end %>
-		
     <div class="control-group">
       <%= f.label :username, :class => 'control-label' %>
       <div class="controls">
@@ -58,7 +50,7 @@
     <div class="control-group">
       <%= f.label :bio,'Biography', :class => 'control-label' %>
       <div class="controls">
-        <%= f.text_area :bio, :rows => "5", :class => "input-xxlarge" %>
+        <%= f.text_area :bio, :rows => "5", :class => "input-xlarge" %>
       </div>
     </div>
 

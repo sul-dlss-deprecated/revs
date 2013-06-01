@@ -15,7 +15,7 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     user_account=User.find_by_username(user_login)
     visit user_profile_name_path(user_account.username)
     page.should have_content("#{user_account.full_name}'s Profile")
-    click_link 'Edit your profile'
+    click_link 'Update your profile'
 
     fill_in 'user_bio', :with=>new_bio
     fill_in 'user_last_name', :with=>new_last_name
@@ -40,7 +40,7 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     user_account=User.find_by_username(user_login)
     visit user_profile_name_path(user_account.username)
     page.should have_content("#{user_account.full_name}'s Profile")
-    click_link 'Edit your profile'
+    click_link 'Update your profile'
 
     fill_in 'register-username', :with=>new_username
     click_button 'submit'
@@ -62,7 +62,7 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     
     visit user_profile_name_path(user_account.username)
     page.should have_content("#{user_account.full_name}'s Profile")
-    click_link 'Edit your account info'
+    click_link 'Change your password'
 
     fill_in 'user_password', :with=>new_password
     fill_in 'user_password_confirmation', :with=>new_password
@@ -98,9 +98,10 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     
     visit user_profile_name_path(sunet_account.username) # user profile page
     page.should have_content sunet_account.full_name
-    page.should_not have_content 'Edit your account info' # we shouldn't have the edit account info link
+    page.should_not have_content 'Change your password' # we shouldn't have the edit password link
+    page.should_not have_content 'Change your email address' # we shouldn't have the edit email address link
     
-    click_link 'Edit your profile'
+    click_link 'Update your profile'
 
     fill_in 'user_bio', :with=>new_bio
     fill_in 'user_last_name', :with=>new_last_name
@@ -136,7 +137,7 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     sunet_account=User.find_by_username(sunet_login)
     
     visit user_profile_name_path(sunet_account.username) # user profile page    
-    click_link 'Edit your profile'
+    click_link 'Update your profile'
 
     fill_in 'register-username', :with=>new_username
     click_button 'submit'
