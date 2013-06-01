@@ -128,4 +128,25 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     
   end
 
+  it "should not allow a logged in stanford user to update their username to a different Stanford email address" do
+   
+    new_username='somemail@stanford.edu'
+
+    visit webauth_login_path
+    sunet_account=User.find_by_username(sunet_login)
+    
+    visit user_profile_name_path(sunet_account.username) # user profile page    
+    click_link 'Edit your profile'
+
+    fill_in 'register-username', :with=>new_username
+    click_button 'submit'
+        
+    page.should have_content("Your username cannot be a Stanford email address other than your own.")
+    
+    # check database
+    sunet_account=User.find_by_username(sunet_login)
+    sunet_account.username.should_not == new_username
+    
+  end
+  
 end
