@@ -4,9 +4,11 @@
   <% if current_flags.count == 0 # they have not already flagged it, give them the new form %>
     <a href='#' class='flag-details'>
       <i class='icon-flag'></i> Flag this item
-      <span class="badge badge-info">
-        <%= flags.size unless flags.size == 0 %>
-      </span>
+      <% if flags.size > 0 %>
+        <span class="badge badge-info">
+          <%= flags.size %>
+        </span>
+      <% end %>
     </a>
     <%= form_for(Flag.new, :remote=>true) do |f| %>
       <%= f.hidden_field :druid, :value=>druid %>
@@ -18,9 +20,11 @@
 
   <% else %>
      <a href='#' class='flag-details flagged'><i class='icon-flag'></i> Flagged
-       <span class="badge badge-info">
-          <%= flags.size unless flags.size == 0 %>
-        </span>
+       <% if flags.size > 0 %>
+         <span class="badge badge-info">
+           <%= flags.size %>
+         </span>
+       <% end %>
       </a>
   <% end %>
 
