@@ -34,7 +34,7 @@
     padding-left: 1px;
     .nav-header {
       border-bottom: 1px solid #e5e5e5;
-      margin: 0 0 6px;
+      margin: 0 -15px 6px 0;
       padding: 0;
     }
     > li >, > li > div {
@@ -42,7 +42,7 @@
         color: #333;
         text-decoration: none;
         i {
-          font-weight: 200;
+          background-image: none;
           margin-right: 9px;
         }
       }
@@ -133,6 +133,14 @@
     }
   }
   .item-actions {
+    .nav-header {
+      i {
+        background-image: none;
+        float: right;
+        font-size: 1.5em;
+        margin-right: 0
+      }
+    }
     #all_flags {
       color: #555;
       .flag-info {
@@ -165,9 +173,14 @@
       i {color: #990000;}
     }
   }
-  .pe-img-viewer-thumbs-nav-bottom .pe-purl-url {
-    border-top-style: none;
-    margin-left: 3px;
+  .pe-img-viewer-thumbs-nav-bottom {
+    img.pe-img-canvas {
+      border: 1px solid #ccc;
+    }
+    .pe-purl-url {
+      border-top-style: none;
+      margin-left: 3px;
+    }
   }
 }
 

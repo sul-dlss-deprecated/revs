@@ -62,7 +62,7 @@
         <%= render :partial => "show_default_collection_member", :locals => {:document => @document} %>
 
         <ul class="nav nav-list item-actions">
-          <li class="nav-header">Actions</li>
+          <li class="nav-header">Actions <i class="icon-cog"></i></li>
           <li>
             <%= link_to('<i class="icon-picture"></i> View full citation page with image download'.html_safe,
             "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'new') %>
