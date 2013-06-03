@@ -1,10 +1,19 @@
 <% if user_signed_in? %>
-  <div class="dropdown">
-    <%= link_to "#{current_user.full_name} <span class='caret'></span>".html_safe, user_profile_name_path(current_user.username),
-        :id => "dLabel", :role => "button", :class => "dropdown-toggle",
-        :data => {:toggle => "dropdown", :target =>"#"} %>
+  <div class="btn-group">
+    <%= link_to "#{current_user.full_name}", user_profile_name_path(current_user.username),
+        :class => "btn btn-link btn-mini" %>
+    <button class="btn btn-link btn-mini dropdown-toggle" data-toggle="dropdown">
+      <span class="caret"></span>
+    </button>
+
     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
       <li><%= link_to "Your Revs profile page", user_profile_name_path(current_user.username) %></li>
+      <% unless current_user.sunet_user? %>
+        <li><%= link_to 'Change your password', edit_user_account_path%></li>
+      <% end %>
+
+      <li class="divider"></li>
+      <li><%= link_to "User Dashboard", user_profile_name_path(current_user.username) %></li>
       <% if can? :administer, :all  %>
         <li><%= link_to "Admin Dashboard", admin_users_path %></li>
       <% end %>
@@ -12,12 +21,14 @@
         <li><%= link_to "Curator Dashboard", curator_tasks_path %></li>
       <% end %>
 
+      <li class="divider"></li>
       <% if current_user.sunet_user? %>
-				<li><%= button_to "Sign out", webauth_logout_path, :method=>:delete, :class => "btn-link" %></li>
-			<% else %>
-  			<li><%= button_to "Sign out", destroy_user_session_path, :method=>:delete, :class => "btn-link" %></li>
+        <li class="signout"><%= button_to "Sign out", webauth_logout_path, :method=>:delete, :class => "btn-link" %></li>
+      <% else %>
+        <li class="signout"><%= button_to "Sign out", destroy_user_session_path, :method=>:delete, :class => "btn-link" %></li>
       <% end %>
     </ul>
+
       <span class="nav-element-divider">|</span>
   </div>
 

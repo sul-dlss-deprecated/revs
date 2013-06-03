@@ -10,22 +10,49 @@
     .caret {
       border-top-color: #ddd;
     }
-    .dropdown {
+    .btn-group {
       display: inline-block;
+      font-family: "Helvetica","Arial",sans-serif;
+      font-size: inherit;
+      .btn-mini {
+        border: none;
+        font-size: 12px;
+        padding: 0 3px 0 0;
+        text-shadow: none;
+        vertical-align: top;
+      }
+      .dropdown-toggle {
+        box-shadow: none;
+        font-family: "Helvetica","Arial",sans-serif;
+        padding: 0;
+        &:active, &:hover, &:visited, &:focus {
+          background-color: transparent;
+          outline-color: transparent;
+        }
+      }
       .dropdown-menu {
-        background-color: #eee;
+        background-color: #fff;
         border: 1px solid #999;
         left: auto;
         right: 0;
         li .button_to input[type="submit"], li > a, li > a:visited {
-          color: $active_link_color;
+          color: #555;
+          font-size: 0.9em;
           padding: 2px 12px;
         }
-          li > a:hover, li > a:focus,
-          li:hover, li:focus {
-           background-color: #fff;
-           background-image: none;
+        li > a:hover, li > a:focus,
+        li:hover, li:focus,
+        li.signout:hover, li.signout:focus {
+          background-color: $active-link-color;
+          background-image: none;
+          color: #fff;
+          .button_to .btn-link {
+            color: #fff;
           }
+        }
+        li.divider:hover {
+          background-color: #e5e5e5;
+        }
       }
     }
   }
