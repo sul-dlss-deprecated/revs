@@ -88,8 +88,8 @@ function disableNewAnnotations() {
 }
 
 function toggleLinks() {
- $('.annotation_links').toggleClass('hidden');
- $('#hide_annotations_link').toggleClass('hidden');
+  $('.annotation_links').toggleClass('hidden-offscreen');
+  $('#hide_annotations_link').toggleClass('hidden-offscreen');
 }
 
 $(document).ready(function(){

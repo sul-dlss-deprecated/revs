@@ -70,16 +70,36 @@
 
           <% if can? :create, Annotation %>
             <li>
-              <%= link_to("<i class='icon-edit'></i> View and add annotations (#{@document.annotations.size} existing)".html_safe, '#', :id=>'annotate_link', :class=>"annotation_links showOnLoad hidden") %>
+              <% if @document.annotations.size > 0 # show badge with count %>
+                <%# link to show annotation workspace %>
+                <%= link_to(("<i class='icon-edit'></i> <span id='annotation-link-text'>View/add annotations</span> ".html_safe + content_tag(:span, @document.annotations.size, :class => "badge badge-info")).html_safe, '#', :id=>'annotate_link', :class=>"annotation_links showOnLoad hidden-offscreen") %>
+
+                <%# link to hide annotation workspace %>
+                <%= link_to(("<i class='icon-edit'></i> Hide annotations ".html_safe + content_tag(:span, @document.annotations.size, :class => "badge badge-info")).html_safe,'#',:id=>'hide_annotations_link',:class=>"hidden-offscreen") %>
+
+              <% else # no annotations so don't show badge with count'%>
+                <%# link to show annotation workspace %>
+                <%= link_to("<i class='icon-edit'></i> <span id='annotation-link-text'>View/add annotations</span>".html_safe, '#', :id=>'annotate_link', :class=>"annotation_links showOnLoad hidden-offscreen") %>
+
+                <%# link to hide annotation workspace %>
+                <%= link_to("<i class='icon-edit'></i> Hide annotations ".html_safe,'#',:id=>'hide_annotations_link',:class=>"hidden-offscreen") %>
+              <% end %>
             </li>
+
           <% elsif can?(:read, Annotation) && @document.annotations.size > 0 %>
             <li>
-              <%= link_to("View #{@document.annotations.size} existing annotations",'#',:id=>'view_annotations_link',:class=>"annotation_links showOnLoad hidden") %>
+              <% if @document.annotations.size > 0 # show badge with count %>
+                <%# link to hide annotation workspace %>
+                <%= link_to(("<i class='icon-edit'></i> <span id='annotation-link-text'>View annotations</span>".html_safe + content_tag(:span, @document.annotations.size, :class => "badge badge-info")).html_safe,'#',:id=>'view_annotations_link',:class=>"annotation_links showOnLoad hidden-offscreen") %>
+
+                <%# link to hide annotation workspace %>
+                <%= link_to("<i class='icon-edit'></i> Hide annotations ".html_safe,'#',:id=>'hide_annotations_link',:class=>"hidden-offscreen") %>
+
+              <% else # no annotations so don't show badge with count'%>
+                <%= link_to("<i class='icon-edit'></i> <span id='annotation-link-text'>View annotations</span>".html_safe,'#',:id=>'view_annotations_link',:class=>"annotation_links showOnLoad hidden-offscreen") %>
+              <% end %>
             </li>
           <% end %>
-          <li>
-            <%= link_to('Hide annotations','#',:id=>'hide_annotations_link',:class=>"hidden") %>
-          </li>
 
           <% if can? :create, Flag %>
             <li>

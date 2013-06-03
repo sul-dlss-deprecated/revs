@@ -65,6 +65,6 @@ $(document).on('blur',"#register-username",function(){
 );
 	
 function showOnLoad() {
-	$('.showOnLoad').removeClass('hidden');	
+	$('.showOnLoad').removeClass('hidden hidden-offscreen');
 	$('.showOnLoad').show();
 }

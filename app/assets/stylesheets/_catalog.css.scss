@@ -84,6 +84,7 @@
     border-radius: 5px;
     display: block;
     font-size: 13px;
+    margin-top: 20px;
     padding: 4px 9px;
   }
   .results-nav {
@@ -100,6 +101,7 @@
     }
   }
   #item-details-accordion {
+    margin-bottom: 36px;
     margin-left: 1px;
     .accordion-group {
       border: none;
@@ -133,6 +135,9 @@
     }
   }
   .item-actions {
+    a#hide_annotations_link i {
+      color: #990000;
+    }
     .nav-header {
       i {
         background-image: none;
@@ -189,9 +194,6 @@
   .blacklight-catalog-show {
     .metadata {
       margin-bottom: 20px;
-      margin-top: 20px;
-    }
-    #feedback_link a {
       margin-top: 20px;
     }
   }

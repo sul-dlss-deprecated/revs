@@ -11,7 +11,7 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
     login_as(user_login)
     visit @starting_page
     should_allow_annotations    
-    page.should have_content('(2 existing)')
+    page.should have_content('2')
   end
 
   it "should add/update the annotations to the right field in solr when adding/updating annotations" do

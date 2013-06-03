@@ -77,11 +77,11 @@ end
 
 # Annotations
 def should_allow_annotations  
-  page.should have_content('View and add annotations')
+  page.should have_content('View/add annotations')
 end
 
 def should_not_allow_annotations  
-  page.should_not have_content('View and add annotations')
+  page.should_not have_content('View/add annotations')
 end
 
 # Flags
