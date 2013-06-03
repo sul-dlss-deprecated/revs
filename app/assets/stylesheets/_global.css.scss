@@ -229,6 +229,11 @@ span.content-type {
   margin-left: 6px;
 }
 
+.badge {
+  border-radius: 5px;
+  padding: 1px 5px 2px;
+}
+
 // Hide element offscreen but still readable by screen readers
 .hidden-offscreen {
   position: absolute !important;
