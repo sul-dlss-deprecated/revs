@@ -7,8 +7,11 @@ class AnnotationsController < ApplicationController
   def index
     druid=params[:druid]
     @annotations=Annotation.includes(:user).where(:druid=>druid)
+
     respond_to do |format|
       format.js { render }
+      format.xml  { render :xml => @annotations.to_xml }
+      format.json { render :json=> @annotations.to_json }      
     end
   end
       
@@ -25,6 +28,7 @@ class AnnotationsController < ApplicationController
     end
     
     respond_to do |format|
+      format.js   { render }
       format.xml  { render :xml => @annotations.to_xml }
       format.json { render :json=> @annotations.to_json }
     end
@@ -36,8 +40,10 @@ class AnnotationsController < ApplicationController
     annotation_json=params[:annotation]
     annotation_hash=JSON.parse(annotation_json)
     @annotation=Annotation.create(:json=>annotation_json,:text=>annotation_hash['text'],:druid=>params[:druid],:user_id=>current_user.id)
-
+    @num_annotations=Annotation.where(:druid=>params[:druid]).count
+    
     respond_to do |format|
+      format.js   { render }
       format.xml  { render :xml => @annotation.to_xml }
       format.json { render :json=> @annotation.to_json }
     end
@@ -55,6 +61,7 @@ class AnnotationsController < ApplicationController
     @annotation.save
 
     respond_to do |format|
+      format.js   { render }
       format.xml  { render :xml => @annotation.to_xml }
       format.json { render :json=> @annotation.to_json }
     end
@@ -64,9 +71,12 @@ class AnnotationsController < ApplicationController
   def destroy
     
     @annotation=Annotation.find(params[:id])
+    druid=@annotation.druid
     @annotation.destroy
+    @num_annotations=Annotation.where(:druid=>druid).count
     
     respond_to do |format|
+      format.js   { render }
       format.xml  { render :xml => @annotation.to_xml }
       format.json { render :json=> @annotation.to_json }
     end

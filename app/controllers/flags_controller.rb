@@ -14,6 +14,7 @@ class FlagsController < ApplicationController
     
     flag_info=params[:flag]
     @flag.update_attributes(:flag_type=>flag_info[:flag_type],:comment=>flag_info[:comment],:druid=>flag_info[:druid],:user_id=>current_user.id)
+    @flag.save
     @all_flags=Flag.where(:druid=>flag_info[:druid])
     @message='The item was flagged.'
     respond_to do |format|

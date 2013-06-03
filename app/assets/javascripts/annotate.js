@@ -2,7 +2,7 @@ anno.addHandler('onAnnotationCreated', function(annotation) {
 	jQuery.ajax({
 		type: "POST",
 		url: "/annotations",
-		dataType: "JSON",
+		dataType: "script",
 		data: "annotation="+JSON.stringify(annotation)+"&druid=" + jQuery("#druid").attr('data-druid'),
 		success: function(data) {
 	    annotation.id=data.id; // the annotation ID should match the database row ID
@@ -17,7 +17,7 @@ anno.addHandler('onAnnotationCreated', function(annotation) {
 anno.addHandler('onAnnotationUpdated', function(annotation) {
 	jQuery.ajax({
 	  type: "PUT",
-		dataType: "JSON",
+		dataType: "script",
 	  url: "/annotations/" + annotation.id,
 	  data: "annotation="+JSON.stringify(annotation)
 	});
@@ -33,7 +33,7 @@ anno.addHandler('beforeAnnotationRemoved', function(annotation) {
 anno.addHandler('onAnnotationRemoved', function(annotation) {
 	jQuery.ajax({
 	  type: "DELETE",
-		dataType: "JSON",
+		dataType: "script",
 	  url: "/annotations/" + annotation.id,
 	});
 });
