@@ -39,13 +39,15 @@ class AnnotationsController < ApplicationController
     
     annotation_json=params[:annotation]
     annotation_hash=JSON.parse(annotation_json)
+
     @annotation=Annotation.create(:json=>annotation_json,:text=>annotation_hash['text'],:druid=>params[:druid],:user_id=>current_user.id)
-    @num_annotations=Annotation.where(:druid=>params[:druid]).count
+    num_annotations=Annotation.where(:druid=>params[:druid]).count
     
+    # in the json response, we add in the number of annotations into the json so we can update the badge on the badge with the success handler
     respond_to do |format|
       format.js   { render }
       format.xml  { render :xml => @annotation.to_xml }
-      format.json { render :json=> @annotation.to_json }
+      format.json { render :json=> @annotation.as_json.merge({'num_annotations'=>num_annotations}) }
     end
     
   end
@@ -73,12 +75,13 @@ class AnnotationsController < ApplicationController
     @annotation=Annotation.find(params[:id])
     druid=@annotation.druid
     @annotation.destroy
-    @num_annotations=Annotation.where(:druid=>druid).count
-    
+    num_annotations=Annotation.where(:druid=>druid).count
+
+    # in the json response, we add in the number of annotations into the json so we can update the badge on the badge with the success handler    
     respond_to do |format|
       format.js   { render }
       format.xml  { render :xml => @annotation.to_xml }
-      format.json { render :json=> @annotation.to_json }
+      format.json { render :json=> @annotation.as_json.merge({'num_annotations'=>num_annotations}) }
     end
     
   end

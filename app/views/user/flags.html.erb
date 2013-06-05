@@ -12,7 +12,7 @@
       </tr>
       <% @flags.each do |flag|%>
        <tr>
-         <td><%= link_to flag.item.title,catalog_path(flag.druid) %></td>
+         <td><%= item_link(flag.item,:truncate=>true) %></td>
 				 <td><%= flag.comment %></td>
 				 <td><%= show_as_datetime(flag.created_at.in_time_zone) %></td>
        </tr>

@@ -8,10 +8,10 @@
 				<li><%= link_to "View profile", user_profile_name_path(@user.username) %></li>
       <% end %>
 			<% if user_annotations_count(@user) > 0 %>
-        <li><%= link_to "View annotations", user_annotations_path(@user.username) %></li>
+        <li><%= link_to "View all annotations", user_annotations_path(@user.username) %></li>
       <% end %>
 			<% if user_flags_count(@user) > 0 %>
-        <li><%= link_to "View flags", user_flags_path(@user.username) %></li>
+        <li><%= link_to "View all flags", user_flags_path(@user.username) %></li>
       <% end %>
     </ul>
     

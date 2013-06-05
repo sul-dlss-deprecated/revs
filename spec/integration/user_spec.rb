@@ -80,7 +80,7 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     page.should_not have_content 'View your annotations'
   end
 
-  it "should show correct number of annotations made by user on that user's profile page" do
+  it "should show correct number of annotations made by user on that user's profile page, along with most recent annotations and flags" do
     login_as(admin_login)
     visit user_profile_name_path(admin_login)
     current_path.should == user_profile_name_path(admin_login)
@@ -90,7 +90,8 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     login_as(user_login)
     visit  user_profile_name_path(user_login)
     current_path.should ==  user_profile_name_path(user_login)
-    page.should have_content 'Annotations 1'
+    ["Annotations 1","Most Recent Annotations","air intake?","Most Recent Flags","Sebring 12 Hour, Green Park..."].each {|title| page.should have_content(title)}
+    
   end
 
   it "should show a profile preview link on edit profile page, but only if user profile is private" do

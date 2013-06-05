@@ -1,5 +1,3 @@
-var tooltip;
-
 $(document).ready(function(){
 	  
 	// Modal behavior for collection member show page.

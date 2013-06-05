@@ -8,6 +8,25 @@
 
   <%=link_to "http://#{@user.url} <i class='icon-share-alt'></i>".html_safe, "http://#{@user.url}", :target=>'_new', :class => "user-website" unless @user.url.blank? %>
 
+	<% if @latest_annotations.size > 0 %>
+		<h3>Most Recent Annotations</h3>
+		<ul>
+		<% @latest_annotations.each do |annotation| %>	
+			<li>"<%=truncate(annotation.text)%>" on <%=item_link(annotation.item,:truncate=>true)%> on <%=show_as_datetime(annotation.created_at)%></li>
+		<% end %>
+		</ul>
+
+	<% end %>
+
+	<% if @latest_flags.size > 0 %>
+		<h3>Most Recent Flags</h3>
+		<ul>
+		<% @latest_flags.each do |flag| %>	
+			<li><%=item_link(flag.item,:truncate=>true)%> on <%=show_as_datetime(flag.created_at)%></li>
+		<% end %>
+		</ul>
+	<% end %>
+	
 </div>
 
 <% if is_logged_in_user?(@user) %>

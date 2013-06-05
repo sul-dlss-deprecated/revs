@@ -2,10 +2,11 @@ anno.addHandler('onAnnotationCreated', function(annotation) {
 	jQuery.ajax({
 		type: "POST",
 		url: "/annotations",
-		dataType: "script",
+		dataType: "JSON",
 		data: "annotation="+JSON.stringify(annotation)+"&druid=" + jQuery("#druid").attr('data-druid'),
 		success: function(data) {
-	    annotation.id=data.id; // the annotation ID should match the database row ID
+	    annotation.id=data.id; // the annotation ID should match the database row ID so we can delete it if needed
+			$(".num-annotations-badge").text(data.num_annotations); // update the total annotations badge
 	  }
 		});
 		
@@ -17,7 +18,7 @@ anno.addHandler('onAnnotationCreated', function(annotation) {
 anno.addHandler('onAnnotationUpdated', function(annotation) {
 	jQuery.ajax({
 	  type: "PUT",
-		dataType: "script",
+		dataType: "JSON",
 	  url: "/annotations/" + annotation.id,
 	  data: "annotation="+JSON.stringify(annotation)
 	});
@@ -29,24 +30,26 @@ anno.addHandler('beforeAnnotationRemoved', function(annotation) {
 	if (r==false) {	return false;}
 });
 
-// this is what gets called when the annotation is actually deleted (assuming the user clicks OK to the confirmation dialog
+// this is what gets called when the annotation is actually deleted (assuming the user clicks OK to the confirmation dialog)
 anno.addHandler('onAnnotationRemoved', function(annotation) {
 	jQuery.ajax({
 	  type: "DELETE",
-		dataType: "script",
+		dataType: "JSON",
 	  url: "/annotations/" + annotation.id,
+		success: function(data) {
+			$(".num-annotations-badge").text(data.num_annotations); // update the total annotations badge
+	  }	
 	});
 });
 
+// this plug allows us to add the username and date to each annotation and display it
 annotorious.plugin.addUsernamePlugin = function(opt_config_options) { }
-
 annotorious.plugin.addUsernamePlugin.prototype.onInitAnnotator = function(annotator) {
   // A Field can be an HTML string or a function(annotation) that returns a string
   annotator.popup.addField(function(annotation) { 
     return '<em>from ' + annotation.username + ' - '+ annotation.updated_at +'</em>'
   });
 }
-
 anno.addPlugin('addUsernamePlugin', {});	
 
 function showAnnotations() {	
