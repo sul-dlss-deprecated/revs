@@ -14,7 +14,7 @@ development: &dev
   jetty_path: './jetty'
   url: http://localhost:8983/solr/dev
 test: &test
-  url: http://localhost:<%= ENV["TEST_JETTY_PORT"] || '8888' %>/solr/test
+  url: http://localhost:<%= ENV["TEST_JETTY_PORT"] || '8983' %>/solr/test
 staging: 
   <<: *dev
 production: &prod
