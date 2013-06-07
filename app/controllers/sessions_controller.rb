@@ -3,6 +3,7 @@ class SessionsController < Devise::SessionsController
   
   # sign in form
   def new
+    redirect_home_if_signed_in
     store_referred_page
     super
   end

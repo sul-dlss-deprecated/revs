@@ -33,6 +33,13 @@ class ApplicationController < ActionController::Base
     session[:login_redirect]  || root_path
   end
      
+  def redirect_home_if_signed_in # if the user is already signed in and they try to go to login/reg page, just send them to the home page to prevent infinite redirects
+    if user_signed_in?
+      session[:login_redirect] = nil
+      redirect_to root_path
+    end
+  end
+       
   def after_sign_out_path_for(resource_or_scope) # back to home page after sign out
     root_path
   end

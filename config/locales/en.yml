@@ -44,7 +44,8 @@ en:
       username: 'Username'
       login: 'Email or username'
       new_account: 'Sign up for a user account'
-      sub_mailing_list: 'Subscribe to the Revs Program Mailing List'
+      sub_mailing_list: 'Subscribe to the Revs Program at Stanford Mailing List'
+      revs_sub_mailing_list: 'Subscribe to the Revs Institute for Automotive Research Mailing List'
       sidebar:
         actions: 'Actions'
         account: 'Your account'

@@ -62,6 +62,17 @@
 				description_tsim
 				annotations_tsim
 				source_id_ssi
+				marque_ssim
+				people_ssim
+				entrant_ssi
+				current_owner_ssi
+				venue_ssi
+				track_ssi
+				event_ssi
+				location_ssi
+				group_class_tsi
+				photographer_ssi
+				model_ssim
       </str>
       <str name="pf">
         title_tsi^20

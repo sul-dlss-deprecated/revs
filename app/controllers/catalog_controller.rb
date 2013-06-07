@@ -130,7 +130,8 @@ class CatalogController < ApplicationController
     # facet bar
     config.add_facet_field 'pub_year_isim', :label => 'Year', :sort => 'index'
     config.add_facet_field 'format_ssim', :label => 'Format'
-    # config.add_facet_field 'subjects_ssim', :label => "Subject" # we have this data, but its the same for every image, so ignore for now
+    config.add_facet_field 'marque_ssim', :label => 'Marque'
+    config.add_facet_field 'model_ssim', :label => 'Model'
     config.add_facet_field 'collection_ssim', :label => "Collection"
 
 
@@ -157,7 +158,6 @@ class CatalogController < ApplicationController
     config.add_show_field 'pub_year_isim', :label => 'Year:'
     config.add_show_field 'format_ssim', :label => 'Format:'
     config.add_show_field 'country_origin_tsi', :label => 'Country of origin:'
-    #config.add_show_field 'subjects_ssim', :label => 'Subjects:'  # we have this data, but its the same for every image, so ignore for now
     config.add_show_field 'description_tsim', :label => 'Description:'
     config.add_show_field 'source_id_ssi', :label => "Identifier:"
     config.add_show_field 'collection_ssim', :label => "Collection:"

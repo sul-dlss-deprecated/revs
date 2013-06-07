@@ -12,8 +12,8 @@ class User < ActiveRecord::Base
          :lockable, :timeoutable, :omniauthable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :username, :email, :sunet, :password, :password_confirmation, :remember_me, :role, :bio, :first_name, :last_name, :public, :url, :login, :subscribe_to_mailing_list
-  attr_accessor :subscribe_to_mailing_list # not persisted, just used on the signup form
+  attr_accessible :username, :email, :sunet, :password, :password_confirmation, :remember_me, :role, :bio, :first_name, :last_name, :public, :url, :login, :subscribe_to_mailing_list, :subscribe_to_revs_mailing_list
+  attr_accessor :subscribe_to_mailing_list, :subscribe_to_revs_mailing_list # not persisted, just used on the signup form
   attr_accessor :login # virtual method that will refer to either email or username
   
   has_many :annotations, :dependent => :destroy
@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
   before_validation :assign_default_role, :if=>lambda{no_role?}
   before_save :trim_names
   after_create :signup_for_mailing_list, :if=>lambda{subscribe_to_mailing_list=='1'}
+  after_create :signup_for_revs_institute_mailing_list, :if=>lambda{subscribe_to_revs_mailing_list=='1'}
   validate :check_role_name
   validates :username, :uniqueness => { :case_sensitive => false }
   validates :username, :length => { :in => 5..50}
@@ -73,6 +74,10 @@ class User < ActiveRecord::Base
     RevsMailer.mailing_list_signup(:from=>email).deliver 
   end
 
+  def signup_for_revs_institute_mailing_list
+    RevsMailer.revs_institute_mailing_list_signup(:from=>email).deliver 
+  end
+  
   def check_role_name
     errors.add(:role, "is not valid") unless ROLES.include? role.to_s
   end
