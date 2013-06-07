@@ -27,4 +27,11 @@
   <field name="race_data_tsi">This is who won, who lost, other bits about the race.</field>
   <field name="metadata_sources_tsi">Where the metadata came from</field>
   <field name="vehicle_markings_tsi">Oil on hood</field>
+  <field name="photographer_ssi">Cronkite, Walter</field>
+  <field name="pub_date_ssi">8/12/1955</field>
+  <field name="model_ssim">Camaro</field>
+  <field name="model_ssim">Mustang</field>
+  <field name="model_ssim">Camaro</field>
+  <field name="model_year_ssim">1950</field>
+  <field name="model_year_ssim">1951</field>
 </doc>
