@@ -6,28 +6,27 @@ task :ci do
   unless Rails.env.test?  
     system("rake ci RAILS_ENV=test")
   else
+    system("rake db:migrate RAILS_ENV=test")  
     Jettywrapper.wrap(Jettywrapper.load_config) do
       Rake::Task["revs:refresh_fixtures"].invoke
-      Rake::Task["db:seed"].invoke
+      Rake::Task["db:migrate"].invoke
+      Rake::Task["db:fixtures:load"].invoke
+      Rake::Task["db:seed"].invoke      
       Rake::Task["rspec"].invoke
     end
   end
 end
 
-desc "Stop dev jetty, run `rake ci`, start dev jetty."
+desc "Assuming jetty is already running - then migrate, reload all fixtures and run rspec"
 task :local_ci do  
-  system("rake jetty:stop RAILS_ENV=development")
-  system("rake db:migrate RAILS_ENV=test")  
   Rails.env='test'
   ENV['RAILS_ENV']='test'
-  Jettywrapper.wrap(Jettywrapper.load_config) do
-    Rake::Task["revs:refresh_fixtures"].invoke
-    Rake::Task["db:seed"].invoke
-    Rake::Task["rspec"].invoke
-  end
-  system("rake jetty:start RAILS_ENV=development")
+  Rake::Task["revs:refresh_fixtures"].invoke
+  Rake::Task["db:migrate"].invoke
+  Rake::Task["db:fixtures:load"].invoke
+  Rake::Task["db:seed"].invoke
+  Rake::Task["rspec"].invoke
 end
-
 
 namespace :revs do
 
