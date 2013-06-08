@@ -1,0 +1,42 @@
+<div class="row doc">
+  <div class="<%= render_document_class document %> document span9">
+    <div class="row result-item">
+      <div class="span3 result-thumbnail">
+        <%= link_to_document document,
+              :label => image_tag(document.images(:large).first,
+              :alt => document.title,
+              :title => document.title,
+              :border => 0),
+              :counter => (document_counter + 1 + @response.params[:start].to_i) %>
+      </div>
+
+      <div class="span6 result-metadata">
+        <h5 class="index_title">
+          <%= link_to_document document,
+              :label => document_show_link_field,
+              :counter => (document_counter + 1 + @response.params[:start].to_i) %>
+        </h5>
+        <div class="result-metadata-details">
+          <span class="result-detail-field">
+            <%= document.identifier %>
+          </span>
+          <% if document.description %>
+            <span class="result-detail-field description">
+              <%= show_formatted_list document.description %>
+            </span>
+          <% end %>
+          <% if document.years %>
+            <span class="result-detail-field">
+              <%= show_formatted_list(document.years,:facet=>'pub_year_isim') %>
+            </span>
+          <% end %>
+          <% if document.formats %>
+            <span class="result-detail-field">
+              <%= show_formatted_list(document.formats,:facet=>'format_ssim') %>
+            </span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

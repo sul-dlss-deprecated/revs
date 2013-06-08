@@ -47,6 +47,7 @@ en:
       gallery_toggle:
         gallery: 'Gallery'
         list: 'Brief'
+        detailed: 'Detailed'
       search_label: 'Search'
       facets:
         title: 'Browse'
