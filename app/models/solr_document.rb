@@ -21,6 +21,14 @@ class SolrDocument
     self[blacklight_config.collection_description_field.to_sym]
   end
 
+  def photographer
+    self[:photographer_ssi]
+  end
+
+  def full_date
+    self[:pub_date_ssi]
+  end
+
   def years
     self[:pub_year_isim]
   end
@@ -67,6 +75,14 @@ class SolrDocument
 
   def marque
     self[:marque_ssim]
+  end
+
+  def vehicle_model
+    self[:model_ssim]
+  end
+
+  def model_year
+    self[:model_year_ssim]
   end
 
   def current_owner

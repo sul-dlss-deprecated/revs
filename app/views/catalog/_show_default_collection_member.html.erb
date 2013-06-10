@@ -17,8 +17,16 @@
             <dt>Year:</dt>
             <dd><%= show_formatted_list(document.years, :facet=>'pub_year_isim') %></dd>
           <% end %>
+          <% if document.full_date %>
+            <dt>Date:</dt>
+            <dd><%= document.full_date %></dd>
+          <% end %>
           <dt>Collection:</dt>
           <dd><%=show_formatted_list(document.collection_names,:facet=>'collection_ssim')%></dd>
+          <% if document.photographer %>
+            <dt>Photographer:</dt>
+            <dd><%= show_linked_value document.photographer %></dd>
+          <% end %>
           <% if document.location %>
             <dt>Location:</dt>
             <dd><%= document.location %></dd>
@@ -54,6 +62,14 @@
           <% if document.marque %>
             <dt>Marque:</dt>
             <dd><%= show_formatted_list document.marque %></dd>
+          <% end %>
+          <% if document.vehicle_model %>
+            <dt>Model:</dt>
+            <dd><%= show_formatted_list document.vehicle_model %></dd>
+          <% end %>
+          <% if document.model_year %>
+            <dt>Model Year:</dt>
+            <dd><%= show_formatted_list document.model_year %></dd>
           <% end %>
           <% if document.group_class %>
             <dt>Group/Class:</dt>
