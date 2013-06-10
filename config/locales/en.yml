@@ -3,6 +3,8 @@
 
 en:
   revs:
+    revs_program: 'Revs Program at Stanford'
+    revs_institute: 'Revs Institute for Automotive Research'
     nav:
       go_back: 'Go back'
       report_problem: 'Report a problem'
@@ -44,8 +46,8 @@ en:
       username: 'Username'
       login: 'Email or username'
       new_account: 'Sign up for a user account'
-      sub_mailing_list: 'Subscribe to the Revs Program at Stanford Mailing List'
-      revs_sub_mailing_list: 'Subscribe to the Revs Institute for Automotive Research Mailing List'
+      subscribe: 'Subscribe to the'
+      mailing_list: 'mailing list'
       sidebar:
         actions: 'Actions'
         account: 'Your account'

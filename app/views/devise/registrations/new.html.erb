@@ -42,17 +42,21 @@
     <div class="control-group">
       <div class="controls ">
         <%= submit_tag "#{t('revs.authentication.sign_up')}", :tabindex => "5", :class => 'btn signup' %>
-        <div class="register">
-          <label class="checkbox" tabindex="4">
-            <%= check_box 'user', 'subscribe_to_mailing_list' %> <%= t('revs.authentication.sub_mailing_list') %>    
+        <div class="subscribe">
+          <label class="checkbox" tabindex="6">
+            <%= check_box 'user', 'subscribe_to_mailing_list' %>
+              <%= t('revs.authentication.subscribe') %>
+              <%= link_to( t('revs.revs_program'), 'http://revs.stanford.edu/') %>
+              <%= t('revs.authentication.mailing_list') %>
 					</label>
-					<label class="checkbox" tabindex="4">
-            <%= check_box 'user', 'subscribe_to_revs_mailing_list' %> <%= t('revs.authentication.revs_sub_mailing_list') %>
+					<label class="checkbox" tabindex="7">
+            <%= check_box 'user', 'subscribe_to_revs_mailing_list' %>
+              <%= t('revs.authentication.subscribe') %>
+              <%= link_to( t('revs.revs_institute'), 'http://www.revsinstitute.org/') %>
+              <%= t('revs.authentication.mailing_list') %>
           </label>
         </div>
       </div>
-    </div>
-
     </div>
 
   <% end %>

@@ -9,7 +9,7 @@
   .btn.signin, .btn.signup {
     margin-right: 20px;
   }
-  .register {
+  .subscribe {
     margin-top: 20px;
   }
   #user_bio {
@@ -31,17 +31,21 @@
 }
 
 // Responsive styles
+@media screen and (min-width: 1200px) {
+  #new_user {
+    .subscribe {
+      display: inline-block;
+      margin-top: 0;
+      vertical-align: middle;
+    }
+  }
+}
 @media screen and (min-width: 980px) {
   #new_user {
     .forgot-password {
       display: inline-block;
       margin-left: 12px;
       margin-top: 0;
-    }
-    .register {
-      display: inline-block;
-      margin-top: 0;
-      vertical-align: middle;
     }
   }
 }
