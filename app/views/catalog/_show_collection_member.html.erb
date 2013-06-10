@@ -115,9 +115,12 @@
               </span>
             </li>
           <% end %>
-
-					To re-use this image, please review the <%= link_to 'Image License Agreement','http://www.revsinstitute.org/Image%20License%20Agreement13.pdf'%> and <%=link_to 'contact the Revs Institute',contact_us_path(:subject=>'terms of use',:from=>request.path,:message=>"Request for image ID #{@document.identifier} at #{catalog_url(@document.id)}")%>.
         </ul>
+
+        <div class="license-image">
+          To re-use this image, please review the <%= link_to 'Image License Agreement','http://www.revsinstitute.org/Image%20License%20Agreement13.pdf'%> and <%=link_to 'contact the Revs Institute',contact_us_path(:subject=>'terms of use',:from=>request.path,:message=>"Request for image ID #{@document.identifier} at #{catalog_url(@document.id)}")%>.
+        </div>
+
       </div>
     </div>
 
