@@ -13,7 +13,7 @@ admin:
   confirmed_at: <%=Time.now%>
   first_name: Admin
   last_name: Stanford
-  bio: 'I am an administrator'
+  bio: 'I am an administrator. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.'
   role: 'admin'
   public: false
 
@@ -24,7 +24,7 @@ curator:
   confirmed_at: <%=Time.now%>
   first_name: Curator
   last_name: Revs
-  bio: 'I am a curator'
+  bio: 'I am a curator and pellentesque habitant morbi tristique senectus et netus et malesuada fames.'
   role: 'curator'
   public: true
   
@@ -35,7 +35,7 @@ user:
   confirmed_at: <%=Time.now%>
   first_name: User
   last_name: Web
-  bio: 'I am a web user'
+  bio: 'I am a web user. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.'
   role: 'user'
   public: true
     
@@ -47,6 +47,6 @@ sunet_user:
   confirmed_at: <%=Time.now%>
   first_name: Stanford
   last_name: User
-  bio: 'I am a Stanford web user'
+  bio: 'I am a Stanford web user. Vestibulum tortor quam, feugiat vitae, ultricies eget.'
   role: 'user'
   public: true
