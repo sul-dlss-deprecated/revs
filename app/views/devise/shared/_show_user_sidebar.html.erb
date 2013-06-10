@@ -5,7 +5,7 @@
         <li class="nav-header">
           <%= t('revs.authentication.sidebar.account') %>
           <% unless @user.role == 'user' %>
-            <span class="label label-info lowercase"><%= @user.role.capitalize %></span>
+            <span class="label label-revs lowercase"><%= @user.role.capitalize %></span>
             <% end %>
           </li>
           <li>Joined on <%= show_as_date(@user.created_at) %></li>
@@ -17,11 +17,11 @@
           </li>
           <li>
             Annotations
-            <span class="badge badge-info"><%= user_annotations_count(@user) %></span>
+            <span class="badge badge-revs"><%= user_annotations_count(@user) %></span>
           </li>
           <li>
             Flags
-            <span class="badge badge-info"><%= user_flags_count(@user) %></span>
+            <span class="badge badge-revs"><%= user_flags_count(@user) %></span>
           </li>
       </ul>
 

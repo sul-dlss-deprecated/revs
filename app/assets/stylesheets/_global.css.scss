@@ -233,6 +233,9 @@ span.content-type {
   border-radius: 5px;
   padding: 1px 5px 2px;
 }
+.badge-revs, .label-revs {
+  background-color: #990000;
+}
 
 // Hide element offscreen but still readable by screen readers
 .hidden-offscreen {
