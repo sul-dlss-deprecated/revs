@@ -54,7 +54,7 @@
 	      </span>
 	      <span class="help-block first">
 	        <small>
-	          If the user's profile page is public, the user's name (instead of username) is used to identify the user on the site.
+	          If the user's profile page is public, the user's first and last name entered below (instead of username) is used to identify the user on the site.
 	        </small>
 	      </span>
       </div>
@@ -123,39 +123,41 @@
           <%= f.select :role, User.roles, {}, :class => "span2" %>
         </div>
       </div>
+			
+			<% unless @user.sunet_user? %>
+	      <div class="control-group">
+	        <%= f.label :password, :class => 'control-label' %>
+	        <div class="controls">
+	          <%= f.password_field :password, :autocomplete => "off" %>
+	          <span class="help-block first">
+	            <small>
+	              Leave blank if you don't want to change it.
+	            </small>
+	          </span>
+	        </div>
+	      </div>
 
-      <div class="control-group">
-        <%= f.label :password, :class => 'control-label' %>
-        <div class="controls">
-          <%= f.password_field :password, :autocomplete => "off" %>
-          <span class="help-block first">
-            <small>
-              Leave blank if you don't want to change it.
-            </small>
-          </span>
-        </div>
-      </div>
+	      <div class="control-group">
+	        <%= f.label :password_confirmation, :class => 'control-label' %>
+	        <div class="controls">
+	          <%= f.password_field :password_confirmation %>
+	        </div>
+	      </div>
 
-      <div class="control-group">
-        <%= f.label :password_confirmation, :class => 'control-label' %>
-        <div class="controls">
-          <%= f.password_field :password_confirmation %>
-        </div>
-      </div>
-
-      <div class="control-group">
-        <div class="controls">
-          <%= check_box_tag :lock, true, !@user.locked_at.blank? %>
-          <%= f.label :lock, "Lock account", :class => "checkbox inline" %>
-          <span class="help-block first">
-            <small>
-              Account is locked due to too many invalid login attempts.
-              Lock the account immediately by checking the box.
-              The user can unlock by verifying their email address or you can unlock by unchecking this box.
-            </small>
-          </span>
-        </div>
-      </div>
+	      <div class="control-group">
+	        <div class="controls">
+	          <%= check_box_tag :lock, true, !@user.locked_at.blank? %>
+	          <%= f.label :lock, "Lock account", :class => "checkbox inline" %>
+	          <span class="help-block first">
+	            <small>
+	              Account is locked due to too many invalid login attempts.
+	              Lock the account immediately by checking the box.
+	              The user can unlock by verifying their email address or you can unlock by unchecking this box.
+	            </small>
+	          </span>
+	        </div>
+	      </div>
+			<% end %>
     <% end %>
 
     <div class="control-group">
