@@ -1,13 +1,5 @@
 <div class="row results-controls">
 
-  <div class="span3 prev-next">
-    <% if paginate_params(@response).num_pages > 1 %>
-    <%= paginate_rsolr_response @response, :theme => :blacklight_compact %>
-    <% else %>
-    <%= render_pagination_info(@response) %>
-    <% end %>
-  </div>
-
   <div class="span4 view-toggle">
     <div class='gallery_toggle tabbable tabs-below'>
       <ul class="nav nav-pills">
@@ -18,7 +10,7 @@
     </div>
   </div>
 
-  <div class="span2 page-pulldown">
+  <div class="span5 page-pulldown">
     <%= render 'sort_and_per_page' %>
   </div>
 
