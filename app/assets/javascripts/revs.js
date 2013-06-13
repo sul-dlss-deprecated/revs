@@ -15,7 +15,10 @@ $(document).ready(function(){
      $(e.target).parent().find(".icon-caret-down").removeClass("icon-caret-down").addClass("icon-caret-right");
    });
 
-   // Collapse Item Details flag details if JavaScript.
+   // Collapse Item Details metadata sections if JavaScript (open by default for no-JS browsers).
+   $('#item-details-accordion .accordion-body').removeClass("in");
+
+   // Collapse Item Details flag details if JavaScript (open by default for no-JS browsers).
    $('#new_flag, #all_flags').hide();
    // Toggle details (new flag form and posted flags) when Flag action is selected.
    $('.flag-details').click(function(){
