@@ -234,7 +234,7 @@ class CatalogController < ApplicationController
     #config.add_sort_field 'author_sort asc, title_sort asc', :label => 'author'
     #config.add_sort_field 'title_sort asc, pub_date_sort desc', :label => 'title'
     config.add_sort_field 'title_tsi asc, source_id_ssi asc', :label => 'title'
-    config.add_sort_field 'source_id_ssi asc, title_tsi asc', :label => 'source id'
+    config.add_sort_field 'source_id_ssi asc, title_tsi asc', :label => 'identifier'
 
     # If there are more than this many search results, no spelling ("did you 
     # mean") suggestion is offered.
