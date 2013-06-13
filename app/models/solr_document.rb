@@ -6,7 +6,7 @@ class SolrDocument
   self.unique_key = 'id'
 
   def title
-    self[:title_tsi]
+    self[:title_tsi] || "Untitled"
   end
   
   def description

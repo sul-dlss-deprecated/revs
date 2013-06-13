@@ -5,7 +5,6 @@ require 'dlss/capistrano'
 require 'pathname'
 
 set :stages, %W(staging development production)
-set :default_stage, "staging"
 set :bundle_flags, "--quiet"
 set :repository, "https://github.com/sul-dlss/revs"
 set :deploy_via, :remote_cache

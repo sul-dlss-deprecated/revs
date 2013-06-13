@@ -1,7 +1,7 @@
 <div class="<%= render_document_class document %> document">
   <h5 class="index_title">
     <%= t('blacklight.search.documents.counter', :counter => (document_counter + 1 + @response.params[:start].to_i)) %>
-    <%= link_to_document document, :label=>document_show_link_field, :counter => (document_counter + 1 + @response.params[:start].to_i) %>
+    <%= link_to_document document, :label=>document.title.html_safe, :counter => (document_counter + 1 + @response.params[:start].to_i) %>
   </h5>
   <span class="muted">(<%= pluralize(document.collection_members.total_members, t('revs.collection_members.items_name')) %>)</span>
 </div>
