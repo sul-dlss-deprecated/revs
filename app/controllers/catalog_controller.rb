@@ -97,7 +97,7 @@ class CatalogController < ApplicationController
      :q => '{!raw f=id v=$id}' 
     }
     
-    config.document_index_view_types = ["gallery", "brief"]
+    config.document_index_view_types = ["gallery", "brief", "detailed"]
 
     # solr field configuration for search results/index views
     config.index.show_link = 'title_tsi'
@@ -229,6 +229,8 @@ class CatalogController < ApplicationController
     #config.add_sort_field 'pub_date_sort desc, title_sort asc', :label => 'year'
     #config.add_sort_field 'author_sort asc, title_sort asc', :label => 'author'
     #config.add_sort_field 'title_sort asc, pub_date_sort desc', :label => 'title'
+    config.add_sort_field 'title_tsi asc, source_id_ssi asc', :label => 'title'
+    config.add_sort_field 'source_id_ssi asc, title_tsi asc', :label => 'identifier'
 
     # If there are more than this many search results, no spelling ("did you 
     # mean") suggestion is offered.

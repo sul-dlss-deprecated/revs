@@ -14,7 +14,7 @@ class SolrDocument
   end
 
   def title
-    self[:title_tsi]
+    self[:title_tsi] || "Untitled"
   end
 
   def description

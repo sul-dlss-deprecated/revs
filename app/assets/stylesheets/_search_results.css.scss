@@ -54,14 +54,42 @@
   }
 }
 
+/* Detailed View */
+.detailed {
+  .result-item {
+    margin-bottom: 12px;
+  }
+  .index_title {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  img {
+    border: 1px solid #ccc;
+    float: left;
+    margin-left: 10px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    max-height: 125px;
+  }
+  .result-metadata-details {
+    clear: left;
+    .result-detail-field {
+      display: block;
+      margin-bottom: 6px;
+      &.description {
+        font-size: 0.95em;
+      }
+    }
+  }
+}
+
 /* Results paging/controls */
 .row.results-controls {
   margin-bottom: 5px;
-  margin-top: 10px;
+  margin-top: 16px;
 }
 .gallery_toggle {
   font-size: 12px;
-  float: right;
 	.active {
 		color: black;
 		cursor: default;
@@ -90,9 +118,14 @@
 }
 
 .prev-next {
+  color: #777;
+  float: right;
+  font-size: 0.7em;
+  font-weight: normal;
   margin-top: 5px;
+  text-transform: lowercase;
 }
-#sort-drowpdown, #per_page-dropdown {
+#sort-dropdown, #per_page-dropdown {
   margin-top: 3px;
   z-index: 9999;
 }
@@ -149,17 +182,66 @@ span.constraints-label {margin-right: 0.5em;}
   }
 }
 
+@media (min-width: 1200px) {
+  #documents.detailed {
+    .result-thumbnail img {
+      max-height: 150px;
+    }
+  }
+}
+
 @media screen and (min-width: 768px) and (max-width: 979px) {
   .constraints .appliedFilter {
     padding: 1px 25px 1px 1em;
   }
+  #documents.detailed {
+    .result-thumbnail img {
+      max-width: 150px;
+    }
+  }
+  #documents.detailed .blacklight-collection {
+    .index_title {
+      margin-left: 10px;
+    }
+  }
 }
+
 @media screen and (max-width: 767px) {
+  #sortAndPerPage {
+    display: none;
+  }
+  .gallery_toggle {
+    float: right;
+  }
   #documents.brief .blacklight-collection {
     .index_title {margin-bottom: 3px;}
     span.muted {
       display: block;
       clear: both;
+    }
+  }
+  #documents.detailed {
+    .result-thumbnail img {
+      margin-bottom: 6px;
+    }
+    .result-metadata, .result-metadata-details {
+      clear: none;
+      margin-left: 12px;
+    }
+    .result-metadata-details {
+      float: left;
+      margin-left: 0;
+    }
+    .index_title {
+      float: none;
+      width: 100%;
+    }
+  }
+}
+@media (max-width: 480px) {
+  #documents.detailed {
+    .result-metadata, .result-metadata-details {
+      clear: left;
     }
   }
 }

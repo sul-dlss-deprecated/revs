@@ -15,7 +15,15 @@
 
       <% extra_head_content << render_opensearch_response_metadata.html_safe %>
 
-			<h2 class="search-results"><%= t('revs.search.search_results') %></h2>
+			<h2 class="search-results"><%= t('revs.search.search_results') %>
+			  <span class="prev-next">
+          <% if paginate_params(@response).num_pages > 1 %>
+            <%= paginate_rsolr_response @response, :theme => :blacklight_compact %>
+          <% else %>
+            <%= render_pagination_info(@response) %>
+          <% end %>
+        </span>
+			</h2>
 			
 			<div id="search-results-metadata">
 				<%#= render 'sort_and_per_page' %>
