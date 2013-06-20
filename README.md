@@ -13,7 +13,6 @@ This is a Blacklight Application for the Revs Digital Library at Stanford Univer
   The master branch is what is deployed in production.
 
   The develop branch is what is actively under development.  
-  <br />
 
 1. [Optional] If you want to use rvmrc to manage gemsets, copy the .rvmrc example files:
 
@@ -41,8 +40,7 @@ This is a Blacklight Application for the Revs Digital Library at Stanford Univer
 
         rake db:seed
 
-  This will give you collection highlights for the home page and MUST BE/IS SAFE to run in all environments for the site to work.  
-  <br />
+  This will give you collection highlights for the home page and MUST BE/IS SAFE to run in all environments for the site to work.
 
 1. Load the fixture data:
 
@@ -50,7 +48,6 @@ This is a Blacklight Application for the Revs Digital Library at Stanford Univer
 
   This will give you a few test users to work with and should only be used in development.
   See the test/fixtures/users.yml files for usernames/passwords.  
-  <br />
 
 1. Start the development solr (you should first stop any other jetty processes if you have
    multiple jetty-related projects):
