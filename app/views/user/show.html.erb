@@ -1,36 +1,94 @@
 <div id="content" class="span9">
 
-  <h2><%= display_user_name(@user) %><span class="lowercase">'s</span> Profile</h2>
+  <h2>User Dashboard</h2>
 
-  <% unless @user.bio.blank? %>
-    <div><%= @user.bio %></div>
-  <% end %>
+  <div class="row profile-vitals">
+    <div class="span2">
+      <%= image_tag('default-avatar.png', :class => "user-image") %>
+    </div>
+    <div class="span6 offset1 user-bio">
+      <% unless @user.bio.blank? %>
+        <div>
+          <%= @user.bio %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 
-  <%=link_to "http://#{@user.url} <i class='icon-share-alt'></i>".html_safe, "http://#{@user.url}", :target=>'_new', :class => "user-website" unless @user.url.blank? %>
+  <div class="row profile-links">
+    <div class="span3 user-name">
+      <%= display_user_name(@user) %>
+    </div>
 
-	<% if @latest_annotations.size > 0 %>
-		<h3>Most Recent Annotations</h3>
-		<ul>
-		<% @latest_annotations.each do |annotation| %>	
-			<li>"<%=truncate(annotation.text)%>" on <%=item_link(annotation.item,:truncate=>true)%> on <%=show_as_datetime(annotation.created_at)%></li>
-		<% end %>
-		</ul>
+    <div class="span6 <%= 'user-links' if @user.url? %> ">
+      <%= link_to "<i class='icon-external-link'></i> http://#{@user.url}".html_safe, "http://#{@user.url}", :target=>'_new', :class => "user-link website" unless @user.url.blank? %>
+      <%# below is placeholder to pending decision to a Twitter link option %>
+      <%= link_to "<i class='icon-twitter'></i> @some_user".html_safe, "http://#{@user.url}", :target=>'_new', :class => "user-link twitter" unless @user.url.blank? %>
+    </div>
+  </div>
 
-	<% end %>
+  <div class="row profile-activity">
+    <div class="span4">
+      <h3>Annotations <span class="activity-count">0<%= user_annotations_count(@user) %></span></h3>
+      <% if @latest_annotations.size > 0 %>
+        <ul>
+        <% @latest_annotations.each do |annotation| %>
+          <li class="activity-item">
+            <ul>
+              <li><%= link_to(image_tag(annotation.item.images.first), item_path(annotation.item)) %><li>
+              <li class="item-title"><%= item_link(annotation.item,:truncate=>true) %></li>
+              <li class="annotation"><%= truncate(annotation.text) %></li>
+              <li><%= show_as_datetime(annotation.created_at) %></li>
+            </ul>
+          </li>
+        <% end %>
+        </ul>
+        <% if user_annotations_count(@user) > 3 %>
+          <p class="more-link">
+            <%= pluralize(user_annotations_count(@user) - 3, 'annotation') %> not shown.
+            <%= link_to "View all »", user_annotations_path(@user.username) %>
+          </p>
+        <% end %>
+      <% else %>
+        <p class="muted">
+          <em>You can annotate item images from the Item Details page.</em>
+        </p>
+      <% end %>
+    </div>
 
-	<% if @latest_flags.size > 0 %>
-		<h3>Most Recent Flags</h3>
-		<ul>
-		<% @latest_flags.each do |flag| %>	
-			<li><%=item_link(flag.item,:truncate=>true)%> on <%=show_as_datetime(flag.created_at)%></li>
-		<% end %>
-		</ul>
-	<% end %>
-	
+    <div class="span4 offset1">
+      <h3>Flags <span class="activity-count">0<%= user_flags_count(@user) %></span></h3>
+      <% if @latest_flags.size > 0 %>
+        <ul>
+        <% @latest_flags.each do |flag| %>
+          <li class="activity-item">
+            <ul>
+              <li><%= link_to(image_tag(flag.item.images.first), item_path(flag.item)) %></li>
+              <li class="item-title"><%= item_link(flag.item,:truncate=>true) %></li>
+              <li><%= show_as_datetime(flag.created_at) %></li>
+            </ul>
+          </li>
+        <% end %>
+        </ul>
+        <% if user_flags_count(@user) > 3 %>
+          <p class="more-link">
+            <%= pluralize(user_flags_count(@user) - 3, 'flag') %> not shown.
+            <%= link_to "View all »", user_flags_path(@user.username) %>
+          </p>
+        <% end %>
+      <% else %>
+        <p class="muted">
+          <em>You can flag problems you see with item metadata from the Item Details page.</em>
+        </p>
+      <% end %>
+    </div>
+
+  </div>
+
 </div>
 
 <% if is_logged_in_user?(@user) %>
-	<%= render :partial => 'devise/shared/show_user_sidebar' %>
+  <%= render :partial => 'devise/shared/show_user_sidebar' %>
 <% else %>
-	<%= render :partial => 'devise/shared/show_public_profile_user_sidebar' %>
+  <%= render :partial => 'devise/shared/show_public_profile_user_sidebar' %>
 <% end %>

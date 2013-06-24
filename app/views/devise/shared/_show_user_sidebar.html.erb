@@ -15,14 +15,6 @@
               <%= @user.public ? "public" : "private"%>
             </span>
           </li>
-          <li>
-            Annotations
-            <span class="badge badge-revs"><%= user_annotations_count(@user) %></span>
-          </li>
-          <li>
-            Flags
-            <span class="badge badge-revs"><%= user_flags_count(@user) %></span>
-          </li>
       </ul>
 
     <ul class="nav nav-list">

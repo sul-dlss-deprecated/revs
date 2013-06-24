@@ -24,9 +24,107 @@
 }
 
 .blacklight-user {
-  .user-website {
-    display: block;
-    margin-top: 6px;
+  .profile-vitals {
+    margin-top: 15px;
+    .user-image {
+      border: 2px solid #ddd;
+      width: 85%;
+    }
+    .user-bio {
+      font-size: 1.2em;
+      font-style: italic;
+      font-weight: 200;
+      line-height: 1.3em;
+      margin-bottom: 12px;
+    }
+  }
+  .profile-links {
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 30px;
+    margin-left: 0;
+    margin-top: 10px;
+    padding-bottom: 8px;
+    .user-name {
+      font-size: 1.1em;
+      font-weight: bold;
+      line-height: 1.3em;
+      margin-left: 0;
+    }
+    .user-links {
+      border-top: 1px dotted #bbb;
+      margin-top: -6px;
+      padding-top: 6px;
+      a.user-link {
+        font-size: 0.95em;
+        font-weight: bold;
+        margin-left: 5px;
+        &:hover, &:active, &:visited, &:link {
+          color: #555;
+          text-decoration: none;
+        }
+        i {
+          vertical-align: middle;
+        }
+        &.website {
+          padding-right: 12px;
+          i {
+            padding-right: 2px;
+          }
+        }
+        &.twitter {
+          padding-left: 8px;
+        }
+      }
+    }
+  }
+  .profile-activity {
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      li {
+        &.activity-item {
+          clear: left;
+          li {
+            margin-bottom: 3px;
+            img {
+              float: left;
+              margin-bottom: 20px;
+              margin-right: 12px;
+              max-width: 80px;
+              @include image_border_thumbnail;
+            }
+            &.item-title {
+              font-size: 1.1em;
+            }
+            &.annotation {
+              font-style: italic;
+            }
+          }
+        }
+      }
+    }
+    h3 {
+      border-bottom: 1px solid #ddd;
+      font-size: 1.25em;
+      margin-bottom: 15px;
+    }
+    .activity-count {
+      color: #888;
+      float: right;
+      font-size: 1.25em;
+      margin-right: 10px;
+    }
+    i {
+      background-image: none;
+      color: #777;
+      margin-right: 6px;
+      vertical-align: baseline;
+    }
+    .more-link {
+      clear: left;
+      font-size: 1.1em;
+    }
   }
 }
 
@@ -53,7 +151,13 @@
 
 }
 @media screen and (max-width: 767px) {
-
+  .blacklight-user {
+    .profile-vitals {
+      .user-image {
+        width: 120px;
+      }
+    }
+  }
 }
 @media screen and (max-width: 479px) {
   #new_user {

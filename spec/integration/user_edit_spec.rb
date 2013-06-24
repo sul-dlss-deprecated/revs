@@ -14,7 +14,8 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     login_as(user_login)
     user_account=User.find_by_username(user_login)
     visit user_profile_name_path(user_account.username)
-    page.should have_content("#{user_account.full_name}'s Profile")
+    page.should have_content("User Dashboard")
+    page.should have_content("#{user_account.full_name}")
     click_link 'Update your profile'
 
     fill_in 'user_bio', :with=>new_bio
@@ -39,7 +40,8 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     login_as(user_login)
     user_account=User.find_by_username(user_login)
     visit user_profile_name_path(user_account.username)
-    page.should have_content("#{user_account.full_name}'s Profile")
+    page.should have_content("User Dashboard")
+    page.should have_content("#{user_account.full_name}")
     click_link 'Update your profile'
 
     fill_in 'register-username', :with=>new_username
@@ -61,7 +63,8 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     user_account=User.find_by_username(user_login)
     
     visit user_profile_name_path(user_account.username)
-    page.should have_content("#{user_account.full_name}'s Profile")
+    page.should have_content("User Dashboard")
+    page.should have_content("#{user_account.full_name}")
     click_link 'Change your password'
 
     fill_in 'user_password', :with=>new_password
@@ -84,7 +87,8 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     fill_in "user_password", :with => new_password
     click_button "submit"
     visit user_profile_name_path(user_account.username)
-    page.should have_content("#{user_account.full_name}'s Profile")
+    page.should have_content("User Dashboard")
+    page.should have_content("#{user_account.full_name}")
     
   end
 

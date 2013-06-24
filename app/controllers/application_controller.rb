@@ -134,7 +134,7 @@ class ApplicationController < ActionController::Base
   end
 
   def show_as_datetime(datetime)
-    datetime.strftime('%B %d, %Y at %l:%M %P %Z')  
+    datetime.strftime('%B %d, %Y')
   end
     
   def exception_on_website(exception)
