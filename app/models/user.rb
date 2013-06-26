@@ -32,6 +32,11 @@ class User < ActiveRecord::Base
     ROLES
   end
 
+  # override devise method --- stanford users are never timed out; regular users are timed out according to devise rules
+  def timedout?(last_access)
+    sunet_user? ? false : super
+  end
+  
   # Blacklight uses #to_s on your user class to get
   # a user-displayable login/identifier for the account.
   def to_s
