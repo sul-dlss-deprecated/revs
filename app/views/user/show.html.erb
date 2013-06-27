@@ -20,10 +20,10 @@
       <%= display_user_name(@user) %>
     </div>
 
-    <div class="span6 <%= 'user-links' if @user.url? %> ">
+    <div class="span6 <%= 'user-links' if @user.url? or @user.twitter? %> ">
       <%= link_to "<i class='icon-external-link'></i> http://#{@user.url}".html_safe, "http://#{@user.url}", :target=>'_new', :class => "user-link website" unless @user.url.blank? %>
-      <%# below is placeholder to pending decision to a Twitter link option %>
-      <%= link_to "<i class='icon-twitter'></i> @some_user".html_safe, "http://#{@user.url}", :target=>'_new', :class => "user-link twitter" unless @user.url.blank? %>
+      <%= '<span class="divider">|</span>'.html_safe if @user.url? and @user.twitter? %>
+      <%= link_to "<i class='icon-twitter'></i> @#{@user.twitter}".html_safe, "https://twitter.com/intent/user?screen_name=@#{@user.twitter}", :target=>'_new', :class => "user-link twitter" unless @user.twitter.blank? %>
     </div>
   </div>
 

@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
          :lockable, :timeoutable, :omniauthable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :username, :email, :sunet, :password, :password_confirmation, :remember_me, :role, :bio, :first_name, :last_name, :public, :url, :login, :subscribe_to_mailing_list, :subscribe_to_revs_mailing_list
+  attr_accessible :username, :email, :sunet, :password, :password_confirmation, :remember_me, :role, :bio, :first_name, :last_name, :public, :url, :twitter, :login, :subscribe_to_mailing_list, :subscribe_to_revs_mailing_list
   attr_accessor :subscribe_to_mailing_list, :subscribe_to_revs_mailing_list # not persisted, just used on the signup form
   attr_accessor :login # virtual method that will refer to either email or username
   

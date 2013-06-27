@@ -167,4 +167,18 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     page.should_not have_content 'Admin Dashboard'
   end
 
+  it "should show a user's website link, if it has been provided by the user" do
+    login_as(user_login)
+    visit user_profile_name_path(user_login)
+    current_path.should ==  user_profile_name_path(user_login)
+    find_link('http://www.example.com/user1/my-website').visible?
+  end
+
+  it "should show a user's Twitter link, if it has been provided by the user" do
+    login_as(user_login)
+    visit user_profile_name_path(user_login)
+    current_path.should ==  user_profile_name_path(user_login)
+    find_link('@RevsTesting').visible?
+  end
+
 end
