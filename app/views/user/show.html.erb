@@ -29,7 +29,7 @@
 
   <div class="row profile-activity">
     <div class="span4">
-      <h3>Annotations <span class="activity-count">0<%= user_annotations_count(@user) %></span></h3>
+      <h3>Annotations <span class="activity-count"><%= user_annotations_count(@user).to_s.rjust(2, '0') %></span></h3>
       <% if @latest_annotations.size > 0 %>
         <ul>
         <% @latest_annotations.each do |annotation| %>
@@ -57,7 +57,7 @@
     </div>
 
     <div class="span4 offset1">
-      <h3>Flags <span class="activity-count">0<%= user_flags_count(@user) %></span></h3>
+      <h3>Flags <span class="activity-count"><%= user_flags_count(@user).to_s.rjust(2, '0') %></span></h3>
       <% if @latest_flags.size > 0 %>
         <ul>
         <% @latest_flags.each do |flag| %>

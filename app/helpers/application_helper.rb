@@ -83,4 +83,8 @@ module ApplicationHelper
     ["edit","update"].include? action_name
   end
   
+  def on_user_profile_page
+    ['show','show_by_name'].include?(action_name) && controller_name == 'user'
+  end
+  
 end

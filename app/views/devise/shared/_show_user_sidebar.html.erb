@@ -22,11 +22,12 @@
 
 
       <li>
-        <% if on_edit_page %>
-          <%= link_to 'View your profile page', user_profile_name_path(@user.username) %>
-        <% else %>
-          <%= link_to 'Update your profile', edit_user_registration_path %>
-        <% end %>
+       <% unless on_user_profile_page %>
+        <%= link_to 'View your profile page', user_profile_name_path(@user.username) %>
+			 <% end %>
+        <% unless on_edit_page %>
+        	<%= link_to 'Update your profile', edit_user_registration_path %>
+				<% end %>
       </li>
 			<% unless current_user.sunet_user? %>
 	      <li><%= link_to 'Change your password', edit_user_account_path%></li>
