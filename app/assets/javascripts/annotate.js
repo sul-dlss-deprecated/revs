@@ -71,7 +71,7 @@ function enableAnnotations() {
 function loadAnnotations() {
 	jQuery.getJSON("/annotations/"+jQuery("#druid").attr('data-druid') + ".json",function(data) {
 		for (var i = 0; i < data.length; i++) {
-				annotation=JSON.parse(data[i].json)
+				annotation = JSON.parse(data[i].json)
         anno.addAnnotation(annotation);
 			}
 	});
@@ -95,11 +95,16 @@ function toggleLinks() {
   $('#hide_annotations_link').toggleClass('hidden-offscreen');
 }
 
+function toggleAnnotationList(){
+  $('#all-annotations').toggleClass('hidden-offscreen');
+}
+
 $(document).ready(function(){
 	
 	$('#annotate_link').click(function() { 
 		showAnnotations(); 
     toggleLinks();
+    toggleAnnotationList();
 		return false;
 	 });
 	
@@ -107,12 +112,14 @@ $(document).ready(function(){
 		 showAnnotations(); 
 		 disableNewAnnotations(); 
      toggleLinks();
+     toggleAnnotationList();
 		 return false;
 	 });
 
 	$('#hide_annotations_link').click(function() {
 		 hideAnnotations(); 
 		 toggleLinks();
+		 toggleAnnotationList();
 		 return false;
 	 });
 	

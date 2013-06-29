@@ -1,0 +1,8 @@
+<% if annotations.size > 0 %>
+	<% annotations.each do |annotation| %>	
+		<div id="<%= annotation.id %>" class="annotation-info">
+      <%= annotation.user == current_user ? "You" : annotation.user.full_name %> annotated it on <%= show_as_date(annotation.created_at) %>
+      <%= "with this note: <blockquote>#{annotation.text}</blockquote>".html_safe unless annotation.text.blank? %>
+    </div>
+	<% end %>
+<% end %>
