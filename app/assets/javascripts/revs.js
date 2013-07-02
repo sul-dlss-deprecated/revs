@@ -23,6 +23,7 @@ $(document).ready(function(){
    // Toggle details (new flag form and posted flags) when Flag action is selected.
    $('.flag-details').click(function(){
      $('#new_flag, #all_flags').toggle();
+     $('.flag-details').toggleClass('active');
      return false;
    });
 

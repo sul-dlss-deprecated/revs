@@ -2,6 +2,6 @@
   <%=flag.user == current_user ? "You" : flag.user.full_name%> flagged it on <%=show_as_date(flag.created_at)%>
   <%= "with this comment: <blockquote>#{flag.comment}</blockquote>".html_safe unless flag.comment.blank? %>
   <% if can? :destroy, flag%>
-    <%= button_to 'Remove Flag',flag_path(flag.id), :method=>:delete,:remote=>true, :confirm=>"Are you sure you want to remove this flag?", :class => "btn btn-small btn-danger" %>
+    <%= button_to 'Remove Flag',flag_path(flag.id), :method=>:delete,:remote=>true, :confirm=>"Are you sure you want to remove this flag?", :class => "btn btn-mini btn-danger" %>
   <% end %>
 </div>

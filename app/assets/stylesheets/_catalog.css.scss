@@ -135,8 +135,14 @@
     }
   }
   .item-actions {
-    a#hide_annotations_link i {
+    a:hover i {
       color: #990000;
+    }
+    a#hide_annotations_link {
+      background-color: #eee;
+      i {
+        color: #990000;
+      }
     }
     .nav-header {
       i {
@@ -149,14 +155,24 @@
     #all_flags, #all-annotations {
       color: #555;
       .flag-info, .annotation-info {
-        border-top: 1px dashed #ccc;
+        background: rgba(0,0,0,0.05);
+        border-radius: 4px;
+        box-shadow: rgba(0,0,0,0.2) 0 -1px 0,rgba(255,255,255,0.8) 0 1px 0;
+        color: #777;
+        font-size: 0.9em;
         margin: 12px 0;
-        padding: 6px 0 0;
+        padding: 6px 9px;
         blockquote {
+          border-left: none;
+          color: #555;
+          font-style: italic;
+          margin-bottom: 6px;
           margin-top: 9px;
         }
         form.button_to {
+          margin-bottom: 6px;
           margin-top: 12px;
+          text-align: right;
         }
       }
     }
@@ -179,8 +195,15 @@
     form.new_flag {
       margin-bottom: 24px;
     }
-    a.flag-details:hover, a.flag-details.flagged {
-      i {color: #990000;}
+    a.flag-details {
+      &.active {
+        background-color: #eeeeee;
+      }
+      &:hover, &.flagged {
+        i {
+          color: #990000;
+        }
+      }
     }
   }
   .license-image {
