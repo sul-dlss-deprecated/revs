@@ -97,7 +97,8 @@ class CatalogController < ApplicationController
      :q => '{!raw f=id v=$id}' 
     }
     
-    config.document_index_view_types = ["gallery", "brief", "detailed"]
+    # tentatively removed 'brief' view type
+    config.document_index_view_types = ["gallery","detailed"]
 
     # solr field configuration for search results/index views
     config.index.show_link = 'title_tsi'
