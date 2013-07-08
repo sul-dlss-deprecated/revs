@@ -27,32 +27,43 @@ $(document).ready(function(){
      return false;
    });
 
-   // Curator view controls and actions.
+   // Curator view controls and actions //
+
+   // Put focus on new value input box on page load
+   $('.curator-edit-options #appendedInputButton').focus();
+   // Called when 'Select all' checkbox is checked or unchecked.
    // Select all rows for edit when 'select all' checkbox is selected.
    $( '.curator-edit-options #select-all' ).click( function () {
       $( '.curator input[type="checkbox"]' ).prop('checked', this.checked);
+      if ($('#field-to-edit option:selected').text() != "Field to update...") { // don't do anything else if no real field is selected in menu
+        var field = $('#field-to-edit option:selected').text(); // current field selected in the select menu
+        $('#documents.curator .result-item').each(function() { // loop through all result item rows
+          updateEditStatus(field,'.result-item'); // update status message
+        });
+      }
    });
-   // Determine which field has been selected in 'Field to edit' select menu.
-   $('#field-to-edit').change(function(e){ // field changed in select menu
+   // Called when an individual checkbox is checked or unchecked.
+   // Update row status message if user changes individual checkbox
+   $('.result-item-checkbox > input[type="checkbox"]').change(function() {
      var field = $('#field-to-edit option:selected').text(); // current value of select menu
-     $('.result-item').each(function(){ // loop through all result item rows
-       if ($(this).find(".result-item-checkbox > input[type='checkbox']").is(':checked')) { // row is selected for edit
-         $(this).find('.edit-field-value > .current-value').text("Update will be made to: " + field).show(); // indicate to user row will be updated
-       }
-       else{
-         $(this).find('.edit-field-value > .current-value').hide(); // row is not selected for edit
-       }
+     var context = $(this).closest('.result-item').data('item-id');
+     updateEditStatus(field,"div[data-item-id='" + context + "']"); // update status message
+   });
+   // Callled when the 'Field to edit' select menu is changed.
+   // Determine which field has been selected in 'Field to edit' select menu and update status message for checked items with new field name.
+   $('#field-to-edit').change(function() { // field changed in select menu
+     var field = $('#field-to-edit option:selected').text(); // current value of select menu
+     $('#documents.curator .result-item').each(function() { // loop through all result item rows
+       updateEditStatus(field,this); // update status message
      });
    });
-   // Update row status message if user changes individual checkbox
-   $('.result-item-checkbox > input[type="checkbox"]').change(function(e){
-     if ($(this).is(':checked')) { // after change, is now set to edit this row
-       var field = $('#field-to-edit option:selected').text(); // current value of select menu
-       $(this).closest('.result-item').find('.edit-field-value > .current-value').text("Update will be made to: " + field).show();
-     }
-     else { // after change, is now set to not edit this row
-       $(this).closest('.result-item').find('.edit-field-value > .current-value').hide();
-     }
+   // Callled when the input field for the new field value loses focus.
+   // Update status message of all checked items to show new field value.
+   $('.curator-edit-options #appendedInputButton').blur(function() { // input loses focus
+     var field = $('#field-to-edit option:selected').text(); // current value of select menu
+     $('#documents.curator .result-item').each(function() { // loop through all result item rows
+       updateEditStatus(field,this); // update status message
+     });
    });
 
 
@@ -98,4 +109,25 @@ $(document).on('blur',"#register-username",function(){
 function showOnLoad() {
 	$('.showOnLoad').removeClass('hidden hidden-offscreen');
 	$('.showOnLoad').show();
+}
+
+// For Curator Bulk Edit view - show or hide the field-to-be-updated status message depending on state of checkbox for that row item
+// 'field' is currently selected field to edit in select menu; show this in status message
+// 'context' is jQuery selector used to know which row to operate on
+function updateEditStatus(field,context) {
+  if ($(context).find(".result-item-checkbox > input[type='checkbox']").is(':checked')) { // row is selected for edit ..
+    if (($('#field-to-edit option:selected').text() != "Field to update...")) { // .. and a real field is selected in menu
+      $(context).find('.edit-field-value > .current-value').text(field).show(); // indicate to user the row that will be updated ..
+      $(context).find('.edit-field-value > .field-label').text("Will be updated to:").show(); // .. and ..
+      $(context).find('.edit-field-value > .new-value').text($('.curator-edit-options #appendedInputButton').val()).show(); // .. the value that will be used for update
+    } else { // row is selected but not field has been chosen in select menu ..
+      $(context).find('.edit-field-value > .field-label').hide(); // .. so hide update message
+      $(context).find('.edit-field-value > .current-value').hide();
+      $(context).find('.edit-field-value > .new-value').hide();
+    }
+  } else { // row is not selected for edit ..
+    $(context).find('.edit-field-value > .field-label').hide(); // .. so hide update message
+    $(context).find('.edit-field-value > .current-value').hide();
+    $(context).find('.edit-field-value > .new-value').hide();
+  }
 }

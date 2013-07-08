@@ -1,6 +1,6 @@
 <div class="row doc">
   <div class="<%= render_document_class document %> document span9">
-    <div class="row result-item">
+    <div class="row result-item" data-item-id="item-<%= document.id %>">
       <div class="span1 result-item-checkbox">
         <input type="checkbox" id="checkbox-<%= document.id %>" name="checkbox-<%= document.id %>">
       </div>
@@ -43,6 +43,8 @@
 
       <div class="span2 edit-field-value">
         <span class="current-value"></span>
+        <span class="field-label"></span>
+        <span class="new-value"></span>
       </div>
 
     </div>

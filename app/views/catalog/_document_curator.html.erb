@@ -1,31 +1,40 @@
 <%= render "gallery_toggle" %>
 
 <div class="row curator-edit-options">
-  <div class="span2 checkbox-toggle">
-    <input type="checkbox" name="select-all" id="select-all"> Select all
-  </div>
-  <div class="span4 field-selector">
-    Field to edit:
-    <select class="span2" name="field-to-edit" id="field-to-edit">
-      <option>Select...</option>
-      <option>Description</option>
-      <option>Year</option>
-      <option>Location</option>
-      <option>Event</option>
-      <option>Marque</option>
-      <option>People</option>
-      <option>Group/Class</option>
-      <option>Entrant</option>
-      <option>Current Owner</option>
-      <option>Tags</option>
-      <option>Format</option>
-      <option>Metadata Sources</option>
-    </select>
-  </div>
-  <div class="span3 new-value">
-    <input class="span2" id="appendedInputButton" type="text" placeholder="new value">
-    <%= submit_tag "Update", :class => 'btn btn-small' %>
-  </div>
+  <form class="form-inline">
+    <div class"controls controls-row">
+
+      <label class="checkbox">
+        <input type="checkbox" name="select-all" id="select-all">
+        Select all
+      </label>
+
+      <div class="update-field">
+        <span class="help-inline">Update:</span>
+        <select class="span2" name="field-to-edit" id="field-to-edit">
+          <option>Field to update...</option>
+          <option>Description</option>
+          <option>Year</option>
+          <option>Location</option>
+          <option>Event</option>
+          <option>Marque</option>
+          <option>People</option>
+          <option>Group/Class</option>
+          <option>Entrant</option>
+          <option>Current Owner</option>
+          <option>Tags</option>
+          <option>Format</option>
+          <option>Metadata Sources</option>
+        </select>
+      </div>
+
+      <div class="update-field-value">
+        <input class="span4" id="appendedInputButton" type="text" placeholder="new value">
+        <%= submit_tag "Update", :class => 'btn btn-small' %>
+      </div>
+
+    </div>
+  </form>
 </div>
 
 <div id="documents" class="curator">

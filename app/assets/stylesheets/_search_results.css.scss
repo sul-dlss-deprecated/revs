@@ -94,54 +94,67 @@
       margin-left: 0;
     }
   }
+  .field-label {
+    color: #777;
+    display: block;
+    font-size: 11px;
+    padding-top: 3px;
+    text-transform: uppercase;
+  }
   .current-value {
-      font-style: italic;
-      color: #990000;
+    color: #990000;
+  }
+  .new-value {
+    font-style: italic;
+  }
+  &#documents {
+    border-top: 2px solid #dedede;
   }
 }
 
 /* .curator-edit-options - bulk edit controls in Curator view */
 .curator-edit-options {
   background-color: #fff;
-  border-top: 2px dotted #dedede;
+  border-top: 2px solid #dedede;
   display: block;
-  font-size: 13px;
-  margin-left: 0;
-  margin-top: 15px;
-  padding: 4px;
-  text-align: center;
-  .checkbox-toggle {
-    font-weight: bold;
-    margin-left: 0;
-    padding: 16px 0 0;
-    text-align: left;
-    input {
-      font-size: 18px;
-      margin-right: 6px;
-      margin-top: 0;
-      padding-left: 9px;
-      vertical-align: baseline;
+  margin: 18px 0 0;
+  form {
+    margin: 10px 5px;
+    .checkbox-toggle {
+      font-weight: bold;
+      margin-left: 0;
+      text-align: left;
+      input {
+        font-size: 18px;
+        margin-right: 6px;
+        padding-left: 9px;
+        vertical-align: baseline;
+      }
     }
-  }
-  .field-selector {
-    font-weight: bold;
-    margin-left: 0;
-    padding: 6px 0 0;
-    text-align: left;
-  }
-  .input-append {
-    padding: 6px 0 0;
-    text-align: right;
-  }
-  select {
-    height: auto;
-    line-height: 16px;
-    margin-top: 6px;
-  }
-  .new-value {
-    padding: 6px 0;
-    input {
-      margin-bottom: 0;
+    .field-selector {
+      font-weight: bold;
+      margin-left: 0;
+      text-align: left;
+    }
+    .input-append {
+      text-align: right;
+    }
+    .new-value {
+      float: right;
+      input {
+        margin-bottom: 0;
+      }
+    }
+    .help-inline {
+      color: #333333;
+      margin-left: 20px;
+    }
+    .update-field {
+      display: inline-block;
+    }
+    .update-field-value {
+      display: inline-block;
+      float: right;
     }
   }
 }
@@ -252,23 +265,25 @@ span.constraints-label {margin-right: 0.5em;}
     }
   }
 }
-
-@media screen and (min-width: 768px) and (max-width: 979px) {
-  .constraints .appliedFilter {
-    padding: 1px 25px 1px 1em;
-  }
-  #documents.detailed {
-    .result-thumbnail img {
-      max-width: 150px;
+@media screen and (max-width: 979px) {
+  .curator-edit-options form {
+    .update-field-value, .update-field {
+      display: block;
+      float: none;
+      margin: 12px 0;
     }
-  }
-  #documents.detailed .blacklight-collection {
-    .index_title {
-      margin-left: 10px;
+    .help-inline {
+      margin-left: 0;
+    }
+    select {
+      margin: 8px 0 18px;
+      width: 170px;
+    }
+    input {
+      margin-bottom: 12px;
     }
   }
 }
-
 @media screen and (max-width: 767px) {
   #sortAndPerPage {
     display: none;
@@ -305,6 +320,21 @@ span.constraints-label {margin-right: 0.5em;}
   #documents.detailed {
     .result-metadata, .result-metadata-details {
       clear: left;
+    }
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 979px) {
+  .constraints .appliedFilter {
+    padding: 1px 25px 1px 1em;
+  }
+  #documents.detailed {
+    .result-thumbnail img {
+      max-width: 150px;
+    }
+  }
+  #documents.detailed .blacklight-collection {
+    .index_title {
+      margin-left: 10px;
     }
   }
 }
