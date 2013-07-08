@@ -74,6 +74,7 @@ en:
         gallery: 'Gallery'
         list: 'Brief'
         detailed: 'Detailed'
+        curator: 'Curator'
       search_label: 'Search'
       facets:
         title: 'Browse'

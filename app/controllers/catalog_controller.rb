@@ -98,7 +98,7 @@ class CatalogController < ApplicationController
     }
     
     # tentatively removed 'brief' view type
-    config.document_index_view_types = ["gallery","detailed"]
+    config.document_index_view_types = ["gallery","detailed","curator"]
 
     # solr field configuration for search results/index views
     config.index.show_link = 'title_tsi'

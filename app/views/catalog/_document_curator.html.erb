@@ -1,0 +1,35 @@
+<%= render "gallery_toggle" %>
+
+<div class="row curator-edit-options">
+  <div class="span2 checkbox-toggle">
+    <input type="checkbox" name="select-all" id="select-all"> Select all
+  </div>
+  <div class="span4 field-selector">
+    Field to edit:
+    <select class="span2" name="field-to-edit" id="field-to-edit">
+      <option>Select...</option>
+      <option>Description</option>
+      <option>Year</option>
+      <option>Location</option>
+      <option>Event</option>
+      <option>Marque</option>
+      <option>People</option>
+      <option>Group/Class</option>
+      <option>Entrant</option>
+      <option>Current Owner</option>
+      <option>Tags</option>
+      <option>Format</option>
+      <option>Metadata Sources</option>
+    </select>
+  </div>
+  <div class="span3 new-value">
+    <input class="span2" id="appendedInputButton" type="text" placeholder="new value">
+    <%= submit_tag "Update", :class => 'btn btn-small' %>
+  </div>
+</div>
+
+<div id="documents" class="curator">
+  <%- documents.each_with_index do |document, index| -%>
+    <%= render_document_partial document, :index, :document_counter => index %>
+  <%- end -%>
+</div>

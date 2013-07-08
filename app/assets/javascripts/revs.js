@@ -27,6 +27,35 @@ $(document).ready(function(){
      return false;
    });
 
+   // Curator view controls and actions.
+   // Select all rows for edit when 'select all' checkbox is selected.
+   $( '.curator-edit-options #select-all' ).click( function () {
+      $( '.curator input[type="checkbox"]' ).prop('checked', this.checked);
+   });
+   // Determine which field has been selected in 'Field to edit' select menu.
+   $('#field-to-edit').change(function(e){ // field changed in select menu
+     var field = $('#field-to-edit option:selected').text(); // current value of select menu
+     $('.result-item').each(function(){ // loop through all result item rows
+       if ($(this).find(".result-item-checkbox > input[type='checkbox']").is(':checked')) { // row is selected for edit
+         $(this).find('.edit-field-value > .current-value').text("Update will be made to: " + field).show(); // indicate to user row will be updated
+       }
+       else{
+         $(this).find('.edit-field-value > .current-value').hide(); // row is not selected for edit
+       }
+     });
+   });
+   // Update row status message if user changes individual checkbox
+   $('.result-item-checkbox > input[type="checkbox"]').change(function(e){
+     if ($(this).is(':checked')) { // after change, is now set to edit this row
+       var field = $('#field-to-edit option:selected').text(); // current value of select menu
+       $(this).closest('.result-item').find('.edit-field-value > .current-value').text("Update will be made to: " + field).show();
+     }
+     else { // after change, is now set to not edit this row
+       $(this).closest('.result-item').find('.edit-field-value > .current-value').hide();
+     }
+   });
+
+
 	// elements defined with the class "showOnLoad" and "hidden" classes will be hidden by default and then show when the page loads
 	//  useful when you have non javascript friendly DOM elements you need to hide for no JS browsers so you can include a <noscript> tag with
 	//   non JS versions
