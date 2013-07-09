@@ -80,6 +80,8 @@ GEM
     execjs (1.4.0)
       multi_json (~> 1.0)
     ffi (1.1.5)
+    font-awesome-rails (3.2.1.2)
+      railties (>= 3.2, < 5.0)
     google-analytics-rails (0.0.4)
     hashie (1.2.0)
     hike (1.2.3)
@@ -212,6 +214,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   devise
   druid-tools (>= 0.2.0)
+  font-awesome-rails
   google-analytics-rails
   jettywrapper
   jquery-rails

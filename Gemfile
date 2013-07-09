@@ -62,3 +62,4 @@ gem 'rest-client'
 gem 'json', '~> 1.7.7'
 
 gem "bootstrap-sass"
+gem "font-awesome-rails"
