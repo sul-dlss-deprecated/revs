@@ -75,6 +75,10 @@ $(document).ready(function(){
 
 });
 
+function druid() {
+	return jQuery("#druid").attr('data-druid');
+}
+
 $(document).on('blur',".user-login-email",function(){
 	  var email=$(this).val();
 	  var id=$(this).attr('id');

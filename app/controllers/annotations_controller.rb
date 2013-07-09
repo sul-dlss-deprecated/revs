@@ -12,6 +12,7 @@ class AnnotationsController < ApplicationController
       format.js { render }
       format.xml  { render :xml => @annotations.to_xml }
       format.json { render :json=> @annotations.to_json }      
+      format.html { render :partial => "catalog/annotation_list", :locals=>{:annotations=>@annotations}}
     end
   end
       
@@ -31,6 +32,7 @@ class AnnotationsController < ApplicationController
       format.js   { render }
       format.xml  { render :xml => @annotations.to_xml }
       format.json { render :json=> @annotations.to_json }
+      format.html { render :partial => "catalog/annotation_list", :locals=>{:annotations=>@annotations}}
     end
     
   end
@@ -48,6 +50,7 @@ class AnnotationsController < ApplicationController
       format.js   { render }
       format.xml  { render :xml => @annotation.to_xml }
       format.json { render :json=> @annotation.as_json.merge({'num_annotations'=>num_annotations}) }
+      format.html { render :partial => "catalog/annotation_list", :locals=>{:annotations=>[@annotation]}}
     end
     
   end
@@ -66,6 +69,7 @@ class AnnotationsController < ApplicationController
       format.js   { render }
       format.xml  { render :xml => @annotation.to_xml }
       format.json { render :json=> @annotation.to_json }
+      format.html { render :partial => "catalog/annotation_list", :locals=>{:annotations=>[@annotation]}}      
     end
            
   end
@@ -82,6 +86,7 @@ class AnnotationsController < ApplicationController
       format.js   { render }
       format.xml  { render :xml => @annotation.to_xml }
       format.json { render :json=> @annotation.as_json.merge({'num_annotations'=>num_annotations}) }
+      format.html { render :partial => "catalog/annotation_list", :locals=>{:annotations=>[@annotation]}}      
     end
     
   end

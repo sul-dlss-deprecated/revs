@@ -3,11 +3,10 @@ anno.addHandler('onAnnotationCreated', function(annotation) {
 		type: "POST",
 		url: "/annotations",
 		dataType: "JSON",
-		data: "annotation="+JSON.stringify(annotation)+"&druid=" + jQuery("#druid").attr('data-druid'),
+		data: "annotation="+JSON.stringify(annotation)+"&druid=" + druid(),
 		success: function(data) {
 	    annotation.id=data.id; // the annotation ID should match the database row ID so we can delete it if needed
-			$(".num-annotations-badge").text(data.num_annotations); // update the total annotations badge
-			$(".num-annotations-badge").removeClass('hidden');
+			updateAnnotationsPanel(data);
 	  }
 		});
 		
@@ -21,7 +20,10 @@ anno.addHandler('onAnnotationUpdated', function(annotation) {
 	  type: "PUT",
 		dataType: "JSON",
 	  url: "/annotations/" + annotation.id,
-	  data: "annotation="+JSON.stringify(annotation)
+	  data: "annotation="+JSON.stringify(annotation),
+		success: function(data) {
+			updateAnnotationsPanel(data);
+	  }	
 	});
 });
 
@@ -38,8 +40,7 @@ anno.addHandler('onAnnotationRemoved', function(annotation) {
 		dataType: "JSON",
 	  url: "/annotations/" + annotation.id,
 		success: function(data) {
-			$(".num-annotations-badge").text(data.num_annotations); // update the total annotations badge
-			$(".num-annotations-badge").removeClass('hidden');
+			updateAnnotationsPanel(data);
 	  }	
 	});
 });
@@ -53,6 +54,12 @@ annotorious.plugin.addUsernamePlugin.prototype.onInitAnnotator = function(annota
   });
 }
 anno.addPlugin('addUsernamePlugin', {});	
+
+function updateAnnotationsPanel(data) {
+	$(".num-annotations-badge").text(data.num_annotations); // update the total annotations badge
+	$(".num-annotations-badge").removeClass('hidden');
+	$("#all-annotations").load("/annotations/"+druid());// re-render the annotations panel
+}
 
 function showAnnotations() {	
 	togglePURLEmbed();
@@ -71,7 +78,7 @@ function enableAnnotations() {
 }
 
 function loadAnnotations() {
-	jQuery.getJSON("/annotations/"+jQuery("#druid").attr('data-druid') + ".json",function(data) {
+	jQuery.getJSON("/annotations/"+druid()+ ".json",function(data) {
 		for (var i = 0; i < data.length; i++) {
 				annotation = JSON.parse(data[i].json)
         anno.addAnnotation(annotation);
