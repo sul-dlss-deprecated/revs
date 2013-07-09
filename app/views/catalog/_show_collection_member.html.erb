@@ -68,52 +68,43 @@
             "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'new') %>
           </li>
 
+					<% annotation_count_display_class = (@document.annotations.size > 0 ? "" : "hidden") %>
+
           <% if can? :create, Annotation %>
             <li>
-              <% if @document.annotations.size > 0 # show badge with count %>
-                <%# link to show annotation workspace %>
-                <%= link_to(("<i class='icon-edit'></i> <span id='annotation-link-text'>View/add annotations</span> ".html_safe + content_tag(:span, @document.annotations.size, :class => "num-annotations-badge badge badge-revs")).html_safe, '#', :id=>'annotate_link', :class=>"annotation_links showOnLoad hidden-offscreen") %>
+               <%# link to show annotation workspace %>
+               <%= link_to(("<i class='icon-edit'></i> <span id='annotation-link-text'>View/add annotations</span> ".html_safe + content_tag(:span, @document.annotations.size, :class => "#{annotation_count_display_class} num-annotations-badge badge badge-revs")).html_safe, '#', :id=>'annotate_link', :class=>"annotation_links showOnLoad hidden-offscreen") %>
+               <%# link to hide annotation workspace %>
+               <%= link_to(("<i class='icon-edit'></i> Hide annotations ".html_safe + content_tag(:span, @document.annotations.size, :class => "#{annotation_count_display_class} num-annotations-badge badge badge-revs")).html_safe,'#',:id=>'hide_annotations_link',:class=>"hidden-offscreen") %>
 
-                <%# link to hide annotation workspace %>
-                <%= link_to(("<i class='icon-edit'></i> Hide annotations ".html_safe + content_tag(:span, @document.annotations.size, :class => "num-annotations-badge badge badge-revs")).html_safe,'#',:id=>'hide_annotations_link',:class=>"hidden-offscreen") %>
-
+							<% if @document.annotations.size > 0 %>
                 <%# list of existing annotations %>
                 <div id="all-annotations" class="hidden-offscreen">
                   <%= render :partial => "annotation_list", :locals=>{:annotations=>@document.annotations} %>
                 </div>
-
-              <% else # no annotations so don't show badge with count'%>
-                <%# link to show annotation workspace %>
-                <%= link_to("<i class='icon-edit'></i> <span id='annotation-link-text'>View/add annotations</span>".html_safe, '#', :id=>'annotate_link', :class=>"annotation_links showOnLoad hidden-offscreen") %>
-
-                <%# link to hide annotation workspace %>
-                <%= link_to("<i class='icon-edit'></i> Hide annotations ".html_safe,'#',:id=>'hide_annotations_link',:class=>"hidden-offscreen") %>
-              <% end %>
+							<% end %>
+								
             </li>
 
           <% elsif can?(:read, Annotation) && @document.annotations.size > 0 %>
             <li>
-              <% if @document.annotations.size > 0 # show badge with count %>
-                <%# link to hide annotation workspace %>
-                <%= link_to(("<i class='icon-edit'></i> <span id='annotation-link-text'>View annotations</span>".html_safe + content_tag(:span, @document.annotations.size, :class => "num-annotations-badge badge badge-revs")).html_safe,'#',:id=>'view_annotations_link',:class=>"annotation_links showOnLoad hidden-offscreen") %>
+               <%# link to hide annotation workspace %>
+               <%= link_to(("<i class='icon-edit'></i> <span id='annotation-link-text'>View annotations</span>".html_safe + content_tag(:span, @document.annotations.size, :class => "#{annotation_count_display_class} num-annotations-badge badge badge-revs")).html_safe,'#',:id=>'view_annotations_link',:class=>"annotation_links showOnLoad hidden-offscreen") %>
 
-                <%# link to hide annotation workspace %>
-                <%= link_to("<i class='icon-edit'></i> Hide annotations ".html_safe,'#',:id=>'hide_annotations_link',:class=>"hidden-offscreen") %>
+               <%# link to hide annotation workspace %>
+               <%= link_to(("<i class='icon-edit'></i> Hide annotations ".html_safe + content_tag(:span, @document.annotations.size, :class => "#{annotation_count_display_class} num-annotations-badge badge badge-revs")).html_safe, '#',:id=>'hide_annotations_link',:class=>"hidden-offscreen") %>
 
-                <%# list of existing annotations %>
-                <div id="all-annotations" class="hidden-offscreen">
-                  <%= render :partial => "annotation_list", :locals=>{:annotations=>@document.annotations} %>
-                </div>
+               <%# list of existing annotations %>
+               <div id="all-annotations" class="hidden-offscreen">
+                 <%= render :partial => "annotation_list", :locals=>{:annotations=>@document.annotations} %>
+               </div>
 
-              <% else # no annotations so don't show badge with count'%>
-                <%= link_to("<i class='icon-edit'></i> <span id='annotation-link-text'>View annotations</span>".html_safe,'#',:id=>'view_annotations_link',:class=>"annotation_links showOnLoad hidden-offscreen") %>
-              <% end %>
             </li>
           <% end %>
 
           <% if can? :create, Flag %>
             <li>
-							  	<%= render :partial=>"flags/new",:locals=>{:druid=>@document.id, :flags=>@document.flags}%>
+							  <%= render :partial=>"flags/new",:locals=>{:druid=>@document.id, :flags=>@document.flags}%>
 								<div id="all_flags">
                   <%= render :partial=>"flags/all",:locals=>{:flags=>@document.flags} %>
                 </div>

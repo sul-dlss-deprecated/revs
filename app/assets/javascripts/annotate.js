@@ -7,6 +7,7 @@ anno.addHandler('onAnnotationCreated', function(annotation) {
 		success: function(data) {
 	    annotation.id=data.id; // the annotation ID should match the database row ID so we can delete it if needed
 			$(".num-annotations-badge").text(data.num_annotations); // update the total annotations badge
+			$(".num-annotations-badge").removeClass('hidden');
 	  }
 		});
 		
@@ -38,6 +39,7 @@ anno.addHandler('onAnnotationRemoved', function(annotation) {
 	  url: "/annotations/" + annotation.id,
 		success: function(data) {
 			$(".num-annotations-badge").text(data.num_annotations); // update the total annotations badge
+			$(".num-annotations-badge").removeClass('hidden');
 	  }	
 	});
 });
