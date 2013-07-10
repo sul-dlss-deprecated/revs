@@ -1,0 +1,32 @@
+<div id="sidebar" class="span3">
+  <%= render "catalog/search_form" %>
+  <%= render :partial => 'catalog/constraints' if query_has_constraints? %>
+  <%#= render :partial=>'catalog/facets' %>
+</div>
+
+<div id="content" class="span9">
+
+  <h2>Collections</h2>
+
+  <div id="documents" class="gallery">
+    <ul class="image-grid">
+      <% @collections.each do |collection| %>
+        <li class="image-item">
+          <div class="blacklight-collection document">
+            <%= link_to_document(collection,
+                :label => image_tag(collection.collection_members.first.images(:large).first,
+                :alt => collection.title.html_safe,:title=>collection.title.html_safe))  %>
+      
+            <h5 class="index_title">
+              <%= link_to_document collection, :label=>collection.title.html_safe %>
+              <span class="muted">
+                (<%= pluralize(number_with_delimiter(collection.collection_members.total_members),
+                    t('revs.collection_members.items_name')) %>)
+              </span>
+            </h5>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

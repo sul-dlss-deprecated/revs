@@ -23,7 +23,7 @@ Revs::Application.routes.draw do
   match 'search', :to=> 'catalog#index', :as=>'search'
   
   # all collections pages helper route
-  match 'collections', :to => 'catalog#index', :as => 'all_collections', :defaults => {:f => {:format_ssim => ["collection"]}}
+  match 'collection', :to => 'collection#index', :as => 'all_collections'
 
   # ajax call from home page
   match 'update_carousel', :to => 'catalog#update_carousel', :as => 'update_carousel'

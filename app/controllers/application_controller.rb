@@ -105,7 +105,7 @@ class ApplicationController < ActionController::Base
   end
   
   def on_collections_page
-    controller_path=='catalog' && !on_home_page
+    controller_path=='collection'
   end
   
   def on_about_pages
