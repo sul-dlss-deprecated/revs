@@ -21,7 +21,7 @@ module ApplicationHelper
     user_signed_in? && user == current_user
   end
     
-  # pass in a user, if it's the currently logged in user, you will get the fullname; otherwise you will get the appropriate name for public display  
+  # pass in a user, if it's the currently logged in user, you will always get the fullname; otherwise you will get the appropriate name for public display  
   def display_user_name(user)
      is_logged_in_user?(user) ? user.full_name : user.to_s
   end

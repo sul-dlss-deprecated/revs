@@ -9,17 +9,20 @@ annotation1:
  user: user  # this is the named "user" fixture object from the users table
  druid: 'qb957rw1430'
  text: 'air intake?'
- json: "{\"src\":\"https://stacks.stanford.edu/image/qb957rw1430/2011-023DUG-3.0_0015_thumb\",\"text\":\"air intake?\",\"shapes\":[{\"type\":\"rect\",\"geometry\":{\"x\":0.4125,\"width\":0.07250000000000001,\"y\":0.8098859315589354,\"height\":0.1026615969581749}}],\"context\":\"http://localhost:3000/item/qb957rw1430\",\"username\":\"me\",\"updated_at\":\"today\"}" 
+ updated_at: 5/1/2013
+ json: "{\"src\":\"https://stacks.stanford.edu/image/qb957rw1430/2011-023DUG-3.0_0015_thumb\",\"text\":\"air intake?\",\"shapes\":[{\"type\":\"rect\",\"geometry\":{\"x\":0.4125,\"width\":0.07250000000000001,\"y\":0.8098859315589354,\"height\":0.1026615969581749}}],\"context\":\"http://localhost:3000/item/qb957rw1430\"}" 
 
 annotation2:
  user: admin  # this is the named "admin" fixture object from the users table
  druid: 'qb957rw1430'
+ updated_at: 10/2/2013
  text: 'Guy in the background looking sideways'
- json: "{\"src\":\"https://stacks.stanford.edu/image/qb957rw1430/2011-023DUG-3.0_0015_thumb\",\"text\":\"Guy in the background looking sideways\",\"shapes\":[{\"type\":\"rect\",\"geometry\":{\"x\":0.5175,\"width\":0.09250000000000003,\"y\":0.155893536121673,\"height\":0.19391634980988592}}],\"context\":\"http://localhost:3000/item/qb957rw1430\",\"username\":\"me\",\"updated_at\":\"today\"}" 
+ json: "{\"src\":\"https://stacks.stanford.edu/image/qb957rw1430/2011-023DUG-3.0_0015_thumb\",\"text\":\"Guy in the background looking sideways\",\"shapes\":[{\"type\":\"rect\",\"geometry\":{\"x\":0.5175,\"width\":0.09250000000000003,\"y\":0.155893536121673,\"height\":0.19391634980988592}}],\"context\":\"http://localhost:3000/item/qb957rw1430\"}" 
           
 annotation3:
   user: admin  # this is the named "admin" fixture object from the users table
   druid: 'yt907db4998'
   text: 'Nazi symbol'
-  json: "{\"src\":\"https://stacks.stanford.edu/image/yt907db4998/2011-023DUG-3.0_0017_thumb\",\"text\":\"Nazi symbol\",\"shapes\":[{\"type\":\"rect\",\"geometry\":{\"x\":0.1375,\"width\":0.09749999999999998,\"y\":0.3726235741444867,\"height\":0.10646387832699616}}],\"context\":\"http://localhost:3000/item/yt907db4998\",\"username\":\"me\",\"updated_at\":\"today\"}" 
+  updated_at: 10/6/2013
+  json: "{\"src\":\"https://stacks.stanford.edu/image/yt907db4998/2011-023DUG-3.0_0017_thumb\",\"text\":\"Nazi symbol\",\"shapes\":[{\"type\":\"rect\",\"geometry\":{\"x\":0.1375,\"width\":0.09749999999999998,\"y\":0.3726235741444867,\"height\":0.10646387832699616}}],\"context\":\"http://localhost:3000/item/yt907db4998\"}" 
 

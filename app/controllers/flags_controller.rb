@@ -2,14 +2,21 @@ class FlagsController < ApplicationController
 
   load_and_authorize_resource  # ensures only people who have access via cancan (defined in ability.rb) can do this
   
-  def index
-    druid=params[:druid]
-    @flags=Flag.where(:druid=>druid)
+  def index # all flags
+    @flags=Flag.all
     respond_to do |format|
       format.js { render }
     end
   end
 
+  def index_by_druid # flags for a specific image
+    druid=params[:id]
+    @flags=Flag.where(:druid=>druid)
+    respond_to do |format|
+      format.js { render }
+    end
+  end
+  
   def create
     
     flag_info=params[:flag]

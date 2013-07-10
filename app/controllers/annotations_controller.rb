@@ -4,10 +4,8 @@ class AnnotationsController < ApplicationController
 
   authorize_resource # ensures only people who have access via cancan (defined in ability.rb) can do this
 
-  def index
-    druid=params[:druid]
-    @annotations=Annotation.includes(:user).where(:druid=>druid)
-
+  def index # all annotations
+    @annotations=Annotation.all
     respond_to do |format|
       format.js { render }
       format.xml  { render :xml => @annotations.to_xml }
@@ -15,24 +13,26 @@ class AnnotationsController < ApplicationController
       format.html { render :partial => "all", :locals=>{:annotations=>@annotations}}
     end
   end
-      
-  def show
-    
-    @annotations=Annotation.includes(:user).where(:druid=>params[:id])
-    @annotations.each do |annotation| # loop through all annotations
-      annotation_hash=JSON.parse(annotation.json) # parse the annotation json into a ruby object
-      annotation_hash[:editable]=can? :update, annotation 
-      annotation_hash[:username]=(user_signed_in? && (annotation.user_id==current_user.id) ? "me" : annotation.user.to_s) # add the username (or "me" if current user)
-      annotation_hash[:updated_at]=show_as_date(annotation.updated_at)
-      annotation_hash[:id]=annotation.id
-      annotation.json=annotation_hash.to_json # convert back to json
-    end
-    
+  
+  def index_by_druid # all annotations for a specific druid
+    druid=params[:id]
+    @annotations=Annotation.for_image_with_user(druid,current_user)    
     respond_to do |format|
       format.js   { render }
       format.xml  { render :xml => @annotations.to_xml }
       format.json { render :json=> @annotations.to_json }
       format.html { render :partial => "all", :locals=>{:annotations=>@annotations}}
+    end
+  end
+  
+  def show
+    
+    @annotation=Annotation.find(params[:id])
+    respond_to do |format|
+      format.js   { render }
+      format.xml  { render :xml => @annotation.to_xml }
+      format.json { render :json=> @annotation.to_json }
+      format.html { render :partial => "all", :locals=>{:annotations=>[@annotation]}}
     end
     
   end
@@ -77,15 +77,15 @@ class AnnotationsController < ApplicationController
   def destroy
     
     @annotation=Annotation.find(params[:id])
-    druid=@annotation.druid
+    @druid=@annotation.druid
     @annotation.destroy
-    @all_annotations=Annotation.includes(:user).where(:druid=>druid)
+    @num_annotations=Annotation.where(:druid=>@druid).count
 
     # in the json response, we add in the number of annotations into the json so we can update the badge on the badge with the success handler    
     respond_to do |format|
       format.js   { render }
       format.xml  { render :xml => @annotation.to_xml }
-      format.json { render :json=> @annotation.as_json.merge({'num_annotations'=>@all_annotations.count}) }
+      format.json { render :json=> @annotation.as_json.merge({'num_annotations'=>@num_annotations}) }
       format.html { render :partial => "all", :locals=>{:annotations=>[@annotation]}}      
     end
     

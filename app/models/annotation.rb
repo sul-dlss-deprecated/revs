@@ -4,7 +4,7 @@ class Annotation < ActiveRecord::Base
   
   belongs_to :user  
   attr_accessible :text, :json, :user_id, :druid
-
+  
   after_create :add_annotation_to_solr
   after_update :update_annotation_in_solr
   after_destroy :update_annotation_in_solr
@@ -18,14 +18,18 @@ class Annotation < ActiveRecord::Base
     @item ||= Item.find(druid)
   end
 
-  # json that has extra fields added for highlighting (also sets editing to false always)
-  def json_for_highlighting
-    annotation_hash=JSON.parse(json) # parse the annotation json into a ruby object
-    annotation_hash[:editable]=false
-    annotation_hash[:username]=""
-    annotation_hash[:updated_at]=""
-    annotation_hash[:id]=self.id
-    return annotation_hash.to_json # convert back to json
+  # pass in a druid and a user and get the annotations for that image, with the appropriate json additions required for display annotations on the image
+  def self.for_image_with_user(druid,user)
+    annotations=Annotation.includes(:user).where(:druid=>druid)
+    annotations.each do |annotation| # loop through all annotations
+      annotation_hash=JSON.parse(annotation.json) # parse the annotation json into a ruby object
+      annotation_hash[:editable]=user ? user.can?(:update, annotation) : false 
+      annotation_hash[:username]=(user && annotation.user_id==user.id) ? "me" : annotation.user.to_s # add the username (or "me" if current user)
+      annotation_hash[:updated_at]=annotation.updated_at.strftime('%B %d, %Y')  
+      annotation_hash[:id]=annotation.id
+      annotation.json=annotation_hash.to_json # convert back to json
+    end
+    return annotations
   end
   
   def add_annotation_to_solr

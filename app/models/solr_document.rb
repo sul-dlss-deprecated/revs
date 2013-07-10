@@ -9,8 +9,8 @@ class SolrDocument
     Flag.includes(:user).where(:druid=>id)
   end
 
-  def annotations
-    Annotation.includes(:user).where(:druid=>id)
+  def annotations(user)
+    Annotation.for_image_with_user(id,user)
   end
 
   def title

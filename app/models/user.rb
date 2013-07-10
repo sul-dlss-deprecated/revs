@@ -27,6 +27,8 @@ class User < ActiveRecord::Base
   validates :username, :length => { :in => 5..50}
   validates :username, :format => { :with => /\A\D.+/,:message => "must start with a letter" }
   include Blacklight::User
+
+  delegate :can?, :cannot?, :to => :ability
   
   def self.roles
     ROLES
@@ -102,7 +104,11 @@ class User < ActiveRecord::Base
   def no_role?
     role.blank?
   end
-  
+
+  def ability
+    @ability ||= Ability.new(self)
+  end
+    
   # update the lock status if needed
   def update_lock_status(lock)
     if lock && locked_at.blank?

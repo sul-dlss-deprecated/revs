@@ -27,6 +27,7 @@ class Ability
   def guest_actions(user)
     # any user of the website (even those not logged in) can perform these actions
     can :read, [Annotation,Flag]
+    can :index_by_druid, [Annotation, Flag]
   end
   
    # administrator can enter admin area and curator area and can peform all user actions

@@ -129,6 +129,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def current_ability
+    current_user ? current_user.ability : User.new.ability
+  end
+  
   def show_as_date(datetime)
     datetime.strftime('%B %d, %Y')  
   end

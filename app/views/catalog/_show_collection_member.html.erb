@@ -19,6 +19,7 @@
   });
 </script>
 
+<% @annotations = @document.annotations(current_user) %>
 <span class="hidden" id="druid" data-druid="<%=@document[:id]%>"></span>
 
 <div class="row">
@@ -68,35 +69,35 @@
             "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'new') %>
           </li>
 
-					<% annotation_count_display_class = (@document.annotations.size > 0 ? "" : "hidden") %>
+					<% annotation_count_display_class = (@annotations.size > 0 ? "" : "hidden") %>
 
           <% if can? :create, Annotation %>
             <li>
                <%# link to show annotation workspace %>
-               <%= link_to(("<i class='icon-edit'></i> <span id='annotation-link-text'>View/add annotations</span> ".html_safe + content_tag(:span, @document.annotations.size, :class => "#{annotation_count_display_class} num-annotations-badge badge badge-revs")).html_safe, '#', :id=>'annotate_link', :class=>"annotation_links showOnLoad hidden-offscreen") %>
+               <%= link_to(("<i class='icon-edit'></i> <span id='annotation-link-text'>View/add annotations</span> ".html_safe + content_tag(:span, @annotations.size, :class => "#{annotation_count_display_class} num-annotations-badge badge badge-revs")).html_safe, '#', :id=>'annotate_link', :class=>"annotation_links showOnLoad hidden-offscreen") %>
                <%# link to hide annotation workspace %>
-               <%= link_to(("<i class='icon-edit'></i> Hide annotations ".html_safe + content_tag(:span, @document.annotations.size, :class => "#{annotation_count_display_class} num-annotations-badge badge badge-revs")).html_safe,'#',:id=>'hide_annotations_link',:class=>"hidden-offscreen") %>
+               <%= link_to(("<i class='icon-edit'></i> Hide annotations ".html_safe + content_tag(:span, @annotations.size, :class => "#{annotation_count_display_class} num-annotations-badge badge badge-revs")).html_safe,'#',:id=>'hide_annotations_link',:class=>"hidden-offscreen") %>
 
-							<% if @document.annotations.size > 0 %>
+							<% if @annotations.size > 0 %>
                 <%# list of existing annotations %>
                 <div id="all-annotations" class="hidden-offscreen">
-                  <%= render :partial => "annotations/all", :locals=>{:annotations=>@document.annotations} %>
+                  <%= render :partial => "annotations/all", :locals=>{:annotations=>@annotations} %>
                 </div>
 							<% end %>
 								
             </li>
 
-          <% elsif can?(:read, Annotation) && @document.annotations.size > 0 %>
+          <% elsif can?(:read, Annotation) && @annotations.size > 0 %>
             <li>
                <%# link to hide annotation workspace %>
-               <%= link_to(("<i class='icon-edit'></i> <span id='annotation-link-text'>View annotations</span>".html_safe + content_tag(:span, @document.annotations.size, :class => "#{annotation_count_display_class} num-annotations-badge badge badge-revs")).html_safe,'#',:id=>'view_annotations_link',:class=>"annotation_links showOnLoad hidden-offscreen") %>
+               <%= link_to(("<i class='icon-edit'></i> <span id='annotation-link-text'>View annotations</span>".html_safe + content_tag(:span, @annotations.size, :class => "#{annotation_count_display_class} num-annotations-badge badge badge-revs")).html_safe,'#',:id=>'view_annotations_link',:class=>"annotation_links showOnLoad hidden-offscreen") %>
 
                <%# link to hide annotation workspace %>
-               <%= link_to(("<i class='icon-edit'></i> Hide annotations ".html_safe + content_tag(:span, @document.annotations.size, :class => "#{annotation_count_display_class} num-annotations-badge badge badge-revs")).html_safe, '#',:id=>'hide_annotations_link',:class=>"hidden-offscreen") %>
+               <%= link_to(("<i class='icon-edit'></i> Hide annotations ".html_safe + content_tag(:span, @annotations.size, :class => "#{annotation_count_display_class} num-annotations-badge badge badge-revs")).html_safe, '#',:id=>'hide_annotations_link',:class=>"hidden-offscreen") %>
 
                <%# list of existing annotations %>
                <div id="all-annotations" class="hidden-offscreen">
-                 <%= render :partial => "annotations/all", :locals=>{:annotations=>@document.annotations} %>
+                 <%= render :partial => "annotations/all", :locals=>{:annotations=>@annotations} %>
                </div>
 
             </li>

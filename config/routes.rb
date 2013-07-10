@@ -47,8 +47,17 @@ Revs::Application.routes.draw do
   # term acceptance dialog
   match 'accept_terms', :to=> 'application#accept_terms', :as=> 'accept_terms', :via=>:post
   
-  resources :annotations
-  resources :flags
+  resources :annotations do
+    collection do
+      get 'for_image/:id', :to => 'annotations#index_by_druid'
+    end
+  end
+  
+  resources :flags do
+    collection do
+      get 'for_image/:id', :to => 'flags#index_by_druid'
+    end
+  end
   
   # admin pages
   namespace :admin do

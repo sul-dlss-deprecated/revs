@@ -6,13 +6,12 @@ anno.addHandler('onAnnotationCreated', function(annotation) {
 		data: "annotation="+JSON.stringify(annotation)+"&druid=" + druid(),
 		success: function(data) {
 	    annotation.id=data.id; // the annotation ID should match the database row ID so we can delete it if needed
-			updateAnnotationsPanel(data);
+			updateAnnotationsPanel(data.num_annotations,druid());
+			// these are added so the display to the user is correct for the new annotation; they will be set on the server when the page loads for all annotations
+			annotation.username='me';
+			annotation.updated_at='today';
 	  }
 		});
-		
-		// these are added so the display to the user is correct for the new annotation; they will be set on the server when the page loads for all annotations
-		annotation.username='me';
-		annotation.updated_at='today';
 });
 
 anno.addHandler('onAnnotationUpdated', function(annotation) {
@@ -22,7 +21,7 @@ anno.addHandler('onAnnotationUpdated', function(annotation) {
 	  url: "/annotations/" + annotation.id,
 	  data: "annotation="+JSON.stringify(annotation),
 		success: function(data) {
-			updateAnnotationsPanel(data);
+			updateAnnotationsPanel(data.num_annotations,druid());
 	  }	
 	});
 });
@@ -40,7 +39,7 @@ anno.addHandler('onAnnotationRemoved', function(annotation) {
 		dataType: "JSON",
 	  url: "/annotations/" + annotation.id,
 		success: function(data) {
-			updateAnnotationsPanel(data);
+			updateAnnotationsPanel(data.num_annotations,druid());
 	  }	
 	});
 });
@@ -61,10 +60,10 @@ annotorious.plugin.addUsernamePlugin.prototype.onInitAnnotator = function(annota
 }
 anno.addPlugin('addUsernamePlugin', {});	
 
-function updateAnnotationsPanel(data) {
-	$(".num-annotations-badge").text(data.num_annotations); // update the total annotations badge
+function updateAnnotationsPanel(num_annotations,druid) {
+	$(".num-annotations-badge").text(num_annotations); // update the total annotations badge
 	$(".num-annotations-badge").removeClass('hidden');
-	$("#all-annotations").load("/annotations/"+druid());// re-render the annotations panel
+	$("#all-annotations").load("/annotations/for_image/"+druid);// re-render the annotations panel
 }
 
 function showAnnotations() {	
@@ -84,7 +83,7 @@ function enableAnnotations() {
 }
 
 function loadAnnotations() {
-	jQuery.getJSON("/annotations/"+druid()+ ".json",function(data) {
+	jQuery.getJSON("/annotations/for_image/"+druid()+ ".json",function(data) {
 		for (var i = 0; i < data.length; i++) {
 				annotation = JSON.parse(data[i].json)
         anno.addAnnotation(annotation);
