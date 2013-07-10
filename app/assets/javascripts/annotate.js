@@ -49,9 +49,15 @@ anno.addHandler('onAnnotationRemoved', function(annotation) {
 annotorious.plugin.addUsernamePlugin = function(opt_config_options) { }
 annotorious.plugin.addUsernamePlugin.prototype.onInitAnnotator = function(annotator) {
   // A Field can be an HTML string or a function(annotation) that returns a string
-  annotator.popup.addField(function(annotation) { 
-    return '<em>from ' + annotation.username + ' - '+ annotation.updated_at +'</em>'
-  });
+	  annotator.popup.addField(function(annotation) { 
+		 	if (annotation.username != '') {
+	    	return '<em>from ' + annotation.username + ' - '+ annotation.updated_at +'</em>'
+		  }
+		else
+		 {
+			 return ''
+			}
+	  });
 }
 anno.addPlugin('addUsernamePlugin', {});	
 

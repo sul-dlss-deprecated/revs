@@ -67,6 +67,12 @@ $(document).ready(function(){
    });
 
 
+	$(document).on('mouseleave','.annotation-info',function(){anno.highlightAnnotation();});
+	$(document).on('mouseenter','.annotation-info',function(){
+		annotation=($(this).data('json'));
+		anno.highlightAnnotation(annotation);
+	});
+
 	// elements defined with the class "showOnLoad" and "hidden" classes will be hidden by default and then show when the page loads
 	//  useful when you have non javascript friendly DOM elements you need to hide for no JS browsers so you can include a <noscript> tag with
 	//   non JS versions

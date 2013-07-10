@@ -18,6 +18,16 @@ class Annotation < ActiveRecord::Base
     @item ||= Item.find(druid)
   end
 
+  # json that has extra fields added for highlighting (also sets editing to false always)
+  def json_for_highlighting
+    annotation_hash=JSON.parse(json) # parse the annotation json into a ruby object
+    annotation_hash[:editable]=false
+    annotation_hash[:username]=""
+    annotation_hash[:updated_at]=""
+    annotation_hash[:id]=self.id
+    return annotation_hash.to_json # convert back to json
+  end
+  
   def add_annotation_to_solr
 
     druid=self.druid

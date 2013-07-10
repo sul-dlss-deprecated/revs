@@ -1,0 +1,3 @@
+$('#all-annotations').html("<%= escape_javascript(render :partial => 'all', :locals=>{:annotations=>@all_annotations}) %>");
+anno.removeAll();
+loadAnnotations();

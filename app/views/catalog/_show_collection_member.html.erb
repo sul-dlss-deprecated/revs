@@ -80,7 +80,7 @@
 							<% if @document.annotations.size > 0 %>
                 <%# list of existing annotations %>
                 <div id="all-annotations" class="hidden-offscreen">
-                  <%= render :partial => "annotation_list", :locals=>{:annotations=>@document.annotations} %>
+                  <%= render :partial => "annotations/all", :locals=>{:annotations=>@document.annotations} %>
                 </div>
 							<% end %>
 								
@@ -96,7 +96,7 @@
 
                <%# list of existing annotations %>
                <div id="all-annotations" class="hidden-offscreen">
-                 <%= render :partial => "annotation_list", :locals=>{:annotations=>@document.annotations} %>
+                 <%= render :partial => "annotations/all", :locals=>{:annotations=>@document.annotations} %>
                </div>
 
             </li>

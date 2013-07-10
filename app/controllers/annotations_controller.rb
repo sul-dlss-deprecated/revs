@@ -12,7 +12,7 @@ class AnnotationsController < ApplicationController
       format.js { render }
       format.xml  { render :xml => @annotations.to_xml }
       format.json { render :json=> @annotations.to_json }      
-      format.html { render :partial => "catalog/annotation_list", :locals=>{:annotations=>@annotations}}
+      format.html { render :partial => "all", :locals=>{:annotations=>@annotations}}
     end
   end
       
@@ -32,7 +32,7 @@ class AnnotationsController < ApplicationController
       format.js   { render }
       format.xml  { render :xml => @annotations.to_xml }
       format.json { render :json=> @annotations.to_json }
-      format.html { render :partial => "catalog/annotation_list", :locals=>{:annotations=>@annotations}}
+      format.html { render :partial => "all", :locals=>{:annotations=>@annotations}}
     end
     
   end
@@ -50,7 +50,7 @@ class AnnotationsController < ApplicationController
       format.js   { render }
       format.xml  { render :xml => @annotation.to_xml }
       format.json { render :json=> @annotation.as_json.merge({'num_annotations'=>num_annotations}) }
-      format.html { render :partial => "catalog/annotation_list", :locals=>{:annotations=>[@annotation]}}
+      format.html { render :partial => "all", :locals=>{:annotations=>[@annotation]}}
     end
     
   end
@@ -69,7 +69,7 @@ class AnnotationsController < ApplicationController
       format.js   { render }
       format.xml  { render :xml => @annotation.to_xml }
       format.json { render :json=> @annotation.to_json }
-      format.html { render :partial => "catalog/annotation_list", :locals=>{:annotations=>[@annotation]}}      
+      format.html { render :partial => "all", :locals=>{:annotations=>[@annotation]}}      
     end
            
   end
@@ -79,14 +79,14 @@ class AnnotationsController < ApplicationController
     @annotation=Annotation.find(params[:id])
     druid=@annotation.druid
     @annotation.destroy
-    num_annotations=Annotation.where(:druid=>druid).count
+    @all_annotations=Annotation.includes(:user).where(:druid=>druid)
 
     # in the json response, we add in the number of annotations into the json so we can update the badge on the badge with the success handler    
     respond_to do |format|
       format.js   { render }
       format.xml  { render :xml => @annotation.to_xml }
-      format.json { render :json=> @annotation.as_json.merge({'num_annotations'=>num_annotations}) }
-      format.html { render :partial => "catalog/annotation_list", :locals=>{:annotations=>[@annotation]}}      
+      format.json { render :json=> @annotation.as_json.merge({'num_annotations'=>@all_annotations.count}) }
+      format.html { render :partial => "all", :locals=>{:annotations=>[@annotation]}}      
     end
     
   end

@@ -8,7 +8,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
     
   it "should allow multiple logged in users to flag an item, show all flags, and then allow the user remove the flag" do
       
-      remove_button='Remove Flag'
+      remove_button='Remove'
       flag_button='Flag Item'
       comment_field='flag_comment'
       default_flag_type='error'
