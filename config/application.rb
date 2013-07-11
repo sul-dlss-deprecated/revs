@@ -70,3 +70,5 @@ Revs::Application.config.stacks_url = YAML.load_file("#{Rails.root}/config/stack
 Revs::Application.config.contact_us_topics = {'default'=>'revs.contact.select_topic', 'metadata'=>'revs.contact.metadata_issue','terms of use'=>'revs.contact.terms_of_use', 'error'=>'revs.contact.problem','other'=>'revs.contact.other_questions'} # sets the list of topics shown in the contact us page
 Revs::Application.config.contact_us_recipients = {'default'=>'digcoll@jirasul.stanford.edu', 'metadata'=>'digcoll@jirasul.stanford.edu','error'=>'digcoll@jirasul.stanford.edu','terms of use'=>'digcoll@jirasul.stanford.edu','other'=>'digcoll@jirasul.stanford.edu'} # sets the email address for each contact us topic configed above
 Revs::Application.config.contact_us_cc_recipients = {'default'=>'', 'metadata'=>'','terms of use'=>'info@revsinstitute.org', 'error'=>''} # sets the CC email address for each contact us topic configed above
+
+Revs::Application.config.editstore_project='revs'

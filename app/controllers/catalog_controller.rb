@@ -20,8 +20,7 @@ class CatalogController < ApplicationController
         @random_collection_number=Random.new.rand(@highlight_collections.size) # pick a random one to start with for non-JS users
       
         # get some information about all the collections and images we have so we can report on total numbers
-        collections=Blacklight.solr.get 'select',:params=>{:q=>'format_ssim:collection'}
-        @total_collections=collections['response']['numFound']
+        @total_collections=SolrDocument.all_collections.size
         items=Blacklight.solr.get 'select',:params=>{:q=>'-format_ssim:collection'}      
         @total_images=items['response']['numFound']
       end

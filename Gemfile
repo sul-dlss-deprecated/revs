@@ -3,6 +3,8 @@ source 'http://sul-gems.stanford.edu'
 
 gem 'bundler', '>= 1.2.0'
 
+gem 'editstore'
+
 ruby "1.9.3"
 
 gem 'rails', '>= 3.2.11'

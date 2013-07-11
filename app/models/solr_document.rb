@@ -204,18 +204,6 @@ class SolrDocument
                              )
   end
 
-  # Return an Array of collection SolrDocuments
-  def all_collections
-    @all_collections ||= Blacklight.solr.select(
-      :params => {
-        :fq => "#{blacklight_config.collection_identifying_field}:\"#{blacklight_config.collection_identifying_value}\"",
-        :rows => "1000"
-      }
-    )["response"]["docs"].map do |document|
-      SolrDocument.new(document)
-    end
-  end
-
   def images(size=:default)
     return nil unless self.has_key?(blacklight_config.image_identifier_field)
     stacks_url = Revs::Application.config.stacks_url
@@ -251,6 +239,18 @@ class SolrDocument
                          )
 
 
+   # Return an Array of collection SolrDocuments
+   def self.all_collections
+     @all_collections ||= Blacklight.solr.select(
+       :params => {
+         :fq => "#{self.config.collection_identifying_field}:\"#{self.config.collection_identifying_value}\"",
+         :rows => "10000"
+       }
+     )["response"]["docs"].map do |document|
+       SolrDocument.new(document)
+     end
+   end
+
   def self.image_dimensions
     options = {:default => "_square",
                :large   => "_thumb" }
@@ -258,7 +258,11 @@ class SolrDocument
 
   private
 
+  def self.config
+    CatalogController.blacklight_config  
+  end
+  
   def blacklight_config
-    CatalogController.blacklight_config
+    self.class.config
   end
 end

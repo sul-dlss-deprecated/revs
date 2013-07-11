@@ -37,9 +37,8 @@ describe SolrDocument, :integration => true do
     end
     describe "all_collections" do
       it "shold return an array of collection SolrDocuments" do
-        document = SolrDocument.new
-        document.all_collections.length.should be > 0
-        document.all_collections.each do |doc|
+        SolrDocument.all_collections.length.should be == 2
+        SolrDocument.all_collections.each do |doc|
           doc.collection?.should be_true
           doc.should be_a SolrDocument
         end

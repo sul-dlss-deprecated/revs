@@ -43,15 +43,20 @@ class Annotation < ActiveRecord::Base
   
   def update_annotation_in_solr
     
-    # get all annotations for this image and update the solr document (its easier than trying to figure out exactly which annotation changed)
-    
-    druid=self.druid
-    
+    self.class.add_to_solr_for_druid(self.druid)
+          
+  end
+  
+  # get all annotations for this image and update the solr document (its easier than trying to figure out exactly which annotation changed)
+  
+  def self.add_to_solr_for_druid(druid)
+       
     annotations=Annotation.where(:druid=>druid)
     text_array = annotations.map {|annotation| annotation.text.gsub('"','\"')}
     
     RestClient.post "#{Blacklight.solr.options[:url]}/update?commit=true", "[{\"id\":\"#{druid}\",\"annotations_tsim\":{\"set\":[\"#{text_array.join('","')}\"]}}]", :content_type => :json, :accept=>:json
-          
+    
   end
+  
     
 end

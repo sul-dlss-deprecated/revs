@@ -1,7 +1,7 @@
 class Item
 
   # A nify little helper class to grab you a Solr Document given an ID.  Helpful on the console:
-  # doc = Item.find('wb029sv4796')
+  # doc = Item.find('qb957rw1430')
   # puts doc.title
 
   def self.find(id)
