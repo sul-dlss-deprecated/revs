@@ -12,4 +12,5 @@
   <field name="marque_ssim">Ford</field>
   <field name="entrant_ssi">Clinton, Bill</field>
   <field name="location_ssi">Canada</field>
+  <field name="priority_isi">1</field>
 </doc>

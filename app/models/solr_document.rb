@@ -164,7 +164,7 @@ class SolrDocument
                               Blacklight.solr.select(
                                 :params => {
                                   :fq => "#{blacklight_config.collection_member_identifying_field}:\"#{self[SolrDocument.unique_key]}\"",
-                                  :sort=> "weight_isi asc",
+                                  :sort=> "priority_isi desc",
                                   :rows => rows.to_s,
                                   :start => start.to_s
                                 }
@@ -187,6 +187,7 @@ class SolrDocument
                                Blacklight.solr.select(
                                  :params => {
                                    :fq => "#{blacklight_config.collection_member_identifying_field}:\"#{self[blacklight_config.collection_member_identifying_field].first}\"",
+                                   :sort=> "priority_isi desc",
                                    :rows => rows.to_s,
                                   :start => start.to_s
                                  }
