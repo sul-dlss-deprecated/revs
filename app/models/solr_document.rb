@@ -172,9 +172,18 @@ class SolrDocument
                             )
   end
   
-  # gives you the representative image of the collection (or first if not defined)
-  def collection_image
-    self.collection_members(:rows=>1,:start=>0).first.images(:large).first
+  def first_item
+    self.collection_members(:rows=>1,:start=>0).first
+  end
+  
+  # gives you the representative image of the collection
+  def first_image
+    first_item.images(:large).first
+  end
+  
+  # gives you the current top priority number for item sorting
+  def current_top_priority
+    first_item['priority_isi'] || 0
   end
   
   # Return a CollectionMembers object of all of the siblings of a collection member (including self)
