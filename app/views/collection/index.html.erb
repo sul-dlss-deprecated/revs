@@ -14,7 +14,7 @@
         <li class="image-item">
           <div class="blacklight-collection document">
             <%= link_to_document(collection,
-                :label => image_tag(collection.collection_members.first.images(:large).first,
+                :label => image_tag(collection.collection_image,
                 :alt => collection.title.html_safe,:title=>collection.title.html_safe))  %>
       
             <h5 class="index_title">

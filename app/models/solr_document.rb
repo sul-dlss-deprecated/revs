@@ -164,13 +164,20 @@ class SolrDocument
                               Blacklight.solr.select(
                                 :params => {
                                   :fq => "#{blacklight_config.collection_member_identifying_field}:\"#{self[SolrDocument.unique_key]}\"",
+                                  :sort=> "weight_isi asc",
                                   :rows => rows.to_s,
                                   :start => start.to_s
                                 }
                               )
                             )
   end
-  # Return a CollectionMembers object of all of the siblins a collection member (including self)
+  
+  # gives you the representative image of the collection (or first if not defined)
+  def collection_image
+    self.collection_members(:rows=>1,:start=>0).first.images(:large).first
+  end
+  
+  # Return a CollectionMembers object of all of the siblings of a collection member (including self)
   def collection_siblings(params={})
     return nil unless collection_member?
 

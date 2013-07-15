@@ -8,4 +8,5 @@
   <field name="collection_ssim">John Dugdale Collection</field>
   <field name="image_id_ssm">2011-023DUG-3.0_0017</field>
   <field name="annotations_tsim">Nazi symbol</field>
+  <field name="weight_isi">-100</field>
 </doc>
