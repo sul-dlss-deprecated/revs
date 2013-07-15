@@ -212,6 +212,27 @@ class SolrDocument
     end
   end
 
+  # add a new value to a multivalued field given a field name and a value
+  def add_field(field_name,value)
+    RestClient.post "#{Blacklight.solr.options[:url]}/update?commit=true", "[{\"id\":\"#{id}\",\"#{field_name}\":{\"add\":\"#{value.gsub('"','\"')}\"}}]",:content_type => :json, :accept=>:json
+  end
+  
+  # set the value for a single valued field or set all values for a multivalued field given a field name and either a single value or an array of values
+  def set_field(field_name,value)
+    value=[value] unless value.class == Array # turn the value into an array if its not one, this will enable to the query below to work for both single values and arrays
+    RestClient.post "#{Blacklight.solr.options[:url]}/update?commit=true", "[{\"id\":\"#{id}\",\"#{field_name}\":{\"set\":[\"#{value.join('","')}\"]}}]", :content_type => :json, :accept=>:json
+  end
+
+  # update the value for a multivalued field from old value to new value (for a single value field, you can just set the new value directly)
+  def update_field(field_name,old_value,new_value)
+    if self[field_name].class == Array
+      new_values=self[field_name].collect{|value| value.to_s==old_value.to_s ? new_value : value}
+      RestClient.post "#{Blacklight.solr.options[:url]}/update?commit=true", "[{\"id\":\"#{id}\",\"#{field_name}\":{\"set\":[\"#{new_values.join('","')}\"]}}]", :content_type => :json, :accept=>:json
+    else
+      set_field(field_name,new_value)
+    end
+  end
+    
   # The following shows how to setup this blacklight document to display marc documents
   extension_parameters[:marc_source_field] = :marc_display
   extension_parameters[:marc_format_type] = :marcxml

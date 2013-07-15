@@ -7,7 +7,7 @@ class CreateEditstoreChanges < ActiveRecord::Migration
       t.string  :field, :null=>false
       t.string  :druid, :null=>false
       t.text    :old_value
-      t.text    :new_value, :null=>false
+      t.text    :new_value
       t.text    :operation, :null=>false
       t.integer :state_id, :null=>false
       t.text    :client_note

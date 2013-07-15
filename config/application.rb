@@ -71,4 +71,4 @@ Revs::Application.config.contact_us_topics = {'default'=>'revs.contact.select_to
 Revs::Application.config.contact_us_recipients = {'default'=>'digcoll@jirasul.stanford.edu', 'metadata'=>'digcoll@jirasul.stanford.edu','error'=>'digcoll@jirasul.stanford.edu','terms of use'=>'digcoll@jirasul.stanford.edu','other'=>'digcoll@jirasul.stanford.edu'} # sets the email address for each contact us topic configed above
 Revs::Application.config.contact_us_cc_recipients = {'default'=>'', 'metadata'=>'','terms of use'=>'info@revsinstitute.org', 'error'=>''} # sets the CC email address for each contact us topic configed above
 
-Revs::Application.config.editstore_project='revs'
+EDITSTORE_PROJECT='revs'  # the name of your project in the editstore database -- this must exist in the edistore database "projects" table in both production and development to work properly
