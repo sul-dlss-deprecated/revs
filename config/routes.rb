@@ -58,7 +58,7 @@ Revs::Application.routes.draw do
       get 'for_image/:id', :to => 'flags#index_by_druid'
     end
   end
-  
+    
   # admin pages
   namespace :admin do
     resources :users

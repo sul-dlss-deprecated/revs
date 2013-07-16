@@ -2,7 +2,7 @@
   <div class="<%= render_document_class document %> document span9">
     <div class="row result-item" data-item-id="item-<%= document.id %>">
       <div class="span1 result-item-checkbox">
-        <input type="checkbox" id="checkbox-<%= document.id %>" name="checkbox-<%= document.id %>">
+			  <%= check_box_tag 'selected_druids[]', document.id, @selected_druids.nil? ? false : @selected_druids.include?(document.id) %>
       </div>
       <div class="span2 result-thumbnail">
         <%= link_to_document document,

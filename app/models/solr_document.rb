@@ -219,7 +219,7 @@ class SolrDocument
   
   # set the value for a single valued field or set all values for a multivalued field given a field name and either a single value or an array of values
   def set_field(field_name,value)
-    value=[value] unless value.class == Array # turn the value into an array if its not one, this will enable to the query below to work for both single values and arrays
+    value=[value] unless value.class == Array # turn the value into an array if its not one, this will enable the query below to work for both single values and arrays
     RestClient.post "#{Blacklight.solr.options[:url]}/update?commit=true", "[{\"id\":\"#{id}\",\"#{field_name}\":{\"set\":[\"#{value.join('","')}\"]}}]", :content_type => :json, :accept=>:json
   end
 
@@ -272,6 +272,11 @@ class SolrDocument
      end
    end
 
+  def self.total_images
+    items=Blacklight.solr.get 'select',:params=>{:q=>'-format_ssim:collection'}      
+    return items['response']['numFound']
+  end
+  
   def self.image_dimensions
     options = {:default => "_square",
                :large   => "_thumb" }

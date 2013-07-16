@@ -7,28 +7,40 @@ class CatalogController < ApplicationController
     
   def index
 
-    if on_home_page
+    if on_home_page # on the home page
           
-      unless fragment_exist?('home')
-        # get the collection highlights from the database
-        highlights = CollectionHighlight.all
+      unless fragment_exist?('home') # fragment cache for performance
 
-        # get the titles and descriptions from solr, but only for those which we find in solr (this allows us to have seeds in the database for items which may not be in solr, eg. in development)
-        highlight_collections_query=Blacklight.solr.get 'select',:params=>{:q=>highlights.map{|highlight| 'id:"' + highlight.druid + '"'}.join(' OR ')}
-        @highlight_collections=highlight_collections_query['response']['docs'].shuffle
-        @highlight_collections.each {|highlight| highlight.merge!('image_url'=>CollectionHighlight.find_by_druid(highlight['id']).image_url)} # add the URL for each highlight image to the solr documents
+        @highlight_collections=CollectionHighlight.all_in_solr
         @random_collection_number=Random.new.rand(@highlight_collections.size) # pick a random one to start with for non-JS users
       
         # get some information about all the collections and images we have so we can report on total numbers
         @total_collections=SolrDocument.all_collections.size
-        items=Blacklight.solr.get 'select',:params=>{:q=>'-format_ssim:collection'}      
-        @total_images=items['response']['numFound']
-      end
-      
-    end
+        @total_images=SolrDocument.total_images
         
-    super
+      end
+    
+    elsif can?(:bulk_update,:all) && params[:operation]=='bulk' # submitted a bulk update operation
+    
+      @selected_druids=params[:selected_druids]
+      @new_value=params[:new_value]
+      @field_name=params[:field_name]
 
+      if @field_name.blank? || @new_value.blank? || @selected_druids.blank?
+        flash.now[:error]="To apply a bulk update, select the field to update, enter a new value and select some items."      
+      else
+        Item.bulk_update(@selected_druids,@field_name,@new_value)
+        flash.now[:notice]="Your update has been applied to all the items you selected."
+        @selected_druids=[]
+        @field_name=nil
+        @new_value=nil
+      end
+              
+    end
+
+    super
+        
+    # if we get this far, it may have been a search operation, so if we only have one search result, just go directly there
     redirect_to item_path(@response['response']['docs'].first['id']) if @response['response']['numFound'] == 1 
 
   end
@@ -41,6 +53,7 @@ class CatalogController < ApplicationController
   
   # an ajax call to get the next set of images to show in a carousel on the collection detail page
   def update_carousel
+    return unless request.xhr?
     druid=params[:druid]
     @rows=params[:rows] || blacklight_config.collection_member_carousel_items
     @start=params[:start] || 0

@@ -1,8 +1,11 @@
 <%= render "gallery_toggle" %>
 
 <div class="row curator-edit-options">
-  <form class="form-inline">
-    <div class"controls controls-row">
+	<%= form_tag(request.url, method: 'post', class:'form-inline') do %>
+	
+    <%= hidden_field_tag :operation,'bulk'%>
+
+    <div class="controls controls-row">
 
       <label class="checkbox">
         <input type="checkbox" name="select-all" id="select-all">
@@ -11,30 +14,15 @@
 
       <div class="update-field">
         <span class="help-inline">Update:</span>
-        <select class="span2" name="field-to-edit" id="field-to-edit">
-          <option>Field to update...</option>
-          <option>Description</option>
-          <option>Year</option>
-          <option>Location</option>
-          <option>Event</option>
-          <option>Marque</option>
-          <option>People</option>
-          <option>Group/Class</option>
-          <option>Entrant</option>
-          <option>Current Owner</option>
-          <option>Tags</option>
-          <option>Format</option>
-          <option>Metadata Sources</option>
-        </select>
+				<%= select_tag :field_name,options_for_select(Item.bulk_update_fields,@field_name),class:"span2",name:"field_name"%>
       </div>
 
       <div class="update-field-value">
-        <input class="span4" id="appendedInputButton" type="text" placeholder="new value">
+			  <%= text_field_tag :new_value, @new_value, class: 'span4', placeholder: 'new value', id: 'new_value' %>
         <%= submit_tag "Update", :class => 'btn btn-small' %>
       </div>
 
     </div>
-  </form>
 </div>
 
 <div id="documents" class="curator">
@@ -42,3 +30,4 @@
     <%= render_document_partial document, :index, :document_counter => index %>
   <%- end -%>
 </div>
+<% end %>
