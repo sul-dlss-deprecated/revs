@@ -122,9 +122,9 @@ GEM
       rack-contrib
       rails
     mime-types (1.23)
-    multi_json (1.7.7)
     mini_magick (3.6.0)
       subexec (~> 0.2.1)
+    multi_json (1.7.7)
     mysql (2.8.1)
     nokogiri (1.5.5)
     omniauth (1.1.3)

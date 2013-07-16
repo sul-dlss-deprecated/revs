@@ -20,20 +20,14 @@ class CatalogController < ApplicationController
         
       end
     
-    elsif can?(:bulk_update,:all) && params[:operation]=='bulk' # submitted a bulk update operation
-    
-      @selected_druids=params[:selected_druids]
-      @new_value=params[:new_value]
-      @field_name=params[:field_name]
+    elsif can?(:bulk_update,:all) && params[:operation]=='bulk' && request.post? # user submitted a bulk update operation and has the rights to do it
 
-      if @field_name.blank? || @new_value.blank? || @selected_druids.blank?
+      if params[:field_name].blank? || params[:new_value].blank? || params[:selected_druids].blank?
         flash.now[:error]="To apply a bulk update, select the field to update, enter a new value and select some items."      
       else
-        Item.bulk_update(@selected_druids,@field_name,@new_value)
+        Item.bulk_update(params[:selected_druids],params[:field_name],params[:new_value])
         flash.now[:notice]="Your update has been applied to all the items you selected."
-        @selected_druids=[]
-        @field_name=nil
-        @new_value=nil
+        [:field_name,:new_value,:selected_druids].each {|field| params.delete(field)} # remove them from the paramas hash
       end
               
     end
