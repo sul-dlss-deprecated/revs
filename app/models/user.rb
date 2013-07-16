@@ -1,5 +1,10 @@
 class User < ActiveRecord::Base
-    
+
+  # class generated with CarrierWave
+  mount_uploader :avatar, AvatarUploader
+  validates_integrity_of  :avatar
+  validates_processing_of :avatar
+
   # user abilities and permissions are defined in the ability.rb class == if you add or change names here, you will need both
   #  update the ability class, and update the strings stored in the user "role" column
   ROLES=%w{admin curator user}
@@ -12,7 +17,10 @@ class User < ActiveRecord::Base
          :lockable, :timeoutable, :omniauthable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :username, :email, :sunet, :password, :password_confirmation, :remember_me, :role, :bio, :first_name, :last_name, :public, :url, :twitter, :login, :subscribe_to_mailing_list, :subscribe_to_revs_mailing_list
+  attr_accessible :username, :email, :sunet, :password, :password_confirmation, :remember_me,
+                  :role, :bio, :first_name, :last_name, :public, :url, :twitter, :login,
+                  :subscribe_to_mailing_list, :subscribe_to_revs_mailing_list,
+                  :avatar, :avatar_cache, :remove_avatar
   attr_accessor :subscribe_to_mailing_list, :subscribe_to_revs_mailing_list # not persisted, just used on the signup form
   attr_accessor :login # virtual method that will refer to either email or username
   

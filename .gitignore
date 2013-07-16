@@ -25,4 +25,7 @@ tmp
 /jetty/solr/dev/data/
 /jetty/solr/test/data/
 
+# Ignore public/uploads dir where user avatars are stored
+/public/uploads/
+
 nohup.out

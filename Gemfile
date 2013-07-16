@@ -16,6 +16,10 @@ gem 'devise'
 gem 'omniauth'
 gem 'cancan'
 
+# image (user avatar) uploading
+gem 'carrierwave'
+gem "mini_magick"
+
 # paging
 gem 'kaminari'
 
