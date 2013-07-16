@@ -15,6 +15,17 @@
   #user_bio {
     width: 90%;
   }
+  .avatar img {
+    width: 100px;
+    border: 1px solid #bbb;
+  }
+  .checkbox.inline {
+    display: block;
+  }
+  #user_avatar {
+    display: block;
+    margin-top: 12px;
+  }
 }
 
 .blacklight-registrations-edit, .blacklight-users-edit {
@@ -27,8 +38,9 @@
   .profile-vitals {
     margin-top: 15px;
     .user-image {
-      border: 2px solid #ddd;
-      width: 85%;
+      border: 1px solid #ddd;
+      max-height: 150px;
+      padding: 5px;
     }
     .user-bio {
       font-size: 1.2em;
@@ -159,7 +171,16 @@
   .blacklight-user {
     .profile-vitals {
       .user-image {
+        margin-bottom: 12px;
         width: 120px;
+      }
+      .user-bio {
+        margin-bottom: 0;
+      }
+    }
+    .profile-links {
+      .user-name {
+        margin-bottom: 12px;
       }
     }
   }
