@@ -1,11 +1,14 @@
 class ApplicationController < ActionController::Base
   # Adds a few additional behaviors into the application controller 
+  
    include Blacklight::Controller
+   include DateHelpers
+  
   # Please be sure to impelement current_user and user_session. Blacklight depends on 
   # these methods in order to perform user specific actions. 
 
   rescue_from Exception, :with=>:exception_on_website
-  helper_method :application_name,:on_home_page,:on_collections_page,:on_about_pages,:on_detail_page,:show_terms_dialog?, :sunet_user_signed_in?, :show_as_date, :show_as_datetime
+  helper_method :application_name,:on_home_page,:on_collections_page,:on_about_pages,:on_detail_page,:show_terms_dialog?, :sunet_user_signed_in?
   layout "revs"
 
   protect_from_forgery
@@ -132,15 +135,7 @@ class ApplicationController < ActionController::Base
   def current_ability
     current_user ? current_user.ability : User.new.ability
   end
-  
-  def show_as_date(datetime)
-    datetime.strftime('%B %d, %Y')  
-  end
-
-  def show_as_datetime(datetime)
-    datetime.strftime('%B %d, %Y')
-  end
-    
+        
   def exception_on_website(exception)
     @exception=exception
 

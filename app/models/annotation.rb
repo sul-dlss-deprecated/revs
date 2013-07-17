@@ -38,14 +38,14 @@ class Annotation < ActiveRecord::Base
     
   end
   
+  # to update an annotation, just get all annotations for this image and update the solr document (its easier than trying to figure out exactly which annotation changed)
   def update_annotation_in_solr
     
     self.class.add_to_solr_for_druid(self.druid)
           
   end
   
-  # get all annotations for this image and update the solr document (its easier than trying to figure out exactly which annotation changed)
-  # this is a class level method so we can call it easily for any given druid (e.g. after an indexing operation)
+  # this is a class level method so we can call it easily for any given druid (e.g. after an indexing operation) without having to load the object first
   def self.add_to_solr_for_druid(druid)
        
     annotations=Annotation.where(:druid=>druid)

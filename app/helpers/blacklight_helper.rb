@@ -2,9 +2,9 @@ module BlacklightHelper
   include Blacklight::BlacklightHelperBehavior
   def document_partial_name(document)
     case
-      when document.collection?
+      when document.is_collection?
         "collection"
-      when document.collection_member?
+      when document.is_item?
         "collection_member"
       else
         "default"

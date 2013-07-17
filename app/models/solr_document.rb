@@ -2,7 +2,38 @@
 class SolrDocument
 
   include Blacklight::Solr::Document
+  include DateHelpers
+  
+  # Email uses the semantic field mappings below to generate the body of an email.
+  SolrDocument.use_extension( Blacklight::Solr::Document::Email )
 
+  # SMS uses the semantic field mappings below to generate the body of an SMS email.
+  SolrDocument.use_extension( Blacklight::Solr::Document::Sms )
+
+  # DublinCore uses the semantic field mappings below to assemble an OAI-compliant Dublin Core document
+  # Semantic mappings of solr stored fields. Fields may be multi or
+  # single valued. See Blacklight::Solr::Document::ExtendableClassMethods#field_semantics
+  # and Blacklight::Solr::Document#to_semantic_values
+  # Recommendation: Use field names from Dublin Core
+  use_extension( Blacklight::Solr::Document::DublinCore)
+  field_semantics.merge!(
+                         :title => "title_tsi",
+                         :author => "author_display",
+                         :language => "language_facet",
+                         :format => "format_ssim"
+                         )
+
+
+    # The following shows how to setup this blacklight document to display marc documents
+    extension_parameters[:marc_source_field] = :marc_display
+    extension_parameters[:marc_format_type] = :marcxml
+    use_extension( Blacklight::Solr::Document::Marc) do |document|
+      document.key?( :marc_display  )
+    end
+                             
+  # these are all date fields, and updating any of them will trigger some automatic computations and settings for the others
+  DATE_FIELDS=[:pub_date_ssi,:pub_year_isim,:pub_year_single_isi]
+  
   self.unique_key = 'id'
 
   def flags
@@ -113,6 +144,10 @@ class SolrDocument
     self[:race_data_tsi]
   end
 
+  def priority
+    self[:priority_tsi] || 0
+  end
+  
   def has_vehicle_metadata?
     return true if
       self.current_owner || self.marque || self.vehicle_markings || self.group_class
@@ -127,19 +162,19 @@ class SolrDocument
     self[blacklight_config.collection_member_collection_title_field.to_sym]
   end
 
-  def collection?
+  def is_collection?
     self.has_key?(blacklight_config.collection_identifying_field) and
       self[blacklight_config.collection_identifying_field].include?(blacklight_config.collection_identifying_value)
   end
 
-  def collection_member?
+  def is_item?
     self.has_key?(blacklight_config.collection_member_identifying_field) and
       !self[blacklight_config.collection_member_identifying_field].blank?
   end
 
-  # Return a SolrDocument object of the parent collection of a collection member
+  # Return a SolrDocument object of the parent collection of an item
   def collection
-    return nil unless collection_member?
+    return nil unless is_item?
     @collection ||= SolrDocument.new(
                       Blacklight.solr.select(
                         :params => {
@@ -151,7 +186,7 @@ class SolrDocument
 
   # Return a CollectionMembers object of just the members of a collection, and cache the result in the object so we can use on the page over again
   def collection_members(params={})
-    return nil unless collection?
+    return nil unless is_collection?
     @collection_members ||= get_members(params)
   end
 
@@ -173,22 +208,25 @@ class SolrDocument
   end
   
   def first_item
+    return nil unless is_collection?
     self.collection_members(:rows=>1,:start=>0).first
   end
   
   # gives you the representative image of the collection
   def first_image
+    return nil unless is_collection?
     first_item.images(:large).first
   end
   
-  # gives you the current top priority number for item sorting
+  # gives you the current top priority number for item sorting for the given collection
   def current_top_priority
-    first_item['priority_isi'] || 0
+    return nil unless is_collection?
+    first_item.priority
   end
   
   # Return a CollectionMembers object of all of the siblings of a collection member (including self)
   def collection_siblings(params={})
-    return nil unless collection_member?
+    return nil unless is_item?
 
     rows=params[:rows] || blacklight_config.collection_member_grid_items
     start=params[:start] || 0
@@ -212,54 +250,69 @@ class SolrDocument
     end
   end
 
+  # remove this field from solr
+  def remove_field(field_name)
+    update_solr(field_name,'remove',nil)
+  end
+  
   # add a new value to a multivalued field given a field name and a value
   def add_field(field_name,value)
-    RestClient.post "#{Blacklight.solr.options[:url]}/update?commit=true", "[{\"id\":\"#{id}\",\"#{field_name}\":{\"add\":\"#{value.gsub('"','\"')}\"}}]",:content_type => :json, :accept=>:json
+    update_solr(field_name,'add',value)
+    update_date_fields(field_name,value) if DATE_FIELDS.include? field_name.to_sym
   end
   
   # set the value for a single valued field or set all values for a multivalued field given a field name and either a single value or an array of values
   def set_field(field_name,value)
     value=[value] unless value.class == Array # turn the value into an array if its not one, this will enable the query below to work for both single values and arrays
-    RestClient.post "#{Blacklight.solr.options[:url]}/update?commit=true", "[{\"id\":\"#{id}\",\"#{field_name}\":{\"set\":[\"#{value.join('","')}\"]}}]", :content_type => :json, :accept=>:json
+    update_solr(field_name,'set',value)
+    update_date_fields(field_name,value) if DATE_FIELDS.include? field_name.to_sym
   end
 
   # update the value for a multivalued field from old value to new value (for a single value field, you can just set the new value directly)
   def update_field(field_name,old_value,new_value)
     if self[field_name].class == Array
       new_values=self[field_name].collect{|value| value.to_s==old_value.to_s ? new_value : value}
-      RestClient.post "#{Blacklight.solr.options[:url]}/update?commit=true", "[{\"id\":\"#{id}\",\"#{field_name}\":{\"set\":[\"#{new_values.join('","')}\"]}}]", :content_type => :json, :accept=>:json
+      update_solr(field_name,'set',new_values)
     else
       set_field(field_name,new_value)
     end
+    update_date_fields(field_name,value) if DATE_FIELDS.include? field_name.to_sym
   end
-    
-  # The following shows how to setup this blacklight document to display marc documents
-  extension_parameters[:marc_source_field] = :marc_display
-  extension_parameters[:marc_format_type] = :marcxml
-  use_extension( Blacklight::Solr::Document::Marc) do |document|
-    document.key?( :marc_display  )
+  
+  def update_solr(field_name,operation,new_values)
+    url="#{Blacklight.solr.options[:url]}/update?commit=true"
+    params="[{\"id\":\"#{id}\",\"#{field_name}\":"
+    if operation == 'add'
+      params+="{\"add\":\"#{new_values.gsub('"','\"')}\"}}]"
+    elsif operation == 'remove'
+      params+="{\"set\":null}}]"          
+    else
+      new_values=[new_values] unless new_values.class==Array
+      new_values = new_values.map {|s| s.to_s.gsub('"','\"')}
+      params+="{\"set\":[\"#{new_values.join('","')}\"]}}]"      
+    end
+    RestClient.post url, params,:content_type => :json, :accept=>:json
   end
-
-  # Email uses the semantic field mappings below to generate the body of an email.
-  SolrDocument.use_extension( Blacklight::Solr::Document::Email )
-
-  # SMS uses the semantic field mappings below to generate the body of an SMS email.
-  SolrDocument.use_extension( Blacklight::Solr::Document::Sms )
-
-  # DublinCore uses the semantic field mappings below to assemble an OAI-compliant Dublin Core document
-  # Semantic mappings of solr stored fields. Fields may be multi or
-  # single valued. See Blacklight::Solr::Document::ExtendableClassMethods#field_semantics
-  # and Blacklight::Solr::Document#to_semantic_values
-  # Recommendation: Use field names from Dublin Core
-  use_extension( Blacklight::Solr::Document::DublinCore)
-  field_semantics.merge!(
-                         :title => "title_tsi",
-                         :author => "author_display",
-                         :language => "language_facet",
-                         :format => "format_ssim"
-                         )
-
-
+  
+  # if the user updates one of the date fields, we'll run some computations to update the others as needed
+  def update_date_fields(field_name,new_value)
+    case field_name.to_sym
+      when :pub_year_isim, :pub_year_single_isi # if the user has updated a year field, we need to blank out the date, since its no longer valid
+        remove_field('pub_date_ssi')
+      when :pub_date_ssi # if the user has updated a date field, we need to set the years appropriately
+        new_value=new_value.first if new_value.class == Array
+        full_date=get_full_date(new_value)
+        if full_date # if it's a valid full date, extract the year into the single and multi-valued year fields
+          update_solr('pub_year_isim','set',full_date.year.to_s)
+          update_solr('pub_year_single_isi','set',full_date.year.to_s)
+        else # if it's not a valid date, clear the year fields
+          remove_field('pub_year_isim')
+          remove_field('pub_date_single_isi')
+        end
+    end    
+  end
+  
+  # CLASS LEVEL METHODS
    # Return an Array of collection SolrDocuments
    def self.all_collections
      @all_collections ||= Blacklight.solr.select(

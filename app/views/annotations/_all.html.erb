@@ -1,8 +1,8 @@
 <% if annotations.size > 0 %>
 	<% annotations.each do |annotation| %>	
 		<div id="annotation_<%= annotation.id %>" data-json='<%=annotation.json%>' class="annotation-info">
-      <%= annotation.user == current_user ? "You" : annotation.user.to_s %> annotated it on <%= show_as_date(annotation.updated_at) %>
-      <%= "with this note: <blockquote>#{annotation.text}</blockquote>".html_safe unless annotation.text.blank? %>
+      <%= annotation.user == current_user ? "You" : annotation.user.to_s %> on <%= show_as_date(annotation.updated_at) %>
+      <blockquote><%= annotation.text%></blockquote>
 		  <% if can? :destroy, annotation%>
 		    <%= button_to 'Remove',annotation_path(annotation.id), :method=>:delete,:remote=>true, :confirm=>"Are you sure you want to remove this annotation?", :class => "btn btn-mini btn-danger" %>
 		  <% end %>			

@@ -7,7 +7,7 @@ describe SolrDocument, :integration => true do
         doc = SolrDocument.new({:id => "yt907db4998", :is_member_of_ssim => ["wn860zc7322"]})
         doc.collection.should_not be_blank
         doc.collection.should be_a SolrDocument
-        doc.collection.collection?.should be_true
+        doc.collection.is_collection?.should be_true
         doc.collection[:id].should == "wn860zc7322"
       end
     end
@@ -39,7 +39,7 @@ describe SolrDocument, :integration => true do
       it "shold return an array of collection SolrDocuments" do
         SolrDocument.all_collections.length.should be == 2
         SolrDocument.all_collections.each do |doc|
-          doc.collection?.should be_true
+          doc.is_collection?.should be_true
           doc.should be_a SolrDocument
         end
       end

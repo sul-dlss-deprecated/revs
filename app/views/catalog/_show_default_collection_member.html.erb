@@ -19,7 +19,7 @@
           <% end %>
           <% if document.full_date %>
             <dt>Date:</dt>
-            <dd><%= document.full_date %></dd>
+            <dd><%= show_as_date(document.full_date) %></dd>
           <% end %>
           <dt>Collection:</dt>
           <dd><%=show_formatted_list(document.collection_names,:facet=>'collection_ssim')%></dd>

@@ -10,8 +10,8 @@ describe SolrDocument do
   
   describe "collections" do
     it "should define themselves as such when they have the correct fields" do
-      SolrDocument.new({:id=>"12345"}).collection?.should be_false
-      SolrDocument.new({:id=>"12345", :format_ssim => "collection"}).collection?.should be_true
+      SolrDocument.new({:id=>"12345"}).is_collection?.should be_false
+      SolrDocument.new({:id=>"12345", :format_ssim => "collection"}).is_collection?.should be_true
     end
     describe "collection siblings" do
       it "should memoize the solr request to get the siblings of a collection member" do
@@ -27,8 +27,8 @@ describe SolrDocument do
     end
     describe "collection members" do
       it "should define themselves as such when they have the correct fields" do
-        SolrDocument.new({:id => "12345"}).collection_member?.should be_false
-        SolrDocument.new({:"is_member_of_ssim" => "collection-1"}).collection_member?.should be_true
+        SolrDocument.new({:id => "12345"}).is_item?.should be_false
+        SolrDocument.new({:"is_member_of_ssim" => "collection-1"}).is_item?.should be_true
       end
       it "should memoize the solr request to get collection members" do
         response = {"response" => {"numFound" => 3, "docs" => [{:id=>"1234"}, {:id =>"4321"}]}}

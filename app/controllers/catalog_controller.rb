@@ -25,9 +25,13 @@ class CatalogController < ApplicationController
       if params[:field_name].blank? || params[:new_value].blank? || params[:selected_druids].blank?
         flash.now[:error]="To apply a bulk update, select the field to update, enter a new value and select some items."      
       else
-        Item.bulk_update(params[:selected_druids],params[:field_name],params[:new_value])
-        flash.now[:notice]="Your update has been applied to all the items you selected."
-        [:field_name,:new_value,:selected_druids].each {|field| params.delete(field)} # remove them from the paramas hash
+        success=Item.bulk_update(params[:selected_druids],params[:field_name],params[:new_value])
+        if success
+          flash.now[:notice]="Your update has been applied to all the items you selected."
+          [:field_name,:new_value,:selected_druids].each {|field| params.delete(field)} # remove them from the paramas hash
+        else
+          flash.now[:error]="The values you entered were not valid for the field you selected."          
+        end
       end
               
     end

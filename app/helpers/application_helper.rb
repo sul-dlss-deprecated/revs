@@ -1,5 +1,7 @@
 module ApplicationHelper
 
+  include DateHelpers
+  
   def validation_errors(obj)
 
     return '' if obj.errors.empty?
