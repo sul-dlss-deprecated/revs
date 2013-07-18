@@ -30,13 +30,13 @@ $(document).ready(function(){
    // Curator view controls and actions //
 
    // Put focus on new value input box on page load
-   $('.curator-edit-options #new_value').focus();
+   $('#bulk_edit_new_value').focus();
    // Called when 'Select all' checkbox is checked or unchecked.
    // Select all rows for edit when 'select all' checkbox is selected.
    $( '.curator-edit-options #select-all' ).click( function () {
       $( '.curator input[type="checkbox"]' ).prop('checked', this.checked);
-      if ($('#field-to-edit option:selected').text() != "Field to update...") { // don't do anything else if no real field is selected in menu
-        var field = $('#field-to-edit option:selected').text(); // current field selected in the select menu
+      if ($('#bulk_edit_field_name option:selected').text() != "Field to update...") { // don't do anything else if no real field is selected in menu
+        var field = $('#bulk_edit_field_name option:selected').text(); // current field selected in the select menu
         $('#documents.curator .result-item').each(function() { // loop through all result item rows
           updateEditStatus(field,'.result-item'); // update status message
         });
@@ -45,20 +45,16 @@ $(document).ready(function(){
    // Called when an individual checkbox is checked or unchecked.
    // Update row status message if user changes individual checkbox
    $('.result-item-checkbox > input[type="checkbox"]').change(function() {
-     var field = $('#field-to-edit option:selected').text(); // current value of select menu
+     var field = $('#bulk_edit_field_name option:selected').text(); // current value of select menu
      var context = $(this).closest('.result-item').data('item-id');
      updateEditStatus(field,"div[data-item-id='" + context + "']"); // update status message
    });
    // Called when the 'Field to edit' select menu is changed.
-   $('#field-to-edit').change(function() { // field changed in select menu
+   $('#bulk_edit_field_name').change(function() { // field changed in select menu
      updateBulkEditStatus();
    });
    // Called when the input field for the new field value loses focus.
-   $('.curator-edit-options #new_value').blur(function() { // input loses focus
-     updateBulkEditStatus();
-   });
-   // Called when the selected field to update loses focus.
-   $('#field_name').change(function() { // select field changes
+   $('#bulk_edit_new_value').blur(function() { // input loses focus
      updateBulkEditStatus();
    });
 
@@ -78,7 +74,7 @@ $(document).ready(function(){
 
 // Determine which field has been selected in 'Field to edit' select menu and update status message for checked items with new field name.
 function updateBulkEditStatus() {
-  var field = $('#field-to-edit option:selected').text(); // current value of select menu
+  var field = $('#bulk_edit_field_name option:selected').text(); // current value of select menu
   $('#documents.curator .result-item').each(function() { // loop through all result item rows
     updateEditStatus(field,this); // update status message
   });
@@ -129,11 +125,11 @@ function showOnLoad() {
 // 'context' is jQuery selector used to know which row to operate on
 function updateEditStatus(field,context) {
   if ($(context).find(".result-item-checkbox > input[type='checkbox']").is(':checked')) { // row is selected for edit ..
-		field_name=$('#field_name option:selected').text();
+		field_name=$('#bulk_edit_field_name option:selected').text();
     if (field_name != "") { // .. and a real field is selected in menu
       $(context).find('.edit-field-value > .current-value').text(field_name).show(); // indicate to user the row that will be updated ..
       $(context).find('.edit-field-value > .field-label').text("will be updated to:").show(); // .. and ..
-      $(context).find('.edit-field-value > .new-value').text($('.curator-edit-options #new_value').val()).show(); // .. the value that will be used for update
+      $(context).find('.edit-field-value > .new-value').text($('#bulk_edit_new_value').val()).show(); // .. the value that will be used for update
     } else { // row is selected but not field has been chosen in select menu ..
       $(context).find('.edit-field-value > .field-label').hide(); // .. so hide update message
       $(context).find('.edit-field-value > .current-value').hide();

@@ -4,9 +4,19 @@ require 'blacklight/catalog'
 class CatalogController < ApplicationController  
 
   include Blacklight::Catalog
-    
-  def index
+  
+  before_filter :filter_params,:only=>[:index]  
 
+  # delete editing form parameters when there is a get request so they don't get picked up and carried to all links by Blacklight
+  def filter_params
+    if request.get?
+      params.delete(:bulk_edit) 
+      params.delete(:authenticity_token)
+    end
+  end
+  
+  def index
+    
     if on_home_page # on the home page
           
       unless fragment_exist?('home') # fragment cache for performance
@@ -20,15 +30,16 @@ class CatalogController < ApplicationController
         
       end
     
-    elsif can?(:bulk_update,:all) && params[:operation]=='bulk' && request.post? # user submitted a bulk update operation and has the rights to do it
+    elsif can?(:bulk_update,:all) && params[:bulk_edit] && request.post? # user submitted a bulk update operation and has the rights to do it
 
-      if params[:field_name].blank? || params[:new_value].blank? || params[:selected_druids].blank?
+      @bulk_edit=params[:bulk_edit]
+      
+      if @bulk_edit[:field_name].blank? || @bulk_edit[:new_value].blank? || @bulk_edit[:selected_druids].blank?
         flash.now[:error]="To apply a bulk update, select the field to update, enter a new value and select some items."      
       else
-        success=SolrDocument.bulk_update(params[:selected_druids],params[:field_name],params[:new_value])
+        success=SolrDocument.bulk_update(@bulk_edit)
         if success
           flash.now[:notice]="Your update has been applied to all the items you selected."
-          [:field_name,:new_value,:selected_druids].each {|field| params.delete(field)} # remove them from the paramas hash
         else
           flash.now[:error]="The values you entered were not valid for the field you selected."          
         end
