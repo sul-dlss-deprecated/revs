@@ -131,8 +131,8 @@ function updateEditStatus(field,context) {
   if ($(context).find(".result-item-checkbox > input[type='checkbox']").is(':checked')) { // row is selected for edit ..
 		field_name=$('#field_name option:selected').text();
     if (field_name != "") { // .. and a real field is selected in menu
-      $(context).find('.edit-field-value > .current-value').text(field).show(); // indicate to user the row that will be updated ..
-      $(context).find('.edit-field-value > .field-label').text(field_name + " will be updated to:").show(); // .. and ..
+      $(context).find('.edit-field-value > .current-value').text(field_name).show(); // indicate to user the row that will be updated ..
+      $(context).find('.edit-field-value > .field-label').text("will be updated to:").show(); // .. and ..
       $(context).find('.edit-field-value > .new-value').text($('.curator-edit-options #new_value').val()).show(); // .. the value that will be used for update
     } else { // row is selected but not field has been chosen in select menu ..
       $(context).find('.edit-field-value > .field-label').hide(); // .. so hide update message

@@ -101,6 +101,9 @@
     padding-top: 3px;
     text-transform: uppercase;
   }
+  .edit-field-value {
+    font-size: 0.95em;
+  }
   .current-value {
     color: #990000;
   }
@@ -151,10 +154,26 @@
     }
     .update-field {
       display: inline-block;
+      padding-top: 5px;
     }
     .update-field-value {
       display: inline-block;
       float: right;
+      padding-top: 2px;
+      .btn {
+        margin-left: 6px;
+      }
+    }
+    #field_name {
+      float: none;
+      height: auto;
+      padding-top: 0;
+    }
+    .controls > .checkbox {
+      padding-top: 0;
+      input {
+        margin-right: 6px;
+      }
     }
   }
 }
@@ -336,5 +355,10 @@ span.constraints-label {margin-right: 0.5em;}
     .index_title {
       margin-left: 10px;
     }
+  }
+  .curator-edit-options form {
+   #new_value {
+     width: 400px;
+   }
   }
 }
