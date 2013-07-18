@@ -115,8 +115,7 @@ class SolrDocument
       ['Photographer','photographer_ssi']
     ]
   end
-
-
+  
   def flags
     Flag.includes(:user).where(:druid=>id)
   end
@@ -226,7 +225,7 @@ class SolrDocument
   end
 
   def priority
-    self[:priority_tsi] || 0
+    self[:priority_isi] || 0
   end
   
   def has_vehicle_metadata?
@@ -302,7 +301,14 @@ class SolrDocument
   # gives you the current top priority number for item sorting for the given collection
   def current_top_priority
     return nil unless is_collection?
-    first_item.priority
+    first_item.priority.to_i
+  end
+  
+  # if an item, set it to be the top priority item for that particular collection
+  def set_top_priority
+    return false unless is_item?
+    set_field('priority_isi',collection.current_top_priority + 1)
+    return true
   end
   
   # Return a CollectionMembers object of all of the siblings of a collection member (including self)
