@@ -58,6 +58,21 @@ $(document).ready(function(){
      updateBulkEditStatus();
    });
 
+   // Curator mode item metadata editing //
+  $('#edit_mode_link').click(function() { // click the curator edit mode action link
+    if ($('#edit-mode-text').text() == "Enter curator edit mode"){ // click is to enter edit mode
+      $('#edit-mode-text').text("Leave curator edit mode");
+      $('.edit-mode-status').addClass("label label-warning");
+      $('.edit-mode-status').text("Active"); // make clear we are in edit mode
+       // need to store an edit_mode session variable so we stay in edit mode across page reloads
+    } else {
+      $('#edit-mode-text').text("Enter curator edit mode"); // click is to leave edit mode
+      $('.edit-mode-status').text("");
+      $('.edit-mode-status').removeClass("label label-warning");
+      // here we would destroy the edit_mode session variable
+    }
+  });
+
 	$(document).on('mouseleave','.annotation-info',function(){anno.highlightAnnotation();});
 	$(document).on('mouseenter','.annotation-info',function(){
 		annotation=($(this).data('json'));

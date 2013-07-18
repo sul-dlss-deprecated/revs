@@ -64,6 +64,14 @@
 
         <ul class="nav nav-list item-actions">
           <li class="nav-header">Actions <i class="icon-cog"></i></li>
+
+          <% if can? :curate, :all  %>
+            <li>
+              <%= link_to("<i class='icon-edit'></i> <span id='edit-mode-text'>Enter curator edit mode</span>".html_safe, '#', :id=>'edit_mode_link', :class=>"showOnLoad hidden-offscreen") %>
+              <span class="edit-mode-status"></span>
+            </li>
+          <% end %>
+
           <li>
             <%= link_to('<i class="icon-picture"></i> View full citation page with image download'.html_safe,
             "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'new') %>
