@@ -9,20 +9,45 @@
     <div id="item-default" class="accordion-body collapse in">
       <div class="accordion-inner">
         <dl class="dl-horizontal  dl-invert">
+
+          <%# Example field for edit in place %>
+            <dt>Descrip:</dt>
+            <dd>
+              <i class='icon-edit description'></i>
+              <%= best_in_place document, :description, :activator => ".icon-edit.description", :type => :textarea, :ok_button => "Save", :cancel_button => "Cancel" %>
+            </dd>
+
           <% if document.description %>
             <dt>Description:</dt>
             <dd><%= show_formatted_list document.description %></dd>
           <% end %>
+
+          <%# Example field for edit in place %>
+            <dt>Years:</dt>
+            <dd>
+              <i class='icon-edit years'></i>
+              <%= best_in_place document, :years, :activator => ".icon-edit.years", :type => :input, :ok_button => "Save", :cancel_button => "Cancel" %>
+            </dd>
+
           <% if document.years %>
             <dt>Year:</dt>
             <dd><%= show_formatted_list(document.years, :facet=>'pub_year_isim') %></dd>
           <% end %>
+
           <% if document.full_date %>
             <dt>Date:</dt>
             <dd><%= show_as_date(document.full_date) %></dd>
           <% end %>
           <dt>Collection:</dt>
           <dd><%=show_formatted_list(document.collection_names,:facet=>'collection_ssim')%></dd>
+
+          <%# Example field for edit in place %>
+            <dt>Photographer:</dt>
+            <dd>
+              <i class='icon-edit photographer'></i>
+              <%= best_in_place document, :photographer, :activator => ".icon-edit.photographer", :type => :input, :ok_button => "Save", :cancel_button => "Cancel" %>
+            </dd>
+
           <% if document.photographer %>
             <dt>Photographer:</dt>
             <dd><%= show_linked_value document.photographer %></dd>

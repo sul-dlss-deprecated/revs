@@ -13,6 +13,7 @@
 //= require annotorious.min
 //= require jquery
 //= require jquery_ujs
+//= require best_in_place
 //
 // Required by Blacklight
 //= require blacklight/blacklight

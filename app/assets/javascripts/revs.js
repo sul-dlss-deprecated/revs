@@ -63,7 +63,17 @@ $(document).ready(function(){
    });
 
    // Curator mode item metadata editing //
-  $('#edit_mode_link').click(function() { // click the curator edit mode action link
+
+   /* Activating Best In Place */
+   $(".best_in_place").best_in_place();
+   // Make edit-in-place buttons a bit smaller
+   $("#item-details-accordion .icon-edit").on('click', function($e) {
+     $(".best_in_place > form > input[type='submit']").addClass("btn btn-small");
+     $(".best_in_place > form > input[type='button']").addClass("btn btn-small");
+   });
+
+   // Enter/leave curator edit mode
+   $('#edit_mode_link').click(function() { // click the curator edit mode action link
     if ($('#edit-mode-text').text() == "Enter curator edit mode"){ // click is to enter edit mode
       $('#edit-mode-text').text("Leave curator edit mode");
       $('.edit-mode-status').addClass("label label-warning");
