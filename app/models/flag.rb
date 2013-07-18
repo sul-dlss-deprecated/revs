@@ -12,7 +12,7 @@ class Flag < ActiveRecord::Base
   
   # head to solr to get the actual item, so we can access its attributes, like the title
   def item
-    @item ||= Item.find(druid)
+    @item ||= SolrDocument.find(druid)
   end
   
   def check_flag_type

@@ -15,7 +15,7 @@ class Annotation < ActiveRecord::Base
 
   # head to solr to get the actual item, so we can access its attributes, like the title
   def item
-    @item ||= Item.find(druid)
+    @item ||= SolrDocument.find(druid)
   end
 
   # pass in a druid and a user and get the annotations for that image, with the appropriate json additions required for display annotations on the image
@@ -50,7 +50,7 @@ class Annotation < ActiveRecord::Base
        
     annotations=Annotation.where(:druid=>druid)
     text_array = annotations.map {|annotation| annotation.text}    
-    Item.find(druid).set_field('annotations_tsim',text_array)
+    SolrDocument.find(druid).set_field('annotations_tsim',text_array)
     
   end
   

@@ -18,7 +18,7 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
     druid='dd482qk0417'
     
     # find the solr doc and confirm there is no annotation listed
-    item=Item.find(druid)
+    item=SolrDocument.find(druid)
     item['annotations_tsim'].should be_nil
   
     # create an annotation
@@ -27,7 +27,7 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
     annotation1=Annotation.create(:druid=>druid,:text=>comment1,:json=>'{a bunch of json would go here}',:user_id=>user_account.id)
 
     # confirm that solr has been updated
-    item=Item.find(druid)
+    item=SolrDocument.find(druid)
     item['annotations_tsim'].should == [comment1]
     
     comment2='second comment'
@@ -35,7 +35,7 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
     annotation2=Annotation.create(:druid=>druid,:text=>comment2,:json=>'{a bunch of json would go here}',:user_id=>user_account.id)
 
     # confirm that solr has been updated
-    item=Item.find(druid)
+    item=SolrDocument.find(druid)
     item['annotations_tsim'].should == [comment1,comment2]
     
     updated_comment1='changed my mind'
@@ -44,7 +44,7 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
     annotation1.save
 
     # confirm that solr has been updated
-    item=Item.find(druid)
+    item=SolrDocument.find(druid)
     item['annotations_tsim'].should == [updated_comment1,comment2]
     
   end
@@ -55,7 +55,7 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
      original_annotation_from_fixture='Nazi symbol'
      
      # find the solr doc and confirm there is no annotation listed
-     item=Item.find(druid)
+     item=SolrDocument.find(druid)
      item['annotations_tsim'].should == [original_annotation_from_fixture]
 
      # create an annotation
@@ -64,14 +64,14 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
      annotation=Annotation.create(:druid=>druid,:text=>comment,:json=>'{a bunch of json would go here}',:user_id=>user_account.id)
 
      # confirm that solr has been updated
-     item=Item.find(druid)
+     item=SolrDocument.find(druid)
      item['annotations_tsim'].should == [original_annotation_from_fixture,comment]
 
      # delete the annotation
      annotation.destroy
 
      # confirm that solr has been updated
-     item=Item.find(druid)
+     item=SolrDocument.find(druid)
      item['annotations_tsim'].should == [original_annotation_from_fixture]
 
    end

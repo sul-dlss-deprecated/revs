@@ -14,7 +14,7 @@
 
       <div class="update-field">
         <span class="help-inline">Update:</span>
-				<%= select_tag :field_name,options_for_select(Item.bulk_update_fields,@field_name),class:"span2",name:"field_name"%>
+				<%= select_tag :field_name,options_for_select(SolrDocument.bulk_update_fields,@field_name),class:"span2",name:"field_name"%>
       </div>
 
       <div class="update-field-value">
