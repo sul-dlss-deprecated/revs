@@ -33,7 +33,7 @@ class CatalogController < ApplicationController
     elsif can?(:bulk_update,:all) && params[:bulk_edit] && request.post? # user submitted a bulk update operation and has the rights to do it
 
       @bulk_edit=params[:bulk_edit]
-      
+            
       if @bulk_edit[:field_name].blank? || @bulk_edit[:new_value].blank? || @bulk_edit[:selected_druids].blank?
         flash.now[:error]="To apply a bulk update, select the field to update, enter a new value and select some items."      
       else

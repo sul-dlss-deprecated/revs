@@ -342,8 +342,8 @@ class SolrDocument
     options = {:default => "_square",
                :large   => "_thumb" }
   end
-
-  def self.find(id)
+ 
+  def self.find(id) # get a specific druid from solr and return a solrdocument class
     response = Blacklight.solr.select(
                                 :params => {
                                   :fq => "id:\"#{id}\"" }
@@ -352,12 +352,12 @@ class SolrDocument
     docs.size == 0 ? nil : docs.first
   end
 
-  def self.bulk_update(params)
+  def self.bulk_update(params) # apply update to the supplied field with the supplied value to the specified list of druids
     
     selected_druids=params[:selected_druids]
     field_name=params[:field_name]
     new_value=params[:new_value]
-    
+        
      # pipes can be used to denote multiple values in a multivalued field (except description, which should just be single valued!)
     if (field_name[-1,1].downcase=='m' && field_name.to_sym != self.config.collection_description_field.to_sym)
       new_values=new_value.split("|") 

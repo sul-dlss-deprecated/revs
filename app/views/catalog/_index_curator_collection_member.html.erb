@@ -2,7 +2,7 @@
   <div class="<%= render_document_class document %> document span9">
     <div class="row result-item" data-item-id="item-<%= document.id %>">
       <div class="span1 result-item-checkbox">
-			  <%= check_box_tag 'bulk_edit[selected_druids][]', document.id, @bulk_edit.nil? || @bulk_edit[:selected_druids].nil? ? false : @bulk_edit[:selected_druids].include?(document.id) %>
+			  <%= check_box_tag 'bulk_edit[selected_druids][]', document.id, (@bulk_edit.nil? || @bulk_edit[:selected_druids].nil?) ? false : @bulk_edit[:selected_druids].include?(document.id), :id=>"bulk_edit_selected_druids_#{document.id}"  %>
       </div>
       <div class="span2 result-thumbnail">
         <%= link_to_document document,
