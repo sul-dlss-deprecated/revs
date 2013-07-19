@@ -30,7 +30,7 @@ class CatalogController < ApplicationController
         
       end
     
-    elsif can?(:bulk_update,:all) && params[:bulk_edit] && request.post? # user submitted a bulk update operation and has the rights to do it
+    elsif can?(:bulk_update_metadata,:all) && params[:bulk_edit] && request.post? # user submitted a bulk update operation and has the rights to do it
 
       @bulk_edit=params[:bulk_edit]
             

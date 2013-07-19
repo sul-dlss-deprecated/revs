@@ -70,17 +70,18 @@ $(document).ready(function(){
 
    // Enter/leave curator edit mode
    $('#edit_mode_link').click(function() { // click the curator edit mode action link
-    if ($('#edit-mode-text').text() == "Enter curator edit mode"){ // click is to enter edit mode
-      $('#edit-mode-text').text("Leave curator edit mode");
-      $('.edit-mode-status').addClass("label label-warning");
-      $('.edit-mode-status').text("Active"); // make clear we are in edit mode
-       // need to store an edit_mode session variable so we stay in edit mode across page reloads
+    if (curatorEditMode() == 'false'){ // currently not in edit mode, click is to enter edit mode
+		  var link=jQuery('#edit-mode-text');
+      link.text(link.attr('data-leave-mode-text'));
+      $('.edit-mode-status').removeClass("hidden-offscreen");
+			setCuratorEditMode(true);
     } else {
-      $('#edit-mode-text').text("Enter curator edit mode"); // click is to leave edit mode
-      $('.edit-mode-status').text("");
-      $('.edit-mode-status').removeClass("label label-warning");
-      // here we would destroy the edit_mode session variable
+		  var link=jQuery('#edit-mode-text');
+      link.text(link.attr('data-enter-mode-text'));
+      $('.edit-mode-status').addClass("hidden-offscreen");
+			setCuratorEditMode(false);
     }
+		return false;
   });
 
 	$(document).on('mouseleave','.annotation-info',function(){anno.highlightAnnotation();});
@@ -106,7 +107,20 @@ function updateBulkEditStatus() {
 }
 
 function druid() {
-	return jQuery("#druid").attr('data-druid');
+	return jQuery("#data-vars").attr('data-druid');
+}
+
+function curatorEditMode() {
+	return jQuery("#data-vars").attr('data-curator-edit-mode');	
+}
+
+function setCuratorEditMode(value) {
+	jQuery("#data-vars").attr('data-curator-edit-mode',value);	
+	$.ajax({
+	        type: "POST",
+	        url: "/curator/tasks/set_edit_mode",
+					data: "value=" + value
+	});
 }
 
 $(document).on('blur',".user-login-email",function(){

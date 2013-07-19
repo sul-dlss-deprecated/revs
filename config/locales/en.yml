@@ -57,7 +57,15 @@ en:
     curator:
       sidebar:
         actions: 'Actions'
+      enter_edit_mode: 'Enter curator edit mode'
+      leave_edit_mode: 'Leave curator edit mode'
     dashboards: 'Dashboards'
+    citations:
+        view: 'View full citation page with image download'
+    annotations:
+        add: 'View/add annotations'
+        view: 'View annotations'
+        hide: 'Hide annotations'
     collection:
       collection_detail: 'Collection Detail'
       member_detail: 'Item Detail'

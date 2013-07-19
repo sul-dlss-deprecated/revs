@@ -64,6 +64,7 @@ function updateAnnotationsPanel(num_annotations,druid) {
 	$(".num-annotations-badge").text(num_annotations); // update the total annotations badge
 	$(".num-annotations-badge").removeClass('hidden');
 	$("#all-annotations").load("/annotations/for_image/"+druid);// re-render the annotations panel
+	$('#all-annotations').removeClass('hidden-offscreen hidden'); // be sure it is visible
 }
 
 function showAnnotations() {	

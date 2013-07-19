@@ -8,4 +8,11 @@ class Curator::TasksController < ApplicationController
      @flags=Flag.select('*,COUNT("druid") as num_flags').group("druid").order(@order).page(params[:page])
    end
    
+   # an ajax call to set the curator edit mode
+   def set_edit_mode
+     return unless (request.xhr? && can?(:update_metadata, :all))
+     session[:curator_edit_mode]=params[:value]
+     render :nothing=>true
+   end
+   
 end

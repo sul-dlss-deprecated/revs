@@ -40,8 +40,8 @@ class Ability
   def curator_actions(user)
     user_actions(user)
     can :curate, :all
-    can :bulk_update, :all
-    can :update, :all
+    can :bulk_update_metadata, :all
+    can :update_metadata, :all
   end
   
   # logged in user

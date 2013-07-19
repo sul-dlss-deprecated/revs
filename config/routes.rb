@@ -66,7 +66,11 @@ Revs::Application.routes.draw do
   
   # curator pages
   namespace :curator do
-    resources :tasks
+    resources :tasks do
+      collection do
+        post 'set_edit_mode', :to => 'tasks#set_edit_mode'
+      end
+    end
   end
     
   # The priority is based upon order of creation:
