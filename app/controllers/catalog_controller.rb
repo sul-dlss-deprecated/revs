@@ -44,7 +44,12 @@ class CatalogController < ApplicationController
           flash.now[:error]="The values you entered were not valid for the field you selected."          
         end
       end
-              
+
+    elsif can?(:update_metadata,:all) && request.put? # user submitted an in-place edit
+
+      puts '*****DO EDIT HERE!'
+      puts params.inspect
+      
     end
 
     super

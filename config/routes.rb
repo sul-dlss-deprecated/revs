@@ -68,7 +68,7 @@ Revs::Application.routes.draw do
   namespace :curator do
     resources :tasks do
       collection do
-        post 'set_edit_mode', :to => 'tasks#set_edit_mode'
+        post 'set_edit_mode/:id', :to => 'tasks#set_edit_mode'
       end
     end
   end

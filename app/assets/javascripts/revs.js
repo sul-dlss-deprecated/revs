@@ -6,26 +6,16 @@ $(document).ready(function(){
 	  return false;
 	});
 
-  // Swap icon used in Item Details accordion when toggling metadata sections
-  $('#item-details-accordion').collapse({
-     toggle: false
-   }).on('show',function (e) {
-     $(e.target).parent().find(".icon-caret-right").removeClass("icon-caret-right").addClass("icon-caret-down");
-   }).on('hide', function (e) {
-     $(e.target).parent().find(".icon-caret-down").removeClass("icon-caret-down").addClass("icon-caret-right");
-   });
+	setupItemDetailPanels();
 
-   // Collapse Item Details metadata sections if JavaScript (open by default for no-JS browsers).
-   $('#item-details-accordion .accordion-body').removeClass("in");
-
-   // Collapse Item Details flag details if JavaScript (open by default for no-JS browsers).
-   $('#new_flag, #all_flags').hide();
-   // Toggle details (new flag form and posted flags) when Flag action is selected.
-   $('.flag-details').click(function(){
-     $('#new_flag, #all_flags').toggle();
-     $('.flag-details').toggleClass('active');
-     return false;
-   });
+  // Collapse Item Details flag details if JavaScript (open by default for no-JS browsers).
+  $('#new_flag, #all_flags').hide();
+  // Toggle details (new flag form and posted flags) when Flag action is selected.
+  $('.flag-details').click(function(){
+    $('#new_flag, #all_flags').toggle();
+    $('.flag-details').toggleClass('active');
+    return false;
+  });
 
    // Curator view controls and actions //
 
@@ -118,7 +108,7 @@ function setCuratorEditMode(value) {
 	jQuery("#data-vars").attr('data-curator-edit-mode',value);	
 	$.ajax({
 	        type: "POST",
-	        url: "/curator/tasks/set_edit_mode",
+	        url: "/curator/tasks/set_edit_mode/" + druid(),
 					data: "value=" + value
 	});
 }
@@ -157,6 +147,20 @@ $(document).on('blur',"#register-username",function(){
 function showOnLoad() {
 	$('.showOnLoad').removeClass('hidden hidden-offscreen');
 	$('.showOnLoad').show();
+}
+
+function setupItemDetailPanels() {
+  // Swap icon used in Item Details accordion when toggling metadata sections
+  $('#item-details-accordion').collapse({
+     toggle: false
+   }).on('show',function (e) {
+     $(e.target).parent().find(".icon-caret-right").removeClass("icon-caret-right").addClass("icon-caret-down");
+   }).on('hide', function (e) {
+     $(e.target).parent().find(".icon-caret-down").removeClass("icon-caret-down").addClass("icon-caret-right");
+   });
+
+   // Collapse Item Details metadata sections if JavaScript (open by default for no-JS browsers).
+   $('#item-details-accordion .accordion-body').removeClass("in");
 }
 
 // For Curator Bulk Edit view - show or hide the field-to-be-updated status message depending on state of checkbox for that row item

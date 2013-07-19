@@ -10,9 +10,9 @@ class Curator::TasksController < ApplicationController
    
    # an ajax call to set the curator edit mode
    def set_edit_mode
-     return unless (request.xhr? && can?(:update_metadata, :all))
+     return unless (request.xhr? && can?(:update_metadata, :all) && !params[:value].blank?)
      session[:curator_edit_mode]=params[:value]
-     render :nothing=>true
+     @document=SolrDocument.find(params[:id])
    end
    
 end

@@ -63,26 +63,34 @@ class SolrDocument
 
   def years
     self[:pub_year_isim]
-  end
-  
+  end  
   def years_edit # multivalued fields have a helper that renders them into a joined view for in-place editing
-    self[:pub_year_isim].join("|")
+    years.join("|")
   end
 
   def people
     self[:people_ssim]
   end
-
+  def people_edit
+    people.join('|')
+  end
+  
   def subjects
     self[:subjects_ssim]
   end
-
+  def subjects_edit
+    subjects.join('|')
+  end
+  
   def location
     self[:location_ssi]
   end
 
   def formats
     self[:format_ssim]
+  end
+  def formats_edit
+    formats.join('|')
   end
 
   def identifier
@@ -112,13 +120,22 @@ class SolrDocument
   def marque
     self[:marque_ssim]
   end
+  def marque_edit
+    marque.join('|')
+  end
 
   def vehicle_model
     self[:model_ssim]
   end
+  def vehicle_model_edit
+    vehicle_model.join('|')
+  end
 
   def model_year
     self[:model_year_ssim]
+  end
+  def model_year_edit
+    model_year.join('|')
   end
 
   def current_owner
