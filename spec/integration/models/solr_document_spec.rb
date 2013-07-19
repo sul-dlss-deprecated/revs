@@ -29,6 +29,10 @@ describe SolrDocument, :integration => true do
         doc.title.should == new_value
         Editstore::Change.where(:new_value=>new_value,:old_value=>old_values[druid],:druid=>druid).size.should == 1
       end
+      
+      # reload solr docs we changed back to their original values
+      reload_solr_docs(druids_to_edit)
+      
     end
     
   end

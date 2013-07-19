@@ -89,4 +89,8 @@ module ApplicationHelper
     ['show','show_by_name'].include?(action_name) && controller_name == 'user'
   end
   
+  def in_curator_edit_mode
+    (session[:curator_edit_mode].blank? || session[:curator_edit_mode] == 'false') ? false : true
+  end
+  
 end

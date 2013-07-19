@@ -118,3 +118,13 @@ def should_allow_curator_section
   visit curator_tasks_path
   page.should have_content('Flagged Items')
 end
+
+def reload_solr_docs(druids)
+  add_docs = []
+  druids=[druids] if druids.class != Array
+  druids.each do |druid|
+    add_docs << File.read(File.join("#{Rails.root}/spec/fixtures","#{druid}.xml"))
+  end
+  RestClient.post "#{Blacklight.solr.options[:url]}/update?commit=true", "<update><add>#{add_docs.join(" ")}</add></update>", :content_type => "text/xml"
+end
+  

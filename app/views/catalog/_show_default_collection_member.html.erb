@@ -10,16 +10,16 @@
       <div class="accordion-inner">
         <dl class="dl-horizontal  dl-invert">
 
-          <%# Example field for edit in place %>
-            <dt>Description:</dt>
-            <dd>
-              <i class='icon-edit description'></i>
-              <%= best_in_place document, :description, :activator => ".icon-edit.description", :type => :textarea, :ok_button => "Save", :cancel_button => "Cancel" %>
-            </dd>
-
-          <% if document.description %>
-            <dt>Description:</dt>
-            <dd><%= document.description %></dd>
+          <% if document.description || in_curator_edit_mode %>
+          	<dt>Description:</dt>
+					  <% if in_curator_edit_mode%>
+		           <dd>
+		              <i class='icon-edit description'></i>
+		              <%= best_in_place document, :description, :activator => ".icon-edit.description", :type => :textarea, :ok_button => "Save", :cancel_button => "Cancel" %>
+		            </dd>
+					  <% else %>
+            	<dd><%= document.description %></dd>
+	          <% end %>
           <% end %>
 
           <%# Example field for edit in place %>

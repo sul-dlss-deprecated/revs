@@ -1,5 +1,5 @@
 <% # embed some useful variables from the sesssion so we have access to them via javascript %>
-<span class="hidden" id="data-vars" data-druid="<%=@document[:id]%>" data-curator-edit-mode="<%=session[:curator_edit_mode] || false%>"></span>
+<span class="hidden" id="data-vars" data-druid="<%=@document[:id]%>" data-curator-edit-mode="<%=in_curator_edit_mode%>"></span>
 
 <% if @document.is_collection? %>
 	<div id="content" class="span9 show-document">
