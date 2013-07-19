@@ -64,6 +64,10 @@ class SolrDocument
   def years
     self[:pub_year_isim]
   end
+  
+  def years_edit # multivalued fields have a helper that renders them into a joined view for in-place editing
+    self[:pub_year_isim].join("|")
+  end
 
   def people
     self[:people_ssim]

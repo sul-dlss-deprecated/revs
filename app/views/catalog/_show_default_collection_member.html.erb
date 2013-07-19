@@ -22,37 +22,38 @@
 	          <% end %>
           <% end %>
 
-          <%# Example field for edit in place %>
+          <% if document.years || in_curator_edit_mode %>
             <dt>Years:</dt>
-            <dd>
-              <i class='icon-edit years'></i>
-              <%= best_in_place document, :years, :activator => ".icon-edit.years", :type => :input, :ok_button => "Save", :cancel_button => "Cancel" %>
-            </dd>
-
-          <% if document.years %>
-            <dt>Year:</dt>
-            <dd><%= show_formatted_list(document.years, :facet=>'pub_year_isim') %></dd>
+						<% if in_curator_edit_mode %>
+	            <dd>
+	              <i class='icon-edit years'></i>
+	              <%= best_in_place document, :years_edit, :activator => ".icon-edit.years", :type => :input, :ok_button => "Save", :cancel_button => "Cancel" %>
+	            </dd>
+						<% else %>
+            	<dd><%= show_formatted_list(document.years, :facet=>'pub_year_isim') %></dd>
+          		<% end %>
           <% end %>
-
-          <% if document.full_date %>
+          
+					<% if document.full_date %>
             <dt>Date:</dt>
             <dd><%= show_as_date(document.full_date) %></dd>
           <% end %>
           <dt>Collection:</dt>
           <dd><%=show_formatted_list(document.collection_names,:facet=>'collection_ssim')%></dd>
 
-          <%# Example field for edit in place %>
+          <% if document.photographer || in_curator_edit_mode %>
             <dt>Photographer:</dt>
-            <dd>
-              <i class='icon-edit photographer'></i>
-              <%= best_in_place document, :photographer, :activator => ".icon-edit.photographer", :type => :input, :ok_button => "Save", :cancel_button => "Cancel" %>
-            </dd>
-
-          <% if document.photographer %>
-            <dt>Photographer:</dt>
-            <dd><%= show_linked_value document.photographer %></dd>
+					  <% if in_curator_edit_mode%>
+	            <dd>
+	              <i class='icon-edit photographer'></i>
+	              <%= best_in_place document, :photographer, :activator => ".icon-edit.photographer", :type => :input, :ok_button => "Save", :cancel_button => "Cancel" %>
+	            </dd>
+						<% else %>
+            	<dd><%= show_linked_value document.photographer %></dd>
+          		<% end %>
           <% end %>
-          <% if document.location %>
+
+					<% if document.location %>
             <dt>Location:</dt>
             <dd><%= document.location %></dd>
           <% end %>
