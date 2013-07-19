@@ -25,9 +25,12 @@ Revs::Application.routes.draw do
   # all collections pages helper route
   match 'collection', :to => 'collection#index', :as => 'all_collections'
 
-  # ajax call from home page
+  # ajax call from home page to get more images for the carousel
   match 'update_carousel', :to => 'catalog#update_carousel', :as => 'update_carousel'
-  
+
+  # in place edit ajax call
+  match 'item/:id/edit_metadata', :to=> 'catalog#edit_metadata', :as=>'edit_metadata', :via=>:put
+    
   # helper routes to we can have a friendly URL for items and collections
   match 'item/:id', :to=> 'catalog#show', :as =>'item'
   match 'collection/:id', :to=> 'catalog#show', :as =>'collection'

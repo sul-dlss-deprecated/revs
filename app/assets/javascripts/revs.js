@@ -52,6 +52,7 @@ $(document).ready(function(){
 
    /* Activating Best In Place */
    $(".best_in_place").best_in_place();
+
    // Make edit-in-place buttons a bit smaller
    $("#item-details-accordion .icon-edit").on('click', function($e) {
      $(".best_in_place > form > input[type='submit']").addClass("btn btn-small");

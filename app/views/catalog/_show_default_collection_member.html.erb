@@ -15,7 +15,7 @@
 					  <% if in_curator_edit_mode%>
 		           <dd>
 		              <i class='icon-edit description'></i>
-		              <%= best_in_place document, :description, :activator => ".icon-edit.description", :type => :textarea, :ok_button => "Save", :cancel_button => "Cancel" %>
+		              <%= best_in_place document, :description, {:activator => ".icon-edit.description", :type => :textarea}.merge(bip_options) %>
 		            </dd>
 					  <% else %>
             	<dd><%= document.description %></dd>
@@ -27,7 +27,7 @@
 						<% if in_curator_edit_mode %>
 	            <dd>
 	              <i class='icon-edit years'></i>
-	              <%= best_in_place document, :years_edit, :activator => ".icon-edit.years", :type => :input, :ok_button => "Save", :cancel_button => "Cancel" %>
+	              <%= best_in_place document, :years_edit, {:activator => ".icon-edit.years", :type => :input}.merge(bip_options) %>
 	            </dd>
 						<% else %>
             	<dd><%= show_formatted_list(document.years, :facet=>'pub_year_isim') %></dd>
@@ -46,7 +46,7 @@
 					  <% if in_curator_edit_mode%>
 	            <dd>
 	              <i class='icon-edit photographer'></i>
-	              <%= best_in_place document, :photographer, :activator => ".icon-edit.photographer", :type => :input, :ok_button => "Save", :cancel_button => "Cancel" %>
+	              <%= best_in_place document, :photographer, {:activator => ".icon-edit.photographer", :type => :input}.merge(bip_options)%>
 	            </dd>
 						<% else %>
             	<dd><%= show_linked_value document.photographer %></dd>

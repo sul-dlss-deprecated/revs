@@ -93,3 +93,29 @@ You can run the test suite locally by running:
 Your local development jetty must be started for this to work.  If your local jetty is stopped, start it with:
 
     rake jetty:start
+
+## Git Development Strategy
+
+### Branches
+
+Master branch is what is running in production and staging
+Develop branch is what is running (typically) on development
+Working branch (local) is your local working branch
+
+### Day to day working
+
+1. git co develop
+2. git pull  
+3. git checkout -b working
+4. now make updates and commit them on 'working'
+5. git checkout develop
+6. git pull
+7. git checkout working
+8. git rebase develop
+9. git checkout develop
+10. git merge working
+
+
+You can skip steps 7,8, and 9 if 'git pull develop' doesn't bring down any updates so you know 'working' is already up to date. 
+Step 8 is where you could have merge conflicts. But now you resolve them on 'working' so when you then merge back to 'develop' (after fixing the conflicts), 
+the git history is linear and doesn't show any merge commits.  

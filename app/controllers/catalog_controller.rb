@@ -44,11 +44,6 @@ class CatalogController < ApplicationController
           flash.now[:error]="The values you entered were not valid for the field you selected."          
         end
       end
-
-    elsif can?(:update_metadata,:all) && request.put? # user submitted an in-place edit
-
-      puts '*****DO EDIT HERE!'
-      puts params.inspect
       
     end
 
@@ -73,6 +68,19 @@ class CatalogController < ApplicationController
     @start=params[:start] || 0
     result,@document = get_solr_response_for_doc_id(druid)
     @carousel_members = @document.get_members(:rows=>@rows,:start=>@start)
+  end
+  
+  # an ajax call for user submitted an in-place edit
+  def edit_metadata
+     
+     return unless can?(:update_metadata,:all) && request.xhr?
+     puts "*****DO EDIT HERE FOR ITEM #{params[:id]}!"
+     puts params.inspect
+
+     @document=SolrDocument.find(params[:id])
+     
+     head :ok
+     
   end
   
   configure_blacklight do |config|

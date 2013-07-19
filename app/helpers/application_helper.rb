@@ -93,4 +93,8 @@ module ApplicationHelper
     (session[:curator_edit_mode].blank? || session[:curator_edit_mode] == 'false') ? false : true
   end
   
+  def bip_options
+    {:path=>edit_metadata_path(@document.id),:ok_button => "Save", :cancel_button => "Cancel"}
+  end
+  
 end
