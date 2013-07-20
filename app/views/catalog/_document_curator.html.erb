@@ -12,13 +12,11 @@
         Select all
       </label>
 
-      <span class="help-inline">Update</span>
-
       <div class="update-field">
+        <span class="help-inline">Update</span>
 				<%= select_tag 'bulk_edit[field_name]',options_for_select(SolrDocument.bulk_update_fields,@bulk_edit.nil? ? '' : @bulk_edit[:field_name]),class:"span2"%>
       </div>
 
-			 <span class="help-inline">to</span>
       <div class="update-field-value">
 			  <%= text_field_tag 'bulk_edit[new_value]' ,@bulk_edit.nil? ? '' : @bulk_edit[:new_value], class: 'span4', placeholder: 'new value'%>
         <%= submit_tag "Update", :class => 'btn btn-small' %>

@@ -164,7 +164,7 @@
         margin-left: 6px;
       }
     }
-    #field_name {
+    #bulk_edit_field_name {
       float: none;
       height: auto;
       padding-top: 0;
@@ -289,16 +289,27 @@ span.constraints-label {margin-right: 0.5em;}
     .update-field-value, .update-field {
       display: block;
       float: none;
-      margin: 12px 0;
+    }
+    .update-field {
+      margin-bottom: 6px;
+      padding-top: 0;
+    }
+    .update-field-value, .update-field-value .btn  {
+      margin-bottom: 0;
+    }
+    #bulk_edit_new_value {
+      margin-bottom: 0;
+      width: 80%;
     }
     .help-inline {
       margin-left: 0;
     }
     select {
-      margin: 8px 0 18px;
+      display: inline-block;
+      margin: 8px 0 8px;
       width: 170px;
     }
-    input {
+    #select-all {
       margin-bottom: 12px;
     }
   }
@@ -357,7 +368,7 @@ span.constraints-label {margin-right: 0.5em;}
     }
   }
   .curator-edit-options form {
-   #new_value {
+   #bulk_edit_new_value {
      width: 400px;
    }
   }
