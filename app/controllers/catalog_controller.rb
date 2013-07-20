@@ -74,11 +74,10 @@ class CatalogController < ApplicationController
   def edit_metadata
      
      return unless can?(:update_metadata,:all) && request.xhr?
-     puts "*****DO EDIT HERE FOR ITEM #{params[:id]}!"
-     puts params.inspect
 
      @document=SolrDocument.find(params[:id])
-     
+     updates=params[:solr_document]
+     updates.each {|field,value| @document.send("#{field}=",value)}
      head :ok
      
   end
@@ -101,10 +100,6 @@ class CatalogController < ApplicationController
     # needs to be in field list for all request handlers so we can identify collections in the search results.
     config.collection_identifying_field = "format_ssim"
     config.collection_identifying_value = "collection"
-    
-    # needs to be stored so we can retreive it for display.
-    # needs to be in field list for all request handlers.
-    config.collection_description_field = "description_tsim"
     
     # needs to be indexed so we can search it to return relationships.
     # needs to be in field list for all request handlers so we can identify collection members in the search results.

@@ -112,7 +112,7 @@ Working
 3. git checkout working
 4. now make updates and commit them on 'working'
 
-Merging
+Getting Develop Up to date
 5. git checkout develop
 6. git pull
 

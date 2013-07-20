@@ -94,7 +94,7 @@ module ApplicationHelper
   end
   
   def bip_options
-    {:path=>edit_metadata_path(@document.id),:ok_button => "Save", :cancel_button => "Cancel"}
+    {:path=>edit_metadata_path(@document.id),:ok_button => "Save", :cancel_button => "Cancel", :nil=>'<em>empty</em>'}
   end
   
 end

@@ -49,12 +49,18 @@ class SolrDocument
   end
 
   def description # for some reason, we have description as a multivalued field, but we really only need it to be a single valued field for now, so let's just return the first entry
-    desc=self[blacklight_config.collection_description_field.to_sym]
+    desc=self['description_tsim']
     desc.class == Array ? desc.first : desc
+  end
+  def description=(value)
+    set_field('description_tsim',value)
   end
 
   def photographer
     self[:photographer_ssi]
+  end
+  def photographer=(value)
+    set_field('photographer_ssi',value)
   end
 
   def full_date
@@ -66,6 +72,9 @@ class SolrDocument
   end  
   def years_edit # multivalued fields have a helper that renders them into a joined view for in-place editing
     years.join("|")
+  end
+  def years_edit=(value)
+    set_field('pub_year_isim',value.split("|"))
   end
 
   def people
@@ -380,7 +389,7 @@ class SolrDocument
     new_value=params[:new_value]
         
      # pipes can be used to denote multiple values in a multivalued field (except description, which should just be single valued!)
-    if (field_name[-1,1].downcase=='m' && field_name.to_sym != self.config.collection_description_field.to_sym)
+    if (field_name[-1,1].downcase=='m' && field_name.to_sym != 'description_tsim')
       new_values=new_value.split("|") 
     else
       new_values=[new_value]
