@@ -10,7 +10,7 @@ class CollectionHighlight < ActiveRecord::Base
     highlight_collections=highlight_collections_query['response']['docs'].shuffle # this randomizes it
     highlight_collections.each {|highlight| highlight.merge!('image_url'=>self.find_by_druid(highlight['id']).image_url)} # add the URL for each highlight image to the solr documents
     
-    return highlight_collections
+    return highlight_collections.map {|highlight| SolrDocument.new(highlight)}
     
   end
 
