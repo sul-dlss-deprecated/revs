@@ -21,7 +21,7 @@ class Curator::TasksController < ApplicationController
       @document=SolrDocument.find(params[:id])
       updates=params[:solr_document]
       updates.each {|field,value| @document.send("#{field}=",value)}
-      @document.save
+      valid=@document.save
       head :ok
    end
    

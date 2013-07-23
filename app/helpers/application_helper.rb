@@ -55,7 +55,9 @@ module ApplicationHelper
   end
   
   def show_formatted_list(mvf,opts={})
-    mvf.collect {|val|show_linked_value(val,opts)}.join(', ').html_safe
+    return "" if mvf.blank?
+    return show_linked_value(mvf,opts) if mvf.class != Array
+    return mvf.collect {|val|show_linked_value(val,opts)}.join(', ').html_safe
   end
   
   def render_locale_class

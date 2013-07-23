@@ -23,17 +23,17 @@
           <span class="result-detail-field">
             <%= document.identifier %>
           </span>
-          <% if document.description %>
+          <% if !document.description.blank? %>
             <span class="result-detail-field description">
               <%= document.description %>
             </span>
           <% end %>
-          <% if document.years %>
+          <% if !document.years.blank? %>
             <span class="result-detail-field">
               <%= show_formatted_list(document.years,:facet=>:years) %>
             </span>
           <% end %>
-          <% if document.formats %>
+          <% if !document.formats.blank? %>
             <span class="result-detail-field">
               <%= show_formatted_list(document.formats,:facet=>:formats) %>
             </span>

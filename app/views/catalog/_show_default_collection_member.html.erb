@@ -10,7 +10,9 @@
       <div class="accordion-inner">
         <dl class="dl-horizontal  dl-invert">
 
-					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'description',:label=>'Description',:editable=>true,:input_type=>'textarea'} %>
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'title',:label=>'Title',:editable=>true} if in_curator_edit_mode %>
+
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'description',:label=>'Description',:editable=>true} %>
 					
 					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'years',:label=>'Years', :multivalued=>true, :facet=> true, :editable=>true} %>
 					
@@ -29,7 +31,7 @@
     </div>
   </div>
 
-<% if document.has_vehicle_metadata? %>
+<% if document.has_vehicle_metadata? || in_curator_edit_mode %>
   <div class="accordion-group">
     <div class="accordion-heading nav-header">
       <a class="accordion-toggle" data-toggle="collapse" data-parent="#item-details-accordion" href="#item-auto">
@@ -51,7 +53,7 @@
 
  					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'group_class',:label=>'Group/Class',:editable=>true} %>
 
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'vehicle_markings',:label=>'Vehicle Markings',:editable=>true,:input_type=>'textarea'} %>
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'vehicle_markings',:label=>'Vehicle Markings',:editable=>true} %>
  					
         </dl>
       </div>
@@ -59,7 +61,7 @@
   </div>
 <% end %>
 
-<% if document.has_race_metadata? %>
+<% if document.has_race_metadata? || in_curator_edit_mode %>
   <div class="accordion-group">
     <div class="accordion-heading nav-header">
       <a class="accordion-toggle" data-toggle="collapse" data-parent="#item-details-accordion" href="#item-race">
@@ -79,7 +81,7 @@
           
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'entrant',:label=>'Entrant',:editable=>true, :facet=>true} %>
          
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'race_data',:label=>'Race Data',:editable=>true, :input_type=>'textarea'} %>
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'race_data',:label=>'Race Data',:editable=>true} %>
           
         </dl>
       </div>
@@ -101,11 +103,11 @@
 
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'identifier',:label=>'Identifier'} %>
 
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'institutional_notes',:label=>'Institution Notes',:editable=>true, :input_type=>'textarea'} %>
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'institutional_notes',:label=>'Institution Notes',:editable=>true} %>
           
-					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'production_notes',:label=>'Production Notes',:editable=>true, :input_type=>'textarea'} %>       
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'production_notes',:label=>'Production Notes',:editable=>true} %>       
 
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'metadata_sources',:label=>'Metadata Sources',:editable=>true, :input_type=>'textarea'} %>
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'metadata_sources',:label=>'Metadata Sources',:editable=>true} %>
           
         </dl>
       </div>

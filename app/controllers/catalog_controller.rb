@@ -5,7 +5,7 @@ class CatalogController < ApplicationController
 
   include Blacklight::Catalog
   
-  before_filter :filter_params,:only=>[:index]  
+  before_filter :filter_params
 
   # delete editing form parameters when there is a get request so they don't get picked up and carried to all links by Blacklight
   def filter_params
@@ -16,6 +16,8 @@ class CatalogController < ApplicationController
   end
   
   def index
+    
+    not_authorized if params[:view]=='curator' && !can?(:bulk_update_metadata,:all)
     
     if on_home_page # on the home page
           
@@ -34,7 +36,7 @@ class CatalogController < ApplicationController
 
       @bulk_edit=params[:bulk_edit]
             
-      if @bulk_edit[:field_name].blank? || @bulk_edit[:new_value].blank? || @bulk_edit[:selected_druids].blank?
+      if @bulk_edit[:attribute].blank? || @bulk_edit[:new_value].blank? || @bulk_edit[:selected_druids].blank?
         flash.now[:error]="To apply a bulk update, select the field to update, enter a new value and select some items."      
       else
         success=SolrDocument.bulk_update(@bulk_edit)
@@ -46,7 +48,7 @@ class CatalogController < ApplicationController
       end
       
     end
-
+    
     super
         
     # if we get this far, it may have been a search operation, so if we only have one search result, just go directly there
@@ -175,7 +177,6 @@ class CatalogController < ApplicationController
     #   The ordering of the field names is the order of the display 
     config.add_show_field 'pub_year_isim', :label => 'Year:'
     config.add_show_field 'format_ssim', :label => 'Format:'
-    config.add_show_field 'country_origin_tsi', :label => 'Country of origin:'
     config.add_show_field 'description_tsim', :label => 'Description:'
     config.add_show_field 'source_id_ssi', :label => "Identifier:"
     config.add_show_field 'collection_ssim', :label => "Collection:"
