@@ -14,7 +14,7 @@
 
       <div class="update-field">
         <span class="help-inline">Update</span>
-				<%= select_tag 'bulk_edit[field_name]',options_for_select(SolrDocument.bulk_update_fields,@bulk_edit.nil? ? '' : @bulk_edit[:field_name]),class:"span2"%>
+				<%= select_tag 'bulk_edit[attribute]',options_for_select(bulk_update_fields,@bulk_edit.nil? ? '' : @bulk_edit[:field_name]),class:"span2"%>
       </div>
 
       <div class="update-field-value">

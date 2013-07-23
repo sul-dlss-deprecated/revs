@@ -12,7 +12,7 @@
 
 					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'description',:label=>'Description',:editable=>true,:input_type=>'textarea'} %>
 					
-					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'years',:label=>'Years', :multivalued=>true, :facet=> true, :editable=>true,:edit_field_name=>'years_ipe'} %>
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'years',:label=>'Years', :multivalued=>true, :facet=> true, :editable=>true} %>
 					
 					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'full_date',:label=>'Date',:editable=>true,:input_type=>'input'} %>
 
@@ -22,7 +22,7 @@
 
  					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'location',:label=>'Location',:editable=>true,:facet=>true} %>
 
-					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'people',:label=>'People',:multivalued=>true,:editable=>true,:edit_field_name=>'people_ipe',:facet=>true} %>
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'people',:label=>'People',:multivalued=>true,:editable=>true,:facet=>true} %>
      
         </dl>
       </div>
@@ -43,11 +43,11 @@
 	
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'current_owner',:label=>'Current Owner',:editable=>true, :facet=>true} %>
 
-					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'marque',:label=>'Marque',:multivalued=>true,:editable=>true,:edit_field_name=>'marque_ipe',:facet=>true} %>
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'marque',:label=>'Marque',:multivalued=>true,:editable=>true,:facet=>true} %>
 
-					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'vehicle_model',:label=>'Model',:multivalued=>true,:editable=>true,:edit_field_name=>'vehicle_model_ipe',:facet=>true} %>
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'vehicle_model',:label=>'Model',:multivalued=>true,:editable=>true,:facet=>true} %>
 
-					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'model_year',:label=>'Model Year',:multivalued=>true,:editable=>true,:edit_field_name=>'model_year_ipe',:facet=>true} %>
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'model_year',:label=>'Model Year',:multivalued=>true,:editable=>true,:facet=>true} %>
 
  					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'group_class',:label=>'Group/Class',:editable=>true} %>
 
@@ -97,7 +97,7 @@
     <div id="item-sources" class="accordion-body collapse in">
       <div class="accordion-inner">
         <dl class="dl-horizontal  dl-invert">
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'formats',:label=>'Formats',:multivalued=>true,:editable=>true,:edit_field_name=>'formats_ipe',:facet=>true} %>
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'formats',:label=>'Formats',:multivalued=>true,:editable=>true,:facet=>true} %>
 
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'identifier',:label=>'Identifier'} %>
 

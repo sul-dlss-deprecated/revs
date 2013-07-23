@@ -15,13 +15,14 @@ class Curator::TasksController < ApplicationController
      @document=SolrDocument.find(params[:id])
    end
 
+   # TODO show validation errors
    # an ajax call for user submitted an in-place edit
    def edit_metadata
       @document=SolrDocument.find(params[:id])
       updates=params[:solr_document]
       updates.each {|field,value| @document.send("#{field}=",value)}
+      @document.save
       head :ok
    end
-
    
 end

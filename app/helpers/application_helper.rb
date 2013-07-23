@@ -87,4 +87,28 @@ module ApplicationHelper
     (session[:curator_edit_mode].blank? || session[:curator_edit_mode] == 'false') ? false : can?(:curate,:all)
   end
   
+  # used to build the drop down menu of available fields for bulk updating -- add the text to be shown to user and the field in solr doc and Editstore fields table
+  def bulk_update_fields
+    [
+      ['Title','title'],
+      ['Formats','formats'],
+      ['Years','years_mvf'],
+      ['Date','full_date'],
+      ['Description','description'],
+      ['Marques','marque_mvf'],
+      ['Models','vehicle_model_mvf'],
+      ['Model Years','model_year_mvf'],
+      ['People','people_mvf'],
+      ['Entrant','entrant'],
+      ['Current Owner','current_owner'],
+      ['Venue','venue'],
+      ['Track','track'],
+      ['Event','event'],
+      ['Location','location'],
+      ['Group/Class','group_class'],
+      ['Race Data','race_data'],
+      ['Photographer','photographer']
+    ]
+  end
+  
 end

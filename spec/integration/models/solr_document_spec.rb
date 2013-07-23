@@ -8,7 +8,7 @@ describe SolrDocument, :integration => true do
 
       druids_to_edit=%w{nn572km4370 kn529wc4372}
       new_value='newbie!'
-      field_to_edit='title_tsi'
+      field_to_edit='title'
       old_values={}
       
       # confirm new field doesn't exist in solr and rows don't exist yet in editstore database
@@ -19,7 +19,7 @@ describe SolrDocument, :integration => true do
         Editstore::Change.where(:new_value=>new_value,:old_value=>doc.title,:druid=>druid).size.should == 0
       end
       
-      params_hash={:field_name=>field_to_edit, :new_value=>new_value,:selected_druids=>druids_to_edit}
+      params_hash={:attribute=>field_to_edit, :new_value=>new_value,:selected_druids=>druids_to_edit}
       success=SolrDocument.bulk_update(params_hash)
       success.should be_true
       
@@ -69,14 +69,14 @@ describe SolrDocument, :integration => true do
       end
     end
 
-    describe "collection_siblings" do
+    describe "siblings" do
       it "should return a collection members class with an array of SolrDocuments" do
         doc = SolrDocument.new({:id => "wn860zc7322", :is_member_of_ssim => ["kz071cg8658"]})
-        doc.collection_siblings.should be_a CollectionMembers
-        doc.collection_siblings.should_not be_blank
-        doc.collection_siblings.total_members.should be > 0
-        doc.collection_siblings.documents.should be_a Array
-        doc.collection_siblings.documents.each do |sibling|
+        doc.siblings.should be_a CollectionMembers
+        doc.siblings.should_not be_blank
+        doc.siblings.total_members.should be > 0
+        doc.siblings.documents.should be_a Array
+        doc.siblings.documents.each do |sibling|
           sibling.should be_a SolrDocument
         end
       end

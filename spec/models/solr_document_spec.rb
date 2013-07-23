@@ -21,7 +21,7 @@ describe SolrDocument do
         Blacklight.should_receive(:solr).and_return(solr)
         doc = SolrDocument.new({:id => "abc123", :is_member_of_ssim => ["collection-1"]})
         5.times do
-          doc.collection_siblings
+          doc.siblings
         end        
       end
     end
