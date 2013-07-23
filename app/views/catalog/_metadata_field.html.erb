@@ -1,0 +1,22 @@
+<% edit_field_name = field_name if !defined?(edit_field_name) || edit_field_name.blank?  # an optional field that will be used to render and set when editing (useful for in place editing with multivalued fields)
+	 multivalued = defined?(multivalued) ? multivalued : false # indicates if field is mulivalued or not for display purposes (defaults to false)
+	 facet_field_name = defined?(facet) ? field_name : nil # indicates if the display should render values as a linked facet field
+	 editable = defined?(editable) ? editable : false # indicates if this field should be in-place editable if that mode is set
+	 input_type = defined?(input_type) ? input_type : 'input' # indicates form field type of editing (defaults to 'input')
+ %>
+
+<% if !document.send(field_name.to_s).blank? || (editable && in_curator_edit_mode)  %>
+	<dt><%=label%>:</dt>
+	<% if editable && in_curator_edit_mode%>
+    <dd>
+      <i class='icon-edit <%=edit_field_name%>'></i>
+      <%= best_in_place document, edit_field_name.to_sym, {:activator => ".icon-edit.#{edit_field_name}", :type => input_type,:path=>edit_metadata_curator_tasks_path(document.id),:ok_button => "Save", :cancel_button => "Cancel", :nil=>'<em>empty</em>'} %>
+    </dd>
+		<% else %>
+			<% if multivalued %>
+  			<dd><%= show_formatted_list(document.send(field_name),:facet=>facet_field_name) %></dd>
+		  <% else %>
+				<dd><%= show_linked_value(document.send(field_name),:facet=>facet_field_name) %></dd>
+			 <% end %>
+ 		<% end %>
+<% end %>

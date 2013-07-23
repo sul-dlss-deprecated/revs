@@ -29,7 +29,6 @@ Revs::Application.routes.draw do
   match 'update_carousel', :to => 'catalog#update_carousel', :as => 'update_carousel'
 
   # in place edit ajax call
-  match 'item/:id/edit_metadata', :to=> 'catalog#edit_metadata', :as=>'edit_metadata', :via=>:put
     
   # helper routes to we can have a friendly URL for items and collections
   match 'item/:id', :to=> 'catalog#show', :as =>'item'
@@ -72,6 +71,7 @@ Revs::Application.routes.draw do
     resources :tasks do
       collection do
         post 'set_edit_mode/:id', :to => 'tasks#set_edit_mode'
+        put 'item/:id/edit_metadata', :to=> 'tasks#edit_metadata', :as=>'edit_metadata'
       end
     end
   end

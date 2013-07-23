@@ -26,8 +26,6 @@ describe("Item Pages",:type=>:request,:integration=>true) do
     page.should have_content('1955')
     page.should have_content('Collection:')
     page.should have_content('David Nadig Collection')
-    page.should have_content('Subjects:')
-    page.should have_content('Automobile, History')
     page.should have_xpath("//img[contains(@src, \"image/yh093pt9555/2012-027NADI-1966-b1_6.4_0011\")]")
   end
 

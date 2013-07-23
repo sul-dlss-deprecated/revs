@@ -5,8 +5,8 @@
 	    <div id="all_collections_carousel" class="carousel slide">
 	      <div class="carousel-inner">
 	        <%- @highlight_collections.each_with_index do |collection, index| -%>
-	          <div class="item<%= " active" if index == 0 %>" data-collection-title="<%= title_no_revs(collection[blacklight_config.show.heading]) %>" data-collection-href="<%= collection_path(collection) %>" data-collection-description="<%= truncate(collection[blacklight_config.collection_description_field].try(:first),:length=>250) %>">
-	            <a id="collection-image-link" href="<%=collection_path(collection['id'])%>"><%=image_tag collection['image_url']%></a>
+	          <div class="item<%= " active" if index == 0 %>" data-collection-title="<%= title_no_revs(collection.title) %>" data-collection-href="<%= collection_path(collection) %>" data-collection-description="<%= truncate(collection.description,:length=>250) %>">
+	            <a id="collection-image-link" href="<%=collection_path(collection)%>"><%=image_tag collection['image_url']%></a>
 	          </div>
 	        <%- end -%>
 	      </div>
@@ -24,9 +24,9 @@
 			<div class="row">
 		    <div id="featured-description" class="span3">
 		      <span class="content-type collection">Featured Collection</span>
-		      <h3><%= link_to title_no_revs(@highlight_collections.first[blacklight_config.show.heading]), collection_path(@highlight_collections.first), :id => "collection-title-link" %></h3>
+		      <h3><%= link_to title_no_revs(@highlight_collections.first.title), collection_path(@highlight_collections.first), :id => "collection-title-link" %></h3>
 		      <p>
-		        <span id="collection-description"><%= truncate(@highlight_collections.first[blacklight_config.collection_description_field].try(:first),:length=>250) %></span>
+		        <span id="collection-description"><%= truncate(@highlight_collections.first.description,:length=>250) %></span>
 		        <%= link_to "More", collection_path(@highlight_collections.first), :id => "collection-link" %>
 		      </p>
 		    </div>
@@ -56,9 +56,9 @@
 				<div class="row">
 			    <div id="featured-description" class="span3">
 			      <span class="content-type collection">Featured Collection</span>
-			      <h3><%= link_to title_no_revs(collection[blacklight_config.show.heading]), collection_path(collection), :id => "collection-title-link" %></h3>
+			      <h3><%= link_to title_no_revs(collection.title), collection_path(collection), :id => "collection-title-link" %></h3>
 			      <p>
-			        <span id="collection-description"><%= truncate(collection[blacklight_config.collection_description_field].try(:first),:length=>300) %></span>
+			        <span id="collection-description"><%= truncate(collection.description,:length=>300) %></span>
 			        <%= link_to "More", collection_path(collection), :id => "collection-link" %>
 			      </p>
 			    </div>

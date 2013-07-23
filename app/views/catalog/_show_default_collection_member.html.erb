@@ -10,61 +10,20 @@
       <div class="accordion-inner">
         <dl class="dl-horizontal  dl-invert">
 
-          <% if document.description || in_curator_edit_mode %>
-          	<dt>Description:</dt>
-					  <% if in_curator_edit_mode%>
-		           <dd>
-		              <i class='icon-edit description'></i>
-		              <%= best_in_place document, :description, {:activator => ".icon-edit.description", :type => :textarea}.merge(bip_options) %>
-		            </dd>
-					  <% else %>
-            	<dd><%= document.description %></dd>
-	          <% end %>
-          <% end %>
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'description',:label=>'Description',:editable=>true,:input_type=>'textarea'} %>
+					
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'years',:label=>'Years', :multivalued=>true, :facet=> true, :editable=>true,:edit_field_name=>'years_ipe'} %>
+					
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'full_date',:label=>'Date',:editable=>true,:input_type=>'input'} %>
 
-          <% if document.years || in_curator_edit_mode %>
-            <dt>Years:</dt>
-						<% if in_curator_edit_mode %>
-	            <dd>
-	              <i class='icon-edit years'></i>
-	              <%= best_in_place document, :years_edit, {:activator => ".icon-edit.years", :type => :input}.merge(bip_options) %>
-	            </dd>
-						<% else %>
-            	<dd><%= show_formatted_list(document.years, :facet=>'pub_year_isim') %></dd>
-          		<% end %>
-          <% end %>
-          
-					<% if document.full_date %>
-            <dt>Date:</dt>
-            <dd><%= show_as_date(document.full_date) %></dd>
-          <% end %>
-          <dt>Collection:</dt>
-          <dd><%=show_formatted_list(document.collection_names,:facet=>'collection_ssim')%></dd>
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'collection_names',:label=>'Collection',:multivalued=>true,:facet=>true,:editable=>false} %>
 
-          <% if document.photographer || in_curator_edit_mode %>
-            <dt>Photographer:</dt>
-					  <% if in_curator_edit_mode%>
-	            <dd>
-	              <i class='icon-edit photographer'></i>
-	              <%= best_in_place document, :photographer, {:activator => ".icon-edit.photographer", :type => :input}.merge(bip_options)%>
-	            </dd>
-						<% else %>
-            	<dd><%= show_linked_value document.photographer %></dd>
-          		<% end %>
-          <% end %>
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'photographer',:label=>'Photographer',:editable=>true,:facet=>true} %>
 
-					<% if document.location %>
-            <dt>Location:</dt>
-            <dd><%= document.location %></dd>
-          <% end %>
-          <% if document.subjects %>
-            <dt>Subjects:</dt>
-            <dd><%= show_formatted_list document.subjects %></dd>
-          <% end %>
-          <% if document.people %>
-            <dt>People:</dt>
-            <dd><%= show_formatted_list document.people %></dd>
-          <% end %>
+ 					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'location',:label=>'Location',:editable=>true,:facet=>true} %>
+
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'people',:label=>'People',:multivalued=>true,:editable=>true,:edit_field_name=>'people_ipe',:facet=>true} %>
+     
         </dl>
       </div>
     </div>
@@ -81,30 +40,19 @@
     <div id="item-auto" class="accordion-body collapse in">
       <div class="accordion-inner">
         <dl class="dl-horizontal  dl-invert">
-          <% if document.current_owner %>
-            <dt>Owner:</dt>
-            <dd><%= document.current_owner %></dd>
-          <% end %>
-          <% if document.marque %>
-            <dt>Marque:</dt>
-            <dd><%= show_formatted_list document.marque %></dd>
-          <% end %>
-          <% if document.vehicle_model %>
-            <dt>Model:</dt>
-            <dd><%= show_formatted_list document.vehicle_model %></dd>
-          <% end %>
-          <% if document.model_year %>
-            <dt>Model Year:</dt>
-            <dd><%= show_formatted_list document.model_year %></dd>
-          <% end %>
-          <% if document.group_class %>
-            <dt>Group/Class:</dt>
-            <dd><%= document.group_class %></dd>
-          <% end %>
-          <% if document.vehicle_markings %>
-            <dt>Vehicle Markings:</dt>
-            <dd><%= document.vehicle_markings %></dd>
-          <% end %>
+	
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'current_owner',:label=>'Current Owner',:editable=>true, :facet=>true} %>
+
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'marque',:label=>'Marque',:multivalued=>true,:editable=>true,:edit_field_name=>'marque_ipe',:facet=>true} %>
+
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'vehicle_model',:label=>'Model',:multivalued=>true,:editable=>true,:edit_field_name=>'vehicle_model_ipe',:facet=>true} %>
+
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'model_year',:label=>'Model Year',:multivalued=>true,:editable=>true,:edit_field_name=>'model_year_ipe',:facet=>true} %>
+
+ 					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'group_class',:label=>'Group/Class',:editable=>true} %>
+
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'vehicle_markings',:label=>'Vehicle Markings',:editable=>true,:input_type=>'textarea'} %>
+ 					
         </dl>
       </div>
     </div>
@@ -122,26 +70,17 @@
     <div id="item-race" class="accordion-body collapse in">
       <div class="accordion-inner">
         <dl class="dl-horizontal  dl-invert">
-          <% if document.event %>
-            <dt>Event:</dt>
-            <dd><%= document.event %></dd>
-          <% end %>
-          <% if document.venue %>
-            <dt>Venue:</dt>
-            <dd><%= document.venue %></dd>
-          <% end %>
-          <% if document.track %>
-            <dt>Track:</dt>
-            <dd><%= document.track %></dd>
-          <% end %>
-          <% if document.entrant %>
-            <dt>Entrant:</dt>
-            <dd><%= document.entrant %></dd>
-          <% end %>
-          <% if document.race_data %>
-            <dt>Race Data:</dt>
-            <dd><%= document.race_data %></dd>
-          <% end %>
+	
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'event',:label=>'Event',:editable=>true, :facet=>true} %>
+          
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'venue',:label=>'Venue',:editable=>true, :facet=>true} %>
+          
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'track',:label=>'Track',:editable=>true, :facet=>true} %>
+          
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'entrant',:label=>'Entrant',:editable=>true, :facet=>true} %>
+         
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'race_data',:label=>'Race Data',:editable=>true, :input_type=>'textarea'} %>
+          
         </dl>
       </div>
     </div>
@@ -158,24 +97,16 @@
     <div id="item-sources" class="accordion-body collapse in">
       <div class="accordion-inner">
         <dl class="dl-horizontal  dl-invert">
-          <% if document.formats %>
-            <dt>Format:</dt>
-            <dd><%= show_formatted_list(document.formats, :facet=>'format_ssim') %></dd>
-          <% end %>
-          <dt>Identifier:</dt>
-          <dd><%=document.identifier%></dd>
-          <% if document.institutional_notes %>
-            <dt>Institutional Notes:</dt>
-            <dd><%= document.institutional_notes %></dd>
-          <% end %>
-          <% if document.production_notes %>
-            <dt>Production Notes:</dt>
-            <dd><%= document.production_notes %></dd>
-          <% end %>
-          <% if document.metadata_sources %>
-            <dt>Metadata Sources:</dt>
-            <dd><%= document.metadata_sources %></dd>
-          <% end %>
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'formats',:label=>'Formats',:multivalued=>true,:editable=>true,:edit_field_name=>'formats_ipe',:facet=>true} %>
+
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'identifier',:label=>'Identifier'} %>
+
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'institutional_notes',:label=>'Institution Notes',:editable=>true, :input_type=>'textarea'} %>
+          
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'production_notes',:label=>'Production Notes',:editable=>true, :input_type=>'textarea'} %>       
+
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'metadata_sources',:label=>'Metadata Sources',:editable=>true, :input_type=>'textarea'} %>
+          
         </dl>
       </div>
     </div>

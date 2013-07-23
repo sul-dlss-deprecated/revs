@@ -69,19 +69,7 @@ class CatalogController < ApplicationController
     result,@document = get_solr_response_for_doc_id(druid)
     @carousel_members = @document.get_members(:rows=>@rows,:start=>@start)
   end
-  
-  # an ajax call for user submitted an in-place edit
-  def edit_metadata
-     
-     return unless can?(:update_metadata,:all) && request.xhr?
-
-     @document=SolrDocument.find(params[:id])
-     updates=params[:solr_document]
-     updates.each {|field,value| @document.send("#{field}=",value)}
-     head :ok
-     
-  end
-  
+    
   configure_blacklight do |config|
     ## Default parameters to send to solr for all search-like requests. See also SolrHelper#solr_search_params
     config.default_solr_params = { 

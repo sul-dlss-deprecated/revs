@@ -3,6 +3,7 @@ class SolrDocument
 
   include Blacklight::Solr::Document
   extend DateHelpers
+  include DateHelpers
   
   # Email uses the semantic field mappings below to generate the body of an email.
   SolrDocument.use_extension( Blacklight::Solr::Document::Email )
@@ -34,7 +35,73 @@ class SolrDocument
   # these are all date fields, and updating any of them will trigger some automatic computations and settings for the others
   DATE_FIELDS=[:pub_date_ssi,:pub_year_isim,:pub_year_single_isi]
   
+  # a hash of attribute names to solr document field names, used by method missing
+  # attributes in lowercase symbols; set to a hash with :field denothing the solr field name, and the optional :default denoting the value to set if solr field is blank
+  FIELD_MAPPINGS={
+    :title=>{:field=>'title_tsi',:default=>'Untitled'},
+    :photographer=>{:field=>'photographer_ssi'},
+    :years=>{:field=>'pub_year_isim'},
+    :full_date=>{:field=>'pub_date_ssi'},
+    :people=>{:field=>'people_ssim'},
+    :subjects=>{:field=>'subjects_ssim'},
+    :location=>{:field=>'location_ssi'},
+    :formats=>{:field=>'format_ssim'},
+    :identifier=>{:field=>'source_id_ssi'},
+    :production_notes=>{:field=>'prod_notes_tsi'},
+    :institutional_notes=>{:field=>'inst_notes_tsi'},
+    :metadata_sources=>{:field=>'metadata_sources_tsi'},
+    :has_more_metadata=>{:field=>'has_more_metadata_ssi'},
+    :vehicle_markings=>{:field=>'vehicle_markings_tsi'},
+    :marque=>{:field=>'marque_ssim'},
+    :vehicle_model=>{:field=>'model_ssim'},
+    :model_year=>{:field=>'model_year_ssim'},
+    :current_owner=>{:field=>'current_owner_ssi'},
+    :entrant=>{:field=>'entrant_ssi'},
+    :venue=>{:field=>'venue_ssi'},
+    :track=>{:field=>'track_ssi'},
+    :event=>{:field=>'event_ssi'},
+    :group_class=>{:field=>'group_class_tsi'},
+    :race_data=>{:field=>'race_data_tsi'},
+    :priority=>{:field=>'priority_isi',:default=>0},
+    :collections=>{:field=>'is_member_of_ssim'},
+    :collection_names=>{:field=>'collection_ssim'},
+    }
+  
+  IN_PLACE_EDIT_FIELD = "_ipe" # in place edit fields end with this 
+  
   self.unique_key = 'id'
+
+  # this exposes the field mappings, which can be useful in the UI
+  def self.field_mappings
+    FIELD_MAPPINGS
+  end
+  
+  def method_missing(meth,*args,&block)
+    
+    method = meth.to_s # convert method name to a string
+    setter = method.end_with?('=') # determine if this is a setter method (which would have the last character "=" in the method name)
+    attribute = setter ? method.chop : method # the attribute name needs to have the "=" removed if it is a setter
+    in_place_edit_field = attribute.end_with?(IN_PLACE_EDIT_FIELD) # in place editing fields can end with _ipe, which will join arrays when return; and split them when setting
+    attribute.gsub!(IN_PLACE_EDIT_FIELD,'') if in_place_edit_field
+    
+    solr_field_config=FIELD_MAPPINGS[attribute.downcase.to_sym]  # lookup the solr field for this accessor
+    if solr_field_config
+      solr_field_name=solr_field_config[:field].downcase
+      default_value=solr_field_config[:default] || ''
+      if setter # if it is a setter, set the appropriate field in solr
+        value = (in_place_edit_field ? args.first.split("|") : args.first) # split the values when setting if this is an in place edit field
+        set_field(solr_field_name,value)
+        return value
+      else # if it is a getter, return the value
+        value = self[solr_field_name]  # get the field value
+        value = default_value if value.blank?
+        return (in_place_edit_field && value.class == Array ? value.join(" | ") : value) # return a joinde value if this is an in place edit field, otherwise just return the value
+      end
+    else
+      super # we couldn't find any solr fields configured, so just send it to super
+    end
+    
+  end
   
   def flags
     Flag.includes(:user).where(:druid=>id)
@@ -44,163 +111,32 @@ class SolrDocument
     Annotation.for_image_with_user(id,user)
   end
 
-  def title
-    self[:title_tsi] || "Untitled"
-  end
-
-  def description # for some reason, we have description as a multivalued field, but we really only need it to be a single valued field for now, so let's just return the first entry
+  # we need a custom getter/setter for the description field because
+  # for some reason, we have description as a multivalued field, but we really only need it to be a single valued field
+  def description 
     desc=self['description_tsim']
     desc.class == Array ? desc.first : desc
   end
   def description=(value)
-    set_field('description_tsim',value)
-  end
-
-  def photographer
-    self[:photographer_ssi]
-  end
-  def photographer=(value)
-    set_field('photographer_ssi',value)
-  end
-
-  def full_date
-    self[:pub_date_ssi]
-  end
-
-  def years
-    self[:pub_year_isim]
-  end  
-  def years_edit # multivalued fields have a helper that renders them into a joined view for in-place editing
-    years.join("|")
-  end
-  def years_edit=(value)
-    set_field('pub_year_isim',value.split("|"))
-  end
-
-  def people
-    self[:people_ssim]
-  end
-  def people_edit
-    people.join('|')
-  end
-  
-  def subjects
-    self[:subjects_ssim]
-  end
-  def subjects_edit
-    subjects.join('|')
-  end
-  
-  def location
-    self[:location_ssi]
-  end
-
-  def formats
-    self[:format_ssim]
-  end
-  def formats_edit
-    formats.join('|')
-  end
-
-  def identifier
-    self[:source_id_ssi]
-  end
-
-  def institutional_notes
-    self[:inst_notes_tsi]
-  end
-
-  def production_notes
-    self[:prod_notes_tsi]
-  end
-
-  def metadata_sources
-    self[:metadata_sources_tsi]
-  end
-
-  def has_more_metadata
-    self[:has_more_metadata_ssi]
-  end
-
-  def vehicle_markings
-    self[:vehicle_markings_tsi]
-  end
-
-  def marque
-    self[:marque_ssim]
-  end
-  def marque_edit
-    marque.join('|')
-  end
-
-  def vehicle_model
-    self[:model_ssim]
-  end
-  def vehicle_model_edit
-    vehicle_model.join('|')
-  end
-
-  def model_year
-    self[:model_year_ssim]
-  end
-  def model_year_edit
-    model_year.join('|')
-  end
-
-  def current_owner
-    self[:current_owner_ssi]
-  end
-
-  def entrant
-    self[:entrant_ssi]
-  end
-
-  def venue
-    self[:venue_ssi]
-  end
-
-  def track
-    self[:track_ssi]
-  end
-
-  def event
-    self[:event_ssi]
-  end
-
-  def group_class
-    self[:group_class_tsi]
-  end
-
-  def race_data
-    self[:race_data_tsi]
-  end
-
-  def priority
-    self[:priority_isi] || 0
+    set_field('description_tsim',value.strip)
   end
   
   def has_vehicle_metadata?
     return true if
-      self.current_owner || self.marque || self.vehicle_markings || self.group_class
+      !self.current_owner.blank? || !self.marque.blank? || !self.vehicle_markings.blank? || !self.group_class.blank?
   end
 
   def has_race_metadata?
     return true if
-      self.entrant || self.venue || self.track || self.event || self.race_data
-  end
-
-  def collection_names
-    self[blacklight_config.collection_member_collection_title_field.to_sym]
+      !self.entrant.blank? || !self.venue.blank? || !self.track.blank? || !self.event.blank? || !self.race_data.blank?
   end
 
   def is_collection?
-    self.has_key?(blacklight_config.collection_identifying_field) and
-      self[blacklight_config.collection_identifying_field].include?(blacklight_config.collection_identifying_value)
+    !self.formats.blank? && self.formats.include?('collection')
   end
 
   def is_item?
-    self.has_key?(blacklight_config.collection_member_identifying_field) and
-      !self[blacklight_config.collection_member_identifying_field].blank?
+    !self.collections.blank?
   end
 
   # Return a SolrDocument object of the parent collection of an item
@@ -326,7 +262,7 @@ class SolrDocument
       params+="{\"set\":null}}]"          
     else
       new_values=[new_values] unless new_values.class==Array
-      new_values = new_values.map {|s| s.to_s.gsub('"','\"')}
+      new_values = new_values.map {|s| s.to_s.gsub('"','\"').strip} # strip leading/trailing spaces and escape quotes for each value
       params+="{\"set\":[\"#{new_values.join('","')}\"]}}]"      
     end
     RestClient.post url, params,:content_type => :json, :accept=>:json
@@ -442,7 +378,7 @@ class SolrDocument
   def self.bulk_update_fields
     [
       ['Title','title_tsi'],
-      ['Format','format_ssim'],
+      ['Formats','format_ssim'],
       ['Years','pub_year_isim'],
       ['Date','pub_date_ssi'],
       ['Description','description_tsim'],
@@ -463,7 +399,6 @@ class SolrDocument
   end
 
   private
-
   def self.config
     CatalogController.blacklight_config  
   end
@@ -471,4 +406,5 @@ class SolrDocument
   def blacklight_config
     self.class.config
   end
+  
 end

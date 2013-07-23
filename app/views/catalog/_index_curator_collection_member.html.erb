@@ -30,12 +30,12 @@
           <% end %>
           <% if document.years %>
             <span class="result-detail-field">
-              <%= show_formatted_list(document.years,:facet=>'pub_year_isim') %>
+              <%= show_formatted_list(document.years,:facet=>:years) %>
             </span>
           <% end %>
           <% if document.formats %>
             <span class="result-detail-field">
-              <%= show_formatted_list(document.formats,:facet=>'format_ssim') %>
+              <%= show_formatted_list(document.formats,:facet=>:formats) %>
             </span>
           <% end %>
         </div>

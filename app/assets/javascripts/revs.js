@@ -17,8 +17,7 @@ $(document).ready(function(){
     return false;
   });
 
-   // Curator view controls and actions //
-
+   // Curator bulk update view controls and actions //
    // Put focus on new value input box on page load
    $('#bulk_edit_new_value').focus();
    // Called when 'Select all' checkbox is checked or unchecked.
@@ -48,16 +47,7 @@ $(document).ready(function(){
      updateBulkEditStatus();
    });
 
-   // Curator mode item metadata editing //
-
-   /* Activating Best In Place */
-   $(".best_in_place").best_in_place();
-
-   // Make edit-in-place buttons a bit smaller
-   $("#item-details-accordion .icon-edit").on('click', function($e) {
-     $(".best_in_place > form > input[type='submit']").addClass("btn btn-small");
-     $(".best_in_place > form > input[type='button']").addClass("btn btn-small");
-   });
+ 	activateInPlaceEditing();
 
    // Enter/leave curator edit mode
    $('#edit_mode_link').click(function() { // click the curator edit mode action link
@@ -95,6 +85,19 @@ function updateBulkEditStatus() {
   $('#documents.curator .result-item').each(function() { // loop through all result item rows
     updateEditStatus(field,this); // update status message
   });
+}
+
+function activateInPlaceEditing() {
+  // Curator mode item metadata editing //
+
+  /* Activating Best In Place */
+  $(".best_in_place").best_in_place();
+
+  // Make edit-in-place buttons a bit smaller
+  $("#item-details-accordion .icon-edit").on('click', function($e) {
+    $(".best_in_place > form > input[type='submit']").addClass("btn btn-small");
+    $(".best_in_place > form > input[type='button']").addClass("btn btn-small");
+  });	
 }
 
 function druid() {
