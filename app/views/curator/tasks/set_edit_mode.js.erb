@@ -1,3 +1,4 @@
 $('#item_details').html("<%= escape_javascript(render :partial => "/catalog/show_default_collection_member", :locals => {:document => @document}) %>");
 setupItemDetailPanels();
+activateInPlaceEditing();
 showOnLoad();

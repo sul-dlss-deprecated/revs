@@ -1,11 +1,11 @@
 module DateHelpers
     
   def show_as_date(datetime)
-    datetime.nil? ? "" : date_object(datetime).strftime('%B %e, %Y')  
+    datetime.blank? ? "" : date_object(datetime).strftime('%B %e, %Y')  
   end
 
   def show_as_datetime(datetime)
-    datetime.nil? ? "" : date_object(datetime).strftime('%B %e, %Y')  
+    datetime.blank? ? "" : date_object(datetime).strftime('%B %e, %Y')  
   end
 
   def date_object(input)

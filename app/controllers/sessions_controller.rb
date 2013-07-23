@@ -19,6 +19,11 @@ class SessionsController < Devise::SessionsController
       super
     end
   end
+  
+  def destroy
+    session[:curator_edit_mode] = nil
+    super
+  end
 
   def webauth_login
     if Revs::Application.config.simulate_sunet_user && Rails.env != 'production' # if we are simulating sunet logins and we are not in production, set a fake webauth cookie manually for testing

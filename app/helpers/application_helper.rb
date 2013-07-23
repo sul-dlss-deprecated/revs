@@ -51,17 +51,11 @@ module ApplicationHelper
   end
 
   def show_linked_value(val,opts={})
-    opts[:facet].nil? ? val : link_to(val,catalog_index_path(:"f[#{opts[:facet]}][]"=>"#{val}"))
+    opts[:facet].blank? ? val : link_to(val,catalog_index_path(:"f[#{SolrDocument.field_mappings[opts[:facet].to_sym][:field]}][]"=>"#{val}"))
   end
   
   def show_formatted_list(mvf,opts={})
-    mvf.collect do |val|
-      if opts[:facet]
-        output=link_to(val,catalog_index_path(:"f[#{opts[:facet]}][]"=>"#{val}"))
-      else
-        output=val
-      end
-    end.join(', ').html_safe
+    mvf.collect {|val|show_linked_value(val,opts)}.join(', ').html_safe
   end
   
   def render_locale_class
@@ -90,11 +84,7 @@ module ApplicationHelper
   end
   
   def in_curator_edit_mode
-    (session[:curator_edit_mode].blank? || session[:curator_edit_mode] == 'false') ? false : true
-  end
-  
-  def bip_options
-    {:path=>edit_metadata_path(@document.id),:ok_button => "Save", :cancel_button => "Cancel", :nil=>'<em>empty</em>'}
+    (session[:curator_edit_mode].blank? || session[:curator_edit_mode] == 'false') ? false : can?(:curate,:all)
   end
   
 end

@@ -71,6 +71,13 @@ class ApplicationController < ActionController::Base
     not_authorized unless can? :curate, :all
   end
     
+  def ajax_only
+    unless request.xhr?
+      render :nothing=>true
+      return
+    end
+  end
+  
   def not_authorized(additional_message=nil)
     
     message="You are not authorized to perform this action."
