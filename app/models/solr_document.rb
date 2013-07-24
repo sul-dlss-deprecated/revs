@@ -134,9 +134,10 @@ class SolrDocument
 
       case solr_field_name.to_sym
         when :pub_date_ssi
-          @errors << 'Date must be in the format MM/DD/YYYY' unless (get_full_date(value) && value)
+          @errors << 'Date must be in the format MM/DD/YYYY' if (!self.class.empty_value?(value) && get_full_date(value) == false)
         when :pub_year_isim,:pub_year_single_isi
-          @errors << 'A year must be after 1800 up until this year and must be in the format YYYY' unless self.class.to_array(value).all?{|new_value| is_valid_year?(new_value)}
+          years=self.class.to_array(value)
+          @errors << 'A year must be after 1800 up until this year and must be in the format YYYY' if (!self.class.empty_value?(years) && !years.all?{|new_value| is_valid_year?(new_value)})
       end
     
     end

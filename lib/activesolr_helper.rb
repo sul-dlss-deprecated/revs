@@ -24,6 +24,11 @@ module ActivesolrHelper
        value.class == Array ? value : [value]
      end
      
+     # tells you if have an blank value or an array that has just blank values
+     def empty_value?(value)
+        value.class == Array ? !value.delete_if(&:blank?).any? : value.blank? 
+     end
+     
   end
   
   # used to cache edits that can be saved later
@@ -91,26 +96,33 @@ module ActivesolrHelper
       
       unsaved_edits.each do |solr_field_name,value| 
 
-        old_values=self[solr_field_name]        
-        set_field(solr_field_name,value) # update remote solr document
+        old_values=self[solr_field_name]   
+        self.class.empty_value?(value) ? remove_field(solr_field_name) : set_field(solr_field_name,value) # update remote solr document
         self[solr_field_name]=value # update the local solr document
         
         # update Editstore database too if needed
         if self.class.use_editstore
+                    
+          if self.class.empty_value?(value) && !self.class.empty_value?(old_values) # the new value is blank, and the previous value exists, so send a delete operation
           
-          new_values=self.class.to_array(value)
+            Editstore::Change.create(:operation=>:delete,:state_id=>Editstore::State.ready.id,:field=>solr_field_name,:druid=>self.id,:client_note=>'delete value')
           
-          if !old_values.nil? # if a previous value(s) exist for this field, we either need to do an update (single valued), or delete all existing values (multivalued)
-            if old_values.class == Array  # multivalued; delete all old values (this is because bulk does not pinpoint change values, it simply does a full replace of any multivalued field)    
-              Editstore::Change.create(:operation=>:delete,:state_id=>Editstore::State.ready.id,:field=>solr_field_name,:druid=>self.id,:client_note=>'delete all old values in multivalued field')
-            else # single-valued, change operation 
-              Editstore::Change.create(:new_value=>new_values.first.to_s.strip,:old_value=>old_values,:operation=>:update,:state_id=>Editstore::State.ready.id,:field=>solr_field_name,:druid=>self.id)
-            end
-          end
-  
-          if old_values.nil? || old_values.class == Array # if previous value didn't exist or we are updating a multvalued field, let's create the new values
-            new_values.each {|new_value| Editstore::Change.create(:new_value=>new_value.to_s.strip,:operation=>:create,:state_id=>Editstore::State.ready.id,:field=>solr_field_name,:druid=>self.id)} # add all new values to DOR        
-          end
+          elsif !self.class.empty_value?(value) # there are some new values
+            
+            new_values=self.class.to_array(value) # ensure we have an array, even if its just one value - this makes the operations below more uniform
+            
+            if !self.class.empty_value?(old_values) # if a previous value(s) exist for this field, we either need to do an update (single valued), or delete all existing values (multivalued)
+              if old_values.class == Array  # field is multivalued; delete all old values (this is because bulk does not pinpoint change values, it simply does a full replace of any multivalued field)    
+                send_delete_to_editstore(solr_field_name,'delete all old values in multivalued field')
+                send_creates_to_editstore(new_values,solr_field_name)
+              elsif  # old value was single-valued, change operation
+                send_update_to_editstore(new_values.first,old_values,solr_field_name)
+              end
+            else # no previous old values, so this must be an add
+              send_creates_to_editstore(new_values,solr_field_name)
+            end # end check for previous old values
+            
+          end # end check for new values being blank
           
         end # end send to editstore
       
@@ -126,6 +138,18 @@ module ActivesolrHelper
     
     end
     
+  end
+  
+  def send_update_to_editstore(new_value,old_value,solr_field_name,note='')
+    Editstore::Change.create(:new_value=>new_value.to_s.strip,:old_value=>old_value,:operation=>:update,:state_id=>Editstore::State.ready.id,:field=>solr_field_name,:druid=>self.id,:client_note=>note)
+  end
+  
+  def send_delete_to_editstore(solr_field_name,note='')
+    Editstore::Change.create(:operation=>:delete,:state_id=>Editstore::State.ready.id,:field=>solr_field_name,:druid=>self.id,:client_note=>note)
+  end
+  
+  def send_creates_to_editstore(new_values,solr_field_name,note='')
+    new_values.each {|new_value| Editstore::Change.create(:new_value=>new_value.to_s.strip,:operation=>:create,:state_id=>Editstore::State.ready.id,:field=>solr_field_name,:druid=>self.id,:client_note=>note)}
   end
   
   # remove this field from solr
