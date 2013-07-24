@@ -10,8 +10,15 @@
 	<dt><%=label%>:</dt>
 	<% if editable && in_curator_edit_mode%>
     <dd>
-      <i class='icon-edit <%=edit_field_name%>'></i>
-      <%= best_in_place document, edit_field_name.to_sym, {:activator => ".icon-edit.#{edit_field_name}", :type => input_type,:path=>edit_metadata_curator_tasks_path(document.id),:ok_button => "Save", :cancel_button => "Cancel", :nil=>'<em>empty</em>'} %>
+			<% case input_type %>			  
+				<% when 'text_area' %>
+				 <%= text_area_tag "document[#{edit_field_name}]",document.send(edit_field_name), :rows => 3, :cols => 40 %>			  
+			 <% else %>
+				 <%= text_field_tag "document[#{edit_field_name}]",document.send(edit_field_name),:size => 40 %>
+			<% end %>
+			<% if multivalued %>
+			  <br /><span class="edit-note">Separate multiple values with a |</span>
+			<% end %>
     </dd>
 		<% else %>
 			<% if multivalued %>

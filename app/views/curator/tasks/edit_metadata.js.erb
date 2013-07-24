@@ -1,0 +1,5 @@
+<% if @valid %>
+	window.alert("Done");
+<% else %>
+  window.alert("Doh. <%=@errors.join(', ') %>");
+<% end %>

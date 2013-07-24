@@ -19,10 +19,10 @@ class Curator::TasksController < ApplicationController
    # an ajax call for user submitted an in-place edit
    def edit_metadata
       @document=SolrDocument.find(params[:id])
-      updates=params[:solr_document]
+      updates=params[:document]
       updates.each {|field,value| @document.send("#{field}=",value)}
-      valid=@document.save
-      head :ok
+      @valid=@document.save
+      @errors=@document.errors
    end
    
 end

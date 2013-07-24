@@ -1,3 +1,5 @@
+<%= form_tag(edit_metadata_curator_tasks_path, method: 'put', remote:true ) do %>
+
 <div class="accordion" id="item-details-accordion">
   <div class="accordion-group">
     <div class="accordion-heading nav-header">
@@ -12,13 +14,13 @@
 
 					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'title',:label=>'Title',:editable=>true} if in_curator_edit_mode %>
 
-					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'description',:label=>'Description',:editable=>true} %>
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'collection_names',:label=>'Collection',:multivalued=>true,:facet=>true,:editable=>false} %>
+
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'description',:label=>'Description',:editable=>true, :input_type=>'text_area'} %>
 					
 					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'years',:label=>'Years', :multivalued=>true, :facet=> true, :editable=>true} %>
 					
-					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'full_date',:label=>'Date',:editable=>true,:input_type=>'input'} %>
-
-					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'collection_names',:label=>'Collection',:multivalued=>true,:facet=>true,:editable=>false} %>
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'full_date',:label=>'Date',:editable=>true} %>
 
 					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'photographer',:label=>'Photographer',:editable=>true,:facet=>true} %>
 
@@ -26,6 +28,8 @@
 
 					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'people',:label=>'People',:multivalued=>true,:editable=>true,:facet=>true} %>
      
+					<%= submit_tag 'Save Changes' if in_curator_edit_mode %>
+
         </dl>
       </div>
     </div>
@@ -53,8 +57,10 @@
 
  					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'group_class',:label=>'Group/Class',:editable=>true} %>
 
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'vehicle_markings',:label=>'Vehicle Markings',:editable=>true} %>
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'vehicle_markings',:label=>'Vehicle Markings',:editable=>true, :input_type=>'text_area'} %>
  					
+					<%= submit_tag 'Save Changes' if in_curator_edit_mode %>
+
         </dl>
       </div>
     </div>
@@ -83,6 +89,8 @@
          
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'race_data',:label=>'Race Data',:editable=>true} %>
           
+					<%= submit_tag 'Save Changes' if in_curator_edit_mode %>
+
         </dl>
       </div>
     </div>
@@ -99,18 +107,22 @@
     <div id="item-sources" class="accordion-body collapse in">
       <div class="accordion-inner">
         <dl class="dl-horizontal  dl-invert">
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'formats',:label=>'Formats',:multivalued=>true,:editable=>true,:facet=>true} %>
-
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'identifier',:label=>'Identifier'} %>
 
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'institutional_notes',:label=>'Institution Notes',:editable=>true} %>
-          
-					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'production_notes',:label=>'Production Notes',:editable=>true} %>       
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'formats',:label=>'Formats',:multivalued=>true,:editable=>true,:facet=>true} %>
 
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'metadata_sources',:label=>'Metadata Sources',:editable=>true} %>
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'institutional_notes',:label=>'Institution Notes',:editable=>true, :input_type=>'text_area'} %>
           
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'production_notes',:label=>'Production Notes',:editable=>true, :input_type=>'text_area'} %>       
+
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'metadata_sources',:label=>'Metadata Sources',:editable=>true, :input_type=>'text_area'} %>
+          
+					<%= submit_tag 'Save Changes' if in_curator_edit_mode %>
+
         </dl>
       </div>
     </div>
   </div>
 </div>
+
+<% end %>

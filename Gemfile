@@ -69,6 +69,3 @@ gem 'json', '~> 1.7.7'
 
 gem "bootstrap-sass"
 gem "font-awesome-rails"
-
-# Edit-in-place
-gem "best_in_place"
