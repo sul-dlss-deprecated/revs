@@ -1,5 +1,6 @@
-<% if @valid %>
-	window.alert("Done");
-<% else %>
-  window.alert("Doh. <%=@errors.join(', ') %>");
+$('#main-flashes').html("<%= escape_javascript(render( :partial => "/flash_msg")).html_safe %>");
+<% if @document.valid? %>
+	$('#item_details').html("<%= escape_javascript(render :partial => "/catalog/show_default_collection_member", :locals => {:document => @document}) %>");
 <% end %>
+setupItemDetailPanels();
+showOnLoad();

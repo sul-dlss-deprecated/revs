@@ -95,23 +95,31 @@ class SolrDocument
     case field_name.to_sym
       when :pub_year_isim # if the user has updated a multivalued year field, we need to blank out the full date, since its no longer valid, and set the single year field if we have one year
         remove_field('pub_date_ssi')
+        self['pub_date_ssi']=nil
         if new_value.class == Array and new_value.size == 1
           update_solr('pub_year_single_isi','set',new_value)
+          self['pub_year_single_isi']=new_value
         else
           remove_field('pub_year_single_isi')
+          self['pub_year_single_isi']=nil
         end
       when :pub_year_single_isi  # if the user has updated a year field, we need to blank out the full date, since its no longer valid, and set the years field
         remove_field('pub_date_ssi')
         update_solr('pub_year_isim','set',new_value)
+        self['pub_year_isim']=new_value
       when :pub_date_ssi # if the user has updated a date field, we need to set the years appropriately
         new_value=new_value.first if new_value.class == Array
         full_date=get_full_date(new_value)
         if full_date # if it's a valid full date, extract the year into the single and multi-valued year fields
           update_solr('pub_year_isim','set',full_date.year.to_s)
           update_solr('pub_year_single_isi','set',full_date.year.to_s)
+          self['pub_year_single_isi']=full_date.year.to_s
+          self['pub_year_isim']=full_date.year.to_s
         else # if it's not a valid date, clear the year fields
           remove_field('pub_year_isim')
           remove_field('pub_date_single_isi')
+          self['pub_year_single_isi']=nil
+          self['pub_year_isim']=nil
         end
     end    
   end
@@ -126,7 +134,7 @@ class SolrDocument
 
       case solr_field_name.to_sym
         when :pub_date_ssi
-          @errors << 'Date must be in the format MM/DD/YYYY' unless get_full_date(value)
+          @errors << 'Date must be in the format MM/DD/YYYY' unless (get_full_date(value) && value)
         when :pub_year_isim,:pub_year_single_isi
           @errors << 'A year must be after 1800 up until this year and must be in the format YYYY' unless self.class.to_array(value).all?{|new_value| is_valid_year?(new_value)}
       end

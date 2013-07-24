@@ -64,9 +64,15 @@ module ActivesolrHelper
       solr_field_name=solr_field_config[:field].downcase
       default_value=solr_field_config[:default] || ''
       if setter # if it is a setter, cache the edit
-        value = (multivalued_field ? args.first.split("|") : args.first) # split the values when setting if this is an in place edit field
-        cache_edit({solr_field_name.to_sym=>value})
-        return value
+        old_values=self[solr_field_name]        
+        new_values=args.first
+        if old_values != new_values # we should only cache the edit if it actually changed
+          value = (multivalued_field ? new_values.split("|") : new_values) # split the values when setting if this is an in place edit field
+          cache_edit({solr_field_name.to_sym=>value})
+          return value
+        else
+          return old_values
+        end
       else # if it is a getter, return the value
         value = unsaved_edits[solr_field_name.to_sym] || self[solr_field_name]  # get the field value, either from unsaved edits or from solr document
         value = default_value if value.blank?
@@ -86,8 +92,9 @@ module ActivesolrHelper
       unsaved_edits.each do |solr_field_name,value| 
 
         old_values=self[solr_field_name]        
-        set_field(solr_field_name,value)
-      
+        set_field(solr_field_name,value) # update remote solr document
+        self[solr_field_name]=value # update the local solr document
+        
         # update Editstore database too if needed
         if self.class.use_editstore
           
