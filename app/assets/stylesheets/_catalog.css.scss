@@ -132,6 +132,16 @@
       dt {
         color: #777;
       }
+      input[type=submit] {
+        float: right;
+        margin-top: 12px;
+      }
+      .mvf {
+        margin-bottom: 0;
+      }
+      textarea, input:not([type=submit]):not([type=file]) {
+        width: 95%;
+      }
     }
   }
   .item-actions {

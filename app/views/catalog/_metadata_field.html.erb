@@ -14,10 +14,12 @@
 				<% when 'text_area' %>
 				 <%= text_area_tag "document[#{edit_field_name}]",document.send(edit_field_name), :rows => 3, :cols => 40 %>			  
 			 <% else %>
-				 <%= text_field_tag "document[#{edit_field_name}]",document.send(edit_field_name),:size => 40 %>
+				 <%= text_field_tag "document[#{edit_field_name}]",document.send(edit_field_name),:size => 40, :class => (multivalued ? 'mvf' : '') %>
 			<% end %>
 			<% if multivalued %>
-			  <br /><span class="edit-note">Separate multiple values with a |</span>
+			  <small>
+			    <span class="help-block">Separate multiple values with a |</span>
+			  </small>
 			<% end %>
     </dd>
 		<% else %>
