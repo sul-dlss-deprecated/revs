@@ -24,8 +24,28 @@ describe("Curator Section",:type=>:request,:integration=>true) do
       current_path.should == starting_page
       should_allow_flagging
       should_allow_annotations    
-      should_not_allow_admin_section
+      should_deny_access(admin_users_path)
       should_allow_curator_section
+    end
+    
+    it "should allow a curator to view the bulk edit view" do
+
+      login_as(curator_login)
+      starting_page=search_path(:"f[pub_year_isim][]"=>"1955",:view=>"curator")
+      visit starting_page
+      current_path.should == search_path
+      current_url.include?('view=curator').should be_true
+            
+    end
+
+    it "should not allow a non-logged in or non curator user to view the bulk edit view" do
+
+      starting_page=search_path(:"f[pub_year_isim][]"=>"1955",:view=>"curator")
+      should_deny_access(starting_page)
+      
+      login_as(user_login)
+      should_deny_access(starting_page)
+      
     end
     
     describe "Flagged Items List" do

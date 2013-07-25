@@ -93,10 +93,8 @@ def should_not_allow_flagging
   page.should_not have_button('Flag Item')
 end
 
-
-# Admin section
-def should_not_allow_admin_section
-  visit admin_users_path
+def should_deny_access(path)
+  visit path
   current_path.should == root_path
   page.should have_content('You are not authorized to perform this action.')
 end
@@ -105,13 +103,6 @@ def should_allow_admin_section
   visit admin_users_path
   page.should have_content('Administer Users')
   current_path.should == admin_users_path  
-end
-
-# Curator section
-def should_not_allow_curator_section
-  visit curator_tasks_path
-  current_path.should == root_path
-  page.should have_content('You are not authorized to perform this action.')
 end
 
 def should_allow_curator_section

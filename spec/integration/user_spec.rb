@@ -31,8 +31,8 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     current_path.should == starting_page
     should_allow_flagging
     should_allow_annotations    
-    should_not_allow_admin_section
-    should_not_allow_curator_section   
+    should_deny_access(admin_users_path)
+    should_deny_access(curator_tasks_path)
   end
   
   it "should not show the public profile of a user who does not want their profile public, but should show the public profile page for users who do have it set as public" do
