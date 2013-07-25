@@ -69,6 +69,16 @@ $(document).ready(function(){
 		anno.highlightAnnotation(annotation);
 	});
 
+	$('#contact_us_link').click(function() {
+	  $('#report-problem-form').slideToggle('slow');
+	  return false;
+	});
+
+	$('#report-problem-form .cancel-link').click(function() {
+	  $('#report-problem-form').slideUp('fast');
+	  return false;
+	});
+
 	// elements defined with the class "showOnLoad" and "hidden" classes will be hidden by default and then show when the page loads
 	//  useful when you have non javascript friendly DOM elements you need to hide for no JS browsers so you can include a <noscript> tag with
 	//   non JS versions

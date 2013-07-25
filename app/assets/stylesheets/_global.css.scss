@@ -237,6 +237,25 @@ span.content-type {
   background-color: #990000;
 }
 
+#report-problem-form {
+  border-bottom: 1px solid #dddddd;
+  display: none;
+  h2 {
+    border-top: none;
+    padding-top: 20px;
+  }
+  textarea, input:not([type=submit]):not([type=file]) {
+    width: 80%;
+  }
+  select {
+    width: auto;
+  }
+}
+.cancel-link {
+  margin-left: 12px;
+}
+
+
 // Hide element offscreen but still readable by screen readers
 .hidden-offscreen {
   position: absolute !important;
@@ -288,5 +307,8 @@ span.content-type {
   #sidebar {
     border-top: none;
     padding-top: 0;
+  }
+  #report-problem-form {
+    margin-left: 20px;
   }
 }
