@@ -110,7 +110,7 @@ def should_allow_curator_section
   page.should have_content('Flagged Items')
 end
 
-def reload_solr_docs(druids)
+def reindex_solr_docs(druids)
   add_docs = []
   druids=[druids] if druids.class != Array
   druids.each do |druid|

@@ -48,8 +48,8 @@ describe("Item Pages",:type=>:request,:integration=>true) do
     page.should have_content('Indy 500 Speedway')
     page.should have_content('Race Data:')
     page.should have_content('This is who won, who lost, other bits about the race.')
-    visit catalog_path('yt907db4998') # Item without Vehicle and Race field values
-    page.should have_content('Record 1')
+    visit catalog_path('xf058ys1313') # Item without Vehicle and Race field values
+    page.should have_content('Thompson Raceway, May 2')
     page.should_not have_content('Vehicle Information')
     page.should_not have_content('Race Information')
   end

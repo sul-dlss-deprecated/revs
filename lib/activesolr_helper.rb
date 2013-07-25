@@ -112,7 +112,7 @@ module ActivesolrHelper
                     
           if self.class.blank_value?(value) && !self.class.blank_value?(old_values) # the new value is blank, and the previous value exists, so send a delete operation
           
-            Editstore::Change.create(:operation=>:delete,:state_id=>Editstore::State.ready.id,:field=>solr_field_name,:druid=>self.id,:client_note=>'delete value')
+            send_delete_to_editstore(solr_field_name,'delete value')
           
           elsif !self.class.blank_value?(value) # there are some new values
             
@@ -152,7 +152,7 @@ module ActivesolrHelper
   end
   
   def send_delete_to_editstore(solr_field_name,note='')
-    Editstore::Change.create(:operation=>:delete,:state_id=>Editstore::State.ready.id,:field=>solr_field_name,:druid=>self.id,:client_note=>note)
+    Editstore::Change.create(:operation=>:delete,:new_value=>'',:state_id=>Editstore::State.ready.id,:field=>solr_field_name,:druid=>self.id,:client_note=>note)
   end
   
   def send_creates_to_editstore(new_values,solr_field_name,note='')

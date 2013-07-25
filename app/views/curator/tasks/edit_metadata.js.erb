@@ -1,5 +1,6 @@
 <% if @document.valid? %>
 	 $('#item_details').html("<%= escape_javascript(render :partial => "/catalog/show_default_collection_member", :locals => {:document => @document}) %>");
+	 $('.show-document-title').html("<%=@document.title%>");
 <% else %>
 	$('.item-edit-errors').html("<%=@message%>");
 	$('.item-edit-errors').removeClass('hidden');

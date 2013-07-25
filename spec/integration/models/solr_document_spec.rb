@@ -1,45 +1,51 @@
 require "spec_helper"
 
 describe SolrDocument, :integration => true do
-  
-  describe "getter methods" do
-    
-    it "should retrieve a couple single valued fields correctly" do
-      doc = SolrDocument.find('yh093pt9555')
-      doc.title.should == doc['title_tsi']
-      doc.title.class.should == String
-      doc.photographer.should == doc['photographer_ssi']
-      doc.photographer.class.should == String
-      doc.description.should == doc['description_tsim'].first # returns a single value even though this is a multivalued field in solr
-      doc.description.class.should == String
-    end
 
-    it "should retrieve a couple single multivalued fields correctly" do
-      doc = SolrDocument.find('yh093pt9555')
-      doc.marque.should == doc['marque_ssim']
-      doc.marque.class.should == Array
-      doc.people.should == doc['people_ssim']
-      doc.people.class.should == Array
-    end
-          
-    it "should return an empty string when that value doesn't exist in the solr doc" do
-      doc = SolrDocument.find('yt907db4998')
-      doc['photographer_ssi'].should be_nil
-      doc['model_year_ssim'].should be_nil
-      doc.photographer.should == ""
-      doc.model_year.should == ""
+  describe "validation" do
+
+    before :each do
+      @doc = SolrDocument.find('yt907db4998')
     end
     
-    it "should return the default value for the title when it is not set" do
-      doc = SolrDocument.find('jg267fg4283')
-      doc['title_tsi'].should be_nil
-      doc.title.should == 'Untitled'
-      doc['title_tsi']='' # even when blank, it should still show as untitled
-      doc.title.should == 'Untitled'
-    end
-    
+    it "should catch invalid dates" do
+      @doc.valid?.should be_true
+      @doc.full_date = 'crap' # bad value
+      @doc.dirty?.should be_true
+      @doc.valid?.should be_false
+      @doc.save.should be_false      
+      @doc.full_date = '5/1/2001' # this is ok
+      @doc.valid?.should be_true
+      @doc.full_date = '' # blanks is ok
+      @doc.valid?.should be_true      
+   end
+
+    it "should catch invalid years" do
+      @doc.valid?.should be_true
+      @doc.years = ['crap','1961'] # bad value
+      @doc.dirty?.should be_true
+      @doc.valid?.should be_false
+      @doc.save.should be_false      
+      @doc.years = 'crap' # this is bad
+      @doc.valid?.should be_false
+      @doc.years = '1999' # this is ok
+      @doc.valid?.should be_true
+      @doc.years = ['1959','1961'] # ok
+      @doc.valid?.should be_true      
+      @doc.years_mvf = '1959|1961' # mvf ok
+      @doc.valid?.should be_true
+      @doc.years_mvf = 'abc|1961' # bad
+      @doc.valid?.should be_false
+      @doc.years_mvf = '1961' # ok
+      @doc.valid?.should be_true
+      @doc.years = '' # blanks is ok
+      @doc.valid?.should be_true   
+      @doc.years_mvf = '' # blanks is ok
+      @doc.valid?.should be_true         
+   end
+      
   end
-  
+    
   describe "metadata_editing" do
     
     it "should apply bulk updates to solr and editstore when update method is called directly" do
@@ -68,8 +74,8 @@ describe SolrDocument, :integration => true do
         Editstore::Change.where(:new_value=>new_value,:old_value=>old_values[druid],:druid=>druid).size.should == 1
       end
       
-      # reload solr docs we changed back to their original values
-      reload_solr_docs(druids_to_edit)
+      # reindex solr docs we changed back to their original values
+      reindex_solr_docs(druids_to_edit)
       
     end
     
@@ -99,8 +105,8 @@ describe SolrDocument, :integration => true do
       collection.current_top_priority.should == 2
       collection.first_image.should == 'https://stacks-test.stanford.edu/image/qb957rw1430/2011-023DUG-3.0_0015_thumb'
       collection.first_item.id.should == 'qb957rw1430'
-      # reload document we changed
-      reload_solr_docs(['qb957rw1430','yt907db4998','wn860zc7322'])
+      # reindex document we changed
+      reindex_solr_docs(['qb957rw1430','yt907db4998','wn860zc7322'])
     end
     
   end
