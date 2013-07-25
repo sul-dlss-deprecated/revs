@@ -57,8 +57,10 @@ en:
     curator:
       sidebar:
         actions: 'Actions'
+      curator_actions: 'Curator Actions'
       enter_edit_mode: 'Enter metadata edit mode'
       leave_edit_mode: 'Leave metadata edit mode'
+      set_posterframe: 'Use this image to represent the collection'
     dashboards: 'Dashboards'
     citations:
         view: 'View full citation page with image download'

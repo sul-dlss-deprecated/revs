@@ -101,7 +101,7 @@
     }
   }
   #item-details-accordion {
-    margin-bottom: 36px;
+    margin-bottom: 24px;
     margin-left: 1px;
     .accordion-group {
       border: none;
@@ -166,6 +166,12 @@
         margin-right: 0
       }
     }
+    &.curator-actions {
+        margin-top: 24px;
+        .curator-action-link {
+          display: inline-block;
+        }
+    }
     #all_flags, #all-annotations {
       color: #555;
       .flag-info, .annotation-info {
@@ -196,10 +202,8 @@
         }
       }
     }
-    #edit_mode_link {
-      display: inline-block;
-    }
-    .edit-mode-status.label {
+    .edit-mode-status.label,
+    .posterframe-status.label {
       margin-left: 10px;
     }
     .badge {

@@ -64,14 +64,6 @@
 			
         <ul class="nav nav-list item-actions">
           <li class="nav-header"><%=t('revs.admin.sidebar.actions')%><i class="icon-cog"></i></li>
-          <% if can? :update_metadata, :all  
-							edit_mode_link_text = in_curator_edit_mode ? t('revs.curator.leave_edit_mode') : t('revs.curator.enter_edit_mode') 
-							%>
-            <li>
-              <%= link_to("<i class='icon-edit'></i> <span data-leave-mode-text='#{t('revs.curator.leave_edit_mode')}' data-enter-mode-text='#{t('revs.curator.enter_edit_mode') }' id='edit-mode-text'>#{edit_mode_link_text}</span>".html_safe, '#', :id=>'edit_mode_link', :class=>"showOnLoad hidden-offscreen") %>
-              <span class="edit-mode-status label label-warning <%="hidden-offscreen" if session[:curator_edit_mode] != 'true'%>">Active</span>
-            </li>
-          <% end %>
 
           <li>
             <%= link_to("<i class='icon-picture'></i> #{t('revs.citations.view')}".html_safe,
@@ -105,6 +97,23 @@
               <span id="feedback_link">
                 <%= link_to t('revs.nav.content_corrections'),new_user_session_path %>
               </span>
+            </li>
+          <% end %>
+        </ul>
+
+        <ul class="nav nav-list item-actions curator-actions">
+          <li class="nav-header"><%=t('revs.curator.curator_actions')%><i class="icon-cog"></i></li>
+          <% if can? :update_metadata, :all
+							edit_mode_link_text = in_curator_edit_mode ? t('revs.curator.leave_edit_mode') : t('revs.curator.enter_edit_mode') 
+							%>
+            <li>
+              <%= link_to("<i class='icon-edit'></i> <span data-leave-mode-text='#{t('revs.curator.leave_edit_mode')}' data-enter-mode-text='#{t('revs.curator.enter_edit_mode') }' id='edit-mode-text'>#{edit_mode_link_text}</span>".html_safe, '#', :id=>'edit_mode_link', :class=>"showOnLoad hidden-offscreen curator-action-link") %>
+              <span class="edit-mode-status label label-warning <%="hidden-offscreen" if session[:curator_edit_mode] != 'true'%>">Active</span>
+            </li>
+            <li>
+              <%= link_to("<i class='icon-picture'></i> <span data-posterframe='false'>#{t('revs.curator.set_posterframe')}</span>".html_safe,
+              "#", :id => 'set-posterframe', :class => 'curator-action-link') %>
+              <span class="posterframe-status label label-info hidden-offscreen">On</span>
             </li>
           <% end %>
         </ul>
