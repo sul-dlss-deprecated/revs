@@ -2,6 +2,44 @@ require "spec_helper"
 
 describe SolrDocument, :integration => true do
   
+  describe "getter methods" do
+    
+    it "should retrieve a couple single valued fields correctly" do
+      doc = SolrDocument.find('yh093pt9555')
+      doc.title.should == doc['title_tsi']
+      doc.title.class.should == String
+      doc.photographer.should == doc['photographer_ssi']
+      doc.photographer.class.should == String
+      doc.description.should == doc['description_tsim'].first # returns a single value even though this is a multivalued field in solr
+      doc.description.class.should == String
+    end
+
+    it "should retrieve a couple single multivalued fields correctly" do
+      doc = SolrDocument.find('yh093pt9555')
+      doc.marque.should == doc['marque_ssim']
+      doc.marque.class.should == Array
+      doc.people.should == doc['people_ssim']
+      doc.people.class.should == Array
+    end
+          
+    it "should return an empty string when that value doesn't exist in the solr doc" do
+      doc = SolrDocument.find('yt907db4998')
+      doc['photographer_ssi'].should be_nil
+      doc['model_year_ssim'].should be_nil
+      doc.photographer.should == ""
+      doc.model_year.should == ""
+    end
+    
+    it "should return the default value for the title when it is not set" do
+      doc = SolrDocument.find('jg267fg4283')
+      doc['title_tsi'].should be_nil
+      doc.title.should == 'Untitled'
+      doc['title_tsi']='' # even when blank, it should still show as untitled
+      doc.title.should == 'Untitled'
+    end
+    
+  end
+  
   describe "metadata_editing" do
     
     it "should apply bulk updates to solr and editstore when update method is called directly" do

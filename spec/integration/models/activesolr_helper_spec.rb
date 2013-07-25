@@ -52,25 +52,27 @@ describe ActivesolrHelper, :integration => true do
   
   describe "cached edits and validation" do
   
+    before :each do
+      @doc = SolrDocument.find('yt907db4998')
+    end
+    
     it "should not have any unsaved edits when initialized" do
-      doc = SolrDocument.find('yt907db4998')
-      doc.dirty?.should be_false
-      doc.unsaved_edits.should be == {}
-      doc.valid?.should be_true
+      @doc.dirty?.should be_false
+      @doc.unsaved_edits.should be == {}
+      @doc.valid?.should be_true
     end
 
-    it "should indicate when a chance has occurred to a field, but not saved" do
+    it "should indicate when a change has occurred to a field, but not saved" do
       Editstore::Change.count.should be == 0
       new_value="new title!"
-      doc = SolrDocument.find('yt907db4998')
-      old_value=doc.title
-      doc.dirty?.should be_false
-      doc.unsaved_edits.should be == {}
-      doc.title=new_value
-      doc.dirty?.should be_true
-      doc.valid?.should be_true
-      doc.unsaved_edits.should be == {:title_tsi=>new_value}
-      doc.title.should be == new_value # change is in memory
+      old_value=@doc.title
+      @doc.dirty?.should be_false
+      @doc.unsaved_edits.should be == {}
+      @doc.title=new_value
+      @doc.dirty?.should be_true
+      @doc.valid?.should be_true
+      @doc.unsaved_edits.should be == {:title_tsi=>new_value}
+      @doc.title.should be == new_value # change is in memory
       reload_doc = SolrDocument.find('yt907db4998') # change is not saved to solr or editstore though
       reload_doc.title.should be == old_value 
       Editstore::Change.count.should be == 0
@@ -78,45 +80,42 @@ describe ActivesolrHelper, :integration => true do
 
     it "should not cache an edit when a single valued field is set but hasn't actually changed" do
       Editstore::Change.count.should be == 0
-      doc = SolrDocument.find('yt907db4998')
-      old_value=doc.title
-      doc.dirty?.should be_false
-      doc.unsaved_edits.should be == {}
-      doc.title=old_value
-      doc.dirty?.should be_false
-      doc.valid?.should be_true
-      doc.unsaved_edits.should be == {}
+      old_value=@doc.title
+      @doc.dirty?.should be_false
+      @doc.unsaved_edits.should be == {}
+      @doc.title=old_value
+      @doc.dirty?.should be_false
+      @doc.valid?.should be_true
+      @doc.unsaved_edits.should be == {}
       Editstore::Change.count.should be == 0
     end
 
     it "should not cache an edit when a mutivalued field is set but hasn't actually changed" do
       Editstore::Change.count.should be == 0
-      doc = SolrDocument.find('yt907db4998')
-      doc.years.should be == [1960] # its an array with an integer value
-      doc.dirty?.should be_false
-      doc.unsaved_edits.should be == {}
-      doc.years="1960" # set to a single valued string, but it should be equivalent and not marked as a change
-      doc.dirty?.should be_false
-      doc.valid?.should be_true
-      doc.unsaved_edits.should be == {}
-      doc.years_mvf="1960" # now set the equivalent _mvf field, but it should be equivalent and not marked as a change
-      doc.dirty?.should be_false
-      doc.valid?.should be_true
-      doc.unsaved_edits.should be == {}      
+      @doc.years.should be == [1960] # its an array with an integer value
+      @doc.dirty?.should be_false
+      @doc.unsaved_edits.should be == {}
+      @doc.years="1960" # set to a single valued string, but it should be equivalent and not marked as a change
+      @doc.dirty?.should be_false
+      @doc.valid?.should be_true
+      @doc.unsaved_edits.should be == {}
+      @doc.years_mvf="1960" # now set the equivalent _mvf field, but it should be equivalent and not marked as a change
+      @doc.dirty?.should be_false
+      @doc.valid?.should be_true
+      @doc.unsaved_edits.should be == {}      
       Editstore::Change.count.should be == 0
     end
 
     it "should cache an edit when a mutivalued field is set and has changed" do
       Editstore::Change.count.should be == 0
-      doc = SolrDocument.find('yt907db4998')
       old_value=[1960]
-      doc.years.should be == old_value # its an array with an integer value
-      doc.dirty?.should be_false
-      doc.unsaved_edits.should be == {}
-      doc.years="1961"
-      doc.dirty?.should be_true
-      doc.valid?.should be_true
-      doc.unsaved_edits.should be == {:pub_year_isim=>'1961'}  
+      @doc.years.should be == old_value # its an array with an integer value
+      @doc.dirty?.should be_false
+      @doc.unsaved_edits.should be == {}
+      @doc.years="1961"
+      @doc.dirty?.should be_true
+      @doc.valid?.should be_true
+      @doc.unsaved_edits.should be == {:pub_year_isim=>'1961'}  
       reload_doc = SolrDocument.find('yt907db4998') # change is not saved to solr or editstore though
       reload_doc.years.should be == old_value    
       Editstore::Change.count.should be == 0  # no changes to Editstore yet
@@ -124,50 +123,47 @@ describe ActivesolrHelper, :integration => true do
 
     it "should cache an edit when a mutivalued field is set using the special MVF field and has changed" do
       Editstore::Change.count.should be == 0
-      doc = SolrDocument.find('yt907db4998')
       old_value=[1960]
-      doc.years.should be == old_value # its an array with an integer value
-      doc.dirty?.should be_false
-      doc.unsaved_edits.should be == {}
-      doc.years_mvf="1961|1962"
-      doc.dirty?.should be_true
-      doc.valid?.should be_true
-      doc.unsaved_edits.should be == {:pub_year_isim=>['1961','1962']}  
+      @doc.years.should be == old_value # its an array with an integer value
+      @doc.dirty?.should be_false
+      @doc.unsaved_edits.should be == {}
+      @doc.years_mvf="1961|1962"
+      @doc.dirty?.should be_true
+      @doc.valid?.should be_true
+      @doc.unsaved_edits.should be == {:pub_year_isim=>['1961','1962']}  
       reload_doc = SolrDocument.find('yt907db4998') # change is not saved to solr or editstore though
       reload_doc.years.should be == old_value    
       Editstore::Change.count.should be == 0  # no changes to Editstore yet
     end
 
     it "should catch invalid dates" do
-      doc = SolrDocument.find('yt907db4998')
-      doc.valid?.should be_true
-      doc.full_date = 'crap' # bad value
-      doc.dirty?.should be_true
-      doc.valid?.should be_false
-      doc.save.should be_false      
-      doc.full_date = '5/1/2001' # this is ok
-      doc.valid?.should be_true
+      @doc.valid?.should be_true
+      @doc.full_date = 'crap' # bad value
+      @doc.dirty?.should be_true
+      @doc.valid?.should be_false
+      @doc.save.should be_false      
+      @doc.full_date = '5/1/2001' # this is ok
+      @doc.valid?.should be_true
    end
 
     it "should catch invalid years" do
-      doc = SolrDocument.find('yt907db4998')
-      doc.valid?.should be_true
-      doc.years = ['crap','1961'] # bad value
-      doc.dirty?.should be_true
-      doc.valid?.should be_false
-      doc.save.should be_false      
-      doc.years = 'crap' # this is bad
-      doc.valid?.should be_false
-      doc.years = '1999' # this is ok
-      doc.valid?.should be_true
-      doc.years = ['1959','1961'] # ok
-      doc.valid?.should be_true      
-      doc.years_mvf = '1959|1961' # mvf ok
-      doc.valid?.should be_true
-      doc.years_mvf = 'abc|1961' # bad
-      doc.valid?.should be_false
-      doc.years_mvf = '1961' # ok
-      doc.valid?.should be_true
+      @doc.valid?.should be_true
+      @doc.years = ['crap','1961'] # bad value
+      @doc.dirty?.should be_true
+      @doc.valid?.should be_false
+      @doc.save.should be_false      
+      @doc.years = 'crap' # this is bad
+      @doc.valid?.should be_false
+      @doc.years = '1999' # this is ok
+      @doc.valid?.should be_true
+      @doc.years = ['1959','1961'] # ok
+      @doc.valid?.should be_true      
+      @doc.years_mvf = '1959|1961' # mvf ok
+      @doc.valid?.should be_true
+      @doc.years_mvf = 'abc|1961' # bad
+      @doc.valid?.should be_false
+      @doc.years_mvf = '1961' # ok
+      @doc.valid?.should be_true
    end
       
   end
