@@ -142,6 +142,10 @@
       textarea, input:not([type=submit]):not([type=file]) {
         width: 95%;
       }
+      .item-edit-errors {
+        clear: both;
+        margin-bottom: 6px;
+      }
     }
   }
   .item-actions {
