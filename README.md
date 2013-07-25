@@ -104,28 +104,32 @@ Working branch (local) is your local working branch
 
 ### Day to day working
 
-Getting up to date
-1. git checkout develop
-2. git pull  
+1. Getting up to date
+git checkout develop
+git pull  
 
-Working
-3. git checkout working
-4. now make updates and commit them on 'working'
+2. Working
+git checkout working
+# do stuff
+git add
+git ci -m 'my changes'
 
-Getting Develop Up to date
-5. git checkout develop
-6. git pull
+3. Getting Develop Up to date
+git checkout develop
+git pull
+# look for new updates here: if you have updates, head to step 4, otherwise head to step 5
 
-If there are changes
-7. git checkout working
-8. git rebase develop
-9. git checkout develop
+4. If there are changes
+git checkout working
+git rebase develop
+git checkout develop
 
-10. git merge working
-11. git push
+5. Merge and push
+git merge working
+git push
 
-12. Head back to step 3 to continue working
+6. Head back to step 2 to continue working
 
-You can skip steps 7,8, and 9 if 'git pull develop' doesn't bring down any updates so you know 'working' is already up to date. 
-Step 8 is where you could have merge conflicts. But now you resolve them on 'working' so when you then merge back to 'develop' (after fixing the conflicts), 
+You can skip steps 4 if the 'git pull' in step 3 doesn't bring down any updates so you know 'working' is already up to date. 
+Step 4 is where you could have merge conflicts. But now you resolve them on 'working' so when you then merge back to 'develop' (after fixing the conflicts), 
 the git history is linear and doesn't show any merge commits.  
