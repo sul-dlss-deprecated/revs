@@ -1,4 +1,4 @@
-<%= form_tag(edit_metadata_curator_tasks_path, method: 'put', remote:true, class: 'form-horizonal' ) do %>
+<% if in_curator_edit_mode %><%= form_tag(edit_metadata_curator_tasks_path, method: 'put', remote:true, class: 'form-horizonal' ) %><% end %>
 
 <div class="accordion" id="item-details-accordion">
   <div class="accordion-group">
@@ -129,4 +129,4 @@
   </div>
 </div>
 
-<% end %>
+<% if in_curator_edit_mode %></form><% end %>

@@ -13,7 +13,6 @@ class Curator::TasksController < ApplicationController
    def set_edit_mode
      session[:curator_edit_mode]=params[:value]
      @document=SolrDocument.find(params[:id])
-     render 'edit_metadata.js'
    end
 
    # an ajax call for user submitted in-place edit
@@ -24,9 +23,8 @@ class Curator::TasksController < ApplicationController
       if @document.save
         flash[:success] = "Changes saved."        
       else  
-        flash[:error] = "You need to fix the following problems to save the edits: #{@document.errors.join(', ')}."
+        @message = "#{@document.errors.join(', ')}."
       end
-      
    end
    
 end

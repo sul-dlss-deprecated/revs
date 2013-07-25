@@ -1,0 +1,4 @@
+$('#main-flashes').html("<%= escape_javascript(render( :partial => "/flash_msg")).html_safe %>");
+$('#item_details').html("<%= escape_javascript(render :partial => "/catalog/show_default_collection_member", :locals => {:document => @document}) %>");
+setupItemDetailPanels();
+showOnLoad();
