@@ -25,8 +25,15 @@ module ActivesolrHelper
      end
      
      # tells you if have an blank value or an array that has just blank values
-     def empty_value?(value)
+     def blank_value?(value)
         value.class == Array ? !value.delete_if(&:blank?).any? : value.blank? 
+     end
+     
+     # attempts to determine if two values (i.e. old and new) are actually the same, by converting to arrays, and then ensuring everything is a string, and then comparing
+     def is_equal?(value1,value2)
+       values1=self.to_array(value1).collect{|val| val.to_s.strip}.delete_if(&:blank?).sort
+       values2=self.to_array(value2).collect{|val| val.to_s.strip}.delete_if(&:blank?).sort
+       values1 == values2
      end
      
   end
@@ -71,7 +78,7 @@ module ActivesolrHelper
       if setter # if it is a setter, cache the edit
         old_values=self[solr_field_name]        
         new_values=args.first
-        if old_values != new_values # we should only cache the edit if it actually changed
+        if !self.class.is_equal?(old_values,new_values) # we should only cache the edit if it actually changed
           value = (multivalued_field ? new_values.split("|") : new_values) # split the values when setting if this is an in place edit field
           cache_edit({solr_field_name.to_sym=>value})
           return value
@@ -97,21 +104,21 @@ module ActivesolrHelper
       unsaved_edits.each do |solr_field_name,value| 
 
         old_values=self[solr_field_name]   
-        self.class.empty_value?(value) ? remove_field(solr_field_name) : set_field(solr_field_name,value) # update remote solr document
+        self.class.blank_value?(value) ? remove_field(solr_field_name) : set_field(solr_field_name,value) # update remote solr document
         self[solr_field_name]=value # update the local solr document
         
         # update Editstore database too if needed
         if self.class.use_editstore
                     
-          if self.class.empty_value?(value) && !self.class.empty_value?(old_values) # the new value is blank, and the previous value exists, so send a delete operation
+          if self.class.blank_value?(value) && !self.class.blank_value?(old_values) # the new value is blank, and the previous value exists, so send a delete operation
           
             Editstore::Change.create(:operation=>:delete,:state_id=>Editstore::State.ready.id,:field=>solr_field_name,:druid=>self.id,:client_note=>'delete value')
           
-          elsif !self.class.empty_value?(value) # there are some new values
+          elsif !self.class.blank_value?(value) # there are some new values
             
             new_values=self.class.to_array(value) # ensure we have an array, even if its just one value - this makes the operations below more uniform
             
-            if !self.class.empty_value?(old_values) # if a previous value(s) exist for this field, we either need to do an update (single valued), or delete all existing values (multivalued)
+            if !self.class.blank_value?(old_values) # if a previous value(s) exist for this field, we either need to do an update (single valued), or delete all existing values (multivalued)
               if old_values.class == Array  # field is multivalued; delete all old values (this is because bulk does not pinpoint change values, it simply does a full replace of any multivalued field)    
                 send_delete_to_editstore(solr_field_name,'delete all old values in multivalued field')
                 send_creates_to_editstore(new_values,solr_field_name)

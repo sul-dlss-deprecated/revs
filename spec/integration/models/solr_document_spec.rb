@@ -35,14 +35,36 @@ describe SolrDocument, :integration => true do
       
     end
     
+    it "should use editstore" do
+      SolrDocument.use_editstore.should be_true
+    end
+    
   end
   
-  describe "find method" do
-    it "should return an instance of a solr document" do
-      doc = SolrDocument.find('yt907db4998')
-      doc.should be_a SolrDocument
-      doc.title.should == 'Record 1'
+  describe "image priority for sorting images in a collection" do
+    
+    it "should indicate which is the highest priority number for a collection" do 
+      collection=SolrDocument.find('wn860zc7322')
+      collection.current_top_priority.should == 1
+      collection.first_image.should == 'https://stacks-test.stanford.edu/image/yt907db4998/2011-023DUG-3.0_0017_thumb'
+      item1=SolrDocument.find('yt907db4998')
+      item1.priority.should == 1
+      item2=SolrDocument.find('qb957rw1430')
+      item2.priority.should == 0      
+      collection.first_item.id.should == 'yt907db4998'
     end
+    
+    it "should set the highest priority image and have the first image be different" do
+      item2=SolrDocument.find('qb957rw1430')
+      item2.set_top_priority
+      collection=SolrDocument.find('wn860zc7322')
+      collection.current_top_priority.should == 2
+      collection.first_image.should == 'https://stacks-test.stanford.edu/image/qb957rw1430/2011-023DUG-3.0_0015_thumb'
+      collection.first_item.id.should == 'qb957rw1430'
+      # reload document we changed
+      reload_solr_docs(['qb957rw1430','yt907db4998','wn860zc7322'])
+    end
+    
   end
   
   describe "collections" do
@@ -54,6 +76,23 @@ describe SolrDocument, :integration => true do
         doc.collection.is_collection?.should be_true
         doc.collection[:id].should == "wn860zc7322"
       end
+      
+      it "should return an item's collection" do
+        item=SolrDocument.find('yt907db4998')
+        item.is_item?.should be_true
+        item.is_collection?.should be_false
+        collection=item.collection
+        collection.is_collection?.should be_true
+        collection.is_item?.should be_false        
+        collection.id.should == 'wn860zc7322'  
+      end
+
+      it "should return a collection's items" do
+        collection=SolrDocument.find('wn860zc7322')
+        collection.collection_members.size.should == 2
+        collection.collection_members.each {|item| item.is_item?.should be_true}
+      end
+      
     end
 
     describe "collection_members" do
@@ -82,6 +121,12 @@ describe SolrDocument, :integration => true do
       end
     end
 
+    describe "all_images" do
+      it "should return the total number of images" do
+        SolrDocument.total_images.should be == 16
+      end
+    end
+    
     describe "all_collections" do
       it "shold return an array of collection SolrDocuments" do
         SolrDocument.all_collections.length.should be == 2

@@ -134,10 +134,10 @@ class SolrDocument
 
       case solr_field_name.to_sym
         when :pub_date_ssi
-          @errors << 'Date must be in the format MM/DD/YYYY' if (!self.class.empty_value?(value) && get_full_date(value) == false)
+          @errors << 'Date must be in the format MM/DD/YYYY' if (!self.class.blank_value?(value) && get_full_date(value) == false)
         when :pub_year_isim,:pub_year_single_isi
           years=self.class.to_array(value)
-          @errors << 'A year must be after 1800 up until this year and must be in the format YYYY' if (!self.class.empty_value?(years) && !years.all?{|new_value| is_valid_year?(new_value)})
+          @errors << 'A year must be after 1800 up until this year and must be in the format YYYY' if (!self.class.blank_value?(years) && !years.all?{|new_value| is_valid_year?(new_value)})
       end
     
     end
@@ -273,7 +273,9 @@ class SolrDocument
   # if an item, set it to be the top priority item for that particular collection
   def set_top_priority
     return false unless is_item?
-    set_field('priority_isi',collection.current_top_priority + 1)
+    new_priority=collection.current_top_priority + 1
+    set_field('priority_isi',new_priority)
+    self['priority_isi']=new_priority
     return true
   end
   
