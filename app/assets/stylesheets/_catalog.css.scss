@@ -225,6 +225,9 @@
     form.new_flag {
       margin-bottom: 24px;
     }
+    div#all-annotations, #all_flags .flag-info {
+      margin-top: 0;
+    }
     a.flag-details {
       &.active {
         background-color: #eeeeee;

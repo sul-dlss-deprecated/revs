@@ -80,7 +80,7 @@
 	             <%= link_to(("<i class='icon-edit'></i> <span id='annotation-link-text'>#{annotation_link_text}</span>".html_safe + content_tag(:span, @annotations.size, :class => "#{annotation_count_display_class} num-annotations-badge badge badge-revs")).html_safe,'#',:id=>annotation_link_id,:class=>"annotation_links showOnLoad hidden-offscreen") %>
 	             <%= link_to(("<i class='icon-edit'></i> #{t('revs.annotations.hide')}".html_safe + content_tag(:span, @annotations.size, :class => "#{annotation_count_display_class} num-annotations-badge badge badge-revs")).html_safe, '#',:id=>'hide_annotations_link',:class=>"hidden-offscreen") %>
 	          </li>
-	          <div id="all-annotations" class="hidden-offscreen">
+	          <div id="all-annotations" class="hide">
 	              <%= render(:partial => "annotations/all", :locals=>{:annotations=>@annotations}) if @annotations.size > 0 %>
 	        	 </div>
 					<% end %>

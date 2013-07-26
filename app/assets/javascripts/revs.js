@@ -12,7 +12,7 @@ $(document).ready(function(){
   $('#new_flag, #all_flags').hide();
   // Toggle details (new flag form and posted flags) when Flag action is selected.
   $('.flag-details').click(function(){
-    $('#new_flag, #all_flags').toggle();
+    $('#new_flag, #all_flags').slideToggle('slow');
     $('.flag-details').toggleClass('active');
     return false;
   });

@@ -111,7 +111,7 @@ function toggleLinks() {
 }
 
 function toggleAnnotationList(){
-  $('#all-annotations').toggleClass('hidden-offscreen');
+  $('#all-annotations').slideToggle('slow');
 }
 
 $(document).ready(function(){
