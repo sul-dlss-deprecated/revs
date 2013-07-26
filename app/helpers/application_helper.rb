@@ -65,8 +65,12 @@ module ApplicationHelper
   end
 
   def item_link(item,opts={})
-    name=opts[:truncate] ? truncate(item.title) : item.title
-    link_to name,catalog_path(item.id)
+    if item.nil?  
+      return t('revs.curator.not_found')
+    else
+      name=opts[:truncate] ? truncate(item.title) : item.title
+      return link_to name,catalog_path(item.id)
+    end
   end
   
   def user_annotations_count(user)

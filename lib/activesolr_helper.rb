@@ -202,7 +202,7 @@ module ActivesolrHelper
       params+="{\"set\":null}}]"          
     else
       new_values=[new_values] unless new_values.class==Array
-      new_values = new_values.map {|s| s.to_s.gsub('"','\"').strip} # strip leading/trailing spaces and escape quotes for each value
+      new_values = new_values.map {|s| s.to_s.gsub("\\","\\\\\\").gsub('"','\"').strip} # strip leading/trailing spaces and escape quotes for each value
       params+="{\"set\":[\"#{new_values.join('","')}\"]}}]"      
     end
     RestClient.post url, params,:content_type => :json, :accept=>:json

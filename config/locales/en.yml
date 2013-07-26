@@ -55,6 +55,7 @@ en:
       sidebar:
         actions: 'Actions'
     curator:
+      not_found: 'Item not found'
       sidebar:
         actions: 'Actions'
       curator_actions: 'Curator Actions'

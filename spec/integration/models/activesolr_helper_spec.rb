@@ -52,6 +52,11 @@ describe ActivesolrHelper, :integration => true do
 
   describe "getter methods" do
     
+    it "should fail with a non-configured getter" do
+      doc = SolrDocument.find('jg267fg4283')
+      expect { value=doc.bogus_field }.to raise_error
+    end
+    
     it "should retrieve a couple single valued fields correctly" do
       doc = SolrDocument.find('yh093pt9555')
       doc.title.should == doc['title_tsi']
@@ -95,6 +100,11 @@ describe ActivesolrHelper, :integration => true do
   end
   
   describe "setter methods" do
+    
+    it "should fail with a non-configured setter" do
+      doc = SolrDocument.find('jg267fg4283')
+      expect { doc.bogus_field="dude" }.to raise_error
+    end
     
     it "should update the value of a single valued field" do
       new_value="cool new title"
@@ -167,6 +177,31 @@ describe ActivesolrHelper, :integration => true do
       
     end
 
+    it "should save an update to a single value field with special odd characters, and propogage to solr and editstore databases" do
+      
+      Editstore::Change.count.should == 0
+    
+      new_value="Test changed it, including apostraphe ' and slahses \\  /  and a quote \" and a pipe |  this not a multivalued field, should be fine " 
+      old_value=@doc.title
+      @doc.title.should_not == new_value # update the title
+      @doc.title=new_value
+      @doc.save
+
+      # refetch doc from solr and confirm new value was saved
+      reload_doc = SolrDocument.find(@druid)
+      reload_doc.title.should == new_value.strip
+      
+       # confirm we have a new change in the database
+      last_edit=Editstore::Change.last
+      last_edit.field.should == 'title_tsi'
+      last_edit.new_value.should == new_value.strip
+      last_edit.old_value.should == old_value
+      last_edit.druid.should == @druid
+      last_edit.operation.should == 'update'
+      last_edit.state.should == Editstore::State.ready
+      Editstore::Change.count.should == 1
+
+    end
     it "should save a new entry to a single value field, and propogage to solr and editstore databases" do
       
       Editstore::Change.count.should == 0
