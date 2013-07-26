@@ -26,6 +26,21 @@ describe ActivesolrHelper, :integration => true do
       SolrDocument.is_equal?([123,"abc"],["abc","123"]).should be_true
       SolrDocument.is_equal?([123,"  abc"],["abc","123 "]).should be_true
     end
+
+    it "should indicate when multivalued field values are equivalent to the solr field array equivalents" do
+       SolrDocument.is_equal?("1",1,true).should be_true
+       SolrDocument.is_equal?("1","1",true).should be_true
+       SolrDocument.is_equal?(1,"1",true).should be_true
+       SolrDocument.is_equal?([1],"1",true).should be_true
+       SolrDocument.is_equal?([1,2],"1 | 2",true).should be_true
+       SolrDocument.is_equal?(['1','2'],"1 | 2",true).should be_true
+       SolrDocument.is_equal?(['peter','paul','mary']," peter |  paul| mary",true).should be_true
+       SolrDocument.is_equal?(['peter','paul','mary'],"peter|paul|mary",true).should be_true
+       SolrDocument.is_equal?(['peter','paul','mary'],"peter|paul|mary",false).should be_false # if we don't ask for a multivalued field comparison, this should fail
+
+       SolrDocument.is_equal?(['1','2'],["1 | 2"],true).should be_false # an incoming array is not what you'd expect coming from a multivalued field
+
+     end
     
     it "to_array should convert strings to arrays, and leave arrays alone" do
       SolrDocument.to_array('test').should == ['test']
@@ -278,6 +293,17 @@ describe ActivesolrHelper, :integration => true do
     it "shouldn't add anything to the Editstore database if nothing is changed, even is save is called" do
       
       Editstore::Change.count.should == 0
+      saved=@doc.save
+      saved.should be_true
+      Editstore::Change.count.should == 0
+      
+    end
+
+    it "shouldn't add anything to the Editstore database when some fields do not actually change, even is save is called" do
+      
+      Editstore::Change.count.should == 0
+      @doc.title = @doc[:title_tsi]
+      @doc.years_mvf = @doc[:pub_year_isim].join(" | ")
       saved=@doc.save
       saved.should be_true
       Editstore::Change.count.should == 0

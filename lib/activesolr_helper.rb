@@ -30,10 +30,11 @@ module ActivesolrHelper
      end
      
      # attempts to determine if two values (i.e. old and new) are actually the same, by converting to arrays, and then ensuring everything is a string, and then comparing
-     def is_equal?(value1,value2)
-       values1=self.to_array(value1).collect{|val| val.to_s.strip}.delete_if(&:blank?).sort
-       values2=self.to_array(value2).collect{|val| val.to_s.strip}.delete_if(&:blank?).sort
-       values1 == values2
+     def is_equal?(old_values,new_values,multivalued_field=false)
+       new_values_split = (multivalued_field && new_values.class != Array && !new_values.blank?) ? new_values.to_s.split("|") : new_values # if the user has indicated the first value is coming a special multivalued field entered as a single value, let's split along the delimiter
+       compare_values1=self.to_array(old_values).collect{|val| val.to_s.strip}.delete_if(&:blank?).sort
+       compare_values2=self.to_array(new_values_split).collect{|val| val.to_s.strip}.delete_if(&:blank?).sort
+       compare_values1 == compare_values2
      end
      
   end
@@ -70,15 +71,15 @@ module ActivesolrHelper
     attribute = setter ? method.chop : method # the attribute name needs to have the "=" removed if it is a setter
     multivalued_field = attribute.end_with?(self.class.multivalued_field_marker) # in place editing fields can end with the special character marker, which will join arrays when return; and split them when setting
     attribute.gsub!(self.class.multivalued_field_marker,'') if multivalued_field
-  
+
     solr_field_config=self.class.field_mappings[attribute.downcase.to_sym]  # lookup the solr field for this accessor
     if solr_field_config
       solr_field_name=solr_field_config[:field].downcase
       default_value=solr_field_config[:default] || ''
-      if setter # if it is a setter, cache the edit
-        old_values=self[solr_field_name]        
+      if setter # if it is a setter, cache the edit if it has changed
+        old_values=self[solr_field_name]
         new_values=args.first
-        if !self.class.is_equal?(old_values,new_values) # we should only cache the edit if it actually changed
+        if !self.class.is_equal?(old_values,new_values,multivalued_field) # we should only cache the edit if it actually changed
           value = (multivalued_field ? new_values.split("|") : new_values) # split the values when setting if this is an in place edit field
           cache_edit({solr_field_name.to_sym=>value})
           return value
