@@ -24,12 +24,12 @@ describe("About Pages",:type=>:request,:integration=>true) do
     page.should have_content(@contact_us_title)
     fill_in 'name', :with=>'Spongebob Squarepants'
     click_button 'Send'
-    find('div.alert').should have_content(I18n.t("revs.about.contact_error")) # problem if you don't enter a message
+    page.should have_content(I18n.t("revs.about.contact_error")) # problem if you don't enter a message
     fill_in 'message', :with=>'I live in a pineapple under the sea.'
     RevsMailer.stub_chain(:contact_message,:deliver).and_return('a mailer')
     RevsMailer.should_receive(:contact_message)
     click_button 'Send'
-    find('div.alert').should have_content(I18n.t("revs.about.contact_message_sent"))
+    page.should have_content(I18n.t("revs.about.contact_message_sent"))
   end
 
   it "should show the terms of use page" do
