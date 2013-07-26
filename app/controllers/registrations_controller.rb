@@ -14,7 +14,7 @@ class RegistrationsController < Devise::RegistrationsController
   # sign up form submit method  
   def create
     if params[:user][:email].include?("@stanford.edu") || params[:user][:username].include?("@stanford.edu") # anyone who tries to register with a stanford email address or username will get an error
-      redirect_to :root, :alert=>"Stanford users should not create a new account.  Login via webauth using your SunetID to access your account."
+      redirect_to :root, :alert=>t('revs.authentication.stanford_create_warning')
       return false
     else
       super
@@ -35,9 +35,9 @@ class RegistrationsController < Devise::RegistrationsController
     
     if params[:user][:username].include?('@stanford.edu') && params[:user][:username] != @user.username
       if @user.sunet_user?
-        @user.errors.add(:base,"Your username cannot be a Stanford email address other than your own.")
+        @user.errors.add(:base,t('revs.authentication.stanford_email_warning1'))
       else
-        @user.errors.add(:base,"Your username cannot be a Stanford email address.")
+        @user.errors.add(:base,t('revs.authentication.stanford_email_warning2'))
       end
       successfully_updated = false
     else

@@ -54,7 +54,7 @@ class UserController < ApplicationController
   end
   
   def profile_not_found
-    flash[:error]='The user was not found or their profile is not public.'
+    flash[:error]=t('revs.authentication.user_not_found')
     redirect_to previous_page  
   end
   

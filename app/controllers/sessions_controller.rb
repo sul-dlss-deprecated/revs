@@ -13,7 +13,7 @@ class SessionsController < Devise::SessionsController
     user=User.where('email=? or username=?',params[:user][:login],params[:user][:login])
     if user.size == 1 && user.first.sunet_user?
       sign_out
-      redirect_to :root, :alert=>'Stanford users must use webauth via SunetID to access their accounts.'
+      redirect_to :root, :alert=>t('revs.authentication.stanford_webauth')
       return false
     else
       super
@@ -37,7 +37,7 @@ class SessionsController < Devise::SessionsController
      session["WEBAUTH_USER"]=nil
     end
     sign_out
-    flash[:notice] = "You have successfully logged out of WebAuth." unless request.env["WEBAUTH_USER"]
+    flash[:notice] = t('revs.authentication.stanford_webauth_logout') unless request.env["WEBAUTH_USER"]
     redirect_to root_url
   end
     

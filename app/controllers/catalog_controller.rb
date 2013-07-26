@@ -37,13 +37,13 @@ class CatalogController < ApplicationController
       @bulk_edit=params[:bulk_edit]
             
       if @bulk_edit[:attribute].blank? || @bulk_edit[:new_value].blank? || @bulk_edit[:selected_druids].blank?
-        flash.now[:error]="To apply a bulk update, select the field to update, enter a new value and select some items."      
+        flash.now[:error]=t('revs.messages.bulk_update_instructions')
       else
         success=SolrDocument.bulk_update(@bulk_edit)
         if success
-          flash.now[:notice]="Your update has been applied to all the items you selected."
+          flash.now[:notice]=t('revs.messages.saved')
         else
-          flash.now[:error]="The values you entered were not valid for the field you selected."          
+          flash.now[:error]=t('revs.messages.validation_error')
         end
       end
       
@@ -274,7 +274,7 @@ class CatalogController < ApplicationController
 
       unless flash[:error]
         email.deliver 
-        flash[:success] = "Email sent"
+        flash[:success] = t('revs.about.contact_message_sent')
         if request.xhr?
           render :email_sent, :formats => [:js]
           return

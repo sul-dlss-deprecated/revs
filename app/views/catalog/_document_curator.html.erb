@@ -9,7 +9,7 @@
 
       <label class="checkbox">
         <input type="checkbox" name="select-all" id="select-all">
-        Select all
+        <%=t('revs.nav.select_all')%>
       </label>
 
       <div class="update-field">
@@ -19,7 +19,7 @@
 
       <div class="update-field-value">
 			  <%= text_field_tag 'bulk_edit[new_value]' ,@bulk_edit.nil? ? '' : @bulk_edit[:new_value], class: 'span4', placeholder: 'new value'%>
-        <%= submit_tag "Update", :class => 'btn btn-small' %>
+        <%= submit_tag t('revs.nav.update'), :class => 'btn btn-small' %>
       </div>
 
     </div>

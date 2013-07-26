@@ -5,7 +5,7 @@ class PasswordsController < Devise::PasswordsController
   def create
     user=User.find_by_email(params[:user][:login])
     if user && user.sunet_user?
-      redirect_to :root, :alert=>'Stanford users need to login via webauth with their SunetID to access their account.  You cannot reset your SunetID password here.'
+      redirect_to :root, :alert=>t('revs.authentication.stanford_warning')
       return false
     else
       super  

@@ -23,7 +23,7 @@ class FlagsController < ApplicationController
     @flag.update_attributes(:flag_type=>flag_info[:flag_type],:comment=>flag_info[:comment],:druid=>flag_info[:druid],:user_id=>current_user.id)
     @flag.save
     @all_flags=Flag.where(:druid=>flag_info[:druid])
-    @message='The item was flagged.'
+    @message=t('revs.flags.created')
     respond_to do |format|
       format.html { flash[:success]=@message
                     redirect_to previous_page}
@@ -44,7 +44,7 @@ class FlagsController < ApplicationController
     @flag.flag_type=flag_info[:flag_type] if flag_info[:flag_type]
     @flag.cleared=Time.now if flag_info[:cleared]
     @flag.save
-    @message='The flag was updated.'
+    @message=t('revs.flags.updated')
     @all_flags=Flag.where(:druid=>flag_info[:druid])
     respond_to do |format|
       format.html { flash[:success]=@message
@@ -55,7 +55,7 @@ class FlagsController < ApplicationController
 
   def destroy
     @flag=Flag.find(params[:id])
-    @message='The flag was removed.'
+    @message=t('revs.flags.removed')
     @druid=@flag.druid
     @flag.destroy
     @all_flags=Flag.where(:druid=>@druid)

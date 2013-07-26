@@ -29,7 +29,7 @@
 					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'people',:label=>'People',:multivalued=>true,:editable=>true,:facet=>true, :input_type=>'text_area'} %>
 
           <%= render "/catalog/item_edit_errors" %>
-					<%= submit_tag 'Save Changes', class: 'btn btn-small' if in_curator_edit_mode %>
+					<%= submit_tag t('revs.nav.save_changes'), class: 'btn btn-small' if in_curator_edit_mode %>
 
         </dl>
       </div>
@@ -61,7 +61,7 @@
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'vehicle_markings',:label=>'Vehicle Markings',:editable=>true, :input_type=>'text_area'} %>
 
           <%= render "/catalog/item_edit_errors" %>
-					<%= submit_tag 'Save Changes', class: 'btn btn-small' if in_curator_edit_mode %>
+					<%= submit_tag t('revs.nav.save_changes'), class: 'btn btn-small' if in_curator_edit_mode %>
 
         </dl>
       </div>
@@ -92,7 +92,7 @@
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'race_data',:label=>'Race Data',:editable=>true} %>
           
           <%= render "/catalog/item_edit_errors" %>
-					<%= submit_tag 'Save Changes', class: 'btn btn-small' if in_curator_edit_mode %>
+					<%= submit_tag t('revs.nav.save_changes'), class: 'btn btn-small' if in_curator_edit_mode %>
 
         </dl>
       </div>
@@ -121,7 +121,7 @@
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'metadata_sources',:label=>'Metadata Sources',:editable=>true, :input_type=>'text_area'} %>
 
           <%= render "/catalog/item_edit_errors" %>
-					<%= submit_tag 'Save Changes', class: 'btn btn-small' if in_curator_edit_mode %>
+					<%= submit_tag t('revs.nav.save_changes'), class: 'btn btn-small' if in_curator_edit_mode %>
 
         </dl>
       </div>

@@ -80,7 +80,7 @@ class ApplicationController < ActionController::Base
   
   def not_authorized(additional_message=nil)
     
-    message="You are not authorized to perform this action."
+    message=t('revs.messages.not_authorized')
     message+=additional_message unless additional_message.blank?
     respond_to do |format|
       format.html { redirect_to :root, :alert=>message}

@@ -5,7 +5,24 @@ en:
   revs:
     revs_program: 'Revs Program at Stanford'
     revs_institute: 'Revs Institute for Automotive Research'
+    messages: 
+      saved: 'Changes saved'
+      not_authorized: 'You are not authorized to perform this action.'
+      validation_error: "The values you entered were not valid for the field you selected."
+      bulk_update_instructions: "To apply a bulk update, select the field to update, enter a new value and select some items."
+    flags:
+      created: 'The item was flagged.'
+      removed: 'The flag was removed.'
+      updated: 'The flag was updated.'
+      flag: 'Flag Item'
+      comment_optional: 'Comment (optional)'
     nav:
+      select_all: 'Select all'
+      update: 'Update'
+      save_changes: 'Save Changes'
+      submit: 'Submit'
+      send: 'Send'
+      cancel: 'Cancel'
       go_back: 'Go back'
       report_problem: 'Report a problem'
       content_corrections: 'Are there problems with the metadata for this item? If you create an account and login, you can flag this item with a comment.'
@@ -48,9 +65,16 @@ en:
       new_account: 'Sign up for a user account'
       subscribe: 'Subscribe to the'
       mailing_list: 'mailing list'
+      stanford_webauth: 'Stanford users must use webauth via SunetID to access their accounts.'
+      stanford_webauth_logout: "You have successfully logged out of WebAuth."
+      stanford_warning: 'Stanford users need to login via webauth with their SunetID to access their account.  You cannot reset your SunetID password here.'
+      stanford_create_warning: "Stanford users should not create a new account.  Login via webauth using your SunetID to access your account."
+      stanford_email_warning1: "Your username cannot be a Stanford email address other than your own."
+      stanford_email_warning2: "Your username cannot be a Stanford email address."
       sidebar:
         actions: 'Actions'
         account: 'Your account'
+      user_not_found: 'The user was not found or their profile is not public.'
     admin:
       sidebar:
         actions: 'Actions'

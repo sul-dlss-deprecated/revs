@@ -25,7 +25,7 @@
 	<div class="control-group">
 	  <label class="control-label" for="name"><%=t('revs.contact.name')%></label>
 	  <div class="controls">
-	    <%=text_field_tag 'name', @name, :placeholder => "Name" %>
+	    <%=text_field_tag 'name', @name, :placeholder => t('revs.contact.name') %>
 	  </div>
 	</div>
 
@@ -38,8 +38,8 @@
 
 	<div class="control-group">
 	  <div class="controls">
-	    <%=submit_tag 'Send', :class => 'btn' %>
-	    <%= link_to 'Cancel', :back, :class => 'cancel-link' %>
+	    <%=submit_tag t('revs.nav.send'), :class => 'btn' %>
+	    <%= link_to t('revs.nav.cancel'), :back, :class => 'cancel-link' %>
 	  </div>
 	</div>
 <% end %>

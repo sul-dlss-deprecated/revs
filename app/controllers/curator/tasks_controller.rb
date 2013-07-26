@@ -21,7 +21,7 @@ class Curator::TasksController < ApplicationController
       updates=params[:document]
       updates.each {|field,value| @document.send("#{field}=",value)}
       if @document.save
-        flash[:success] = "Changes saved."        
+        flash[:success] = "#{t('revs.messages.saved')}."        
       else  
         @message = "#{@document.errors.join(', ')}."
       end

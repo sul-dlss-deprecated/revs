@@ -12,7 +12,8 @@ class AboutController < ApplicationController
     @message=params[:message]
 
     if request.post?
-      unless @message.blank?
+      
+      unless @message.blank? # message is required
         RevsMailer.contact_message(:params=>params,:request=>request).deliver 
         
         if @subject=='metadata'
@@ -24,18 +25,18 @@ class AboutController < ApplicationController
         @message=nil
         @name=nil
         @email=nil
-        unless @from.blank? || request.xhr?
+        unless @from.blank? || request.xhr? # if this not an ajax request and we have a page to return to, go there
           redirect_to(@from)
           return
         end
         @success=true
-      else
+      else # validation issue
         @success=false
         flash.now[:error]=t("revs.about.contact_error")
       end
     end
     
-    request.xhr? ? render('contact.js') : show
+    request.xhr? ? render('contact.js') : show # ajax requests need to exectue some JS, non-ajax requests render the form
     
   end
 
