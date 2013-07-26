@@ -167,12 +167,7 @@ describe ActivesolrHelper, :integration => true do
       
        # confirm we have a new change in the database
       last_edit=Editstore::Change.last
-      last_edit.field.should == 'title_tsi'
-      last_edit.new_value.should == new_value
-      last_edit.old_value.should == old_value
-      last_edit.druid.should == @druid
-      last_edit.operation.should == 'update'
-      last_edit.state.should == Editstore::State.ready
+      editstore_entry(Editstore::Change.last,:field=>'title_tsi',:new_value=>new_value,:old_value=>old_value,:druid=>@druid,:operation=>'update',:state=>:ready).should be_true
       Editstore::Change.count.should == 1
       
     end
@@ -192,13 +187,7 @@ describe ActivesolrHelper, :integration => true do
       reload_doc.title.should == new_value.strip
       
        # confirm we have a new change in the database
-      last_edit=Editstore::Change.last
-      last_edit.field.should == 'title_tsi'
-      last_edit.new_value.should == new_value.strip
-      last_edit.old_value.should == old_value
-      last_edit.druid.should == @druid
-      last_edit.operation.should == 'update'
-      last_edit.state.should == Editstore::State.ready
+      editstore_entry(Editstore::Change.last,:field=>'title_tsi',:new_value=>new_value.strip,:old_value=>old_value,:druid=>@druid,:operation=>'update',:state=>:ready).should be_true
       Editstore::Change.count.should == 1
 
     end
@@ -216,13 +205,7 @@ describe ActivesolrHelper, :integration => true do
       reload_doc.photographer.should == new_value
       
        # confirm we have a new change in the database
-      last_edit=Editstore::Change.last
-      last_edit.field.should == 'photographer_ssi'
-      last_edit.new_value.should == new_value
-      last_edit.old_value.should be_nil
-      last_edit.druid.should == @druid
-      last_edit.operation.should == 'create'
-      last_edit.state.should == Editstore::State.ready
+      editstore_entry(Editstore::Change.last,:field=>'photographer_ssi',:new_value=>new_value,:old_value=>nil,:druid=>@druid,:operation=>'create',:state=>:ready).should be_true
       Editstore::Change.count.should == 1
       
     end
@@ -240,13 +223,7 @@ describe ActivesolrHelper, :integration => true do
       reload_doc.entrant.should == ""
       
        # confirm we have a new change in the database
-      last_edit=Editstore::Change.last
-      last_edit.field.should == 'entrant_ssi'
-      last_edit.new_value.should == ''
-      last_edit.old_value.should be_nil
-      last_edit.druid.should == @druid
-      last_edit.operation.should == 'delete'
-      last_edit.state.should == Editstore::State.ready
+      editstore_entry(Editstore::Change.last,:field=>'entrant_ssi',:new_value=>'',:old_value=>nil,:druid=>@druid,:operation=>'delete',:state=>:ready).should be_true
       Editstore::Change.count.should == 1
       
     end
@@ -267,13 +244,7 @@ describe ActivesolrHelper, :integration => true do
       reload_doc.vehicle_model.should == ""
       
        # confirm we have a new change in the database
-      last_edit=Editstore::Change.last
-      last_edit.field.should == 'model_ssim'
-      last_edit.new_value.should == ''
-      last_edit.old_value.should be_nil
-      last_edit.druid.should == @druid
-      last_edit.operation.should == 'delete'
-      last_edit.state.should == Editstore::State.ready
+      editstore_entry(Editstore::Change.last,:field=>'model_ssim',:new_value=>'',:old_value=>nil,:druid=>@druid,:operation=>'delete',:state=>:ready).should be_true
       Editstore::Change.count.should == 1
       
     end
@@ -298,19 +269,8 @@ describe ActivesolrHelper, :integration => true do
       
        # confirm we have new changes in the database
       last_edits=Editstore::Change.all
-      last_edits[0].field.should == 'marque_ssim'
-      last_edits[0].new_value.should == new_values_as_array[0]
-      last_edits[0].old_value.should be_nil
-      last_edits[0].druid.should == @druid
-      last_edits[0].operation.should == 'create'
-      last_edits[0].state.should == Editstore::State.ready
-      
-      last_edits[1].field.should == 'marque_ssim'
-      last_edits[1].new_value.should == new_values_as_array[1]
-      last_edits[1].old_value.should be_nil
-      last_edits[1].druid.should == @druid
-      last_edits[1].operation.should == 'create'
-      last_edits[1].state.should == Editstore::State.ready      
+      editstore_entry(last_edits[0],:field=>'marque_ssim',:new_value=>new_values_as_array[0],:old_value=>nil,:druid=>@druid,:operation=>'create',:state=>:ready).should be_true
+      editstore_entry(last_edits[1],:field=>'marque_ssim',:new_value=>new_values_as_array[1],:old_value=>nil,:druid=>@druid,:operation=>'create',:state=>:ready).should be_true 
       Editstore::Change.count.should == 2
       
     end
@@ -358,26 +318,9 @@ describe ActivesolrHelper, :integration => true do
       
        # confirm we have new changes in the database, which includes a delete and two adds
       last_edits=Editstore::Change.all
-      last_edits[0].field.should == 'model_ssim'
-      last_edits[0].new_value.should be == ''
-      last_edits[0].old_value.should be_nil
-      last_edits[0].druid.should == @druid
-      last_edits[0].operation.should == 'delete'
-      last_edits[0].state.should == Editstore::State.ready
-      
-      last_edits[1].field.should == 'model_ssim'
-      last_edits[1].new_value.should == new_values_as_array[0]
-      last_edits[1].old_value.should be_nil
-      last_edits[1].druid.should == @druid
-      last_edits[1].operation.should == 'create'
-      last_edits[1].state.should == Editstore::State.ready
-      
-      last_edits[2].field.should == 'model_ssim'
-      last_edits[2].new_value.should == new_values_as_array[1]
-      last_edits[2].old_value.should be_nil
-      last_edits[2].druid.should == @druid
-      last_edits[2].operation.should == 'create'
-      last_edits[2].state.should == Editstore::State.ready      
+      editstore_entry(last_edits[0],:field=>'model_ssim',:new_value=>'',:old_value=>nil,:druid=>@druid,:operation=>'delete',:state=>:ready).should be_true
+      editstore_entry(last_edits[1],:field=>'model_ssim',:new_value=>new_values_as_array[0],:old_value=>nil,:druid=>@druid,:operation=>'create',:state=>:ready).should be_true
+      editstore_entry(last_edits[2],:field=>'model_ssim',:new_value=>new_values_as_array[1],:old_value=>nil,:druid=>@druid,:operation=>'create',:state=>:ready).should be_true
       Editstore::Change.count.should == 3
       
     end
@@ -391,21 +334,16 @@ describe ActivesolrHelper, :integration => true do
     end
     
     it "should not have any unsaved edits when initialized" do
-      @doc.dirty?.should be_false
-      @doc.unsaved_edits.should == {}
-      @doc.valid?.should be_true
+      unchanged(@doc).should be_true
     end
 
     it "should indicate when a change has occurred to a field, but not saved" do
       Editstore::Change.count.should == 0
       new_value="new title!"
       old_value=@doc.title
-      @doc.dirty?.should be_false
-      @doc.unsaved_edits.should == {}
+      unchanged(@doc).should be_true
       @doc.title=new_value
-      @doc.dirty?.should be_true
-      @doc.valid?.should be_true
-      @doc.unsaved_edits.should == {:title_tsi=>new_value}
+      changed(@doc,{:title_tsi=>new_value}).should be_true
       @doc.title.should == new_value # change is in memory
       reload_doc = SolrDocument.find('yt907db4998') # change is not saved to solr or editstore though
       reload_doc.title.should == old_value 
@@ -415,41 +353,44 @@ describe ActivesolrHelper, :integration => true do
     it "should not cache an edit when a single valued field is set but hasn't actually changed" do
       Editstore::Change.count.should == 0
       old_value=@doc.title
-      @doc.dirty?.should be_false
-      @doc.unsaved_edits.should == {}
+      unchanged(@doc).should be_true
       @doc.title=old_value
-      @doc.dirty?.should be_false
-      @doc.valid?.should be_true
-      @doc.unsaved_edits.should == {}
+      unchanged(@doc).should be_true      
       Editstore::Change.count.should == 0
     end
 
-    it "should not cache an edit when a mutivalued field is set but hasn't actually changed" do
+    it "should not cache an edit when a mutivalued field with one value is set but hasn't actually changed" do
       Editstore::Change.count.should == 0
       @doc.years.should == [1960] # its an array with an integer value
-      @doc.dirty?.should be_false
-      @doc.unsaved_edits.should == {}
+      unchanged(@doc).should be_true
       @doc.years="1960" # set to a single valued string, but it should be equivalent and not marked as a change
-      @doc.dirty?.should be_false
-      @doc.valid?.should be_true
-      @doc.unsaved_edits.should == {}
+      unchanged(@doc).should be_true
       @doc.years_mvf="1960" # now set the equivalent _mvf field, but it should be equivalent and not marked as a change
-      @doc.dirty?.should be_false
-      @doc.valid?.should be_true
-      @doc.unsaved_edits.should == {}      
+      unchanged(@doc).should be_true    
       Editstore::Change.count.should == 0
     end
 
+    it "should not cache an edit when a mutivalued field with two values is set but hasn't actually changed" do
+      doc2=SolrDocument.find('yh093pt9555')
+      Editstore::Change.count.should == 0
+      doc2.years.should == [1955,1956] # its an array with integer value2
+      unchanged(doc2).should be_true
+      doc2.years=[1955,1956] # set to an equivalent array
+      unchanged(doc2).should be_true
+      doc2.years=["1955","1956"] # set to an equivalent array but of string
+      unchanged(doc2).should be_true
+      doc2.years_mvf="1955 | 1956" # now set the equivalent _mvf field like it would be coming from the form
+      unchanged(doc2).should be_true
+      Editstore::Change.count.should == 0
+    end
+    
     it "should cache an edit when a mutivalued field is set and has changed" do
       Editstore::Change.count.should == 0
       old_value=[1960]
       @doc.years.should == old_value # its an array with an integer value
-      @doc.dirty?.should be_false
-      @doc.unsaved_edits.should == {}
+      unchanged(@doc).should be_true
       @doc.years="1961"
-      @doc.dirty?.should be_true
-      @doc.valid?.should be_true
-      @doc.unsaved_edits.should == {:pub_year_isim=>'1961'}  
+      changed(@doc,{:pub_year_isim=>'1961'}).should be_true
       reload_doc = SolrDocument.find('yt907db4998') # change is not saved to solr or editstore though
       reload_doc.years.should == old_value    
       Editstore::Change.count.should == 0  # no changes to Editstore yet
@@ -459,13 +400,10 @@ describe ActivesolrHelper, :integration => true do
       Editstore::Change.count.should == 0
       old_value=[1960]
       @doc.years.should == old_value # its an array with an integer value
-      @doc.dirty?.should be_false
-      @doc.unsaved_edits.should == {}
+      unchanged(@doc).should be_true
       @doc.years_mvf="1961|1962"
       @doc.years=['1961','1962'] # should return as an array
-      @doc.dirty?.should be_true
-      @doc.valid?.should be_true
-      @doc.unsaved_edits.should == {:pub_year_isim=>['1961','1962']}  
+      changed(@doc,{:pub_year_isim=>['1961','1962']}).should be_true
       reload_doc = SolrDocument.find('yt907db4998') # change is not saved to solr or editstore though
       reload_doc.years.should == old_value    
       Editstore::Change.count.should == 0  # no changes to Editstore yet

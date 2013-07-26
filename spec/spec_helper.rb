@@ -110,6 +110,23 @@ def should_allow_curator_section
   page.should have_content('Flagged Items')
 end
 
+def unchanged(doc)
+  doc.valid? && !doc.dirty? && doc.unsaved_edits == {}
+end
+
+def changed(doc,updates)
+  doc.dirty? && doc.valid? && doc.unsaved_edits == updates
+end
+
+def editstore_entry(entry,params={})
+  entry.field == params[:field] &&
+    entry.new_value == params[:new_value] &&
+    entry.old_value == params[:old_value] &&
+    entry.druid == params[:druid] &&
+    entry.operation == params[:operation] && 
+    entry.state == Editstore::State.send(params[:state].to_s) 
+end
+
 def reindex_solr_docs(druids)
   add_docs = []
   druids=[druids] if druids.class != Array

@@ -68,7 +68,7 @@ module ActivesolrHelper
     method = meth.to_s # convert method name to a string
     setter = method.end_with?('=') # determine if this is a setter method (which would have the last character "=" in the method name)
     attribute = setter ? method.chop : method # the attribute name needs to have the "=" removed if it is a setter
-    multivalued_field = attribute.end_with?(self.class.multivalued_field_marker) # in place editing fields can end with _ipe, which will join arrays when return; and split them when setting
+    multivalued_field = attribute.end_with?(self.class.multivalued_field_marker) # in place editing fields can end with the special character marker, which will join arrays when return; and split them when setting
     attribute.gsub!(self.class.multivalued_field_marker,'') if multivalued_field
   
     solr_field_config=self.class.field_mappings[attribute.downcase.to_sym]  # lookup the solr field for this accessor

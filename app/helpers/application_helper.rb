@@ -51,7 +51,8 @@ module ApplicationHelper
   end
 
   def show_linked_value(val,opts={})
-    opts[:facet].blank? ? val : link_to(val,catalog_index_path(:"f[#{SolrDocument.field_mappings[opts[:facet].to_sym][:field]}][]"=>"#{val}"))
+    value = (opts[:simple_format].blank? ? val : simple_format(val))
+    opts[:facet].blank? ? value : link_to(value,catalog_index_path(:"f[#{SolrDocument.field_mappings[opts[:facet].to_sym][:field]}][]"=>"#{val}"))
   end
   
   def show_formatted_list(mvf,opts={})

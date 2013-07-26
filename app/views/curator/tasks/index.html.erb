@@ -5,20 +5,21 @@
   <h3>Flagged Items</h3>
 
   <%= paginate @flags, :params => {:order=>@order} %>
-  <table class="admin table table-bordered table-condensed table-hover table-striped">
-    <tr>
-      <th>Item</th>
-      <th class="centered"><%= link_to '# Flags', curator_tasks_path(:order=>'num_flags DESC') %></th>
-      <th><%= link_to 'Date Flagged', curator_tasks_path(:order=>'created_at desc') %></th>
-    </tr>
+	 
+	 <table class="admin table table-bordered table-condensed table-hover table-striped">
+	    <tr>
+	      <th>Item</th>
+	      <th class="centered"><%= link_to '# Flags', curator_tasks_path(:order=>'num_flags DESC') %></th>
+	      <th><%= link_to 'Date Flagged', curator_tasks_path(:order=>'created_at desc') %></th>
+	    </tr>
 
-  <% @flags.each do |flag|%>
-    <tr>
-      <td><%= item_link(flag.item,:truncate=>true) %></td>
-      <td class="centered"><%= flag.num_flags %></td>
-      <td><%= show_as_datetime(flag.created_at.in_time_zone) %></td>
-    </tr>
-  <% end %>
+	  <% @flags.each do |flag|%>
+	    <tr>
+	      <td><%= item_link(flag.item,:truncate=>true) %></td>
+	      <td class="centered"><%= flag.num_flags %></td>
+	      <td><%= show_as_datetime(flag.created_at.in_time_zone) %></td>
+	    </tr>
+	  <% end %>
 
   </table>
 

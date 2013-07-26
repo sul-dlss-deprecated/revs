@@ -148,14 +148,11 @@ class SolrDocument
   end
 
   ######################
-  # we need a custom getter/setter for the description field because
-  # for some reason, we have description as a multivalued field, but we really only need it to be a single valued field
+  # we need a custom getter for the description field because
+  # for some reason, we have description as a multivalued solr field, but we really only need it to be a single valued field
   def description 
     desc=self['description_tsim']
     desc.class == Array ? desc.first : desc
-  end
-  def description=(value)
-    set_field('description_tsim',value.strip)
   end
   ######################
   
