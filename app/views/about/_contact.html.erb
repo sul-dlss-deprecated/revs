@@ -1,4 +1,7 @@
-<%= form_tag(contact_us_path, :method=>'post', :class => 'form-horizontal') do %>
+<%= form_tag(contact_us_path, :method=>'post', :class => 'form-horizontal', :remote=>true) do %>
+
+	<div class="contact-us-errors alert alert-error hidden"></div>
+
 	<%= hidden_field_tag 'from',@from%>
 
 	<% if Revs::Application.config.contact_us_topics.size > 1 %>

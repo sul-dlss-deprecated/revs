@@ -24,15 +24,18 @@ class AboutController < ApplicationController
         @message=nil
         @name=nil
         @email=nil
-        unless @from.blank?
+        unless @from.blank? || request.xhr?
           redirect_to(@from)
           return
         end
+        @success=true
       else
+        @success=false
         flash.now[:error]=t("revs.about.contact_error")
       end
     end
-    show
+    
+    request.xhr? ? render('contact.js') : show
     
   end
 

@@ -1,0 +1,9 @@
+<% if @success %>
+	$('.contact-us-errors').html('');
+	$('.contact-us-errors').addClass('hidden');
+	$('#report-problem-form').slideUp('fast');
+	$('#main-flashes').html("<%= escape_javascript(render( :partial => "/flash_msg")).html_safe %>");
+<% else %>
+  $('.contact-us-errors').html("<%=flash[:error]%>");
+	$('.contact-us-errors').removeClass('hidden');
+<% end %>
