@@ -253,7 +253,7 @@ class SolrDocument
   
   def first_item
     return nil unless is_collection?
-    self.collection_members(:rows=>1,:start=>0).first
+    self.get_members(:rows=>1,:start=>0).first # never cache this so its always current
   end
   
   # gives you the representative image of the collection
@@ -282,11 +282,7 @@ class SolrDocument
     return false unless is_item?
     item_priority = self.priority
     collection_priority = self.collection.current_top_priority
-    if item_priority == collection_priority
-      return true
-    else
-      return false
-    end
+    item_priority == collection_priority
   end
 
    ##################################################################

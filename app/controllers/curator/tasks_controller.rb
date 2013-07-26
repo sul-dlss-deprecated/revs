@@ -21,7 +21,7 @@ class Curator::TasksController < ApplicationController
       updates=params[:document]
       updates.each {|field,value| @document.send("#{field}=",value)}
       if @document.save
-        flash[:success] = "#{t('revs.messages.saved')}."        
+        flash[:success] = t('revs.messages.saved')
       else  
         @message = "#{@document.errors.join(', ')}."
       end
@@ -31,11 +31,7 @@ class Curator::TasksController < ApplicationController
    def set_top_priority_item
      @document=SolrDocument.find(params[:id])
      @document.set_top_priority
-     if @document.save
-       flash[:success] = "Successfully set this image to represent its collection."
-     else
-       @message = "#{@document.errors.join(', ')}."
-     end
+     flash[:success] = t('revs.messages.set_top_priority')
    end
 
 end

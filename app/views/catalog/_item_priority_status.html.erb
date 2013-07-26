@@ -6,5 +6,5 @@
    class: 'btn btn-small btn-link curator-action-link' %>
 
 <% if @document.top_priority? %>
- <span class="posterframe-status label label-info">On</span>
+ <span id="is_top_priority" class="posterframe-status label label-info"><%=t('revs.messages.on')%></span>
 <% end %>
