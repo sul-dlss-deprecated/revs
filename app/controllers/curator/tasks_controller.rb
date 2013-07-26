@@ -1,7 +1,7 @@
 class Curator::TasksController < ApplicationController
 
   before_filter :check_for_curator_logged_in
-  before_filter :ajax_only, :only=>[:set_edit_mode,:edit_metadata]
+  before_filter :ajax_only, :only=>[:set_edit_mode,:edit_metadata,:set_top_priority_item]
 
     # get all flags grouped by druid with counts
    def index
@@ -26,5 +26,16 @@ class Curator::TasksController < ApplicationController
         @message = "#{@document.errors.join(', ')}."
       end
    end
-   
+
+   # an ajax call to set the item to be the top priority item for collection
+   def set_top_priority_item
+     @document=SolrDocument.find(params[:id])
+     @document.set_top_priority
+     if @document.save
+       flash[:success] = "Successfully set this image to represent its collection."
+     else
+       @message = "#{@document.errors.join(', ')}."
+     end
+   end
+
 end

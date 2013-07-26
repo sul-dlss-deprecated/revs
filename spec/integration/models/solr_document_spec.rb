@@ -170,7 +170,16 @@ describe SolrDocument, :integration => true do
       # reindex document we changed
       reindex_solr_docs(['qb957rw1430','yt907db4998','wn860zc7322'])
     end
-    
+
+    it "should know if it is the highest priority item in its collection" do
+      item1=SolrDocument.find('yt907db4998')
+      item1.priority.should == 1
+      item2=SolrDocument.find('qb957rw1430')
+      item2.priority.should == 0
+      item1.top_priority?.should == true
+      item2.top_priority?.should == false
+    end
+
   end
   
   describe "collections" do

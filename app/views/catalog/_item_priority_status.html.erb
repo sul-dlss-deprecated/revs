@@ -1,0 +1,10 @@
+<%= link_to "<i class='icon-picture'></i> 
+   #{t('revs.curator.set_posterframe')}".html_safe,
+   set_top_priority_item_curator_tasks_path,
+   :method => 'put',
+   :remote => true,
+   class: 'btn btn-small btn-link curator-action-link' %>
+
+<% if @document.top_priority? %>
+ <span class="posterframe-status label label-info">On</span>
+<% end %>

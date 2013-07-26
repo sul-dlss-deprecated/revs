@@ -1,0 +1,6 @@
+<% if @document.valid? %>
+  $('#item-priority-status').html("<%= escape_javascript(render(:partial => "/catalog/item_priority_status")).html_safe %>");
+<% else %>
+  $('#item-priority-status').html("<%=@message%>");
+<% end %>
+$('#main-flashes').html("<%= escape_javascript(render(:partial => "/flash_msg")).html_safe %>");

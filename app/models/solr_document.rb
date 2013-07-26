@@ -276,7 +276,19 @@ class SolrDocument
     self['priority_isi']=new_priority
     return true
   end
-  
+
+  # is item currently the top priority item in its collection?
+  def top_priority?
+    return false unless is_item?
+    item_priority = self.priority
+    collection_priority = self.collection.current_top_priority
+    if item_priority == collection_priority
+      return true
+    else
+      return false
+    end
+  end
+
    ##################################################################
    # CLASS LEVEL METHODS
    # Return an Array of all collection type SolrDocuments

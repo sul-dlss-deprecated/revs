@@ -63,15 +63,6 @@ $(document).ready(function(){
 		return false;
   });
 
-  // Set current item as the item to represent collection ('posterframe')
-  $('#set-posterframe').click(function() {
-    // update current item priority in database to be top
-    // ...
-    // show label to indicate current item is now posterframe
-    $(".posterframe-status").removeClass("hidden-offscreen");
-    return false;
-  });
-
 	$(document).on('mouseleave','.annotation-info',function(){anno.highlightAnnotation();});
 	$(document).on('mouseenter','.annotation-info',function(){
 		annotation=($(this).data('json'));

@@ -112,11 +112,9 @@
                 <span class="edit-mode-status label label-warning <%="hidden-offscreen" if session[:curator_edit_mode] != 'true'%>">Active</span>
               </li>
             <% end %>
-              <li>
-                <%= link_to("<i class='icon-picture'></i> <span data-posterframe='false'>#{t('revs.curator.set_posterframe')}</span>".html_safe,
-                "#", :id => 'set-posterframe', :class => 'curator-action-link') %>
-                <span class="posterframe-status label label-info hidden-offscreen">On</span>
-              </li>
+            <li id="item-priority-status">
+              <%= render "/catalog/item_priority_status" %>
+            </li>
           </ul>
         <% end %>
 
