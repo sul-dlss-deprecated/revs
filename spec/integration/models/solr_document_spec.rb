@@ -83,6 +83,68 @@ describe SolrDocument, :integration => true do
       SolrDocument.use_editstore.should be_true
     end
     
+    describe "update_date_fields callback methods" do
+      
+      it "should automatically set the year field and single year solr field when a full date is set" do
+        druid='zp006sp7532'
+        doc=SolrDocument.find(druid)
+        doc.years.should == [1969] # current year value
+        doc[:pub_year_single_isi].should == 1969 # check the solr fields        
+        doc.full_date.should == '' # current full date value
+        doc.full_date='5/6/1999' # set a new full date
+        doc.years.should == [1969] # year hasn't be set yet, since we haven't saved
+        doc.save # now let's save it
+        
+        reload_doc=SolrDocument.find(druid)
+        reload_doc.years.should == [1999] # year has now been updated
+        reload_doc[:pub_year_single_isi].should == 1999 # check the solr fields
+        reindex_solr_docs(druid)
+      end
+
+      it "should automatically remove the single year field when multiple years are set" do
+        druid='zp006sp7532'        
+        doc=SolrDocument.find(druid)
+        doc.years.should == [1969] # current year value
+        doc[:pub_year_single_isi].should == 1969 # check the solr fields        
+        doc.full_date.should == '' # current full date value
+        doc.years_mvf='2000|2001' # set multiple years
+        doc.save # now let's save it
+        
+        reload_doc=SolrDocument.find(druid)
+        reload_doc.years.should == [2000,2001] # years has now been updated
+        reload_doc[:pub_year_single_isi].should be_nil # single year field is gone
+        reindex_solr_docs(druid)
+      end
+
+      it "should automatically set the single year field when a new single year is set" do
+        druid='zp006sp7532'        
+        doc=SolrDocument.find(druid)
+        doc.years.should == [1969] # current year value
+        doc[:pub_year_single_isi].should == 1969 # check the solr fields        
+        doc.full_date.should == '' # current full date value
+        doc.years_mvf='1989' # set new single year
+        doc.save # now let's save it
+        
+        reload_doc=SolrDocument.find(druid)
+        reload_doc.years.should == [1989] # years has now been updated
+        reload_doc[:pub_year_single_isi].should == 1989 # single year field is updated
+        reindex_solr_docs(druid)
+      end
+      
+      it "should clear out the full date field if a new year is set" do
+        druid='td830rb1584'
+        doc=SolrDocument.find(druid)
+        doc.full_date.should == '5/1/1955' # current full date
+        doc.years='2002'
+        doc.save
+        
+        reload_doc=SolrDocument.find(druid)
+        reload_doc.full_date.should == '' # full date is now gone
+        reindex_solr_docs(druid)
+      end
+      
+    end
+    
   end
   
   describe "image priority for sorting images in a collection" do

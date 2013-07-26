@@ -280,6 +280,29 @@ describe ActivesolrHelper, :integration => true do
       
     end
 
+    it "shouldn't add anything to the Editstore database if nothing is changed, even is save is called" do
+      
+      Editstore::Change.count.should == 0
+      saved=@doc.save
+      saved.should be_true
+      Editstore::Change.count.should == 0
+      
+    end
+
+    it "shouldn't add anything to the Editstore database or update solr and save nothing when there is an invalid value" do
+      
+      Editstore::Change.count.should == 0
+      @doc.full_date.should == ''
+      @doc.full_date='bogusness'
+      @doc.valid?.should be_false
+      saved=@doc.save
+      saved.should be_false
+      reload_doc=SolrDocument.find(@druid)
+      reload_doc.full_date.should == ''
+      Editstore::Change.count.should == 0
+      
+    end
+    
     it "should save an updated entry to a multivalue field using MVF syntax, and propogage to solr and editstore databases, stripping extra spaces" do
       
       Editstore::Change.count.should == 0

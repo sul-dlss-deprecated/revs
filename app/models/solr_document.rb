@@ -81,6 +81,7 @@ class SolrDocument
   # you can configure a callback method to execute if any of these fields are changed
   # set the solr field as the key, and the method name as the value; the method will receive the solr field being updated and its new value
   # if you don't have any callbacks needed, just set an empty hash
+  # NOTE: the callbacks occur on "SAVE", not immediately when a value is set
   def self.field_update_callbacks
     {
       :pub_date_ssi=>:update_date_fields,
