@@ -85,9 +85,11 @@
 	        	 </div>
 					<% end %>
 					
-          <% if can? :create, Flag %>
+          <% if can? :create, Flag%>
             <li>
-							  <%= render :partial=>"flags/new",:locals=>{:druid=>@document.id, :flags=>@document.flags}%>
+				        <div id="new_flag_form">
+							  	<%= render :partial=>"flags/new",:locals=>{:druid=>@document.id, :flags=>@document.flags}%>
+								</div>
 								<div id="all_flags">
                   <%= render :partial=>"flags/all",:locals=>{:flags=>@document.flags} %>
                 </div>

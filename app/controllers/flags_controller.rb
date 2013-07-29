@@ -23,6 +23,7 @@ class FlagsController < ApplicationController
     @flag.update_attributes(:flag_type=>flag_info[:flag_type],:comment=>flag_info[:comment],:druid=>flag_info[:druid],:user_id=>current_user.id)
     @flag.save
     @all_flags=Flag.where(:druid=>flag_info[:druid])
+    @document=SolrDocument.find(flag_info[:druid])
     @message=t('revs.flags.created')
     respond_to do |format|
       format.html { flash[:success]=@message
@@ -59,6 +60,7 @@ class FlagsController < ApplicationController
     @druid=@flag.druid
     @flag.destroy
     @all_flags=Flag.where(:druid=>@druid)
+    @document=SolrDocument.find(@druid)
     respond_to do |format|
       format.html { flash[:success]=@message
                     redirect_to previous_page}      

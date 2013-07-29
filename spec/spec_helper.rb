@@ -86,11 +86,11 @@ end
 
 # Flags
 def should_allow_flagging
-  page.should have_button('Flag Item')
+  page.should have_button('Flag this item')
 end
 
 def should_not_allow_flagging
-  page.should_not have_button('Flag Item')
+  page.should_not have_button('Flag this item')
 end
 
 def should_deny_access(path)

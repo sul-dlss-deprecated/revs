@@ -17,7 +17,8 @@ en:
       created: 'The item was flagged.'
       removed: 'The flag was removed.'
       updated: 'The flag was updated.'
-      flag: 'Flag Item'
+      flag: 'Flag this item'
+      flagged: 'Flagged'
       comment_optional: 'Comment (optional)'
     nav:
       select_all: 'Select all'

@@ -45,9 +45,9 @@
 			   <% end %>
         <% end %>
         </ul>
-        <% if user_annotations_count(@user) > @num_to_show_latest %>
+        <% if user_annotations_count(@user) > Revs::Application.config.num_latest_user_activity %>
           <p class="more-link">
-            <%= pluralize(user_annotations_count(@user) - @num_to_show_latest, 'annotation') %> not shown.
+            <%= pluralize(user_annotations_count(@user) - Revs::Application.config.num_latest_user_activity, 'annotation') %> not shown.
             <%= link_to "View all »", user_annotations_path(@user.username) %>
           </p>
         <% end %>
@@ -74,9 +74,9 @@
 	       <% end %>
         <% end %>
         </ul>
-        <% if user_flags_count(@user) > @num_to_show_latest %>
+        <% if user_flags_count(@user) > Revs::Application.config.num_latest_user_activity %>
           <p class="more-link">
-            <%= pluralize(user_flags_count(@user) - @num_to_show_latest, 'flag') %> not shown.
+            <%= pluralize(user_flags_count(@user) - Revs::Application.config.num_latest_user_activity, 'flag') %> not shown.
             <%= link_to "View all »", user_flags_path(@user.username) %>
           </p>
         <% end %>

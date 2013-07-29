@@ -47,7 +47,12 @@ class Ability
   # logged in user
   def user_actions(user)
     can [:update,:destroy], [Annotation,Flag], :user_id => user.id # can update and destroy their own annotations and flags
-    can :create, [Annotation,Flag] # can create new annotations and flags
+    can :create, Annotation # can create new annotations
+    can :create, Flag # can create new flags
+    can :add_new_flag_to, SolrDocument do |doc|
+        doc.flags.where(:user_id=>user.id).count < Revs::Application.config.num_flags_per_item_per_user
+    end # can only add new flags to a solr document with less than a certain number of flags for any given user
+    
   end
   
   

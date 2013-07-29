@@ -1,7 +1,5 @@
 class UserController < ApplicationController
   
-  before_filter :set_num_to_show_latest
-  
   # user profile pages
   
   # public user profile page by ID (e.g. /user/134)
@@ -45,8 +43,8 @@ class UserController < ApplicationController
   private
   def render_profile
     if (@user && (@user==current_user || @user.public == true)) # if this is the currently logged in user or the profile is public, show the profile
-      @latest_flags=@user.flags.order('created_at desc').limit(@num_to_show_latest)
-      @latest_annotations=@user.annotations.order('created_at desc').limit(@num_to_show_latest)
+      @latest_flags=@user.flags.order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
+      @latest_annotations=@user.annotations.order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
       render :show
     else
       profile_not_found
@@ -57,12 +55,6 @@ class UserController < ApplicationController
     flash[:error]=t('revs.authentication.user_not_found')
     redirect_to previous_page  
   end
-  
-  private 
-  
-  # the number of latest annotations/flags to show on the user profile page
-  def set_num_to_show_latest
-    @num_to_show_latest=3
-  end
+
   
 end
