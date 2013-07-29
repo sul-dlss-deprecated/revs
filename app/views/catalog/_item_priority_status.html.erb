@@ -1,12 +1,18 @@
-<%= link_to "<i class='icon-picture'></i> 
-   #{t('revs.curator.set_posterframe')}".html_safe,
-   set_top_priority_item_curator_tasks_path,
-   :method => 'put',
-   :remote => true,
-   class: 'btn btn-small btn-link curator-action-link' %>
-
 <% if @document.top_priority? %>
- <span id="is_top_priority" class="posterframe-status label label-info"><%=t('revs.messages.switch_on')%></span>
+  <span class="curator-action-link disabled">
+    <i class='icon-picture'></i>
+    <%= t('revs.curator.set_posterframe').html_safe %>
+  </span>
+  <span id="is_top_priority" class="posterframe-status label label-info">
+    <%=t('revs.messages.switch_on')%>
+  </span>
+
 <% else %>
-  <span id="is_top_priority" class="posterframe-status label"><%=t('revs.messages.switch_off')%></span>
+  <%= link_to "<i class='icon-picture'></i>
+     #{t('revs.curator.set_posterframe')}".html_safe,
+     set_top_priority_item_curator_tasks_path,
+     :method => 'put',
+     :remote => true,
+     class: "btn btn-small btn-link curator-action-link" %>
+
 <% end %>

@@ -167,10 +167,16 @@
       }
     }
     &.curator-actions {
-        margin-top: 24px;
-        .curator-action-link {
-          display: inline-block;
+      margin-top: 24px;
+      .curator-action-link {
+        display: inline-block;
+        &.disabled {
+          background-color: $body_bg_color;
+          i {
+            margin-right: 9px;
+          }
         }
+      }
     }
     #all_flags, #all-annotations {
       color: #555;
