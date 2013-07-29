@@ -282,7 +282,7 @@ class SolrDocument
     return false unless is_item?
     item_priority = self.priority
     collection_priority = self.collection.current_top_priority
-    item_priority == collection_priority
+    (item_priority == collection_priority) && item_priority != 0
   end
 
    ##################################################################
