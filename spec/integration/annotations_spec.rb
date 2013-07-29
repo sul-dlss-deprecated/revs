@@ -11,9 +11,14 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
     login_as(user_login)
     visit @starting_page
     should_allow_annotations    
-    page.should have_content('2')
+    find(".num-annotations-badge").should have_content("2")     
   end
 
+  it "should not show annotations link to a non-logged in user when there are no annotations" do
+    visit catalog_path('xf058ys1313')
+    page.should_not have_css('#view_annotations_link')
+  end
+  
   it "should add/update the annotations to the right field in solr when adding/updating annotations" do
     druid='dd482qk0417'
     

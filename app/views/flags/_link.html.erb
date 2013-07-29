@@ -2,7 +2,7 @@
 	flag_link_display_class = can?(:create, Flag) || @document.flags.size > 0 ? "" : "hidden"
   flag_link_display_text = can?(:add_new_flag_to, @document) ? t('revs.flags.flag') : t('revs.flags.flagged')
 %>
-<a href='#' class='<%=flag_link_display_class%> flag-details <%="flagged" if @document.flags.size > 0 %>'><i class='icon-flag'></i> <%=flag_link_display_text %>
+<a href='#' id="flag-details-link" class='<%=flag_link_display_class%> flag-details <%="flagged" if @document.flags.size > 0 %>'><i class='icon-flag'></i> <%=flag_link_display_text %>
    <span class="<%=display_class(@document.flags.size)%> badge badge-revs num-flags-badge">
      <%= @document.flags.size %>
    </span>

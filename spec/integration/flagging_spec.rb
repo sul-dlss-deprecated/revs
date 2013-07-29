@@ -10,35 +10,40 @@ describe("Flagging",:type=>:request,:integration=>true) do
     @default_flag_type='error'
   end
   
+  it "should not show the flagging link if there are no flags to non-logged in users" do
+    
+    visit catalog_path('xf058ys1313')
+    page.should have_css('#flag-details-link.hidden')
+    
+  end
+
+
+  it "should allow non-logged in users to view flags for items that have them" do
+
+    visit catalog_path('sc411ff4198')
+    page.should_not have_css('#flag-details-link.hidden')
+    page.should have_content("Flagged")
+    page.should have_content("user comment") # the text of the flag
+    find(".num-flags-badge").should have_content("1")
+    
+  end
+  
   it "should allow logged in users to view flags" do
 
     login_as(user_login)
-    druid="sc411ff4198"    
-    item_page=catalog_path(druid)
-    visit item_page
+    visit catalog_path('sc411ff4198')
+    find('.flag-details').should be_visible
     page.should have_content("Flag this item")
     page.should have_content("user comment") # the text of the flag
     find(".num-flags-badge").should have_content("1")
 
   end
 
-  it "should allow non-logged in users to view flags" do
-
-    druid="sc411ff4198"    
-    item_page=catalog_path(druid)
-    visit item_page
-    page.should have_content("Flagged")
-    page.should have_content("user comment") # the text of the flag
-    find(".num-flags-badge").should have_content("1")
-    
-  end
-
   it "should not allow a user to flag an item more than the defined number of times" do
     
     login_as(user_login)
-    druid="sc411ff4198"    
-    item_page=catalog_path(druid)
-    visit item_page
+    visit catalog_path('sc411ff4198')
+    find('.flag-details').should be_visible
     should_allow_flagging
     find(".num-flags-badge").should have_content("1")
     
