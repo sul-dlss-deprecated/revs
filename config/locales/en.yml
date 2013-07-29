@@ -5,9 +5,10 @@ en:
   revs:
     revs_program: 'Revs Program at Stanford'
     revs_institute: 'Revs Institute for Automotive Research'
-    messages: 
+    messages:
+      switch_on: "On"
+      switch_off: "Off"
       saved: 'Changes saved'
-      on: 'On'
       not_authorized: 'You are not authorized to perform this action.'
       validation_error: "The values you entered were not valid for the field you selected."
       bulk_update_instructions: "To apply a bulk update, select the field to update, enter a new value and select some items."
