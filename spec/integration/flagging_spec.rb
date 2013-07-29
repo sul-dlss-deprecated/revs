@@ -4,14 +4,60 @@ describe("Flagging",:type=>:request,:integration=>true) do
 
   before :each do
     logout 
+    @remove_button='Remove'
+    @flag_button='Flag this item'
+    @comment_field='flag_comment'
+    @default_flag_type='error'
   end
+  
+  it "should allow logged in users to view flags" do
+
+    login_as(user_login)
+    druid="sc411ff4198"    
+    item_page=catalog_path(druid)
+    visit item_page
+    page.should have_content("Flag this item")
+    page.should have_content("user comment") # the text of the flag
+    find(".num-flags-badge").should have_content("1")
+
+  end
+
+  it "should allow non-logged in users to view flags" do
+
+    druid="sc411ff4198"    
+    item_page=catalog_path(druid)
+    visit item_page
+    page.should have_content("Flagged")
+    page.should have_content("user comment") # the text of the flag
+    find(".num-flags-badge").should have_content("1")
     
-  it "should allow multiple logged in users to flag an item, show all flags, and then allow the user remove the flag" do
+  end
+
+  it "should not allow a user to flag an item more than the defined number of times" do
+    
+    login_as(user_login)
+    druid="sc411ff4198"    
+    item_page=catalog_path(druid)
+    visit item_page
+    should_allow_flagging
+    find(".num-flags-badge").should have_content("1")
+    
+    # add more flags up to 5
+    for i in 2..Revs::Application.config.num_flags_per_item_per_user-1
+      fill_in @comment_field, :with=>"comment #{i}"
+      click_button @flag_button
+      find(".num-flags-badge").should have_content("#{i}")
+      should_allow_flagging
+    end
+  
+    fill_in @comment_field, :with=>"last one!"
+    click_button @flag_button
+    should_not_allow_flagging # now we can't add any more!
       
-      remove_button='Remove'
-      flag_button='Flag this item'
-      comment_field='flag_comment'
-      default_flag_type='error'
+  end
+  
+  it "should allow multiple logged in users to flag an item, show all flags, and then allow the user remove their own flag" do
+
       druid='qb957rw1430'
       initial_flag_count=Flag.count
             
@@ -22,22 +68,22 @@ describe("Flagging",:type=>:request,:integration=>true) do
 
       #flag the item
       visit item_page
-      fill_in comment_field, :with=>user_comment
-      click_button flag_button
+      fill_in @comment_field, :with=>user_comment
+      click_button @flag_button
       
       # check the page for the correct messages
       current_path.should == item_page
       page.should have_content('The item was flagged.')
       page.should have_content("You on #{ApplicationController.new.show_as_date(Date.today)}")
       page.should have_content(user_comment)
-      page.should have_button(remove_button)
+      page.should have_button(@remove_button)
       
       # check the database
       user=User.find_by_username(user_login)
       Flag.count.should == initial_flag_count + 1
       flag=Flag.last
       flag.comment.should == user_comment
-      flag.flag_type.should == default_flag_type
+      flag.flag_type.should == @default_flag_type
       flag.user=user
 
       # login and visit an item as a curator
@@ -47,8 +93,8 @@ describe("Flagging",:type=>:request,:integration=>true) do
 
       #flag the item
       visit item_page
-      fill_in comment_field, :with=>curator_comment
-      click_button flag_button
+      fill_in @comment_field, :with=>curator_comment
+      click_button @flag_button
       
       # check the page for the correct messages
       current_path.should == item_page
@@ -57,18 +103,18 @@ describe("Flagging",:type=>:request,:integration=>true) do
       page.should have_content(curator_comment)
       page.should have_content("#{user.full_name} on #{ApplicationController.new.show_as_date(Date.today)}")
       page.should have_content(user_comment)
-      page.should have_button(remove_button)
+      page.should have_button(@remove_button)
       
       # check the database
       curator=User.find_by_username(curator_login)
       Flag.count.should == initial_flag_count + 2
       flag=Flag.last
       flag.comment.should == curator_comment
-      flag.flag_type.should == default_flag_type
+      flag.flag_type.should == @default_flag_type
       flag.user=curator
            
       # remove and confirm deletion of the curator's flag in the database
-      click_button remove_button
+      click_button @remove_button
       page.should have_content('The flag was removed.')
       Flag.count.should == initial_flag_count + 1
       Flag.last.user.should == user

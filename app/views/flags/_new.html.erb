@@ -1,31 +1,9 @@
-<%
- current_flags=current_user.flags.where(:druid=>druid)
-
-flag_count_display_class = (flags.size > 0 ? "" : "hidden")%>
-
- <%# if they have not already flagged it more than a handful of times, give them the new form %>
- <%  if can? :add_new_flag_to, @document %>
-   <a href='#' class='flag-details'>
-     <i class='icon-flag'></i> Flag this item
-      <span class="<%=flag_count_display_class%> badge badge-revs num-flags-badge">
-        <%= flags.size %>
-      </span>
-   </a>
-   <%= form_for(Flag.new, :remote=>true) do |f| %>
-     <%= f.hidden_field :druid, :value=>druid %>
-     <%= f.hidden_field :flag_type, :value=>'error' %>
-     <%= f.label :comment, t('revs.flags.comment_optional')%>
-     <%= f.text_area :comment, :rows => '2', :class => "input-xlarge" %>
-     <%= f.submit t('revs.flags.flag'), :class => "flag-button btn btn-small" %>
-   <% end %>
-
- <% else %>
-
-    <a href='#' class='flag-details flagged'><i class='icon-flag'></i> Flagged
-       <span class="<%=flag_count_display_class%> badge badge-revs num-flags-badge">
-         <%= flags.size %>
-       </span>
-     </a>
-
+<% if can? :add_new_flag_to, @document %>
+ <%= form_for(Flag.new, :remote=>true) do |f| %>
+   <%= f.hidden_field :druid, :value=>druid %>
+   <%= f.hidden_field :flag_type, :value=>'error' %>
+   <%= f.label :comment, t('revs.flags.comment_optional')%>
+   <%= f.text_area :comment, :rows => '2', :class => "input-xlarge" %>
+   <%= f.submit t('revs.flags.flag'), :class => "flag-button btn btn-small" %>
  <% end %>
-
+<% end %>

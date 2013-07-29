@@ -94,6 +94,10 @@ module ApplicationHelper
     (session[:curator_edit_mode].blank? || session[:curator_edit_mode] == 'false') ? false : can?(:curate,:all)
   end
   
+  def display_class(item_count)
+    item_count == 0 ? "hidden" : ""
+  end
+  
   # used to build the drop down menu of available fields for bulk updating -- add the text to be shown to user and the field in solr doc and Editstore fields table
   def bulk_update_fields
     [

@@ -56,7 +56,7 @@
 
     <div class="row">
       <div class="span5">
-        <%= render_document_heading.html_safe %>
+        <h4 class="show-document-title"><%=@document.title%></h4>
 
 				<div id="item_details">
           <%= render :partial => "show_default_collection_member", :locals => {:document => @document} %>
@@ -71,38 +71,48 @@
           </li>
 
 					<% if (can?(:read, Annotation) || can?(:create, Annotation)) 
- 						 @annotations = @document.annotations(current_user)
-						 	annotation_count_display_class = (@annotations.size > 0 ? "" : "hidden") 
+   					  @annotations = @document.annotations(current_user)
 							annotation_link_text = can?(:create, Annotation) ?  t('revs.annotations.add') : t('revs.annotations.view')
 							annotation_link_id = can?(:create, Annotation) ?  "annotate_link" : "view_annotations_link"
+							annotation_link_class = can?(:create, Annotation) || @annotations.size > 0 ? "" : "hidden"
 				 			%>
 						<li>
-	             <%= link_to(("<i class='icon-edit'></i> <span id='annotation-link-text'>#{annotation_link_text}</span>".html_safe + content_tag(:span, @annotations.size, :class => "#{annotation_count_display_class} num-annotations-badge badge badge-revs")).html_safe,'#',:id=>annotation_link_id,:class=>"annotation_links showOnLoad hidden-offscreen") %>
-	             <%= link_to(("<i class='icon-edit'></i> #{t('revs.annotations.hide')}".html_safe + content_tag(:span, @annotations.size, :class => "#{annotation_count_display_class} num-annotations-badge badge badge-revs")).html_safe, '#',:id=>'hide_annotations_link',:class=>"hidden-offscreen") %>
+	             <%= link_to(("<span class='#{annotation_link_class} id='annotation-link-text'><i class='icon-edit'></i> #{annotation_link_text}</span>".html_safe + content_tag(:span, @annotations.size, :class => "#{display_class(@annotations.size)} num-annotations-badge badge badge-revs")).html_safe,'#',:id=>annotation_link_id,:class=>"annotation_links showOnLoad hidden-offscreen") %>
+	             <%= link_to(("<i class='icon-edit'></i> #{t('revs.annotations.hide')}".html_safe + content_tag(:span, @annotations.size, :class => "#{display_class(@annotations.size)} num-annotations-badge badge badge-revs")).html_safe, '#',:id=>'hide_annotations_link',:class=>"hidden-offscreen") %>
 	          </li>
 	          <div id="all-annotations" class="hide">
 	              <%= render(:partial => "annotations/all", :locals=>{:annotations=>@annotations}) if @annotations.size > 0 %>
 	        	 </div>
 					<% end %>
 					
-          <% if can? :create, Flag%>
-            <li>
-				        <div id="new_flag_form">
-							  	<%= render :partial=>"flags/new",:locals=>{:druid=>@document.id, :flags=>@document.flags}%>
+          <% if (can?(:read, Flag) || can?(:add_new_flag_to, @document))	%>
+            	<li>
+						  
+							  <div id="flags_link">
+									<%= render :partial=>'flags/link'%>
 								</div>
+								
+				        <div id="new_flag_form">
+							  	<%= render :partial=>"flags/new",:locals=>{:druid=>@document.id, :flags=>@document.flags} %>
+								</div>
+								
 								<div id="all_flags">
                   <%= render :partial=>"flags/all",:locals=>{:flags=>@document.flags} %>
                 </div>
-            </li>
-          <% else %>
-            <li>
-              <span id="feedback_link">
-                <%= link_to t('revs.nav.content_corrections'),new_user_session_path %>
-              </span>
-            </li>
-          <% end %>
-        </ul>
 
+            </li>
+
+							<% if !can?(:create, Flag) %>
+							<li>
+							  <span id="feedback_link">
+							    <%= link_to t('revs.nav.content_corrections'),new_user_session_path %>
+							  </span>
+							</li>
+	          	<% end %>
+					<% end %>        
+				
+				</ul>
+				
         <% if can? :curate, :all %>
           <ul class="nav nav-list item-actions curator-actions showOnLoad hidden-offscreen">
             <li class="nav-header"><%=t('revs.curator.curator_actions')%><i class="icon-cog"></i></li>
