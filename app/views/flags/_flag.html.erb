@@ -1,4 +1,5 @@
 <div class="flag-info">
+  <%= image_tag((flag.user.avatar.url.blank? ? asset_url('default-avatar_32x32.png') : flag.user.avatar.url(:tiny)), :class => "user-image user-image-tiny") %>
   <%=flag.user == current_user ? "You" : flag.user.to_s%> on <%=show_as_date(flag.created_at)%>
   <blockquote><%= flag.comment%></blockquote>
   <% if can? :destroy, flag%>

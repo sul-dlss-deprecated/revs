@@ -1,6 +1,7 @@
 <% if annotations.size > 0 %>
 	<% annotations.each do |annotation| %>	
 		<div id="annotation_<%= annotation.id %>" data-json='<%=annotation.json%>' class="annotation-info">
+      <%= image_tag((annotation.user.avatar.url.blank? ? asset_url('default-avatar_32x32.png') : annotation.user.avatar.url(:tiny)), :class => "user-image user-image-tiny") %>
       <%= annotation.user == current_user ? "You" : annotation.user.to_s %> on <%= show_as_date(annotation.updated_at) %>
       <blockquote><%= annotation.text%></blockquote>
 		  <% if can? :destroy, annotation%>
