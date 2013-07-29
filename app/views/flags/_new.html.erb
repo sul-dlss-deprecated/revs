@@ -3,7 +3,8 @@
 
 	flag_count_display_class = (flags.size > 0 ? "" : "hidden")%>
 
-  <% if current_flags.count == 0 # they have not already flagged it, give them the new form %>
+  <%# if they have not already flagged it more than a handful of times, give them the new form %>
+  <% if current_flags.count < 5 %>
     <a href='#' class='flag-details'>
       <i class='icon-flag'></i> Flag this item
        <span class="<%=flag_count_display_class%> badge badge-revs num-flags-badge">
