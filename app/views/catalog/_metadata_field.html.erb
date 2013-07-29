@@ -13,7 +13,7 @@
     <dd>
 			<% case input_type %>			  
 				<% when 'text_area' %>
-				 <%= text_area_tag "document[#{edit_field_name}]",document.send(edit_field_name), :rows => 3, :cols => 40 %>			  
+				 <%= text_area_tag "document[#{edit_field_name}]",document.send(edit_field_name), :rows => 3, :cols => 40, :class => (multivalued ? 'mvf' : '') %>			  
 			 <% else %>
 				 <%= text_field_tag "document[#{edit_field_name}]",document.send(edit_field_name),:size => 40, :class => (multivalued ? 'mvf' : '') %>
 			<% end %>
