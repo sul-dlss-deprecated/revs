@@ -314,16 +314,18 @@ class SolrDocument
     selected_druids=params[:selected_druids]
     attribute=params[:attribute]
     new_value=params[:new_value]
+  
+    valid=false
     
-    valid=true
-        
+    # iterate over all druids    
     selected_druids.each do |druid|
     
-      # load item and grab old values
-      item=self.find(druid)
-      item.send("#{attribute}=",new_value) # this sets the attribute
-      valid = item.save # if true, we have successfully updated solr
-      break unless valid # stop if we are not valid
+      item=self.find(druid) # load item
+      if !item.blank?
+        item.send("#{attribute}=",new_value) # this sets the attribute
+        valid = item.save # if true, we have successfully updated solr
+      end
+      break unless valid # stop if any item is not valid
       
     end
           
