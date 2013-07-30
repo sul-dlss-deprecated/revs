@@ -53,7 +53,7 @@ describe("Admin Section",:type=>:request,:integration=>true) do
        click_button 'Update'
 
        # check the database and some items on the page
-       page.should have_content('User updated.')
+       page.should have_content(I18n.t('revs.messages.saved'))
        current_path.should == admin_users_path
        user.reload
        user.role.should == new_role

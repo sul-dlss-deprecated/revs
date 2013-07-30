@@ -84,13 +84,13 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     login_as(admin_login)
     visit user_profile_name_path(admin_login)
     current_path.should == user_profile_name_path(admin_login)
-    page.should have_content 'Annotations 02'
+    page.should have_content 'Annotations 2'
     logout
 
     login_as(user_login)
     visit  user_profile_name_path(user_login)
     current_path.should ==  user_profile_name_path(user_login)
-    ["Annotations 01","air intake?","Flags","Sebring 12 Hour, Green Park..."].each {|title| page.should have_content(title)}
+    ["Annotations 1","air intake?","Flags","Sebring 12 Hour, Green Park..."].each {|title| page.should have_content(title)}
     
   end
 

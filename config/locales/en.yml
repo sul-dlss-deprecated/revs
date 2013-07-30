@@ -2,25 +2,45 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  activerecord:
+    errors:
+      messages:
+        not_valid: 'is not valid'
   revs:
+    digital_library: 'Revs Digital Library'
     revs_program: 'Revs Program at Stanford'
-    revs_institute: 'Revs Institute for Automotive Research'
+    revs_institute: 'Revs Institute'
+    stanford_library: 'Stanford University Libraries'
+    actions:
+      remove: 'Remove'
     messages:
+      date: 'Date'
+      not_shown: 'not shown'
+      view_all: 'View all'
+      created: 'Created'
       switch_on: "On"
       switch_off: "Off"
-      saved: 'Changes saved'
+      saved: 'Changes saved.'
       not_authorized: 'You are not authorized to perform this action.'
       validation_error: "The values you entered were not valid for the field you selected."
       bulk_update_instructions: "To apply a bulk update, select the field to update, enter a new value and select some items."
       set_top_priority: "Success! This image is now set to represent its collection."
     flags:
+      are_you_sure: 'Are you sure you want to remove this flag?'
       created: 'The item was flagged.'
       removed: 'The flag was removed.'
       updated: 'The flag was updated.'
       flag: 'Flag this item'
       flagged: 'Flagged'
       comment_optional: 'Comment (optional)'
+      comment: 'Comment'
+      singluar: 'Flag'
+      plural: 'Flags'
+      none: 'This user does not have any flags.'
+      you_can_flag_problems: 'You can flag problems you see with item metadata from the Item Details page.'
     nav:
+      home: 'Home'
+      collections: 'Collections'
       select_all: 'Select all'
       update: 'Update'
       save_changes: 'Save Changes'
@@ -42,20 +62,6 @@ en:
       subject: 'Subject'
       message: 'Message'
       describe_problem: 'Please describe your question or problem.'    
-    about:
-      project_title: 'About the Revs Digital Library'
-      contact_title: 'Contact Us'
-      contact_message_sent: 'Thanks - your message has been sent.'
-      contact_message_sent_about_metadata: 'Thanks - we have received your corrections.  We may not be able to correct all problems immediately or respond individually but the corrections are appreciated and are logged for review.'
-      contact_error: 'You need to enter some message text.'
-      terms_of_use_title: 'Terms of Use'
-      acknowledgements_title: 'Acknowledgements'
-      team_title: 'Project Team'
-      version_title: 'Application Version'
-      terms_dialog_title: 'Notice'
-      terms_of_use_message: 'The Revs Digital Library is under development and contains content that has not been reviewed by curators. By continuing, I acknowledge I understand and that I can provide feedback about the site and about content.'
-      terms_continue: 'Continue'
-      terms_disagree: 'Do not continue'
     authentication:
       new_user: 'New user?'
       sign_in: 'Sign in'
@@ -97,6 +103,10 @@ en:
         add: 'View/add annotations'
         view: 'View annotations'
         hide: 'Hide annotations'
+        singular: 'Annotation'
+        plural: 'Annotations'
+        none: 'This user does not have any annotations.'
+        you_can_annotate_images: 'You can annotate item images from the Item Details page.'
     collection:
       collection_detail: 'Collection Detail'
       member_detail: 'Item Detail'
@@ -128,3 +138,16 @@ en:
       wait: 'One moment please...'
       open_in_full_screen: 'Open in full screen'
       close: 'Close'
+    user:
+      dashboard: 'User Dashboard'
+      stanford_warning_html: '<strong>Important:</strong> Stanford users should not create a new account or enter their SUNET ID or passwords on this website.  %{webauth_link}'
+      webauth_link_text: 'Login to webauth first'
+      sign_in: 'Sign in'
+      sign_up: 'Sign up'
+      sign_out: 'Sign out'
+      change_password: 'Change your password'
+      profile_page: 'Your Revs profile page'
+      user_dashboard: 'User Dashboard'
+      curator_dashboard: 'Curator Dashboard'
+      admin_dashboard: 'Admin Dashboard'
+      

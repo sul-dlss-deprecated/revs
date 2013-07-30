@@ -1,6 +1,4 @@
-<p>The Revs Digital Library acknowledges the support of the 
-<%=link_to 'Revs Institute','http://revsinstitute.org'%>, the <%=link_to 'Stanford University Libraries','http://library.stanford.edu'%>, and the <%=link_to 'Revs Program at Stanford', 'http://revs.stanford.edu'%>.
-</p>
 <p>
-	<span class="slug">End</span>
+	<%=t('revs.about.acknowledgements_text_html',:revs_institute=>link_to(t('revs.revs_institute'),'http://revsinstitute.org'),:stanford_library=>link_to(t('revs.stanford_library'),'http://library.stanford.edu'),:revs_program=>link_to(t('revs.revs_program'),'http://revs.stanford.edu'))%>
 </p>
+<%= render :partial=>'end_page_slug'%>

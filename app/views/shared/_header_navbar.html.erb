@@ -27,20 +27,20 @@
       </a>
       <div class="row">
         <div class="span3">
-          <%= link_to(image_tag("revs-logo.png", :title=>"Revs Program at Stanford Logo" , :alt => "Revs Program at Stanford Logo"), root_path, :class => "logo")%>
+          <%= link_to(image_tag("revs-logo.png", :title=>t('revs.digital_library') , :alt => t('revs.digital_library')), root_path, :class => "logo")%>
         </div>
         <div class="span8 site-header-content">
           <h1><%=application_name%></h1>
           <div class="nav-collapse">
             <ul class="nav">
               <li class="<%="active" if on_home_page%>">
-                <%= link_to 'HOME', root_path %>
+                <%= link_to t('revs.nav.home').upcase, root_path %>
               </li>
               <li class="<%="active" if on_collections_page%>">
-                <%= link_to 'COLLECTIONS', all_collections_path%>
+                <%= link_to t('revs.nav.collections').upcase, all_collections_path%>
               </li>
-              <li class="<%="active" if on_about_pages%>"><%= link_to 'ABOUT', about_project_path %></li>
-              <li><%= link_to 'REVS PROGRAM AT STANFORD', 'http://revs.stanford.edu', :target=>'_new' %></li>
+              <li class="<%="active" if on_about_pages%>"><%= link_to t('revs.about.word').upcase, about_project_path %></li>
+              <li><%= link_to t('revs.revs_program').upcase, 'http://revs.stanford.edu', :target=>'_new' %></li>
             </ul>
           </div>
         </div>

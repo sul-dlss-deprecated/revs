@@ -1,13 +1,13 @@
 <div id="content" class="span9">
 
-  <h2><%= display_user_name(@user) %><span class="lowercase">'s</span> Annotations</h2>
+  <h2><%= display_user_name(@user) %><span class="lowercase">'s</span> <%=t('revs.annotations.plural')%></h2>
 
  <% if @annotations.size > 0 %>
     <%= paginate @annotations, :params => {:order=>@order} %>
     <table class="table table-bordered table-condensed table-hover table-striped">
       <tr>
-        <th><%= link_to 'Item', user_annotations_path(:id=>@id,:order=>'druid') %></th>
-        <th>Annotation</th>
+        <th><%= link_to t('revs.collection_members.items_name').titleize, user_annotations_path(:id=>@id,:order=>'druid') %></th>
+        <th><%=t('revs.annotations.singular')%></th>
         <th><%= link_to 'Created', user_annotations_path(:id=>@id,:order=>'created_at') %></th>
       </tr>
       <% @annotations.each do |annotation|%>
@@ -19,7 +19,7 @@
       <% end %>
     </table>
  <% else %>
-    This user does not have any annotations.
+    <%=t('revs.annotations.none')%>
 <% end %>
 
 </div>

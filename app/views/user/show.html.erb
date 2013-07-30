@@ -1,6 +1,6 @@
 <div id="content" class="span9">
 
-  <h2>User Dashboard</h2>
+  <h2><%=t('revs.user.dashboard')%></h2>
 
   <div class="row profile-vitals">
     <div class="span2">
@@ -29,7 +29,7 @@
 
   <div class="row profile-activity">
     <div class="span4">
-      <h3>Annotations <span class="activity-count"><%= user_annotations_count(@user).to_s.rjust(2, '0') %></span></h3>
+      <h3><%=t('revs.annotations.plural')%> <span class="activity-count"><%= user_annotations_count(@user).to_s.rjust(1, '0') %></span></h3>
       <% if @latest_annotations.size > 0 %>
         <ul>
         <% @latest_annotations.each do |annotation| %>
@@ -47,19 +47,19 @@
         </ul>
         <% if user_annotations_count(@user) > Revs::Application.config.num_latest_user_activity %>
           <p class="more-link">
-            <%= pluralize(user_annotations_count(@user) - Revs::Application.config.num_latest_user_activity, 'annotation') %> not shown.
-            <%= link_to "View all »", user_annotations_path(@user.username) %>
+            <%= pluralize(user_annotations_count(@user) - Revs::Application.config.num_latest_user_activity, 'annotation') %> <%=t('revs.messages.not_shown')%>.
+            <%= link_to "#{t('revs.messages.view_all')} »", user_annotations_path(@user.username) %>
           </p>
         <% end %>
       <% else %>
         <p class="muted">
-          <em>You can annotate item images from the Item Details page.</em>
+	        <em><%=t('revs.annotations.you_can_annotate_images')%></em>  
         </p>
       <% end %>
     </div>
 
     <div class="span4 offset1">
-      <h3>Flags <span class="activity-count"><%= user_flags_count(@user).to_s.rjust(2, '0') %></span></h3>
+      <h3><%=t('revs.flags.plural')%> <span class="activity-count"><%= user_flags_count(@user).to_s.rjust(1, '0') %></span></h3>
       <% if @latest_flags.size > 0 %>
         <ul>
         <% @latest_flags.each do |flag| %>
@@ -76,13 +76,13 @@
         </ul>
         <% if user_flags_count(@user) > Revs::Application.config.num_latest_user_activity %>
           <p class="more-link">
-            <%= pluralize(user_flags_count(@user) - Revs::Application.config.num_latest_user_activity, 'flag') %> not shown.
-            <%= link_to "View all »", user_flags_path(@user.username) %>
+            <%= pluralize(user_flags_count(@user) - Revs::Application.config.num_latest_user_activity, 'flag') %> <%=t('revs.messages.not_shown')%>.
+            <%= link_to "#{t('revs.messages.view_all')} »", user_flags_path(@user.username) %>
           </p>
         <% end %>
       <% else %>
         <p class="muted">
-          <em>You can flag problems you see with item metadata from the Item Details page.</em>
+          <em><%=t('revs.flags.you_can_flag_problems')%></em>
         </p>
       <% end %>
     </div>

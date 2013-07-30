@@ -1,0 +1,60 @@
+en:
+  revs:
+    about:
+      word: 'About'
+      project_title: 'About the Revs Digital Library'
+      related_sites: 'Related Sites'
+      contact_us: 'Contact Us'
+      contact_title: 'Contact'
+      contact_message_sent: 'Thanks - your message has been sent.'
+      contact_message_sent_about_metadata: 'Thanks - we have received your corrections.  We may not be able to correct all problems immediately or respond individually but the corrections are appreciated and are logged for review.'
+      contact_error: 'You need to enter some message text.'
+      terms_of_use_title: 'Terms of Use'
+      use_policy: 'Use Policy'
+      acknowledgements_title: 'Acknowledgements'
+      team_title: 'Project Team'
+      version_title: 'Application Version'
+      terms_dialog_title: 'Notice'
+      terms_of_use_message: 'The Revs Digital Library is under development and contains content that has not been reviewed by curators. By continuing, I acknowledge I understand and that I can provide feedback about the site and about content.'
+      terms_continue: 'Continue'
+      terms_disagree: 'Do not continue'
+      acknowledgements_text_html: 'The Revs Digital Library acknowledges the support of the %{revs_institute}, the %{stanford_library}, and the %{revs_program}.'
+      copyright_infringement: 'report alleged copyright infringement to Stanford'
+      terms_of_use_policy: 'Stanford University Terms of Use Policy'
+      terms_of_use_text_html: |
+        Any of the content displayed on this site may be under copyright, and it is up to the user to comply with the content's specific copyright provisions. 
+        Each piece of content may have a different license and re-use requirement, which may be shown with the content.  If a license is not shown, you
+        should assume full rights remain with the owner.  For questions about terms of use, you may contact us and review the %{terms_of_use_link}.
+        You may also %{copyright_infringement_link}.
+      team_text_html: |
+        <ul>
+          <li><a href="http://library.stanford.edu/people/rns">Robert Schwarzwalder</a> - Associate University Librarian for Science & Engineering Director, Library Technologies</li>
+          <li><a href="http://library.stanford.edu/people/tcramer">Tom Cramer</a> - Chief Technology Strategist & Associate Director, Digital Library Systems & Services</li>
+          <li><a href="http://library.stanford.edu/people/snydman">Stuart Snydman</a> - Manager, Digital Production & Web Application Development</li>
+          <li><a href="http://library.stanford.edu/people/petucket">Peter Mangiafico</a> - Product Manager, Revs Project</li>
+          <li>Gary Geisler - Digital Library Software Engineer</li>
+          <li><a href="http://library.stanford.edu/people/jkeck">Jessie Keck</a> - Digital Library Software Engineer</li>
+        </ul>
+      project_text_html: |
+        <p>
+        	 The %{revs_institute} has a large and varied collection of automotive materials, including images, research books, ephemera, and specialized documents. 
+           The Revs Program at Stanford is producing research data and generating course materials.  The primary goal of the Stanford Library is to ensure these materials are indexed, preserved and made
+           available to library patrons, researchers and the general public.  By digitizing materials and making them discoverable, content that was once available to a select few becomes useful and
+           discoverable for a wide range of researchers. 
+        </p>
+        <p>
+        	%{revs_about_scanning_image}
+        	Working with <a href="http://pixelacuity.com/">Pixel Acuity</a>, the Revs Institute is digitizing their collection of images using specialized digital cameras.  Each slide, negative or print is cleaned and imaged at a high resolution.
+          The images and associated metadata are collected and transferred to Stanford, where they are being accessioned into the 
+          <a href="http://library.stanford.edu/projects/stanford-digital-repository">Stanford Digital Repository</a> (SDR).
+        </p>
+        <p>
+        	The Stanford Digital Repository ensures each digital object is preserved, made available via a permanent persistent URL (web address), enforces content rights and restrictions and provides a common 
+          storage mechanism for other applications to build upon.  Research and course material from the Revs Program at Stanford will also be stored in SDR, and all materials will be discoverable via Stanford
+           Library's online catalog, <a href="http://searchworks.stanford.edu">SearchWorks</a>.
+        </p>
+        <p>
+        	The Revs Digital Library is built on top of the Stanford Digital Repository to provide a web based platform for discovery of automotive research and images. The Digital Library is developed 
+          in <a href="http://www.rubyonrails.org">Ruby on Rails</a> using open source technologies, including <a href="http://projectblacklight.org/">Blacklight</a>, <a href="http://projecthydra.org/">Hydra</a>, 
+          and <a href="http://fedora-commons.org/">Fedora Commons</a> and will allow for metadata editing, provide community features, and tools for researchers to further utilize the data.
+        </p>

@@ -1,8 +1,8 @@
 <div class="flag-info">
   <%= image_tag((flag.user.avatar.url.blank? ? asset_url('default-avatar_32x32.png') : flag.user.avatar.url(:tiny)), :class => "user-image user-image-tiny") %>
-  <%=flag.user == current_user ? "You" : flag.user.to_s%> on <%=show_as_date(flag.created_at)%>
+  <%=flag.user == current_user ? "You" : flag.user.to_s%>  <%=show_as_date(flag.created_at)%>
   <blockquote><%= flag.comment%></blockquote>
   <% if can? :destroy, flag%>
-    <%= button_to 'Remove',flag_path(flag.id), :method=>:delete,:remote=>true, :confirm=>"Are you sure you want to remove this flag?", :class => "btn btn-mini btn-danger" %>
+    <%= button_to t('revs.actions.remove'),flag_path(flag.id), :method=>:delete,:remote=>true, :confirm=>t('revs.flags.are_you_sure'), :class => "btn btn-mini btn-danger" %>
   <% end %>
 </div>

@@ -5,9 +5,9 @@ describe("About Pages",:type=>:request,:integration=>true) do
   before :each do
     @about_page_title=I18n.t("revs.about.project_title")
     @project_team_title=I18n.t("revs.about.team_title")
-    @acknowledgements_title=I18n.t("revs.about.acknowledgements_title")
-    @contact_us_title=I18n.t("revs.about.contact_title")
-    @terms_of_use_title=I18n.t("revs.about.terms_of_use_title")
+    @acknowledgements=I18n.t("revs.about.acknowledgements_title")
+    @contact_us=I18n.t("revs.about.contact_title")
+    @terms_of_use=I18n.t("revs.about.terms_of_use_title")
   end
   
   it "should show the about project page for various URLs" do
@@ -21,7 +21,7 @@ describe("About Pages",:type=>:request,:integration=>true) do
 
   it "should show the contact us page" do
     visit '/about/contact'
-    page.should have_content(@contact_us_title)
+    page.should have_content(@contact_us)
     fill_in 'name', :with=>'Spongebob Squarepants'
     click_button 'Send'
     page.should have_content(I18n.t("revs.about.contact_error")) # problem if you don't enter a message
@@ -34,12 +34,12 @@ describe("About Pages",:type=>:request,:integration=>true) do
 
   it "should show the terms of use page" do
     visit '/about/terms_of_use'
-    page.should have_content(@terms_of_use_title)
+    page.should have_content(@terms_of_use)
   end
 
   it "should show the acknowledgements page" do
     visit '/about/acknowledgements'
-    page.should have_content(@acknowledgements_title)
+    page.should have_content(@acknowledgements)
   end
 
   it "should show the project team page" do

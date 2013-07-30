@@ -94,7 +94,7 @@ class User < ActiveRecord::Base
   end
   
   def check_role_name
-    errors.add(:role, "is not valid") unless ROLES.include? role.to_s
+    errors.add(:role, :not_valid) unless ROLES.include? role.to_s
   end
     
   def no_name_entered?

@@ -1,1 +1,3 @@
-<p class="text-info"><strong>Important:</strong> Stanford users should not create a new account or enter their SUNET ID or passwords on this website.  <%= link_to 'Login to webauth first', webauth_login_path(:referrer => session[:login_redirect])%>.</p>
+<p class="text-info">
+	<%=t('revs.user.stanford_warning_html',:webauth_link=>link_to(t('revs.user.webauth_link_text'), webauth_login_path(:referrer => session[:login_redirect])))%>.
+</p>

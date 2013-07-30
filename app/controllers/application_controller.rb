@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
   end
   
   def application_name
-    "Revs Digital Library"
+    t('revs.digital_library')
   end
   
   def previous_page

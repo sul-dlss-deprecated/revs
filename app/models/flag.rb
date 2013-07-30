@@ -16,7 +16,7 @@ class Flag < ActiveRecord::Base
   end
   
   def check_flag_type
-    errors.add(:flag_type, "is not valid") unless FLAG_TYPES.include? flag_type.to_s
+    errors.add(:flag_type, :not_valid) unless FLAG_TYPES.include? flag_type.to_s
   end
 
   def is_cleared?

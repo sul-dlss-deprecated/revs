@@ -25,7 +25,7 @@ class Admin::UsersController < ApplicationController
     @user=User.find(params[:id])
     if @user.update_attributes(params[:user]) 
      @user.update_lock_status(params[:lock])
-     flash[:success]="User updated."
+     flash[:success]=t('revs.messages.saved')
      redirect_to admin_users_path
     else
       render :edit
