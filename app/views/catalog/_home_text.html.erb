@@ -23,11 +23,11 @@
 			</div>
 			<div class="row">
 		    <div id="featured-description" class="span3">
-		      <span class="content-type collection">Featured Collection</span>
+		      <span class="content-type collection"><%= t('revs.collection.featured_collection')%></span>
 		      <h3><%= link_to title_no_revs(@highlight_collections.first.title), collection_path(@highlight_collections.first), :id => "collection-title-link" %></h3>
 		      <p>
 		        <span id="collection-description"><%= truncate(@highlight_collections.first.description,:length=>250) %></span>
-		        <%= link_to "More", collection_path(@highlight_collections.first), :id => "collection-link" %>
+		        <%= link_to t('revs.nav.more'), collection_path(@highlight_collections.first), :id => "collection-link" %>
 		      </p>
 		    </div>
 			</div>
@@ -55,11 +55,11 @@
 				</div>
 				<div class="row">
 			    <div id="featured-description" class="span3">
-			      <span class="content-type collection">Featured Collection</span>
+			      <span class="content-type collection"><%= t('revs.collection.featured_collection')%></span>
 			      <h3><%= link_to title_no_revs(collection.title), collection_path(collection), :id => "collection-title-link" %></h3>
 			      <p>
 			        <span id="collection-description"><%= truncate(collection.description,:length=>300) %></span>
-			        <%= link_to "More", collection_path(collection), :id => "collection-link" %>
+			        <%= link_to "#{t('revs.nav.more')}", collection_path(collection), :id => "collection-link" %>
 			      </p>
 			    </div>
 				</div>
@@ -71,15 +71,18 @@
 
 	<div class="row">
 		<div class="span9 about-dl">
-			<h3 class="section-heading">About the Revs Digital Library</h3>
-			<p>
+			<h3 class="section-heading"><%= t('revs.about.project_title') %></h3>
 				<%= link_to image_tag('revs-about-project-scanning.png', :width => '120'), about_project_path %>
-				<p>The Revs Digital Library currently contains <strong><%=number_with_delimiter(@total_images)%> items</strong> from <strong><%=link_to "#{number_with_delimiter(@total_collections)} collections",all_collections_path%></strong>.</p>
-
-				<p>The Digital Library is built on top of the Stanford Digital Repository to provide a web based platform for discovery of automotive research and images.  The Stanford Digital Repository ensures each digital object is preserved, made available via a permanent persistent URL (web address), enforces content rights and restrictions and provides a common storage mechanism for other applications to build upon.
-			</p>
+        <p>
+          <%= t('revs.about.homepage_about_counts_html',
+              :total_images => number_with_delimiter(@total_images),
+              :number_collections => link_to(number_with_delimiter(@total_collections) + t('revs.about.homepage_about_counts_linktext'), all_collections_path)) %>
+        </p>
+        <p>
+          <%= t('revs.about.homepage_about_project_html') %>
+        </p>
 			<p>
-				<%= link_to 'More', about_project_path %>
+				<%= link_to t('revs.nav.more'), about_project_path %>
 			</p>
 		</div>
 	</div>

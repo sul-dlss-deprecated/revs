@@ -9,7 +9,7 @@
 <% unless @document.more_like_this.empty? %>
 <div id="sidebar-mlt">
   <ul class="nav nav-list">
-  <li class="nav-header">More Like This</li>
+  <li class="nav-header"><%= t('revs.sidebar.more_like_this') %></li>
     <%= render :collection => @document.more_like_this, :partial => 'show_more_like_this', :as => :document %>
   </ul>
 </div>

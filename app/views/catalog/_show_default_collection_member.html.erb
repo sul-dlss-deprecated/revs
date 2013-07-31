@@ -4,7 +4,7 @@
   <div class="accordion-group">
     <div class="accordion-heading nav-header">
       <a class="accordion-toggle" data-toggle="collapse" data-parent="#item-details-accordion" href="#item-default">
-        General Information
+        <%= t('revs.show.general_information') %>
         <span class="accordion-icon showOnLoad hidden"><i class="icon-caret-right icon-2x"></i></span>
       </a>
     </div>
@@ -12,21 +12,21 @@
       <div class="accordion-inner">
         <dl class="dl-horizontal  dl-invert">
 
-					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'title',:label=>'Title',:editable=>true} if in_curator_edit_mode %>
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'title',:label=>t('revs.show.label_title'),:editable=>true} if in_curator_edit_mode %>
 
-					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'collection_names',:label=>'Collection',:multivalued=>true,:facet=>true,:editable=>false} %>
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'collection_names',:label=>t('revs.show.label_collection'),:multivalued=>true,:facet=>true,:editable=>false} %>
 
-					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'description',:label=>'Description',:simple_format=>true, :editable=>true, :input_type=>'text_area'} %>
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'description',:label=>t('revs.show.label_description'),:simple_format=>true, :editable=>true, :input_type=>'text_area'} %>
 					
-					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'years',:label=>'Years', :multivalued=>true, :facet=> true, :editable=>true, :input_type=>'text_area'} %>
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'years',:label=>t('revs.show.label_years'), :multivalued=>true, :facet=> true, :editable=>true, :input_type=>'text_area'} %>
 					
-					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'full_date',:label=>'Date',:editable=>true} %>
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'full_date',:label=>t('revs.show.label_date'),:editable=>true} %>
 
-					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'photographer',:label=>'Photographer',:editable=>true,:facet=>true} %>
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'photographer',:label=>t('revs.show.label_photographer'),:editable=>true,:facet=>true} %>
 
- 					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'location',:label=>'Location',:editable=>true,:facet=>true} %>
+ 					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'location',:label=>t('revs.show.label_location'),:editable=>true,:facet=>true} %>
 
-					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'people',:label=>'People',:multivalued=>true,:editable=>true,:facet=>true, :input_type=>'text_area'} %>
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'people',:label=>t('revs.show.label_people'),:multivalued=>true,:editable=>true,:facet=>true, :input_type=>'text_area'} %>
 
           <%= render "/catalog/item_edit_errors" %>
 					<%= submit_tag t('revs.nav.save_changes'), class: 'btn btn-small' if in_curator_edit_mode %>
@@ -40,7 +40,7 @@
   <div class="accordion-group">
     <div class="accordion-heading nav-header">
       <a class="accordion-toggle" data-toggle="collapse" data-parent="#item-details-accordion" href="#item-auto">
-        Vehicle Information
+        <%= t('revs.show.vehicle_information') %>
         <span class="accordion-icon showOnLoad hidden"><i class="icon-caret-right icon-2x"></i></span>
       </a>
     </div>
@@ -48,17 +48,17 @@
       <div class="accordion-inner">
         <dl class="dl-horizontal  dl-invert">
 	
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'current_owner',:label=>'Current Owner',:editable=>true, :facet=>true} %>
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'current_owner',:label=>t('revs.show.label_current_owner'),:editable=>true, :facet=>true} %>
 
-					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'marque',:label=>'Marque',:multivalued=>true,:editable=>true,:facet=>true, :input_type=>'text_area'} %>
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'marque',:label=>t('revs.show.label_marque'),:multivalued=>true,:editable=>true,:facet=>true, :input_type=>'text_area'} %>
 
-					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'vehicle_model',:label=>'Model',:multivalued=>true,:editable=>true,:facet=>true, :input_type=>'text_area'} %>
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'vehicle_model',:label=>t('revs.show.label_model'),:multivalued=>true,:editable=>true,:facet=>true, :input_type=>'text_area'} %>
 
-					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'model_year',:label=>'Model Year',:multivalued=>true,:editable=>true,:facet=>true, :input_type=>'text_area'} %>
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'model_year',:label=>t('revs.show.label_model_year'),:multivalued=>true,:editable=>true,:facet=>true, :input_type=>'text_area'} %>
 
- 					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'group_class',:label=>'Group/Class',:editable=>true} %>
+ 					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'group_class',:label=>t('revs.show.label_group_class'),:editable=>true} %>
 
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'vehicle_markings',:label=>'Vehicle Markings',:editable=>true, :input_type=>'text_area'} %>
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'vehicle_markings',:label=>t('revs.show.label_vehicle_markings'),:editable=>true, :input_type=>'text_area'} %>
 
           <%= render "/catalog/item_edit_errors" %>
 					<%= submit_tag t('revs.nav.save_changes'), class: 'btn btn-small' if in_curator_edit_mode %>
@@ -73,7 +73,7 @@
   <div class="accordion-group">
     <div class="accordion-heading nav-header">
       <a class="accordion-toggle" data-toggle="collapse" data-parent="#item-details-accordion" href="#item-race">
-        Race Information
+        <%= t('revs.show.race_information') %>
         <span class="accordion-icon showOnLoad hidden"><i class="icon-caret-right icon-2x"></i></span>
       </a>
     </div>
@@ -81,15 +81,15 @@
       <div class="accordion-inner">
         <dl class="dl-horizontal  dl-invert">
 	
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'event',:label=>'Event',:editable=>true, :facet=>true} %>
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'event',:label=>t('revs.show.label_event'),:editable=>true, :facet=>true} %>
           
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'venue',:label=>'Venue',:editable=>true, :facet=>true} %>
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'venue',:label=>t('revs.show.label_venue'),:editable=>true, :facet=>true} %>
           
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'track',:label=>'Track',:editable=>true, :facet=>true} %>
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'track',:label=>t('revs.show.label_track'),:editable=>true, :facet=>true} %>
           
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'entrant',:label=>'Entrant',:editable=>true, :facet=>true} %>
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'entrant',:label=>t('revs.show.label_entrant'),:editable=>true, :facet=>true} %>
          
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'race_data',:label=>'Race Data',:editable=>true} %>
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'race_data',:label=>t('revs.show.label_race_data'),:editable=>true} %>
           
           <%= render "/catalog/item_edit_errors" %>
 					<%= submit_tag t('revs.nav.save_changes'), class: 'btn btn-small' if in_curator_edit_mode %>
@@ -103,22 +103,22 @@
   <div class="accordion-group">
     <div class="accordion-heading nav-header">
       <a class="accordion-toggle" data-toggle="collapse" data-parent="#item-details-accordion" href="#item-sources">
-        Sources, Notes, &amp; Technical Information
+        <%= t('revs.show.source_information_html') %>
         <span class="accordion-icon showOnLoad hidden"><i class="icon-caret-right icon-2x"></i></span>
       </a>
     </div>
     <div id="item-sources" class="accordion-body collapse in">
       <div class="accordion-inner">
         <dl class="dl-horizontal  dl-invert">
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'identifier',:label=>'Identifier'} %>
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'identifier',:label=>t('revs.show.label_identifier')} %>
 
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'formats',:label=>'Formats',:multivalued=>true,:editable=>true,:facet=>true, :input_type=>'text_area'} %>
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'formats',:label=>t('revs.show.label_formats'),:multivalued=>true,:editable=>true,:facet=>true, :input_type=>'text_area'} %>
 
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'institutional_notes',:label=>'Institution Notes',:editable=>true, :input_type=>'text_area'} %>
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'institutional_notes',:label=>t('revs.show.label_institutional_notes'),:editable=>true, :input_type=>'text_area'} %>
           
-					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'production_notes',:label=>'Production Notes',:editable=>true, :input_type=>'text_area'} %>       
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'production_notes',:label=>t('revs.show.label_production_notes'),:editable=>true, :input_type=>'text_area'} %>       
 
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'metadata_sources',:label=>'Metadata Sources',:editable=>true, :input_type=>'text_area'} %>
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'metadata_sources',:label=>t('revs.show.label_metadata_sources'),:editable=>true, :input_type=>'text_area'} %>
 
           <%= render "/catalog/item_edit_errors" %>
 					<%= submit_tag t('revs.nav.save_changes'), class: 'btn btn-small' if in_curator_edit_mode %>

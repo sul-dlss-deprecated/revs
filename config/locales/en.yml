@@ -50,6 +50,7 @@ en:
       go_back: 'Go back'
       report_problem: 'Report a problem'
       content_corrections: 'Are there problems with the metadata for this item? If you create an account and login, you can flag this item with a comment.'
+      more: 'More'
     contact:
       select_topic: 'Select a topic...'
       problem: 'Problem with the website'
@@ -61,7 +62,12 @@ en:
       email_address: 'Email address'
       subject: 'Subject'
       message: 'Message'
-      describe_problem: 'Please describe your question or problem.'    
+      describe_problem: 'Please describe your question or problem.'
+      image_license_agreement: "Image License Agreement"
+      image_reuse_agreement: "To re-use this image, please review the %{license_agreement_link}"
+      reuse_contact: "and %{reuse_contact_link}"
+      contact_linktext: "contact the Revs Institute"
+      reuse_contact_message: "Request for image ID %{reuse_contact_message_doc} at %{reuse_contact_message_url}"
     authentication:
       new_user: 'New user?'
       sign_in: 'Sign in'
@@ -96,6 +102,7 @@ en:
       enter_edit_mode: 'Enter metadata edit mode'
       leave_edit_mode: 'Leave metadata edit mode'
       set_posterframe: 'Use this image to represent the collection'
+      active: "Active"
     dashboards: 'Dashboards'
     citations:
         view: 'View full citation page with image download'
@@ -110,6 +117,8 @@ en:
     collection:
       collection_detail: 'Collection Detail'
       member_detail: 'Item Detail'
+      featured_collection: 'Featured Collection'
+      total_items: "Total Items"
     collection_members:
       items_name: 'item'
     collection_members_grid:
@@ -134,10 +143,40 @@ en:
       history:
         title: 'History'
         search_history: 'Search History'
+      more_like_this: "More Like This"
     show:
       wait: 'One moment please...'
       open_in_full_screen: 'Open in full screen'
       close: 'Close'
+      mvf_help_text: "Separate multiple values with a |"
+      general_information: "General Information"
+      vehicle_information: "Vehicle Information"
+      race_information: "Race Information"
+      source_information_html: "Sources, Notes, &amp; Technical Information"
+      label_title: "Title"
+      label_collection: "Collection"
+      label_description: "Description"
+      label_years: "Years"
+      label_date: "Date"
+      label_photographer: "Photographer"
+      label_location: "Location"
+      label_people: "People"
+      label_current_owner: "Current Owner"
+      label_marque: "Marque"
+      label_model: "Model"
+      label_model_year: "Model Year"
+      label_group_class: "Group/Class"
+      label_vehicle_markings: "Vehicle Markings"
+      label_event: "Event"
+      label_venue: "Venue"
+      label_track: "Track"
+      label_entrant: "Entrant"
+      label_race_data: "Race Data"
+      label_identifier: "Identifier"
+      label_formats: "Formats"
+      label_institutional_notes: "Institutional Notes"
+      label_production_notes: "Production Notes"
+      label_metadata_sources: "Metadata Sources"
     user:
       dashboard: 'User Dashboard'
       stanford_warning_html: '<strong>Important:</strong> Stanford users should not create a new account or enter their SUNET ID or passwords on this website.  %{webauth_link}'
@@ -150,4 +189,3 @@ en:
       user_dashboard: 'User Dashboard'
       curator_dashboard: 'Curator Dashboard'
       admin_dashboard: 'Admin Dashboard'
-      

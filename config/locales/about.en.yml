@@ -58,3 +58,12 @@ en:
           in <a href="http://www.rubyonrails.org">Ruby on Rails</a> using open source technologies, including <a href="http://projectblacklight.org/">Blacklight</a>, <a href="http://projecthydra.org/">Hydra</a>, 
           and <a href="http://fedora-commons.org/">Fedora Commons</a> and will allow for metadata editing, provide community features, and tools for researchers to further utilize the data.
         </p>
+      homepage_about_counts_linktext: " collections"
+      homepage_about_counts_html: |
+          The Revs Digital Library currently contains <strong>%{total_images} items</strong> from
+          <strong>%{number_collections}</strong>.
+      homepage_about_project_html: |
+          The Digital Library is built on top of the Stanford Digital Repository to provide a web based platform for discovery of
+          automotive research and images.
+          The Stanford Digital Repository ensures each digital object is preserved, made available via a permanent persistent URL
+          (web address), enforces content rights and restrictions and provides a common storage mechanism for other applications to build upon.

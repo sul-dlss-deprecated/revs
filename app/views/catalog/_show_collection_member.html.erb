@@ -124,7 +124,7 @@
                 %>
               <li>
                 <%= link_to("<i class='icon-edit'></i> <span data-leave-mode-text='#{t('revs.curator.leave_edit_mode')}' data-enter-mode-text='#{t('revs.curator.enter_edit_mode') }' id='edit-mode-text'>#{edit_mode_link_text}</span>".html_safe, '#', :id=>'edit_mode_link', :class=>"showOnLoad hidden-offscreen curator-action-link") %>
-                <span class="edit-mode-status label label-warning <%="hidden-offscreen" if session[:curator_edit_mode] != 'true'%>">Active</span>
+                <span class="edit-mode-status label label-warning <%="hidden-offscreen" if session[:curator_edit_mode] != 'true'%>"><%= t('revs.curator.active') %></span>
               </li>
             <% end %>
             <li id="item-priority-status">
@@ -134,7 +134,17 @@
         <% end %>
 
         <div class="license-image">
-          To re-use this image, please review the <%= link_to 'Image License Agreement','http://www.revsinstitute.org/Image%20License%20Agreement13.pdf'%> and <%=link_to 'contact the Revs Institute',contact_us_path(:subject=>'terms of use',:from=>request.path,:message=>"Request for image ID #{@document.identifier} at #{catalog_url(@document.id)}")%>.
+          <%= t('revs.contact.image_reuse_agreement',
+              :license_agreement_link => link_to(t('revs.contact.image_license_agreement'),
+              'http://www.revsinstitute.org/Image%20License%20Agreement13.pdf')).html_safe %>
+          <%= t('revs.contact.reuse_contact',
+              :reuse_contact_link => link_to(t('revs.contact.contact_linktext'),
+              contact_us_path(:subject=>'terms of use',
+                              :from=>request.path,
+                              :message=> t('revs.contact.reuse_contact_message',
+                                :reuse_contact_message_doc => @document.identifier,
+                                :reuse_contact_message_url => catalog_url(@document.id)
+              )))).html_safe %>.
         </div>
 
       </div>

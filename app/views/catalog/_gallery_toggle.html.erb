@@ -4,7 +4,6 @@
     <div class='gallery_toggle tabbable tabs-below'>
       <ul class="nav nav-pills">
         <li><%= link_to(t('revs.search.gallery_toggle.gallery'), catalog_index_path(params.merge(:view => nil)), :class=>"#{'active' if params[:view] == 'gallery' or params[:view].nil?}") %></li>
-        <!-- <li><%#= link_to(t('revs.search.gallery_toggle.list'), catalog_index_path(params.merge(:view => 'brief')), :class=>"#{'active'if params[:view] == 'brief'}") %></li> -->
         <li><%= link_to(t('revs.search.gallery_toggle.detailed'), catalog_index_path(params.merge(:view => 'detailed')), :class=>"#{'active'if params[:view] == 'detailed'}") %></li>
 
         <% if can? :curate, :all  %>

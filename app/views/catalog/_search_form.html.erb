@@ -5,6 +5,6 @@
     <label for="q" class="hide-text"><%= t('blacklight.search.form.q') %></label>
     <%= text_field_tag :q, params[:q], :placeholder => t('blacklight.search.form.q'), :class => "search_q q", :id => "q" %>
     <%= submit_tag(t('blacklight.search.form.q'), :class=>'hide') %>
-    <button type="submit" class="btn btn-small">Search</button>
+    <button type="submit" class="btn btn-small"><%= t('revs.search.search_label') %></button>
   <%- end -%>
 </div>
