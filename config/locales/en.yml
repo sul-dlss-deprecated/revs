@@ -203,7 +203,6 @@ en:
       label_production_notes: "Production Notes"
       label_metadata_sources: "Metadata Sources"
     user:
-      dashboard: 'User Dashboard'
       stanford_warning_html: '<strong>Important:</strong> Stanford users should not create a new account or enter their SUNET ID or passwords on this website.  %{webauth_link}'
       webauth_link_text: 'Login to webauth first'
       stanford_users_login_webauth_html: |
