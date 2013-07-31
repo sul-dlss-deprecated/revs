@@ -58,7 +58,7 @@
 
  					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'group_class',:label=>t('revs.show.label_group_class'),:editable=>true} %>
 
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'vehicle_markings',:label=>t('revs.show.label_vehicle_markings'),:editable=>true, :input_type=>'text_area'} %>
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'vehicle_markings',:label=>t('revs.show.label_vehicle_markings'),:simple_format=>true,:editable=>true, :input_type=>'text_area'} %>
 
           <%= render "/catalog/item_edit_errors" %>
 					<%= submit_tag t('revs.nav.save_changes'), class: 'btn btn-small' if in_curator_edit_mode %>
@@ -89,7 +89,7 @@
           
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'entrant',:label=>t('revs.show.label_entrant'),:editable=>true, :facet=>true} %>
          
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'race_data',:label=>t('revs.show.label_race_data'),:editable=>true} %>
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'race_data',:label=>t('revs.show.label_race_data'),:simple_format=>true,:editable=>true,:input_type=>'text_area'} %>
           
           <%= render "/catalog/item_edit_errors" %>
 					<%= submit_tag t('revs.nav.save_changes'), class: 'btn btn-small' if in_curator_edit_mode %>
@@ -114,11 +114,11 @@
 
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'formats',:label=>t('revs.show.label_formats'),:multivalued=>true,:editable=>true,:facet=>true, :input_type=>'text_area'} %>
 
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'institutional_notes',:label=>t('revs.show.label_institutional_notes'),:editable=>true, :input_type=>'text_area'} %>
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'institutional_notes',:label=>t('revs.show.label_institutional_notes'),:simple_format=>true,:editable=>true, :input_type=>'text_area'} %>
           
-					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'production_notes',:label=>t('revs.show.label_production_notes'),:editable=>true, :input_type=>'text_area'} %>       
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'production_notes',:label=>t('revs.show.label_production_notes'),:simple_format=>true,:editable=>true, :input_type=>'text_area'} %>       
 
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'metadata_sources',:label=>t('revs.show.label_metadata_sources'),:editable=>true, :input_type=>'text_area'} %>
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'metadata_sources',:label=>t('revs.show.label_metadata_sources'),:simple_format=>true,:editable=>true, :input_type=>'text_area'} %>
 
           <%= render "/catalog/item_edit_errors" %>
 					<%= submit_tag t('revs.nav.save_changes'), class: 'btn btn-small' if in_curator_edit_mode %>
