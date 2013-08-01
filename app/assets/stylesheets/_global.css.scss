@@ -229,6 +229,10 @@ span.content-type {
   margin-left: 6px;
 }
 
+.form-horizontal input + .help-block, .form-horizontal .help-block {
+  margin-top: 4px;
+}
+
 .badge {
   border-radius: 5px;
   padding: 1px 5px 2px;
