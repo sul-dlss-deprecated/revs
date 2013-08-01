@@ -78,8 +78,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
       
       # check the page for the correct messages
       current_path.should == item_page
-      page.should have_content('The item was flagged.')
-      page.should have_content("You #{ApplicationController.new.show_as_date(Date.today)}")
+      page.should have_content(I18n.t('revs.flags.created'))     
       page.should have_content(user_comment)
       page.should have_button(@remove_button)
       
@@ -103,10 +102,8 @@ describe("Flagging",:type=>:request,:integration=>true) do
       
       # check the page for the correct messages
       current_path.should == item_page
-      page.should have_content('The item was flagged.')
-      page.should have_content("You #{ApplicationController.new.show_as_date(Date.today)}")
+      page.should have_content(I18n.t('revs.flags.created'))
       page.should have_content(curator_comment)
-      page.should have_content("#{user.full_name} #{ApplicationController.new.show_as_date(Date.today)}")
       page.should have_content(user_comment)
       page.should have_button(@remove_button)
       
@@ -120,7 +117,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
            
       # remove and confirm deletion of the curator's flag in the database
       click_button @remove_button
-      page.should have_content('The flag was removed.')
+      page.should have_content(I18n.t('revs.flags.removed'))    
       Flag.count.should == initial_flag_count + 1
       Flag.last.user.should == user
            
