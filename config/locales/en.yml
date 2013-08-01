@@ -20,7 +20,10 @@ en:
       created: 'Created'
       switch_on: "On"
       switch_off: "Off"
+      never: "never"
       saved: 'Changes saved.'
+      switch_yes: "yes"
+      switch_no: "no"
       not_authorized: 'You are not authorized to perform this action.'
       validation_error: "The values you entered were not valid for the field you selected."
       bulk_update_instructions: "To apply a bulk update, select the field to update, enter a new value and select some items."
@@ -38,6 +41,7 @@ en:
       plural: 'Flags'
       none: 'This user does not have any flags.'
       you_can_flag_problems: 'You can flag problems you see with item metadata from the Item Details page.'
+      you: "You"
     nav:
       home: 'Home'
       collections: 'Collections'
@@ -87,11 +91,31 @@ en:
       stanford_create_warning: "Stanford users should not create a new account.  Login via webauth using your SunetID to access your account."
       stanford_email_warning1: "Your username cannot be a Stanford email address other than your own."
       stanford_email_warning2: "Your username cannot be a Stanford email address."
+      stanford_user: "Stanford user"
+      profile_page_is: "Profile page is"
+      users_username_public: "The user's username is publicly visible on the Revs site"
+      users_if_profile_public: "If the user's profile page is public, the user's first and last name entered below (instead of username) is used to identify the user on the site."
       sidebar:
         actions: 'Actions'
         account: 'Your account'
       user_not_found: 'The user was not found or their profile is not public.'
+      account_locked: |
+         Account is locked due to too many invalid login attempts.
+         Lock the account immediately by checking the box.
+         The user can unlock by verifying their email address or you can unlock by unchecking this box.
+      lock_account: "Lock account"
     admin:
+      administer_users: "Administer Users"
+      dashboard: "Administrator Dashboard"
+      your_account: "This is your account. To update your password, visit %{your_account_linktext}. You cannot update your own role."
+      waiting_confirmation_from_user: "Currently waiting confirmation from user of their email address"
+      search_by_email: "Search by email"
+      name: "Name"
+      stanford: "Stanford?"
+      role: "Role"
+      registered_on: "Registered on"
+      confirmed: "Confirmed?"
+      no_users_found: "No users were found with an email address of '%{with_email_address}'"
       sidebar:
         actions: 'Actions'
         administer_users: "Administer Users"
@@ -209,6 +233,7 @@ en:
       resend_confirmation: "Resend confirmation instructions"
       resend_unlock: "Resend unlock instructions"
       email_or_username: "your email address or username"
+      enter_email_address: "enter email address"
       your_email: "your email address"
       your_password: "your password"
       welcome: "Welcome"
@@ -245,6 +270,9 @@ en:
       profile_page_notice_html: |
         Your profile page includes your username, full name, bio, and website URL.
         It does <strong>not</strong> include your email address.
+      profile_page_notice_admin_html: |
+        The profile page includes username, full name, bio, and website URL.
+        It does <strong>not</strong> include email address.
       waiting_confirmation: "Currently waiting confirmation for"
       username_public_display: "username for public display"
       view_flagged_items: "View flagged items"
@@ -254,3 +282,5 @@ en:
       view_your_flags: "View your flags"
       view_all_flags: "View all flags"
       view_profile_page: "View your profile page"
+      edit_profile: "Edit Profile"
+      your_profile_page: "your profile page"

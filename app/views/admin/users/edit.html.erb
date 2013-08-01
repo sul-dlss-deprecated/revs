@@ -1,14 +1,13 @@
 <div id="content" class="span9 admin">
 
-  <h2>Edit Profile: <%=@user.email%></h2>
+  <h2><%= t('revs.user.edit_profile') %>: <%=@user.email%></h2>
 
   <% if current_user == @user %>
     <div class="notice">
       <p class="text-info">
-        This is your account.
-        To update your password, visit
-        <%= link_to 'your profile page', edit_user_registration_path(@user) %>.
-        You cannot update your own role.
+        <%= t('revs.admin.your_account',
+            :your_account_linktext => link_to(t('revs.user.your_profile_page'),
+              edit_user_registration_path(@user))).html_safe %>
       </p>
     </div>
   <% end %>
@@ -16,7 +15,7 @@
   <% if @user.confirmed_at.blank? || @user.pending_reconfirmation? %>
     <div class="notice">
       <p class="text-info">
-        Currently waiting confirmation from user of their email address.
+        <%= t('revs.user.waiting_confirmation_from_user') %>.
       </p>
     </div>
   <% end %>
@@ -28,15 +27,15 @@
     <div class="control-group">
       <div class="controls">
         Last sign in:
-        <%=@user.last_sign_in_at.blank? ? "never" : show_as_datetime(@user.last_sign_in_at.in_time_zone)%>
+        <%=@user.last_sign_in_at.blank? ? t('revs.messages.never') : show_as_datetime(@user.last_sign_in_at.in_time_zone)%>
       </div>
     </div>
 
     <div class="control-group">
-      <%= f.label :email, "Email Address", :class => 'control-label' %>
+      <%= f.label :email, t('revs.authentication.email'), :class => 'control-label' %>
       <div class="controls">
 			  <% if @user.sunet_user? %>
-					<%= @user.email %> (Stanford user)
+					<%= @user.email %> (<%= t('revs.authentication.stanford_user') %>)
 				<% else %>
         	<%= f.email_field :email, :size=>"80", :autofocus => true %>
 				<% end %>
@@ -49,12 +48,12 @@
         <%= f.text_field :username, :size=>"80" %>
 	      <span class="help-block first">
 	        <small>
-	          The user's username is publicly visible on the Revs site.
+	          <%= t('revs.authentication.users_username_public') %>.
 	        </small>
 	      </span>
 	      <span class="help-block first">
 	        <small>
-	          If the user's profile page is public, the user's first and last name entered below (instead of username) is used to identify the user on the site.
+            <%= t('revs.authentication.users_if_profile_public') %>
 	        </small>
 	      </span>
       </div>
@@ -75,32 +74,31 @@
     </div>
 
     <div class="control-group">
-      <%= f.label :public, "Profile page is", :class => 'control-label' %>
+      <%= f.label :public, t('revs.authentication.profile_page_is'), :class => 'control-label' %>
       <div class="controls">
         <label class="radio">
           <%= f.radio_button :public, true, :class => "radio" %>
-          Public
+          <%= t('revs.user.public') %>
         </label>
         <label class="radio">
           <%= f.radio_button :public, false, :class => "radio" %>
-          Private
+          <%= t('revs.user.private') %>
           <span class="inline-help-block">
             <small>
-              <%= link_to '(Preview)', user_profile_name_path(@user.username) unless @user.public %>
+              <%= link_to t('revs.user.preview').upcase, user_profile_name_path(@user.username) unless @user.public %>
             </small>
           </span>
         </label>
         <span class="help-block first">
           <small>
-            The profile page includes username, full name, bio, and website URL.
-            It does <strong>not</strong> include email address.
+            <%= t('revs.user.profile_page_notice_admin_html') %>
           </small>
         </span>
       </div>
     </div>
 
     <div class="control-group">
-      <%= f.label :url, 'Website URL', :class => 'control-label' %>
+      <%= f.label :url, t('revs.user.website_url'), :class => 'control-label' %>
       <div class="controls">
         <div class="input-prepend">
           <span class="add-on">http://</span>
@@ -110,7 +108,7 @@
     </div>
 
     <div class="control-group">
-      <%= f.label :bio,'Biography', :class => 'control-label' %>
+      <%= f.label :bio, t('revs.user.biography'), :class => 'control-label' %>
       <div class="controls">
         <%= f.text_area :bio, :rows => "5", :class => "input-xxlarge" %>
       </div>
@@ -131,7 +129,7 @@
 	          <%= f.password_field :password, :autocomplete => "off" %>
 	          <span class="help-block first">
 	            <small>
-	              Leave blank if you don't want to change it.
+	              <%= t('revs.user.leave_blank') %>.
 	            </small>
 	          </span>
 	        </div>
@@ -147,12 +145,10 @@
 	      <div class="control-group">
 	        <div class="controls">
 	          <%= check_box_tag :lock, true, !@user.locked_at.blank? %>
-	          <%= f.label :lock, "Lock account", :class => "checkbox inline" %>
+	          <%= f.label :lock, t('revs.authentication.lock_account'), :class => "checkbox inline" %>
 	          <span class="help-block first">
 	            <small>
-	              Account is locked due to too many invalid login attempts.
-	              Lock the account immediately by checking the box.
-	              The user can unlock by verifying their email address or you can unlock by unchecking this box.
+	              <%= t('revs.authentication.account_locked') %>
 	            </small>
 	          </span>
 	        </div>

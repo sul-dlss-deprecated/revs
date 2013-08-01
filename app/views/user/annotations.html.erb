@@ -8,7 +8,7 @@
       <tr>
         <th><%= link_to t('revs.collection_members.items_name').titleize, user_annotations_path(:id=>@id,:order=>'druid') %></th>
         <th><%=t('revs.annotations.singular')%></th>
-        <th><%= link_to 'Created', user_annotations_path(:id=>@id,:order=>'created_at') %></th>
+        <th><%= link_to t('revs.messages.created'), user_annotations_path(:id=>@id,:order=>'created_at') %></th>
       </tr>
       <% @annotations.each do |annotation|%>
        <tr>
