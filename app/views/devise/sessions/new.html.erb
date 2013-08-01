@@ -2,27 +2,37 @@
 
   <h2><%= t('revs.authentication.sign_in') %></h2>
 
-	<p><strong>Important:</strong> Stanford users should <%= link_to 'login via webauth', webauth_login_path(:referrer => session[:login_redirect])%>.</p>
+  <p>
+    <%= t('revs.user.stanford_users_login_webauth_html') %>
+    <%= link_to t('revs.user.login_webauth'), webauth_login_path(:referrer => session[:login_redirect])%>.
+  </p>
 
-  <%= form_tag({:controller=>'sessions', :action=>'create'}, :method=>'post', :id => 'new_user', :class => 'form-horizontal') do %>
+  <%= form_tag({:controller=>'sessions', :action=>'create'}, :method=>'post',
+      :id => 'new_user', :class => 'form-horizontal') do %>
 
     <div class="control-group">
-      <label class="control-label" for="user_login"><%= t('revs.authentication.login') %></label>
+      <label class="control-label" for="user_login">
+        <%= t('revs.authentication.login') %>
+      </label>
       <div class="controls">
-        <%= text_field_tag 'user[login]', @login, :autofocus => true, :class=>'user-login-email', :placeholder => "your email address or username" %>
-				<div id="stanford-user-warning" class="hidden notice">
-					<%= render :partial=>'/shared/stanford_webauth_reminder' %>
-				</div>
+        <%= text_field_tag 'user[login]', @login, :autofocus => true, :class=>'user-login-email',
+            :placeholder => "your email address or username" %>
+        <div id="stanford-user-warning" class="hidden notice">
+          <%= render :partial=>'/shared/stanford_webauth_reminder' %>
+        </div>
       </div>
     </div>
 
     <div class="control-group compact">
-      <label class="control-label" for="user_password"><%= t('revs.authentication.password') %></label>
+      <label class="control-label" for="user_password">
+        <%= t('revs.authentication.password') %>
+      </label>
       <div class="controls">
-        <%= password_field_tag 'user[password]', @password, :placeholder => "your password" %>
+        <%= password_field_tag 'user[password]', @password,
+            :placeholder => t('revs.user.your_password') %>
         <%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
           <div class="forgot-password">
-            <%= link_to "Forgot your password?", new_password_path(resource_name) %>
+            <%= link_to t('revs.user.forgot_password'), new_password_path(resource_name) %>
           </div>
         <% end -%>
       </div>
@@ -32,7 +42,8 @@
       <div class="control-group compact">
         <div class="controls">
           <label class="checkbox">
-            <%= check_box_tag 'user[remember_me]', @remember_me %> <%= t('revs.authentication.remember_me') %>
+            <%= check_box_tag 'user[remember_me]', @remember_me %>
+            <%= t('revs.authentication.remember_me') %>
           </label>
         </div>
       </div>
@@ -42,7 +53,7 @@
       <div class="controls">
         <%= submit_tag "#{t('revs.authentication.sign_in')}", :id=>'submit', :class => 'btn signin' %>
         <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-          <%= link_to t('revs.authentication.new_user'), new_registration_path(resource_name) %><br />
+          <%= link_to t('revs.authentication.new_user'), new_registration_path(resource_name) %>
         <% end -%>
       </div>
     </div>

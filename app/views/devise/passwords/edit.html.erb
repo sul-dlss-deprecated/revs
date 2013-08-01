@@ -1,20 +1,20 @@
 <div id="content" class="span9">
 
-  <h2>Change your password</h2>
+  <h2><%= t('revs.user.change_password') %></h2>
 
   <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put, :class => 'form-horizontal' }) do |f| %>
     <%= devise_error_messages! %>
     <%= f.hidden_field :reset_password_token %>
 
-    <div><%= f.label :password, "New password" %><br />
+    <div><%= f.label :password, t('revs.user.new_password') %><br />
     <%= f.password_field :password, :autofocus => true %></div>
 
-    <div><%= f.label :password_confirmation, "Confirm new password" %><br />
+    <div><%= f.label :password_confirmation, t('revs.user.new_password_confirm') %><br />
     <%= f.password_field :password_confirmation %></div>
 
     <div class="control-group">
       <div class="controls">
-        <%= f.submit "Change my password", :id=>'submit', :class => "btn" %>
+        <%= f.submit t('revs.user.change_password_linktext'), :id=>'submit', :class => "btn" %>
      </div>
     </div>
   <% end %>

@@ -1,21 +1,23 @@
 <div id="content" class="span9">
 
-  <h2>Change Your Email Address or Password</h2>
+  <h2><%= t('revs.user.change_email_or_password') %></h2>
 
   <%= form_for(resource, :as => resource_name, :url => update_user_account_path, :html => { :method => :put, :class => "form-horizontal" }) do |f| %>
     <%= devise_error_messages! %>
 
     <div class="control-group">
-      <%= f.label :email, "Email Address", :class => 'control-label' %>
+      <%= f.label :email, t('revs.user.email_address'), :class => 'control-label' %>
       <div class="controls">
         <%= f.email_field :email, :size=>"80", :class=>'user-login-email', :id=>'register-email' %>
-				<p id="duplicate-email-warning" class="hidden text-info">That email address is already registered.</p>				
+        <p id="duplicate-email-warning" class="hidden text-info">
+          <%= t('revs.user.email_address_already_registered') %>.
+        </p>
 
       </div>
     </div>
-		
+
     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-      <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <div><%= t('revs.user.waiting_confirmation') %>: <%= resource.unconfirmed_email %></div>
     <% end %>
 
     <div class="control-group">
@@ -24,7 +26,7 @@
         <%= f.password_field :password, :autocomplete => "off" %>
         <span class="help-block first">
           <small>
-            Leave blank if you don't want to change it.
+            <%= t('revs.user.leave_blank') %>.
           </small>
         </span>
       </div>
@@ -43,7 +45,7 @@
           <%= f.password_field :current_password %>
           <span class="help-block first">
             <small>
-              We need your current password to confirm your changes.
+              <%= t('revs.user.need_password') %>.
             </small>
           </span>
         </div>

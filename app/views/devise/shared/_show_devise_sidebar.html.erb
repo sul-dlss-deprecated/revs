@@ -4,15 +4,15 @@
       <li class="nav-header"><%= t('revs.authentication.sidebar.actions') %></li>
 
       <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
-        <li><%= link_to "Resend confirmation instructions", new_confirmation_path(resource_name) %></li>
+        <li><%= link_to t('revs.user.resend_confirmation'), new_confirmation_path(resource_name) %></li>
       <% end -%>
 
       <%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
-        <li><%= link_to "Resend unlock instructions", new_unlock_path(resource_name) %><li>
+        <li><%= link_to t('revs.user.resend_unlock'), new_unlock_path(resource_name) %><li>
       <% end -%>
 
 			<%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'sessions' %>
-			  <li><%= link_to "Forgot your password?", new_password_path(resource_name) %><li>
+			  <li><%= link_to t('revs.user.forgot_password'), new_password_path(resource_name) %><li>
 			<% end -%>
 			
     </ul>

@@ -94,6 +94,7 @@ en:
     admin:
       sidebar:
         actions: 'Actions'
+        administer_users: "Administer Users"
     curator:
       not_found: 'Item not found'
       sidebar:
@@ -181,11 +182,75 @@ en:
       dashboard: 'User Dashboard'
       stanford_warning_html: '<strong>Important:</strong> Stanford users should not create a new account or enter their SUNET ID or passwords on this website.  %{webauth_link}'
       webauth_link_text: 'Login to webauth first'
+      stanford_users_login_webauth_html: |
+        <strong>Important:</strong> Stanford users should
+      login_webauth: "login via webauth"
       sign_in: 'Sign in'
       sign_up: 'Sign up'
       sign_out: 'Sign out'
+      sign_in_with: "Sign in with %{provider}"
+      email_address: "Email Address"
+      email_address_already_registered: "That email address is already registered"
+      reset_password_if_forgot_linktext: "Reset your password"
+      reset_password_if_forgot: "%{reset_password_linktext} if you forgot it"
       change_password: 'Change your password'
+      change_email: 'Change your email address'
+      change_email_or_password: "Change Your Email Address or Password"
+      leave_blank: "Leave blank if you don't want to change it"
+      need_password: "We need your current password to confirm your changes"
+      new_password: "New password"
+      new_password_confirm: "Confirm new password"
+      forgot_password: "Forgot your password?"
+      send_password_instructions: "Send me reset password instructions"
       profile_page: 'Your Revs profile page'
       user_dashboard: 'User Dashboard'
       curator_dashboard: 'Curator Dashboard'
       admin_dashboard: 'Admin Dashboard'
+      resend_confirmation: "Resend confirmation instructions"
+      resend_unlock: "Resend unlock instructions"
+      email_or_username: "your email address or username"
+      your_email: "your email address"
+      your_password: "your password"
+      welcome: "Welcome"
+      hello: "Hello"
+      confirm_instructions: "You can confirm your account email through the link below"
+      confirm_linktext: "Confirm my account"
+      change_password_instructions: "Someone has requested a link to change your password. You can do this through the link below"
+      change_password_linktext: "Change my password"
+      change_password_post_instructions_html: |
+        <p>If you didn't request this, please ignore this email.</p>
+        <p>Your password won't change until you access the link above and create a new one.</p>
+      confirm_password: "confirm password"
+      didnt_receive_confirmation: "Didn't receive confirmation instructions?"
+      didnt_receive_unlock: "Didn't receive unlock instructions?"
+      set_password: "set password"
+      account_locked: "Your account has been locked due to an excessive number of unsuccessful sign in attempts"
+      account_locked_instructions: "Click the link below to unlock your account"
+      account_locked_linktext: "Unlock my account"
+      update_your_profile: "Update Your Profile"
+      username_taken: "Username is taken - please select a new one"
+      username_public: "Your username is publicly visible on the Revs site"
+      username_public_warning: "If you make your profile page public, your first and last name (instead of your username) is used to identify you on the site"
+      twitter_account: "Twitter account"
+      website_url: "Website URL"
+      biography: "Biography"
+      avatar: "Avatar"
+      remove_avatar: "Remove avatar"
+      public: "Public"
+      private: "Private"
+      preview: "Preview"
+      joined_on: "Joined on"
+      my_profile_page: "My profile page is"
+      profile_page: "Profile page"
+      profile_page_notice_html: |
+        Your profile page includes your username, full name, bio, and website URL.
+        It does <strong>not</strong> include your email address.
+      waiting_confirmation: "Currently waiting confirmation for"
+      username_public_display: "username for public display"
+      view_flagged_items: "View flagged items"
+      view_profile: "View profile"
+      view_all_annotations: "View all annotations"
+      view_your_annotations: "View your annotations"
+      view_your_flags: "View your flags"
+      view_all_flags: "View all flags"
+      view_profile_page: "View your profile page"
