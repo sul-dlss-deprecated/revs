@@ -1,6 +1,6 @@
 <div id="content" class="span9">
 
-  <h2>Update Your Profile</h2>
+  <h2><%= t('revs.user.update_your_profile') %></h2>
 
   <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :multipart => true, :class => "form-horizontal" }) do |f| %>
     <%= devise_error_messages! %>
@@ -9,20 +9,20 @@
       <%= f.label :username, :class => 'control-label' %>
       <div class="controls">
         <%= f.text_field :username, :size=>"80",:id=>'register-username' %>
-      	<p id="duplicate-username-warning" class="hidden text-info">Username is taken - please select a new one.</p>				
-	      <span class="help-block first">
-	        <small>
-	          Your username is publicly visible on the Revs site.
-	        </small>
-	      </span>
-	      <span class="help-block first">
-	        <small>
-	          If you make your profile page public, your first and last name (instead of your username) is used to identify you on the site.
-	        </small>
-	      </span>
+        <p id="duplicate-username-warning" class="hidden text-info"><%= t('revs.user.username_taken') %>.</p>
+        <span class="help-block first">
+          <small>
+            <%= t('revs.user.username_public') %>.
+          </small>
+        </span>
+        <span class="help-block first">
+          <small>
+            <%= t('revs.user.username_public_warning') %>.
+          </small>
+        </span>
       </div>
     </div>
-		
+
     <div class="control-group">
       <%= f.label :first_name, :class => 'control-label' %>
       <div class="controls">
@@ -38,7 +38,7 @@
     </div>
 
     <div class="control-group">
-      <%= f.label :twitter, 'Twitter account', :class => 'control-label' %>
+      <%= f.label :twitter, t('revs.user.twitter_account'), :class => 'control-label' %>
       <div class="controls">
         <div class="input-prepend">
           <span class="add-on">@</span>
@@ -48,7 +48,7 @@
     </div>
 
     <div class="control-group">
-      <%= f.label :url, 'Website URL', :class => 'control-label' %>
+      <%= f.label :url, t('revs.user.website_url'), :class => 'control-label' %>
       <div class="controls">
         <div class="input-prepend">
           <span class="add-on">http://</span>
@@ -58,19 +58,19 @@
     </div>
 
     <div class="control-group">
-      <%= f.label :bio,'Biography', :class => 'control-label' %>
+      <%= f.label :bio, t('revs.user.biography'), :class => 'control-label' %>
       <div class="controls">
         <%= f.text_area :bio, :rows => "5", :class => "input-xlarge" %>
       </div>
     </div>
 
     <div class="control-group">
-      <%= f.label :avatar, 'Avatar', :class => 'control-label' %>
+      <%= f.label :avatar, t('revs.user.avatar'), :class => 'control-label' %>
       <div class="controls avatar">
         <% if current_user.avatar.url.present? %>
           <%= image_tag(current_user.avatar.url(:thumb)) %>
           <%= f.label :remove_avatar, :class=> "checkbox inline" do %>
-            <%= f.check_box :remove_avatar %> Remove avatar
+            <%= f.check_box :remove_avatar %> <%= t('revs.user.remove_avatar') %>
           <% end %>
         <% else %>
           <%= image_tag('default-avatar.png') %>
@@ -81,32 +81,31 @@
     </div>
 
     <div class="control-group">
-      <%= f.label :public, "My profile page is", :class => 'control-label' %>
+      <%= f.label :public, t('revs.user.my_profile_page'), :class => 'control-label' %>
       <div class="controls">
         <label class="radio">
           <%= f.radio_button :public, true, :class => "radio" %>
-          Public
+          <%= t('revs.user.public') %>
         </label>
         <label class="radio">
           <%= f.radio_button :public, false, :class => "radio" %>
-          Private
+          <%= t('revs.user.private') %>
           <span class="inline-help-block">
             <small>
-              <%= link_to '(Preview)', user_profile_name_path(current_user.username) unless resource.public %>
+              <%= link_to "(#{t('revs.user.preview')})", user_profile_name_path(current_user.username) unless resource.public %>
             </small>
           </span>
         </label>
         <span class="help-block first">
           <small>
-            Your profile page includes your username, full name, bio, and website URL.
-            It does <strong>not</strong> include your email address.
+            <%= t('revs.user.profile_page_notice_html') %>
           </small>
         </span>
       </div>
     </div>
 
     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-      <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <div><%= t('revs.user.waiting_confirmation') %>: <%= resource.unconfirmed_email %></div>
     <% end %>
 
     <div class="control-group">

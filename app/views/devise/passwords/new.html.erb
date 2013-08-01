@@ -1,14 +1,16 @@
 <div id="content" class="span9">
 
-  <h2>Forgot your password?</h2>
+  <h2><%= t('revs.user.forgot_password') %></h2>
 
   <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post, :class => 'form-horizontal' }) do |f| %>
     <%= devise_error_messages! %>
 
     <div class="control-group">
-      <label class="control-label" for="user_login"><%= t('revs.authentication.login') %></label>
+      <label class="control-label" for="user_login">
+        <%= t('revs.authentication.login') %>
+      </label>
       <div class="controls">
-        <%= f.text_field :login, :autofocus => true, :placeholder => "your email address or username", :class=>'user-login-email' %>
+        <%= f.text_field :login, :autofocus => true, :placeholder => t('revs.user.email_or_username'), :class=>'user-login-email' %>
         <div id="stanford-user-warning" class="hidden notice">
           <%= render :partial=>'/shared/stanford_webauth_reminder' %>
         </div>
@@ -17,7 +19,7 @@
 
     <div class="control-group">
       <div class="controls">
-        <%= f.submit "Send me reset password instructions", :id=>'submit', :class => "btn" %>
+        <%= f.submit t('revs.user.send_password_instructions'), :id=>'submit', :class => "btn" %>
      </div>
     </div>
   <% end %>

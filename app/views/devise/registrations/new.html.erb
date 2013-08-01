@@ -2,40 +2,55 @@
 
   <h2><%= t('revs.authentication.new_account') %></h2>
 
-	
-  <%= form_tag({:controller=>'registrations', :action=>'create'}, :method=>'post', :id => 'new_user', :class => 'form-horizontal') do %>
+
+  <%= form_tag({:controller=>'registrations', :action=>'create'}, :method=>'post',
+      :id => 'new_user', :class => 'form-horizontal') do %>
     <%= devise_error_messages! %>
 
     <div class="control-group">
       <label class="control-label" for="user_email"><%= t('revs.authentication.email') %></label>
       <div class="controls">
-        <%= email_field_tag 'user[email]', @email, :autofocus => true, :tabindex => "1", :class=>'user-login-email', :id=>'register-email', :"data-trigger"=>"manual", :placeholder => "your email address" %>
-				<p id="duplicate-email-warning" class="hidden text-info">That email address is already registered. <%=link_to 'Reset your password',new_user_password_path%> if you forgot it.</p>				
-				<div id="stanford-user-warning" class="hidden notice">
-					<%= render :partial=>'/shared/stanford_webauth_reminder' %>
-				</div>
+        <%= email_field_tag 'user[email]', @email, :autofocus => true, :tabindex => "1",
+            :class=>'user-login-email', :id=>'register-email',
+            :"data-trigger"=>"manual", :placeholder => t('revs.user.your_email') %>
+        <p id="duplicate-email-warning" class="hidden text-info">
+          <%= t('revs.user.email_address_already_registered') %>.
+          <%= t('revs.user.reset_password_if_forgot',
+              :reset_password_linktext => link_to(t('revs.user.reset_password_if_forgot_linktext'), new_user_password_path)).html_safe %>.
+        </p>
+        <div id="stanford-user-warning" class="hidden notice">
+          <%= render :partial=>'/shared/stanford_webauth_reminder' %>
+        </div>
       </div>
     </div>
 
     <div class="control-group">
       <label class="control-label" for="user_username"><%= t('revs.authentication.username') %></label>
       <div class="controls">
-        <%= text_field_tag 'user[username]', @username, :autofocus => true, :tabindex => "2", :class=>'user-login-email', :id=>'register-username', :"data-trigger"=>"manual", :placeholder => "username for public display" %>
-      	<p id="duplicate-username-warning" class="hidden text-info">Username is taken - please select a new one. <%=link_to 'Reset your password',new_user_password_path%> if you forgot it.</p>				
-			</div>
+        <%= text_field_tag 'user[username]', @username, :autofocus => true, :tabindex => "2",
+            :class=>'user-login-email', :id=>'register-username',
+            :"data-trigger"=>"manual", :placeholder => t('revs.user.username_public_display') %>
+        <p id="duplicate-username-warning" class="hidden text-info">
+          <%= t('revs.user.username_taken') %>.
+          <%= t('revs.user.reset_password_if_forgot',
+              :reset_password_linktext => link_to(t('revs.user.reset_password_if_forgot_linktext'), new_user_password_path)).html_safe %>.
+        </p>
+      </div>
     </div>
 
     <div class="control-group">
       <label class="control-label" for="user_password"><%= t('revs.authentication.password') %></label>
       <div class="controls">
-        <%= password_field_tag 'user[password]', @password, :tabindex => "3", :placeholder => "set password" %>
+        <%= password_field_tag 'user[password]', @password, :tabindex => "3",
+            :placeholder => t('revs.user.set_password') %>
       </div>
     </div>
 
     <div class="control-group">
       <label class="control-label" for="user_password_confirmation"><%= t('revs.authentication.password_confirmation') %></label>
       <div class="controls">
-        <%= password_field_tag 'user[password_confirmation]', @password_confirmation, :tabindex => "4", :placeholder => "confirm password" %>
+        <%= password_field_tag 'user[password_confirmation]', @password_confirmation, :tabindex => "4",
+            :placeholder => t('revs.user.confirm_password') %>
       </div>
     </div>
 
@@ -48,8 +63,8 @@
               <%= t('revs.authentication.subscribe') %>
               <%= link_to( t('revs.revs_program'), 'http://revs.stanford.edu/') %>
               <%= t('revs.authentication.mailing_list') %>
-					</label>
-					<label class="checkbox" tabindex="7">
+          </label>
+          <label class="checkbox" tabindex="7">
             <%= check_box 'user', 'subscribe_to_revs_mailing_list' %>
               <%= t('revs.authentication.subscribe') %>
               <%= link_to( t('revs.revs_institute'), 'http://www.revsinstitute.org/') %>
