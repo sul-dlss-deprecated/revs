@@ -95,41 +95,24 @@ class SolrDocument
   def update_date_fields(field_name,new_value)
     case field_name.to_sym
       when :pub_year_isim # if the user has updated a multivalued year field, we need to blank out the full date, since its no longer valid, and set the single year field if we have one year
-        remove_field('pub_date_ssi')
-        send_delete_to_editstore('pub_date_ssi')
-        self['pub_date_ssi']=nil
+        immediate_remove('pub_date_ssi')
         if new_value.class == Array and new_value.size == 1
-          send_update_to_editstore(new_value,self['pub_year_single_isi'],'pub_year_single_isi')
-          update_solr('pub_year_single_isi','set',new_value)
-          self['pub_year_single_isi']=new_value
+          immediate_update('pub_year_single_isi',new_value)
         else
-          send_delete_to_editstore('pub_year_single_isi')
-          remove_field('pub_year_single_isi')
-          self['pub_year_single_isi']=nil
+          immediate_remove('pub_year_single_isi')
         end
       when :pub_year_single_isi  # if the user has updated a year field, we need to blank out the full date, since its no longer valid, and set the years field
-        remove_field('pub_date_ssi')
-        send_delete_to_editstore('pub_date_ssi')
-        update_solr('pub_year_isim','set',new_value)
-        self['pub_year_isim']=new_value
-        send_update_to_editstore(new_value,self['pub_year_isim'],'pub_year_isim')
+        immediate_remove('pub_date_ssi')
+        immediate_update('pub_year_isim',new_value)
       when :pub_date_ssi # if the user has updated a date field, we need to set the years appropriately
         new_value=new_value.first if new_value.class == Array
         full_date=get_full_date(new_value)
         if full_date # if it's a valid full date, extract the year into the single and multi-valued year fields
-          send_update_to_editstore(full_date.year.to_s,self['pub_year_single_isi'],'pub_year_single_isi')
-          send_update_to_editstore(full_date.year.to_s,self['pub_year_isim'],'pub_year_isim')
-          update_solr('pub_year_isim','set',full_date.year.to_s)
-          update_solr('pub_year_single_isi','set',full_date.year.to_s)
-          self['pub_year_single_isi']=full_date.year.to_s
-          self['pub_year_isim']=full_date.year.to_s
+          immediate_update('pub_year_single_isi',full_date.year.to_s)
+          immediate_update('pub_year_isim',full_date.year.to_s)
         else # if it's not a valid date, clear the year fields
-          remove_field('pub_year_isim')
-          remove_field('pub_date_single_isi')
-          send_delete_to_editstore('pub_year_isim')
-          send_delete_to_editstore('pub_date_single_isi')
-          self['pub_year_single_isi']=nil
-          self['pub_year_isim']=nil
+          immediate_remove('pub_year_isim')
+          immediate_remove('pub_date_single_isi')
         end
     end    
   end

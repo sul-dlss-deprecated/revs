@@ -148,6 +148,20 @@ module ActivesolrHelper
     
   end
   
+  # updates the field in solr, editstore and in the object itself (useful in a callback method where you don't want to wait for saving or re-trigger callbacks)
+  def immediate_update(field_name,new_value)
+    send_update_to_editstore(new_value,self[field_name],field_name)
+    update_solr(field_name,'set',new_value)
+    self[field_name]=new_value
+  end
+
+  # removes the field in solr, editstore and in the object itself (useful in a callback method where you don't want to wait for saving or re-trigger callbacks)
+  def immediate_remove(field_name)
+    remove_field(field_name)
+    send_delete_to_editstore(field_name)
+    self[field_name]=nil
+  end
+  
   def send_update_to_editstore(new_value,old_value,solr_field_name,note='')
     Editstore::Change.create(:new_value=>new_value.to_s.strip,:old_value=>old_value,:operation=>:update,:state_id=>Editstore::State.ready.id,:field=>solr_field_name,:druid=>self.id,:client_note=>note)
   end
