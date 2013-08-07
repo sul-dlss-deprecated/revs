@@ -16,9 +16,6 @@ gem 'devise', '~> 2.2.5'
 gem 'omniauth'
 gem 'cancan'
 
-# used when saving changes back to solr
-gem 'countries'
-
 # image (user avatar) uploading
 gem 'carrierwave'
 gem "mini_magick"
@@ -46,7 +43,7 @@ end
 
 group :test do
   gem 'rspec-rails'
-  gem 'capybara'
+  gem 'capybara', '~> 1.0'
 end
 
 group :development do

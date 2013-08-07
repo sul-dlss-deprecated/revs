@@ -7,8 +7,6 @@ class SolrDocument
   extend ActivesolrHelper::ClassMethods
   
   include DateHelper
-  
-  include ModsHelper
         
   # Email uses the semantic field mappings below to generate the body of an email.
   SolrDocument.use_extension( Blacklight::Solr::Document::Email )
@@ -58,7 +56,6 @@ class SolrDocument
       :full_date=>{:field=>'pub_date_ssi'},
       :people=>{:field=>'people_ssim'},
       :subjects=>{:field=>'subjects_ssim'},
-      :location=>{:field=>'location_ssi',:editstore=>false},
       :city_section=>{:field=>'city_sections_ssi'},
       :city=>{:field=>'cities_ssi'},
       :state=>{:field=>'states_ssi'},
@@ -95,25 +92,12 @@ class SolrDocument
       :pub_date_ssi=>:update_date_fields,
       :pub_year_isim=>:update_date_fields,
       :pub_year_single_isi=>:update_date_fields,
-      :location_ssi=>:update_location_fields
     }
   end
   
-  # if the user updates the full location string, we need to reparse into cities/states/countries so we get those separate fields in solr
-  # for correct parsing, incoming address must be Street | City (State) | Country
-  def update_location_fields(field_name,new_value)
-     #      new_value.first.split('|').each do |location| 
-     #     country_value=revs_get_country(location.strip) 
-     #         city_state_value=revs_get_city_state(location.strip)
-     #          if country_value
-     #        self.country=country_value
-     #         elsif city_state_value 
-     #            self.state=revs_get_state_name(city_state_value[1].strip)
-     #            self.city=city_state_value[0].strip
-     #         else 
-     #            self.city_section=location.strip
-     #         end 
-     # end 
+  # a helper that makes it easy to show the user's location
+  def location
+    [city_section,city,state,country].reject(&:blank?).join(', ')
   end
   
   # if the user updates one of the date fields, we'll run some computations to update the others as needed

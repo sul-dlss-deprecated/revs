@@ -49,6 +49,9 @@ Revs::Application.routes.draw do
   # term acceptance dialog
   match 'accept_terms', :to=> 'application#accept_terms', :as=> 'accept_terms', :via=>:post
   
+  # bulk metadata editing
+  post 'catalog', :to=>'catalog#index', :as=>'bulk_edit'
+  
   resources :annotations do
     collection do
       get 'for_image/:id', :to => 'annotations#index_by_druid'
