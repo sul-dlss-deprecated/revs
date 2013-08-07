@@ -12,7 +12,7 @@ gem 'rails', '>= 3.2.11'
 gem 'google-analytics-rails'
 
 # user authentication and roles
-gem 'devise'
+gem 'devise', '~> 2.2.5'
 gem 'omniauth'
 gem 'cancan'
 
