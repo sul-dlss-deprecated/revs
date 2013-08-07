@@ -6,7 +6,9 @@ class SolrDocument
   include ActivesolrHelper
   extend ActivesolrHelper::ClassMethods
   
-  include DateHelpers
+  include DateHelper
+  
+  include ModsHelper
         
   # Email uses the semantic field mappings below to generate the body of an email.
   SolrDocument.use_extension( Blacklight::Solr::Document::Email )
@@ -41,6 +43,8 @@ class SolrDocument
   # The methods below need to be set to use Activesolr                             
   # a hash of attribute names to solr document field names, used by Activesolr to create automatic setters and getters
   # attributes in lowercase symbols; set to a hash with :field denothing the solr field name, and the optional :default denoting the value to set if solr field is blank
+  #  set :editstore to false if you don't want the change to propogate to DOR in any scenario
+  
   def self.use_editstore
     true # set to true to propogate changes to editstore when the .save method is called
   end
@@ -54,7 +58,11 @@ class SolrDocument
       :full_date=>{:field=>'pub_date_ssi'},
       :people=>{:field=>'people_ssim'},
       :subjects=>{:field=>'subjects_ssim'},
-      :location=>{:field=>'location_ssi'},
+      :location=>{:field=>'location_ssi',:editstore=>false},
+      :city_section=>{:field=>'city_sections_ssi'},
+      :city=>{:field=>'cities_ssi'},
+      :state=>{:field=>'states_ssi'},
+      :country=>{:field=>'countries_ssi'},
       :formats=>{:field=>'format_ssim'},
       :identifier=>{:field=>'source_id_ssi'},
       :production_notes=>{:field=>'prod_notes_tsi'},
@@ -72,7 +80,7 @@ class SolrDocument
       :event=>{:field=>'event_ssi'},
       :group_class=>{:field=>'group_class_tsi'},
       :race_data=>{:field=>'race_data_tsi'},
-      :priority=>{:field=>'priority_isi',:default=>0},
+      :priority=>{:field=>'priority_isi',:default=>0,:editstore=>false},
       :collections=>{:field=>'is_member_of_ssim'},
       :collection_names=>{:field=>'collection_ssim'},
       }  
@@ -86,8 +94,26 @@ class SolrDocument
     {
       :pub_date_ssi=>:update_date_fields,
       :pub_year_isim=>:update_date_fields,
-      :pub_year_single_isi=>:update_date_fields
+      :pub_year_single_isi=>:update_date_fields,
+      :location_ssi=>:update_location_fields
     }
+  end
+  
+  # if the user updates the full location string, we need to reparse into cities/states/countries so we get those separate fields in solr
+  # for correct parsing, incoming address must be Street | City (State) | Country
+  def update_location_fields(field_name,new_value)
+     #      new_value.first.split('|').each do |location| 
+     #     country_value=revs_get_country(location.strip) 
+     #         city_state_value=revs_get_city_state(location.strip)
+     #          if country_value
+     #        self.country=country_value
+     #         elsif city_state_value 
+     #            self.state=revs_get_state_name(city_state_value[1].strip)
+     #            self.city=city_state_value[0].strip
+     #         else 
+     #            self.city_section=location.strip
+     #         end 
+     # end 
   end
   
   # if the user updates one of the date fields, we'll run some computations to update the others as needed

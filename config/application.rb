@@ -76,3 +76,7 @@ module Revs
 end
 
 EDITSTORE_PROJECT='revs'  # the name of your project in the editstore database -- this must exist in the edistore database "projects" table in both production and development to work properly
+
+REVS_LC_TERMS_FILENAME=File.join(Rails.root,'lib','revs-lc-marque-terms.obj')
+
+

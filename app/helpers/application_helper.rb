@@ -1,6 +1,6 @@
 module ApplicationHelper
 
-  include DateHelpers
+  include DateHelper
   
   def validation_errors(obj)
 

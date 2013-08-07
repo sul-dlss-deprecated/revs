@@ -56,11 +56,9 @@ module ActivesolrHelper
   end
 
 
-  # you should redefine this method if you want to perform validations, if your method returns false, you should also set the @errors with a list of errors to display... setting false will NOT update solr
+  # you should redefine this method in your own model class if you want to perform validations, if your method returns false, you should also set the @errors with a list of errors to display... setting false will NOT update solr
   def valid?
-    
     true
-    
   end
 
   # create the automatic getters/setters based on the configured fields
@@ -108,8 +106,11 @@ module ActivesolrHelper
         self.class.blank_value?(value) ? remove_field(solr_field_name) : set_field(solr_field_name,value) # update remote solr document
         self[solr_field_name]=value # update the local solr document
         
+        # get the solr field configuration for this field
+        solr_field_config=self.class.field_mappings.collect{|key,value| value if value[:field]==solr_field_name.to_s}.reject(&:blank?).first
+                
         # update Editstore database too if needed
-        if self.class.use_editstore
+        if self.class.use_editstore && (solr_field_config[:editstore].nil? || solr_field_config[:editstore] == true)
                     
           if self.class.blank_value?(value) && !self.class.blank_value?(old_values) # the new value is blank, and the previous value exists, so send a delete operation
           

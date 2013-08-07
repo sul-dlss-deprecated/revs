@@ -1,4 +1,4 @@
-module DateHelpers
+module DateHelper
     
   def show_as_date(datetime)
     datetime.blank? ? "" : date_object(datetime).strftime('%B %e, %Y')  

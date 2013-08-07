@@ -187,6 +187,27 @@ describe ActivesolrHelper, :integration => true do
       
     end
 
+    it "should save an update to a single value field, and propogage to solr but not to editstore database if not configured to do that" do
+      
+      # the location field is configured to not propogate to editstore
+      
+      Editstore::Change.count.should == 0
+    
+      new_value='560 Escondido Road, Palo Alto, CA 94305' 
+      old_value=@doc.location
+      @doc.location.should_not == new_value # update the title
+      @doc.location=new_value
+      @doc.save
+
+      # refetch doc from solr and confirm new value was saved
+      reload_doc = SolrDocument.find(@druid)
+      reload_doc.location.should == new_value
+      
+       # confirm we don't have a new change in the database
+      Editstore::Change.count.should == 0
+      
+    end
+
     it "should save an update to a single value field with special odd characters, and propogage to solr and editstore databases" do
       
       Editstore::Change.count.should == 0
