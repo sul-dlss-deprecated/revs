@@ -95,7 +95,7 @@ class SolrDocument
     }
   end
   
-  # a helper that makes it easy to show the user's location
+  # a helper that makes it easy to show the document location as a single string
   def location
     [city_section,city,state,country].reject(&:blank?).join(', ')
   end

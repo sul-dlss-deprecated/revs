@@ -20,7 +20,10 @@
   <field name="venue_ssi">Indy 500 Speedway</field>
   <field name="track_ssi">The racetrack</field>
   <field name="event_ssi">Indy Race</field>
-  <field name="location_ssi">Indianapolis, IN, USA</field>
+  <field name="cities_ssi">Indianapolis</field>
+  <field name="countries_ssi">USA</field>
+  <field name="states_ssi">IN</field>
+  <field name="city_sections_ssi">Indy Racetrack</field>
   <field name="has_more_metadata_ssi">yes</field>
   <field name="inst_notes_tsi">Institution notes</field>
   <field name="prod_notes_tsi">Production notes</field>

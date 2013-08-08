@@ -69,7 +69,10 @@
 				venue_ssi
 				track_ssi
 				event_ssi
-				location_ssi
+				city_sections_ssi
+				cities_ssi
+				countries_ssi
+				states_ssi
 				group_class_tsi
 				photographer_ssi
 				model_ssim
