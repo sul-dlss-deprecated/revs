@@ -32,10 +32,10 @@ module ActivesolrHelper
      # attempts to determine if two values (i.e. old and new) are actually the same, by converting to arrays, and then ensuring everything is a string, and then comparing
      def is_equal?(old_values,new_values,multivalued_field=false)
        new_values_split = (multivalued_field && new_values.class != Array && !new_values.blank?) ? new_values.to_s.split("|") : new_values # if the user has indicated the first value is coming a special multivalued field entered as a single value, let's split along the delimiter
-       compare_values1=self.to_array(old_values).collect{|val| val.to_s.strip}.delete_if(&:blank?).sort
-       compare_values2=self.to_array(new_values_split).collect{|val| val.to_s.strip}.delete_if(&:blank?).sort
+       compare_values1=self.to_array(old_values).collect{|val| val.to_s.strip.gsub(/\r\n?/, "\n")}.delete_if(&:blank?).sort
+       compare_values2=self.to_array(new_values_split).collect{|val| val.to_s.strip.gsub(/\r\n?/, "\n")}.delete_if(&:blank?).sort
        compare_values1 == compare_values2
-     end
+      end
      
   end
   
