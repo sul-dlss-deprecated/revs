@@ -80,6 +80,7 @@ namespace :db do
   end  
   task :symlink_sqlite do
     run "ln -s #{shared_path}/#{rails_env}.sqlite3 #{release_path}/db/#{rails_env}.sqlite3"
+    run "ln -s #{shared_path}/editstore_#{rails_env}.sqlite3 #{release_path}/db/editstore_#{rails_env}.sqlite3"
   end  
 end
 

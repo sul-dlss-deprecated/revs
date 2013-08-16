@@ -227,6 +227,7 @@ describe ActivesolrHelper, :integration => true do
       Editstore::Change.count.should == 1
 
     end
+    
     it "should save a new entry to a single value field, and propogage to solr and editstore databases" do
       
       Editstore::Change.count.should == 0
