@@ -96,7 +96,7 @@ module ActivesolrHelper
   end
 
   # iterate through all cached unsaved edits and update solr
-  def save
+  def save(user=nil)
     
     if valid?
       

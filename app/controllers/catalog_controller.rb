@@ -39,7 +39,7 @@ class CatalogController < ApplicationController
       if @bulk_edit[:attribute].blank? || @bulk_edit[:new_value].blank? || @bulk_edit[:selected_druids].blank?
         flash.now[:error]=t('revs.messages.bulk_update_instructions')
       else
-        success=SolrDocument.bulk_update(@bulk_edit)
+        success=SolrDocument.bulk_update(@bulk_edit,current_user)
         if success
           flash.now[:notice]=t('revs.messages.saved')
         else

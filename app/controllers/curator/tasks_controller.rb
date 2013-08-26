@@ -20,7 +20,7 @@ class Curator::TasksController < ApplicationController
       @document=SolrDocument.find(params[:id])
       updates=params[:document]
       updates.each {|field,value| @document.send("#{field}=",value)}
-      if @document.save
+      if @document.save(current_user)
         flash[:success] = t('revs.messages.saved')
       else  
         @message = "#{@document.errors.join(', ')}."

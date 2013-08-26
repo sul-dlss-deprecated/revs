@@ -26,6 +26,8 @@ class User < ActiveRecord::Base
   
   has_many :annotations, :dependent => :destroy
   has_many :flags, :dependent => :destroy
+  has_many :change_logs, :dependent => :destroy
+  
   before_validation :assign_default_role, :if=>lambda{no_role?}
   before_save :trim_names
   after_create :signup_for_mailing_list, :if=>lambda{subscribe_to_mailing_list=='1'}

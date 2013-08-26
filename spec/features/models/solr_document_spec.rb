@@ -50,6 +50,8 @@ describe SolrDocument, :integration => true do
     
     it "should apply bulk updates to solr and editstore when update method is called directly" do
 
+      user=User.last
+      
       druids_to_edit=%w{nn572km4370 kn529wc4372}
       new_value='newbie!'
       field_to_edit='title'
@@ -61,10 +63,11 @@ describe SolrDocument, :integration => true do
         doc.title.should_not == new_value
         old_values[druid] =  doc.title # store old values in hash so we can use it later in the test when checking the editstore database
         Editstore::Change.where(:new_value=>new_value,:old_value=>doc.title,:druid=>druid).size.should == 0
+        ChangeLog.where(:druid=>druid,:operation=>'metadata update',:user_id=>user.id).size.should == 0
       end
       
       params_hash={:attribute=>field_to_edit, :new_value=>new_value,:selected_druids=>druids_to_edit}
-      success=SolrDocument.bulk_update(params_hash)
+      success=SolrDocument.bulk_update(params_hash,user)
       success.should be_true
       
       # confirm new field has been updated in solr and has correct rows in editstore database
@@ -72,6 +75,7 @@ describe SolrDocument, :integration => true do
         doc=SolrDocument.find(druid)
         doc.title.should == new_value
         Editstore::Change.where(:new_value=>new_value,:old_value=>old_values[druid],:druid=>druid).size.should == 1
+        ChangeLog.where(:druid=>druid,:operation=>'metadata update',:user_id=>user.id).size.should == 1
       end
       
       # reindex solr docs we changed back to their original values
@@ -87,13 +91,19 @@ describe SolrDocument, :integration => true do
       
       it "should automatically set the year field and single year solr field when a full date is set" do
         druid='zp006sp7532'
+
+        user=User.last
+        ChangeLog.where(:druid=>druid,:operation=>'metadata update',:user_id=>user.id).size.should == 0
+       
         doc=SolrDocument.find(druid)
         doc.years.should == [1969] # current year value
         doc[:pub_year_single_isi].should == 1969 # check the solr fields        
         doc.full_date.should == '' # current full date value
         doc.full_date='5/6/1999' # set a new full date
         doc.years.should == [1969] # year hasn't be set yet, since we haven't saved
-        doc.save # now let's save it
+        doc.save(user) # now let's save it
+        
+        ChangeLog.where(:druid=>druid,:operation=>'metadata update',:user_id=>user.id).size.should == 1
         
         reload_doc=SolrDocument.find(druid)
         reload_doc.years.should == [1999] # year has now been updated

@@ -311,7 +311,18 @@ class SolrDocument
                :large   => "_thumb" }
   end
 
-  def self.bulk_update(params) # apply update to the supplied field with the supplied value to the specified list of druids; returns false if something didn't work
+  # store the change log info before going to the ActiveSolr save method to perform the saves and editstore updates
+  def save(user=nil)
+    
+    if valid? && user
+      ChangeLog.create(:druid=>id,:user_id=>user.id,:operation=>'metadata update',:note=>unsaved_edits.to_s)
+    end
+    
+    super
+    
+  end
+  
+  def self.bulk_update(params,user) # apply update to the supplied field with the supplied value to the specified list of druids; returns false if something didn't work
     
     selected_druids=params[:selected_druids]
     attribute=params[:attribute]
@@ -325,7 +336,7 @@ class SolrDocument
       item=self.find(druid) # load item
       if !item.blank?
         item.send("#{attribute}=",new_value) # this sets the attribute
-        valid = item.save # if true, we have successfully updated solr
+        valid = item.save(user) # if true, we have successfully updated solr
       end
       break unless valid # stop if any item is not valid
       
