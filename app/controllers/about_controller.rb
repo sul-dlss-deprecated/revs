@@ -1,5 +1,7 @@
 class AboutController < ApplicationController 
 
+  before_filter :authorize
+  
   # To create a new about page, create a partial with the URL name you want containing the actul page content
   # If your action has logic that needs to be run before the view, create a method, call "show" at the end of it, create a view partical o match,
   # and add a custom route in the routes.rb file    
@@ -47,5 +49,10 @@ class AboutController < ApplicationController
     @no_nav=(@page_name=='terms_dialog' ? true : false)
     render :show
   end
-    
+
+  protected
+  def authorize
+    not_authorized unless can? :read,:about_pages
+  end
+
 end

@@ -72,3 +72,4 @@ Revs::Application.config.simulate_sunet_user = "" # SET TO BLANK OR FALSE IN PRO
 Revs::Application.config.purl_plugin_server = "prod"
 Revs::Application.config.purl = "//purl.stanford.edu"
 Revs::Application.config.purl_plugin_location = "//image-viewer.stanford.edu/javascripts/purl_embed_jquery_plugin.js"
+Revs::Application.config.restricted_beta = true # if set to true, then only beta users (and sunet users) can view the site

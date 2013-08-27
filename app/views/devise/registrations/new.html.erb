@@ -2,7 +2,10 @@
 
   <h2><%= t('revs.authentication.new_account') %></h2>
 
-
+  <% if Revs::Application.config.restricted_beta %>
+    <h3><%=t('revs.messages.in_beta_not_authorized_html')%></h3>
+  <% end %>
+    
   <%= form_tag({:controller=>'registrations', :action=>'create'}, :method=>'post',
       :id => 'new_user', :class => 'form-horizontal') do %>
     <%= devise_error_messages! %>

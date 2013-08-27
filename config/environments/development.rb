@@ -41,7 +41,8 @@ Revs::Application.configure do
   config.assets.debug = true
 end
 
-Revs::Application.config.simulate_sunet_user = false # if set to anything but false, then this will simulate you being logged in as a sunet user of this name # DONT DO THIS IN PRODUCTION
+Revs::Application.config.simulate_sunet_user = "sunetuser" # if set to anything but false, then this will simulate you being logged in as a sunet user of this name # DONT DO THIS IN PRODUCTION
 Revs::Application.config.purl_plugin_server = "prod"
 Revs::Application.config.purl_plugin_location = "//image-viewer.stanford.edu/javascripts/purl_embed_jquery_plugin.js"
 Revs::Application.config.purl = "//purl.stanford.edu"
+Revs::Application.config.restricted_beta = false # if set to true, then only beta users (and sunet users) can view the site

@@ -55,6 +55,10 @@ def admin_login
   'admin1'
 end
 
+def beta_login
+  'beta1'
+end
+
 def login_pw
   'password'
 end

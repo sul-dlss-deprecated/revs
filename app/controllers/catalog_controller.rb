@@ -20,7 +20,9 @@ class CatalogController < ApplicationController
     not_authorized if params[:view]=='curator' && !can?(:bulk_update_metadata,:all)
     
     if on_home_page # on the home page
-          
+        
+      not_authorized unless can? :read,:home_page
+      
       unless fragment_exist?('home') # fragment cache for performance
 
         @highlight_collections=CollectionHighlight.all_in_solr
@@ -34,6 +36,8 @@ class CatalogController < ApplicationController
     
     elsif can?(:bulk_update_metadata,:all) && params[:bulk_edit] && request.post? # user submitted a bulk update operation and has the rights to do it
 
+      not_authorized unless can?(:bulk_update_metadata,:all)
+      
       @bulk_edit=params[:bulk_edit]
             
       if @bulk_edit[:attribute].blank? || @bulk_edit[:new_value].blank? || @bulk_edit[:selected_druids].blank?
@@ -46,7 +50,11 @@ class CatalogController < ApplicationController
           flash.now[:error]=t('revs.messages.validation_error')
         end
       end
+
+    else
       
+       not_authorized unless can? :read,:search_pages
+ 
     end
     
     super
@@ -57,6 +65,8 @@ class CatalogController < ApplicationController
   end
   
   def show
+    
+    not_authorized unless can? :read,:item_pages
     
     super
     

@@ -81,9 +81,10 @@ class ApplicationController < ActionController::Base
   def not_authorized(additional_message=nil)
     
     message=t('revs.messages.not_authorized')
-    message+=additional_message unless additional_message.blank?
+    message+=" " + additional_message unless additional_message.blank?
+    message+=" " + t('revs.messages.in_beta_not_authorized_html') if Revs::Application.config.restricted_beta
     respond_to do |format|
-      format.html { redirect_to :root, :alert=>message}
+      format.html { redirect_to :root, :alert=>message.html_safe}
       format.xml  { render :xml => message, :status=>401 }
       format.json { render :json => {:message=>"^#{message}"}, :status=>401}
     end

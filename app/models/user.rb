@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 
   # user abilities and permissions are defined in the ability.rb class == if you add or change names here, you will need both
   #  update the ability class, and update the strings stored in the user "role" column
-  ROLES=%w{admin curator user}
+  ROLES=%w{admin curator beta user}
   DEFAULT_ROLE='user' # the default role that any logged in user will have
   
   # Include default devise modules. Others available are:
@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
   validates :username, :format => { :with => /\A\D.+/,:message => "must start with a letter" }
   include Blacklight::User
 
-  delegate :can?, :cannot?, :to => :ability
+  delegate :can?, :cannot?, :to => :ability # this saves us some typing so we can ask user.can? instead of user.ability.can?
   
   def self.roles
     ROLES

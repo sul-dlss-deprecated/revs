@@ -17,43 +17,115 @@ class Ability
     
     user ||= User.new # non-logged in user
 
-    send("#{user.role.downcase}_actions",user) unless user.no_role?
+    send("#{user.role.downcase}_actions",user) unless user.no_role? # this lets us define abilities by creating methods called "ROLENAME_actions"
 
-    guest_actions(user)
+    guest_actions
+    
+    beta_actions(user) if user.sunet_user?  # sunet users are automatically included in the beta
             
   end
   
+  # roles defintions (ROLENAME_actions)
+
   # unlogged in users
-  def guest_actions(user)
-    # any user of the website (even those not logged in) can perform these actions
-    can :read, [Annotation,Flag]
-    can :index_by_druid, [Annotation, Flag]
+  def guest_actions
+    can_act_as_guest_user
   end
-  
-   # administrator can enter admin area and curator area and can peform all user actions
-  def admin_actions(user)
-    curator_actions(user)
-    can :administer, :all
-  end
-  
-  # curator role can enter curator area and can perform all user actions
-  def curator_actions(user)
-    user_actions(user)
-    can :curate, :all
-    can :bulk_update_metadata, :all
-    can :update_metadata, :all
-  end
-  
+
   # logged in user
   def user_actions(user)
-    can [:update,:destroy], [Annotation,Flag], :user_id => user.id # can update and destroy their own annotations and flags
-    can :create, Annotation # can create new annotations
-    can :create, Flag # can create new flags
-    can :add_new_flag_to, SolrDocument do |doc|
-        doc.flags.where(:user_id=>user.id).count < Revs::Application.config.num_flags_per_item_per_user
-    end # can only add new flags to a solr document with less than a certain number of flags for any given user
-    
+    can_act_as_guest_user # can do anything a guest can
+    can_act_as_logged_in_user(user) unless Revs::Application.config.restricted_beta # also have logged in privileges if we are not in beta
+  end
+        
+   # logged in beta user, gets logged in user actions
+  def beta_actions(user)
+    can_act_as_guest_user
+    can_act_as_logged_in_user(user)
   end
   
+  # curator role can do anything a logged in user can + curate and update metadata
+  def curator_actions(user)
+    can_act_as_guest_user
+    can_act_as_logged_in_user(user)
+    can_curate
+    can_update_metadata
+  end  
+  
+   # administrator can do anything a logged in user can, a curator can, as well as adminster
+  def admin_actions(user)
+    can_act_as_guest_user
+    can_act_as_logged_in_user(user)
+    can_curate
+    can_update_metadata
+    can_administer
+  end
+  
+  # defined abilities
+  private
+  def can_act_as_guest_user
+    # any user of the website (even those not logged in) can perform these actions
+    can_view_about_pages # anyone can see the about and home page no matter what
+    unless Revs::Application.config.restricted_beta # if we are in private beta, guests can do nothing else, otherwise they can view items and read annotations and flags
+      can_view_items
+      can_read_annotations
+      can_read_flags
+    end
+  end
+  
+  def can_act_as_logged_in_user(user)
+    can_view_about_pages
+    can_view_items
+    can_read_annotations
+    can_read_flags
+    can_annotate(user)
+    can_flag(user)
+  end
+  
+  def can_view_about_pages
+    can :read, [:home_page,:about_pages]
+  end
+
+  def can_view_items
+    can :read,:collections_page
+    can :read,:item_pages
+    can :read,:search_pages   
+  end
+  
+  def can_read_annotations
+    can :read, Annotation    
+    can :index_by_druid, Annotation 
+  end
+  
+  def can_read_flags
+    can :read, Flag    
+    can :index_by_druid, Flag    
+  end
+  
+  def can_annotate(user)
+    can :create, Annotation # can create new annotations
+    can [:update,:destroy], Annotation, :user_id => user.id # can update and destroy their own annotations and flags
+  end
+
+  def can_flag(user)
+    can :create, Flag # can create new flags
+    can [:update,:destroy], Flag, :user_id => user.id # can update and destroy their own annotations and flags
+    can :add_new_flag_to, SolrDocument do |doc|
+         doc.flags.where(:user_id=>user.id).count < Revs::Application.config.num_flags_per_item_per_user
+     end # can only add new flags to a solr document with less than a certain number of flags for any given user
+  end
+    
+  def can_curate
+    can :curate, :all
+  end
+  
+  def can_update_metadata
+    can :bulk_update_metadata, :all
+    can :update_metadata, :all 
+  end
+  
+  def can_administer
+    can :administer, :all
+  end
   
 end

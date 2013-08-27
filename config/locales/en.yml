@@ -25,6 +25,7 @@ en:
       switch_yes: "yes"
       switch_no: "no"
       not_authorized: 'You are not authorized to perform this action.'
+      in_beta_not_authorized_html: "The Revs Digital Library is currently in limited beta release.  If you would like to request beta access, please <a href='/contact'>contact us.</a>"
       validation_error: "The values you entered were not valid for the field you selected."
       bulk_update_instructions: "To apply a bulk update, select the field to update, enter a new value and select some items."
       set_top_priority: "Success! This image is now set to represent its collection."
