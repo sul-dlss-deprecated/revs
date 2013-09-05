@@ -98,38 +98,45 @@ Your local development jetty must be started for this to work.  If your local je
 
 ### Branches
 
-Master branch is what is running in production and staging
-Develop branch is what is running (typically) on development
-Working branch (local) is your local working branch
+The *master* branch is what is running in production and staging.
+The *develop* branch is what is running (typically) in development.
+In the examples below, the *working* branch is your local feature branch,
+from which you later merge your updated work into either *master* or *develop*.
 
-### Day to day working
+### Typical day to day development workflow
 
 1. Getting up to date
-git checkout develop
-git pull  
 
-2. Working
-git checkout working
-# do stuff
-git add
-git ci -m 'my changes'
+        git checkout develop
+        git pull  
 
-3. Getting Develop Up to date
-git checkout develop
-git pull
-# look for new updates here: if you have updates, head to step 4, otherwise head to step 5
+2. Working (*working* is your local feature branch)
+
+        git checkout working
+        * do stuff *
+        git add
+        git commit -m 'my changes'
+
+3. Getting *develop* up to date
+
+        git checkout develop
+        git pull
+
+  Look for new updates. If you have updates, continue with Step 4, otherwise continue with Step 5.
 
 4. If there are changes
-git checkout working
-git rebase develop
-git checkout develop
+
+        git checkout working
+        git rebase develop
+        git checkout develop
 
 5. Merge and push
-git merge working
-git push
+
+        git merge working
+        git push
 
 6. Head back to step 2 to continue working
 
-You can skip steps 4 if the 'git pull' in step 3 doesn't bring down any updates so you know 'working' is already up to date. 
-Step 4 is where you could have merge conflicts. But now you resolve them on 'working' so when you then merge back to 'develop' (after fixing the conflicts), 
-the git history is linear and doesn't show any merge commits.  
+  You can skip step 4 if the `git pull` in step 3 doesn't bring down any updates so you know *working* is already up-to-date. 
+  Step 4 is where you could have merge conflicts. But now you resolve them on *working* so when you then merge back to *develop* (after fixing the conflicts), 
+  the git history is linear and doesn't show any merge commits.  
