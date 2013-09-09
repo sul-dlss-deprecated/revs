@@ -140,4 +140,13 @@ def reindex_solr_docs(druids)
   end
   RestClient.post "#{Blacklight.solr.options[:url]}/update?commit=true", "<update><add>#{add_docs.join(" ")}</add></update>", :content_type => "text/xml"
 end
+
+def remove_flag_by_content(content)
+  all_flags = page.all(:css, '.flag-info')
+    all_flags.each do |f|
+      if f.has_content?(content)
+        f.click_button('Remove')
+      end 
+    end
+end
   

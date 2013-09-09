@@ -118,17 +118,54 @@ describe("Flagging",:type=>:request,:integration=>true) do
       # remove and confirm deletion of the curator's flag in the database
       #Since curators can remove any comment now, we need to target the removal of the comment that the curator just added
       
-      all_flags = page.all(:css, '.flag-info')
-      all_flags.each do |f|
-          if f.has_content?(curator_comment)
-              f.click_button('Remove')
-          end 
-      end
+      remove_flag_by_content(curator_comment)
       
       page.should have_content(I18n.t('revs.flags.removed'))
       Flag.count.should == initial_flag_count + 1
-      Flag.last.user.should == user
            
     end
     
+    it "should allow curators and admins to delete flags set by any other user in the system" do
+    
+      #Login as a User and Leave A comment
+      druid='qb957rw1430'
+      initial_flag_count=Flag.count
+            
+      # login and visit an item as a regular user
+      login_as(user_login)
+      user_comment='all wrong!'
+      item_page=catalog_path(druid)
+
+      #flag the item
+      visit item_page
+      fill_in @comment_field, :with=>user_comment
+      click_button @flag_button
+      
+      # check the page for the correct messages
+      current_path.should == item_page
+      page.should have_content(I18n.t('revs.flags.created'))
+      page.should have_content(user_comment)
+      page.should have_button(@remove_button)
+      
+      # check the database
+      user=User.find_by_username(user_login)
+      Flag.count.should == initial_flag_count + 1
+      flag=Flag.last
+      flag.comment.should == user_comment
+      flag.flag_type.should == @default_flag_type
+      flag.user=user
+
+      # login and visit an item as a curator
+      logout
+      login_as(curator_login)
+      visit item_page
+      
+      #target the comment the user just left
+      remove_flag_by_content(user_comment)
+
+      Flag.count.should == initial_flag_count
+      page.should have_content(I18n.t('revs.flags.removed'))
+
+    end
+
 end
