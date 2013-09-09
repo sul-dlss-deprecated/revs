@@ -122,7 +122,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
       
       page.should have_content(I18n.t('revs.flags.removed'))
       Flag.count.should == initial_flag_count + 1
-           
+      Flag.last.user.should == user     
     end
     
     it "should allow curators and admins to delete flags set by any other user in the system" do
