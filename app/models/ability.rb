@@ -117,6 +117,9 @@ class Ability
     
   def can_curate
     can :curate, :all
+    can :destroy, Flag
+
+
   end
   
   def can_update_metadata
