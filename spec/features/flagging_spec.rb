@@ -116,7 +116,15 @@ describe("Flagging",:type=>:request,:integration=>true) do
       flag.user=curator
            
       # remove and confirm deletion of the curator's flag in the database
-      click_button @remove_button
+      #Since curators can remove any comment now, we need to target the removal of the comment that the curator just added
+      
+      all_flags = page.all(:css, '.flag-info')
+      all_flags.each do |f|
+          if f.has_content?(curator_comment)
+              f.click_button('Remove')
+          end 
+      end
+      
       page.should have_content(I18n.t('revs.flags.removed'))
       Flag.count.should == initial_flag_count + 1
       Flag.last.user.should == user
