@@ -118,6 +118,7 @@ class Ability
   def can_curate
     can :curate, :all
     can :destroy, Flag
+    can :destroy, Annotation
 
 
   end
