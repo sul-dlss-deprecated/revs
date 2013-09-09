@@ -64,6 +64,18 @@ This is a Blacklight Application for the Revs Digital Library at Stanford Univer
 
 1. Go to <http://localhost:3000>
 
+
+## Default Users
+
+The default users in the fixtures are:
+
+admin1
+curator1
+user1
+
+Passwords in each case are "password"
+
+
 ## Terms Dialog Box
 
 Configuration for the terms dialog box is in the application_controller.rb.
