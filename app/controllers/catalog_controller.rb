@@ -161,6 +161,7 @@ class CatalogController < ApplicationController
     config.add_facet_field 'pub_year_isim', :label => 'Year', :sort => 'index'
     config.add_facet_field 'format_ssim', :label => 'Format'
     config.add_facet_field 'marque_ssim', :label => 'Marque'
+    config.add_facet_field 'model_year_ssim', :label => 'Model Year'
     config.add_facet_field 'model_ssim', :label => 'Model'
     config.add_facet_field 'collection_ssim', :label => "Collection"
 

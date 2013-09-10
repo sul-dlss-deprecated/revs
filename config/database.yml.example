@@ -5,10 +5,10 @@ development:
   timeout: 5000
 
 editstore_development:
-	adapter: sqlite3
-	database: db/editstore_development.sqlite3
-	pool: 5
-	timeout: 5000
+  adapter: sqlite3
+  database: db/editstore_development.sqlite3
+  pool: 5
+  timeout: 5000
 
 staging:
   adapter: sqlite3
@@ -23,10 +23,10 @@ test:
   timeout: 5000
 
 editstore_test:
-	adapter: sqlite3
-	database: db/editstore_test.sqlite3
-	pool: 5
-	timeout: 5000
+  adapter: sqlite3
+  database: db/editstore_test.sqlite3
+  pool: 5
+  timeout: 5000
 
 production:
   adapter: sqlite3
