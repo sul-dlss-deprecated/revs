@@ -80,5 +80,55 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
      item['annotations_tsim'].should == [original_annotation_from_fixture]
 
    end
+
+  it "should allow a curator to remove an annonation entered by someone else." do
+    druid='yt907db4998'
+    original_annotation_from_fixture='Nazi symbol'
+    item_page=catalog_path(druid)
+    logout
+
+    #ensure we only have the expected orginial
+    item=SolrDocument.find(druid)
+    item['annotations_tsim'].should == [original_annotation_from_fixture]
+
+
+    # create an annotation
+     comment='The rain in spain falls mostly on the plain.'
+     user_account=User.find_by_username(curator_login)
+     annotation=Annotation.create(:druid=>druid,:text=>comment,:json=>'{"src":"https://stacks.stanford.edu/image/yt907db4998/2011-023DUG-3.0_0017_thumb","shapes":[{"type":"rect","geometry":{"x":0.5223880597014925,"width":0.19651741293532343,"y":0.4075471698113208,"height":0.1132075471698113}}],"context":"http://127.0.0.1:3000/catalog/yt907db4998","editable":true,"username":"me","updated_at":"September 10, 2013","id":1045387672}',:user_id=>user_account.id) 
+
+     # confirm that solr has been updated
+     item=SolrDocument.find(druid)
+     item['annotations_tsim'].should == [original_annotation_from_fixture,comment]
+
+     #go the page as an admin
+     logout
+     login_as(admin_login)
+     visit item_page
+     
+     #Individual annotations have long id strings on them that make them unique, so grab the parent and then look for content
+     anno_parent = page.find('#all-annotations')
+     anno_parent.all('div').each do |d|
+          if d.has_content?(comment)
+              d.click_button('Remove')
+          end
+     end
+
+     #all_anno = page.all(:css, '#annotation_')
+     #all_anno.each do |a|
+     #  if a.has_content?(comment)
+     #   within(a) do
+     #      a.click_button('Remove')
+     #   end
+     #  end 
+     #end
+     
+     #end the comment has been removed
+     item=SolrDocument.find(druid)
+     item['annotations_tsim'].should == [original_annotation_from_fixture]
+       
+   
+   end 
+
     
 end
