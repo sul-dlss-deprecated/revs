@@ -4,7 +4,7 @@ class Flag < ActiveRecord::Base
   
   FLAG_TYPES=%w{error inappropriate bookmark}
   
-  attr_accessible :druid, :comment, :type, :flag_type, :user_id, :resolved, :resolution
+  attr_accessible :druid, :comment, :type, :flag_type, :user_id
   
   validates :druid, :is_druid=>true
   validates :user_id, :numericality => { :only_integer => true }
@@ -22,5 +22,17 @@ class Flag < ActiveRecord::Base
   def is_cleared?
     !cleared.blank?
   end
+  
+  def unresolved_count
+    flags = Flag.all
+    count = 0
+    for f in flags
+      if not f.resolved
+        count += 1
+      end 
+    end
+    return count
+  end
+  
   
 end

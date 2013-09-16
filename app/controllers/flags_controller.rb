@@ -43,7 +43,7 @@ class FlagsController < ApplicationController
     flag_info=params[:flag]    
     @flag.resolution = flag_info[:resolution]
     @flag.resolved_time=Time.now
-    @flag.resolving_user = flag_info[:resolving_id]
+    @flag.resolving_user = current_user.id
     @flag.resolved = true
     @flag.save
     @message=t('revs.flags.resolved')

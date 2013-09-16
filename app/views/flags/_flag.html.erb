@@ -11,8 +11,6 @@
 	     <%= f.label :resolution, t('revs.flags.resolution_notes')%>
 	     <%= f.text_area :resolution, :rows => '2', :class => "input-xlarge" %>
 	     <%= f.hidden_field :druid, :value=>flag.druid%>
-	     <%= f.hidden_field :resolving_id, :value=>current_user.id %>
-		 <%= f.hidden_field :r, :value=>flag.resolved%>
 	     <%= f.submit t('revs.flags.resolve'), :resolution => "flag-button btn btn-small" %>
 	     <% end %>
 	  <% end %>

@@ -120,6 +120,8 @@ class Ability
     can :destroy, Flag
     can :destroy, Annotation
     can :resolve, Flag
+    can :update, Flag
+    
 
 
   end
