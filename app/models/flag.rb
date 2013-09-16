@@ -23,7 +23,7 @@ class Flag < ActiveRecord::Base
     !cleared.blank?
   end
   
-  def unresolved_count
+  def self.unresolved_count
     flags = Flag.all
     count = 0
     for f in flags

@@ -59,11 +59,11 @@
     </div>
 
     <div class="span4 offset1">
-      <h3><%=t('revs.flags.plural')%> <span class="activity-count"><%= user_flags_count(@user).to_s.rjust(1, '0') %></span></h3>
+      <h3><%=t('revs.flags.plural')%> <span class="activity-count"><%= user_flags_unresolved_count(@user).to_s.rjust(1, '0') %></span></h3>
       <% if @latest_flags.size > 0 %>
         <ul>
         <% @latest_flags.each do |flag| %>
-				  <% if flag.item %>
+				  <% if flag.item and not flag.resolved%>
 	          <li class="activity-item">
 	            <ul>
 	              <li><%= link_to(image_tag(flag.item.images.first), item_path(flag.item)) %></li>
@@ -74,7 +74,7 @@
 	       <% end %>
         <% end %>
         </ul>
-        <% if user_flags_count(@user) > Revs::Application.config.num_latest_user_activity %>
+        <% if user_flags_unresolved_count(@user) > Revs::Application.config.num_latest_user_activity %>
           <p class="more-link">
             <%= pluralize(user_flags_count(@user) - Revs::Application.config.num_latest_user_activity, 'flag') %> <%=t('revs.messages.not_shown')%>.
             <%= link_to "#{t('revs.messages.view_all')} »", user_flags_path(@user.username) %>

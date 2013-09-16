@@ -6,7 +6,7 @@
 	  <% if can? :destroy, flag%>
 	    <%= button_to t('revs.actions.remove'),flag_path(flag.id), :method=>:delete,:remote=>true, :confirm=>t('revs.flags.are_you_sure'), :class => "btn btn-mini btn-danger" %>
 	  <% end %>
-	  <% if can? :resolve, flag%>
+	  <% if not flag.resolved and can? :resolve, flag%>
 	     <%= form_for flag do |f| %>
 	     <%= f.label :resolution, t('revs.flags.resolution_notes')%>
 	     <%= f.text_area :resolution, :rows => '2', :class => "input-xlarge" %>
