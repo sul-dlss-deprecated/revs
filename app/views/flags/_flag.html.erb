@@ -14,5 +14,9 @@
 	     <%= f.submit t('revs.flags.resolve'), :resolution => "flag-button btn btn-small" %>
 	     <% end %>
 	  <% end %>
-
+	  <%if flag.resolved and can? :administer, flag %>
+	  <%= t('revs.flags.resolver_id')%> <%= flag.resolving_user%>
+	  <%= t('revs.flags.resolver_username')%> <%= User.find(flag.resolving_user).username%>
+	  <%= t('revs.flags.resolution_notes')%>  <%= flag.resolution%>
+      <%end%>
 </div>

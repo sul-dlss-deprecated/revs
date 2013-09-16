@@ -38,6 +38,8 @@ en:
       flag: 'Flag this item'
       resolution_notes: 'Resolution Notes'
       resolve: 'Resolve'
+      resolver_id: ' Resolving User ID'
+      resolver_username: 'Resolving Username'  
       flagged: 'Flagged'
       comment_optional: 'Comment (optional)'
       comment: 'Comment'
