@@ -1,6 +1,8 @@
 <% if flags.size > 0 %>
-	<% flags.each do |flag| %>	
-		<%= render :partial=>'flags/flag',:locals=>{:flag=>flag}%>
+	<% flags.each do |flag| %>
+	    <%if not flag.resolved or can? :administer, all %>	
+		     <%= render :partial=>'flags/flag',:locals=>{:flag=>flag}%>
+		<% end %>
 	<% end %>
 <% end %>
 

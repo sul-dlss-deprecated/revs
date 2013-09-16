@@ -1,8 +1,20 @@
 <div class="flag-info">
-  <%= image_tag((flag.user.avatar.url.blank? ? asset_url('default-avatar_32x32.png') : flag.user.avatar.url(:tiny)), :class => "user-image user-image-tiny") %>
-  <%=flag.user == current_user ? t('revs.flags.you') : flag.user.to_s%> on <%=show_as_date(flag.created_at)%>
-  <blockquote><%= flag.comment%></blockquote>
-  <% if can? :destroy, flag%>
-    <%= button_to t('revs.actions.remove'),flag_path(flag.id), :method=>:delete,:remote=>true, :confirm=>t('revs.flags.are_you_sure'), :class => "btn btn-mini btn-danger" %>
-  <% end %>
+  
+	   <%= image_tag((flag.user.avatar.url.blank? ? asset_url('default-avatar_32x32.png') : flag.user.avatar.url(:tiny)), :class => "user-image user-image-tiny") %>
+	  <%=flag.user == current_user ? t('revs.flags.you') : flag.user.to_s%> on <%=show_as_date(flag.created_at)%>
+	  <blockquote><%= flag.comment%></blockquote>
+	  <% if can? :destroy, flag%>
+	    <%= button_to t('revs.actions.remove'),flag_path(flag.id), :method=>:delete,:remote=>true, :confirm=>t('revs.flags.are_you_sure'), :class => "btn btn-mini btn-danger" %>
+	  <% end %>
+	  <% if can? :resolve, flag%>
+	     <%= form_for flag do |f| %>
+	     <%= f.label :resolution, t('revs.flags.resolution_notes')%>
+	     <%= f.text_area :resolution, :rows => '2', :class => "input-xlarge" %>
+	     <%= f.hidden_field :druid, :value=>flag.druid%>
+	     <%= f.hidden_field :resolving_id, :value=>current_user.id %>
+		 <%= f.hidden_field :r, :value=>flag.resolved%>
+	     <%= f.submit t('revs.flags.resolve'), :resolution => "flag-button btn btn-small" %>
+	     <% end %>
+	  <% end %>
+
 </div>

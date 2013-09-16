@@ -119,6 +119,7 @@ class Ability
     can :curate, :all
     can :destroy, Flag
     can :destroy, Annotation
+    can :resolve, Flag
 
 
   end

@@ -41,16 +41,18 @@ class FlagsController < ApplicationController
   
   def update
     flag_info=params[:flag]    
-    @flag.comment=flag_info[:comment]
-    @flag.flag_type=flag_info[:flag_type] if flag_info[:flag_type]
-    @flag.cleared=Time.now if flag_info[:cleared]
+    @flag.resolution = flag_info[:resolution]
+    @flag.resolved_time=Time.now
+    @flag.resolving_user = flag_info[:resolving_id]
+    @flag.resolved = true
     @flag.save
-    @message=t('revs.flags.updated')
+    @message=t('revs.flags.resolved')
     @all_flags=Flag.where(:druid=>flag_info[:druid])
     respond_to do |format|
-      format.html { flash[:success]=@message
-                    redirect_to previous_page}      
-      format.js { render }
+    format.html { flash[:success]=@message
+                  redirect_to previous_page}      
+    format.js { render }
+     
     end    
   end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130826192602) do
+ActiveRecord::Schema.define(:version => 20130916181720) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "user_id"
@@ -52,12 +52,15 @@ ActiveRecord::Schema.define(:version => 20130826192602) do
 
   create_table "flags", :force => true do |t|
     t.integer  "user_id"
-    t.string   "druid",                           :null => false
-    t.string   "flag_type",  :default => "error", :null => false
+    t.string   "druid",                               :null => false
+    t.string   "flag_type",      :default => "error", :null => false
     t.text     "comment"
-    t.datetime "cleared"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+    t.string   "resolution"
+    t.integer  "resolving_user"
+    t.boolean  "resolved",       :default => false
+    t.datetime "resolved_time"
   end
 
   add_index "flags", ["druid"], :name => "index_flags_on_druid"
