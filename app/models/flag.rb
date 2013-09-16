@@ -4,7 +4,7 @@ class Flag < ActiveRecord::Base
   
   FLAG_TYPES=%w{error inappropriate bookmark}
   
-  attr_accessible :druid, :comment, :type, :flag_type, :user_id
+  attr_accessible :druid, :comment, :type, :flag_type, :user_id, :resolved, :resolution
   
   validates :druid, :is_druid=>true
   validates :user_id, :numericality => { :only_integer => true }
