@@ -86,6 +86,10 @@ module ApplicationHelper
     return user.flags.unresolved_count
   end
   
+  def user_flags_resolved_count(user)
+    return user_flags_count(user) - user_flags_unresolved_count(user)
+  end
+  
   def on_edit_page
     ["edit","update"].include? action_name
   end
