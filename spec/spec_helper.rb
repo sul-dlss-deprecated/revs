@@ -141,6 +141,24 @@ def reindex_solr_docs(druids)
   RestClient.post "#{Blacklight.solr.options[:url]}/update?commit=true", "<update><add>#{add_docs.join(" ")}</add></update>", :content_type => "text/xml"
 end
 
+def login_as_user_and_goto_druid(user, druid)
+  #logout, just in case
+  logout
+  
+  #login as the provided user
+  login_as(user)
+  item_page=catalog_path(druid)
+  visit item_page
+
+end
+
+def add_flag(content)
+  #This function assumes you have already called login_as_user_and_goto_druid to visit the item page
+  fill_in @comment_field, :with=>content
+  click_button @flag_button
+
+end
+
 def remove_flag_by_content(content)
   all_flags = page.all(:css, '.flag-info')
     all_flags.each do |f|
@@ -149,4 +167,55 @@ def remove_flag_by_content(content)
       end 
     end
 end
+
+def remove_flag(user, druid, content)
+  login_as_user_and_goto_druid(user, druid)
+  remove_flag_by_content(content)
+end
+
+def add_a_flag(user, druid, content)
+  login_as_user_and_goto_druid(user,druid)
+  add_flag(content)
+end
+
+def check_flag_was_created(user, druid, content, flag_count)
+  # check the page for the correct messages
+  check_page_for_flag(user, druid, content)
+  
+  #check the database for the comment and ensure the flag count was incremented
+  check_database_for_flag(user, flag_count, content)
+  
+  
+end
+
+def check_page_for_flag(user, druid, content)
+  item_page=catalog_path(druid)
+  current_path.should == item_page
+  page.should have_content(I18n.t('revs.flags.created'))
+  page.should have_content(content)
+  page.should have_button(@remove_button)
+end
+
+def check_database_for_flag(user, expected_total_flags, content)
+  user=User.find_by_username(user)
+  Flag.count.should == expected_total_flags
+  flag=Flag.last
+  flag.comment.should == content
+  flag.flag_type.should == @default_flag_type
+  flag.user=user
+end
+
+def check_flag_was_deleted(user, expected_total_flags)
+  page.should have_content(I18n.t('revs.flags.removed'))
+  Flag.count.should == expected_total_flags
+  Flag.last.user.should == User.find_by_username(user) 
+end
+
+def get_user_spam_count(username)
+  return User.find_by_username(username).spam_flags
+end
+
+
+
+
   

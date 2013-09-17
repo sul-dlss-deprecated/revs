@@ -63,6 +63,14 @@ class FlagsController < ApplicationController
     @flag.destroy
     @all_flags=Flag.where(:druid=>@druid)
     @document=SolrDocument.find(@druid)
+    
+    #If a different user is deleting the flag, penalize the creating user for spam.
+    if(@flag.user_id != current_user.id)
+      @user = User.find_by_id(@flag.user_id)
+      @user.spam_flags += 1 
+      @user.save
+    end
+    
     respond_to do |format|
       format.html { flash[:success]=@message
                     redirect_to previous_page}      

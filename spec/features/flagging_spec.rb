@@ -117,7 +117,6 @@ describe("Flagging",:type=>:request,:integration=>true) do
            
       # remove and confirm deletion of the curator's flag in the database
       #Since curators can remove any comment now, we need to target the removal of the comment that the curator just added
-      
       remove_flag_by_content(curator_comment)
       
       page.should have_content(I18n.t('revs.flags.removed'))
@@ -125,47 +124,76 @@ describe("Flagging",:type=>:request,:integration=>true) do
       Flag.last.user.should == user     
     end
     
-    it "should allow curators and admins to delete flags set by any other user in the system" do
+    it "should allow curators to delete flags set by any other user in the system and increase that user's spam count" do
     
-      #Login as a User and Leave A comment
+      #Vars
       druid='qb957rw1430'
-      initial_flag_count=Flag.count
-            
-      # login and visit an item as a regular user
-      login_as(user_login)
       user_comment='all wrong!'
-      item_page=catalog_path(druid)
-
-      #flag the item
-      visit item_page
-      fill_in @comment_field, :with=>user_comment
-      click_button @flag_button
+      starting_spam_count = get_user_spam_count(user_login)
+      initial_flag_count=Flag.count
       
-      # check the page for the correct messages
-      current_path.should == item_page
-      page.should have_content(I18n.t('revs.flags.created'))
-      page.should have_content(user_comment)
-      page.should have_button(@remove_button)
       
-      # check the database
-      user=User.find_by_username(user_login)
-      Flag.count.should == initial_flag_count + 1
-      flag=Flag.last
-      flag.comment.should == user_comment
-      flag.flag_type.should == @default_flag_type
-      flag.user=user
-
-      # login and visit an item as a curator
-      logout
-      login_as(curator_login)
-      visit item_page
+      #Login as a User and Leave A comment
+      add_a_flag(user_login, druid, user_comment)       
       
-      #target the comment the user just left
-      remove_flag_by_content(user_comment)
+      #Ensure the Flag Was Created On The Page and Database
+      check_flag_was_created(user_login, druid, user_comment, initial_flag_count+1)
+      
+      #Login As a Curator and delete the flag
+      remove_flag(curator_login, druid, user_comment)
+      
+      #Ensure The Flag Was Deleted On the Page and Database
+      check_flag_was_deleted(user_login, initial_flag_count)
 
-      Flag.count.should == initial_flag_count
-      page.should have_content(I18n.t('revs.flags.removed'))
+      get_user_spam_count(user_login).should == starting_spam_count+1
 
     end
+    
+    it "should allow admins to delete flags set by any other user in the system and increase that user's spam count" do
+    
+      #Vars
+      druid='qb957rw1430'
+      user_comment='all wrong!'
+      starting_spam_count = get_user_spam_count(user_login)
+      initial_flag_count=Flag.count
+     
+      
+      #Login as a User and Leave A comment
+      add_a_flag(user_login, druid, user_comment)       
+      
+      #Ensure the Flag Was Created On The Page and Database
+      check_flag_was_created(user_login, druid, user_comment, initial_flag_count+1)
+      
+      #Login As a Curator and delete the flag
+      remove_flag(admin_login, druid, user_comment)
+      
+      #Ensure The Flag Was Deleted On the Page and Database
+      check_flag_was_deleted(user_login, initial_flag_count)
 
+      get_user_spam_count(user_login).should == starting_spam_count+1
+
+    end
+    
+    it "should allow users to add flags and then delete them without paying a spam penalty later" do
+      druid='qb957rw1430'
+      user_comment='I am a flag that has a tpyo in me!'
+      starting_spam_count = get_user_spam_count(user_login)
+      initial_flag_count=Flag.count
+      
+      
+      #Login as a User and Leave A comment
+      add_a_flag(user_login, druid, user_comment)       
+      
+      #Ensure the Flag Was Created On The Page and Database
+      check_flag_was_created(user_login, druid, user_comment, initial_flag_count+1)
+      
+      #Login As a Curator and delete the flag
+      remove_flag(user_login, druid, user_comment)
+      
+      #Ensure The Flag Was Deleted On the Page and Database
+      check_flag_was_deleted(user_login, initial_flag_count)
+
+      get_user_spam_count(user_login).should == starting_spam_count 
+    end
+    
 end
