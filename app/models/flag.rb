@@ -35,14 +35,7 @@ class Flag < ActiveRecord::Base
   end
   
   def self.unresolved_count
-    flags = Flag.all
-    count = 0
-    for f in flags
-      if not f.resolved
-        count += 1
-      end 
-    end
-    return count
+    Flag.where(:state=>'open').count
   end
   
   def resolved
