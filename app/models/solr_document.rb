@@ -190,6 +190,12 @@ class SolrDocument
 
     rows=params[:rows] || blacklight_config.collection_member_grid_items
     start=params[:start] || 0
+    random=params[:random] || false # if set to true, will give you a random selection from the collection ("start" will be ignored)
+    
+    if random
+      start = self.total_siblings-rows < 0 ? 0 : rand(0...self.total_siblings-rows) # if we have less items than we want to show, just start at 0; else start at a random number between 0 and the total - # to show
+    end
+        
     @siblings ||= CollectionMembers.new(
                                Blacklight.solr.select(
                                  :params => {
@@ -234,6 +240,9 @@ class SolrDocument
   end  
   ###################
   
+  def total_siblings
+    self.collection.collection_members.total_members
+  end
   
   def has_vehicle_metadata?
     return true if
@@ -287,6 +296,12 @@ class SolrDocument
     (item_priority == collection_priority) && item_priority != 0
   end
 
+  # store the change log info into our local database before going to the ActiveSolr save method to perform the saves and editstore updates
+  def save(user=nil)
+    ChangeLog.create(:druid=>id,:user_id=>user.id,:operation=>'metadata update',:note=>unsaved_edits.to_s) if (valid? && user)
+    super
+  end
+  
    ##################################################################
    # CLASS LEVEL METHODS
    # Return an Array of all collection type SolrDocuments
@@ -309,17 +324,6 @@ class SolrDocument
   def self.image_dimensions
     options = {:default => "_square",
                :large   => "_thumb" }
-  end
-
-  # store the change log info before going to the ActiveSolr save method to perform the saves and editstore updates
-  def save(user=nil)
-    
-    if valid? && user
-      ChangeLog.create(:druid=>id,:user_id=>user.id,:operation=>'metadata update',:note=>unsaved_edits.to_s)
-    end
-    
-    super
-    
   end
   
   def self.bulk_update(params,user) # apply update to the supplied field with the supplied value to the specified list of druids; returns false if something didn't work
