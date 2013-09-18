@@ -21,6 +21,7 @@ class FlagsController < ApplicationController
     
     flag_info=params[:flag]
     @flag.update_attributes(:flag_type=>flag_info[:flag_type],:comment=>flag_info[:comment],:druid=>flag_info[:druid],:user_id=>current_user.id)
+    @flag.state= Flag.open
     @flag.save
     @all_flags=Flag.where(:druid=>flag_info[:druid])
     @document=SolrDocument.find(flag_info[:druid])
@@ -44,9 +45,9 @@ class FlagsController < ApplicationController
     @flag.resolution = flag_info[:resolution]
     @flag.resolved_time=Time.now
     @flag.resolving_user = current_user.id
-    @flag.resolved = true
+    @flag.state = {t('revs.flags.fixed')=>Flag.fixed, t('revs.flags.wont_fix')=>Flag.wont_fix}[params[t('revs.flags.resolve')]]
     @flag.save
-    @message=t('revs.flags.resolved')
+    @message={t('revs.flags.fixed')=>t('revs.flags.resolved_fix'), t('revs.flags.wont_fix')=>t('revs.flags.resolved_wont_fix')}[params[t('revs.flags.resolve')]]
     @all_flags=Flag.where(:druid=>flag_info[:druid])
     respond_to do |format|
     format.html { flash[:success]=@message

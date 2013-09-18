@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130917191931) do
+ActiveRecord::Schema.define(:version => 20130917215855) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "user_id"
@@ -59,8 +59,8 @@ ActiveRecord::Schema.define(:version => 20130917191931) do
     t.datetime "updated_at",                          :null => false
     t.string   "resolution"
     t.integer  "resolving_user"
-    t.boolean  "resolved",       :default => false
     t.datetime "resolved_time"
+    t.string   "state",          :default => "open"
   end
 
   add_index "flags", ["druid"], :name => "index_flags_on_druid"

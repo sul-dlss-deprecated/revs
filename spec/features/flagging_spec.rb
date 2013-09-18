@@ -7,7 +7,10 @@ describe("Flagging",:type=>:request,:integration=>true) do
     @remove_button=I18n.t('revs.actions.remove')
     @flag_button=I18n.t('revs.flags.flag')
     @comment_field='flag_comment'
+    @resolution_field = 'flag_resolution'
     @default_flag_type='error'
+    @wont_fix_button=I18n.t('revs.flags.wont_fix')
+    @fix_button=I18n.t('revs.flags.fixed')
   end
   
   it "should not show the flagging link if there are no flags to non-logged in users" do
@@ -117,7 +120,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
            
       # remove and confirm deletion of the curator's flag in the database
       #Since curators can remove any comment now, we need to target the removal of the comment that the curator just added
-      remove_flag_by_content(curator_comment)
+      remove_flag(curator_login, druid, curator_comment)
       
       page.should have_content(I18n.t('revs.flags.removed'))
       Flag.count.should == initial_flag_count + 1
@@ -145,6 +148,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
       #Ensure The Flag Was Deleted On the Page and Database
       check_flag_was_deleted(user_login, initial_flag_count)
 
+      #Ensure the User Was Penalized for Spam
       get_user_spam_count(user_login).should == starting_spam_count+1
 
     end
@@ -170,6 +174,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
       #Ensure The Flag Was Deleted On the Page and Database
       check_flag_was_deleted(user_login, initial_flag_count)
 
+      #Ensure the User Was Penalized for Spam
       get_user_spam_count(user_login).should == starting_spam_count+1
 
     end
@@ -193,7 +198,55 @@ describe("Flagging",:type=>:request,:integration=>true) do
       #Ensure The Flag Was Deleted On the Page and Database
       check_flag_was_deleted(user_login, initial_flag_count)
 
+      #Ensure the User Was NOT Penalized for Spam
       get_user_spam_count(user_login).should == starting_spam_count 
     end
+    
+    it "should allow a curator to resolve a flag as won't fix" do
+        druid='qb957rw1430'
+        user_comment="I am a comment that will be marked as won't fix."
+        curator_comment='That was a bad flag and you should feel bad!'
+        starting_spam_count = get_user_spam_count(user_login)
+        initial_flag_count=Flag.count
+      
+        #Login as a User and Leave A comment
+        add_a_flag(user_login, druid, user_comment) 
+      
+        #Ensure the Flag Was Created On The Page and Database
+        flag_id = check_flag_was_created(user_login, druid, user_comment, initial_flag_count+1)  
+      
+        #Login As a Curator and Mark It As Won't Fix
+        resolve_flag_wont_fix(curator_login, druid, user_comment, curator_comment)
+        
+        #Ensure the Flag Was Resolved via a message on the page to the user and in the database
+        check_flag_was_marked_wont_fix(user_comment, initial_flag_count+1, curator_comment, flag_id)
+      
+      
+    end
+    
+    it "should allow a curator to resolve a flag as fixed" do
+        druid='qb957rw1430'
+        user_comment="I am a comment that will be marked as fixed."
+        curator_comment='This is a good flag and you should feel good!'
+        starting_spam_count = get_user_spam_count(user_login)
+        initial_flag_count=Flag.count
+      
+        #Login as a User and Leave A comment
+        add_a_flag(user_login, druid, user_comment) 
+      
+        #Ensure the Flag Was Created On The Page and Database
+        flag_id = check_flag_was_created(user_login, druid, user_comment, initial_flag_count+1)  
+      
+        #Login As a Curator and Mark It As Fixed
+        resolve_flag_fix(curator_login, druid, user_comment, curator_comment)
+        
+        #Ensure the Flag Was Resolved via a message on the page to the user and in the database
+        check_flag_was_marked_fix(user_comment, initial_flag_count+1, curator_comment, flag_id)
+      
+      
+    end
+    
+    
+  
     
 end

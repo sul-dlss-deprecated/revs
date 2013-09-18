@@ -152,30 +152,59 @@ def login_as_user_and_goto_druid(user, druid)
 
 end
 
-def add_flag(content)
-  #This function assumes you have already called login_as_user_and_goto_druid to visit the item page
-  fill_in @comment_field, :with=>content
-  click_button @flag_button
+def login_as_user_and_goto_druid(user, druid)
+  #logout, just in case
+  logout
+  
+  #login as the provided user
+  login_as(user)
+  item_page=catalog_path(druid)
+  visit item_page
 
 end
 
-def remove_flag_by_content(content)
-  all_flags = page.all(:css, '.flag-info')
-    all_flags.each do |f|
-      if f.has_content?(content)
-        f.click_button('Remove')
-      end 
-    end
-end
 
 def remove_flag(user, druid, content)
   login_as_user_and_goto_druid(user, druid)
-  remove_flag_by_content(content)
+  find_flag_by_content_and_click_button(content, @remove_button)
 end
+
+def find_flag_by_content_and_click_button(content, button)
+   get_a_flag_by_content(content).click_button(button)
+end
+
+def resolve_flag_wont_fix(user, druid, content, resolve_message)
+  login_as_user_and_goto_druid(user, druid)
+  resolve_flag(content, resolve_message, @wont_fix_button)
+end
+
+def resolve_flag_fix(user, druid, content, resolve_message)
+  login_as_user_and_goto_druid(user, druid)
+  resolve_flag(content, resolve_message, @fix_button)
+end
+
+def resolve_flag(content, resolve_message, button)
+  f = get_a_flag_by_content(content)
+  fill_in @resolution_field, :with=>resolve_message
+  click_button button
+end
+
+def get_a_flag_by_content(content)
+  all_flags = page.all(:css, '.flag-info')
+
+    all_flags.each do |f|
+      if f.has_content?(content)
+        return f
+      end 
+    end
+    return nil 
+end
+
 
 def add_a_flag(user, druid, content)
   login_as_user_and_goto_druid(user,druid)
-  add_flag(content)
+  fill_in @comment_field, :with=>content
+  click_button @flag_button
 end
 
 def check_flag_was_created(user, druid, content, flag_count)
@@ -183,7 +212,7 @@ def check_flag_was_created(user, druid, content, flag_count)
   check_page_for_flag(user, druid, content)
   
   #check the database for the comment and ensure the flag count was incremented
-  check_database_for_flag(user, flag_count, content)
+  return check_database_for_flag(user, flag_count, content)
   
   
 end
@@ -203,19 +232,48 @@ def check_database_for_flag(user, expected_total_flags, content)
   flag.comment.should == content
   flag.flag_type.should == @default_flag_type
   flag.user=user
+  return flag.id
 end
 
 def check_flag_was_deleted(user, expected_total_flags)
   page.should have_content(I18n.t('revs.flags.removed'))
   Flag.count.should == expected_total_flags
   Flag.last.user.should == User.find_by_username(user) 
+
 end
+
+def check_flag_was_marked_wont_fix(content, expected_total_flags, resolution, flag_id)
+  check_flag_resolution_on_page(content, I18n.t('revs.flags.resolved_wont_fix'), expected_total_flags)
+  check_flag_resolution_in_db(content, resolution, Flag.wont_fix, flag_id)
+end
+
+def check_flag_was_marked_fix(content, expected_total_flags, resolution, flag_id)
+  check_flag_resolution_on_page(content, I18n.t('revs.flags.resolved_fix'), expected_total_flags)
+  check_flag_resolution_in_db(content, resolution, Flag.fixed, flag_id)
+end
+
+
+
+def check_flag_resolution_on_page(content, message, expected_total_flags)
+  page.should have_content(message)
+  Flag.count.should == expected_total_flags
+  
+  #Make sure this flag isn't displaying since it has been resolved
+  get_a_flag_by_content(content).should == nil
+end
+
+def check_flag_resolution_in_db(content, resolution, state, id)
+   flags = Flag.all
+   for f in flags
+     if(f.id == id)
+       f.state.should == state
+       f.resolution == resolution
+     end
+   end
+end
+
+
 
 def get_user_spam_count(username)
   return User.find_by_username(username).spam_flags
 end
-
-
-
-
-  

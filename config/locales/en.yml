@@ -34,17 +34,21 @@ en:
       created: 'The item was flagged.'
       removed: 'The flag was removed.'
       updated: 'The flag was updated.'
-      resolved: 'The flag was resolved.'
+      resolved_fix: 'The flag was marked as fixed.'
+      resolved_wont_fix: "The flag was marked was won't fix."
       flag: 'Flag this item'
       resolution_notes: 'Resolution Notes'
       resolve: 'Resolve'
       resolver_id: ' Resolving User ID'
+      fixed: 'Fixed Flag'
+      wont_fix: "Won't Fix Flag"
       resolver_username: 'Resolving Username'  
       flagged: 'Flagged'
       comment_optional: 'Comment (optional)'
       comment: 'Comment'
       singluar: 'Flag'
       plural: 'Flags'
+      resolve: 'Resolve'
       none: 'This user does not have any flags.'
       you_can_flag_problems: 'You can flag problems you see with item metadata from the Item Details page.'
       you: "You"
