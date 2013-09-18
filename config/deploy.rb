@@ -80,11 +80,13 @@ namespace :db do
   end  
   task :symlink_sqlite do
     run "ln -s #{shared_path}/#{rails_env}.sqlite3 #{release_path}/db/#{rails_env}.sqlite3"
-    #run "ln -s #{shared_path}/editstore_#{rails_env}.sqlite3 #{release_path}/db/editstore_#{rails_env}.sqlite3"
   end  
 end
 
 namespace :deploy do
+  task :symlink_editstore do
+    run "ln -s /home/lyberadmin/editstore-updater/current/public #{release_path}/public/editstore"
+  end  
   task :start do ; end
   task :stop do ; end
   task :restart, :roles => :app, :except => { :no_release => true } do

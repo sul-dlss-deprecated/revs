@@ -15,6 +15,8 @@ namespace :deploy do
 end
 
 after "deploy:finalize_update", "db:symlink_sqlite"
+after "deploy:finalize_update", "deploy:symlink_editstore"
+
 after "deploy:finalize_update", "jetty:remove"
 after "deploy:finalize_update", "fixtures:refresh"
 after "deploy:create_symlink", "db:loadseeds"

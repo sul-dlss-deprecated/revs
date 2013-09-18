@@ -45,3 +45,4 @@ Revs::Application.config.purl_plugin_server = "test"
 Revs::Application.config.purl = "//purl-test.stanford.edu"
 Revs::Application.config.purl_plugin_location = "//image-viewer.stanford.edu/javascripts/purl_embed_jquery_plugin.js"
 Revs::Application.config.restricted_beta = false # if set to true, then only beta users (and sunet users) can view the site
+Revs::Application.config.use_editstore = true # if set to true, then all changes will be saved to editstore database (MUST BE TRUE IN PRODUCTION AND TEST!)

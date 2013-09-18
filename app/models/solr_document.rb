@@ -44,7 +44,7 @@ class SolrDocument
   #  set :editstore to false if you don't want the change to propogate to DOR in any scenario
   
   def self.use_editstore
-    true # set to true to propogate changes to editstore when the .save method is called
+    Revs::Application.config.use_editstore # set to true to propogate changes to editstore when the .save method is called
   end
   
   def self.field_mappings
