@@ -50,16 +50,7 @@
       <% end %>
     </ul>
 
-    <ul class="nav nav-list">
-      <li class="nav-header"><%= t('revs.dashboards') %></li>
-      <li><%= link_to t('revs.user.user_dashboard'), user_profile_name_path(@user.username) %></li>
-      <% if can? :administer, :all  %>
-        <li><%= link_to t('revs.user.admin_dashboard'), admin_users_path %></li>
-      <% end %>
-      <% if can? :curate, :all %>
-        <li><%= link_to t('revs.user.curator_dashboard'), curator_tasks_path %></li>
-      <% end %>
-    </ul>
+    <%= render :partial=>'/devise/shared/dashboards', :locals=>{:user=>@user} %>
 
   </div>
 </div>

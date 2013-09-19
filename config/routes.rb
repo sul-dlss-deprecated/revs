@@ -63,10 +63,12 @@ Revs::Application.routes.draw do
       get 'for_image/:id', :to => 'flags#index_by_druid'
     end
   end
-    
+      
   # admin pages
+  get 'admin', :to => 'admin#index', :as=>'admin_dashboard' # admin dashboard
   namespace :admin do
     resources :users
+    resources :collection_highlights
   end
   
   # curator pages

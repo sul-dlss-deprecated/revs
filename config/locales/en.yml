@@ -13,6 +13,7 @@ en:
     stanford_library: 'Stanford University Libraries'
     actions:
       remove: 'Remove'
+      edit: 'Edit'
     messages:
       date: 'Date'
       not_shown: 'not shown'
@@ -116,6 +117,7 @@ en:
       lock_account: "Lock account"
     admin:
       administer_users: "Administer Users"
+      administer_highlights: "Set Collection Highlights on Homepage"
       dashboard: "Administrator Dashboard"
       your_account: "This is your account. To update your password, visit %{your_account_linktext}. You cannot update your own role."
       waiting_confirmation_from_user: "Currently waiting confirmation from user of their email address"
@@ -126,6 +128,7 @@ en:
       registered_on: "Registered on"
       confirmed: "Confirmed?"
       no_users_found: "No users were found with an email address of '%{with_email_address}'"
+      none_found: "None found"
       sidebar:
         actions: 'Actions'
         administer_users: "Administer Users"

@@ -6,7 +6,7 @@ describe("Admin Section",:type=>:request,:integration=>true) do
     logout
   end
   
-  it "should allow an admin user to login" do
+  it "should allow an admin user to login and see the admin dashboard" do
       login_as(admin_login)
       current_path.should == root_path
       page.should have_content('Admin Stanford')    # name at top of page  
@@ -27,9 +27,37 @@ describe("Admin Section",:type=>:request,:integration=>true) do
       should_allow_admin_section
       should_allow_curator_section
     end
+
+    it "should not allow a non-admin user to see the admin dashboard" do 
+      logout
+      visit admin_dashboard_path
+      current_path.should == root_path
+    end
+
+    describe "Administer collection highlights" do
+
+      it "should not show the administer collection highlights page to a non-admin user" do
+        logout
+        visit admin_collection_highlights_path
+        current_path.should == root_path
+      end
+
+      it "should show the administer collection highlights page to an admin user" do
+        login_as(admin_login)
+        visit admin_collection_highlights_path
+        current_path.should == admin_collection_highlights_path
+      end
+      
+    end
    
    describe "Administer users" do
    
+     it "should not show the administer users page to a non-admin user" do
+       logout
+       visit admin_users_path
+       current_path.should == root_path
+     end
+     
      it "should show all users, and be able to edit a user" do
 
        new_lastname='NewLastName'

@@ -105,9 +105,9 @@ def should_deny_access(path)
 end
 
 def should_allow_admin_section
-  visit admin_users_path
-  page.should have_content('Administer Users')
-  current_path.should == admin_users_path  
+  visit admin_dashboard_path
+  page.should have_content('Administrator Dashboard')
+  current_path.should == admin_dashboard_path
 end
 
 def should_allow_curator_section
