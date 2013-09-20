@@ -122,7 +122,7 @@ class Ability
     can :destroy, Annotation
     can :resolve, Flag
     can :update, Flag
-    
+    can :curator_update_flag_table, User  
 
 
   end

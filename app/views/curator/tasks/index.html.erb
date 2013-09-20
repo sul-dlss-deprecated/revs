@@ -26,12 +26,13 @@
   <% end %>
 
 </table>
-  
-	 <%= select_tag 'curator_flag_selection',options_from_collection_for_select(Flag.for_dropdown, :first, :last, @selected) %>
-	 
-	 <div id="curator_flag_table_table">
-	 
-     </div>
+
+<h2><%=t('revs.flags.all_flags_name')%></h2>  
+<%= select_tag 'curator_flag_selection',options_from_collection_for_select(Flag.for_dropdown, :first, :last, @selected) %>
+
+ <div id="#flags_table">
+  <%= render :partial => 'user/flags_table', :locals=>{:selection=>[Flag.open], :flags=>Flag.all, :user=>current_user,:curate_view=>true }%>
+ </div>
 </div>
 
 <%= render :partial => 'devise/shared/show_curator_sidebar' %>

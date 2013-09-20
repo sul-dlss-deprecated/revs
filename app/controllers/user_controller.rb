@@ -43,9 +43,20 @@ class UserController < ApplicationController
   end
   
   def update_flag_table
+    @curate_view = false 
     @user = current_user
     @selection = params[:selection].split(',') #make this an array so we can do if array include?, that way you could search for both fixed and won't fixed 
     @flags = Flag.where(:user_id=> @user.id)
+    respond_to do |format|
+       format.js { render }
+    end
+  end
+  
+  def curator_update_flag_table
+    @curate_view = true 
+    @user = current_user
+    @selection = params[:selection].split(',') #make this an array so we can do if array include?, that way you could search for both fixed and won't fixed 
+    @flags = Flag.all
     respond_to do |format|
        format.js { render }
     end

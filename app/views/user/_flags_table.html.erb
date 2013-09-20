@@ -1,24 +1,50 @@
-<div id="flags_table">
-	
-	
+<div id="flags_table">	
     <table class="table table-bordered table-condensed table-hover table-striped">
      <tr>
-      <th><%= link_to t('revs.collection_members.items_name').titleize, user_flags_path(:name=>user.username,:order=>'druid') %></th>
+     
+	  <% if local_assigns[:curate_view]%>
+	     <th><%= t('revs.collection_members.items_name').titleize %></th>
+	     <th><%= t('revs.flags.flagging_user')%></th>
+	  <% end%>
+	  <% if not local_assigns[:curate_view] %>
+	     <th><%= link_to t('revs.collection_members.items_name').titleize, user_flags_path(:name=>user.username,:order=>'druid') %></th>
+	  <% end%>
       <th><%= t('revs.flags.comment')%></th>
       <th><%= link_to t('revs.messages.created'), user_flags_path(:name=>user.username, :order=>'created_at') %></th>
 	  <th><%= t('revs.messagaes.status') %></th>
-	  <th><%= t('revs.flags.resolver_username') %></th>
-	  <th><%= t('revs.flags.resolution_notes') %></th>
+	  <% if Flag.display_resolved_columns(local_assigns[:selection])%> 
+	    <th><%= t('revs.flags.resolver_username') %></th>
+	    <th><%= t('revs.flags.resolution_notes') %></th>
+        <% if local_assigns[:curate_view]%>
+          <th><%= t('revs.flags.resolution_time')%></th>
+        <% end%>
+	  <% end %>
      </tr>
   <% flags.each do |flag|%>
   <% if local_assigns[:selection].include? flag.state%>
    <tr>
      <td><%= item_link(flag.item,:truncate=>true) %></td>
+     <% if local_assigns[:curate_view]%>
+       <td><%=display_user_name(User.find(flag.user_id))%></td>
+     <% end%>
 	 <td><%= flag.comment %></td>
 	 <td><%= show_as_datetime(flag.created_at.in_time_zone) %></td>
 	 <td><%= flag.state_display_name%></td>
-	 <td><%= flag.resolving_user%></td>
-	 <td><%= flag.resolution%></td>
+	 <% if Flag.display_resolved_columns(local_assigns[:selection])%> 
+	  <td>
+		  <% if flag.resolving_user != nil%>
+		  <%= display_user_name(User.find(flag.resolving_user))%>
+		  <%end%>
+	  </td>
+	  <td><%= flag.resolution%></td>
+      <% if local_assigns[:curate_view]%>
+	   <td>
+	    <%if flag.resolved_time != nil%>
+         <%= show_as_datetime(flag.resolved_time.in_time_zone)%>
+		<% end%>
+	   </td>	
+      <% end%>
+	 <% end %> 
    </tr>
      <% end %>
 	 

@@ -6,7 +6,7 @@
    <%= paginate @flags, :params => {:order=>@order} %>
     <%= select_tag 'state_selection',options_from_collection_for_select(Flag.for_dropdown, :first, :last, @selected) %>
 	
-    <%= render :partial => 'user/flags_table', :locals=>{:selection=>[Flag.open], :user=>@user, :flags=>@flags} %>
+    <%= render :partial => 'user/flags_table', :locals=>{:selection=>[Flag.open], :user=>@user, :flags=>@flags, :curate_view=>false} %>
     
 	
  <% else %>

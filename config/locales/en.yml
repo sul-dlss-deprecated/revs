@@ -59,6 +59,8 @@ en:
       wont_fix_state_display_name: "Won't Fix"
       all_closed_name: "All Closed Flags"
       all_flags_name: "All Flags"
+      flagging_user: "Flagging User"
+      resolution_time: "Resolution Time"
     nav:
       home: 'Home'
       collections: 'Collections'

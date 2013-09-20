@@ -55,6 +55,10 @@ class Flag < ActiveRecord::Base
     return FLAG_STATE_DISPLAYS[self.state]
   end
   
+  def self.display_resolved_columns(options)
+    return (options.include? Flag.fixed or options.include? Flag.wont_fix)
+  end
+  
  
   
 end
