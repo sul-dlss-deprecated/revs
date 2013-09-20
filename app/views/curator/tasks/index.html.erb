@@ -5,24 +5,33 @@
   <h3><%="#{t('revs.flags.flagged')} #{t('revs.collection_members.items_name').titleize.pluralize}"%></h3>
 
   <%= paginate @flags, :params => {:order=>@order} %>
+  
+ <table class="admin table table-bordered table-condensed table-hover table-striped">
+    <tr>
+      <th><%=t('revs.collection_members.items_name').titleize%></th>
+      <th class="centered"><%= link_to t('revs.flags.open_state_display_name'), curator_tasks_path(:order=>'num_flags DESC') %></th>
+	  <th class="centered"><%= link_to t('revs.flags.fixed_state_diplay_name'), curator_tasks_path(:order=>'num_flags DESC') %></th>
+	  <th class="centered"><%= link_to t('revs.flags.wont_fix_state_display_name'), curator_tasks_path(:order=>'num_flags DESC') %></th>
+      <th><%= link_to t('revs.message.date'), curator_tasks_path(:order=>'created_at desc') %></th>
+    </tr>
+
+  <% @flags.each do |flag|%>
+    <tr>
+      <td><%= item_link(flag.item,:truncate=>true) %></td>
+      <td class="centered"><%= Flag.where('druid'=>flag.item.id,'state'=>Flag.open).size %></td>
+	  <td class="centered"><%= Flag.where('druid'=>flag.item.id,'state'=>Flag.fixed).size %></td>
+	  <td class="centered"><%= Flag.where('druid'=>flag.item.id,'state'=>Flag.wont_fix).size %></td>
+      <td><%= show_as_datetime(flag.created_at.in_time_zone) %></td>
+    </tr>
+  <% end %>
+
+</table>
+  
+	 <%= select_tag 'curator_flag_selection',options_from_collection_for_select(Flag.for_dropdown, :first, :last, @selected) %>
 	 
-	 <table class="admin table table-bordered table-condensed table-hover table-striped">
-	    <tr>
-	      <th><%=t('revs.collection_members.items_name').titleize%></th>
-	      <th class="centered"><%= link_to t('revs.flags.plural'), curator_tasks_path(:order=>'num_flags DESC') %></th>
-	      <th><%= link_to t('revs.message.date'), curator_tasks_path(:order=>'created_at desc') %></th>
-	    </tr>
-
-	  <% @flags.each do |flag|%>
-	    <tr>
-	      <td><%= item_link(flag.item,:truncate=>true) %></td>
-	      <td class="centered"><%= flag.num_flags %></td>
-	      <td><%= show_as_datetime(flag.created_at.in_time_zone) %></td>
-	    </tr>
-	  <% end %>
-
-  </table>
-
+	 <div id="curator_flag_table_table">
+	 
+     </div>
 </div>
 
 <%= render :partial => 'devise/shared/show_curator_sidebar' %>
