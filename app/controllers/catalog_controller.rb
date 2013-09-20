@@ -25,7 +25,7 @@ class CatalogController < ApplicationController
       
       unless fragment_exist?('home') # fragment cache for performance
 
-        @highlight_collections=SolrDocument.all_collections(:highlighted=>true)
+        @highlight_collections=SolrDocument.highlighted_collections
         @random_collection_number=Random.new.rand(@highlight_collections.size) # pick a random one to start with for non-JS users
       
         # get some information about all the collections and images we have so we can report on total numbers

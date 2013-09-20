@@ -308,17 +308,23 @@ class SolrDocument
    # Return an Array of all collection type SolrDocuments
    def self.all_collections(params={})
      highlighted=params[:highlighted] || false
+     rows=params[:rows] || "10000"
      fq="#{self.config.collection_identifying_field}:\"#{self.config.collection_identifying_value}\""
      fq+=" AND highlighted_ssi:\"true\"" if highlighted
      Blacklight.solr.select(
        :params => {
          :fq => fq,
-         :rows => "10000",
+         :rows => rows,
          :sort=> "highlighted_ssi desc",
        }
      )["response"]["docs"].map do |document|
        SolrDocument.new(document)
      end
+   end
+
+   def self.highlighted_collections
+     collections=self.all_collections(:highlighted=>true)
+     collections.size > 0 ? collections : self.all_collections
    end
    
   def self.total_images
