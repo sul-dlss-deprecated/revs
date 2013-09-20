@@ -5,7 +5,7 @@ class Flag < ActiveRecord::Base
   FLAG_TYPES=%w{error inappropriate bookmark}
   
   FLAG_STATES={ open: 'open', fixed: 'fixed', wont_fix: 'wont fix'}  #add a potential spam state here if desired 
-  FLAG_STATE_DISPLAYS = {FLAG_STATES[:open]=> I18n.t('revs.flags.open_state_display_name'),FLAG_STATES[:fixed]=> I18n.t('revs.flags.fixed_state_diplay_name'),FLAG_STATES[:wont_fix]=> I18n.t('revs.flags.wont_fix_state_display_name')}
+  FLAG_STATE_DISPLAYS = {FLAG_STATES[:open]=> I18n.t('revs.flags.open_state_display_name'),FLAG_STATES[:fixed]=> I18n.t('revs.flags.fixed_state_diplay_name'),FLAG_STATES[:wont_fix]=> I18n.t('revs.flags.wont_fix_state_display_name'),FLAG_STATES[:wont_fix]+","+FLAG_STATES[:fixed]=>I18n.t('revs.flags.all_closed_name')}
   
   attr_accessible :druid, :comment, :type, :flag_type, :user_id, FLAG_TYPES
   
@@ -38,7 +38,7 @@ class Flag < ActiveRecord::Base
   def self.for_dropdown
     return FLAG_STATE_DISPLAYS
   end
-  
+
   def self.unresolved_count
     Flag.where(:state=>'open').count
   end

@@ -2,11 +2,11 @@
 
   <h2><%= display_user_name(@user) %><span class="lowercase">'s</span> <%=t('revs.flags.plural')%></h2>
  
- <% if @flags.unresolved_count > 0 %>
+ <% if @flags.count > 0 %>
    <%= paginate @flags, :params => {:order=>@order} %>
     <%= select_tag 'state_selection',options_from_collection_for_select(Flag.for_dropdown, :first, :last, @selected) %>
 	
-    <%= render :partial => 'user/flags_table', :locals=>{:selection=>Flag.open, :user=>@user, :flags=>@flags} %>
+    <%= render :partial => 'user/flags_table', :locals=>{:selection=>[Flag.open], :user=>@user, :flags=>@flags} %>
     
 	
  <% else %>

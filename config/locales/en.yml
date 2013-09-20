@@ -57,6 +57,7 @@ en:
       open_state_display_name: 'Open'
       fixed_state_diplay_name: 'Fixed'
       wont_fix_state_display_name: "Won't Fix"
+      all_closed_name: "All Closed Flags"
     nav:
       home: 'Home'
       collections: 'Collections'

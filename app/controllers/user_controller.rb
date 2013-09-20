@@ -44,7 +44,7 @@ class UserController < ApplicationController
   
   def update_flag_table
     @user = current_user
-    @selection = [params[:selection]] #make this a list so we can do if in list, that way you could search for both fixed and won't fixed 
+    @selection = params[:selection].split(',') #make this an array so we can do if array include?, that way you could search for both fixed and won't fixed 
     @flags = Flag.where(:user_id=> @user.id)
     respond_to do |format|
        format.js { render }

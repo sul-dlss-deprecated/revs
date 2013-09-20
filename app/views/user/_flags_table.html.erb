@@ -1,4 +1,6 @@
 <div id="flags_table">
+	
+	
     <table class="table table-bordered table-condensed table-hover table-striped">
      <tr>
       <th><%= link_to t('revs.collection_members.items_name').titleize, user_flags_path(:name=>user.username,:order=>'druid') %></th>
@@ -9,7 +11,7 @@
 	  <th><%= t('revs.flags.resolution_notes') %></th>
      </tr>
   <% flags.each do |flag|%>
-  <% if not flag.resolved and local_assigns[:selection].include? flag.state%>
+  <% if local_assigns[:selection].include? flag.state%>
    <tr>
      <td><%= item_link(flag.item,:truncate=>true) %></td>
 	 <td><%= flag.comment %></td>
@@ -19,6 +21,8 @@
 	 <td><%= flag.resolution%></td>
    </tr>
      <% end %>
+	 
   <% end %>
 </table>
+
 </div>
