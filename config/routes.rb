@@ -40,6 +40,8 @@ Revs::Application.routes.draw do
   match 'user/:id', :to=>'user#show', :as=>'user_profile_id', :via=>:get, :constraints => {:id => /\d+/} # all digits is assumed to be an ID
   match 'user/:name', :to=>'user#show_by_name', :as=>'user_profile_name', :via=>:get, :constraints => {:name => /\D+.+/} # any non digit followed by any other characters is assumed to be a name
   
+  
+  
   # Handles all About pages.
   match 'about', :to => 'about#show', :as => 'about_project', :defaults => {:id=>'project'} # no page specified, go to project page
   match 'contact', :to=> 'about#contact', :as=>'contact_us'
@@ -52,6 +54,8 @@ Revs::Application.routes.draw do
   # bulk metadata editing
   post 'catalog', :to=>'catalog#index', :as=>'bulk_edit'
   
+  
+  
   resources :annotations do
     collection do
       get 'for_image/:id', :to => 'annotations#index_by_druid'
@@ -61,9 +65,16 @@ Revs::Application.routes.draw do
   resources :flags do
     collection do
       get 'for_image/:id', :to => 'flags#index_by_druid'
+      get 'update_flag_table/:selection', :to => 'user#update_flag_table', :as => 'flag'
     end
   end
+<<<<<<< HEAD
       
+=======
+  
+ 
+    
+>>>>>>> Adding in the ability for a user to sort flags based on status.
   # admin pages
   get 'admin', :to => 'admin#index', :as=>'admin_dashboard' # admin dashboard
   namespace :admin do

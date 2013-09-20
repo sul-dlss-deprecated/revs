@@ -11,7 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 20130919233742) do
+=======
+ActiveRecord::Schema.define(:version => 20130918165923) do
+>>>>>>> Adding in the ability for a user to sort flags based on status.
 
   create_table "annotations", :force => true do |t|
     t.integer  "user_id"
@@ -58,6 +62,9 @@ ActiveRecord::Schema.define(:version => 20130919233742) do
 
   add_index "flags", ["druid"], :name => "index_flags_on_druid"
   add_index "flags", ["flag_type"], :name => "index_flags_on_flag_type"
+  add_index "flags", ["resolved_time"], :name => "index_flags_on_resolved_time"
+  add_index "flags", ["resolving_user"], :name => "index_flags_on_resolving_user"
+  add_index "flags", ["state"], :name => "index_flags_on_state"
   add_index "flags", ["user_id"], :name => "index_flags_on_user_id"
 
   create_table "searches", :force => true do |t|

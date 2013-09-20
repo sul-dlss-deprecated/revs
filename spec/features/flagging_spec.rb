@@ -179,7 +179,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
 
     end
     
-    it "should allow users to add flags and then delete them without paying a spam penalty later" do
+    it "should allow users to add flags and then delete them without having their spam count increase" do
       druid='qb957rw1430'
       user_comment='I am a flag that has a tpyo in me!'
       starting_spam_count = get_user_spam_count(user_login)

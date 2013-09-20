@@ -99,7 +99,8 @@ class Ability
   
   def can_read_flags
     can :read, Flag    
-    can :index_by_druid, Flag    
+    can :index_by_druid, Flag  
+    can :update_flag_table, User  
   end
   
   def can_annotate(user)

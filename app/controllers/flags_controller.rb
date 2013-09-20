@@ -78,5 +78,8 @@ class FlagsController < ApplicationController
       format.js { render }
     end     
   end
+  
+  
+
     
 end

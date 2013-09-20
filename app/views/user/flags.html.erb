@@ -1,26 +1,14 @@
 <div id="content" class="span9">
 
   <h2><%= display_user_name(@user) %><span class="lowercase">'s</span> <%=t('revs.flags.plural')%></h2>
-
+ 
  <% if @flags.unresolved_count > 0 %>
-    <%= paginate @flags, :params => {:order=>@order} %>
+   <%= paginate @flags, :params => {:order=>@order} %>
+    <%= select_tag 'state_selection',options_from_collection_for_select(Flag.for_dropdown, :first, :last, @selected) %>
 	
-    <table class="table table-bordered table-condensed table-hover table-striped">
-      <tr>
-        <th><%= link_to t('revs.collection_members.items_name').titleize, user_flags_path(:id=>@id,:order=>'druid') %></th>
-        <th><%= t('revs.flags.comment')%></th>
-        <th><%= link_to t('revs.messages.created'), user_flags_path(:id=>@id,:order=>'created_at') %></th>
-      </tr>
-      <% @flags.each do |flag|%>
-	  <% if not flag.resolved%>
-       <tr>
-         <td><%= item_link(flag.item,:truncate=>true) %></td>
-				 <td><%= flag.comment %></td>
-				 <td><%= show_as_datetime(flag.created_at.in_time_zone) %></td>
-       </tr>
-	     <% end %>
-      <% end %>
-    </table>
+    <%= render :partial => 'user/flags_table', :locals=>{:selection=>Flag.open, :user=>@user, :flags=>@flags} %>
+    
+	
  <% else %>
     <%=t('revs.flags.none')%>
 <% end %>

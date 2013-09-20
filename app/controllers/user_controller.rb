@@ -32,11 +32,22 @@ class UserController < ApplicationController
   def flags
     @name=params[:name]
     @user=User.find_by_username(@name)
+    @flags=Flag.all
+    
     if @user
       @order=params[:order] || 'druid'    
       @flags=Flag.where(:user_id=>@user.id).order(@order).page params[:page] 
     else
       profile_not_found
+    end
+  end
+  
+  def update_flag_table
+    @user = current_user
+    @selection = [params[:selection]] #make this a list so we can do if in list, that way you could search for both fixed and won't fixed 
+    @flags = Flag.where(:user_id=> @user.id)
+    respond_to do |format|
+       format.js { render }
     end
   end
   
@@ -55,6 +66,8 @@ class UserController < ApplicationController
     flash[:error]=t('revs.authentication.user_not_found')
     redirect_to previous_page  
   end
+  
+  
 
   
 end

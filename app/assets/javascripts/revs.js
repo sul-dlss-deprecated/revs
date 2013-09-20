@@ -16,6 +16,8 @@ $(document).ready(function(){
     $('.flag-details').toggleClass('active');
     return false;
   });
+  
+ 
 
    // Curator bulk update view controls and actions //
    // Put focus on new value input box on page load

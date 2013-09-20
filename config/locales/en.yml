@@ -25,6 +25,7 @@ en:
       saved: 'Changes saved.'
       switch_yes: "yes"
       switch_no: "no"
+      status: "Status"
       not_authorized: 'You are not authorized to perform this action.'
       in_beta_not_authorized_html: "The Revs Digital Library is currently in limited beta release.  If you would like to request beta access, please <a href='/contact'>contact us.</a>"
       validation_error: "The values you entered were not valid for the field you selected."
@@ -53,6 +54,9 @@ en:
       none: 'This user does not have any flags.'
       you_can_flag_problems: 'You can flag problems you see with item metadata from the Item Details page.'
       you: "You"
+      open_state_display_name: 'Open'
+      fixed_state_diplay_name: 'Fixed'
+      wont_fix_state_display_name: "Won't Fix"
     nav:
       home: 'Home'
       collections: 'Collections'
