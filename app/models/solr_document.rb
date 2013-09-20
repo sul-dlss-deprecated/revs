@@ -80,6 +80,7 @@ class SolrDocument
       :priority=>{:field=>'priority_isi',:default=>0,:editstore=>false},
       :collections=>{:field=>'is_member_of_ssim'},
       :collection_names=>{:field=>'collection_ssim'},
+      :highlighted=>{:field=>'highlighted_ssi'},
       }  
   end
   
@@ -305,17 +306,21 @@ class SolrDocument
    ##################################################################
    # CLASS LEVEL METHODS
    # Return an Array of all collection type SolrDocuments
-   def self.all_collections
-     @all_collections ||= Blacklight.solr.select(
+   def self.all_collections(params={})
+     highlighted=params[:highlighted] || false
+     fq="#{self.config.collection_identifying_field}:\"#{self.config.collection_identifying_value}\""
+     fq+=" AND highlighted_ssi:\"true\"" if highlighted
+     Blacklight.solr.select(
        :params => {
-         :fq => "#{self.config.collection_identifying_field}:\"#{self.config.collection_identifying_value}\"",
-         :rows => "10000"
+         :fq => fq,
+         :rows => "10000",
+         :sort=> "highlighted_ssi desc",
        }
      )["response"]["docs"].map do |document|
        SolrDocument.new(document)
      end
    end
-
+   
   def self.total_images
     items=Blacklight.solr.get 'select',:params=>{:q=>'-format_ssim:collection'}      
     return items['response']['numFound']

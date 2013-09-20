@@ -6,7 +6,7 @@
 	      <div class="carousel-inner">
 	        <%- @highlight_collections.each_with_index do |collection, index| -%>
 	          <div class="item<%= " active" if index == 0 %>" data-collection-title="<%= title_no_revs(collection.title) %>" data-collection-href="<%= collection_path(collection) %>" data-collection-description="<%= truncate(collection.description,:length=>250) %>">
-	            <a id="collection-image-link" href="<%=collection_path(collection)%>"><%=image_tag collection['image_url']%></a>
+	            <a id="collection-image-link" href="<%=collection_path(collection)%>"><%=image_tag collection.first_image%></a>
 	          </div>
 	        <%- end -%>
 	      </div>
@@ -43,7 +43,7 @@
 		      <div class="carousel-inner">
 		        <%- collection = @highlight_collections[@random_collection_number] -%>
 		          <div class="item active">
-		            <a id="collection-image-link" href="<%=collection_path(collection)%>"><img id="image-0" src="<%= collection['image_url'] %>"></img></a>
+		            <a id="collection-image-link" href="<%=collection_path(collection)%>"><img id="image-0" src="<%= collection.first_image %>"></img></a>
 							</div>
 		      </div>
 		    </div>

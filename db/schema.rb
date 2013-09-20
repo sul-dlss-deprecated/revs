@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130917215855) do
+ActiveRecord::Schema.define(:version => 20130919233742) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "user_id"
@@ -39,13 +39,6 @@ ActiveRecord::Schema.define(:version => 20130917215855) do
     t.string   "druid",      :null => false
     t.string   "operation",  :null => false
     t.text     "note"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "collection_highlights", :force => true do |t|
-    t.string   "druid"
-    t.string   "image_url"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

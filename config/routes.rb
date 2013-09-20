@@ -68,7 +68,11 @@ Revs::Application.routes.draw do
   get 'admin', :to => 'admin#index', :as=>'admin_dashboard' # admin dashboard
   namespace :admin do
     resources :users
-    resources :collection_highlights
+    resources :collection_highlights do
+      collection do
+        post 'set_highlight/:id', :to => 'collection_highlights#set_highlight'
+      end
+    end
   end
   
   # curator pages
