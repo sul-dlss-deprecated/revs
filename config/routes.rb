@@ -69,13 +69,7 @@ Revs::Application.routes.draw do
       get 'update_curator_flag_table/:selection', :to => 'user#curator_update_flag_table'
     end
   end
-<<<<<<< HEAD
-      
-=======
-  
- 
-    
->>>>>>> Adding in the ability for a user to sort flags based on status.
+
   # admin pages
   get 'admin', :to => 'admin#index', :as=>'admin_dashboard' # admin dashboard
   namespace :admin do

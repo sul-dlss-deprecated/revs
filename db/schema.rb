@@ -11,11 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 20130919233742) do
-=======
-ActiveRecord::Schema.define(:version => 20130918165923) do
->>>>>>> Adding in the ability for a user to sort flags based on status.
 
   create_table "annotations", :force => true do |t|
     t.integer  "user_id"
