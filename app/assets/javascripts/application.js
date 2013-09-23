@@ -19,5 +19,6 @@
 // 
 // Additional boostrap components not autoloaded by Blacklgiht
 //= require bootstrap-carousel
+//= require bootstrap-dropdown
 //
 //= require_tree .
