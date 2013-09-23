@@ -45,16 +45,15 @@ class Flag < ActiveRecord::Base
     return FLAG_STATE_DISPLAYS
   end
 
-  def self.unresolved_count
-    Flag.where(:state=>'open').count
+  # get total flag unresolved count, or for a specific druid if you pass it in
+  def self.unresolved_count(druid=nil)
+    counts=Flag.where(:state=>'open')
+    counts=counts.where(:druid=>druid) if druid
+    counts.size
   end
   
   def resolved
     return (self.state == FLAG_STATES[:wont_fix] or self.state == FLAG_STATES[:fixed])
-  end
-  
-  def unresolved_for_druid
-  
   end
   
   def state_display_name
