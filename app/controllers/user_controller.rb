@@ -56,7 +56,7 @@ class UserController < ApplicationController
     @curate_view = true 
     @user = current_user
     @selection = params[:selection].split(',') #make this an array so we can do if array include?, that way you could search for both fixed and won't fixed 
-    @flags = flagListForStates(params[:selection].split(','), nil)
+    @flags = flagListForStates(@selection, nil)
     respond_to do |format|
        format.js { render }
     end
