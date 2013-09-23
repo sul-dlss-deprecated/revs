@@ -13,6 +13,8 @@ class Flag < ActiveRecord::Base
   validates :user_id, :numericality => { :only_integer => true }
   validate :check_flag_type
   
+  FLAGS_PER_TABLE_PAGE = 25
+  
   
   # head to solr to get the actual item, so we can access its attributes, like the title
   def item
@@ -21,6 +23,10 @@ class Flag < ActiveRecord::Base
   
   def check_flag_type
     errors.add(:flag_type, :not_valid) unless FLAG_TYPES.include? flag_type.to_s
+  end
+  
+  def self.per_table_page
+    return FLAGS_PER_TABLE_PAGE
   end
   
   def self.fixed
