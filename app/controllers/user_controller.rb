@@ -1,5 +1,8 @@
 class UserController < ApplicationController
   
+  #Class Vars
+  
+  
   # user profile pages
   
   # public user profile page by ID (e.g. /user/134)
@@ -9,7 +12,10 @@ class UserController < ApplicationController
     render_profile
     
   end
-
+  
+  
+ 
+   
   # public user profile page by name (e.g. /user/peter)
   def show_by_name
     @name=params[:name]
@@ -33,11 +39,11 @@ class UserController < ApplicationController
   def flags
     @name=params[:name]
     @user=User.find_by_username(@name)
-    @flags=Flag.all
+    @flags=Flag.where(:state=>Flag.open)
     
     if @user
       @order=params[:order] || 'druid'    
-      @flags=Flag.where(:user_id=>@user.id).order(@order).page params[:page] 
+      @flags=flagListForStates([Flag.open], @user)
     else
       profile_not_found
     end
@@ -63,9 +69,12 @@ class UserController < ApplicationController
     end
   end
   
+ 
+  
+  
   def flagListForStates(states, user)
     flags = []
-    
+    flags_per_page = 25
     for state in states 
       if user == nil #curator, we want all flags
          temp = Flag.where(:state=>state)
@@ -77,7 +86,7 @@ class UserController < ApplicationController
         flags += temp
       end
     end
-    return flags 
+    return Kaminari.paginate_array(flags).page(params[:page]).per(flags_per_page)
   end
   
   private

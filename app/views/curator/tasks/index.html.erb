@@ -4,7 +4,7 @@
 
   <h3><%="#{t('revs.flags.flagged')} #{t('revs.collection_members.items_name').titleize.pluralize}"%></h3>
 
-  <%= paginate @flags, :params => {:order=>@order} %>
+  <%= paginate @flags_grouped, :params => {:order=>@order} %>
   
  <table class="admin table table-bordered table-condensed table-hover table-striped">
     <tr>
@@ -15,7 +15,7 @@
       <th><%= link_to t('revs.message.date'), curator_tasks_path(:order=>'created_at desc') %></th>
     </tr>
 
-  <% @flags.each do |flag|%>
+  <% @flags_grouped.each do |flag|%>
     <tr>
       <td><%= item_link(flag.item,:truncate=>true) %></td>
       <td class="centered"><%= Flag.where('druid'=>flag.item.id,'state'=>Flag.open).size %></td>
@@ -31,7 +31,7 @@
 <%= select_tag 'curator_flag_selection',options_from_collection_for_select(Flag.for_dropdown, :first, :last, @selected) %>
 
  <div id="#flags_table">
-  <%= render :partial => 'user/flags_table', :locals=>{:selection=>[Flag.open], :flags=>Flag.all, :user=>current_user,:curate_view=>true }%>
+  <%= render :partial => 'user/flags_table', :locals=>{:selection=>[Flag.open], :flags=>@flags, :user=>current_user,:curate_view=>true }%>
  </div>
 </div>
 

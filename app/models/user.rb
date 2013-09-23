@@ -118,6 +118,10 @@ class User < ActiveRecord::Base
   def ability
     @ability ||= Ability.new(self)
   end
+  
+  def init_flag_user(current_user)
+    return flagListForStates([Flag.open], current_user)
+  end
     
   # update the lock status if needed
   def update_lock_status(lock)
