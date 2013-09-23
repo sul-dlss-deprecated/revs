@@ -46,7 +46,7 @@ class UserController < ApplicationController
     @curate_view = false 
     @user = current_user
     @selection = params[:selection].split(',') #make this an array so we can do if array include?, that way you could search for both fixed and won't fixed 
-    @flags = Flag.where(:user_id=> @user.id)
+    @flags = flagListForStates(@selection, current_user.id)
     respond_to do |format|
        format.js { render }
     end
@@ -56,10 +56,27 @@ class UserController < ApplicationController
     @curate_view = true 
     @user = current_user
     @selection = params[:selection].split(',') #make this an array so we can do if array include?, that way you could search for both fixed and won't fixed 
-    @flags = Flag.all
+    @flags = flagListForStates(params[:selection].split(','), nil)
     respond_to do |format|
        format.js { render }
     end
+  end
+  
+  def flagListForStates(states, user)
+    flags = []
+    
+    for state in states 
+      if user == nil #curator, we want all flags
+         temp = Flag.where(:state=>state)
+      else
+        temp = Flag.where(:state=>state, :user_id=> @user.id)
+      end
+      
+      if temp != nil
+        flags += temp
+      end
+    end
+    return flags 
   end
   
   private
