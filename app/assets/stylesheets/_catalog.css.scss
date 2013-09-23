@@ -235,11 +235,19 @@
     form.new_flag {
       margin-bottom: 24px;
     }
-    form.edit_flag {
+    form.edit_flag, div#all_flags .flag-info .resolution-history {
       border-top: 1px dotted #999;
       margin-bottom: 4px;
       margin-top: 12px;
       padding-top: 6px;
+      label {
+        display: inline;
+        font-weight: 700;
+        margin-left: 0;
+      }
+      span {
+        display: block;
+      }
     }
     #flag_resolution {
       width: 90%;
