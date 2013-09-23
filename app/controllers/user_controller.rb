@@ -5,7 +5,7 @@ class UserController < ApplicationController
   # public user profile page by ID (e.g. /user/134)
   def show
     @id=params[:id]
-    @user=User.find_by_id(@id)
+    @user=User.find_by_id(@id).page(params[:page]).per(1)
     render_profile
   end
 

@@ -5,11 +5,12 @@ class Admin::UsersController < ApplicationController
   def index
     @email=params[:email]
     @order=params[:order] || 'email'
+    users_per_page = 10
     
     if !@email.blank?
-      @users=User.where(['email like ?',"#{@email}%"]).order(@order).page params[:page]
+      @users=User.where(['email like ?',"#{@email}%"]).order(@order).page(param[:page]).per(users_per_page)
     else
-      @users=User.order(@order).page params[:page]
+      @users=User.order(@order).page(params[:page]).per(users_per_page)
     end
   end
 
