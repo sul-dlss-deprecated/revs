@@ -154,6 +154,14 @@ en:
       leave_edit_mode: 'Leave metadata edit mode'
       set_posterframe: 'Use this image to represent the collection'
       active: "Active"
+      item_title: "Item Title"
+      flagging_user: "Flagged by"
+      flag_created: "Flagged on"
+      resolver_username: "Resolved by"
+      resolution_notes: "Resolution notes"
+      resolution_date: "Resolved on"
+      flagged_items_by_status: "By Flag Status"
+      flagged_items_by_item: "By Item"
     dashboards: 'Dashboards'
     citations:
         view: 'View full citation page with image download'

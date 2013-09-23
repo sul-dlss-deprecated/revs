@@ -259,6 +259,13 @@ span.content-type {
   margin-left: 12px;
 }
 
+td.right, th.right {
+  text-align: right;
+}
+
+select:focus {
+  outline: none;
+}
 
 // Hide element offscreen but still readable by screen readers
 .hidden-offscreen {
