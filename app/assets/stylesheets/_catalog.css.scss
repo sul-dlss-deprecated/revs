@@ -235,8 +235,23 @@
     form.new_flag {
       margin-bottom: 24px;
     }
+    form.edit_flag {
+      border-top: 1px dotted #999;
+      margin-bottom: 4px;
+      margin-top: 12px;
+      padding-top: 6px;
+    }
+    #flag_resolution {
+      width: 90%;
+    }
     div#all-annotations, div#all_flags .flag-info {
       margin-top: 0;
+      label {
+        font-size: 1em;
+      }
+      .flag-button {
+        display: inline-block;
+      }
     }
     a.flag-details {
       margin-bottom: 6px;

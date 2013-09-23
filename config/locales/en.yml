@@ -39,11 +39,11 @@ en:
       resolved_fix: 'The flag was marked as fixed.'
       resolved_wont_fix: "The flag was marked was won't fix."
       flag: 'Flag this item'
-      resolution_notes: 'Resolution Notes'
+      resolution_notes: 'Resolution Notes (optional)'
       resolve: 'Resolve'
       resolver_id: ' Resolving User ID'
-      fixed: 'Fixed Flag'
-      wont_fix: "Won't Fix Flag"
+      fixed: 'Fixed Issue'
+      wont_fix: "Won't Fix Issue"
       resolver_username: 'Resolving Username'  
       flagged: 'Flagged'
       comment_optional: 'Comment (optional)'
