@@ -61,6 +61,7 @@ en:
       all_flags_name: "All Flags"
       flagging_user: "Flagging User"
       resolution_time: "Resolution Time"
+      no_results: "No flags found."
     nav:
       home: 'Home'
       collections: 'Collections'

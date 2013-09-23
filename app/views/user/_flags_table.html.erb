@@ -49,7 +49,11 @@
    </tr>
      <% end %>
 	 
-  
+	
 </table>
+
+<%if flags.size == 0%>
+  <%=t('revs.flags.no_results')%>
+  <%end%>
 
 </div>
