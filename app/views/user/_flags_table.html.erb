@@ -55,5 +55,5 @@
 <%if flags.size == 0%>
   <%=t('revs.flags.no_results')%>
 <%end%>
- <%= paginate @flags, :param_name => :pagina, :params => {:order=>@order} %>
+ <%= paginate @flags, :param_name => :pagina, :params => {:order=>@order, :tab=>"flags-by-flag"} %>
 </div>
