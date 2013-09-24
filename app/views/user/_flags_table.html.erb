@@ -1,5 +1,4 @@
 <div id="flags_table">
-  <%= paginate @flags, :params => {:order=>@order} %>
   <table class="table table-bordered table-condensed table-hover table-striped">
     <tr>
       <% if local_assigns[:curate_view] %>
@@ -56,5 +55,5 @@
 <%if flags.size == 0%>
   <%=t('revs.flags.no_results')%>
 <%end%>
-
+ <%= paginate @flags, :param_name => :pagina, :params => {:order=>@order} %>
 </div>

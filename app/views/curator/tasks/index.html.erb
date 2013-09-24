@@ -29,8 +29,9 @@
             <td><%= show_as_datetime(flag.created_at.in_time_zone) %></td>
           </tr>
         <% end %>
-
+     
       </table>
+	  <%= paginate @flags_grouped, :param_name => :pagina2, :params => {:order=>@order} %>
     </div>
     <div class="tab-pane" id="flags-by-flag">
       <%= select_tag 'curator_flag_selection', options_from_collection_for_select(Flag.for_dropdown, :first, :last, @selected) %>
@@ -38,7 +39,8 @@
     </div>
   </div>
 
-  <%= paginate @flags_grouped, :params => {:order=>@order} %>
+ 
+ 
 
 </div>
 

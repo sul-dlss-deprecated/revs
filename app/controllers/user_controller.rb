@@ -86,7 +86,7 @@ class UserController < ApplicationController
         flags += temp
       end
     end
-    return Kaminari.paginate_array(flags).page(params[:page]).per(flags_per_page).per(Flag.per_table_page)
+    return Kaminari.paginate_array(flags).page(params[:pagina]).per(flags_per_page).per(Flag.per_table_page)
   end
   
   private
