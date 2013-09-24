@@ -113,7 +113,7 @@ class Ability
     can :create, Flag # can create new flags
     can [:update,:destroy], Flag, :user_id => user.id # can update and destroy their own annotations and flags
     can :add_new_flag_to, SolrDocument do |doc|
-         doc.flags.where(:user_id=>user.id).count < Revs::Application.config.num_flags_per_item_per_user
+         doc.flags.where(:user_id=>user.id, :state=>Flag.open).count < Revs::Application.config.num_flags_per_item_per_user
      end # can only add new flags to a solr document with less than a certain number of flags for any given user
   end
     
@@ -124,7 +124,7 @@ class Ability
     can :resolve, Flag
     can :update, Flag
     can :curator_update_flag_table, User  
-
+   
 
   end
   
