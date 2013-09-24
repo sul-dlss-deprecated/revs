@@ -1,7 +1,8 @@
 <div id="content" class="span9 admin">
 
-  <h2><%= t('revs.admin.administer_users') %></h2>
+  <h2><%= t('revs.user.admin_dashboard') %></h2>
 
+  <h3><%= t('revs.admin.administer_users') %></h3>
   <%= form_tag admin_users_path, :method=>:get, :class => 'form-search' do %>
     <%= text_field_tag :email, @email, :class => 'input-large',
         :placeholder => t('revs.user.enter_email_address') %>

@@ -126,10 +126,10 @@ en:
          The user can unlock by verifying their email address or you can unlock by unchecking this box.
       lock_account: "Lock account"
     admin:
-      administer_users: "Administer Users"
+      administer_users: "Manage Users"
       administer_highlights: 
-        title: "Set Collection Highlights on Homepage"
-        description: "Set the collections that are featured on the home page by checking the box next to the collection name."
+        title: "Feature Collections"
+        description: "To feature a collection on the home page, check the box next its name."
       dashboard: "Administrator Dashboard"
       your_account: "This is your account. To update your password, visit %{your_account_linktext}. You cannot update your own role."
       waiting_confirmation_from_user: "Currently waiting confirmation from user of their email address"
@@ -141,10 +141,11 @@ en:
       confirmed: "Confirmed?"
       no_users_found: "No users were found with an email address of '%{with_email_address}'"
       none_found: "None found"
-      on_home_page: "Home Page"
+      feature_on_home_page: "Feature"
       sidebar:
         actions: 'Actions'
-        administer_users: "Administer Users"
+        administer_users: "Manage Users"
+        administer_highlights: "Feature Collections"
     curator:
       not_found: 'Item not found'
       sidebar:
@@ -266,7 +267,7 @@ en:
       profile_page: 'Your Revs profile page'
       user_dashboard: 'User Dashboard'
       curator_dashboard: 'Curator Dashboard'
-      admin_dashboard: 'Admin Dashboard'
+      admin_dashboard: 'Administrator Dashboard'
       resend_confirmation: "Resend confirmation instructions"
       resend_unlock: "Resend unlock instructions"
       email_or_username: "your email address or username"

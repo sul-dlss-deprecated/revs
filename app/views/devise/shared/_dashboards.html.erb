@@ -1,7 +1,7 @@
     <ul class="nav nav-list">
       <li class="nav-header"><%= t('revs.dashboards') %></li>
       <% if can? :administer, :all  %>
-        <li><%= link_to t('revs.user.admin_dashboard'), admin_dashboard_path %></li>
+        <li><%= link_to t('revs.user.admin_dashboard'), admin_collection_highlights_path %></li>
       <% end %>
       <% if can? :curate, :all %>
         <li><%= link_to t('revs.user.curator_dashboard'), curator_tasks_path %></li>

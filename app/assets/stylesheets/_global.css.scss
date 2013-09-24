@@ -263,8 +263,16 @@ td.right, th.right {
   text-align: right;
 }
 
+td.centered, th.centered {
+  text-align: center;
+}
+
 select:focus {
   outline: none;
+}
+
+.feature-collection img {
+  max-width: 120px;
 }
 
 // Hide element offscreen but still readable by screen readers
