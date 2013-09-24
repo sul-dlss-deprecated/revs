@@ -246,6 +246,38 @@ describe("Flagging",:type=>:request,:integration=>true) do
       
     end
     
+    it "should not allow flags by a user after the the user has posted the maxinum number of flags on an item" do
+       druid = 'yh093pt9555'
+       first_user_comment="I am the first comment."
+       other_comments="Bunch of bad flags."
+       resolution="Closing bad flag"
+       
+       #The item should have no open flags on it by this user
+       Flag.where(:druid=>druid, :state=>Flag.open, :user_id=>User.where(:username=>user_login)[0].id).should == []
+       
+       #Add an initial comment we can easily find and resolve
+       add_a_flag(user_login, druid, first_user_comment)
+       
+       #Add comments up to the limit
+       flags = 1
+       while flags < Revs::Application.config.num_flags_per_item_per_user do
+         add_a_flag(user_login, druid, other_comments)
+         flags += 1
+       end
+       
+       #Ensure that you can no longer add a flag
+       login_as_user_and_goto_druid(user_login, druid)
+       page.should have_no_content(I18n.t('revs.flags.flag'))
+       
+       #resolve the first flag
+       resolve_flag_fix(curator_login, druid, first_user_comment, resolution)
+       
+       #Ensure the User Could Comment Again
+       login_as_user_and_goto_druid(user_login, druid)
+       page.should have_content(I18n.t('revs.flags.flag'))
+       
+    end
+    
     
   
     
