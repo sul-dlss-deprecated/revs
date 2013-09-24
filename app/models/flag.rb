@@ -13,7 +13,7 @@ class Flag < ActiveRecord::Base
   validates :user_id, :numericality => { :only_integer => true }
   validate :check_flag_type
   
-  FLAGS_PER_TABLE_PAGE = 2
+  FLAGS_PER_TABLE_PAGE = 25
   
   
   # head to solr to get the actual item, so we can access its attributes, like the title
