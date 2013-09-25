@@ -3,7 +3,7 @@ source 'http://sul-gems.stanford.edu'
 
 gem 'bundler', '>= 1.2.0'
 
-gem 'editstore', '>= 0.1.4'
+gem 'editstore', '>= 0.1.5'
 
 ruby "1.9.3"
 

@@ -84,7 +84,7 @@ GEM
       warden (~> 1.2.1)
     diff-lcs (1.2.4)
     druid-tools (0.2.3)
-    editstore (0.1.4)
+    editstore (0.1.5)
       druid-tools (>= 0.2.0)
       rails (~> 3.2.13)
     erubis (2.7.0)
@@ -231,7 +231,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   devise (~> 2.2.5)
   druid-tools (>= 0.2.0)
-  editstore (>= 0.1.4)
+  editstore (>= 0.1.5)
   font-awesome-rails
   google-analytics-rails
   jettywrapper
