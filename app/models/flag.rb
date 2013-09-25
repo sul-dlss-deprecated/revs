@@ -69,11 +69,7 @@ class Flag < ActiveRecord::Base
   end
   
   def self.queryFlagGroup(flag_group, druid, state)
-    value = flag_group[[druid,state]]
-    if value == nil
-      value = 0
-    end
-    return value
+    return flag_group[[druid,state]] || 0
   end
   
  
