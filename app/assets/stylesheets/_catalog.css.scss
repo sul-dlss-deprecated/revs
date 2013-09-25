@@ -299,6 +299,9 @@
   .blacklight-catalog-index #featured-collection-nav {
     border-top: none;
   }
+  .unresolved-label {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 979px) and (min-width: 768px) {
