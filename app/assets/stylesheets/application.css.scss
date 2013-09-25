@@ -15,9 +15,13 @@
 @import "bootstrap-responsive";
 
 @import 'blacklight/responsive';
-
 @import 'blacklight/blacklight_defaults';
 @import "blacklight/modal";
+@import "blacklight/facets";
+@import "blacklight/bookmark";
+@import "blacklight/dropdown";
+@import "blacklight/catalog";
+
 @import "improved-modal/bootstrap-modal";
 
 @import "global";
@@ -28,12 +32,8 @@
 @import "admin";
 @import "about";
 @import "annotations";
-@import "blacklight/facets";
 @import "facets";
-@import "blacklight/catalog";
 @import "catalog";
-@import "blacklight/bookmark";
-@import "blacklight/dropdown";
 
 @import "collection_members_grid";
 @import "carousel";
