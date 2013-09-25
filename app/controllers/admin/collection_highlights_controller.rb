@@ -17,6 +17,7 @@ class Admin::CollectionHighlightsController < ApplicationController
     @collection=SolrDocument.find(params[:id])
     @collection.update_solr('highlighted_ssi','update',params[:highlighted])
     flash[:success]=t('revs.messages.saved')
+    expire_fragment('home')
     redirect_to admin_collection_highlights_path
   end
   
@@ -24,6 +25,7 @@ class Admin::CollectionHighlightsController < ApplicationController
     @collection=SolrDocument.find(params[:id])
     @collection.update_solr('highlighted_ssi','update',params[:highlighted])
     puts params[:id] + " " + params[:highlighted]
+    expire_fragment('home')
     render :nothing=>true
   end
   
