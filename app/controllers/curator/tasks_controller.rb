@@ -7,6 +7,7 @@ class Curator::TasksController < ApplicationController
    def index
      @order=params[:order] || 'num_flags DESC'
      @flags_grouped=Flag.select('*,COUNT("druid") as num_flags').group("druid").order(@order).page(params[:pagina2]).per(Flag.per_table_page)
+     @flag_states = Flag.groupByFlagState
      #@flags_grouped = Kaminari.paginate_array(Flag.all).page(params[:pagina2]).per(Flag.per_table_page)
      @flags = Kaminari.paginate_array(Flag.where(:state => Flag.open)).page(params[:pagina]).per(Flag.per_table_page)
    end

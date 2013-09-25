@@ -42,9 +42,9 @@
         <tr>
           <td><%= item_link(flag.item,:truncate=>true) %></td>
 			    <td class="right"><%= flag.num_flags %></td>
-          <td class="right"><%= Flag.where('druid'=>flag.item.id,'state'=>Flag.open).size %></td>
-          <td class="right"><%= Flag.where('druid'=>flag.item.id,'state'=>Flag.fixed).size %></td>
-          <td class="right"><%= Flag.where('druid'=>flag.item.id,'state'=>Flag.wont_fix).size %></td>
+          <td class="right"><%= Flag.queryFlagGroup(@flag_states, flag.druid, Flag.open) %></td>
+          <td class="right"><%= Flag.queryFlagGroup(@flag_states, flag.druid, Flag.fixed) %></td>
+          <td class="right"><%= Flag.queryFlagGroup(@flag_states, flag.druid, Flag.wont_fix) %></td>
           <td><%= show_as_datetime(flag.created_at.in_time_zone) %></td>
         </tr>
       <% end %>

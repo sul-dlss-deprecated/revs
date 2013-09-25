@@ -64,6 +64,18 @@ class Flag < ActiveRecord::Base
     return (options.include? Flag.fixed or options.include? Flag.wont_fix)
   end
   
+  def self.groupByFlagState
+    return Flag.group("druid", "state").size
+  end
+  
+  def self.queryFlagGroup(flag_group, druid, state)
+    value = flag_group[[druid,state]]
+    if value == nil
+      value = 0
+    end
+    return value
+  end
+  
  
   
 end
