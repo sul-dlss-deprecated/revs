@@ -2,7 +2,7 @@
   
      <%= image_tag((flag.user.avatar.url.blank? ? asset_url('default-avatar_32x32.png') : flag.user.avatar.url(:tiny)), :class => "user-image user-image-tiny") %>
     <%=flag.user == current_user ? t('revs.flags.you') : flag.user.to_s%> on <%=show_as_date(flag.created_at)%>
-    <% if !flag.resolved %>
+    <% if !flag.resolved and can? :resolve, flag %>
       <span class="label label-warning pull-right unresolved-label">Unresolved</span>
     <% end %>
     <blockquote><%= flag.comment%></blockquote>
