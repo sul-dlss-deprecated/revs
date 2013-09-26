@@ -19,8 +19,8 @@ class Curator::TasksController < ApplicationController
    def annotations
      @order = params[:order] || "druid"
     
-     @annotations = Kaminari.paginate_array(Annotation.order(@order).all).page(params[:page]).per(Annotation.per_table_page)
-     
+     #@annotations = Kaminari.paginate_array(Annotation.order(@order).all).page(params[:page]).per(Annotation.per_table_page)
+     @annotations = Annotation.select('*,COUNT("druid") as num_annotations').group("druid").order(@order).page(params[:page]).per(Annotation.per_table_page)
    end
    
    # an ajax call to set the curator edit mode

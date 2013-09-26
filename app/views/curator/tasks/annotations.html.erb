@@ -4,15 +4,14 @@
   <%= @test%>
    <table class="table table-bordered table-condensed table-hover table-striped">
 	   <th><%=link_to t('revs.curator.item_title'), annotations_table_curator_tasks_path(:order=>'druid')%></th>
-	   <th><%=t('revs.annotations.annotation_text')%></th>
-	   <th><%=link_to t('revs.annotations.annotator'), annotations_table_curator_tasks_path(:order=>'user_id')%></th>
+	   <th><%=link_to t('revs.annotations.count'), annotations_table_curator_tasks_path(:order=>'num_annotations')%></th>
+	   
 	   <th><%=link_to t('revs.annotations.annotation_created'), annotations_table_curator_tasks_path(:order=>'created_at')%></th>
 	   
 	    <%@annotations.each do |annotation| %>
 		<tr>
 			<td><%=item_link(annotation.item,:truncate=>true)%></td>
-			<td><%=annotation.text%></td>
-			<td><%=display_user_name(User.find(annotation.user_id))%></td>
+			<td><%=annotation.num_annotations%></td>
 		    <td><%= show_as_datetime(annotation.created_at.in_time_zone) %></td>		
 		</tr>
 		<% end %>
