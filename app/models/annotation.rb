@@ -12,6 +12,8 @@ class Annotation < ActiveRecord::Base
   validates :druid, :is_druid=>true
   validates :text, :presence=>true
   validates :user_id, :numericality => { :only_integer => true }
+  
+   ANNOTATIONS_PER_TABLE_PAGE = 25
 
   # head to solr to get the actual item, so we can access its attributes, like the title
   def item
@@ -30,6 +32,10 @@ class Annotation < ActiveRecord::Base
       annotation.json=annotation_hash.to_json # convert back to json
     end
     return annotations
+  end
+  
+  def self.per_table_page
+    return ANNOTATIONS_PER_TABLE_PAGE 
   end
   
   def add_annotation_to_solr

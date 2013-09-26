@@ -16,6 +16,13 @@ class Curator::TasksController < ApplicationController
      @flags = Kaminari.paginate_array(Flag.where(:state => @selection).order(@order_all)).page(params[:pagina]).per(Flag.per_table_page)
    end
    
+   def annotations
+     @order = params[:order] || "druid"
+    
+     @annotations = Kaminari.paginate_array(Annotation.order(@order).all).page(params[:page]).per(Annotation.per_table_page)
+     
+   end
+   
    # an ajax call to set the curator edit mode
    def set_edit_mode
      session[:curator_edit_mode]=params[:value]

@@ -150,6 +150,7 @@ en:
       not_found: 'Item not found'
       sidebar:
         actions: 'Actions'
+        annotations: 'View annotations'
       curator_actions: 'Curator Actions'
       enter_edit_mode: 'Enter metadata edit mode'
       leave_edit_mode: 'Leave metadata edit mode'
@@ -174,6 +175,9 @@ en:
         plural: 'Annotations'
         none: 'This user does not have any annotations.'
         you_can_annotate_images: 'You can annotate item images from the Item Details page.'
+        annotation_created: "Annotation created"
+        annotation_text: "Annotation text"
+        annotator: "Annotator"
     collection:
       collection_detail: 'Collection Detail'
       member_detail: 'Item Detail'
