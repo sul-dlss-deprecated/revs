@@ -3,7 +3,7 @@
   <table class="table table-bordered table-condensed table-hover table-striped">
     <tr>
       <% if local_assigns[:curate_view] %>
-       <th><%= t('revs.curator.item_title')%></th>
+       <th><%= link_to t('revs.curator.item_title'), curator_tasks_path(:order_all=>'druid', :selection=>local_assigns[:selection].join(','), :tab=>"flags-by-flag")%></th>
        <th><%= t('revs.curator.flagging_user') %></th>
      <% end %>
 
@@ -18,7 +18,7 @@
 	   <% end %>
 	   
 	   <% if local_assigns[:curate_view] %>
-      <th><%= t('revs.curator.flag_created')%></th>
+      <th><%= link_to t('revs.curator.flag_created'), curator_tasks_path(:order_all=>'created_at', :selection=>local_assigns[:selection].join(','), :tab=>"flags-by-flag")%></th>
 	   <% end %>
 	  
 	  

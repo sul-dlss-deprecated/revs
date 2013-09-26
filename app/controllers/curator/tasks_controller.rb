@@ -5,12 +5,15 @@ class Curator::TasksController < ApplicationController
 
     # get all flags grouped by druid with counts
    def index
-     @selection = [Flag.open]
+     s = params[:selection] || Flag.open
+     @selection = s.split(',')
      @order=params[:order] || 'num_flags DESC'
+     @order_all=params[:order_all] || "druid"
      @flags_grouped=Flag.select('*,COUNT("druid") as num_flags').group("druid").order(@order).page(params[:pagina2]).per(Flag.per_table_page)
      @flag_states = Flag.groupByFlagState
+     @tab = params[:tab]
      #@flags_grouped = Kaminari.paginate_array(Flag.all).page(params[:pagina2]).per(Flag.per_table_page)
-     @flags = Kaminari.paginate_array(Flag.where(:state => Flag.open)).page(params[:pagina]).per(Flag.per_table_page)
+     @flags = Kaminari.paginate_array(Flag.where(:state => @selection).order(@order_all)).page(params[:pagina]).per(Flag.per_table_page)
    end
    
    # an ajax call to set the curator edit mode
