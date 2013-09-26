@@ -39,11 +39,13 @@ class UserController < ApplicationController
   def flags
     @name=params[:name]
     @user=User.find_by_username(@name)
-    @flags=Flag.where(:state=>Flag.open)
+    s = params[:selection] || Flag.open
+    @selection = s.split(',')
     
     if @user
       @order=params[:order] || 'druid'    
-      @flags=flagListForStates([Flag.open], @user)
+      @flags=flagListForStates(@selection, @user, @order)
+      
     else
       profile_not_found
     end
@@ -51,9 +53,9 @@ class UserController < ApplicationController
   
   def update_flag_table
     @curate_view = false 
+    @selection = params[:selection].split(',')
     @user = current_user
-    @selection = params[:selection].split(',') #make this an array so we can do if array include?, that way you could search for both fixed and won't fixed 
-    @flags = flagListForStates(@selection, current_user.id)
+    @flags = flagListForStates(@selection, current_user.id, params[:sort] || "druid")
     respond_to do |format|
        format.js { render }
     end
@@ -62,31 +64,28 @@ class UserController < ApplicationController
   def curator_update_flag_table
     @curate_view = true 
     @user = current_user
-    @selection = params[:selection].split(',') #make this an array so we can do if array include?, that way you could search for both fixed and won't fixed 
-    @flags = flagListForStates(@selection, nil)
+    @selection = params[:selection].split(',') 
+    @flags = flagListForStates(@selection, nil,params[:sort] || "druid")
     respond_to do |format|
        format.js { render }
     end
   end
   
- 
   
   
-  def flagListForStates(states, user)
+  
+  def flagListForStates(states, user, sort)
     flags = []
-    flags_per_page = 25
-    for state in states 
-      if user == nil #curator, we want all flags
-         temp = Flag.where(:state=>state)
-      else
-        temp = Flag.where(:state=>state, :user_id=> @user.id)
-      end
       
-      if temp != nil
-        flags += temp
+      if user == nil #curator, we want all flags
+         temp = Flag.where(:state=>states).order(sort)
+      else
+        temp = Flag.where(:state=>states, :user_id=> @user.id).order(sort)
       end
-    end
-    return Kaminari.paginate_array(flags).page(params[:pagina]).per(flags_per_page).per(Flag.per_table_page)
+     
+    flags = temp || []  
+      
+    return Kaminari.paginate_array(flags).page(params[:pagina]).per(Flag.per_table_page)
   end
   
   private

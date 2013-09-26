@@ -60,8 +60,8 @@
 	  <div class="tab-pane" id="flags-by-flag">
 	<% end %>
 
-  <%= select_tag 'curator_flag_selection', options_from_collection_for_select(Flag.for_dropdown, :first, :last, @selected) %>
-  <%= render :partial => 'user/flags_table', :locals=>{:selection=>[Flag.open], :flags=>@flags, :user=>current_user,:curate_view=>true }%>
+  <%= select_tag 'curator_flag_selection', options_from_collection_for_select(Flag.for_dropdown, :first, :last, :selected => @selection.join(",")) %>
+  <%= render :partial => 'user/flags_table', :locals=>{:selection=>@selection, :flags=>@flags, :user=>current_user,:curate_view=>true }%>
     </div>
 
   </div>

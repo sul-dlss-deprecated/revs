@@ -88,6 +88,7 @@ Revs::Application.routes.draw do
         post 'set_edit_mode/:id', :to => 'tasks#set_edit_mode'
         put 'item/:id/edit_metadata', :to => 'tasks#edit_metadata', :as => 'edit_metadata'
         put 'item/:id/set_top_priority_item', :to => 'tasks#set_top_priority_item', :as => 'set_top_priority_item'
+        post 'order', :to => 'tasks#index', :as => 'order_flags'
       end
     end
   end

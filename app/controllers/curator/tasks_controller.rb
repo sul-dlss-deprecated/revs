@@ -5,6 +5,7 @@ class Curator::TasksController < ApplicationController
 
     # get all flags grouped by druid with counts
    def index
+     @selection = [Flag.open]
      @order=params[:order] || 'num_flags DESC'
      @flags_grouped=Flag.select('*,COUNT("druid") as num_flags').group("druid").order(@order).page(params[:pagina2]).per(Flag.per_table_page)
      @flag_states = Flag.groupByFlagState

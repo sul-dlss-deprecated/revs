@@ -1,17 +1,27 @@
 <div id="flags_table">
+	
   <table class="table table-bordered table-condensed table-hover table-striped">
     <tr>
       <% if local_assigns[:curate_view] %>
-       <th><%= t('revs.curator.item_title') %></th>
+       <th><%= t('revs.curator.item_title')%></th>
        <th><%= t('revs.curator.flagging_user') %></th>
-      <% end %>
+     <% end %>
 
       <% if not local_assigns[:curate_view] %>
-        <th><%= link_to t('revs.collection_members.items_name').titleize, user_flags_path(:name=>user.username,:order=>'druid') %></th>
+        <th><%= link_to t('revs.collection_members.items_name').titleize, user_flags_path(:name=>user.username,:order=>'druid', :selection=>local_assigns[:selection].join(',')) %></th>
       <% end%>
 
       <th><%= t('revs.flags.comment')%></th>
-      <th><%= link_to t('revs.curator.flag_created'), user_flags_path(:name=>user.username, :order=>'created_at') %></th>
+	  
+	   <% if not local_assigns[:curate_view] %>
+      <th><%= link_to t('revs.curator.flag_created'), user_flags_path(:name=>user.username, :order=>'created_at', :selection=>local_assigns[:selection].join(',')) %></th>
+	   <% end %>
+	   
+	   <% if local_assigns[:curate_view] %>
+      <th><%= t('revs.curator.flag_created')%></th>
+	   <% end %>
+	  
+	  
       <th><%= t('revs.messagaes.status') %></th>
 
       <% if Flag.display_resolved_columns(local_assigns[:selection])%>
