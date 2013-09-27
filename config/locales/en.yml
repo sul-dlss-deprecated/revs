@@ -161,12 +161,15 @@ en:
       item_title: "Item Title"
       flagging_user: "Flagged by"
       flag_created: "Flagged on"
+      created_on: "Created on"
       resolver_username: "Resolved by"
       resolution_notes: "Resolution notes"
       resolution_date: "Resolved on"
       flagged_items_by_status: "By Flag Status"
       flagged_items_by_item: "By Item"
       annotations: "Annotations"
+      annotated_items_by_annotation: "By Annotation"
+      annotated_items_by_item: "By Item"
     dashboards: 'Dashboards'
     citations:
         view: 'View full citation page with image download'
