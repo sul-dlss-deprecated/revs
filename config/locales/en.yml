@@ -62,7 +62,7 @@ en:
       all_flags_name: "All Flags"
       flagging_user: "Flagging User"
       resolution_time: "Resolution Time"
-      no_results: "No flags found."
+      no_results: "There are no flags with this status."
     nav:
       home: 'Home'
       collections: 'Collections'
@@ -150,7 +150,8 @@ en:
       not_found: 'Item not found'
       sidebar:
         actions: 'Actions'
-        annotations: 'View annotations'
+        annotations: 'View Annotations'
+        view_flagged_items: "View Flagged Items"
       curator_actions: 'Curator Actions'
       enter_edit_mode: 'Enter metadata edit mode'
       leave_edit_mode: 'Leave metadata edit mode'
@@ -164,6 +165,7 @@ en:
       resolution_date: "Resolved on"
       flagged_items_by_status: "By Flag Status"
       flagged_items_by_item: "By Item"
+      annotations: "Annotations"
     dashboards: 'Dashboards'
     citations:
         view: 'View full citation page with image download'
@@ -317,7 +319,6 @@ en:
         It does <strong>not</strong> include email address.
       waiting_confirmation: "Currently waiting confirmation for"
       username_public_display: "username for public display"
-      view_flagged_items: "View flagged items"
       view_profile: "View profile"
       view_all_annotations: "View all annotations"
       close_all_annotations: "Close all Annotations"

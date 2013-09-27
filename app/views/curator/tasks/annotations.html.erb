@@ -1,7 +1,32 @@
 <div id="content" class="span9 admin">
-	
+
   <h2><%=t('revs.user.curator_dashboard')%></h2>
+<<<<<<< HEAD
    <%= render :partial => 'curator/tasks/annotations_tables' %>
+=======
+
+  <h3>
+    <%= t('revs.curator.annotations') %>
+    <span class="object-count muted">(<%= Annotation.count %> total)</span>
+  </h3>
+
+  <%= @test %>
+   <table class="table table-bordered table-condensed table-hover table-striped">
+     <th><%= link_to t('revs.curator.item_title'), annotations_table_curator_tasks_path(:order=>'druid') %></th>
+     <th class="right"><%= link_to t('revs.annotations.count'), annotations_table_curator_tasks_path(:order=>'num_annotations DESC') %></th>
+     <th><%= link_to t('revs.annotations.annotation_created'), annotations_table_curator_tasks_path(:order=>'created_at') %></th>
+
+    <%@annotations.each do |annotation| %>
+      <tr>
+        <td><%= item_link(annotation.item,:truncate=>true) %></td>
+        <td class="right"><%= annotation.num_annotations %></td>
+        <td><%= show_as_datetime(annotation.created_at.in_time_zone) %></td>
+      </tr>
+    <% end %>
+
+   </table>
+
+>>>>>>> 3a5e5d04294d46cd137a56cdc2b095c8bc29db95
    <%= paginate @annotations, :params => {:order=>@order} %>
 </div>
 
