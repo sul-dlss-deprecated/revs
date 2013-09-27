@@ -26,6 +26,7 @@ en:
       switch_yes: "yes"
       switch_no: "no"
       status: "Status"
+      changes_not_saved: "Please note, in %{rails_env} your metadata changes will NOT be permanently saved."
       not_authorized: 'You are not authorized to perform this action.'
       in_beta_not_authorized_html: "The Revs Digital Library is currently in limited beta release.  If you would like to request beta access, please <a href='/contact'>contact us.</a>"
       validation_error: "The values you entered were not valid for the field you selected."

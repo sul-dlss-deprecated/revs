@@ -45,7 +45,7 @@ class CatalogController < ApplicationController
       else
         success=SolrDocument.bulk_update(@bulk_edit,current_user)
         if success
-          flash.now[:notice]=t('revs.messages.saved')
+          flash.now[:notice]=t('revs.messages.saved') if ['staging','development'].include?(Rails.env)
         else
           flash.now[:error]=t('revs.messages.validation_error')
         end

@@ -1,4 +1,5 @@
 <%= render "gallery_toggle" %>
+<strong><%= t('revs.messages.changes_not_saved',:rails_env=>Rails.env) if ['staging','development'].include?(Rails.env)%></strong>
 
 <div class="row curator-edit-options">
 	<%= form_tag(request.url, method: 'post', class:'form-inline') do %>
