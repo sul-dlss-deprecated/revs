@@ -35,7 +35,7 @@
 		   <% end %>
        <% end %>
    </table>
-   <%= paginate @annotations, :params => {:order=>@order} %>
+   <%= paginate @annotations, :params => {:order=>@order, :display_druid=>@display_druid, :exclude => @exclude.join(',')} %>
 </div>
 
 
