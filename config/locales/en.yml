@@ -179,7 +179,7 @@ en:
         you_can_annotate_images: 'You can annotate item images from the Item Details page.'
         annotation_created: "Annotation created"
         annotation_text: "Annotation text"
-        annotator: "Most Recent Annotator"
+        annotator: "Annotator"
     collection:
       collection_detail: 'Collection Detail'
       member_detail: 'Item Detail'
