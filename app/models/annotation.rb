@@ -13,7 +13,7 @@ class Annotation < ActiveRecord::Base
   validates :text, :presence=>true
   validates :user_id, :numericality => { :only_integer => true }
   
-   ANNOTATIONS_PER_TABLE_PAGE = 1
+   ANNOTATIONS_PER_TABLE_PAGE = 25
    ANNOTATION_ALL = 'all'
    ANNOTATION_NONE = 'none'
 
