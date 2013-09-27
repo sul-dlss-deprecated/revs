@@ -2,7 +2,10 @@
 	
   <h2><%=t('revs.user.curator_dashboard')%></h2>
 
-  <h3><%="#{t('revs.flags.flagged')} #{t('revs.collection_members.items_name').titleize.pluralize}"%></h3>
+  <h3>
+    <%="#{t('revs.flags.flagged')} #{t('revs.collection_members.items_name').titleize.pluralize}"%>
+    <span class="object-count muted">(<%= Flag.count %> total, <%= Flag.unresolved_count %> unresolved)</span>
+  </h3>
 
   <ul class="nav nav-tabs">
     <% if params[:tab] != "flags-by-flag"%>

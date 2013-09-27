@@ -1,69 +1,71 @@
 <div id="flags_table">
-	
-  <table class="table table-bordered table-condensed table-hover table-striped">
-    <tr>
-      <% if local_assigns[:curate_view] %>
-       <th><%= link_to t('revs.curator.item_title'), curator_tasks_path(:order_all=>'druid', :selection=>local_assigns[:selection].join(','), :tab=>"flags-by-flag")%></th>
-       <th><%= t('revs.curator.flagging_user') %></th>
-     <% end %>
 
-      <% if not local_assigns[:curate_view] %>
-        <th><%= link_to t('revs.collection_members.items_name').titleize, user_flags_path(:name=>user.username,:order=>'druid', :selection=>local_assigns[:selection].join(',')) %></th>
-      <% end%>
+  <% if flags.size == 0 %>
+    <%=t('revs.flags.no_results')%>
+  <% else %>
+    <table class="table table-bordered table-condensed table-hover table-striped">
+      <tr>
+        <% if local_assigns[:curate_view] %>
+         <th><%= link_to t('revs.curator.item_title'), curator_tasks_path(:order_all=>'druid', :selection=>local_assigns[:selection].join(','), :tab=>"flags-by-flag")%></th>
+         <th><%= t('revs.curator.flagging_user') %></th>
+       <% end %>
 
-      <th><%= t('revs.flags.comment')%></th>
-	  
-	   <% if not local_assigns[:curate_view] %>
-      <th><%= link_to t('revs.curator.flag_created'), user_flags_path(:name=>user.username, :order=>'created_at', :selection=>local_assigns[:selection].join(',')) %></th>
-	   <% end %>
-	   
-	   <% if local_assigns[:curate_view] %>
-      <th><%= link_to t('revs.curator.flag_created'), curator_tasks_path(:order_all=>'created_at', :selection=>local_assigns[:selection].join(','), :tab=>"flags-by-flag")%></th>
-	   <% end %>
-	  
-	  
-      <th><%= t('revs.messagaes.status') %></th>
-
-      <% if Flag.display_resolved_columns(local_assigns[:selection])%>
-        <th><%= t('revs.curator.resolver_username') %></th>
-        <th><%= t('revs.curator.resolution_notes') %></th>
-        <% if local_assigns[:curate_view]%>
-          <th><%= t('revs.curator.resolution_date')%></th>
+        <% if not local_assigns[:curate_view] %>
+          <th><%= link_to t('revs.collection_members.items_name').titleize, user_flags_path(:name=>user.username,:order=>'druid', :selection=>local_assigns[:selection].join(',')) %></th>
         <% end%>
-      <% end %>
-    </tr>
 
-  <% flags.each do |flag| %>
-   <tr>
-     <td><%= item_link(flag.item,:truncate=>true) %></td>
-     <% if local_assigns[:curate_view]%>
-       <td><%=display_user_name(User.find(flag.user_id))%></td>
-     <% end%>
-    <td><%= flag.comment %></td>
-    <td><%= show_as_datetime(flag.created_at.in_time_zone) %></td>
-    <td><%= flag.state_display_name%></td>
-   <% if Flag.display_resolved_columns(local_assigns[:selection])%>
-    <td>
-      <% if flag.resolving_user != nil %>
-        <%= display_user_name(User.find(flag.resolving_user))%>
-      <%end%>
-    </td>
-    <td><%= flag.resolution%></td>
-    <% if local_assigns[:curate_view] %>
-      <td>
-        <% if flag.resolved_time != nil %>
-          <%= show_as_datetime(flag.resolved_time.in_time_zone)%>
+        <th><%= t('revs.flags.comment')%></th>
+
+       <% if not local_assigns[:curate_view] %>
+        <th><%= link_to t('revs.curator.flag_created'), user_flags_path(:name=>user.username, :order=>'created_at', :selection=>local_assigns[:selection].join(',')) %></th>
+       <% end %>
+
+       <% if local_assigns[:curate_view] %>
+        <th><%= link_to t('revs.curator.flag_created'), curator_tasks_path(:order_all=>'created_at', :selection=>local_assigns[:selection].join(','), :tab=>"flags-by-flag")%></th>
+       <% end %>
+
+
+        <th><%= t('revs.messagaes.status') %></th>
+
+        <% if Flag.display_resolved_columns(local_assigns[:selection])%>
+          <th><%= t('revs.curator.resolver_username') %></th>
+          <th><%= t('revs.curator.resolution_notes') %></th>
+          <% if local_assigns[:curate_view]%>
+            <th><%= t('revs.curator.resolution_date')%></th>
+          <% end%>
         <% end %>
-      </td>
-    <% end %>
-   <% end %>
-   </tr>
+      </tr>
+
+      <% flags.each do |flag| %>
+       <tr>
+         <td><%= item_link(flag.item,:truncate=>true) %></td>
+         <% if local_assigns[:curate_view]%>
+           <td><%=display_user_name(User.find(flag.user_id))%></td>
+         <% end%>
+        <td><%= flag.comment %></td>
+        <td><%= show_as_datetime(flag.created_at.in_time_zone) %></td>
+        <td><%= flag.state_display_name%></td>
+       <% if Flag.display_resolved_columns(local_assigns[:selection])%>
+        <td>
+          <% if flag.resolving_user != nil %>
+            <%= display_user_name(User.find(flag.resolving_user))%>
+          <%end%>
+        </td>
+        <td><%= flag.resolution%></td>
+        <% if local_assigns[:curate_view] %>
+          <td>
+            <% if flag.resolved_time != nil %>
+              <%= show_as_datetime(flag.resolved_time.in_time_zone)%>
+            <% end %>
+          </td>
+        <% end %>
+       <% end %>
+       </tr>
+      <% end %>
+
+    </table>
+
   <% end %>
 
-</table>
-
-<%if flags.size == 0%>
-  <%=t('revs.flags.no_results')%>
-<%end%>
  <%= paginate @flags, :param_name => :pagina, :params => {:order=>@order, :tab=>"flags-by-flag"} %>
 </div>
