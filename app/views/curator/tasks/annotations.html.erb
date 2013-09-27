@@ -2,7 +2,7 @@
 	
   <h2><%=t('revs.user.curator_dashboard')%></h2>
    <%= render :partial => 'curator/tasks/annotations_tables' %>
-   <%= paginate @annotations, :params => {:order=>@order} %>
+
 </div>
 
 <%= render :partial => 'devise/shared/show_curator_sidebar' %>
