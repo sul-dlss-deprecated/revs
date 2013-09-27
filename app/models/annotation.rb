@@ -14,6 +14,8 @@ class Annotation < ActiveRecord::Base
   validates :user_id, :numericality => { :only_integer => true }
   
    ANNOTATIONS_PER_TABLE_PAGE = 25
+   ANNOTATION_ALL = 'all'
+   ANNOTATION_NONE = 'none'
 
   # head to solr to get the actual item, so we can access its attributes, like the title
   def item
@@ -32,6 +34,14 @@ class Annotation < ActiveRecord::Base
       annotation.json=annotation_hash.to_json # convert back to json
     end
     return annotations
+  end
+  
+  def self.show_all
+    return  ANNOTATION_ALL
+  end
+  
+  def self.show_none
+    return  ANNOTATION_NONE
   end
   
   def self.per_table_page

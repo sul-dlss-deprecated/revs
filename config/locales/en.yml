@@ -177,7 +177,7 @@ en:
         you_can_annotate_images: 'You can annotate item images from the Item Details page.'
         annotation_created: "Annotation created"
         annotation_text: "Annotation text"
-        recent_annotator: "Most Recent Annotator"
+        annotator: "Most Recent Annotator"
     collection:
       collection_detail: 'Collection Detail'
       member_detail: 'Item Detail'
@@ -320,6 +320,7 @@ en:
       view_flagged_items: "View flagged items"
       view_profile: "View profile"
       view_all_annotations: "View all annotations"
+      close_all_annotations: "Close all Annotations"
       view_your_annotations: "View your annotations"
       view_your_flags: "View your flags"
       view_all_flags: "View all flags"

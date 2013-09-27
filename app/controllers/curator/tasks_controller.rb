@@ -18,10 +18,37 @@ class Curator::TasksController < ApplicationController
    
    def annotations
      @order = params[:order] || "druid"
-    
+     @display_druid = params[:display_druid] || Annotation.show_none
      #@annotations = Kaminari.paginate_array(Annotation.order(@order).all).page(params[:page]).per(Annotation.per_table_page)
      @annotations = Annotation.select('*,COUNT("druid") as num_annotations').group("druid").order(@order).page(params[:page]).per(Annotation.per_table_page)
+     e = params[:exclude] ||  Annotation.show_none
+     @exclude = e.split(",") 
+     
+     #Check to see if we've opened one annotation and now want to close it
+     close_selected = false 
+     if @display_druid !=  Annotation.show_all and @exclude.include?(@display_druid)
+       close_selected = true  
+     end
+     
+     #Check to see if the user has closed all annotations one by one
+     all_closed = false
+     if @display_druid == Annotation.show_all
+       all_closed = true
+       @annotations.each do |annotation|
+          if not @exclude.include?(annotation.druid)
+            all_closed = false
+          end
+        end
+     end
+     
+     if all_closed or close_selected
+       @exclude = Annotation.show_none
+       @display_druid = Annotation.show_none
+     end
+     
    end
+   
+   
    
    # an ajax call to set the curator edit mode
    def set_edit_mode

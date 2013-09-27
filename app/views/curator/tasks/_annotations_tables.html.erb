@@ -1,0 +1,41 @@
+<div id="content" class="span9 admin">
+	<% if @display_druid != 'all'%>
+	<span><%= link_to t('revs.show.view_all_annotations'), annotations_table_curator_tasks_path(:order=>@order, :display_druid=>Annotation.show_all)%></span>
+	<% else %>
+	<span><%= link_to t('revs.show.close_all_annotations'), annotations_table_curator_tasks_path(:order=>@order, :display_druid=>Annotation.show_none, :exclude=>'none')%></span>
+	<% end %>
+   <table class="table table-bordered table-condensed table-hover table-striped">
+	   <th><%=link_to t('revs.curator.item_title'), annotations_table_curator_tasks_path(:order=>'druid', :display_druid => @display_druid, :exclude => @exclude)%></th>
+	   <th><%=link_to t('revs.annotations.count'), annotations_table_curator_tasks_path(:order=>'num_annotations', :display_druid => @display_druid, :exclude => @exclude )%></th>
+	   
+	   <th><%=link_to t('revs.annotations.annotation_created'), annotations_table_curator_tasks_path(:order=>'created_at', :display_druid => @display_druid, :exclude => @exclude)%></th>
+	   
+	   <%@annotations.each do |annotation| %>
+		<tr>
+			<td><%=item_link(annotation.item,:truncate=>true)%></td>
+			<td><%= link_to annotation.num_annotations, annotations_table_curator_tasks_path(:order=>@order, :display_druid => annotation.druid, :exclude => Annotation.show_none)%></td>
+		    <td><%= show_as_datetime(annotation.created_at.in_time_zone) %></td>		
+		</tr>
+		   <%if annotation.druid == @display_druid or (@display_druid == 'all' and not @exclude.include?(annotation.druid))%>
+		   <tr><td>
+		   <table class="table table-bordered table-condensed table-hover table-striped">
+			   <th><%= t('revs.annotations.annotation_text')%></th>
+			   <th><%= t('revs.annotations.annotator')%></th>
+			   <th><%= t('revs.annotations.annotation_created')%></th>
+			   <%Annotation.where(:druid => annotation.druid).each do |a|%>
+			   <tr>
+				   <td><%= a.text%></td>
+				   <td><%= User.where(:id => a.user_id)[0].username%></td>
+				   <td><%= show_as_datetime(a.created_at.in_time_zone) %></td>
+			   </tr>	   
+			   <% end %>
+		   </table>
+		   <span><%=link_to t('revs.show.close'), annotations_table_curator_tasks_path(:order=>@order, :display_druid=>@display_druid, :exclude => @exclude.join(',') + "," + annotation.druid)%></span>
+	       </td></tr>
+		   <% end %>
+       <% end %>
+   </table>
+   <%= paginate @annotations, :params => {:order=>@order} %>
+</div>
+
+
