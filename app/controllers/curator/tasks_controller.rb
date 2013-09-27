@@ -42,7 +42,7 @@ class Curator::TasksController < ApplicationController
      end
      
      if all_closed or close_selected
-       @exclude = Annotation.show_none
+       @exclude = [Annotation.show_none]
        @display_druid = Annotation.show_none
      end
      

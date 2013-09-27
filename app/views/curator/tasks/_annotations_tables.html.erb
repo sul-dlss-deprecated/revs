@@ -5,10 +5,10 @@
 	<span><%= link_to t('revs.show.close_all_annotations'), annotations_table_curator_tasks_path(:order=>@order, :display_druid=>Annotation.show_none, :exclude=>'none')%></span>
 	<% end %>
    <table class="table table-bordered table-condensed table-hover table-striped">
-	   <th><%=link_to t('revs.curator.item_title'), annotations_table_curator_tasks_path(:order=>'druid', :display_druid => @display_druid, :exclude => @exclude)%></th>
-	   <th><%=link_to t('revs.annotations.count'), annotations_table_curator_tasks_path(:order=>'num_annotations', :display_druid => @display_druid, :exclude => @exclude )%></th>
+	   <th><%=link_to t('revs.curator.item_title'), annotations_table_curator_tasks_path(:order=>'druid', :display_druid => @display_druid, :exclude => @exclude.join(',') )%></th>
+	   <th><%=link_to t('revs.annotations.count'), annotations_table_curator_tasks_path(:order=>'num_annotations', :display_druid => @display_druid, :exclude => @exclude.join(',') )%></th>
 	   
-	   <th><%=link_to t('revs.annotations.annotation_created'), annotations_table_curator_tasks_path(:order=>'created_at', :display_druid => @display_druid, :exclude => @exclude)%></th>
+	   <th><%=link_to t('revs.annotations.annotation_created'), annotations_table_curator_tasks_path(:order=>'created_at', :display_druid => @display_druid, :exclude => @exclude.join(',') )%></th>
 	   
 	   <%@annotations.each do |annotation| %>
 		<tr>
