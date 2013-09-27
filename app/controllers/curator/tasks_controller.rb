@@ -34,7 +34,7 @@ class Curator::TasksController < ApplicationController
    def set_edit_mode
      session[:curator_edit_mode]=params[:value]
      @document=SolrDocument.find(params[:id])
-     flash[:notice] = t('revs.messages.changes_not_saved',:rails_env=>Rails.env) if (params[:value]=true && ['staging','development'].include?(Rails.env))
+     flash[:notice] = t('revs.messages.changes_not_saved',:rails_env=>Rails.env) if (params[:value]==true && ['staging'].include?(Rails.env))
    end
 
    # an ajax call for user submitted in-place edit
