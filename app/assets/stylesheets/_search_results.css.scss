@@ -243,12 +243,15 @@ span.constraints-label {margin-right: 0.5em;}
   clear: right;
   margin: 0 8px 0 0;
   .appliedFilter {
+    background-color: $constraint_bg_color;
+    border-color: $constraint_border_color;
     color: $active_link_color;
     padding: 1px 20px 1px 1em;
     .btnRemove {
       /* override the BL icon used as separator */
       background: asset_url('remove.png', image) no-repeat center center;
       background-size: 8px 8px;
+      border-left-color: $constraint_border_color;
     }
     .queryName,.filterName {
       /* override the BL icon used as separator */
