@@ -89,6 +89,17 @@ want the user to see the terms dialog box again for a specific period of time (w
 
 ## Deployment
 
+### Tagging
+
+Before deploying to production, tag the release with a version.  We use date based tags, typically month-year (eg. september-2013) for monthly releases.
+
+git co master
+git tag september-2013
+git push --tags
+
+
+### Deploying
+
     cd deploy
     cap production deploy   # for production
     cap staging deploy      # for staging
@@ -107,6 +118,7 @@ Your local development jetty must be started for this to work.  If your local je
     rake jetty:start
 
 ## Git Development Strategy
+
 
 ### Branches
 
