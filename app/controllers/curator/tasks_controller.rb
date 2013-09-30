@@ -22,9 +22,10 @@ class Curator::TasksController < ApplicationController
      #@annotations = Kaminari.paginate_array(Annotation.order(@order).all).page(params[:page]).per(Annotation.per_table_page)
      @annotations = Annotation.select('*,COUNT("druid") as num_annotations').group("druid").order(@order).page(params[:pagina2]).per(Annotation.per_table_page)
      @annotations_list = Kaminari.paginate_array(Annotation.order(@order2).all).page(params[:pagina]).per(Annotation.per_table_page)
-     @tab_group = 'annotations-grouped'
+     
+     @tab_group = 'annotations-group'
      @tab_list_all = 'annotations-list'
-   
+     @tab = params[:tab] || @tab_group
    
    end
    
