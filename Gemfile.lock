@@ -45,7 +45,11 @@ GEM
     addressable (2.3.5)
     arel (3.0.2)
     bcrypt-ruby (3.1.1)
+<<<<<<< HEAD
     better_errors (0.9.0)
+=======
+    better_errors (0.5.0)
+>>>>>>> 840156da97c28c9705a6398a86a7b570a60e0eb1
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
     binding_of_caller (0.7.2)
@@ -75,8 +79,12 @@ GEM
     coffee-script (2.2.0)
       coffee-script-source
       execjs
+<<<<<<< HEAD
     coffee-script-source (1.6.3)
     debug_inspector (0.0.2)
+=======
+    coffee-script-source (1.4.0)
+>>>>>>> 840156da97c28c9705a6398a86a7b570a60e0eb1
     devise (2.2.5)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -123,12 +131,18 @@ GEM
     meta_request (0.2.8)
       callsite
       rack-contrib
+<<<<<<< HEAD
       railties
     mime-types (1.25)
     mini_magick (3.6.0)
       subexec (~> 0.2.1)
     mini_portile (0.5.1)
     multi_json (1.8.0)
+=======
+      rails
+    mime-types (1.23)
+    multi_json (1.7.8)
+>>>>>>> 840156da97c28c9705a6398a86a7b570a60e0eb1
     mysql (2.8.1)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
