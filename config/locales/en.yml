@@ -28,7 +28,7 @@ en:
       status: "Status"
       changes_not_saved: "Please note, in %{rails_env} your metadata changes will NOT be permanently saved."
       not_authorized: 'You are not authorized to perform this action.'
-      in_beta_not_authorized_html: "The Revs Digital Library is currently in limited beta release.  If you would like to request beta access, please <a href='/contact'>contact us.</a>"
+      in_beta_not_authorized_html: "The Revs Digital Library is currently in limited beta release.  If you would like to be notified when the site is public, please <a href='/users/sign_up'>sign up</a> and request to be added to the mailing lists."
       validation_error: "The values you entered were not valid for the field you selected."
       bulk_update_instructions: "To apply a bulk update, select the field to update, enter a new value and select some items."
       set_top_priority: "Success! This image is now set to represent its collection."
