@@ -1,4 +1,11 @@
 GIT
+  remote: https://github.com/cbeer/gssapi.git
+  revision: 59bbd6dd916cf2b96cf6b1984f5db8e7891c8bcd
+  specs:
+    gssapi (1.1.2)
+      ffi (>= 1.0.1)
+
+GIT
   remote: https://github.com/projectblacklight/blacklight.git
   revision: e1210d1ae4fe95701b30a797f92bf7fa18bdf4f1
   specs:
@@ -55,6 +62,14 @@ GEM
     builder (3.0.4)
     callsite (0.0.11)
     cancan (1.6.10)
+    capistrano (2.15.5)
+      highline
+      net-scp (>= 1.0.0)
+      net-sftp (>= 2.0.0)
+      net-ssh (>= 2.0.14)
+      net-ssh-gateway (>= 1.1.0)
+    capistrano-ext (1.2.1)
+      capistrano (>= 1.0.0)
     capybara (1.1.4)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -93,8 +108,16 @@ GEM
     font-awesome-rails (3.2.1.3)
       railties (>= 3.2, < 5.0)
     google-analytics-rails (0.0.4)
+    grit (2.5.0)
+      diff-lcs (~> 1.1)
+      mime-types (~> 1.15)
+      posix-spawn (~> 0.3.6)
     hashie (2.0.5)
+    highline (1.6.19)
     hike (1.2.3)
+    holepicker (0.3.1)
+      json (>= 1.7.7)
+      rainbow (>= 1.1.4)
     i18n (0.6.5)
     jettywrapper (1.4.1)
       activesupport (>= 3.0.0)
@@ -114,6 +137,19 @@ GEM
       addressable (~> 2.3)
     libv8 (3.16.14.3)
     logger (1.2.8)
+    lyberteam-capistrano-devel (1.3.0)
+      actionmailer
+      capistrano (>= 2.11.0)
+      grit
+      holepicker
+      rake (>= 0.8.7)
+      rest-client
+    lyberteam-devel (1.0.1)
+      lyberteam-capistrano-devel (~> 1.0, >= 1.0.7)
+      lyberteam-gems-devel (~> 1.0, >= 1.0.1)
+    lyberteam-gems-devel (1.0.1)
+      rake (>= 0.8.7)
+      rest-client
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -129,6 +165,16 @@ GEM
     mini_portile (0.5.1)
     multi_json (1.8.0)
     mysql (2.8.1)
+    net-scp (1.1.2)
+      net-ssh (>= 2.6.5)
+    net-sftp (2.1.2)
+      net-ssh (>= 2.6.5)
+    net-ssh (2.7.0)
+    net-ssh-gateway (1.2.0)
+      net-ssh (>= 2.6.5)
+    net-ssh-krb (0.3.0)
+      gssapi (~> 1.1.2)
+      net-ssh (>= 2.0)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
     omniauth (1.1.4)
@@ -136,6 +182,7 @@ GEM
       rack
     orm_adapter (0.4.0)
     polyglot (0.3.3)
+    posix-spawn (0.3.6)
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -160,6 +207,7 @@ GEM
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
+    rainbow (1.1.4)
     rake (10.1.0)
     rdoc (3.12.2)
       json (~> 1.4)
@@ -180,6 +228,8 @@ GEM
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
     rubyzip (0.9.9)
+    rvm-capistrano (1.5.0)
+      capistrano (>= 2.15.4)
     sass (3.2.11)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -225,6 +275,8 @@ DEPENDENCIES
   bootstrap-sass
   bundler (>= 1.2.0)
   cancan
+  capistrano
+  capistrano-ext
   capybara (~> 1.0)
   carrierwave
   coffee-rails (~> 3.2.1)
@@ -233,18 +285,23 @@ DEPENDENCIES
   editstore (>= 0.1.5)
   font-awesome-rails
   google-analytics-rails
+  gssapi!
   jettywrapper
   jquery-rails
   json (~> 1.7.7)
   kaminari
   launchy
+  lyberteam-devel (>= 1.0.0)
+  lyberteam-gems-devel (>= 1.0.0)
   meta_request
   mini_magick
   mysql (= 2.8.1)
+  net-ssh-krb
   omniauth
   rails (>= 3.2.11)
   rest-client
   rspec-rails
+  rvm-capistrano
   sass-rails (~> 3.2.3)
   sqlite3
   therubyracer

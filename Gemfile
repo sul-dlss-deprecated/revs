@@ -62,6 +62,17 @@ group :staging, :production do
   gem 'mysql', "2.8.1"
 end
 
+# gems necessary for capistrano deployment
+group :deployment do
+  gem 'capistrano'
+  gem 'capistrano-ext'
+  gem 'rvm-capistrano'
+  gem 'lyberteam-devel', '>=1.0.0'
+  gem 'lyberteam-gems-devel', '>=1.0.0'
+  gem 'net-ssh-krb'
+end
+gem 'gssapi', :git => 'https://github.com/cbeer/gssapi.git'
+
 gem 'jquery-rails'
 gem 'rest-client'
 
