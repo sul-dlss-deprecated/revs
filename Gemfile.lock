@@ -291,6 +291,7 @@ DEPENDENCIES
   json (~> 1.7.7)
   kaminari
   launchy
+  lyberteam-capistrano-devel (>= 1.1.0)
   lyberteam-devel (>= 1.0.0)
   lyberteam-gems-devel (>= 1.0.0)
   meta_request

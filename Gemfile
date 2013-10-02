@@ -63,12 +63,13 @@ group :staging, :production do
 end
 
 # gems necessary for capistrano deployment
-group :deployment do
+group :development,:deployment do
   gem 'capistrano'
   gem 'capistrano-ext'
   gem 'rvm-capistrano'
   gem 'lyberteam-devel', '>=1.0.0'
   gem 'lyberteam-gems-devel', '>=1.0.0'
+	gem 'lyberteam-capistrano-devel', '>= 1.1.0'
   gem 'net-ssh-krb'
 end
 gem 'gssapi', :git => 'https://github.com/cbeer/gssapi.git'
