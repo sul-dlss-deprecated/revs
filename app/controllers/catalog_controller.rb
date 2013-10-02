@@ -4,6 +4,8 @@ require 'blacklight/catalog'
 class CatalogController < ApplicationController  
 
   include Blacklight::Catalog
+
+  before_filter :ajax_only, :only=>[:update_carousel,:show_collection_members_grid]
   
   before_filter :filter_params
 
@@ -72,13 +74,17 @@ class CatalogController < ApplicationController
     
   end
   
+  # an ajax call to show just the collection members grid at the bottom of the page
+  def show_collection_members_grid
+    @document=SolrDocument.find(params[:id])
+  end
+  
   # an ajax call to get the next set of images to show in a carousel on the collection detail page
   def update_carousel
-    return unless request.xhr?
     druid=params[:druid]
     @rows=params[:rows] || blacklight_config.collection_member_carousel_items
     @start=params[:start] || 0
-    result,@document = get_solr_response_for_doc_id(druid)
+    @document = SolrDocument.find(druid)
     @carousel_members = @document.get_members(:rows=>@rows,:start=>@start)
   end
     

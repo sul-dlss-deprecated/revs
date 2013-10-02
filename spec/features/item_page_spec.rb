@@ -19,7 +19,8 @@ describe("Item Pages",:type=>:request,:integration=>true) do
     page.should have_xpath("//a[contains(@href, \"/catalog?f%5Bformat_ssim%5D%5B%5D=slides\")]")    
     page.should have_xpath("//a[contains(@href, \"/catalog?f%5Bcollection_ssim%5D%5B%5D=John+Dugdale+Collection\")]")    
     page.should have_xpath("//a[contains(@href, \"/catalog?f%5Bpub_year_isim%5D%5B%5D=1960\")]")    
-    page.should have_xpath("//img[contains(@src, \"image/qb957rw1430/2011-023DUG-3.0_0015_square\")]")
+    page.should have_content("John Dugdale Collection (2)")
+    page.should have_content("View All Collection Items")
   end
 
   it "should show an item detail page that has a description" do 

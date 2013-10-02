@@ -28,7 +28,8 @@ Revs::Application.routes.draw do
   # ajax call from home page to get more images for the carousel
   match 'update_carousel', :to => 'catalog#update_carousel', :as => 'update_carousel'
 
-  # in place edit ajax call
+  # ajax call from item page to show collections grid at bottom of the page
+  match 'show_collection_members_grid/:id', :to => 'catalog#show_collection_members_grid', :as => 'show_collection_members_grid'
     
   # helper routes to we can have a friendly URL for items and collections
   match 'item/:id', :to=> 'catalog#show', :as =>'item'

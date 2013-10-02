@@ -149,6 +149,10 @@ function showOnLoad() {
 	$('.showOnLoad').show();
 }
 
+function loadCollectionMembersGrid(id) {
+  jQuery.ajax({type: "GET", dataType: "script", url: "/show_collection_members_grid/" + id});
+}
+
 function setupItemDetailPanels() {
   // Swap icon used in Item Details accordion when toggling metadata sections
   $('#item-details-accordion').collapse({
