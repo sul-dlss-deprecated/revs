@@ -143,6 +143,9 @@ en:
       no_users_found: "No users were found with an email address of '%{with_email_address}'"
       none_found: "None found"
       feature_on_home_page: "Feature"
+      user_roles_updated: "Successfully updated %{num} users to the role '%{role}'"
+      no_user_roles_updated: "You did not select any users to update"
+      set_checked_users: "Set checked users to role"
       sidebar:
         actions: 'Actions'
         administer_users: "Manage Users"

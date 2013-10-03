@@ -17,7 +17,11 @@ $(document).ready(function(){
     return false;
   });
   
- 
+  // admin users select all
+  $( '#admin-select-all-users' ).click( function () {
+     $( 'input[type="checkbox"]' ).prop('checked', this.checked);
+     }
+  ); 
 
    // Curator bulk update view controls and actions //
    // Put focus on new value input box on page load

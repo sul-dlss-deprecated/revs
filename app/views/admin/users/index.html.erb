@@ -11,7 +11,11 @@
 
   <% if @users.size > 0 %>
     <%= paginate @users, :params => {:order=>@order} %>
-    <table class="admin table table-bordered table-condensed table-hover table-striped">
+  	<%= form_tag(bulk_update_role_admin_users_path, method: 'post', class:'form-inline') do %>
+    <p><%=t('revs.admin.set_checked_users')%> <%= select_tag 'role',options_for_select(User.roles,@role),class:"span2"%> <%= submit_tag t('revs.nav.update'), :class => 'btn btn-small' %>
+      <!--<input type="checkbox" name="select-all" id="admin-select-all-users"> --> <%#=t('revs.nav.select_all')%> 
+    </p>
+    <table id="admin-users" class="admin table table-bordered table-condensed table-hover table-striped">
       <tr>
         <th><%= link_to t('revs.user.email_address'),
                 admin_users_path(:order=>'email',:email=>@email) %></th>
@@ -28,6 +32,7 @@
         <th class="centered"><%= link_to t('revs.admin.confirmed'),
                 admin_users_path(:order=>'confirmed_at desc',:email=>@email) %></th>
         <th class="centered"><%=t('revs.authentication.sidebar.actions')%></th>
+        <th class="centered"></th>
       </tr>
       <% @users.each do |user|%>
        <tr>
@@ -39,9 +44,13 @@
          <td><%= show_as_datetime(user.created_at.in_time_zone) %></td>
          <td class="centered"><%= user.confirmed_at.blank? ? t('revs.messages.switch_no') : t('revs.messages.switch_yes') %></td>
          <td class="centered"><%= link_to "[#{t('revs.actions.edit')}]", edit_admin_user_path(user.id),:id=>"edit-#{user.id}" %></td>
+         <td class="centered"><%= check_box_tag 'selected_users[]', user.id, false, :id=>"bulk_edit_selected_users_#{user.id}"  %>
+          </td>
        </tr>
       <% end %>
     </table>
+    
+    <% end %>
 
   <% else %>
     <%= t('revs.admin.no_users_found', :with_email_address => @email) if @email %>
