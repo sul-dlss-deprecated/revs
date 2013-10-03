@@ -247,7 +247,7 @@ class SolrDocument
   
   def has_vehicle_metadata?
     return true if
-      !self.current_owner.blank? || !self.marque.blank? || !self.vehicle_markings.blank? || !self.group_class.blank?
+      !self.current_owner.blank? || !self.marque.blank? || !self.vehicle_markings.blank? || !self.group_class.blank? || !self.model_year.blank?
   end
 
   def has_race_metadata?
