@@ -20,8 +20,8 @@ module DateHelper
   end
   
   # tell us if the string passed is a valid year
-  def is_valid_year?(date_string)
-    date_string.to_s.strip.scan(/\D/).empty? and (1800..Date.today.year).include?(date_string.to_i)
+  def is_valid_year?(date_string,starting_year=1800)
+    date_string.to_s.strip.scan(/\D/).empty? and (starting_year..Date.today.year).include?(date_string.to_i)
   end
 
   # tell us if the string passed is in is a full date of the format M/D/YYYY, and returns the date object if it is valid

@@ -20,12 +20,44 @@ describe SolrDocument, :integration => true do
       @doc.valid?.should be_true      
    end
 
+   it "should catch invalid model years" do
+     @doc.valid?.should be_true
+     @doc.model_year = ['crap','1961'] # bad value
+     @doc.dirty?.should be_true
+     @doc.valid?.should be_false
+     @doc.save.should be_false      
+     @doc.model_year = '1810' # this is bad (before 1850)
+     @doc.valid?.should be_false   
+     @doc.model_year = Date.today.year+1 # this is bad (future)
+     @doc.valid?.should be_false  
+     @doc.model_year = 'crap' # this is bad
+     @doc.valid?.should be_false
+     @doc.model_year = '1999' # this is ok
+     @doc.valid?.should be_true
+     @doc.model_year = ['1959','1961'] # ok
+     @doc.valid?.should be_true      
+     @doc.model_year_mvf = '1959|1961' # mvf ok
+     @doc.valid?.should be_true
+     @doc.model_year_mvf = 'abc|1961' # bad
+     @doc.valid?.should be_false
+     @doc.model_year_mvf = '1961' # ok
+     @doc.valid?.should be_true
+     @doc.model_year = '' # blanks is ok
+     @doc.valid?.should be_true   
+     @doc.model_year_mvf = '' # blanks is ok
+     @doc.valid?.should be_true        
+   end
+   
     it "should catch invalid years" do
       @doc.valid?.should be_true
       @doc.years = ['crap','1961'] # bad value
       @doc.dirty?.should be_true
       @doc.valid?.should be_false
-      @doc.save.should be_false      
+      @doc.save.should be_false   
+      @doc.years = '1750' # this is bad (before 1800)
+      @doc.valid?.should be_false   
+      @doc.years = Date.today.year+1 # this is bad (future)
+      @doc.valid?.should be_false         
       @doc.years = 'crap' # this is bad
       @doc.valid?.should be_false
       @doc.years = '1999' # this is ok

@@ -137,11 +137,14 @@ class SolrDocument
     unsaved_edits.each do |solr_field_name,value| 
 
       case solr_field_name.to_sym
+        when :model_year_ssim
+          model_years=self.class.to_array(value)
+          @errors << 'Model years must be after 1850 up until this year and must be in the format YYYY'  if (!self.class.blank_value?(model_years) && !model_years.all?{|new_value| is_valid_year?(new_value,1850)})
         when :pub_date_ssi
           @errors << 'Date must be in the format MM/DD/YYYY' if (!self.class.blank_value?(value) && get_full_date(value) == false)
         when :pub_year_isim,:pub_year_single_isi
           years=self.class.to_array(value)
-          @errors << 'A year must be after 1800 up until this year and must be in the format YYYY' if (!self.class.blank_value?(years) && !years.all?{|new_value| is_valid_year?(new_value)})
+          @errors << 'A year must be after 1800 up until this year and must be in the format YYYY' if (!self.class.blank_value?(years) && !years.all?{|new_value| is_valid_year?(new_value,1800)})
       end
     
     end

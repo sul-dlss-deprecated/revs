@@ -46,7 +46,7 @@ class Curator::TasksController < ApplicationController
       if @document.save(current_user)
         flash[:success] = t('revs.messages.saved')
       else  
-        @message = "#{@document.errors.join(', ')}."
+        @message = "#{@document.errors.join('. ')}."
       end
    end
 
