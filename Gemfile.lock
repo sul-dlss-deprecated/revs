@@ -99,7 +99,7 @@ GEM
       warden (~> 1.2.1)
     diff-lcs (1.2.4)
     druid-tools (0.2.3)
-    editstore (0.1.5)
+    editstore (1.0.1)
       druid-tools (>= 0.2.0)
       rails (~> 3.2.13)
     erubis (2.7.0)
@@ -163,7 +163,7 @@ GEM
     mini_magick (3.6.0)
       subexec (~> 0.2.1)
     mini_portile (0.5.1)
-    multi_json (1.8.0)
+    multi_json (1.8.1)
     mysql (2.8.1)
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
@@ -282,7 +282,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   devise (~> 2.2.5)
   druid-tools (>= 0.2.0)
-  editstore (>= 0.1.5)
+  editstore (>= 1.0.1)
   font-awesome-rails
   google-analytics-rails
   gssapi!
