@@ -1,6 +1,6 @@
 <script type="text/javascript">
   // fetch collection members grid at bottom of the page on a delay so main image loads first
-  var timeout = setTimeout(function() {loadCollectionMembersGrid('<%=document.id%>')}, 3000);
+  var timeout = setTimeout(function() {loadCollectionMembersGrid('<%=document.id%>','item')}, 3000);
 
   $(document).ready(function(){
     $("#image_workspace").embedPurl({'server': '<%=Revs::Application.config.purl_plugin_server%>',

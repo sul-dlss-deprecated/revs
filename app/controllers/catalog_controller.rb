@@ -77,6 +77,15 @@ class CatalogController < ApplicationController
   # an ajax call to show just the collection members grid at the bottom of the page
   def show_collection_members_grid
     @document=SolrDocument.find(params[:id])
+    if params[:on_page] == 'item'
+      @collection_members=@document.siblings(:random=>true)
+      @type=:siblings
+      @show_full_width=true
+    else
+      @collection_members=@document.collection_members
+      @type=:collection
+      @show_full_width=false     
+    end
   end
   
   # an ajax call to get the next set of images to show in a carousel on the collection detail page

@@ -5,6 +5,7 @@
 	 input_type = defined?(input_type) ? input_type : 'input' # indicates form field type of editing (defaults to 'input')
  	 edit_field_name = multivalued ? "#{field_name}#{SolrDocument.multivalued_field_marker}" : field_name # the edit field name is different if we are using a mutlivalued field, since we want to edit/display mutlivalues delimited with a | character
 	 simple_format = defined?(simple_format) ? simple_format : 'false' # indicates if we want to use the simple_format command to format single valued fields
+   checked_value = defined?(checked_value) ? checked_value : true # indicates the checked value for a checkbox field
 %>
 
 <% if !document.send(field_name.to_s).blank? || (editable && in_curator_edit_mode)  %>
@@ -14,6 +15,8 @@
 			<% case input_type %>			  
 				<% when 'text_area' %>
 				 <%= text_area_tag "document[#{edit_field_name}]",document.send(edit_field_name), :rows => 3, :cols => 40, :class => (multivalued ? 'mvf' : '') %>			  
+ 				<% when 'checkbox' %>
+          <%= check_box_tag "document[#{edit_field_name}]",checked_value,(document.send(edit_field_name) == checked_value) %>
 			 <% else %>
 				 <%= text_field_tag "document[#{edit_field_name}]",document.send(edit_field_name),:size => 40, :class => (multivalued ? 'mvf' : '') %>
 			<% end %>

@@ -128,12 +128,17 @@
 
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'formats',:label=>t('revs.show.label_formats'),:multivalued=>true,:editable=>true,:facet=>true, :input_type=>'text_area'} %>
 
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'institutional_notes',:label=>t('revs.show.label_institutional_notes'),:simple_format=>true,:editable=>true, :input_type=>'text_area'} %>
+          <% if can? :curate,:all # the following fields are only useful to show for curators%>
+            <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'institutional_notes',:label=>t('revs.show.label_institutional_notes'),:simple_format=>true,:editable=>true, :input_type=>'text_area'} %>
           
-					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'production_notes',:label=>t('revs.show.label_production_notes'),:simple_format=>true,:editable=>true, :input_type=>'text_area'} %>       
+  					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'production_notes',:label=>t('revs.show.label_production_notes'),:simple_format=>true,:editable=>true, :input_type=>'text_area'} %>       
 
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'metadata_sources',:label=>t('revs.show.label_metadata_sources'),:simple_format=>true,:editable=>true, :input_type=>'text_area'} %>
+            <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'metadata_sources',:label=>t('revs.show.label_metadata_sources'),:simple_format=>true,:editable=>true, :input_type=>'text_area'} %>
 
+            <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'has_more_metadata',:label=>t('revs.show.label_more_metadata'),:simple_format=>true,:editable=>true,:input_type=>'checkbox',:checked_value=>'yes'} %>
+
+          <% end %>
+            
           <%= render "/catalog/item_edit_errors" %>
 					<%= submit_tag t('revs.nav.save_changes'), class: 'btn btn-small' if in_curator_edit_mode %>
 

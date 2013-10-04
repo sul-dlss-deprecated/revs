@@ -1,7 +1,12 @@
 <script language="javascript">
 $(document).ready(function(){
 	$('#description').truncate({max_length: 700});
+
+  // fetch collection members grid at bottom of the page on a delay so main image loads first
+  var timeout = setTimeout(function() {loadCollectionMembersGrid('<%=document.id%>','collection')}, 3000);
+
 });
+
 </script>
 
 <div class="row">
@@ -23,4 +28,5 @@ $(document).ready(function(){
   </div>
 </div>
 
-<%= render :partial => "collection_members_grid", :locals => {:collection_members => @document.collection_members} %>
+<div id="collection-members-grid">
+</div>

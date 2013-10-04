@@ -101,7 +101,6 @@ class Ability
     can :read, Flag    
     can :index_by_druid, Flag  
     can :update_flag_table, User 
- 
   end
   
   def can_annotate(user)
@@ -124,8 +123,6 @@ class Ability
     can :resolve, Flag
     can :update, Flag
     can :curator_update_flag_table, User  
-   
-
   end
   
   def can_update_metadata

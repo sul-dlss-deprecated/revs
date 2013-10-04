@@ -5,7 +5,7 @@ class Admin::UsersController < ApplicationController
   def index
     @email=params[:email]
     @order=params[:order] || 'email'
-    users_per_page = params[:per_page] || 10
+    users_per_page = params[:per_page] || 50
     @role = params[:role] || "curator"
     
     if !@email.blank?

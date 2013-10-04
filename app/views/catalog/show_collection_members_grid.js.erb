@@ -1,1 +1,1 @@
-$('#collection-members-grid').html("<%= escape_javascript(render :partial => '/catalog/collection_members_grid',:locals => {:collection_members => @document.siblings(:random=>true), :type => :siblings, :show_full_width => true}).html_safe %>");
+$('#collection-members-grid').html("<%= escape_javascript(render :partial => '/catalog/collection_members_grid',:locals => {:collection_members => @collection_members, :type => @type, :show_full_width => @show_full_width}).html_safe %>");

@@ -153,8 +153,8 @@ function showOnLoad() {
 	$('.showOnLoad').show();
 }
 
-function loadCollectionMembersGrid(id) {
-  jQuery.ajax({type: "GET", dataType: "script", url: "/show_collection_members_grid/" + id});
+function loadCollectionMembersGrid(id,page_type) {
+  jQuery.ajax({type: "GET", dataType: "script", url: "/show_collection_members_grid/" + id + "?on_page=" + page_type});
 }
 
 function setupItemDetailPanels() {
