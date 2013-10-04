@@ -1,10 +1,6 @@
 <div id="content" class="span9">
 
   <h2><%= t('revs.authentication.sign_in') %></h2>
-
-  <% if Revs::Application.config.restricted_beta %>
-    <h3><%=t('revs.messages.in_beta_not_authorized_html')%></h3>
-  <% end %>
   
   <p>
     <%= t('revs.user.stanford_users_login_webauth_html') %>
