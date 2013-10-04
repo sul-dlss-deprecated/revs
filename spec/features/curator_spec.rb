@@ -6,15 +6,22 @@ describe("Curator Section",:type=>:request,:integration=>true) do
     logout
   end
   
-  it "should allow a curator to login" do
+  it "should allow a curator to login and show metadata facet" do
       login_as(curator_login)
       current_path.should == root_path
       page.should have_content('Curator Revs')    # username at top of page  
       page.should have_content('Signed in successfully.') # sign in message
       page.should_not have_content('Admin') # no admin menu on top of page
       page.should have_content('Curator') # curator menu on top of page
+      page.should have_content('More Metadata') # curator more metadata facet
+      
     end
 
+    it "should NOT show more metadata facet to non-curators" do
+      visit root_path
+      page.should_not have_content('More Metadata') # curator more metadata facet is not shown
+    end
+    
     it "should allow a curator to return to the page they were on and then see the curator interface, but not the admin interface" do
       starting_page=catalog_path('qb957rw1430')
       visit starting_page

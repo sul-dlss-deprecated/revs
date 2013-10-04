@@ -8,12 +8,19 @@ class CatalogController < ApplicationController
   before_filter :ajax_only, :only=>[:update_carousel,:show_collection_members_grid]
   
   before_filter :filter_params
-
+  before_filter :add_facets_for_curators
+  
   # delete editing form parameters when there is a get request so they don't get picked up and carried to all links by Blacklight
   def filter_params
     if request.get?
       params.delete(:bulk_edit) 
       params.delete(:authenticity_token)
+    end
+  end
+  
+  def add_facets_for_curators
+    if can? :curate, :all
+      self.blacklight_config.add_facet_field 'has_more_metadata_ssi', :label => "More Metadata"
     end
   end
   
@@ -179,8 +186,7 @@ class CatalogController < ApplicationController
     config.add_facet_field 'model_year_ssim', :label => 'Model Year'
     config.add_facet_field 'model_ssim', :label => 'Model'
     config.add_facet_field 'collection_ssim', :label => "Collection"
-
-
+    
     # config.add_facet_field 'example_query_facet_field', :label => 'Publish Date', :query => {
     #    :years_5 => { :label => 'within 5 Years', :fq => "pub_date:[#{Time.now.year - 5 } TO *]" },
     #    :years_10 => { :label => 'within 10 Years', :fq => "pub_date:[#{Time.now.year - 10 } TO *]" },
