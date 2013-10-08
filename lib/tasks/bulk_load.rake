@@ -159,17 +159,7 @@ namespace :revs do
              log.error("In document #{file} save error for #{row[sourceid]}") if(not success and not local_testing)
             
            
-           end #End Altering Single Solr Document
-        
-          #doc.send('title=',"aaaaaaaffhhhhhh"})
-        
-        
-        
-          #puts doc.save
-        
-        
-        
-        
+           end #End Altering Single Solr Document 
         end
       end
     end 
