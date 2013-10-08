@@ -66,7 +66,7 @@ namespace :revs do
       #Ensure we can handle all headers we've found
       bad_header = false 
       changes.headers().each do |header|
-        if not known_headers.include?(header)
+        if not known_headers.include?(header.strip.downcase)
           bad_header = true
           log.error("In document #{file} the #{header} is an unsupported header")
         end
