@@ -2,141 +2,175 @@ require 'jettywrapper' unless Rails.env.production?
 require 'rest_client'
 require 'csv'
 require 'countries'
-require 'date'
+require 'pathname'
 
 namespace :revs do
   desc "Load all changes to the metadata from CSV files located in TBD"
-  task :bulk_load => :environment do
+  task :bulk_load, [:change_files_loc] => :environment do |t, args|
     local_testing = true
     debug_source_id = '2012-027NADI-1967-b1_1.0_0008'
-    log = Logger.new(STDOUT)
-    log.level = Logger::ERROR
-    marque_file = File.open('/tmp/revs-lc-marque-terms.obj','rb'){|io| Marshal.load(io)}
-    change_file_location = "/tmp/debug"
+    
+    marque_file = File.open('lib/assets/revs-lc-marque-terms.obj','rb'){|io| Marshal.load(io)}
+    change_file_location = args[:change_files_loc]
     change_file_extension = "*.csv"
     sourceid = 'sourceid'
     location = "location"
     format = "format"
     marque = "marque"
     filename = "filename"
-    year = "year"
+    year = "date"
     full_date = "full_date"
     seperator = "|"
     assigner = "="
-    mutli = "_mvf"
+    multi = "_mvf"
+    model = 'model'
     ignore_fields = [sourceid, location, marque, filename]  
-    #special_fields = ['year', 'marque', 'model', 'people', 'location']
     location_fields = ['country', 'city', 'state']
     additional_fields = location_fields + [full_date]#add other arrays here if we do anymore splitting
-    multivalue_fields = []
+    comma = ","
+    comma_splits = [marque, model]
+   
   
     #Map the csv names to the field names from 
     csv_to_solr = {'label' => 'title',   
-                   'model'  => 'vehicle_model',
+                   model  => 'vehicle_model',
                    year => 'years',
                    format => 'formats',
-                   'collection_name' => 'collection_names'
+                   'collection_name' => 'collection_names',
+                   'inst_notes' => 'institutional_notes',
+                   'prod_notes' => 'production_notes'
                   }
+    solr_keys = [ 'title', 'description', 'photographer', 'years', 'full_date', 'people', 'subjects', 'city_section',
+                  'city', 'state', 'country', 'formats', 'identifier', 'production_notes', 'institutional_notes',
+                  'metadata_sources', 'has_more_metadata', 'vehicle_markings', 'marque', 'vehicle_model', 'model_year',
+                  'current_owner', 'entrant', 'venue', 'track', 'event', 'group_class', 'race_data', 'priority', 'collections',
+                  'collection_names', 'highlighted']
    
-   #These should be the field name from /app/,odels/solr_document.rb
+   #These should be the field name from /app/models/solr_document.rb
    multi_values = ['vehicle_model', 'years', "formats", "model_years", "marque", "people"]
   
+   #All the CSV headers we know how to handle
+   known_headers = csv_to_solr.keys + ignore_fields + solr_keys
     
    #Get a list of all the files we need to process and loop over them
    change_files = Dir.glob(File.join(change_file_location, change_file_extension))
     
     #Process Each File 
     change_files.each do |file| 
+      log = Logger.new("#{Rails.root}/log/#{Pathname.new(file).basename}.#{Time.now.to_i}.log")
+      log.level = Logger::ERROR
       
       #Load in the CSV, with the top row being taken as the header
       changes = CSV.parse(File.read(file), :headers => true )
-      changes.each do |row|
-        #Get the Solr Document and set it for updating 
+      
+      #Ensure we can handle all headers we've found
+      bad_header = false 
+      changes.headers().each do |header|
+        if not known_headers.include?(header)
+          bad_header = true
+          log.error("In document #{file} the #{header} is an unsupported header")
+        end
+      end
+      
+      if not bad_header
+        changes.each do |row|
+          #Get the Solr Document and set it for updating 
+          
+        
+          #DEBUG AREA
+          save_id = row[sourceid] if local_testing
+          row[sourceid] = debug_source_id if local_testing
         
         
-        #DEBUG AREA
-        save_id = row[sourceid] if local_testing
-        row[sourceid] = debug_source_id if local_testing
-        
-        
-        target = Blacklight.solr.select(:params =>{:q=>'source_id_ssi:"'+ row['sourceid']+'"'})["response"]["docs"][0]
+          target = Blacklight.solr.select(:params =>{:q=>'source_id_ssi:"'+ row['sourceid']+'"'})["response"]["docs"][0]
        
        
-        #Catch sourceid with no matching druid
-        log.error("In document #{file} no druid found for #{row[sourceid]}") if target == nil
+          #Catch sourceid with no matching druid
+          log.error("In document #{file} no druid found for #{row[sourceid]}") if target == nil
         
-        if target != nil #Begin Altering Single Solr Document
-           doc = SolrDocument.new(target)
+          if target != nil #Begin Altering Single Solr Document
+             doc = SolrDocument.new(target)
            
-           #Check to see if we have a format row and clean it up
-           row[format] = cleanFormat(row[format].strip.split(seperator)).join(seperator) if row[format] != nil
+             #If we have comma splits, replace them with the expected seperator 
+             comma_splits.each do |key|
+               row[key] = row[key].strip.gsub(comma, seperator) if row[key] != nil
+             end
+           
+           
+             #Check to see if we have a format row and clean it up
+             row[format] = cleanFormat(row[format].strip.split(seperator)).join(seperator) if row[format] != nil
           
            
-           #Check to see if we have a location and see if we need to parse it.
-           row = parseLocation(row, location) if row[location] != nil
+             #Check to see if we have a location and see if we need to parse it.
+             row = parseLocation(row, location) if row[location] != nil
            
-           #Check to see if we need need to handle marques
-           if row[marque] != nil 
-             array_marque = row[marque].split(seperator)
-             count = 0 
-             array_marque.each do |m|
-               array_marque[count] = revs_lookup_marque(m, marque_file)
-               count += 1
+             #Check to see if we need need to handle marques
+             if row[marque] != nil 
+               array_marque = row[marque].split(seperator)
+               count = 0 
+               array_marque.each do |m|
+                 array_marque[count] = revs_lookup_marque(m, marque_file)
+                 count += 1
+               end
+               row[marque] = array_marque.join(seperator)
+               #puts row[marque]
+             end 
+           
+             #We could have a full date, a year, or a span of years, handle that.
+             if row[year] != nil
+               is_full_date = SolrDocument.get_full_date(row[year])
+               if is_full_date
+                 row[full_date] = row[year]
+                 row[year] = nil if year != full_date
+               else
+                 row[csv_to_solr[year] || year ] = SolrDocument.parse_years(row[year]).join(seperator)
+                 row[year] = nil if(csv_to_solr[year] != nil and csv_to_solr[year] != year) #Clear whatever the csv used for year/date if it is not the proper Solr key
+               end
              end
-             row[marque] = array_marque.join(seperator)
-             #puts row[marque]
-           end 
-           
-           #Check to see if we have a full date or just a year for the photograph date
-           #TODO:  This could handle things much better
-           #Note:  The Date gem assumes the form dd/mm/yyyy but REVS is using the format mm/dd/yyyy, so use caution when using the Date gem 
-           if row[year] != nil and row[year].strip.size > 4
-               row[full_date] = row[year]
-               row[year] = nil
-           end
            
            
-           (changes.headers()-ignore_fields+additional_fields).each do |key|
-             
-             #First make sure we have a real change
-             if row[key] != nil
-               #See if the solr document calls the key something else
-                 if csv_to_solr[key] != nil
-                   proper_key_name = csv_to_solr[key]
-                 else
-                   proper_key_name = key
-                 end   
+             (changes.headers()-ignore_fields+additional_fields).each do |key|
+               key = key.strip.downcase
+               #First make sure we have a real change
+               if row[key] != nil
+                 #See if the solr document calls the key something else
+                   if csv_to_solr[key] != nil
+                     proper_key_name = csv_to_solr[key.strip]
+                   else
+                     proper_key_name = key
+                   end   
            
-                 #Set up multivalue and send it the value 
-                 args = assigner 
-                 args = mutli+assigner if multi_values.include?(proper_key_name) 
+                   #Set up multivalue and send it the value 
+                   args = assigner 
+                   args = multi+assigner if multi_values.include?(proper_key_name) 
                
-                 begin 
-                      doc.send(proper_key_name+args, row[key].strip)
-                      #puts "Sending: #{proper_key_name+args} #{row[key].strip}" 
-                 rescue
-                     log.error("In document #{file} on row #{row[sourceid]}, failed to send the key: #{proper_key_name+args} and value: #{row[key]}")
-                 end 
+                   begin 
+                        doc.send(proper_key_name+args, row[key].strip)
+                        #puts "Sending: #{proper_key_name+args} #{row[key].strip}" 
+                   rescue
+                       log.error("In document #{file} on row #{row[sourceid]}, failed to send the key: #{proper_key_name+args} and value: #{row[key]}")
+                   end 
+               end
              end
-           end
            
-           success = doc.save
+             success = doc.save
            
-           log.error("In document #{file} save error for #{save_id} "+" #{changes.headers()-ignore_fields+additional_fields} #{row}") if(not success and local_testing)
-           log.error("In document #{file} save error for #{row[sourceod]}") if(not success and not local_testing)
+             log.error("In document #{file} save error for #{save_id} "+" #{changes.headers()-ignore_fields+additional_fields} #{row}") if(not success and local_testing)
+             log.error("In document #{file} save error for #{row[sourceid]}") if(not success and not local_testing)
             
            
-         end #End Altering Single Solr Document
+           end #End Altering Single Solr Document
         
-        #doc.send('title=',"aaaaaaaffhhhhhh"})
-        
-        
-        
-        #puts doc.save
+          #doc.send('title=',"aaaaaaaffhhhhhh"})
         
         
         
+          #puts doc.save
         
+        
+        
+        
+        end
       end
     end 
   end
@@ -231,5 +265,8 @@ namespace :revs do
       end
     end
     return result
-  end # revs_lookup_marque
+  end 
+  
+  
+  
 end
