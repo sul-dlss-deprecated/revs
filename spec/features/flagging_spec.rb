@@ -278,6 +278,47 @@ describe("Flagging",:type=>:request,:integration=>true) do
        
     end
     
+    #This has been placed here, as opposed to user spec, since it needs to add and remove flags and makes use of variables declared in this spec
+    it "should show all of a user's flags and show only the open ones by default" do 
+      druid='qb957rw1430'
+      open_comment = "I am an unresolved comment"
+      fixed_comment = "I am a comment that has been marked as fixed."
+      wont_fix_comment = "I am a comment that has been marked as won't fix."
+      comments = [open_comment, fixed_comment, wont_fix_comment]
+      curator_fix_comment = "I have fixed this comment."
+      curator_wont_fix_comment = "I won't fix this comment."
+      select_id = "state_selection"
+      
+    
+      #Add the comments in by the user
+      comments.each do |comment|
+        add_a_flag(user_login, druid, open_comment)
+      end
+      
+      #Mark the fix comment as fixed
+      resolve_flag_fix(curator_login, druid, fixed_comment, curator_fix_comment)
+      
+      #Mark the wont fix comment as fixed
+      resolve_flag_wont_fix(curator_login, druid, wont_fix_comment, curator_wont_fix_comment)
+      
+      
+      #Login as the user and go to their dashboard to see all flags
+      logout
+      login_as(user_login)
+      user_account = User.find_by_username(user_login)
+      table_header = "#{user_account.full_name}'s #{I18n.t('revs.flags.plural')}"
+      visit user_flags_path(user_account.username)
+      
+      #Check the default of the user dashboard, by default we should see only the open comment 
+      has_content_array([table_header, open_comment])
+      has_no_content_array([fixed_comment, wont_fix_comment, curator_fix_comment, curator_wont_fix_comment])
+      
+     #We can only test the default because PhantomJS is currently not implemented, so no AJAX reloads.
+   
+    
+    end
+    
+    
     
   
     

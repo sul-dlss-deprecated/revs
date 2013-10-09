@@ -36,6 +36,9 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+  
+
+  
 end
 
 # the following must match what are in the users.yml fixtures
@@ -276,4 +279,16 @@ end
 
 def get_user_spam_count(username)
   return User.find_by_username(username).spam_flags
+end
+
+def has_content_array(all_content)
+  all_content.each do |a|
+    page.should have_content(a)
+  end
+end
+
+def has_no_content_array(all_content)
+  all_content.each do |a|
+    page.should have_no_content(a)
+  end
 end

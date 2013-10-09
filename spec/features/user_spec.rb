@@ -181,4 +181,5 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     find_link('@RevsTesting').visible?
   end
 
+ 
 end
