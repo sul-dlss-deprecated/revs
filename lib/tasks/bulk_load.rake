@@ -6,8 +6,8 @@ require 'pathname'
 
 namespace :revs do
   desc "Load all changes to the metadata from CSV files located in TBD"
-  task :bulk_load, [:change_files_loc] => :environment do |t, args|
-    local_testing = true
+  task :bulk_load, [:change_files_loc, :local_testing] => :environment do |t, args|
+    local_testing = args[:local_testing] || false #Assume we are not testing locally unless told so
     debug_source_id = '2012-027NADI-1967-b1_1.0_0008'
     
     marque_file = File.open('lib/assets/revs-lc-marque-terms.obj','rb'){|io| Marshal.load(io)}
