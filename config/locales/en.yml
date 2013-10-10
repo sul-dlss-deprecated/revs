@@ -165,7 +165,7 @@ en:
       leave_edit_mode: 'Leave metadata edit mode'
       set_posterframe: 'Use this image to represent the collection'
       active: "Active"
-      item_title: "Item Title"
+      item_title: "Item title"
       flagging_user: "Flagged by"
       flag_created: "Flagged on"
       created_on: "Created on"
@@ -177,6 +177,15 @@ en:
       annotations: "Annotations"
       annotated_items_by_annotation: "By Annotation"
       annotated_items_by_item: "By Item"
+      edits: "Item Edits"
+      edited_items_by_item: "By Item"
+      edited_items_by_user: "By User"
+      edit_count: "Edit count"
+      edit_update: "Last edit"
+      edit_status: "Edit status"
+      edits_made: "Edits made"
+      edit_rating: "Approval rating"
+      username: "User"
     dashboards: 'Dashboards'
     citations:
         view: 'View full citation page with image download'
