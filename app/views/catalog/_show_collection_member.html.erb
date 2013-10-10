@@ -131,6 +131,16 @@
                 <span class="edit-mode-status label label-warning <%="hidden-offscreen" if session[:curator_edit_mode] != 'true'%>"><%= t('revs.curator.active') %></span>
               </li>
             <% end %>
+            <%# TODO: li below is placeholder for item visibility action %>
+            <li id="item-public-visibility-status">
+              <%#  Default state %>
+                <%= link_to "<i class='icon-eye-close'></i> #{t('revs.messages.public_visibility_hide')}".html_safe, "#" %>
+              <%#  Item hidden state - commented out lines below %>
+                <%#= link_to "<i class='icon-eye-close'></i> #{t('revs.messages.public_visibility_show')}".html_safe, "#" %>
+                <!-- <span class="public-visibility-status label label-warning">
+                  <%#= t('revs.messages.public_visibility_hidden') %>
+                </span> -->
+            </li>
             <li id="item-priority-status">
               <%= render :partial=>"/catalog/item_priority_status" %>
             </li>

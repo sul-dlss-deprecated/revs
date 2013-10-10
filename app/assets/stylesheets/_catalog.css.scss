@@ -180,6 +180,9 @@
           }
         }
       }
+      #item-public-visibility-status a {
+        display: inline-block;
+      }
     }
     #all_flags, #all-annotations {
       color: #555;
@@ -213,7 +216,8 @@
       }
     }
     .edit-mode-status.label,
-    .posterframe-status.label {
+    .posterframe-status.label,
+    .public-visibility-status.label {
       margin-left: 10px;
     }
     .badge {

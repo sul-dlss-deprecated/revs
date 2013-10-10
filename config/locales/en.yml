@@ -32,6 +32,9 @@ en:
       validation_error: "The values you entered were not valid for the field you selected."
       bulk_update_instructions: "To apply a bulk update, select the field to update, enter a new value and select some items."
       set_top_priority: "Success! This image is now set to represent its collection."
+      public_visibility_hidden: "Hidden"
+      public_visibility_show: "Show this item to the public"
+      public_visibility_hide: "Hide this item from public view"
     flags:
       are_you_sure: 'Are you sure you want to remove this flag?'
       created: 'The item was flagged.'
