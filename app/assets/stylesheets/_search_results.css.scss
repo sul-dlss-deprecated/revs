@@ -246,7 +246,7 @@ span.constraints-label {margin-right: 0.5em;}
     background-color: $constraint_bg_color;
     border-color: $constraint_border_color;
     color: $active_link_color;
-    padding: 1px 20px 1px 1em;
+    padding: 1px 50px 1px 1em;
     .btnRemove {
       /* override the BL icon used as separator */
       background: asset_url('remove.png', image) no-repeat center center;
@@ -256,7 +256,7 @@ span.constraints-label {margin-right: 0.5em;}
     .queryName,.filterName {
       /* override the BL icon used as separator */
       background: none;
-      padding-right: 0;
+      padding-right: 2px;
       &:after {
         content: ">";   /* Facet > Value separator */
         padding-left: 6px;
