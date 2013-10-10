@@ -158,7 +158,8 @@ en:
       sidebar:
         actions: 'Actions'
         annotations: 'View Annotations'
-        view_flagged_items: "View Flagged Items"
+        view_flagged_items: "View Flags"
+        view_edited_items: "View Edits"
       curator_actions: 'Curator Actions'
       enter_edit_mode: 'Enter metadata edit mode'
       leave_edit_mode: 'Leave metadata edit mode'
