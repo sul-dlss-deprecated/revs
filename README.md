@@ -17,14 +17,10 @@ This is a Blacklight Application for the Revs Digital Library at Stanford Univer
 1. [Optional] If you want to use rvmrc to manage gemsets, copy the .rvmrc example files:
 
         cp .rvmrc.example .rvmrc
-        cp deploy/.rvmrc.example deploy/.rvmrc
 
 1. Install dependencies via bundler for both the main and deploy directories:
 
         bundle install
-        cd deploy
-        bundle install
-        cd ..
 
 1. Copy the .yml example files:
 
@@ -69,11 +65,11 @@ This is a Blacklight Application for the Revs Digital Library at Stanford Univer
 
 The default users in the fixtures are:
 
-admin1
-curator1
-user1
+* admin1
+* curator1
+* user1
 
-Passwords in each case are "password"
+The password for each default user is "password"
 
 
 ## Terms Dialog Box
@@ -93,14 +89,13 @@ want the user to see the terms dialog box again for a specific period of time (w
 
 Before deploying to production, tag the release with a version.  We use date based tags, typically month-year (eg. september-2013) for monthly releases.
 
-git co master
-git tag september-2013
-git push --tags
+  git co master
+  git tag september-2013
+  git push --tags
 
 
 ### Deploying
 
-    cd deploy
     cap production deploy   # for production
     cap staging deploy      # for staging
     cap development deploy  # for development
