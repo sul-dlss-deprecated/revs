@@ -171,7 +171,7 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     login_as(user_login)
     visit user_profile_name_path(user_login)
     current_path.should ==  user_profile_name_path(user_login)
-    find_link('http://www.example.com/user1/my-website').visible?
+    find_link('www.example.com/user1/my-website').visible?
   end
 
   it "should show a user's Twitter link, if it has been provided by the user" do

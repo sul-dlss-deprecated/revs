@@ -36,7 +36,7 @@ user:
   first_name: User
   last_name: Web
   bio: 'I am a web user. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.'
-  url: 'http://www.example.com/user1/my-website'
+  url: 'www.example.com/user1/my-website'
   twitter: 'RevsTesting'
   role: 'user'
   public: true
