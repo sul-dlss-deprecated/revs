@@ -88,6 +88,9 @@ namespace :deploy do
   task :symlink_editstore do
     run "ln -s /home/lyberadmin/editstore-updater/current/public #{release_path}/public/editstore"
   end  
+  task :dev_options_set do
+    run "cd #{deploy_to}/current && rake revs:dev_options_set RAILS_ENV=#{rails_env}"
+  end
   task :start do ; end
   task :stop do ; end
   task :restart, :roles => :app, :except => { :no_release => true } do
@@ -97,4 +100,4 @@ end
 
 after "deploy:create_symlink", "deploy:migrate"
 after "deploy:update", "deploy:cleanup" 
-after "deploy:update", "revs:dev_options_set"
+after "deploy:update", "deploy:dev_options_set"
