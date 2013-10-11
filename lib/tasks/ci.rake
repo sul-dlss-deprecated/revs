@@ -30,6 +30,15 @@ end
 
 namespace :revs do
 
+  desc "Check development options"
+  task :dev_options_set => :environment do
+    if Revs::Application.config.simulate_sunet_user || !Revs::Application.config.use_editstore || !Revs::Application.config.restricted_beta
+      puts '**************************************************************'
+      puts '****** WARNING: SOME DEVELOPMENT ONLY OPTIONS ARE SET ********'
+      puts '**************************************************************'
+    end
+  end
+  
   desc "Copy configuration files"
   task :config do
     cp("#{Rails.root}/config/database.yml.example", "#{Rails.root}/config/database.yml") unless File.exists?("#{Rails.root}/config/database.yml")

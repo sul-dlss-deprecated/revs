@@ -97,3 +97,4 @@ end
 
 after "deploy:create_symlink", "deploy:migrate"
 after "deploy:update", "deploy:cleanup" 
+after "deploy:update", "revs:dev_options_set"
