@@ -15,6 +15,7 @@ set :shared_children, %w(
   log 
   config/database.yml
   config/solr.yml
+  public/uploads
 )
 
 set :user, "lyberadmin" 
@@ -91,6 +92,9 @@ namespace :deploy do
   task :dev_options_set do
     run "cd #{deploy_to}/current && rake revs:dev_options_set RAILS_ENV=#{rails_env}"
   end
+  task :symlink_uploads do
+    run "rm -fr #{release_path}/public/uploads && ln -s #{shared_path}/uploads #{release_path}/public/uploads"
+  end
   task :start do ; end
   task :stop do ; end
   task :restart, :roles => :app, :except => { :no_release => true } do
@@ -101,3 +105,5 @@ end
 after "deploy:create_symlink", "deploy:migrate"
 after "deploy:update", "deploy:cleanup" 
 after "deploy:update", "deploy:dev_options_set"
+after "deploy:finalize_update", "deploy:symlink_editstore"
+after "deploy:finalize_update", "deploy:symlink_uploads"
