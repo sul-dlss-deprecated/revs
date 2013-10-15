@@ -6,6 +6,7 @@ require 'pathname'
 
 namespace :revs do
   desc "Load all changes to the metadata from CSV files located in TBD"
+  #Run me: rake revs:bulk_load["SHEETS_LOCATION"] RAILS_ENV=production
   task :bulk_load, [:change_files_loc, :local_testing] => :environment do |t, args|
     local_testing = args[:local_testing] || false #Assume we are not testing locally unless told so
     debug_source_id = '2012-027NADI-1967-b1_1.0_0008'
@@ -24,6 +25,7 @@ namespace :revs do
     assigner = "="
     multi = "_mvf"
     model = 'model'
+    model_year = 'model_year'
     ignore_fields = [sourceid, location, marque, filename]  
     location_fields = ['country', 'city', 'state']
     additional_fields = location_fields + [full_date]#add other arrays here if we do anymore splitting
@@ -47,7 +49,7 @@ namespace :revs do
                   'collection_names', 'highlighted']
    
    #These should be the field name from /app/models/solr_document.rb
-   multi_values = ['vehicle_model', 'years', "formats", "model_years", "marque", "people"]
+   multi_values = ['vehicle_model', 'years', "formats", "model_year", "marque", "people"]
   
    #All the CSV headers we know how to handle
    known_headers = csv_to_solr.keys + ignore_fields + solr_keys
@@ -98,8 +100,24 @@ namespace :revs do
            
            
              #Check to see if we have a format row and clean it up
-             row[format] = cleanFormat(row[format].strip.split(seperator)).join(seperator) if row[format] != nil
-          
+             
+             #Assume there is no change to the format field and we should ignore this key
+             ignore_fields.insert(0, format) if not ignore_fields.include?(format)
+             
+             if row[format] != nil
+               current_format = target[SolrDocument.field_mappings[:formats][:field]]
+               current_format = current_format.sort if current_format != nil
+               format_changes = cleanFormat(row[format].strip.downcase.split(seperator)).sort
+               
+               #We have changes 
+               if current_format != format_changes
+                  row[format] = format_changes.join(seperator)
+                  ignore_fields.delete(format) #Pull it out of the ignore fields since we need to make changes here. 
+                else
+               end
+               
+             end
+
            
              #Check to see if we have a location and see if we need to parse it.
              row = parseLocation(row, location) if row[location] != nil
@@ -127,9 +145,14 @@ namespace :revs do
                  row[year] = nil if(csv_to_solr[year] != nil and csv_to_solr[year] != year) #Clear whatever the csv used for year/date if it is not the proper Solr key
                end
              end
+             
+             #Handle multiple model_years
+             if row[model_year] != nil
+               row[model_year] = SolrDocument.parse_years(row[model_year]).join(seperator)
+             end
            
            
-             (changes.headers()-ignore_fields+additional_fields).each do |key|
+             (changes.headers()+additional_fields-ignore_fields).each do |key|
                key = key.strip.downcase
                #First make sure we have a real change
                if row[key] != nil
