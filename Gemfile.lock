@@ -278,7 +278,7 @@ DEPENDENCIES
   bootstrap-sass
   bundler (>= 1.2.0)
   cancan
-  capistrano
+  capistrano (~> 2)
   capistrano-ext
   capybara (~> 1.0)
   carrierwave

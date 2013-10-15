@@ -96,9 +96,9 @@ Before deploying to production, tag the release with a version.  We use date bas
 
 ### Deploying
 
-    cap production deploy   # for production
-    cap staging deploy      # for staging
-    cap development deploy  # for development
+    cap production deploy   # for production  (revslib.stanford.edu)
+    cap staging deploy      # for staging     (revs-stage.stanford.edu)
+    cap development deploy  # for development (revs-dev.stanford.edu)
 
 You must specify a branch or tag to deploy.  You can deploy the latest by specifying "master"
 

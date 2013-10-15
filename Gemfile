@@ -64,7 +64,7 @@ end
 
 # gems necessary for capistrano deployment
 group :development,:deployment do
-  gem 'capistrano'
+  gem 'capistrano', '~>2'
   gem 'capistrano-ext'
   gem 'rvm-capistrano'
   gem 'lyberteam-devel', '>=1.0.0'
