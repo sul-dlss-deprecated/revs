@@ -6,6 +6,7 @@
  	 edit_field_name = multivalued ? "#{field_name}#{SolrDocument.multivalued_field_marker}" : field_name # the edit field name is different if we are using a mutlivalued field, since we want to edit/display mutlivalues delimited with a | character
 	 simple_format = defined?(simple_format) ? simple_format : 'false' # indicates if we want to use the simple_format command to format single valued fields
    checked_value = defined?(checked_value) ? checked_value : true # indicates the checked value for a checkbox field
+   separator = defined?(separator) ? separator : nil # indicates the separator to be used when showing multivalued fields (defaults to , as defined by helper method "show_formatted_list")
 %>
 
 <% if !document.send(field_name.to_s).blank? || (editable && in_curator_edit_mode)  %>
@@ -28,7 +29,7 @@
     </dd>
 		<% else %>
 			<% if multivalued %>
-  			<dd><%= show_formatted_list(document.send(field_name),:facet=>facet_field_name) %></dd>
+  			<dd><%= show_formatted_list(document.send(field_name),:facet=>facet_field_name,:separator=>separator) %></dd>
 		  <% else %>
 				<dd><%= show_linked_value(document.send(field_name),:simple_format=>simple_format,:facet=>facet_field_name) %></dd>
 			 <% end %>

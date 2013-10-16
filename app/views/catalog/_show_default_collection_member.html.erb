@@ -40,7 +40,7 @@
 						<% end%>
 					<% end %>
 					
-					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'people',:label=>t('revs.show.label_people'),:multivalued=>true,:editable=>true,:facet=>true, :input_type=>'text_area'} %>
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'people',:label=>t('revs.show.label_people'),:multivalued=>true,:editable=>true,:facet=>true,:separator=>'; ',:input_type=>'text_area'} %>
 
           <%= render "/catalog/item_edit_errors" %>
 					<%= submit_tag t('revs.nav.save_changes'), class: 'btn btn-small' if in_curator_edit_mode %>
