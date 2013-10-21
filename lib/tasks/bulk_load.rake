@@ -60,7 +60,7 @@ namespace :revs do
     
     #Process Each File 
     change_files.each do |file| 
-      log = Logger.new("#{Rails.root}/log/#{Pathname.new(file).basename}.#{Time.now.to_i}.log")
+      log = Logger.new("#{Rails.root}/log/#{Time.now.to_i}.#{Pathname.new(file).basename}.log")
       log.level = Logger::ERROR
       
       #Load in the CSV, with the top row being taken as the header
