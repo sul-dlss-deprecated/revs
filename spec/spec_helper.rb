@@ -107,6 +107,12 @@ def should_deny_access(path)
   page.should have_content('You are not authorized to perform this action.')
 end
 
+def should_deny_access_for_beta(path)
+  visit path
+  current_path.should == root_path
+  page.should have_content("The Revs Digital Library is currently in limited beta release.")
+end
+
 def should_allow_admin_section
   visit admin_dashboard_path
   page.should have_content('Administrator Dashboard')

@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   before_filter :signin_sunet_user, :if=>lambda{sunet_user_signed_in? && !user_signed_in?} # signin a sunet user if they are webauthed but not yet logged into the site
 
   rescue_from CanCan::AccessDenied do |exception|
-    not_authorized(exception.message)
+    not_authorized(:additional_message=>exception.message)
   end
   
   def application_name
@@ -40,6 +40,7 @@ class ApplicationController < ActionController::Base
     if user_signed_in?
       session[:login_redirect] = nil
       redirect_to root_path
+      return true
     end
   end
        
@@ -84,11 +85,14 @@ class ApplicationController < ActionController::Base
     response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
   end
   
-  def not_authorized(additional_message=nil)
+  def not_authorized(params={})
     
-    message=t('revs.messages.not_authorized')
+    additional_message=params[:additional_message]
+    replace_message=params[:replace_message]
+    
+    message = replace_message || t('revs.messages.not_authorized')
     message+=" " + additional_message unless additional_message.blank?
-    message+=" " + t('revs.messages.in_beta_not_authorized_html') if Revs::Application.config.restricted_beta
+    
     respond_to do |format|
       format.html { redirect_to :root, :alert=>message.html_safe}
       format.xml  { render :xml => message, :status=>401 }

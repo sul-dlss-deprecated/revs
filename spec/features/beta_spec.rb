@@ -11,12 +11,12 @@ describe("Beta Users Only",:type=>:request,:integration=>true) do
   end
   
   it "should not let us visit an item detail page if we are not logged in" do 
-    should_deny_access(catalog_path('yt907db4998'))
+    should_deny_access_for_beta(catalog_path('yt907db4998'))
   end
 
   it "should not let us visit an item detail page if we are logged in but not part of the beta" do 
     login_as user_login
-    should_deny_access(catalog_path('yt907db4998'))
+    should_deny_access_for_beta(catalog_path('yt907db4998'))
     logout
   end
 

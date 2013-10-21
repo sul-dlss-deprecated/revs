@@ -6,7 +6,7 @@ class RegistrationsController < Devise::RegistrationsController
   
   # sign up form
   def new
-    redirect_home_if_signed_in
+    return if redirect_home_if_signed_in
     store_referred_page
     super
   end

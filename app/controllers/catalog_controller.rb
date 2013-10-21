@@ -62,7 +62,7 @@ class CatalogController < ApplicationController
 
     else
 
-       not_authorized unless can? :read,:search_pages
+       not_authorized(:replace_message=>t('revs.messages.in_beta_not_authorized_html')) unless can? :read,:search_pages
  
     end
     
@@ -75,7 +75,7 @@ class CatalogController < ApplicationController
   
   def show
     
-    not_authorized unless can? :read,:item_pages
+    not_authorized(:replace_message=>t('revs.messages.in_beta_not_authorized_html')) unless can? :read,:item_pages
     
     super
     
