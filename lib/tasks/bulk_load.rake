@@ -31,6 +31,7 @@ namespace :revs do
     additional_fields = location_fields + [full_date]#add other arrays here if we do anymore splitting
     comma = ","
     comma_splits = [marque, model]
+    file_ext = ".tif"
    
   
     #Map the csv names to the field names from 
@@ -83,9 +84,15 @@ namespace :revs do
           save_id = row[sourceid] if local_testing
           row[sourceid] = debug_source_id if local_testing
         
-        
+          #Attempt to get the target based on the source_id
           target = Blacklight.solr.select(:params =>{:q=>'source_id_ssi:"'+ row['sourceid']+'"'})["response"]["docs"][0]
        
+          #If we can't get the target based on source_id, try it with the filename
+          if(target == nil and row[filename] != nil)
+            alt_attempt = row[filename].slice! file_ext
+            target = Blacklight.solr.select(:params =>{:q=>'source_id_ssi:"'+ alt_attempt+'"'})["response"]["docs"][0]
+          end
+          
        
           #Catch sourceid with no matching druid
           log.error("In document #{file} no druid found for #{row[sourceid]}") if target == nil
