@@ -134,7 +134,8 @@ namespace :revs do
                array_marque = row[marque].split(seperator)
                count = 0 
                array_marque.each do |m|
-                 array_marque[count] = revs_lookup_marque(m, marque_file)
+                 result = revs_lookup_marque(m, marque_file)
+                 array_marque[count] = result['value'] if result
                  count += 1
                end
                row[marque] = array_marque.join(seperator)
@@ -284,6 +285,7 @@ namespace :revs do
         break
       end
     end
+    
     return result
   end 
   
