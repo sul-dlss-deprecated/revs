@@ -18,7 +18,7 @@ staging:
 
 test:
   adapter: sqlite3
-  database: db/test.sqlite3
+  database: db/editstore_test.sqlite3
   pool: 5
   timeout: 5000
 
