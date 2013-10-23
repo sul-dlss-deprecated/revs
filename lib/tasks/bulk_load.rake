@@ -10,6 +10,9 @@ namespace :revs do
   @filename = 'filename'
   @csv_extension_wild = '*.csv'
   @csv_extension = ".csv"
+  @log_extension = ".out" #use something beside .log to avoid the autorotate feature for .log files
+  @success = "SUCCESS:"
+  @failure = "FAILURE:"
   
   desc "When passed the location of .csv file(s) and a list of headers, this will generate csv with just those fields, plus fields to find the solr document"
   #Run me: rake revs:bulk_load["SHEETS_LOCATION", header1|header2|etc, output_name] RAILS_ENV=production
@@ -21,7 +24,7 @@ namespace :revs do
     full_output_path = "#{Rails.root}/lib/assets/#{args[:fn]}#{@csv_extension}"
     
     #Start Logging
-    log = Logger.new("#{Rails.root}/log/#{Time.now.to_i}.csv_for_fields.log")
+    log = Logger.new("#{Rails.root}/log/#{Time.now.to_i}.csv_for_fields#{@log_extension}")
     log.level = Logger::INFO
     log.info("Starting run with the command line args of csv_fields: #{args[:csv_files]} fields: #{args[:fields]} output filename: #{args[:fn]}")
     
@@ -104,10 +107,19 @@ namespace :revs do
     
    #Get a list of all the files we need to process and loop over them
    change_files = load_csv_files_from_directory(change_file_location)
-    
+  
+   #Setup a master log
+   master_log = Logger.new("#{Rails.root}/log/#{Time.now.to_i}.revs_bulk_load#{@log_extension}")
+   sleep 1 #This way the log timestamp will be at least oen second ahead of the next log we make and the master log ends up at the top of the list
+     
     #Process Each File 
     change_files.each do |file| 
-      log = Logger.new("#{Rails.root}/log/#{Time.now.to_i}.#{Pathname.new(file).basename}.log")
+      error_count = 0
+      name = Pathname.new(file).basename.to_s
+      name.slice! @csv_extension
+      log = Logger.new("#{Rails.root}/log/#{Time.now.to_i}.#{name}#{@log_extension}")
+      master_log.info("#{file} started at #{Time.now}")
+      
       log.level = Logger::ERROR
       
       #Load in the CSV, with the top row being taken as the header
@@ -120,6 +132,7 @@ namespace :revs do
         if not known_headers.include?(header.strip.downcase)
           bad_header = true
           log.error("In document #{file} the #{header} is an unsupported header")
+          master_log.error("#{@failure}#{file} contains unsupported header(s)")
         end
       end
       
@@ -145,8 +158,11 @@ namespace :revs do
           
        
           #Catch sourceid with no matching druid
-          log.error("In document #{file} no druid found for #{row[sourceid]}") if target == nil
-        
+          if target == nil
+            log.error("In document #{file} no druid found for #{row[sourceid]}") 
+            error_count += 1
+          end 
+          
           if target != nil #Begin Altering Single Solr Document
              doc = SolrDocument.new(target)
            
@@ -238,11 +254,18 @@ namespace :revs do
            
              log.error("In document #{file} save error for #{save_id} "+" #{changes.headers()-ignore_fields+additional_fields} #{row}") if(not success and local_testing)
              log.error("In document #{file} save error for #{row[sourceid]}") if(not success and not local_testing)
-            
+             error_count  += 1 if not success 
            
-           end #End Altering Single Solr Document 
+           end #End Altering Single Solr Document   
+          
         end
+        master_log.info("#{@success}#{file} had no errors.") if error_count == 0
+        master_log.error("#{@failure}#{file} had #{error_count} error(s).") if error_count != 0
+        puts file if local_testing
+        puts error_count if local_testing
       end
+      
+    
     end 
   end
   
