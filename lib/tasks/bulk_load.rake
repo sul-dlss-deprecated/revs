@@ -5,6 +5,53 @@ require 'countries'
 require 'pathname'
 
 namespace :revs do
+  @sourceid = 'sourceid'
+  @seperator = '|'
+  @filename = 'filename'
+  @csv_extension_wild = '*.csv'
+  @csv_extension = ".csv"
+  
+  desc "When passed the location of .csv file(s) and a list of headers, this will generate csv with just those fields, plus fields to find the solr document"
+  #Run me: rake revs:bulk_load["SHEETS_LOCATION", header1|header2|etc, output_name] RAILS_ENV=production
+  task :csv_for_fields, [:csv_files, :fields, :fn] => :environment do |t, args|
+    always_present = [@sourceid, @filename]
+    additional_headers = args[:fields].split(@seperator) 
+    all_fields = always_present + additional_headers
+    files = load_csv_files_from_directory(args[:csv_files])
+    full_output_path = "#{Rails.root}/lib/assets/#{args[:fn]}#{@csv_extension}"
+    
+    #Start Logging
+    log = Logger.new("#{Rails.root}/log/#{Time.now.to_i}.csv_for_fields.log")
+    log.level = Logger::INFO
+    log.info("Starting run with the command line args of csv_fields: #{args[:csv_files]} fields: #{args[:fields]} output filename: #{args[:fn]}")
+    
+    #Setup the output csv
+      CSV.open(full_output_path, "wb") do |csv|
+        #Write Out The Headers
+        csv << all_fields
+        
+        #Load each sheet we are taking data from
+          files.each do |file|
+             data = read_csv_with_headers(file)
+             #Make sure the always there files are present
+               always_present.each do |header|
+                 log.warn("File #{file} lacks required header: #{header}") if data.headers().include?(header) == false
+               end
+               data.each do |row|
+                 out_array = []
+                   all_fields.each do |field|
+                     out_array.append(row[field])
+                     log.warn("Nil value for #{field}, a required field, in #{file}") if row[field] == nil and always_present.include?(field)  
+                   end
+                 csv << out_array   
+               end
+      
+          end
+       end  
+  end
+
+  
+  
   desc "Load all changes to the metadata from CSV files located in TBD"
   #Run me: rake revs:bulk_load["SHEETS_LOCATION"] RAILS_ENV=production
   task :bulk_load, [:change_files_loc, :local_testing] => :environment do |t, args|
@@ -13,15 +60,15 @@ namespace :revs do
     
     marque_file = File.open('lib/assets/revs-lc-marque-terms.obj','rb'){|io| Marshal.load(io)}
     change_file_location = args[:change_files_loc]
-    change_file_extension = "*.csv"
-    sourceid = 'sourceid'
+    change_file_extension = @csv_extension_wild
+    sourceid = @sourceid
     location = "location"
     format = "format"
     marque = "marque"
-    filename = "filename"
+    filename = @filename
     year = "date"
     full_date = "full_date"
-    seperator = "|"
+    seperator =  @seperator
     assigner = "="
     multi = "_mvf"
     model = 'model'
@@ -31,6 +78,7 @@ namespace :revs do
     additional_fields = location_fields + [full_date]#add other arrays here if we do anymore splitting
     comma = ","
     comma_splits = [marque, model]
+    file_ext = ".tif"
    
   
     #Map the csv names to the field names from 
@@ -55,15 +103,16 @@ namespace :revs do
    known_headers = csv_to_solr.keys + ignore_fields + solr_keys
     
    #Get a list of all the files we need to process and loop over them
-   change_files = Dir.glob(File.join(change_file_location, change_file_extension))
+   change_files = load_csv_files_from_directory(change_file_location)
     
     #Process Each File 
     change_files.each do |file| 
-      log = Logger.new("#{Rails.root}/log/#{Pathname.new(file).basename}.#{Time.now.to_i}.log")
+      log = Logger.new("#{Rails.root}/log/#{Time.now.to_i}.#{Pathname.new(file).basename}.log")
       log.level = Logger::ERROR
       
       #Load in the CSV, with the top row being taken as the header
-      changes = CSV.parse(File.read(file), :headers => true )
+      #changes = CSV.parse(File.read(file), :headers => true )
+      changes = read_csv_with_headers(file)
       
       #Ensure we can handle all headers we've found
       bad_header = false 
@@ -83,9 +132,17 @@ namespace :revs do
           save_id = row[sourceid] if local_testing
           row[sourceid] = debug_source_id if local_testing
         
-        
-          target = Blacklight.solr.select(:params =>{:q=>'source_id_ssi:"'+ row['sourceid']+'"'})["response"]["docs"][0]
+          #Attempt to get the target based on the source_id
+          #target = Blacklight.solr.select(:params =>{:q=>'source_id_ssi:"'+ row['sourceid']+'"'})["response"]["docs"][0]
+          target = find_doc_via_blacklight(row[@sourceid])
        
+          #If we can't get the target based on source_id, try it with the filename
+          if(target == nil and row[filename] != nil)
+            alt_attempt = row[filename].slice! file_ext
+            target = find_doc_via_blacklight(alt_attempt)
+            #target = Blacklight.solr.select(:params =>{:q=>'source_id_ssi:"'+ alt_attempt+'"'})["response"]["docs"][0]
+          end
+          
        
           #Catch sourceid with no matching druid
           log.error("In document #{file} no druid found for #{row[sourceid]}") if target == nil
@@ -127,7 +184,8 @@ namespace :revs do
                array_marque = row[marque].split(seperator)
                count = 0 
                array_marque.each do |m|
-                 array_marque[count] = revs_lookup_marque(m, marque_file)
+                 result = revs_lookup_marque(m, marque_file)
+                 array_marque[count] = result['value'] if result
                  count += 1
                end
                row[marque] = array_marque.join(seperator)
@@ -277,9 +335,20 @@ namespace :revs do
         break
       end
     end
+    
     return result
   end 
   
+  def load_csv_files_from_directory(file_location)
+    return Dir.glob(File.join(file_location, @csv_extension_wild))
+  end
   
+  def read_csv_with_headers(file)
+     return CSV.parse(File.read(file), :headers => true )
+  end
+  
+  def find_doc_via_blacklight(source)
+     return Blacklight.solr.select(:params =>{:q=>'source_id_ssi:"'+ source+'"'})["response"]["docs"][0]
+  end
   
 end
