@@ -148,10 +148,13 @@ namespace :revs do
           #Attempt to get the target based on the source_id
           #target = Blacklight.solr.select(:params =>{:q=>'source_id_ssi:"'+ row['sourceid']+'"'})["response"]["docs"][0]
           target = find_doc_via_blacklight(row[@sourceid])
-       
+          
+      
+          
           #If we can't get the target based on source_id, try it with the filename
           if(target == nil and row[filename] != nil)
-            alt_attempt = row[filename].slice! file_ext
+            alt_attempt = row[filename]
+            alt_attempt.slice! file_ext
             target = find_doc_via_blacklight(alt_attempt)
             #target = Blacklight.solr.select(:params =>{:q=>'source_id_ssi:"'+ alt_attempt+'"'})["response"]["docs"][0]
           end
