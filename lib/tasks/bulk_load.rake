@@ -61,7 +61,6 @@ namespace :revs do
   task :bulk_load, [:change_files_loc, :local_testing] => :environment do |t, args|
     local_testing = args[:local_testing] || false #Assume we are not testing locally unless told so
     debug_source_id = '2012-027NADI-1967-b1_1.0_0008'
-    
     change_file_location = args[:change_files_loc]
     change_file_extension = @csv_extension_wild
     sourceid = @sourceid
@@ -212,19 +211,19 @@ namespace :revs do
            
              #We could have a full date, a year, or a span of years, handle that.
              if row[year] != nil
-               is_full_date = SolrDocument.get_full_date(row[year])
+               is_full_date = RevsUtils.get_full_date(row[year])
                if is_full_date
                  row[full_date] = row[year]
                  row[year] = nil if year != full_date
                else
-                 row[csv_to_solr[year] || year ] = SolrDocument.parse_years(row[year]).join(seperator)
+                 row[csv_to_solr[year] || year ] = RevsUtils.parse_years(row[year]).join(seperator)
                  row[year] = nil if(csv_to_solr[year] != nil and csv_to_solr[year] != year) #Clear whatever the csv used for year/date if it is not the proper Solr key
                end
              end
              
              #Handle multiple model_years
              if row[model_year] != nil
-               row[model_year] = SolrDocument.parse_years(row[model_year]).join(seperator)
+               row[model_year] = RevsUtils.parse_years(row[model_year]).join(seperator)
              end
            
            
