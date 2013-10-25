@@ -3,6 +3,7 @@ require 'rest_client'
 require 'csv'
 require 'countries'
 require 'pathname'
+require 'revs-utils'
 
 namespace :revs do
   @sourceid = 'sourceid'
@@ -61,7 +62,6 @@ namespace :revs do
     local_testing = args[:local_testing] || false #Assume we are not testing locally unless told so
     debug_source_id = '2012-027NADI-1967-b1_1.0_0008'
     
-    marque_file = File.open('lib/assets/revs-lc-marque-terms.obj','rb'){|io| Marshal.load(io)}
     change_file_location = args[:change_files_loc]
     change_file_extension = @csv_extension_wild
     sourceid = @sourceid
@@ -183,7 +183,7 @@ namespace :revs do
              if row[format] != nil
                current_format = target[SolrDocument.field_mappings[:formats][:field]]
                current_format = current_format.sort if current_format != nil
-               format_changes = cleanFormat(row[format].strip.downcase.split(seperator)).sort
+               format_changes = RevsUtils.revs_check_format(row[format].strip.downcase.split(seperator)).sort
                
                #We have changes 
                if current_format != format_changes
@@ -194,16 +194,15 @@ namespace :revs do
                
              end
 
-           
              #Check to see if we have a location and see if we need to parse it.
-             row = parseLocation(row, location) if row[location] != nil
+             row = RevsUtils.parse_location(row, location) if row[location] != nil
            
              #Check to see if we need need to handle marques
              if row[marque] != nil 
                array_marque = row[marque].split(seperator)
                count = 0 
                array_marque.each do |m|
-                 result = revs_lookup_marque(m, marque_file)
+                 result = RevsUtils.revs_lookup_marque(m)
                  array_marque[count] = result['value'] if result
                  count += 1
                end
@@ -272,99 +271,11 @@ namespace :revs do
     end 
   end
   
-  def parseLocation(row, location)
-    row[location].split('|').reverse.each do |local|
-      country = revs_get_country(local)
-      city_state = revs_get_city_state(local) 
-      row['country'] = country.strip if country 
-      if city_state
-        row['state'] = revs_get_state_name(city_state[1].strip)
-        row['city'] = city_state[0].strip
-      end
-      if not city_state and not country
-        row['city_section'] = local
-      end
-    end
-    
-    return row
-  end 
-  
-    def revs_get_country(name)
-      name='US' if name=='USA' # special case; USA is not recognized by the country gem, but US is
-      country=Country.find_country_by_name(name.strip) # find it by name
-      code=Country.new(name.strip) # find it by code
-      if country.nil? && code.data.nil? 
-        return false
-      else
-        return (code.data.nil? ? country.name : code.name)
-      end
-    end # revs_get_country
-  
-    # parse a string like this: "San Mateo (Calif.)" to try and figure out if there is any state in there; if found, return the city and state as an array, if none found, return false
-    def revs_get_city_state(name)
-      state_match=name.match(/[(]\S+[)]/)
-      if state_match.nil?
-        return false
-      else
-        first_match=state_match[0]
-        state=first_match.gsub(/[()]/,'').strip # remove parens and strip
-        city=name.gsub(first_match,'').strip # remove state name from input string and strip
-        return [city,state]
-      end
-    end # revs_get_city_state
-  
-    # given an abbreviated state name (e.g. "Calif." or "CA") return the full state name (e.g. "California")
-    def revs_get_state_name(name)
-      test_name=name.gsub('.','').strip.downcase
-      us=Country.new('US')
-      us.states.each do |key,value|
-        if value['name'].downcase.start_with?(test_name) || key.downcase == test_name
-          return value['name']
-          break
-        end
-      end
-      return name
-    end # revs_get_state_name
-  
-    
-    
-  def cleanFormat(format)
-    known_fixes = {"black-and-white negative"=>"black-and-white negatives",
-                   "color negative"=>"color negatives",
-                   "slides/color transparency"=>"color transparencies",
-                   "color negatives/slides"=>"color negatives",
-                   "black-and-white negative strips"=>"black-and-white negatives",
-                   "color transparency"=>"color transparencies",
-                   "slide"=>"slides"
-                 }
-    count = 0 
-    format.each do |f|
-      format[count] = known_fixes[f] || f
-      count += 1
-    end
-    
-    return format
+  class RevsUtils    
+    extend Revs::Utils
+    include Revs::Utils
   end
-  
-  def revs_lookup_marque(marque, a_lc_t)
-    result=false
-    variants1=[marque,marque.capitalize,marque.singularize,marque.pluralize,marque.capitalize.singularize,marque.capitalize.pluralize]
-    variants2=[]
-    variants1.each do |name| 
-      variants2 << "#{name} automobile" 
-      variants2 << "#{name} automobiles"
-    end
-    (variants1+variants2).each do |variant|
-      lookup_term=a_lc_t[variant]
-      if lookup_term
-        result={'url'=>lookup_term,'value'=>variant}
-        break
-      end
-    end
     
-    return result
-  end 
-  
   def load_csv_files_from_directory(file_location)
     return Dir.glob(File.join(file_location, @csv_extension_wild))
   end

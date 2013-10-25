@@ -212,11 +212,17 @@ GEM
       thor (>= 0.14.6, < 2.0)
     rainbow (1.1.4)
     rake (10.1.0)
+    rdf (1.0.9)
+      addressable (>= 2.3)
     rdoc (3.12.2)
       json (~> 1.4)
     ref (1.0.5)
     rest-client (1.6.7)
       mime-types (>= 1.16)
+    revs-utils (0.0.2)
+      actionpack (~> 3)
+      countries
+      rdf
     rsolr (1.0.9)
       builder (>= 2.1.2)
     rspec-core (2.14.5)
@@ -305,6 +311,7 @@ DEPENDENCIES
   omniauth
   rails (>= 3.2.11)
   rest-client
+  revs-utils (>= 0.0.2)
   rspec-rails
   rvm-capistrano
   sass-rails (~> 3.2.3)
