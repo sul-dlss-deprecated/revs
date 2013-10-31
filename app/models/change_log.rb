@@ -13,4 +13,8 @@ class ChangeLog < ActiveRecord::Base
     @item ||= SolrDocument.find(druid)
   end
   
+  def updates
+    eval(self.note)
+  end
+  
 end

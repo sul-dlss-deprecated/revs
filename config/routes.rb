@@ -89,7 +89,7 @@ Revs::Application.routes.draw do
         post 'set_edit_mode/:id', :to => 'tasks#set_edit_mode'
         put 'item/:id/edit_metadata', :to => 'tasks#edit_metadata', :as => 'edit_metadata'
         put 'item/:id/set_top_priority_item', :to => 'tasks#set_top_priority_item', :as => 'set_top_priority_item'
-        match 'annotations', :to => 'tasks#annotations', :as=>"annotations_table"
+        match 'annotations', :to => 'tasks#annotations', :as=>"annotations_table"        
         match 'edits', :to => 'tasks#edits', :as=>"edits_table"
       end
     end
