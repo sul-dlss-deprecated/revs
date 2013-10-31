@@ -1,0 +1,33 @@
+<div id="content" class="span9">
+
+  <h2><%= display_user_name(@user) %><span class="lowercase">'s</span> <%=t('revs.curator.edits')%></h2>
+ 
+ <% if @edits.count > 0 %>
+ 	
+ <%= paginate @edits, :params => {:order=>@order} %>
+ <table class="table table-bordered table-condensed table-hover table-striped">
+   <tr>
+     <th><%= link_to t('revs.collection_members.items_name').titleize, user_edits_path(:id=>@id,:order=>'druid') %></th>
+     <th><%= link_to t('revs.messages.created'), user_edits_path(:id=>@id,:order=>'created_at DESC') %></th>
+   </tr>
+   <% @edits.each do |edit|%>
+    <tr>
+      <td><%= item_link(edit.item,:truncate=>true) %></td>
+			 <td><%= show_as_datetime(edit.created_at.in_time_zone) %></td>
+    </tr>
+   <% end %>
+ </table>
+	
+ <% else %>
+    <%=t('revs.edits.none')%>
+<% end %>
+
+
+
+</div>
+	<% if is_logged_in_user?(@user) %>
+		<%= render :partial => 'devise/shared/show_user_sidebar' %>
+	<% else %>
+		<%= render :partial => 'devise/shared/show_public_profile_user_sidebar' %>
+	<% end %>
+

@@ -31,8 +31,8 @@ class Curator::TasksController < ApplicationController
    def edits
      @order = params[:order] || "num_edits DESC"
      @order2 = params[:order2] || "num_edits DESC"
-     @edits_by_item=ChangeLog.select("count(*) as num_edits,druid,updated_at").group('druid').order(@order).page(params[:pagina])
-     @edits_by_user=ChangeLog.select("count(*) as num_edits,user_id,updated_at").includes(:user).group('user_id').order(@order2).page(params[:pagina2])
+     @edits_by_item=ChangeLog.select("count(id) as num_edits,druid,updated_at").where(:operation=>'metadata update').group('druid').order(@order).page(params[:pagina])
+     @edits_by_user=ChangeLog.select("count(id) as num_edits,user_id,updated_at").where(:operation=>'metadata update').includes(:user).group('user_id').order(@order2).page(params[:pagina2])
 
      @tab_list_item = 'edits-by-item'
      @tab_list_user = 'edits-by-user'

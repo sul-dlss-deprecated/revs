@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131017172837) do
+ActiveRecord::Schema.define(:version => 20131031171240) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "user_id"
@@ -42,6 +42,10 @@ ActiveRecord::Schema.define(:version => 20131017172837) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "change_logs", ["druid"], :name => "index_change_logs_on_druid"
+  add_index "change_logs", ["operation"], :name => "index_change_logs_on_operation"
+  add_index "change_logs", ["user_id"], :name => "index_change_logs_on_user_id"
 
   create_table "flags", :force => true do |t|
     t.integer  "user_id"

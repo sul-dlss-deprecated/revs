@@ -41,6 +41,9 @@
       <% if user_flags_count(@user) > 0 %>
         <li><%= link_to t('revs.user.view_your_flags'), user_flags_path(@user.username) %></li>
       <% end %>
+      <% if user_edits_count(@user) > 0 %>
+        <li><%= link_to t('revs.user.view_your_edits'), user_edits_path(@user.username) %></li>
+      <% end %>      
       <% if current_user.sunet_user? %>
         <li><%= button_to t('revs.user.sign_out'), webauth_logout_path, :method=>:delete,
                 :class => "btn-link" %></li>

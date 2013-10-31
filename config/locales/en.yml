@@ -188,6 +188,8 @@ en:
     dashboards: 'Dashboards'
     citations:
         view: 'View full citation page with image download'
+    edits:
+        none: 'This user does not have any edits.'
     annotations:
         add: 'View/add annotations'
         view: 'View annotations'
@@ -344,6 +346,8 @@ en:
       close_all_annotations: "Close all Annotations"
       view_your_annotations: "View your annotations"
       view_your_flags: "View your flags"
+      view_your_edits: "View your edits"
+      view_all_edits: "View all edits"
       view_all_flags: "View all flags"
       view_profile_page: "View your profile page"
       edit_profile: "Edit Profile"

@@ -67,7 +67,7 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     page.should have_content 'private'
   end
 
-  it "should show link to annotations made by user on that user's profile page, only if user has made annotations " do
+  it "should show link to annotations made by user on that user's profile page, only if user has made annotations" do
     login_as(user_login) # this user has annotations
     visit user_profile_name_path(user_login)
     current_path.should == user_profile_name_path(user_login)
@@ -91,7 +91,17 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     visit  user_profile_name_path(user_login)
     current_path.should ==  user_profile_name_path(user_login)
     ["Annotations 1","air intake?","Flags","Sebring 12 Hour, Green Park..."].each {|title| page.should have_content(title)}
-    
+  end
+
+  it "should show correct number of item edits made by user on that user's profile page, along with most recent item edits" do
+    edited_titles=["A Somewhat Shorter Than Ave...","Marlboro Governor's Cup, Ap...","Thompson Raceway, May 1"]
+    login_as(curator_login)
+    visit user_profile_name_path(curator_login)
+    current_path.should == user_profile_name_path(curator_login)
+    page.should have_content 'Item Edits 4'
+    edited_titles.each {|title| page.should have_content(title)}    
+    visit user_edits_path(curator_login)
+    edited_titles.each {|title| page.should have_content(title)}        
   end
 
   it "should show a profile preview link on edit profile page, but only if user profile is private" do
@@ -107,7 +117,7 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     page.should_not have_link('Preview', href: user_profile_name_path(user_login))
   end
 
-  it "show the logged in users annotations/flags with their full name, even if the profile is private" do
+  it "show the logged in users annotations/flags/edits with their full name, even if the profile is private" do
     login_as(admin_login)
     admin_account=User.find_by_username(admin_login)
     admin_account.public.should == false
@@ -116,10 +126,13 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     page.should have_content "Guy in the background looking sideways"
     visit user_flags_path(admin_account.username)    
     page.should have_content "#{admin_account.full_name}'s Flags"
-    page.should have_content "This user does not have any flags."    
+    page.should have_content "This user does not have any flags."   
+    visit user_edits_path(admin_account.username)    
+    page.should have_content "#{admin_account.full_name}'s Item Edits"
+    page.should have_content "A Somewhat Shorter Than Ave"     
   end
 
-  it "show a non logged in users annotations/flags with just their username, even if the profile is private" do
+  it "show a non logged in users annotations/flags/edits with just their username, even if the profile is private" do
     admin_account=User.find_by_username(admin_login)
     admin_account.public.should == false
     visit user_annotations_path(admin_account.username)
@@ -128,7 +141,10 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     page.should have_content "Guy in the background looking sideways"
     visit user_flags_path(admin_account.username)    
     page.should have_content "#{admin_account.username}'s Flags"
-    page.should have_content "This user does not have any flags."    
+    page.should have_content "This user does not have any flags."  
+    visit user_edits_path(admin_account.username)    
+    page.should have_content "#{admin_account.username}'s Item Edits"
+    page.should have_content "A Somewhat Shorter Than Ave"
   end
 
   it "show a non logged in users annotations/flags with their full name if their profile is public" do
@@ -140,6 +156,9 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     visit user_flags_path(user_account.username)    
     page.should have_content "#{user_account.full_name}'s Flags"
     page.should have_content "user comment"    
+    visit user_edits_path(user_account.username)    
+    page.should have_content "#{user_account.full_name}'s Item Edits"
+    page.should have_content "This user does not have any edits."    
   end
   
   it "should show only the dashboard links appropriate for role of user" do

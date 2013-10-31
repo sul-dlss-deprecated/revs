@@ -6,6 +6,9 @@
       <% if @user.public %>
 				<li><%= link_to t('revs.user.view_profile'), user_profile_name_path(@user.username) %></li>
       <% end %>
+      <% if user_edits_count(@user) > 0 %>
+        <li><%= link_to t('revs.user.view_all_edits'), user_edits_path(@user.username) %></li>
+      <% end %>
 			<% if user_annotations_count(@user) > 0 %>
         <li><%= link_to t('revs.user.view_all_annotations'), user_annotations_path(@user.username) %></li>
       <% end %>
