@@ -4,9 +4,37 @@ describe("Item Visibility",:type=>:request,:integration=>true) do
 
   before :each do
     @hidden_druid='bb004bn8654'
+    @default_visible_druid='yt907db4998'
+    @visible_druid='xf058ys1313'
     @hidden_druid_path=catalog_path(@hidden_druid)
     @nadig_collection_druid='kz071cg8658'
     @nadig_collection_path=catalog_path(@nadig_collection_druid)
+  end
+  
+  it "should update image visibility" do
+    doc1=SolrDocument.find(@hidden_druid)
+    doc1.visibility_value.should == 0
+    doc1.visibility.should == :hidden
+    doc1.visibility=:visible
+    doc1.save
+    doc1=SolrDocument.find(@hidden_druid)
+    doc1.visibility_value.should == 1
+    doc1.visibility.should == :visible
+    
+    doc2=SolrDocument.find(@visible_druid)
+    doc2.visibility_value.should == ""
+    doc2.visibility.should == :visible
+    doc2.visibility=:hidden
+    doc2.save
+    doc2=SolrDocument.find(@visible_druid)
+    doc2.visibility_value.should == 0
+    doc2.visibility.should == :hidden
+
+    doc3=SolrDocument.find(@default_visible_druid)
+    doc3.visibility_value.should == 1
+    doc3.visibility.should == :visible
+
+    reindex_solr_docs([@hidden_druid,@visible_druid])    
   end
   
   it "should not show hidden items to non-logged in or regular users" do

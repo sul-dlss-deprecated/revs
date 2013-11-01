@@ -52,6 +52,14 @@ class SolrDocument
     Revs::Application.config.use_editstore # set to true to propogate changes to editstore when the .save method is called
   end
   
+  # map visibility values stored in solr and the database to what they mean
+  def self.visibility_mappings
+    { :hidden =>  '0',
+      :visible => '1',
+      :preview => '2'
+    }
+  end
+  
   def self.field_mappings
     {
       :title=>{:field=>'title_tsi',:default=>'Untitled'},
@@ -86,7 +94,7 @@ class SolrDocument
       :collections=>{:field=>'is_member_of_ssim'},
       :collection_names=>{:field=>'collection_ssim'},
       :highlighted=>{:field=>'highlighted_ssi'},
-      :visibility=>{:field=>'visibility_isi'},
+      :visibility_value=>{:field=>'visibility_isi'},
       }  
   end
   
@@ -169,17 +177,15 @@ class SolrDocument
   ######################
 
   ######################
-  # we need a custom getter for the visibility field to make it easier to map integers to values
+  # we need a custom getter/setter for the visibility field to make it easier to map integers to values
   def visibility
-    case self['visibility_isi']
-      when '0',0
-        :hidden
-      when '2',2
-        :preview
-      else
-        :visible
-      end      
+    viz=SolrDocument.visibility_mappings.invert[visibility_value.to_s]
+    viz ? viz.to_sym : :visible  # if we don't have any value, its visible
   end
+
+  def visibility=(value)
+    self.visibility_value = SolrDocument.visibility_mappings[value.to_sym]
+  end  
   ######################
   
   #####################
@@ -343,12 +349,14 @@ class SolrDocument
    # specify solr fq queries for retrieving just visible, hidden or all images
    def self.images_query(visibility)
      case visibility
-      when :visible
-        '((*:* -visibility_isi:[* TO *]) OR visibility_isi:1)'
-      when :hidden
-        '(visibility_isi:0)'
-      else
-        ''
+        when :visible
+          "((*:* -visibility_isi:[* TO *]) OR visibility_isi:#{SolrDocument.visibility_mappings[:visible]})"
+        when :hidden
+          "(visibility_isi:#{SolrDocument.visibility_mappings[:hidden]})"
+        when :preview
+          "(visibility_isi:#{SolrDocument.visibility_mappings[:preview]})"
+        else
+          ''
       end
    end
    

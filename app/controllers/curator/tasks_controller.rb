@@ -41,11 +41,21 @@ class Curator::TasksController < ApplicationController
    
    # an ajax call to set the curator edit mode
    def set_edit_mode
-     session[:curator_edit_mode]=params[:value]
      @document=SolrDocument.find(params[:id])
-     flash[:notice] = t('revs.messages.changes_not_saved',:rails_env=>Rails.env) if (params[:value]==true && ['staging'].include?(Rails.env))
+     @value=params[:value]
+     session[:curator_edit_mode]=@value
+     flash[:notice] = t('revs.messages.changes_not_saved',:rails_env=>Rails.env) if (@value && ['staging'].include?(Rails.env))
    end
 
+   # an ajax call to set the item visibility
+   def set_visibility
+     @document=SolrDocument.find(params[:id])
+     @value=params[:value].to_sym
+     @document.visibility=@value
+     @document.save
+     flash[:success] = (@value == :hidden ? t('revs.messages.hide_image_success') : t('revs.messages.show_image_success'))
+   end
+   
    # an ajax call for user submitted in-place edit
    def edit_metadata
       @document=SolrDocument.find(params[:id])

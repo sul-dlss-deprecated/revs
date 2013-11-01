@@ -1,0 +1,10 @@
+$('#main-flashes').html("<%= escape_javascript(render(:partial => "/flash_msg")).html_safe %>");
+jQuery("#data-vars").attr('data-visibility','<%=@value%>');	
+var link=jQuery('#visibility-text');
+<% if @value == :hidden # currently hidden, set text to show%> 
+	link.text(link.attr('data-visibility-show-text'));
+	$('.public-visibility-status').removeClass("hidden-offscreen");
+<% else # currently showing, show text to hide%>
+  link.text(link.attr('data-visibility-hide-text'));
+  $('.public-visibility-status').addClass("hidden-offscreen");	
+<% end %>
