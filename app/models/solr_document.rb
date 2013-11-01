@@ -9,9 +9,10 @@ class SolrDocument
   extend ActivesolrHelper::ClassMethods
   
   include DateHelper
-        
+  include SolrQueryHelper      
+ 
   extend Revs::Utils
-  
+      
   # Email uses the semantic field mappings below to generate the body of an email.
   SolrDocument.use_extension( Blacklight::Solr::Document::Email )
 
@@ -85,6 +86,7 @@ class SolrDocument
       :collections=>{:field=>'is_member_of_ssim'},
       :collection_names=>{:field=>'collection_ssim'},
       :highlighted=>{:field=>'highlighted_ssi'},
+      :visibility=>{:field=>'visibility_isi'},
       }  
   end
   
@@ -165,9 +167,23 @@ class SolrDocument
     desc.class == Array ? desc.first : desc
   end
   ######################
+
+  ######################
+  # we need a custom getter for the visibility field to make it easier to map integers to values
+  def visibility
+    case self['visibility_isi']
+      when '0',0
+        :hidden
+      when '2',2
+        :preview
+      else
+        :visible
+      end      
+  end
+  ######################
   
   #####################
-  # provides the equivalient of an ActiveRecord has_one relationship with collection
+  # provides the equivalent of an ActiveRecord has_one relationship with collection
   # Return a SolrDocument object of the parent collection of an item
   def collection
     return nil unless is_item?
@@ -183,7 +199,7 @@ class SolrDocument
   ######################
   
   ######################
-  # provides the equivalent of an ActiveRecord has_many relationship with flags, annotations, images and siblings
+  # provides the equivalent of an ActiveRecord has_many relationship with flags, annotations, edits, images and siblings
   def flags
     Flag.includes(:user).where(:druid=>id)
   end
@@ -192,6 +208,10 @@ class SolrDocument
     Annotation.for_image_with_user(id,user)
   end
 
+  def edits
+    ChangeLog.includes(:user).where(:druid=>id,:operation=>'metadata update')
+  end
+  
   # Return a CollectionMembers object of all of the siblings of a collection member (including self)
   def siblings(params={})
     return nil unless is_item?
@@ -199,15 +219,18 @@ class SolrDocument
     rows=params[:rows] || blacklight_config.collection_member_grid_items
     start=params[:start] || 0
     random=params[:random] || false # if set to true, will give you a random selection from the collection ("start" will be ignored)
+    include_hidden=params[:include_hidden] || false # if set to true, the query will also return hidden images
     
     if random
       start = self.total_siblings-rows < 0 ? 0 : rand(0...self.total_siblings-rows) # if we have less items than we want to show, just start at 0; else start at a random number between 0 and the total - # to show
     end
         
+    fq="#{blacklight_config.collection_member_identifying_field}:\"#{self[blacklight_config.collection_member_identifying_field].first}\""
+    fq+=" AND #{SolrDocument.images_query(:visible)}" unless include_hidden
     @siblings ||= CollectionMembers.new(
                                Blacklight.solr.select(
                                  :params => {
-                                   :fq => "#{blacklight_config.collection_member_identifying_field}:\"#{self[blacklight_config.collection_member_identifying_field].first}\"",
+                                   :fq => fq,
                                    :sort=> "priority_isi desc",
                                    :rows => rows.to_s,
                                   :start => start.to_s
@@ -235,10 +258,14 @@ class SolrDocument
 
     rows=params[:rows] || blacklight_config.collection_member_grid_items
     start=params[:start] || 0
+    include_hidden=params[:include_hidden] || false # if set to true, the query will also return hidden images
+    
+    fq="#{blacklight_config.collection_member_identifying_field}:\"#{self[SolrDocument.unique_key]}\""
+    fq+=" AND #{SolrDocument.images_query(:visible)}" unless include_hidden
     return CollectionMembers.new(
                               Blacklight.solr.select(
                                 :params => {
-                                  :fq => "#{blacklight_config.collection_member_identifying_field}:\"#{self[SolrDocument.unique_key]}\"",
+                                  :fq => fq,
                                   :sort=> "priority_isi desc",
                                   :rows => rows.to_s,
                                   :start => start.to_s
@@ -248,8 +275,8 @@ class SolrDocument
   end  
   ###################
   
-  def total_siblings
-    self.collection.collection_members.total_members
+  def total_siblings(params={})
+    self.collection.collection_members(params).total_members
   end
   
   def has_vehicle_metadata?
@@ -312,6 +339,19 @@ class SolrDocument
   
    ##################################################################
    # CLASS LEVEL METHODS
+   
+   # specify solr fq queries for retrieving just visible, hidden or all images
+   def self.images_query(visibility)
+     case visibility
+      when :visible
+        '((*:* -visibility_isi:[* TO *]) OR visibility_isi:1)'
+      when :hidden
+        '(visibility_isi:0)'
+      else
+        ''
+      end
+   end
+   
    # Return an Array of all collection type SolrDocuments
    def self.all_collections(params={})
      highlighted=params[:highlighted] || false
@@ -334,8 +374,10 @@ class SolrDocument
      collections.size > 0 ? collections : self.all_collections
    end
    
-  def self.total_images
-    items=Blacklight.solr.get 'select',:params=>{:q=>'-format_ssim:collection'}      
+   # count the total number of images (default to those marked as visible only, can also pass in :all or :hidden)
+  def self.total_images(visibility=:visible)
+    params={:q=>'-format_ssim:collection',:fq=>self.images_query(visibility)}
+    items=Blacklight.solr.get 'select',:params=>params      
     return items['response']['numFound']
   end
   

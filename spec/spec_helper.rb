@@ -150,28 +150,15 @@ def reindex_solr_docs(druids)
   RestClient.post "#{Blacklight.solr.options[:url]}/update?commit=true", "<update><add>#{add_docs.join(" ")}</add></update>", :content_type => "text/xml"
 end
 
+
 def login_as_user_and_goto_druid(user, druid)
   #logout, just in case
-  logout
-  
+  logout  
   #login as the provided user
   login_as(user)
   item_page=catalog_path(druid)
   visit item_page
-
 end
-
-def login_as_user_and_goto_druid(user, druid)
-  #logout, just in case
-  logout
-  
-  #login as the provided user
-  login_as(user)
-  item_page=catalog_path(druid)
-  visit item_page
-
-end
-
 
 def remove_flag(user, druid, content)
   login_as_user_and_goto_druid(user, druid)

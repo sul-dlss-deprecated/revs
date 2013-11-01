@@ -109,7 +109,7 @@
 
             </li>
 
-							<% if !can?(:create, Flag) %>
+							<% if cannot?(:create, Flag) %>
 							<li>
 							  <span id="feedback_link">
 							    <%= link_to t('revs.nav.content_corrections'),new_user_session_path %>
@@ -131,20 +131,30 @@
                 <span class="edit-mode-status label label-warning <%="hidden-offscreen" if session[:curator_edit_mode] != 'true'%>"><%= t('revs.curator.active') %></span>
               </li>
             <% end %>
-            <%# TODO: li below is placeholder for item visibility action %>
-            <li id="item-public-visibility-status">
-              <%#  Default state %>
-                <%#= link_to "<i class='icon-eye-close'></i> #{t('revs.messages.public_visibility_hide')}".html_safe, "#" %>
-              <%#  Item hidden state - commented out lines below %>
-                <%#= link_to "<i class='icon-eye-close'></i> #{t('revs.messages.public_visibility_show')}".html_safe, "#" %>
-                <!-- <span class="public-visibility-status label label-warning">
-                  <%#= t('revs.messages.public_visibility_hidden') %>
-                </span> -->
-            </li>
+              <li id="item-public-visibility-status">              
+                <%#  Default state %>
+                <% if @document.visibility == :visible %>
+                  <%= link_to "<i class='icon-eye-close'></i> #{t('revs.messages.public_visibility_hide')}".html_safe, "#" %>
+                <%#  Item hidden state - commented out lines below %>
+                 <% elsif @document.visibility == :hidden %>
+                  <%= link_to "<i class='icon-eye-close'></i> #{t('revs.messages.public_visibility_show')}".html_safe, "#" %>
+                   <span class="public-visibility-status label label-warning">
+                    <%= t('revs.messages.public_visibility_hidden') %>
+                  </span>
+                <% end %>
+              </li>
             <li id="item-priority-status">
               <%= render :partial=>"/catalog/item_priority_status" %>
             </li>
           </ul>
+        <% end %>
+        
+        <% if @document.visibility == :hidden %>
+          <noscript>
+             <span class="public-visibility-status label label-warning">
+              <%= t('revs.messages.public_visibility_hidden') %>
+            </span>
+          </noscript>
         <% end %>
 
         <div class="license-image">
@@ -173,12 +183,12 @@
       <div class="span12 collection-members">
         <div class="row">
             <div class="span8">
-              <h5><%= document[blacklight_config.collection_member_collection_title_field].first %> <span class="muted">(<%= number_with_delimiter(@document.siblings.total_members) %>)</span></h5>
+              <h5><%= document[blacklight_config.collection_member_collection_title_field].first %> <span class="muted">(<%= number_with_delimiter(@document.siblings(:include_hidden=>can?(:view_hidden, SolrDocument)).total_members) %>)</span></h5>
             </div>
             <div class="span3 offset1 controls">
               <%= link_to(t('revs.collection_members_grid.collection_link'), catalog_path(@document[blacklight_config.collection_member_identifying_field])) %>
               |
-              <%= link_to(t('revs.collection_members_grid.members_link'), catalog_index_path( {:f => { blacklight_config.collection_member_collection_title_field => @document.siblings.first[blacklight_config.collection_member_collection_title_field]  } } ))%>
+              <%= link_to(t('revs.collection_members_grid.members_link'), catalog_index_path( {:f => { blacklight_config.collection_member_collection_title_field => @document.siblings(:include_hidden=>can?(:view_hidden, SolrDocument)).first[blacklight_config.collection_member_collection_title_field]  } } ))%>
             </div>
         </div>
       </div>

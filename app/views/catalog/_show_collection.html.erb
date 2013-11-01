@@ -18,7 +18,7 @@ $(document).ready(function(){
 <div class="row">
   <div class="span5">
     <div id="collection_carousel" class="carousel slide">
-		  <% @carousel_members = @document.get_members(:rows=>blacklight_config.collection_member_carousel_items,:start=>0)%>
+		  <% @carousel_members = @document.get_members(:rows=>blacklight_config.collection_member_carousel_items,:start=>0,:include_hidden=>can?(:view_hidden, SolrDocument))%>
 			<%= render :partial=> "collection_member_carousel", :locals => {:rows=>blacklight_config.collection_member_carousel_items,:start=>0}%>
     </div>
   </div>

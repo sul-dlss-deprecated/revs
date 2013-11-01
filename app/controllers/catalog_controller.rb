@@ -9,6 +9,7 @@ class CatalogController < ApplicationController
   
   before_filter :filter_params
   before_filter :add_facets_for_curators
+  before_filter :set_default_image_visibility_query
   
   # delete editing form parameters when there is a get request so they don't get picked up and carried to all links by Blacklight
   def filter_params
@@ -26,7 +27,7 @@ class CatalogController < ApplicationController
   
   def index
     
-    not_authorized if params[:view]=='curator' && !can?(:bulk_update_metadata,:all)
+    not_authorized if params[:view]=='curator' && cannot?(:bulk_update_metadata,:all)
     
     if on_home_page # on the home page
         
@@ -39,7 +40,12 @@ class CatalogController < ApplicationController
       
         # get some information about all the collections and images we have so we can report on total numbers
         @total_collections=SolrDocument.all_collections.size
-        @total_images=SolrDocument.total_images
+        if can?(:view_hidden, SolrDocument)
+          @total_images=SolrDocument.total_images(:all)
+          @total_hidden_images=SolrDocument.total_images(:hidden)
+        else
+          @total_images=SolrDocument.total_images
+        end
         
       end
     
@@ -78,6 +84,8 @@ class CatalogController < ApplicationController
     not_authorized(:replace_message=>t('revs.messages.in_beta_not_authorized_html')) unless can? :read,:item_pages
     
     super
+
+    not_authorized if @document.visibility == :hidden && cannot?(:view_hidden, SolrDocument)
     
   end
   
@@ -85,11 +93,11 @@ class CatalogController < ApplicationController
   def show_collection_members_grid
     @document=SolrDocument.find(params[:id])
     if params[:on_page] == 'item'
-      @collection_members=@document.siblings(:random=>true)
+      @collection_members=@document.siblings(:random=>true,:include_hidden=>can?(:view_hidden, SolrDocument))
       @type=:siblings
       @show_full_width=true
     else
-      @collection_members=@document.collection_members
+      @collection_members=@document.collection_members(:include_hidden=>can?(:view_hidden, SolrDocument))
       @type=:collection
       @show_full_width=false     
     end
@@ -101,11 +109,12 @@ class CatalogController < ApplicationController
     @rows=params[:rows] || blacklight_config.collection_member_carousel_items
     @start=params[:start] || 0
     @document = SolrDocument.find(druid)
-    @carousel_members = @document.get_members(:rows=>@rows,:start=>@start)
+    @carousel_members = @document.get_members(:rows=>@rows,:start=>@start,:include_hidden=>can?(:view_hidden, SolrDocument))
   end
     
   configure_blacklight do |config|
     ## Default parameters to send to solr for all search-like requests. See also SolrHelper#solr_search_params
+   
     config.default_solr_params = { 
       :qt => 'standard',
       :facet => 'true',

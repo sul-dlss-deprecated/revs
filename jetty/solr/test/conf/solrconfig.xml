@@ -76,6 +76,7 @@
 				group_class_tsi
 				photographer_ssi
 				model_ssim
+				visibility_isi
       </str>
       <str name="pf">
         title_tsi^20

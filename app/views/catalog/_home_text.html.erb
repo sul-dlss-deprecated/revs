@@ -77,6 +77,9 @@
           <%= t('revs.about.homepage_about_counts_html',
               :total_images => number_with_delimiter(@total_images),
               :number_collections => link_to(number_with_delimiter(@total_collections) + t('revs.about.homepage_about_counts_linktext'), all_collections_path)) %>
+          <% if can? :view_hidden, SolrDocument%>
+              <%= t('revs.about.homepage_about_hidden_counts_html',:total_images=> number_with_delimiter(@total_hidden_images))%>
+          <% end %>
         </p>
         <p>
           <%= t('revs.about.homepage_about_project_html') %>

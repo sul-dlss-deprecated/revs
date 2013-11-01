@@ -280,7 +280,10 @@ describe SolrDocument, :integration => true do
 
     describe "all_images" do
       it "should return the total number of images" do
-        SolrDocument.total_images.should be == 16
+        SolrDocument.total_images.should be == 16 # default is visible
+        SolrDocument.total_images(:visible).should be == 16
+        SolrDocument.total_images(:hidden).should be == 1
+        SolrDocument.total_images(:all).should be == 17
       end
     end
     
