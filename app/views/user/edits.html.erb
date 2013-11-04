@@ -12,7 +12,7 @@
    </tr>
    <% @edits.each do |edit|%>
     <tr>
-      <td><%= item_link(edit.item,:truncate=>true) %></td>
+      <td><%= item_link(edit.solr_document,:truncate=>true) %></td>
 			 <td><%= show_as_datetime(edit.created_at.in_time_zone) %></td>
     </tr>
    <% end %>

@@ -43,7 +43,7 @@
 
       <% @flags_grouped.each do |flag|%>
         <tr>
-          <td><%= item_link(flag.item,:truncate=>true) %></td>
+          <td><%= item_link(flag.solr_document,:truncate=>true) %></td>
 			    <td class="right"><%= flag.num_flags %></td>
           <td class="right"><%= Flag.queryFlagGroup(@flag_states, flag.druid, Flag.open) %></td>
           <td class="right"><%= Flag.queryFlagGroup(@flag_states, flag.druid, Flag.fixed) %></td>

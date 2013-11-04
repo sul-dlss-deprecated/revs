@@ -1,8 +1,10 @@
 require 'rest_client'
 
-class Annotation < ActiveRecord::Base
+class Annotation < WithSolrDocument
   
   belongs_to :user  
+  belongs_to :item, :foreign_key=>:druid, :primary_key=>:druid
+  
   attr_accessible :text, :json, :user_id, :druid
   
   after_create :add_annotation_to_solr
@@ -16,11 +18,6 @@ class Annotation < ActiveRecord::Base
    ANNOTATIONS_PER_TABLE_PAGE = 25
    ANNOTATION_ALL = 'all'
    ANNOTATION_NONE = 'none'
-
-  # head to solr to get the actual item, so we can access its attributes, like the title
-  def item
-    @item ||= SolrDocument.find(druid)
-  end
 
   # pass in a druid and a user and get the annotations for that image, with the appropriate json additions required for display annotations on the image
   def self.for_image_with_user(druid,user)
@@ -49,16 +46,12 @@ class Annotation < ActiveRecord::Base
   end
   
   def add_annotation_to_solr
-
-    item.add_field('annotations_tsim',text)
-    
+    solr_document.add_field('annotations_tsim',text)
   end
   
   # to update an annotation, just get all annotations for this image and update the solr document (its easier than trying to figure out exactly which annotation changed)
-  def update_annotation_in_solr
-    
-    self.class.add_to_solr_for_druid(self.druid)
-          
+  def update_annotation_in_solr    
+    self.class.add_to_solr_for_druid(self.druid)        
   end
   
   # this is a class level method so we can call it easily for any given druid (e.g. after an indexing operation) without having to load the object first

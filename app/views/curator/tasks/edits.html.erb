@@ -38,7 +38,7 @@
           <th><%= link_to t('revs.curator.edit_update'), edits_table_curator_tasks_path(:order=>'updated_at DESC', :tab=>@tab_list_item  ) %></th>
           <% @edits_by_item.each do |result| %>
             <tr>
-              <td><%=item_link(result.item,:truncate=>true)%></td>
+              <td><%=item_link(result.solr_document,:truncate=>true)%></td>
               <td class="right"><%= result.num_edits%></td>
               <td><%=show_as_date(result.updated_at)%></td>
             </tr>

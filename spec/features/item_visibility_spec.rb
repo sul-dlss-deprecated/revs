@@ -12,6 +12,8 @@ describe("Item Visibility",:type=>:request,:integration=>true) do
   end
   
   it "should update image visibility" do
+    item1=Item.where(:druid=>@hidden_druid)
+    item1.size.should == 0
     doc1=SolrDocument.find(@hidden_druid)
     doc1.visibility_value.should == 0
     doc1.visibility.should == :hidden
@@ -20,6 +22,15 @@ describe("Item Visibility",:type=>:request,:integration=>true) do
     doc1=SolrDocument.find(@hidden_druid)
     doc1.visibility_value.should == 1
     doc1.visibility.should == :visible
+    item1=Item.where(:druid=>@hidden_druid)
+    item1.size.should == 1
+    item1.first.visibility.should == :visible
+    doc1=SolrDocument.find(@hidden_druid)
+    doc1.visibility=:hidden
+    doc1.save
+    item1=Item.where(:druid=>@hidden_druid)
+    item1.size.should == 1
+    item1.first.visibility.should == :hidden
     
     doc2=SolrDocument.find(@visible_druid)
     doc2.visibility_value.should == ""

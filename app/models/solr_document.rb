@@ -8,8 +8,9 @@ class SolrDocument
   include ActivesolrHelper
   extend ActivesolrHelper::ClassMethods
   
+  include VisibilityHelper
   include DateHelper
-  include SolrQueryHelper      
+  include SolrQueryHelper     
  
   extend Revs::Utils
       
@@ -159,6 +160,8 @@ class SolrDocument
         when :pub_year_isim,:pub_year_single_isi
           years=self.class.to_array(value)
           @errors << 'A year must be after 1800 up until this year and must be in the format YYYY' if (!self.class.blank_value?(years) && !years.all?{|new_value| is_valid_year?(new_value,1800)})
+        when :visibility_isi
+          @errors << 'Visibility value not_valid' unless SolrDocument.visibility_mappings.values.include? value.to_s
       end
     
     end
@@ -174,18 +177,6 @@ class SolrDocument
     desc=self['description_tsim']
     desc.class == Array ? desc.first : desc
   end
-  ######################
-
-  ######################
-  # we need a custom getter/setter for the visibility field to make it easier to map integers to values
-  def visibility
-    viz=SolrDocument.visibility_mappings.invert[visibility_value.to_s]
-    viz ? viz.to_sym : :visible  # if we don't have any value, its visible
-  end
-
-  def visibility=(value)
-    self.visibility_value = SolrDocument.visibility_mappings[value.to_sym]
-  end  
   ######################
   
   #####################
@@ -339,8 +330,20 @@ class SolrDocument
 
   # store the change log info into our local database before going to the ActiveSolr save method to perform the saves and editstore updates
   def save(user=nil)
-    ChangeLog.create(:druid=>id,:user_id=>user.id,:operation=>'metadata update',:note=>unsaved_edits.to_s) if (valid? && user)
+    add_changelog(user)
+    update_item # propoage unique information to database as well when saving solr document
     super
+  end
+
+  def add_changelog(user)
+    ChangeLog.create(:druid=>id,:user_id=>user.id,:operation=>'metadata update',:note=>unsaved_edits.to_s) if (valid? && user)  
+  end
+  
+  # propoage unique information to database as well when saving solr document
+  def update_item
+    @item=Item.fetch(id)
+    @item.visibility_value=visibility_value
+    @item.save
   end
   
    ##################################################################

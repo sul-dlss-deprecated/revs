@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131031171240) do
+ActiveRecord::Schema.define(:version => 20131101233228) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "user_id"
@@ -66,6 +66,15 @@ ActiveRecord::Schema.define(:version => 20131031171240) do
   add_index "flags", ["resolving_user"], :name => "index_flags_on_resolving_user"
   add_index "flags", ["state"], :name => "index_flags_on_state"
   add_index "flags", ["user_id"], :name => "index_flags_on_user_id"
+
+  create_table "items", :force => true do |t|
+    t.string   "druid"
+    t.integer  "visibility_value"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "items", ["druid"], :name => "index_items_on_druid"
 
   create_table "searches", :force => true do |t|
     t.text     "query_params"
