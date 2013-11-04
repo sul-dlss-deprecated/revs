@@ -189,4 +189,19 @@
     
   </types>
   
+  <copyField source = "people_ssim" dest="people_tim"/>
+  <copyField source = "photographer_ssi" dest="photographer_ti"/>
+  <copyField source = "marque_ssim" dest="marque_tim"/>
+  <copyField source = "model_ssim" dest="model_tim"/>
+  <copyField source = "model_year_ssim" dest="model_year_tim"/>
+  <copyField source = "entrant_ssi" dest="entrant_ti"/>
+  <copyField source = "current_owner_ssi" dest="current_owner_ti"/>
+  <copyField source = "venue_ssi" dest="venue_ti"/>
+  <copyField source = "track_ssi" dest="track_ti"/>
+  <copyField source = "event_ssi" dest="event_ti"/>
+  <copyField source = "cities_ssi" dest="cities_ti"/>
+  <copyField source = "countries_ssi" dest="countries_ti"/>
+  <copyField source = "states_ssi" dest="states_ti"/>
+  <copyField source = "city_sections_ssi" dest="city_sections_ti"/>
+  
 </schema>

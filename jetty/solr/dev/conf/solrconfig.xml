@@ -63,20 +63,23 @@
 				annotations_tsim
 				source_id_ssi
 				marque_ssim
-				people_ssim
-				entrant_ssi
-				current_owner_ssi
-				venue_ssi
-				track_ssi
-				event_ssi
-				city_sections_ssi
-				cities_ssi
-				countries_ssi
-				states_ssi
 				group_class_tsi
-				photographer_ssi
 				model_ssim
-				visibility_isi
+			    <!-- Begin references to copy fields for searching-->
+				people_tim
+				entrant_ti
+				current_owner_ti
+				venue_ti
+				track_ti
+				event_ti
+				cities_ti
+				countries_ti
+				states_ti
+				city_sections_ti
+				photographer_ti
+				marque_tim
+				model_tim
+				model_year_tim	
       </str>
       <str name="pf">
         title_tsi^20
