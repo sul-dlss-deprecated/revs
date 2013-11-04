@@ -1,6 +1,8 @@
 <div class="<%= render_document_class document %> document">
+  <%= render :partial=>'/catalog/hidden_message', :locals=>{:document=>document,:start_tag=>true} if document.visibility==:hidden %>
   <h5 class="index_title">
     <%= t('blacklight.search.documents.counter', :counter => (document_counter + 1 + @response.params[:start].to_i)) %>
     <%= link_to_document document, :label=>document.title.html_safe, :counter => (document_counter + 1 + @response.params[:start].to_i) %>
   </h5>
+  <%= render :partial=>'/catalog/hidden_message', :locals=>{:document=>document,:end_tag=>true} if document.visibility==:hidden %>
 </div>

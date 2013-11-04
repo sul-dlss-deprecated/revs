@@ -1,0 +1,6 @@
+<% if (defined?(start_tag) && start_tag == true) || (defined?(full)) %>
+  <span class="public-visibility-status label label-warning <%="hidden-offscreen" if document.visibility != :hidden%>">
+<% end %>
+<% if (defined?(end_tag) && end_tag == true) || (defined?(full)) %>
+  <%= t('revs.messages.public_visibility_hidden') %></span>
+<% end %>
