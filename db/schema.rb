@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(:version => 20131101233228) do
     t.datetime "updated_at",       :null => false
   end
 
-  add_index "items", ["druid"], :name => "index_items_on_druid", :unique => true
+  add_index "items", ["druid"], :name => "index_items_on_druid"
 
   create_table "searches", :force => true do |t|
     t.text     "query_params"
