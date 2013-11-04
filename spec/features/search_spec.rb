@@ -40,5 +40,5 @@ describe("Search Pages",:type=>:request,:integration=>true) do
     page.should have_xpath("//img[contains(@src, \"image/dd482qk0417/2012-027NADI-1969-b4_12.2_0021_thumb\")]")
     page.should have_content('black-and-white negatives')
   end
-    
+  
 end

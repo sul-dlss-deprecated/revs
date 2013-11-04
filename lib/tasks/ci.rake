@@ -43,6 +43,10 @@ namespace :revs do
   task :config do
     cp("#{Rails.root}/config/database.yml.example", "#{Rails.root}/config/database.yml") unless File.exists?("#{Rails.root}/config/database.yml")
     cp("#{Rails.root}/config/solr.yml.example", "#{Rails.root}/config/solr.yml") unless File.exists?("#{Rails.root}/config/solr.yml")
+    cp("#{Rails.root}/config/schema.xml", "#{Rails.root}/jetty/solr/dev/conf/schema.xml")
+    cp("#{Rails.root}/config/schema.xml", "#{Rails.root}/jetty/solr/test/conf/schema.xml")
+    cp("#{Rails.root}/config/solrconfig.xml", "#{Rails.root}/jetty/solr/dev/conf/solrconfig.xml")
+    cp("#{Rails.root}/config/solrconfig.xml", "#{Rails.root}/jetty/solr/test/conf/solrconfig.xml")
   end  
   
   desc "Delete and index all fixtures in solr"
