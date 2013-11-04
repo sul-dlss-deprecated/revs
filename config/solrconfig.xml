@@ -65,6 +65,7 @@
 				marque_ssim
 				group_class_tsi
 				model_ssim
+				visibility_isi
 			    <!-- Begin references to copy fields for searching-->
 				people_tim
 				entrant_ti

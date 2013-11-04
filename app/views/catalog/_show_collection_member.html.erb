@@ -142,7 +142,8 @@
                 %>
                 <%= link_to("<i class='icon-eye-#{visibility_class}'></i> <span data-visibility-show-text='#{t('revs.messages.public_visibility_show')}' data-visibility-hide-text='#{t('revs.messages.public_visibility_hide')}' id='visibility-text'>#{visibility_link_text}</span>".html_safe, '#', :id=>'visibility_link', :class=>"showOnLoad hidden-offscreen curator-action-link") %>
 
-                <span class="public-visibility-status label label-warning <%="hidden-offscreen" if @document.visibility != :hidden%>"><%= t('revs.messages.public_visibility_hidden') %></span>
+                <%= render :partial=>'/catalog/hidden_message', :locals=>{:document=>document,:full=>true}%>            
+
               </li>
             <li id="item-priority-status">
               <%= render :partial=>"/catalog/item_priority_status" %>
@@ -152,9 +153,7 @@
         
         <% if @document.visibility == :hidden %>
           <noscript>
-             <span class="public-visibility-status label label-warning">
-              <%= t('revs.messages.public_visibility_hidden') %>
-            </span>
+            <%= render :partial=>'/catalog/hidden_message', :locals=>{:document=>document}%>            
           </noscript>
         <% end %>
 
