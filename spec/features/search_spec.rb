@@ -41,4 +41,42 @@ describe("Search Pages",:type=>:request,:integration=>true) do
     page.should have_content('black-and-white negatives')
   end
   
+  it "should allow case insensitive searches within text fields" do
+    copy_fields_to_check = [:marque, :vehicle_model, :people, :entrant, :current_owner, :venue, :track, :event, :city, :country, :state, :city_section, :photographer]
+    #model_year
+    fields = {}
+    counter = 0
+    strings = array_of_unique_strings(copy_fields_to_check.size*2) #Go double here so we can test "Random1 Random2 in the text field"
+    first_druid = 'dd482qk0417'
+    second_druid = 'yt907db4998'
+    
+    #Set up a unique string to use for all the above
+    #Also ensure that they map to a Solr Field
+    copy_fields_to_check.each do |field|
+      SolrDocument.field_mappings[field].should_not be_nil #If sometime was typed wrong in copy_fields_to_check this will catch it
+      #Set up the key we'll be using for this
+      fields[field] = strings[counter] + " " + strings[counter+1]
+      counter += 2 
+    end
+    login_as(curator_login)
+    
+    #Test each field with search results
+    fields.keys.each do |field|
+      #1.  A query for the strings assigned to this field should return no results
+      searches_no_result(fields[field])
+      
+      #2.  Assign this query to one druid, should go directly to that druid
+      update_solr_field(first_druid, field, fields[field])
+      searches_direct_route(fields[field], first_druid)
+      
+      #3.  Assign this query to a second druid, we should get multiple results now
+      update_solr_field(second_druid, field, fields[field])
+      searches_multiple_results(fields[field],2)
+      
+    end
+   
+  
+  end 
+
+  
 end

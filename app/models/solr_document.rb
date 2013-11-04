@@ -64,26 +64,26 @@ class SolrDocument
   def self.field_mappings
     {
       :title=>{:field=>'title_tsi',:default=>'Untitled'},
-      :description=>{:field=>'description_tsim'},
+      :description=>{:field=>'description_tsim', :multi_valued => true},
       :photographer=>{:field=>'photographer_ssi'},
-      :years=>{:field=>'pub_year_isim'},
+      :years=>{:field=>'pub_year_isim', :multi_valued => true},
       :full_date=>{:field=>'pub_date_ssi'},
-      :people=>{:field=>'people_ssim'},
-      :subjects=>{:field=>'subjects_ssim'},
+      :people=>{:field=>'people_ssim', :multi_valued => true},
+      :subjects=>{:field=>'subjects_ssim', :multi_valued => true},
       :city_section=>{:field=>'city_sections_ssi'},
       :city=>{:field=>'cities_ssi'},
       :state=>{:field=>'states_ssi'},
       :country=>{:field=>'countries_ssi'},
-      :formats=>{:field=>'format_ssim'},
+      :formats=>{:field=>'format_ssim', :multi_valued => true},
       :identifier=>{:field=>'source_id_ssi'},
       :production_notes=>{:field=>'prod_notes_tsi'},
       :institutional_notes=>{:field=>'inst_notes_tsi'},
       :metadata_sources=>{:field=>'metadata_sources_tsi'},
       :has_more_metadata=>{:field=>'has_more_metadata_ssi'},
       :vehicle_markings=>{:field=>'vehicle_markings_tsi'},
-      :marque=>{:field=>'marque_ssim'},
-      :vehicle_model=>{:field=>'model_ssim'},
-      :model_year=>{:field=>'model_year_ssim'},
+      :marque=>{:field=>'marque_ssim', :multi_valued => true},
+      :vehicle_model=>{:field=>'model_ssim', :multi_valued => true},
+      :model_year=>{:field=>'model_year_ssim', :multi_valued => true},
       :current_owner=>{:field=>'current_owner_ssi'},
       :entrant=>{:field=>'entrant_ssi'},
       :venue=>{:field=>'venue_ssi'},
@@ -92,13 +92,14 @@ class SolrDocument
       :group_class=>{:field=>'group_class_tsi'},
       :race_data=>{:field=>'race_data_tsi'},
       :priority=>{:field=>'priority_isi',:default=>0,:editstore=>false},
-      :collections=>{:field=>'is_member_of_ssim'},
-      :collection_names=>{:field=>'collection_ssim'},
+      :collections=>{:field=>'is_member_of_ssim', :multi_valued => true},
+      :collection_names=>{:field=>'collection_ssim', :multi_valued => true},
       :highlighted=>{:field=>'highlighted_ssi'},
       :visibility_value=>{:field=>'visibility_isi'},
       }  
   end
   
+ 
   # you can configure a callback method to execute if any of these fields are changed
   # set the solr field as the key, and the method name as the value; the method will receive the solr field being updated and its new value
   # if you don't have any callbacks needed, just set an empty hash

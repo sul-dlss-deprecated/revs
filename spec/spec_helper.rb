@@ -285,3 +285,87 @@ def has_no_content_array(all_content)
     page.should have_no_content(a)
   end
 end
+
+
+def random_mixed_case_string()
+  s = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
+  string = (0...50).map{ s[rand(s.length)] }.join
+  return string if string != string.downcase and string != string.upcase #return if not all caps and not all lower case
+  return random_mixed_case_string()  #We managed to get a string with entirely the same case, try again.    
+end
+
+def array_of_unique_strings(len)
+  return_array = []
+  while return_array.size <= len
+    return_array.append(random_mixed_case_string())
+    return_array = return_array.map{|i| i.downcase}.uniq #Groom out ones that aren't entirely unique
+    #TODO:  Could be smarter and just groom at the end of the loop due to low odds of duplicates, then just use recursion to finish filling up the array.  However since I'm only calling this <12 items, not worth it.
+  end
+  return return_array
+end
+
+def update_solr_field(druid, field, value)
+  
+  doc = SolrDocument.find(druid)
+  #TODO: Refractor me out to a helper
+  assigner = '='
+  assigner = '_mvf'+assigner if SolrDocument.field_mappings[field][:multi_valued]
+  #End
+  doc.send(field.to_s+assigner,value)
+  doc.save
+
+end
+
+def search_no_result(search)
+  visit search_path(:q=>search)
+  page.should have_content(I18n.t('revs.search.search_results'))
+  page.should have_content('No entries found')  #TODO:  Figure out why not in /lib/locales/en.yml
+end
+
+def searches_no_result(search)
+  full_search_array(search).each do |query|
+    search_no_result(query)
+  end
+  
+end
+
+def searches_direct_route(search, druid)
+  full_search_array(search).each do |query|
+    search_direct_route(query, druid)
+  end
+end
+
+def search_direct_route(search, druid)
+  visit search_path(:q=>search)
+  current_path.should == item_path(druid)
+end
+
+def search_multiple_results(search, expected) 
+  pag_limit = 25 #Default for Kaminari
+  visit search_path(:q=>'photo')
+  page.should have_content('Results')
+  page.should have_content("1 - #{expected} of #{expected}") if expected <= 25
+  page.should have_content("1 - #{expected} of #{25}") if expected > 25
+  page.should have_content('The David Nadig Collection of the Revs Institute')
+  page.should have_content('The John Dugdale Collection of the Revs Institute')
+end
+
+def searches_multiple_results(search, expected)
+  full_search_array(search).each do |query|
+    search_multiple_results(query, expected)
+  end
+end
+
+def full_search_array(search)
+  searches = [search, search.upcase, search.downcase]
+  subs = search.split(" ")
+  subs.each do |s|
+    searches.append(s)
+    searches.append(s.upcase)
+    searches.append(s.downcase)
+  end
+  return searches
+end
+
+
+

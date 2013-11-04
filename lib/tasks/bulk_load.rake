@@ -75,7 +75,8 @@ namespace :revs do
     multi = "_mvf"
     model = 'model'
     model_year = 'model_year'
-    ignore_fields = [sourceid, location, marque, filename]  
+    collection_name = "collection_names"
+    ignore_fields = [sourceid, location, marque, filename, collection_name]  
     location_fields = ['country', 'city', 'state']
     additional_fields = location_fields + [full_date]#add other arrays here if we do anymore splitting
     comma = ","
@@ -88,7 +89,7 @@ namespace :revs do
                    model  => 'vehicle_model',
                    year => 'years',
                    format => 'formats',
-                   'collection_name' => 'collection_names',
+                   'collection_name' => collection_name, 
                    'inst_notes' => 'institutional_notes',
                    'prod_notes' => 'production_notes'
                   }
