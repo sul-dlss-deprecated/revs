@@ -75,9 +75,7 @@ namespace :revs do
     multi = "_mvf"
     model = 'model'
     model_year = 'model_year'
-    collection_name = "collection_name"
-    collection_names = "collection_names"
-    ignore_fields = [sourceid, location, marque, filename, collection_name]  
+    ignore_fields = [sourceid, location, marque, filename]  
     location_fields = ['country', 'city', 'state']
     additional_fields = location_fields + [full_date]#add other arrays here if we do anymore splitting
     comma = ","
@@ -90,7 +88,7 @@ namespace :revs do
                    model  => 'vehicle_model',
                    year => 'years',
                    format => 'formats',
-                   collection_name => collection_names, 
+                   'collection_name' => 'collection_names',
                    'inst_notes' => 'institutional_notes',
                    'prod_notes' => 'production_notes'
                   }
@@ -98,7 +96,7 @@ namespace :revs do
                   'city', 'state', 'country', 'formats', 'identifier', 'production_notes', 'institutional_notes',
                   'metadata_sources', 'has_more_metadata', 'vehicle_markings', 'marque', 'vehicle_model', 'model_year',
                   'current_owner', 'entrant', 'venue', 'track', 'event', 'group_class', 'race_data', 'priority', 'collections',
-                  collection_names, 'highlighted']
+                  'collection_names', 'highlighted']
    
    #These should be the field name from /app/models/solr_document.rb
    multi_values = ['vehicle_model', 'years', "formats", "model_year", "marque", "people"]
