@@ -49,6 +49,8 @@ describe("Search Pages",:type=>:request,:integration=>true) do
     strings = array_of_unique_strings(copy_fields_to_check.size*2) #Go double here so we can test "Random1 Random2 in the text field"
     first_druid = 'dd482qk0417'
     second_druid = 'yt907db4998'
+    random_complex_check = rand(0...copy_fields_to_check.size) #Since complex searches for everyone takes awhile, only run this for one random one each time
+    
     
     #Set up a unique string to use for all the above
     #Also ensure that they map to a Solr Field
@@ -62,21 +64,45 @@ describe("Search Pages",:type=>:request,:integration=>true) do
     
     #Test each field with search results
     fields.keys.each do |field|
-      #1.  A query for the strings assigned to this field should return no results
-      searches_no_result(fields[field])
+      complex = false
+      complex = true if copy_fields_to_check[random_complex_check] == field
       
-      #2.  Assign this query to one druid, should go directly to that druid
+      #1.  A query for the strings assigned to this field should return no results
+      searches_no_result(fields[field], complex)
+      
+      #2.  Assign this query to one druid, a search should go directly to that druid
       update_solr_field(first_druid, field, fields[field])
-      searches_direct_route(fields[field], first_druid)
+      searches_direct_route(fields[field], first_druid, complex)
       
       #3.  Assign this query to a second druid, we should get multiple results now
       update_solr_field(second_druid, field, fields[field])
-      searches_multiple_results(fields[field],2)
+      searches_multiple_results(fields[field],2, complex)
       
     end
-   
-  
+    reindex_solr_docs([first_druid, second_druid]) #Clean up the druids
+    
   end 
+  
+  #This is seperate from the test above due to special restrictions on the field
+  it "the model_year_tim copyfield should allow text searching of the model_year_ssim field" do
+    first_druid = 'dd482qk0417'
+    second_druid = 'yt907db4998'
+    year = "1851"
+    
+    #1.  A query for the year here should return no results
+    searches_no_result(year, false)
+       
+    #2. Assign the year to one druid, a search should go directly to that druid
+    update_solr_field(first_druid, :model_year, year)
+    searches_direct_route(year, first_druid, false)
+       
+    #3. Assign the year to two druids, a search should now return two results
+    update_solr_field(second_druid, :model_year, year)
+    searches_multiple_results(year,2, false)
+    
+    reindex_solr_docs([first_druid, second_druid]) #Clean up the druids     
+    
+  end
 
   
 end

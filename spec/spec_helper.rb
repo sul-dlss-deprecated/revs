@@ -322,15 +322,15 @@ def search_no_result(search)
   page.should have_content('No entries found')  #TODO:  Figure out why not in /lib/locales/en.yml
 end
 
-def searches_no_result(search)
-  full_search_array(search).each do |query|
+def searches_no_result(search, complex)
+  full_search_array(search, complex).each do |query|
     search_no_result(query)
   end
   
 end
 
-def searches_direct_route(search, druid)
-  full_search_array(search).each do |query|
+def searches_direct_route(search, druid, complex)
+  full_search_array(search, complex).each do |query|
     search_direct_route(query, druid)
   end
 end
@@ -350,13 +350,15 @@ def search_multiple_results(search, expected)
   page.should have_content('The John Dugdale Collection of the Revs Institute')
 end
 
-def searches_multiple_results(search, expected)
-  full_search_array(search).each do |query|
+def searches_multiple_results(search, expected, complex)
+  full_search_array(search, complex).each do |query|
     search_multiple_results(query, expected)
   end
 end
 
-def full_search_array(search)
+def full_search_array(search, complex)
+  return [search] if not complex
+  
   searches = [search, search.upcase, search.downcase]
   subs = search.split(" ")
   subs.each do |s|
@@ -364,8 +366,5 @@ def full_search_array(search)
     searches.append(s.upcase)
     searches.append(s.downcase)
   end
-  return searches
+  return searches.uniq
 end
-
-
-
