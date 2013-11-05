@@ -6,7 +6,7 @@ ruby "1.9.3"
 gem 'bundler', '>= 1.2.0'
 
 gem 'editstore', '>= 1.1.5'
-gem 'revs-utils', '>= 0.0.2'
+gem 'revs-utils', '>= 0.0.5'
 
 gem 'rails', '>= 3.2.11'
 
