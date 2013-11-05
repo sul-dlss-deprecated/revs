@@ -14,6 +14,62 @@ namespace :revs do
   @log_extension = ".out" #use something beside .log to avoid the autorotate feature for .log files
   @success = "SUCCESS:"
   @failure = "FAILURE:"
+  @assigner = "="
+  @mvf = "_mvf"
+  @max_expected_collection_size = 2147483647
+  @id = "id"
+  
+  
+  desc "Go back and touch every SolrDocument so that it will update itself and all copy fields.  Place a UUID in production notes to show it has been touched and verify each document displays the propery collection name."
+  #Run Me: rake revs:touch_all["UUID"]
+  task :touch_all, [:uuid] => :environment do |t, args|
+    #Have Editstore ignore updates by this rake task
+    Revs::Application.config.use_editstore = false
+    log = Logger.new("#{Rails.root}/log/#{Time.now.to_i}.touch_all#{@log_extension}")
+    log.info("Starting touch all, placing UUID: #{args[:uuid]} in production notes.")
+    
+    #Get all collections
+    total_success_count = 0
+    total_error_count = 0 
+    SolrDocument.all_collections.each do |collection|
+      collection_success_count = 0 
+      collection_error_count = 0 
+      changes = [[:production_notes, args[:uuid], true], [:collection_names, collection[SolrDocument.field_mappings[:title][:field]]]]
+     
+      #For each collection, touch every member
+      collection.get_members(:include_hidden=>true, :rows=> @max_expected_collection_size).each do |item|
+        doc = SolrDocument.find(item[@id])
+        druid = doc[@id]
+        result = update_multi_fields(doc, changes)
+        
+        if result
+          collection_success_count += 1
+        else
+          collection_error_count += 1
+          log.error("Failed to save: #{druid}") 
+        end
+        
+      end  
+      #Record Collection Stats
+      total_success_count += collection_success_count
+      total_error_count += collection_error_count
+      col_druid = collection[@id]
+      if collection_error_count == 0
+        log.info("#{@success} for collection #{col_druid}, touched #{collection_success_count} with no errors.")
+      else
+        log.info("#{@failure} for collection #{col_druid}, #{collection_error_count} errors and #{collection_success_count} touched successfully.  #{collection_error_count+collection_success_count} total touches attempted for collection.")
+      end
+      
+    end
+    
+    if total_error_count == 0
+      log.info("#{@success} Run complete with #{total_success_count} touched with no errors.")
+    else
+      log.info("#{@failure} run complete with #{total_error_count} errors and #{total_success_count} touched successfully.  #{total_error_count+total_success_count} total touches attempted on this run.")
+    end
+      
+  end
+  
   
   desc "When passed the location of .csv file(s) and a list of headers, this will generate csv with just those fields, plus fields to find the solr document"
   #Run me: rake revs:bulk_load["SHEETS_LOCATION", header1|header2|etc, output_name] RAILS_ENV=production
@@ -71,8 +127,8 @@ namespace :revs do
     year = "date"
     full_date = "full_date"
     seperator =  @seperator
-    assigner = "="
-    multi = "_mvf"
+    assigner = @assigner
+    multi = @mvf
     model = 'model'
     model_year = 'model_year'
     collection_name = "collection_name"
@@ -94,11 +150,13 @@ namespace :revs do
                    'inst_notes' => 'institutional_notes',
                    'prod_notes' => 'production_notes'
                   }
-    solr_keys = [ 'title', 'description', 'photographer', 'years', 'full_date', 'people', 'subjects', 'city_section',
-                  'city', 'state', 'country', 'formats', 'identifier', 'production_notes', 'institutional_notes',
-                  'metadata_sources', 'has_more_metadata', 'vehicle_markings', 'marque', 'vehicle_model', 'model_year',
-                  'current_owner', 'entrant', 'venue', 'track', 'event', 'group_class', 'race_data', 'priority', 'collections',
-                  collection_names, 'highlighted']
+    solr_keys = []
+    multi_values = []
+    SolrDocument.field_mappings.keys.each do |key|
+      solr_keys.append(key.to_s)
+      multi_values.append(key.to_s) if SolrDocument.field_mappings[key][:multi_valued]
+    end
+    
    
    #These should be the field name from /app/models/solr_document.rb
    multi_values = ['vehicle_model', 'years', "formats", "model_year", "marque", "people"]
@@ -289,4 +347,33 @@ namespace :revs do
      return Blacklight.solr.select(:params =>{:q=>'source_id_ssi:"'+ source+'"'})["response"]["docs"][0]
   end
   
+  #Note, this function doesn't save the document, I just return a content string!
+  def join_content(doc, field, content)
+    current_content = doc[SolrDocument.field_mappings[field][:field]]  
+    return content if current_content == nil
+    current_content = current_content.join(@seperator) if SolrDocument.field_mappings[field][:multi_valued] 
+    current_content = current_content + content
+    return current_content
+  end
+  
+  def get_args_for_send(field)
+    args = @assigner  
+    args = @mvf + args if SolrDocument.field_mappings[field][:multi_valued]
+    return args
+  end
+  
+  
+  #Note you will need to refetch the document to see the changes after calling this function
+  def update_multi_fields(doc, changes)
+    #Fields is expected to be in the form of [[field, content, append]]
+    #Ex: [[:title, "My New Title"],[:people, "Person I Forgot To List", true]]
+    changes.each do |change|
+      content = change[1]
+      content = join_content(doc, change[0], change[1]) if change[2]
+      doc.send(change[0].to_s+get_args_for_send(change[0]),content)
+    end
+    return doc.save #Returns true if this all worked
+  end
+
+
 end
