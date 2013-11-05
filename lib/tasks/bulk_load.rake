@@ -34,12 +34,11 @@ namespace :revs do
     SolrDocument.all_collections.each do |collection|
       collection_success_count = 0 
       collection_error_count = 0 
-      changes = [[:production_notes, args[:uuid], true], [:collection_names, collection[SolrDocument.field_mappings[:title][:field]]]]
+      changes = [[:production_notes, args[:uuid], true], [:collection_names, collection.title]]
      
       #For each collection, touch every member
-      collection.get_members(:include_hidden=>true, :rows=> @max_expected_collection_size).each do |item|
-        doc = SolrDocument.find(item[@id])
-        druid = doc[@id]
+      collection.get_members(:include_hidden=>true, :rows=> @max_expected_collection_size).each do |doc|
+        druid = doc.id
         result = update_multi_fields(doc, changes)
         
         if result
