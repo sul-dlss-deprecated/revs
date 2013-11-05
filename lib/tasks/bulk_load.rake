@@ -34,7 +34,8 @@ namespace :revs do
     SolrDocument.all_collections.each do |collection|
       collection_success_count = 0 
       collection_error_count = 0 
-      changes = [[:production_notes, args[:uuid], true], [:collection_names, collection.title]]
+      clean_title = RevsUtils.clean_collection_name(collection.title)
+      changes = [[:production_notes, args[:uuid], true], [:collection_names, clean_title]]
      
       #For each collection, touch every member
       collection.get_members(:include_hidden=>true, :rows=> @max_expected_collection_size).each do |doc|
