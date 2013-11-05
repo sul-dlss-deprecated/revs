@@ -1,6 +1,7 @@
 module ApplicationHelper
 
   include DateHelper
+  include Revs::Utils
   
   def validation_errors(obj)
 
@@ -37,10 +38,6 @@ module ApplicationHelper
   def home_or_back
     url = request.referrer || root_path
     link_to t('revs.nav.go_back'),url
-  end
-  
-  def title_no_revs(title)
-    title.gsub(" of the Revs Institute","")
   end
   
   # take in a hash of options for the contact us form, and then pass the values of the hash through the translation engine
