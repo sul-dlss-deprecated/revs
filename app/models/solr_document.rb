@@ -93,7 +93,7 @@ class SolrDocument
       :race_data=>{:field=>'race_data_tsi'},
       :priority=>{:field=>'priority_isi',:default=>0,:editstore=>false},
       :collections=>{:field=>'is_member_of_ssim', :multi_valued => true},
-      :collection_names=>{:field=>'collection_ssim', :multi_valued => true},
+      :collection_names=>{:field=>'collection_ssim', :multi_valued => true,:editstore=>false},
       :highlighted=>{:field=>'highlighted_ssi',:editstore=>false},
       :visibility_value=>{:field=>'visibility_isi',:editstore=>false},
       }  
