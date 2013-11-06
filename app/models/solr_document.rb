@@ -67,6 +67,7 @@ class SolrDocument
       :description=>{:field=>'description_tsim', :multi_valued => true},
       :photographer=>{:field=>'photographer_ssi'},
       :years=>{:field=>'pub_year_isim', :multi_valued => true},
+      :single_year=>{:field=>'pub_year_single_isi'},
       :full_date=>{:field=>'pub_date_ssi'},
       :people=>{:field=>'people_ssim', :multi_valued => true},
       :subjects=>{:field=>'subjects_ssim', :multi_valued => true},
@@ -121,10 +122,10 @@ class SolrDocument
   # this method is set as a callback when one of the date fields is updated
   def update_date_fields(field_name,new_value)
     case field_name.to_sym
-      when :pub_year_isim # if the user has updated a multivalued year field, we need to blank out the full date, since its no longer valid, and set the single year field if we have one year
+      when :pub_year_isim # if the user has updated a multivalued year field, we need to blank out the full date, since its no longer valid, and set the single year field if we have only one year
         immediate_remove('pub_date_ssi')
-        if new_value.class == Array and new_value.size == 1
-          immediate_update('pub_year_single_isi',new_value)
+        if new_value.class == Array && new_value.size == 1
+          immediate_update('pub_year_single_isi',new_value.first)
         else
           immediate_remove('pub_year_single_isi')
         end
@@ -139,7 +140,7 @@ class SolrDocument
           immediate_update('pub_year_isim',full_date.year.to_s)
         else # if it's not a valid date, clear the year fields
           immediate_remove('pub_year_isim')
-          immediate_remove('pub_date_single_isi')
+          immediate_remove('pub_year_single_isi')
         end
     end    
   end

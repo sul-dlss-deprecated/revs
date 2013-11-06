@@ -129,7 +129,7 @@ describe SolrDocument, :integration => true do
        
         doc=SolrDocument.find(druid)
         doc.years.should == [1969] # current year value
-        doc[:pub_year_single_isi].should == 1969 # check the solr fields        
+        doc.single_year.should == 1969 # check the solr fields        
         doc.full_date.should == '' # current full date value
         doc.full_date='5/6/1999' # set a new full date
         doc.years.should == [1969] # year hasn't be set yet, since we haven't saved
@@ -139,7 +139,7 @@ describe SolrDocument, :integration => true do
         
         reload_doc=SolrDocument.find(druid)
         reload_doc.years.should == [1999] # year has now been updated
-        reload_doc[:pub_year_single_isi].should == 1999 # check the solr fields
+        reload_doc.single_year.should == 1999 # check the solr fields
         reindex_solr_docs(druid)
       end
 
@@ -147,14 +147,14 @@ describe SolrDocument, :integration => true do
         druid='zp006sp7532'        
         doc=SolrDocument.find(druid)
         doc.years.should == [1969] # current year value
-        doc[:pub_year_single_isi].should == 1969 # check the solr fields        
+        doc.single_year.should == 1969 # check the solr fields        
         doc.full_date.should == '' # current full date value
         doc.years_mvf='2000|2001' # set multiple years
         doc.save # now let's save it
         
         reload_doc=SolrDocument.find(druid)
         reload_doc.years.should == [2000,2001] # years has now been updated
-        reload_doc[:pub_year_single_isi].should be_nil # single year field is gone
+        reload_doc.single_year.should == ''
         reindex_solr_docs(druid)
       end
 
@@ -162,14 +162,14 @@ describe SolrDocument, :integration => true do
         druid='zp006sp7532'        
         doc=SolrDocument.find(druid)
         doc.years.should == [1969] # current year value
-        doc[:pub_year_single_isi].should == 1969 # check the solr fields        
+        doc.single_year.should == 1969 # check the solr fields        
         doc.full_date.should == '' # current full date value
         doc.years_mvf='1989' # set new single year
         doc.save # now let's save it
         
         reload_doc=SolrDocument.find(druid)
         reload_doc.years.should == [1989] # years has now been updated
-        reload_doc[:pub_year_single_isi].should == 1989 # single year field is updated
+        reload_doc.single_year.should == 1989 # single year field is updated
         reindex_solr_docs(druid)
       end
       
@@ -182,7 +182,47 @@ describe SolrDocument, :integration => true do
         
         reload_doc=SolrDocument.find(druid)
         reload_doc.full_date.should == '' # full date is now gone
+        reload_doc.single_year.should == 2002
         reindex_solr_docs(druid)
+      end
+    
+      it "should correctly remove values from a solr document" do
+        druid='zp006sp7532'
+        doc=SolrDocument.find(druid)
+        doc[:pub_year_isim].should == [1969]
+        doc[:pub_year_single_isi].should == 1969
+        doc.immediate_remove(:pub_year_single_isi)
+        reload_doc=SolrDocument.find(druid)
+        reload_doc[:pub_year_single_isi].should be_nil
+        reindex_solr_docs(druid)
+      end
+
+      it "should clear out the multivalued year field if the single valued year field is removed and should clear out the single value year field if the multivalued year field is removed" do
+        druid='zp006sp7532'
+        doc=SolrDocument.find(druid)
+        doc.years.should == [1969] # current year value
+        doc.single_year.should == 1969
+        doc.years=''
+        doc.save
+        
+        reload_doc=SolrDocument.find(druid)
+        reload_doc.full_date.should == '' # no full date
+        reload_doc.years.should == '' # no multivalued year
+        reload_doc.single_year.should == '' # no single year
+
+        reindex_solr_docs(druid)
+
+        doc=SolrDocument.find(druid)
+        doc.years.should == [1969] # current year value
+        doc.single_year = '' # set single year to blank
+        doc.save
+
+        reload_doc=SolrDocument.find(druid)
+        reload_doc.full_date.should == '' # no full date
+        reload_doc.single_year.should == '' # no single year
+        reload_doc.years.should == '' # no multivalued year
+        reindex_solr_docs(druid)
+        
       end
       
     end
