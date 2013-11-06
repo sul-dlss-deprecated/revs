@@ -97,7 +97,6 @@ module ActivesolrHelper
 
   # iterate through all cached unsaved edits and update solr
   def save(user=nil)
-    
     if valid?
       
       unsaved_edits.each do |solr_field_name,value| 
@@ -151,14 +150,18 @@ module ActivesolrHelper
   
   # updates the field in solr, editstore and in the object itself (useful in a callback method where you don't want to wait for saving or re-trigger callbacks)
   def immediate_update(field_name,new_value)
-    update_solr(field_name,'set',new_value)
-    send_update_to_editstore(new_value,self[field_name],field_name) if self.class.use_editstore
-    self[field_name]=new_value
+    if self.class.blank_value?(new_value)
+      immediate_remove(field_name)
+    else
+      update_solr(field_name,'set',new_value)
+      send_update_to_editstore(new_value,self[field_name],field_name) if self.class.use_editstore
+      self[field_name]=new_value
+    end
   end
 
   # removes the field in solr, editstore and in the object itself (useful in a callback method where you don't want to wait for saving or re-trigger callbacks)
   def immediate_remove(field_name)
-    remove_field(field_name)
+    update_solr(field_name,'remove',nil)
     send_delete_to_editstore(field_name) if self.class.use_editstore
     self[field_name]=nil
   end
@@ -178,6 +181,7 @@ module ActivesolrHelper
   # remove this field from solr
   def remove_field(field_name)
     update_solr(field_name,'remove',nil)
+    execute_callbacks(field_name,nil)
   end
   
   # add a new value to a multivalued field given a field name and a value
