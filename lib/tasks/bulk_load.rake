@@ -35,12 +35,14 @@ namespace :revs do
       collection_success_count = 0 
       collection_error_count = 0 
       clean_title = RevsUtils.clean_collection_name(collection.title)
-      changes = [[:production_notes, args[:uuid], true], [:collection_names, clean_title]]
+      changes = [[:production_notes, args[:uuid], true]]
      
       #For each collection, touch every member
       collection.get_members(:include_hidden=>true, :rows=> @max_expected_collection_size).each do |doc|
         druid = doc.id
-        result = update_multi_fields(doc, changes)
+        doc_changes = changes.dup 
+        doc_changes << [:single_year,doc.years.first] if doc.years.size == 1 # set the single year field if there is only one year in the multi-years field
+        result = update_multi_fields(doc, doc_changes)
         
         if result
           collection_success_count += 1
