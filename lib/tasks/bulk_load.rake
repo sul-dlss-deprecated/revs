@@ -20,13 +20,13 @@ namespace :revs do
   @id = "id"
   
   
-  desc "Go back and touch every SolrDocument so that it will update itself and all copy fields.  Place a UUID in production notes to show it has been touched and verify each document displays the propery collection name."
+  desc "Go back and touch every SolrDocument so that it will update the year field to use the sortable year field, remove the UUID from previous pass.."
   #Run Me: rake revs:touch_all["UUID"]
   task :touch_all, [:uuid] => :environment do |t, args|
     #Have Editstore ignore updates by this rake task
     Revs::Application.config.use_editstore = false
     log = Logger.new("#{Rails.root}/log/#{Time.now.to_i}.touch_all#{@log_extension}")
-    log.info("Starting touch all, placing UUID: #{args[:uuid]} in production notes.")
+    log.info("Starting touch all, removing UUID: #{args[:uuid]} in production notes.")
     
     #Get all collections
     total_success_count = 0
@@ -35,12 +35,17 @@ namespace :revs do
       collection_success_count = 0 
       collection_error_count = 0 
       clean_title = RevsUtils.clean_collection_name(collection.title)
-      changes = [[:production_notes, args[:uuid], true]]
+      #changes = [[:production_notes, args[:uuid], true]]
+      changes = []
      
       #For each collection, touch every member
       collection.get_members(:include_hidden=>true, :rows=> @max_expected_collection_size).each do |doc|
         druid = doc.id
+        
+        prod_notes = join_content(doc, :production_notes, "") #make an empty call to get the current content
+        prod_notes.slice! args[:uuid] #Remove the UUID
         doc_changes = changes.dup 
+        doc_changes << [:production_notes, prod_notes] #push out the new prod notes
         doc_changes << [:single_year,doc.years.first] if doc.years.size == 1 # set the single year field if there is only one year in the multi-years field
         result = update_multi_fields(doc, doc_changes)
         
