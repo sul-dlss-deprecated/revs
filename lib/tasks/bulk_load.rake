@@ -36,20 +36,24 @@ namespace :revs do
       collection_error_count = 0 
       clean_title = RevsUtils.clean_collection_name(collection.title)
       #changes = [[:production_notes, args[:uuid], true]]
-      changes = []
+      changes = [[:production_notes, args[:uuid],true]]  #Append a new UUID to ensure there is a save
      
       #For each collection, touch every member
       collection.get_members(:include_hidden=>true, :rows=> @max_expected_collection_size).each do |doc|
         druid = doc.id
+        doc_changes = changes.dup 
+        doc_changes << [:single_year,doc.years.first] if doc.years.size == 1 # set the single year field if there is only one year in the multi-years field
+        result_a = update_multi_fields(doc, doc_changes)        
         
         prod_notes = join_content(doc, :production_notes, "") #make an empty call to get the current content
-        prod_notes.slice! args[:uuid] #Remove the UUID
-        doc_changes = changes.dup 
-        doc_changes << [:production_notes, prod_notes] #push out the new prod notes
-        doc_changes << [:single_year,doc.years.first] if doc.years.size == 1 # set the single year field if there is only one year in the multi-years field
-        result = update_multi_fields(doc, doc_changes)
+        slice = true
+        while slice do
+           slice = prod_notes.slice! args[:uuid] #Remove the UUID, multiple times if needed
+        end
+        doc = SolrDocument.find(druid)
+        result_b = update_multi_fields(doc, [[:production_notes, prod_notes]])  #Slice off the UUID and save agaib
         
-        if result
+        if result_a and result_b
           collection_success_count += 1
         else
           collection_error_count += 1
