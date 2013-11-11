@@ -32,6 +32,9 @@
     line-height: 16px;
     position: absolute;
   }
+  .public-visibility-status.label {
+    @include hidden-visibility-overlay-label;
+  }
 }
 
 /* Brief/List View */
