@@ -22,6 +22,7 @@ class CatalogController < ApplicationController
   def add_facets_for_curators
     if can? :curate, :all
       self.blacklight_config.add_facet_field 'has_more_metadata_ssi', :label => "More Metadata"
+      self.blacklight_config.add_facet_field 'visibility_isi', :label => 'Visibility', :query => {:visibility_1=>{:label=>"Hidden", :fq=>"visibility_isi:0"}}
     end
   end
   

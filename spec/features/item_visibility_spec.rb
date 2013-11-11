@@ -48,6 +48,16 @@ describe("Item Visibility",:type=>:request,:integration=>true) do
     reindex_solr_docs([@hidden_druid,@visible_druid])    
   end
   
+  it "should not show the visibility facet to non-curators" do
+    visit root_path
+    page.should_not have_content("Visibility Hidden 1")
+    login_as(user_login)
+    visit root_path
+    page.should_not have_content("Visibility Hidden 1")
+    login_as(curator_login)
+    page.should have_content("Visibility Hidden 1")
+  end
+  
   it "should not show hidden items to non-logged in or regular users" do
     should_deny_access(@hidden_druid_path)
     login_as(user_login)
