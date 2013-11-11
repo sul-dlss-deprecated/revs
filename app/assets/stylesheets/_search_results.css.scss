@@ -33,10 +33,7 @@
     position: absolute;
   }
   .public-visibility-status.label {
-    font-weight: 500;
-    position: absolute;
-    right: 0;
-    top: 0;
+    @include hidden-visibility-overlay-label;
   }
 }
 

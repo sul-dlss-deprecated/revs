@@ -47,6 +47,13 @@ $constraint_border_active_color: #FFD27A !default;
   box-shadow: 2px 2px #ddd;
 }
 
+@mixin hidden-visibility-overlay-label {
+  font-weight: 500;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
 /* --- */
 
 html {

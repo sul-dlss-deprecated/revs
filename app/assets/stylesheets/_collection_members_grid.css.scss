@@ -19,6 +19,7 @@
 	.item {
 		float: left;
 		margin: 5px 7px;
+    position: relative;
 		img {@include image_border_thumbnail;}
 	}
 	.muted {
@@ -26,4 +27,7 @@
 	  margin-left: 3px;
 	  vertical-align: top;
 	}
+  .item .public-visibility-status.label {
+    @include hidden-visibility-overlay-label;
+  }
 }
