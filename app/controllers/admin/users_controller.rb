@@ -9,7 +9,7 @@ class Admin::UsersController < ApplicationController
     @role = params[:role] || "curator"
     
     if !@email.blank?
-      @users=User.where(['email like ?',"#{@email}%"]).order(@order).page(param[:page]).per(users_per_page)
+      @users=User.where(['email like ?',"#{@email}%"]).order(@order).page(params[:page]).per(users_per_page)
     else
       @users=User.order(@order).page(params[:page]).per(users_per_page)
     end
