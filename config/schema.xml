@@ -203,5 +203,6 @@
   <copyField source = "countries_ssi" dest="countries_ti"/>
   <copyField source = "states_ssi" dest="states_ti"/>
   <copyField source = "city_sections_ssi" dest="city_sections_ti"/>
+  <copyField source = "pub_year_isim" dest="pub_year_tim"/>
   
 </schema>
