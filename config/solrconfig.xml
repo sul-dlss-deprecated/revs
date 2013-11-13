@@ -80,7 +80,8 @@
 				photographer_ti
 				marque_tim
 				model_tim
-				model_year_tim	
+				model_year_tim
+				pub_year_tim	
       </str>
       <str name="pf">
         title_tsi^20
