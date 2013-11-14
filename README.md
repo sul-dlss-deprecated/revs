@@ -22,7 +22,7 @@ This is a Blacklight Application for the Revs Digital Library at Stanford Univer
 
         bundle install
 
-1. Copy the .yml example files:
+1. Copy the .yml example files and the jetty config files:
 
         cd revs
         rake revs:config
