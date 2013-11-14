@@ -27,7 +27,6 @@ class User < ActiveRecord::Base
   has_many :annotations, :dependent => :destroy
   has_many :flags, :dependent => :destroy
   has_many :change_logs, :dependent => :destroy
-  
   before_validation :assign_default_role, :if=>lambda{no_role?}
   before_save :trim_names
   after_create :signup_for_mailing_list, :if=>lambda{subscribe_to_mailing_list=='1'}
@@ -44,6 +43,10 @@ class User < ActiveRecord::Base
     ROLES
   end
 
+  def metadata_updates
+    change_logs.where(:operation=>'metadata update')
+  end
+  
   # override devise method --- stanford users are never timed out; regular users are timed out according to devise rules
   def timedout?(last_access)
     sunet_user? ? false : super

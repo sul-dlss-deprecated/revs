@@ -161,13 +161,13 @@ namespace :revs do
                    'inst_notes' => 'institutional_notes',
                    'prod_notes' => 'production_notes'
                   }
+                  
     solr_keys = []
     multi_values = []
     SolrDocument.field_mappings.keys.each do |key|
       solr_keys.append(key.to_s)
       multi_values.append(key.to_s) if SolrDocument.field_mappings[key][:multi_valued]
     end
-    
    
    #These should be the field name from /app/models/solr_document.rb
    multi_values = ['vehicle_model', 'years', "formats", "model_year", "marque", "people"]

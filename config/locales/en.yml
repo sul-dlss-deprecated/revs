@@ -31,7 +31,10 @@ en:
       in_beta_not_authorized_html: "The Revs Digital Library is currently in limited beta release.  If you have an account, <a href='/users/sign_in'>please sign in</a> (Stanford users should <a href='/users/webauth_login'>sign in via webauth</a>). If you do not have an account and would like to be notified when the site is public, please <a href='/users/sign_up'>sign up</a> and request to be added to the mailing lists."
       validation_error: "The values you entered were not valid for the field you selected."
       bulk_update_instructions: "To apply a bulk update, select the field to update, enter a new value and select some items."
-      set_top_priority: "Success! This image is now set to represent its collection."
+      set_top_priority: "This image is now set to represent its collection."
+      hide_image_success: "This image has been hidden."
+      show_image_success: "This image has been made visible."
+      update_visibility: "Success! This image has been hidden."
       public_visibility_hidden: "Hidden"
       public_visibility_show: "Show this item to the public"
       public_visibility_hide: "Hide this item from public view"
@@ -182,13 +185,16 @@ en:
       edited_items_by_user: "By User"
       edit_count: "Edit count"
       edit_update: "Last edit"
-      edit_status: "Edit status"
       edits_made: "Edits made"
       edit_rating: "Approval rating"
       username: "User"
+      metadata_edit_history: "Metadata Edit History"
+      metadata_edit_history_description: "This item has been edited on"
     dashboards: 'Dashboards'
     citations:
         view: 'View full citation page with image download'
+    edits:
+        none: 'This user does not have any edits.'
     annotations:
         add: 'View/add annotations'
         view: 'View annotations'
@@ -345,6 +351,8 @@ en:
       close_all_annotations: "Close all Annotations"
       view_your_annotations: "View your annotations"
       view_your_flags: "View your flags"
+      view_your_edits: "View your edits"
+      view_all_edits: "View all edits"
       view_all_flags: "View all flags"
       view_profile_page: "View your profile page"
       edit_profile: "Edit Profile"

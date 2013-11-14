@@ -6,6 +6,10 @@
         :border => 0),
         :counter => (document_counter + 1 + @response.params[:start].to_i) %>
 
+  <% if document.visibility == :hidden %>
+    <span class="public-visibility-status label label-warning">Hidden</span>
+  <% end %>
+
   <h5 class="index_title">
     <%= link_to_document document,
         :label => document.title.html_safe,

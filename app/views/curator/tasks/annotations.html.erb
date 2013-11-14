@@ -37,7 +37,7 @@
           <th class="right"><%= link_to t('revs.annotations.count'), annotations_table_curator_tasks_path(:order=>'num_annotations',  :tab=>@tab_group) %></th>
           <% @annotations.each do |annotation| %>
             <tr>
-              <td><%=item_link(annotation.item,:truncate=>true)%></td>
+              <td><%=item_link(annotation.solr_document,:truncate=>true)%></td>
               <td class="right"><%= annotation.num_annotations%></td>
             </tr>
           <% end %>
@@ -58,7 +58,7 @@
           <th><%=link_to t('revs.curator.created_on'), annotations_table_curator_tasks_path(:order2=>'created_at', :tab=>@tab_list_all  )%></th>
           <%@annotations_list.each do |annotation| %>
             <tr>
-              <td><%=item_link(annotation.item,:truncate=>true)%></td>
+              <td><%=item_link(annotation.solr_document,:truncate=>true)%></td>
               <td><%= annotation.text%></td>
               <td><%= User.where(:id=>annotation.user_id)[0].username%></td>
               <td><%= show_as_datetime(annotation.created_at.in_time_zone)%></td>

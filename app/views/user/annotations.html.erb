@@ -8,11 +8,11 @@
       <tr>
         <th><%= link_to t('revs.collection_members.items_name').titleize, user_annotations_path(:id=>@id,:order=>'druid') %></th>
         <th><%=t('revs.annotations.singular')%></th>
-        <th><%= link_to t('revs.messages.created'), user_annotations_path(:id=>@id,:order=>'created_at') %></th>
+        <th><%= link_to t('revs.messages.created'), user_annotations_path(:id=>@id,:order=>'created_at DESC') %></th>
       </tr>
       <% @annotations.each do |annotation|%>
        <tr>
-         <td><%= item_link(annotation.item,:truncate=>true) %></td>
+         <td><%= item_link(annotation.solr_document,:truncate=>true) %></td>
 				 <td><%= annotation.text %></td>
 				 <td><%= show_as_datetime(annotation.created_at.in_time_zone) %></td>
        </tr>

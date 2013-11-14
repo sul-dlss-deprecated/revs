@@ -4,73 +4,74 @@
 
   <h3>
     <%= t('revs.curator.edits') %>
-    <span class="object-count muted">(<%#= Annotation.count %> total)</span>
+    <span class="object-count muted">(<%= ChangeLog.count %> total)</span>
   </h3>
   
   <ul class="nav nav-tabs">
-    <% if @tab == @tab_group %>
+    <% if @tab == @tab_list_item %>
       <li class="active">
     <% else %>
       <li class>
     <% end %>
-    <a href="#edits-grouped" data-toggle="tab"><%=t('revs.curator.edited_items_by_item') %></a>
+    <a href="#edits-by-item" data-toggle="tab"><%=t('revs.curator.edited_items_by_item') %></a>
     </li>
 
-    <% if @tab == @tab_list_all%>
+    <% if @tab == @tab_list_user%>
       <li class="active">
     <% else %>
       <li class>
     <% end %>
-    <a href="#edits-list" data-toggle="tab"><%= t('revs.curator.edited_items_by_user') %></a>
+    <a href="#edits-by-user" data-toggle="tab"><%= t('revs.curator.edited_items_by_user') %></a>
     </li>
   </ul>
 
   <div class="tab-content">
-    <% if @tab == @tab_group%>
-      <div id='edits-grouped' class="tab-pane active">
+    <% if @tab == @tab_list_item%>
+      <div id='edits-by-item' class="tab-pane active">
     <% else %>
-      <div id='edits-grouped' class="tab-pane">
+      <div id='edits-by-item' class="tab-pane">
     <% end %>
 
         <table class="table table-bordered table-condensed table-hover table-striped">
-          <th><%= link_to t('revs.curator.item_title'), annotations_table_curator_tasks_path(:order=>'druid', :tab=>@tab_group  ) %></th>
-          <th class="right">Edit count</th>
-          <%# @annotations.each do |annotation| %>
-          <th>Last edit</th>
-          <th>Edit status</th>
+          <th><%= link_to t('revs.curator.item_title'), edits_table_curator_tasks_path(:order=>'druid', :tab=>@tab_list_item  ) %></th>
+          <th class="right"><%= link_to t('revs.curator.edit_count'), edits_table_curator_tasks_path(:order=>'num_edits DESC', :tab=>@tab_list_item  ) %></th>
+          <th><%= link_to t('revs.curator.edit_update'), edits_table_curator_tasks_path(:order=>'updated_at DESC', :tab=>@tab_list_item  ) %></th>
+          <% @edits_by_item.each do |result| %>
             <tr>
-              <td><%#=item_link(annotation.item,:truncate=>true)%></td>
-              <td class="right"><%#= annotation.num_annotations%></td>
-              <td>Date value</td>
-              <td>Edit status</td>
+              <td><%=item_link(result.solr_document,:truncate=>true)%></td>
+              <td class="right"><%= result.num_edits%></td>
+              <td><%=show_as_date(result.updated_at)%></td>
             </tr>
-          <%# end %>
+          <% end %>
         </table>
-        <%#= paginate @annotations,:param_name => :pagina2,  :params => {:order=>@order, :tab=>@tab_group} %>
+        <%= paginate @edits_by_item,:param_name => :pagina,  :params => {:order=>@order, :tab=>@tab_list_item} %>
       </div>
 
-    <% if @tab == @tab_list_all%>
-      <div id='edits-list' class="tab-pane active">
+    <% if @tab == @tab_list_user%>
+      <div id='edits-by-user' class="tab-pane active">
     <% else %>
-      <div id='edits-list' class="tab-pane">
+      <div id='edits-by-user' class="tab-pane">
     <% end %>
 
         <table class="table table-bordered table-condensed table-hover table-striped">
-          <th><%=link_to t('revs.curator.username'), annotations_table_curator_tasks_path(:order2=>'druid', :tab=>@tab_list_all  )%></th>
-          <th class="right"><%=t('revs.curator.edits_made')%></th>
-          <th><%=t('revs.curator.last_edit')%></th>
-          <th class="right"><%=link_to t('revs.curator.edit_rating'), annotations_table_curator_tasks_path(:order2=>'created_at', :tab=>@tab_list_all  )%></th>
-          <%# @annotations_list.each do |annotation| %>
+          <th><%=link_to t('revs.curator.username'), edits_table_curator_tasks_path(:order2=>'user_id ASC', :tab=>@tab_list_user) %></th>
+          <th class="right"><%=link_to t('revs.curator.edits_made'), edits_table_curator_tasks_path(:order2=>'num_edits DESC', :tab=>@tab_list_user) %></th>
+          <th><%=link_to t('revs.curator.edit_update'), edits_table_curator_tasks_path(:order2=>'updated_at DESC', :tab=>@tab_list_user) %></th>
+          <% @edits_by_user.each do |result| %>
             <tr>
-              <td>Username</td>
-              <td class="right"><%#= annotation.count%></td>
-              <td>Date value</td>
-              <td class="right">75%</td>
+              <td><% if result.user.public?%>
+                <%=link_to result.user.to_s,user_profile_id_path(result.user_id) %>
+              <% else %>
+                <%=result.user.to_s%>
+              <% end %>
+              </td>
+              <td class="right"><%= result.num_edits%></td>
+              <td><%=show_as_date(result.updated_at)%></td>
             </tr>
-          <%# end %>
+          <% end %>
         </table>
 
-        <%#= paginate @annotations_list,:param_name => :pagina,  :params => {:order2=>@order, :tab=>@tab_list_all} %>
+        <%= paginate @edits_by_user,:param_name => :pagina2,  :params => {:order2=>@order, :tab=>@tab_list_user} %>
       </div>
 
   </div>

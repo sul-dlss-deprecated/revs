@@ -26,24 +26,42 @@ class Curator::TasksController < ApplicationController
      @tab_group = 'annotations-group'
      @tab_list_all = 'annotations-list'
      @tab = params[:tab] || @tab_group
-   
    end
    
-   
+   def edits
+     @order = params[:order] || "num_edits DESC"
+     @order2 = params[:order2] || "num_edits DESC"
+     @edits_by_item=ChangeLog.select("count(id) as num_edits,druid,updated_at").where(:operation=>'metadata update').group('druid').order(@order).page(params[:pagina])
+     @edits_by_user=ChangeLog.select("count(id) as num_edits,user_id,updated_at").where(:operation=>'metadata update').includes(:user).group('user_id').order(@order2).page(params[:pagina2])
+
+     @tab_list_item = 'edits-by-item'
+     @tab_list_user = 'edits-by-user'
+     @tab = params[:tab] || @tab_list_item
+   end
    
    # an ajax call to set the curator edit mode
    def set_edit_mode
-     session[:curator_edit_mode]=params[:value]
      @document=SolrDocument.find(params[:id])
-     flash[:notice] = t('revs.messages.changes_not_saved',:rails_env=>Rails.env) if (params[:value]==true && ['staging'].include?(Rails.env))
+     @value=params[:value]
+     session[:curator_edit_mode]=@value
+     flash[:notice] = t('revs.messages.changes_not_saved',:rails_env=>Rails.env) if (@value && ['staging'].include?(Rails.env))
    end
 
+   # an ajax call to set the item visibility
+   def set_visibility
+     @document=SolrDocument.find(params[:id])
+     @value=params[:value].to_sym
+     @document.visibility=@value
+     @document.save
+     flash[:success] = (@value == :hidden ? t('revs.messages.hide_image_success') : t('revs.messages.show_image_success'))
+   end
+   
    # an ajax call for user submitted in-place edit
    def edit_metadata
       @document=SolrDocument.find(params[:id])
       updates=params[:document]
       updates.each {|field,value| @document.send("#{field}=",value)}
-      if @document.save(current_user)
+      if @document.save(:user=>current_user)
         flash[:success] = t('revs.messages.saved')
       else  
         @message = "#{@document.errors.join('. ')}."

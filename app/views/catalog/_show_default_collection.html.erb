@@ -1,4 +1,4 @@
 <dl class="dl-horizontal  dl-invert">
-		<dt><%= t('revs.collection.total_items') %>:</dt> <dd><%=number_with_delimiter(document.collection_members.total_members)%></dd>
+		<dt><%= t('revs.collection.total_items') %>:</dt> <dd><%=number_with_delimiter(document.collection_members(:include_hidden=>can?(:view_hidden, SolrDocument)).total_members)%></dd>
 </dl>
 <p id="description"><%= render_document_show_field_value :document => document, :field => 'description_tsim' %></p>

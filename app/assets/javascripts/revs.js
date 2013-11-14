@@ -56,15 +56,19 @@ $(document).ready(function(){
    // Enter/leave curator edit mode
    $('#edit_mode_link').click(function() { // click the curator edit mode action link
     if (curatorEditMode() == 'false'){ // currently not in edit mode, click is to enter edit mode
-		  var link=jQuery('#edit-mode-text');
-      link.text(link.attr('data-leave-mode-text'));
-      $('.edit-mode-status').removeClass("hidden-offscreen");
 			setCuratorEditMode(true);
     } else {
-		  var link=jQuery('#edit-mode-text');
-      link.text(link.attr('data-enter-mode-text'));
-      $('.edit-mode-status').addClass("hidden-offscreen");
 			setCuratorEditMode(false);
+    }
+		return false;
+  });
+
+   // visibility update link
+   $('#visibility_link').click(function() { // click the curator update visibility link
+    if (visibility() == 'hidden'){ // currently hidden; set to show
+			setVisibility('visible');
+    } else { // currently showing; set to hide
+			setVisibility('hidden');
     }
 		return false;
   });
@@ -104,15 +108,26 @@ function druid() {
 	return jQuery("#data-vars").attr('data-druid');
 }
 
+function visibility() {
+	return jQuery("#data-vars").attr('data-visibility');
+}
+
 function curatorEditMode() {
 	return jQuery("#data-vars").attr('data-curator-edit-mode');	
 }
 
 function setCuratorEditMode(value) {
-	jQuery("#data-vars").attr('data-curator-edit-mode',value);	
 	$.ajax({
 	        type: "POST",
 	        url: "/curator/tasks/set_edit_mode/" + druid(),
+					data: "value=" + value
+	});
+}
+
+function setVisibility(value) {
+	$.ajax({
+	        type: "PUT",
+	        url: "/curator/tasks/item/" +  druid() + "/set_visibility",
 					data: "value=" + value
 	});
 }
@@ -159,7 +174,7 @@ function loadCollectionMembersGrid(id,page_type) {
 
 function setupItemDetailPanels() {
   // Swap icon used in Item Details accordion when toggling metadata sections
-  $('#item-details-accordion').collapse({
+  $('.accordion-body').collapse({
      toggle: false
    }).on('show',function (e) {
      $(e.target).parent().find(".icon-caret-right").removeClass("icon-caret-right").addClass("icon-caret-down");
@@ -168,7 +183,8 @@ function setupItemDetailPanels() {
    });
 
    // Collapse Item Details metadata sections if JavaScript (open by default for no-JS browsers).
-   $('#item-details-accordion .accordion-body').removeClass("in");
+   $('.accordion-body').removeClass("in");
+
 }
 
 // For Curator Bulk Edit view - show or hide the field-to-be-updated status message depending on state of checkbox for that row item

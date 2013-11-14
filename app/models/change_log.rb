@@ -1,16 +1,16 @@
-class ChangeLog < ActiveRecord::Base
+class ChangeLog < WithSolrDocument
 
   attr_accessible :druid, :user_id, :operation, :note
   
   belongs_to :user
+  belongs_to :item, :foreign_key=>:druid, :primary_key=>:druid
 
   validates :druid, :is_druid=>true
   validates :operation, :presence=>true
   validates :user_id, :numericality => { :only_integer => true }
   
-  # head to solr to get the actual item, so we can access its attributes, like the title
-  def item
-    @item ||= SolrDocument.find(druid)
+  def updates
+    eval(self.note)
   end
   
 end

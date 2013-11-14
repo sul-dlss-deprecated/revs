@@ -80,6 +80,10 @@ module ApplicationHelper
     user.flags.count
   end
   
+  def user_edits_count(user)
+    user.metadata_updates.count
+  end
+  
   def user_flags_unresolved_count(user)
     return user.flags.unresolved_count
   end

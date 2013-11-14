@@ -133,7 +133,7 @@ describe SolrDocument, :integration => true do
         doc.full_date.should == '' # current full date value
         doc.full_date='5/6/1999' # set a new full date
         doc.years.should == [1969] # year hasn't be set yet, since we haven't saved
-        doc.save(user) # now let's save it
+        doc.save(:user=>user) # now let's save it
         
         ChangeLog.where(:druid=>druid,:operation=>'metadata update',:user_id=>user.id).size.should == 1
         
@@ -320,7 +320,10 @@ describe SolrDocument, :integration => true do
 
     describe "all_images" do
       it "should return the total number of images" do
-        SolrDocument.total_images.should be == 16
+        SolrDocument.total_images.should be == 16 # default is visible
+        SolrDocument.total_images(:visible).should be == 16
+        SolrDocument.total_images(:hidden).should be == 1
+        SolrDocument.total_images(:all).should be == 17
       end
     end
     

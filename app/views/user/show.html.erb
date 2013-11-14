@@ -33,11 +33,11 @@
       <% if @latest_annotations.size > 0 %>
         <ul>
         <% @latest_annotations.each do |annotation| %>
-			  	<% if annotation.item %>
+			  	<% if annotation.solr_document %>
 	          <li class="activity-item">
 	            <ul>
-	              <li><%= link_to(image_tag(annotation.item.images.first), item_path(annotation.item)) %><li>
-	              <li class="item-title"><%= item_link(annotation.item,:truncate=>true) %></li>
+	              <li><%= link_to(image_tag(annotation.solr_document.images.first), item_path(annotation.solr_document)) %><li>
+	              <li class="item-title"><%= item_link(annotation.solr_document,:truncate=>true) %></li>
 	              <li class="annotation"><%= truncate(annotation.text) %></li>
 	              <li><%= show_as_datetime(annotation.created_at) %></li>
 	            </ul>
@@ -63,11 +63,11 @@
       <% if @latest_flags.size > 0 %>
         <ul>
         <% @latest_flags.each do |flag| %>
-				  <% if flag.item and not flag.resolved%>
+				  <% if flag.solr_document and not flag.resolved%>
 	          <li class="activity-item">
 	            <ul>
-	              <li><%= link_to(image_tag(flag.item.images.first), item_path(flag.item)) %></li>
-	              <li class="item-title"><%= item_link(flag.item,:truncate=>true) %></li>
+	              <li><%= link_to(image_tag(flag.solr_document.images.first), item_path(flag.solr_document)) %></li>
+	              <li class="item-title"><%= item_link(flag.solr_document,:truncate=>true) %></li>
 	              <li><%= show_as_datetime(flag.created_at) %></li>
 	            </ul>
 	          </li>
@@ -85,6 +85,40 @@
           <em><%=t('revs.flags.you_can_flag_problems')%></em>
         </p>
       <% end %>
+    </div>
+
+  </div>
+
+  <div class="row profile-activity">
+    <div class="span4">
+      <% if @user.can? :curate, :all %>
+        <h3><%=t('revs.curator.edits')%> <span class="activity-count"><%= user_edits_count(@user).to_s.rjust(1, '0') %></span></h3>
+        <% if @latest_edits.size > 0 %>
+          <ul>
+          <% @latest_edits.each do |edit| %>
+  			  	<% if edit.solr_document %>
+  	          <li class="activity-item">
+  	            <ul>
+  	              <li><%= link_to(image_tag(edit.solr_document.images.first), item_path(edit.solr_document)) %></li>
+  	              <li class="item-title"><%= item_link(edit.solr_document,:truncate=>true) %></li>
+  	              <li><%= show_as_datetime(edit.created_at) %></li>
+  	            </ul>
+  	          </li>
+  			   <% end %>
+          <% end %>
+          </ul>
+          <% if user_edits_count(@user) > Revs::Application.config.num_latest_user_activity %>
+            <p class="more-link">
+              <%= pluralize(user_edits_count(@user) - Revs::Application.config.num_latest_user_activity, 'edits') %> <%=t('revs.messages.not_shown')%>.
+              <%= link_to "#{t('revs.messages.view_all')} »", user_edits_path(@user.username) %>
+            </p>
+          <% end %>
+        <% end %>
+      <% end %>      
+    </div>
+
+    <div class="span4 offset1">
+
     </div>
 
   </div>

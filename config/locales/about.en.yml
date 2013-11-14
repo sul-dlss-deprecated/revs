@@ -62,6 +62,8 @@ en:
       homepage_about_counts_html: |
           The Revs Digital Library currently contains <strong>%{total_images} items</strong> from
           <strong>%{number_collections}</strong>.
+      homepage_about_hidden_counts_html: |
+          This total includes <strong>%{total_images} hidden items</strong>.
       homepage_about_project_html: |
           The Digital Library is built on top of the Stanford Digital Repository to provide a web based platform for discovery of
           automotive research and images.

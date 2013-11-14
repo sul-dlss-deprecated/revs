@@ -1,4 +1,4 @@
-# -*- encoding : utf-8 -*-
+######################## -*- encoding : utf-8 -*-
 require 'revs-utils'
 
 class SolrDocument
@@ -8,10 +8,12 @@ class SolrDocument
   include ActivesolrHelper
   extend ActivesolrHelper::ClassMethods
   
+  include VisibilityHelper
   include DateHelper
-        
+  include SolrQueryHelper     
+ 
   extend Revs::Utils
-  
+      
   # Email uses the semantic field mappings below to generate the body of an email.
   SolrDocument.use_extension( Blacklight::Solr::Document::Email )
 
@@ -51,45 +53,53 @@ class SolrDocument
     Revs::Application.config.use_editstore # set to true to propogate changes to editstore when the .save method is called
   end
   
-  def self.field_mappings
-      {
-        :title=>{:field=>'title_tsi',:default=>'Untitled'},
-        :description=>{:field=>'description_tsim', :multi_valued => true},
-        :photographer=>{:field=>'photographer_ssi'},
-        :years=>{:field=>'pub_year_isim', :multi_valued => true},
-        :single_year=>{:field=>'pub_year_single_isi'},
-        :full_date=>{:field=>'pub_date_ssi'},
-        :people=>{:field=>'people_ssim', :multi_valued => true},
-        :subjects=>{:field=>'subjects_ssim', :multi_valued => true},
-        :city_section=>{:field=>'city_sections_ssi'},
-        :city=>{:field=>'cities_ssi'},
-        :state=>{:field=>'states_ssi'},
-        :country=>{:field=>'countries_ssi'},
-        :formats=>{:field=>'format_ssim', :multi_valued => true},
-        :identifier=>{:field=>'source_id_ssi'},
-        :production_notes=>{:field=>'prod_notes_tsi'},
-        :institutional_notes=>{:field=>'inst_notes_tsi'},
-        :metadata_sources=>{:field=>'metadata_sources_tsi'},
-        :has_more_metadata=>{:field=>'has_more_metadata_ssi'},
-        :vehicle_markings=>{:field=>'vehicle_markings_tsi'},
-        :marque=>{:field=>'marque_ssim', :multi_valued => true},
-        :vehicle_model=>{:field=>'model_ssim', :multi_valued => true},
-        :model_year=>{:field=>'model_year_ssim', :multi_valued => true},
-        :current_owner=>{:field=>'current_owner_ssi'},
-        :entrant=>{:field=>'entrant_ssi'},
-        :venue=>{:field=>'venue_ssi'},
-        :track=>{:field=>'track_ssi'},
-        :event=>{:field=>'event_ssi'},
-        :group_class=>{:field=>'group_class_tsi'},
-        :race_data=>{:field=>'race_data_tsi'},
-        :priority=>{:field=>'priority_isi',:default=>0,:editstore=>false},
-        :collections=>{:field=>'is_member_of_ssim', :multi_valued => true},
-        :collection_names=>{:field=>'collection_ssim', :multi_valued => true,:editstore=>false},
-        :highlighted=>{:field=>'highlighted_ssi',:editstore=>false},
-        :visibility_value=>{:field=>'visibility_isi',:editstore=>false},
-        }  
-    end
+  # map visibility values stored in solr and the database to what they mean
+  def self.visibility_mappings
+    { :hidden =>  '0',
+      :visible => '1',
+      :preview => '2'
+    }
+  end
   
+  def self.field_mappings
+    {
+      :title=>{:field=>'title_tsi',:default=>'Untitled'},
+      :description=>{:field=>'description_tsim', :multi_valued => true},
+      :photographer=>{:field=>'photographer_ssi'},
+      :years=>{:field=>'pub_year_isim', :multi_valued => true},
+      :single_year=>{:field=>'pub_year_single_isi'},
+      :full_date=>{:field=>'pub_date_ssi'},
+      :people=>{:field=>'people_ssim', :multi_valued => true},
+      :subjects=>{:field=>'subjects_ssim', :multi_valued => true},
+      :city_section=>{:field=>'city_sections_ssi'},
+      :city=>{:field=>'cities_ssi'},
+      :state=>{:field=>'states_ssi'},
+      :country=>{:field=>'countries_ssi'},
+      :formats=>{:field=>'format_ssim', :multi_valued => true},
+      :identifier=>{:field=>'source_id_ssi'},
+      :production_notes=>{:field=>'prod_notes_tsi'},
+      :institutional_notes=>{:field=>'inst_notes_tsi'},
+      :metadata_sources=>{:field=>'metadata_sources_tsi'},
+      :has_more_metadata=>{:field=>'has_more_metadata_ssi'},
+      :vehicle_markings=>{:field=>'vehicle_markings_tsi'},
+      :marque=>{:field=>'marque_ssim', :multi_valued => true},
+      :vehicle_model=>{:field=>'model_ssim', :multi_valued => true},
+      :model_year=>{:field=>'model_year_ssim', :multi_valued => true},
+      :current_owner=>{:field=>'current_owner_ssi'},
+      :entrant=>{:field=>'entrant_ssi'},
+      :venue=>{:field=>'venue_ssi'},
+      :track=>{:field=>'track_ssi'},
+      :event=>{:field=>'event_ssi'},
+      :group_class=>{:field=>'group_class_tsi'},
+      :race_data=>{:field=>'race_data_tsi'},
+      :priority=>{:field=>'priority_isi',:default=>0,:editstore=>false},
+      :collections=>{:field=>'is_member_of_ssim', :multi_valued => true},
+      :collection_names=>{:field=>'collection_ssim', :multi_valued => true,:editstore=>false},
+      :highlighted=>{:field=>'highlighted_ssi',:editstore=>false},
+      :visibility_value=>{:field=>'visibility_isi',:editstore=>false},
+      }  
+  end
+ 
   # you can configure a callback method to execute if any of these fields are changed
   # set the solr field as the key, and the method name as the value; the method will receive the solr field being updated and its new value
   # if you don't have any callbacks needed, just set an empty hash
@@ -151,6 +161,8 @@ class SolrDocument
         when :pub_year_isim,:pub_year_single_isi
           years=self.class.to_array(value)
           @errors << 'A year must be after 1800 up until this year and must be in the format YYYY' if (!self.class.blank_value?(years) && !years.all?{|new_value| is_valid_year?(new_value,1800)})
+        when :visibility_isi
+          @errors << 'Visibility value not_valid' unless SolrDocument.visibility_mappings.values.include? value.to_s
       end
     
     end
@@ -169,7 +181,7 @@ class SolrDocument
   ######################
   
   #####################
-  # provides the equivalient of an ActiveRecord has_one relationship with collection
+  # provides the equivalent of an ActiveRecord has_one relationship with collection
   # Return a SolrDocument object of the parent collection of an item
   def collection
     return nil unless is_item?
@@ -185,15 +197,19 @@ class SolrDocument
   ######################
   
   ######################
-  # provides the equivalent of an ActiveRecord has_many relationship with flags, annotations, images and siblings
+  # provides the equivalent of an ActiveRecord has_many relationship with flags, annotations, edits, images and siblings
   def flags
-    Flag.includes(:user).where(:druid=>id)
+    @flags ||= Flag.includes(:user).where(:druid=>id).order('created_at desc')
   end
 
   def annotations(user)
-    Annotation.for_image_with_user(id,user)
+    @annotations ||= Annotation.for_image_with_user(id,user).order('created_at desc')
   end
 
+  def edits
+    @edits ||= ChangeLog.includes(:user).where(:druid=>id,:operation=>'metadata update').order('created_at desc')
+  end
+  
   # Return a CollectionMembers object of all of the siblings of a collection member (including self)
   def siblings(params={})
     return nil unless is_item?
@@ -201,15 +217,18 @@ class SolrDocument
     rows=params[:rows] || blacklight_config.collection_member_grid_items
     start=params[:start] || 0
     random=params[:random] || false # if set to true, will give you a random selection from the collection ("start" will be ignored)
+    include_hidden=params[:include_hidden] || false # if set to true, the query will also return hidden images
     
     if random
       start = self.total_siblings-rows < 0 ? 0 : rand(0...self.total_siblings-rows) # if we have less items than we want to show, just start at 0; else start at a random number between 0 and the total - # to show
     end
         
+    fq="#{blacklight_config.collection_member_identifying_field}:\"#{self[blacklight_config.collection_member_identifying_field].first}\""
+    fq+=" AND #{SolrDocument.images_query(:visible)}" unless include_hidden
     @siblings ||= CollectionMembers.new(
                                Blacklight.solr.select(
                                  :params => {
-                                   :fq => "#{blacklight_config.collection_member_identifying_field}:\"#{self[blacklight_config.collection_member_identifying_field].first}\"",
+                                   :fq => fq,
                                    :sort=> "priority_isi desc",
                                    :rows => rows.to_s,
                                   :start => start.to_s
@@ -237,10 +256,14 @@ class SolrDocument
 
     rows=params[:rows] || blacklight_config.collection_member_grid_items
     start=params[:start] || 0
+    include_hidden=params[:include_hidden] || false # if set to true, the query will also return hidden images
+    
+    fq="#{blacklight_config.collection_member_identifying_field}:\"#{self[SolrDocument.unique_key]}\""
+    fq+=" AND #{SolrDocument.images_query(:visible)}" unless include_hidden
     return CollectionMembers.new(
                               Blacklight.solr.select(
                                 :params => {
-                                  :fq => "#{blacklight_config.collection_member_identifying_field}:\"#{self[SolrDocument.unique_key]}\"",
+                                  :fq => fq,
                                   :sort=> "priority_isi desc",
                                   :rows => rows.to_s,
                                   :start => start.to_s
@@ -250,8 +273,8 @@ class SolrDocument
   end  
   ###################
   
-  def total_siblings
-    self.collection.collection_members.total_members
+  def total_siblings(params={})
+    self.collection.collection_members(params).total_members
   end
   
   def has_vehicle_metadata?
@@ -307,13 +330,41 @@ class SolrDocument
   end
 
   # store the change log info into our local database before going to the ActiveSolr save method to perform the saves and editstore updates
-  def save(user=nil)
-    ChangeLog.create(:druid=>id,:user_id=>user.id,:operation=>'metadata update',:note=>unsaved_edits.to_s) if (valid? && user)
+  def save(params={})
+    user=params[:user] || nil # currently logged in user, needed for some updates
+    add_changelog(user)
+    update_item # propoage unique information to database as well when saving solr document
     super
+  end
+
+  def add_changelog(user)
+    ChangeLog.create(:druid=>id,:user_id=>user.id,:operation=>'metadata update',:note=>unsaved_edits.to_s) if (valid? && user)  
+  end
+  
+  # propoage unique information to database as well when saving solr document
+  def update_item
+    @item=Item.fetch(id)
+    @item.visibility_value=visibility_value
+    @item.save
   end
   
    ##################################################################
    # CLASS LEVEL METHODS
+   
+   # specify solr fq queries for retrieving just visible, hidden or all images
+   def self.images_query(visibility)
+     case visibility
+        when :visible
+          "((*:* -visibility_isi:[* TO *]) OR visibility_isi:#{SolrDocument.visibility_mappings[:visible]})"
+        when :hidden
+          "(visibility_isi:#{SolrDocument.visibility_mappings[:hidden]})"
+        when :preview
+          "(visibility_isi:#{SolrDocument.visibility_mappings[:preview]})"
+        else
+          ''
+      end
+   end
+   
    # Return an Array of all collection type SolrDocuments
    def self.all_collections(params={})
      highlighted=params[:highlighted] || false
@@ -336,8 +387,10 @@ class SolrDocument
      collections.size > 0 ? collections : self.all_collections
    end
    
-  def self.total_images
-    items=Blacklight.solr.get 'select',:params=>{:q=>'-format_ssim:collection'}      
+   # count the total number of images (default to those marked as visible only, can also pass in :all or :hidden)
+  def self.total_images(visibility=:visible)
+    params={:q=>'-format_ssim:collection',:fq=>self.images_query(visibility)}
+    items=Blacklight.solr.get 'select',:params=>params      
     return items['response']['numFound']
   end
   
@@ -357,12 +410,12 @@ class SolrDocument
     # iterate over all druids    
     selected_druids.each do |druid|
     
-      item=self.find(druid) # load item
-      if !item.blank?
-        item.send("#{attribute}=",new_value) # this sets the attribute
-        valid = item.save(user) # if true, we have successfully updated solr
+      doc=self.find(druid) # load solr doc
+      if !doc.blank?
+        doc.send("#{attribute}=",new_value) # this sets the attribute
+        valid = doc.save(:user=>user) # if true, we have successfully updated solr
       end
-      break unless valid # stop if any item is not valid
+      break unless valid # stop if any solr doc is not valid
       
     end
           

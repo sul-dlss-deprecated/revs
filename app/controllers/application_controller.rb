@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   
    include Blacklight::Controller
    include DateHelper
+   include SolrQueryHelper
   
   # Please be sure to impelement current_user and user_session. Blacklight depends on 
   # these methods in order to perform user specific actions. 
@@ -29,7 +30,11 @@ class ApplicationController < ActionController::Base
   end
   
   def store_referred_page
-    session[:login_redirect] = previous_page unless previous_page == new_user_session_url
+    if [new_user_session_url,new_user_session_path,new_user_registration_url,new_user_registration_path].include?(previous_page) # referral pages cannot be sign in or sign up page
+      session[:login_redirect] = root_path 
+    else
+      session[:login_redirect] = previous_page 
+    end
   end
   
   def after_sign_in_path_for(resource)

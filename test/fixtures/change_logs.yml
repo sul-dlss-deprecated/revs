@@ -1,0 +1,42 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+
+changelog1:
+ user: curator  # this is the named "curator" fixture object from the users table
+ druid: 'qb957rw1430'
+ operation: 'metadata update'
+ updated_at: 5/1/2013
+ created_at: 5/1/2013
+
+changelog2:
+  user: curator  # this is the named "curator" fixture object from the users table
+  druid: 'td830rb1584'
+  operation: 'metadata update'
+  updated_at: 6/1/2013
+  created_at: 6/1/2013
+          
+changelog3:
+   user: curator  # this is the named "curator" fixture object from the users table
+   druid: 'bg152pb0116'
+   operation: 'metadata update'
+   updated_at: 6/5/2013
+   created_at: 6/5/2013
+
+changelog4:
+  user: curator  # this is the named "curator" fixture object from the users table
+  druid: 'qb957rw1430'
+  operation: 'metadata update'
+  updated_at: 9/5/2013
+  created_at: 9/5/2013
+
+changelog5:
+  user: admin  # this is the named "admin" fixture object from the users table
+  druid: 'qb957rw1430'
+  operation: 'metadata update'
+  updated_at: 6/4/2013
+  created_at: 6/4/2013
+

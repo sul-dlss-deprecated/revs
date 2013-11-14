@@ -1,4 +1,13 @@
 $('#main-flashes').html("<%= escape_javascript(render( :partial => "/flash_msg")).html_safe %>");
+jQuery("#data-vars").attr('data-curator-edit-mode','<%=@value%>');	
 $('#item_details').html("<%= escape_javascript(render :partial => "/catalog/show_default_collection_member", :locals => {:document => @document}) %>");
+var link=jQuery('#edit-mode-text');
+<% if @value == "true" # now in edit mode%> 
+	link.text(link.attr('data-leave-mode-text'));
+	$('.edit-mode-status').removeClass("hidden-offscreen");
+<% else # no longer in edit mode%>
+	link.text(link.attr('data-enter-mode-text'));
+	$('.edit-mode-status').addClass("hidden-offscreen");	
+<% end %>
 setupItemDetailPanels();
 showOnLoad();

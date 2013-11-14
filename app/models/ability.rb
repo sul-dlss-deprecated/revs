@@ -123,6 +123,7 @@ class Ability
     can :resolve, Flag
     can :update, Flag
     can :curator_update_flag_table, User  
+    can :view_hidden, SolrDocument
   end
   
   def can_update_metadata

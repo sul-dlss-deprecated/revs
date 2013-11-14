@@ -1,6 +1,7 @@
-class Flag < ActiveRecord::Base
+class Flag < WithSolrDocument
 
   belongs_to :user
+  belongs_to :item, :foreign_key=>:druid, :primary_key=>:druid
   
   FLAG_TYPES=%w{error inappropriate bookmark}
   
@@ -14,12 +15,6 @@ class Flag < ActiveRecord::Base
   validate :check_flag_type
   
   FLAGS_PER_TABLE_PAGE = 25
-  
-  
-  # head to solr to get the actual item, so we can access its attributes, like the title
-  def item
-    @item ||= SolrDocument.find(druid)
-  end
   
   def check_flag_type
     errors.add(:flag_type, :not_valid) unless FLAG_TYPES.include? flag_type.to_s
