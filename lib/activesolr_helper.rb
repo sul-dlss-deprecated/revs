@@ -99,7 +99,7 @@ module ActivesolrHelper
   def save(params={})
     
     user=params[:user] || nil # currently logged in user, needed for some updates
-    commit=params[:commit] || true # if solr document should be committed immediately, defaults to true
+    commit=params[:commit].nil? ? true : params[:commit] # if solr document should be committed immediately, defaults to true
     
     if valid?
       
