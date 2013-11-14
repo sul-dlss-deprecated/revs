@@ -96,14 +96,18 @@ module ActivesolrHelper
   end
 
   # iterate through all cached unsaved edits and update solr
-  def save(user=nil)
+  def save(params={})
+    
+    user=params[:user] || nil # currently logged in user, needed for some updates
+    commit=params[:commit] || true # if solr document should be committed immediately, defaults to true
+    
     if valid?
       
       unsaved_edits.each do |solr_field_name,value| 
 
         old_values=self[solr_field_name]   
-        self.class.blank_value?(value) ? remove_field(solr_field_name) : set_field(solr_field_name,value) # update remote solr document
-        self[solr_field_name]=value # update the local solr document
+        self.class.blank_value?(value) ? remove_field(solr_field_name,commit) : set_field(solr_field_name,value,commit) # update solr document on server by issuing update queries
+        self[solr_field_name]=value # update in memory solr document so value is available with reloading solr doc from server
         
         # get the solr field configuration for this field
         solr_field_config=self.class.field_mappings.collect{|key,value| value if value[:field]==solr_field_name.to_s}.reject(&:blank?).first
@@ -179,31 +183,31 @@ module ActivesolrHelper
   end
   
   # remove this field from solr
-  def remove_field(field_name)
-    update_solr(field_name,'remove',nil)
+  def remove_field(field_name,commit=true)
+    update_solr(field_name,'remove',nil,commit)
     execute_callbacks(field_name,nil)
   end
   
   # add a new value to a multivalued field given a field name and a value
-  def add_field(field_name,value)
-    update_solr(field_name,'add',value)
+  def add_field(field_name,value,commit=true)
+    update_solr(field_name,'add',value,commit)
     execute_callbacks(field_name,value)
   end
   
   # set the value for a single valued field or set all values for a multivalued field given a field name and either a single value or an array of values
-  def set_field(field_name,value)
+  def set_field(field_name,value,commit=true)
     values=self.class.to_array(value)
-    update_solr(field_name,'set',values)
+    update_solr(field_name,'set',values,commit)
     execute_callbacks(field_name,values)
   end
 
   # update the value for a multivalued field from old value to new value (for a single value field, you can just set the new value directly)
-  def update_field(field_name,old_value,new_value)
+  def update_field(field_name,old_value,new_value,commit=true)
     if self[field_name].class == Array
       new_values=self[field_name].collect{|value| value.to_s==old_value.to_s ? new_value : value}
-      update_solr(field_name,'set',new_values)
+      update_solr(field_name,'set',new_values,commit)
     else
-      set_field(field_name,new_value)
+      set_field(field_name,new_value,commit)
     end
     execute_callbacks(field_name,value)
   end
@@ -213,8 +217,8 @@ module ActivesolrHelper
     self.send(callback_method,field_name,value) unless callback_method.blank?
   end
   
-  def update_solr(field_name,operation,new_values)
-    url="#{Blacklight.solr.options[:url]}/update?commit=true"
+  def update_solr(field_name,operation,new_values,commit=true)
+    url="#{Blacklight.solr.options[:url]}/update?commit=#{commit}"
     params="[{\"id\":\"#{id}\",\"#{field_name}\":"
     if operation == 'add'
       params+="{\"add\":\"#{new_values.gsub('"','\"')}\"}}]"

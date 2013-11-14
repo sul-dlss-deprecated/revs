@@ -331,7 +331,8 @@ class SolrDocument
   end
 
   # store the change log info into our local database before going to the ActiveSolr save method to perform the saves and editstore updates
-  def save(user=nil)
+  def save(params={})
+    user=params[:user] || nil # currently logged in user, needed for some updates
     add_changelog(user)
     update_item # propoage unique information to database as well when saving solr document
     super
@@ -410,12 +411,12 @@ class SolrDocument
     # iterate over all druids    
     selected_druids.each do |druid|
     
-      item=self.find(druid) # load item
-      if !item.blank?
-        item.send("#{attribute}=",new_value) # this sets the attribute
-        valid = item.save(user) # if true, we have successfully updated solr
+      doc=self.find(druid) # load solr doc
+      if !doc.blank?
+        doc.send("#{attribute}=",new_value) # this sets the attribute
+        valid = doc.save(:user=>user) # if true, we have successfully updated solr
       end
-      break unless valid # stop if any item is not valid
+      break unless valid # stop if any solr doc is not valid
       
     end
           
