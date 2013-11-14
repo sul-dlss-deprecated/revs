@@ -174,7 +174,7 @@ function loadCollectionMembersGrid(id,page_type) {
 
 function setupItemDetailPanels() {
   // Swap icon used in Item Details accordion when toggling metadata sections
-  $('#item-details-accordion').collapse({
+  $('.accordion-body').collapse({
      toggle: false
    }).on('show',function (e) {
      $(e.target).parent().find(".icon-caret-right").removeClass("icon-caret-right").addClass("icon-caret-down");
@@ -183,7 +183,8 @@ function setupItemDetailPanels() {
    });
 
    // Collapse Item Details metadata sections if JavaScript (open by default for no-JS browsers).
-   $('#item-details-accordion .accordion-body').removeClass("in");
+   $('.accordion-body').removeClass("in");
+
 }
 
 // For Curator Bulk Edit view - show or hide the field-to-be-updated status message depending on state of checkbox for that row item

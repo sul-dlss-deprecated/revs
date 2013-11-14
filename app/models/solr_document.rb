@@ -200,15 +200,15 @@ class SolrDocument
   ######################
   # provides the equivalent of an ActiveRecord has_many relationship with flags, annotations, edits, images and siblings
   def flags
-    Flag.includes(:user).where(:druid=>id)
+    @flags ||= Flag.includes(:user).where(:druid=>id).order('created_at desc')
   end
 
   def annotations(user)
-    Annotation.for_image_with_user(id,user)
+    @annotations ||= Annotation.for_image_with_user(id,user).order('created_at desc')
   end
 
   def edits
-    ChangeLog.includes(:user).where(:druid=>id,:operation=>'metadata update')
+    @edits ||= ChangeLog.includes(:user).where(:druid=>id,:operation=>'metadata update').order('created_at desc')
   end
   
   # Return a CollectionMembers object of all of the siblings of a collection member (including self)

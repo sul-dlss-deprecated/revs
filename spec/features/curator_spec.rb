@@ -57,6 +57,28 @@ describe("Curator Section",:type=>:request,:integration=>true) do
       should_deny_access(starting_page)
     end
     
+    it "should allow a curator to view edited item history on an item page" do
+      login_as(curator_login)
+      visit catalog_path('qb957rw1430')
+      page.should have_content 'Metadata Edit History'
+      page.should have_content 'May 8, 2013 by Curator Revs'
+      page.should have_content 'April 5, 2013 by admin1'
+      page.should have_content 'January 4, 2013 by Curator Revs'
+    end
+
+    it "should now allow a non-curator to view edited item history on an item page" do
+      logout
+      visit catalog_path('qb957rw1430')
+      page.should_not have_content 'Metadata Edit History'
+      page.should_not have_content 'May 8, 2013 by Curator Revs'
+    end
+
+    it "should not show item edit history to curators if none exists for an item" do
+      login_as(curator_login)
+      visit catalog_path('yh093pt9555')
+      page.should_not have_content 'Metadata Edit History'
+    end
+    
     it "should allow a curator to view the item edit reports" do
       login_as(curator_login)
       visit edits_table_curator_tasks_path
