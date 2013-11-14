@@ -183,6 +183,26 @@
       #item-public-visibility-status a {
         display: inline-block;
       }
+      #item-edit-history-accordion {
+        .icon {
+          font-size: 18px;
+          margin-left: 3px;
+          padding-right: 4px;
+        }
+        + #item-edit-history .edit-history-list  {
+          margin: 6px 0 12px 25px;
+          background: #f8f8f8;
+          border-top: none;
+          box-shadow: inset 0 0 10px #eee, inset 0 0 10px #eee, inset 0 0 10px #eee;
+          padding: 12px 9px 3px 15px;
+          p {
+            margin-top: 0;
+          }
+          ul {
+            margin-bottom: 6px;
+          }
+        }
+      }
     }
     #all_flags, #all-annotations {
       color: #555;

@@ -188,7 +188,8 @@ en:
       edits_made: "Edits made"
       edit_rating: "Approval rating"
       username: "User"
-      metadata_edit_history: "Metadata Edit History"
+      metadata_edit_history_show: "View metadata edit history"
+      metadata_edit_history_hide: "Hide metadata edit history"
       metadata_edit_history_description: "This item has been edited on"
     dashboards: 'Dashboards'
     citations:

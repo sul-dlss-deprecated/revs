@@ -131,6 +131,26 @@
                 <span class="edit-mode-status label label-warning <%="hidden-offscreen" if session[:curator_edit_mode] != 'true'%>"><%= t('revs.curator.active') %></span>
               </li>
             <% end %>
+
+            <% if @document.edits.size > 0 %>
+              <li id="item-edit-history-accordion">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#item-edit-history-accordion" href="#item-edit-history">
+                  <i class="icon-caret-right icon"></i>
+                  <%= t('revs.curator.metadata_edit_history_show') %>
+                </a>
+              </li>
+              <div id="item-edit-history" class="collapse">
+                <div class="edit-history-list">
+                  <p><%=t('revs.curator.metadata_edit_history_description')%>:</p>
+                  <ul>
+                    <% @document.edits.each do |edit| %>
+                      <li><%=show_as_date(edit.created_at)%> by <%=edit.user.to_s%></li>
+                    <% end %>
+                  </ul>
+                </div>
+              </div>
+            <% end %>
+
               <li id="item-public-visibility-status">              
                 <% if @document.visibility == :visible 
                       visibility_link_text = t('revs.messages.public_visibility_hide')
@@ -149,31 +169,6 @@
               <%= render :partial=>"/catalog/item_priority_status" %>
             </li>
           </ul>
-
-          <% if @document.edits.size > 0 %>
-            <div class="accordion" id="item-edit-history-accordion">
-              <div class="accordion-group">
-                <div class="accordion-heading nav-header">
-                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#item-edit-history-accordion" href="#item-edit-history">
-                    <%=t('revs.curator.metadata_edit_history')%>
-                    <span class="accordion-icon showOnLoad hidden"><i class="icon-caret-right icon-2x"></i></span>
-                  </a>
-                </div>
-                <div id="item-edit-history" class="accordion-body collapse in">
-                  <div class="accordion-inner">
-                    <dl class="dl-horizontal  dl-invert">
-                      <p><%=t('revs.curator.metadata_edit_history_description')%>:</p>
-                        <ul>
-                        <% @document.edits.each do |edit| %>
-                          <li><%=show_as_date(edit.created_at)%> by <%=edit.user.to_s%></li>  
-                        <% end %>
-                        </ul>
-                    </dl>
-                  </div>
-                </div>
-              </div>
-            </div>
-          <% end %>
 
           <% if @document.visibility == :hidden %>
             <noscript>
