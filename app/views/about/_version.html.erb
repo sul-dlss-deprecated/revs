@@ -1,5 +1,12 @@
 <h3><%=application_name%></h3>
-<p><strong>Rails environment:</strong> <%=Rails.env %></p>
-<p><strong>Current deployed version:</strong> <%=Revs::Application.config.version %></p>
-<p><strong>Last deployed time:</strong> <%=File.new('REVISION').mtime if File.exists?('REVISION')%></p>
-<p><strong>Last restart time:</strong> <%=File.new('tmp/restart.txt').mtime  if File.exists?('tmp/restart.txt')%></p>
+<p>
+  <strong>Rails environment:</strong> <%=Rails.env %><br >
+  <strong>Restricted beta:</strong> <%=Revs::Application.config.restricted_beta %><br />
+  <strong>Using editstore:</strong> <%=Revs::Application.config.use_editstore %>
+</p>
+
+<p>
+  <strong>Last deployed time:</strong> <%=File.new('REVISION').mtime if File.exists?('REVISION')%><br />
+  <strong>Current deployed version:</strong> <%=Revs::Application.config.version %><br />
+  <strong>Last restart time:</strong> <%=File.new('tmp/restart.txt').mtime  if File.exists?('tmp/restart.txt')%>
+</p>
