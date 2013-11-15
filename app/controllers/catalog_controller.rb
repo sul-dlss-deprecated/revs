@@ -30,7 +30,7 @@ class CatalogController < ApplicationController
     
     not_authorized if params[:view]=='curator' && cannot?(:bulk_update_metadata,:all)
     
-    if on_home_page # on the home page
+    if on_home_page || @force_render_home # on the home page
         
       not_authorized unless can? :read,:home_page
       
@@ -112,7 +112,13 @@ class CatalogController < ApplicationController
     @document = SolrDocument.find(druid)
     @carousel_members = @document.get_members(:rows=>@rows,:start=>@start,:include_hidden=>can?(:view_hidden, SolrDocument))
   end
-    
+
+  # when a request for /catalog/BAD_SOLR_ID is made, this method is executed... overriding default blacklight behavior to get our home page to work
+  def invalid_solr_id_error
+    @force_render_home=true
+    super
+  end
+      
   configure_blacklight do |config|
     ## Default parameters to send to solr for all search-like requests. See also SolrHelper#solr_search_params
    
