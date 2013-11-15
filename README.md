@@ -24,7 +24,6 @@ This is a Blacklight Application for the Revs Digital Library at Stanford Univer
 
 1. Copy the .yml example files and the jetty config files:
 
-        cd revs
         rake revs:config
 
 1. Create and migrate the databases:

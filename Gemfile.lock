@@ -309,7 +309,7 @@ DEPENDENCIES
   mysql (= 2.8.1)
   net-ssh-krb
   omniauth
-  rails (>= 3.2.11)
+  rails (~> 3)
   rest-client
   revs-utils (>= 0.0.6)
   rspec-rails
