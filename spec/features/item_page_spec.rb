@@ -35,6 +35,12 @@ describe("Item Pages",:type=>:request,:integration=>true) do
     page.should have_xpath("//img[contains(@src, \"image/yh093pt9555/2012-027NADI-1966-b1_6.4_0011\")]")
   end
 
+  it "should show a nice error message and go to the home page when you visit an invalid ID" do 
+    visit catalog_path('yh093pt9554')
+    current_path.should == catalog_path('yh093pt9554')
+    page.should have_content("Sorry, you have requested a record that doesn't exist.")
+  end
+
   it "should show an item detail page metadata section only if values exist for metadata in that section" do
     visit catalog_path('yh093pt9555') # Item with Vehicle and Race field values
     find('.show-document-title').should have_content('Marlboro 12 Hour, August 12-14')
