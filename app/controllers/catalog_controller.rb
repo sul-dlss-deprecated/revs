@@ -34,7 +34,7 @@ class CatalogController < ApplicationController
         
       not_authorized unless can? :read,:home_page
       
-      unless fragment_exist?('home') # fragment cache for performance
+      unless fragment_exist?("home-#{current_role}") # fragment cache for performance
 
         @highlight_collections=SolrDocument.highlighted_collections
         @random_collection_number=Random.new.rand(@highlight_collections.size) # pick a random one to start with for non-JS users

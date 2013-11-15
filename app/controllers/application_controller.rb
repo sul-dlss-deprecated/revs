@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   # these methods in order to perform user specific actions. 
 
   rescue_from Exception, :with=>:exception_on_website
-  helper_method :application_name,:on_home_page,:on_collections_page,:on_about_pages,:on_detail_page,:show_terms_dialog?, :sunet_user_signed_in?
+  helper_method :application_name,:current_role,:on_home_page,:on_collections_page,:on_about_pages,:on_detail_page,:show_terms_dialog?, :sunet_user_signed_in?
   layout "revs"
 
   protect_from_forgery
@@ -155,6 +155,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def current_role
+    current_user ? current_user.role : 'none'
+  end
+  
   def current_ability
     current_user ? current_user.ability : User.new.ability
   end
