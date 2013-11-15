@@ -2,7 +2,7 @@
 <strong><%= t('revs.messages.changes_not_saved',:rails_env=>Rails.env) if ['staging'].include?(Rails.env)%></strong>
 
 <div class="row curator-edit-options">
-	<%= form_tag(request.url, method: 'post', class:'form-inline') do %>
+	<%= form_tag(request.url, method: 'post', class:'form-inline', id:'bulk-update-form') do %>
 	
     <%= hidden_field_tag 'bulk_edit[operation]','bulk'%>
 
@@ -20,7 +20,7 @@
 
       <div class="update-field-value">
 			  <%= text_field_tag 'bulk_edit[new_value]' ,@bulk_edit.nil? ? '' : @bulk_edit[:new_value], class: 'span4', placeholder: 'new value'%>
-        <%= submit_tag t('revs.nav.update'), :class => 'btn btn-small' %>
+        <%= submit_tag t('revs.nav.update'), :id=>'bulk-update-button', :class => 'btn btn-small', :disable_with => t('revs.nav.please_wait'), :confirm=> t('revs.curator.are_you_sure_apply_updates') %>
       </div>
 
     </div>

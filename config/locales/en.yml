@@ -83,6 +83,7 @@ en:
       report_problem: 'Report a problem'
       content_corrections: 'Are there problems with the metadata for this item? If you create an account and login, you can flag this item with a comment.'
       more: 'More'
+      please_wait: 'Please wait...'
     contact:
       select_topic: 'Select a topic...'
       problem: 'Problem with the website'
@@ -191,6 +192,7 @@ en:
       metadata_edit_history_show: "View metadata edit history"
       metadata_edit_history_hide: "Hide metadata edit history"
       metadata_edit_history_description: "This item has been edited on"
+      are_you_sure_apply_updates: "Are you sure you want to apply this update to all selected items?"
     dashboards: 'Dashboards'
     citations:
         view: 'View full citation page with image download'
