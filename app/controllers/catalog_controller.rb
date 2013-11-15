@@ -82,11 +82,12 @@ class CatalogController < ApplicationController
   
   def show
     
-    not_authorized(:replace_message=>t('revs.messages.in_beta_not_authorized_html')) unless can? :read,:item_pages
-    
-    super
-
-    not_authorized if @document.visibility == :hidden && cannot?(:view_hidden, SolrDocument)
+    unless can? :read,:item_pages
+      not_authorized(:replace_message=>t('revs.messages.in_beta_not_authorized_html')) 
+    else
+      super
+      not_authorized if @document.visibility == :hidden && cannot?(:view_hidden, SolrDocument)
+    end
     
   end
   
