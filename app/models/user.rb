@@ -42,7 +42,30 @@ class User < ActiveRecord::Base
   def self.roles
     ROLES
   end
-
+  
+  def self.visibility_filter(things,class_name)
+    things.joins("LEFT OUTER JOIN items on items.druid = #{class_name}.druid").where("items.visibility_value = #{SolrDocument.visibility_mappings[:visible]} OR items.visibility_value is null")    
+  end
+  
+  def self.latest_filter(things)
+    things.order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
+  end
+  
+  def latest_flags
+    latest=self.flags
+    self.class.visibility_filter(latest,"flags")
+    self.class.latest_filter(latest)
+    latest
+  end
+  
+  def latest_annotations
+     self.annotations.joins("LEFT OUTER JOIN items on items.druid = annotations.druid").where("items.visibility_value = #{SolrDocument.visibility_mappings[:visible]} OR items.visibility_value is null").order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)  
+  end
+  
+  def latest_edits
+    self.metadata_updates.joins("LEFT OUTER JOIN items on items.druid = change_logs.druid").where("items.visibility_value = #{SolrDocument.visibility_mappings[:visible]} OR items.visibility_value is null").order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)      
+  end
+  
   def metadata_updates
     change_logs.where(:operation=>'metadata update')
   end
