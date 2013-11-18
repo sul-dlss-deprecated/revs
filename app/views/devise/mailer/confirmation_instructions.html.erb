@@ -1,6 +1,4 @@
-<p><%= t('revs.user.welcome') %> <%= @email %>!</p>
-
-<p><%= t('revs.user.confirm_instructions') %>:</p>
+<p><%= t('revs.user.confirm_instructions') %></p>
 
 <p><%= link_to t('revs.user.confirm_linktext'),
         confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>

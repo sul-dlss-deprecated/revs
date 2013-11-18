@@ -11,6 +11,7 @@ en:
     revs_program: 'Revs Program at Stanford'
     revs_institute: 'Revs Institute'
     stanford_library: 'Stanford University Libraries'
+    routing_error: "Sorry, the page you were looking for was not found."
     actions:
       remove: 'Remove'
       edit: 'Edit'
@@ -312,9 +313,9 @@ en:
       your_password: "your password"
       welcome: "Welcome"
       hello: "Hello"
-      confirm_instructions: "You can confirm your account email through the link below"
+      confirm_instructions: "Welcome to the Revs Digital Library.  In order to create an account, you need to confirm your email address.  Please click the link to confirm your address."
       confirm_linktext: "Confirm my account"
-      change_password_instructions: "Someone has requested a link to change your password. You can do this through the link below"
+      change_password_instructions: "You have requested a link to change your password on the Revs Digital Library website. You can do this by clicking the link below."
       change_password_linktext: "Change my password"
       change_password_post_instructions_html: |
         <p>If you didn't request this, please ignore this email.</p>
@@ -323,7 +324,7 @@ en:
       didnt_receive_confirmation: "Didn't receive confirmation instructions?"
       didnt_receive_unlock: "Didn't receive unlock instructions?"
       set_password: "set password"
-      account_locked: "Your account has been locked due to an excessive number of unsuccessful sign in attempts"
+      account_locked: "Your account on the Revs Digital Library has been locked due to an excessive number of unsuccessful sign in attempts"
       account_locked_instructions: "Click the link below to unlock your account"
       account_locked_linktext: "Unlock my account"
       update_your_profile: "Update Your Profile"

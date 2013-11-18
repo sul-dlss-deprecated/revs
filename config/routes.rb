@@ -19,7 +19,7 @@ Revs::Application.routes.draw do
     
   # version page
   match 'version', :to=>'about#show', :defaults => {:id=>'version'}, :as => 'version'
-
+  
   match 'search', :to=> 'catalog#index', :as=>'search'
   
   # all collections pages helper route
@@ -96,6 +96,8 @@ Revs::Application.routes.draw do
       end
     end
   end
+    
+  match "*gibberish", :to => "catalog#routing_error"
     
   # The priority is based upon order of creation:
   # first created -> highest priority.
