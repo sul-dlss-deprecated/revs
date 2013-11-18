@@ -100,9 +100,6 @@ class UserController < ApplicationController
   private
   def render_profile
     if (@user && (@user==current_user || @user.public == true)) # if this is the currently logged in user or the profile is public, show the profile
-      @latest_flags=@user.flags.order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
-      @latest_annotations=@user.annotations.order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
-      @latest_edits=@user.metadata_updates.order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
       render :show
     else
       profile_not_found

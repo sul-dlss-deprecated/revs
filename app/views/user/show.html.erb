@@ -30,9 +30,9 @@
   <div class="row profile-activity">
     <div class="span4">
       <h3><%=t('revs.annotations.plural')%> <span class="activity-count"><%= user_annotations_count(@user).to_s.rjust(1, '0') %></span></h3>
-      <% if @latest_annotations.size > 0 %>
+      <% if @user.latest_annotations.size > 0 %>
         <ul>
-        <% @latest_annotations.each do |annotation| %>
+        <% @user.latest_annotations.each do |annotation| %>
 			  	<% if annotation.solr_document %>
 	          <li class="activity-item">
 	            <ul>
@@ -60,9 +60,9 @@
 
     <div class="span4 offset1">
       <h3><%=t('revs.flags.plural')%> <span class="activity-count"><%= user_flags_unresolved_count(@user).to_s.rjust(1, '0') %></span></h3>
-      <% if @latest_flags.size > 0 %>
+      <% if @user.latest_flags.size > 0 %>
         <ul>
-        <% @latest_flags.each do |flag| %>
+        <% @user.latest_flags.each do |flag| %>
 				  <% if flag.solr_document and not flag.resolved%>
 	          <li class="activity-item">
 	            <ul>
@@ -93,9 +93,9 @@
     <div class="span4">
       <% if @user.can? :curate, :all %>
         <h3><%=t('revs.curator.edits')%> <span class="activity-count"><%= user_edits_count(@user).to_s.rjust(1, '0') %></span></h3>
-        <% if @latest_edits.size > 0 %>
+        <% if @user.latest_edits.size > 0 %>
           <ul>
-          <% @latest_edits.each do |edit| %>
+          <% @user.latest_edits.each do |edit| %>
   			  	<% if edit.solr_document %>
   	          <li class="activity-item">
   	            <ul>
