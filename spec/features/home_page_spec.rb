@@ -21,5 +21,11 @@ describe("Home Page",:type=>:request,:integration=>true) do
           logout
         end
     end
+    
+    it "should give a nice error message if we visit a bogus url" do
+      visit "/bogusness"
+      current_path.should == "/bogusness"
+      page.should have_content("Sorry, the page you were looking for was not found.")
+    end
   
 end

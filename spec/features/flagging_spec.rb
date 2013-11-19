@@ -146,7 +146,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
       remove_flag(curator_login, druid, user_comment)
       
       #Ensure The Flag Was Deleted On the Page and Database
-      check_flag_was_deleted(user_login, initial_flag_count)
+      check_flag_was_deleted(user_login, druid, initial_flag_count)
 
       #Ensure the User Was Penalized for Spam
       get_user_spam_count(user_login).should == starting_spam_count+1
@@ -172,7 +172,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
       remove_flag(admin_login, druid, user_comment)
       
       #Ensure The Flag Was Deleted On the Page and Database
-      check_flag_was_deleted(user_login, initial_flag_count)
+      check_flag_was_deleted(user_login, druid, initial_flag_count)
 
       #Ensure the User Was Penalized for Spam
       get_user_spam_count(user_login).should == starting_spam_count+1
@@ -196,7 +196,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
       remove_flag(user_login, druid, user_comment)
       
       #Ensure The Flag Was Deleted On the Page and Database
-      check_flag_was_deleted(user_login, initial_flag_count)
+      check_flag_was_deleted(user_login, druid, initial_flag_count)
 
       #Ensure the User Was NOT Penalized for Spam
       get_user_spam_count(user_login).should == starting_spam_count 

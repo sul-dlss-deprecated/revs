@@ -15,3 +15,9 @@ flag2:
   flag_type: 'error'
   comment: 'curator comment'
   druid: 'yt907db4998'
+
+flag3:
+  user: curator  # this is the named "curator" fixture object from the users table
+  flag_type: 'error'
+  comment: 'hidden item'
+  druid: 'bb004bn8654'

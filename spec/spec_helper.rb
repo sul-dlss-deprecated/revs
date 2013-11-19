@@ -231,11 +231,10 @@ def check_database_for_flag(user, expected_total_flags, content)
   return flag.id
 end
 
-def check_flag_was_deleted(user, expected_total_flags)
+def check_flag_was_deleted(user, druid, expected_total_flags)
   page.should have_content(I18n.t('revs.flags.removed'))
   Flag.count.should == expected_total_flags
-  Flag.last.user.should == User.find_by_username(user) 
-
+  Flag.where(:user_id=>User.find_by_username(user).id,:druid=>druid).size.should == 0 
 end
 
 def check_flag_was_marked_wont_fix(content, expected_total_flags, resolution, flag_id)

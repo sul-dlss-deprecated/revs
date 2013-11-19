@@ -73,19 +73,19 @@ module ApplicationHelper
   end
   
   def user_annotations_count(user)
-    user.annotations.count
+    user.visible('annotations').count
   end
 
   def user_flags_count(user)
-    user.flags.count
+    user.visible('flags').count
   end
   
   def user_edits_count(user)
-    user.metadata_updates.count
+    user.visible('change_logs').count
   end
   
   def user_flags_unresolved_count(user)
-    return user.flags.unresolved_count
+    return user.visible('flags').unresolved_count
   end
   
   def user_flags_resolved_count(user)

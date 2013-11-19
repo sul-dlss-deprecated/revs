@@ -13,7 +13,7 @@ describe("Item Visibility",:type=>:request,:integration=>true) do
   
   it "should update image visibility" do
     item1=Item.where(:druid=>@hidden_druid)
-    item1.size.should == 0
+    item1.size.should == 1
     doc1=SolrDocument.find(@hidden_druid)
     doc1.visibility_value.should == 0
     doc1.visibility.should == :hidden
