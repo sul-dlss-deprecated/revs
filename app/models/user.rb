@@ -51,19 +51,17 @@ class User < ActiveRecord::Base
     things.order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
   end
   
-  def latest_flags
-    latest=self.flags
-    self.class.visibility_filter(latest,"flags")
-    self.class.latest_filter(latest)
-    latest
+  def visible(class_name)
+    visible=eval("self.#{class_name}")
+    visible=self.class.visibility_filter(visible,class_name)
+    visible=visible.where(:operation=>'metadata update') if class_name=='change_logs' 
+    return visible   
   end
   
-  def latest_annotations
-     self.annotations.joins("LEFT OUTER JOIN items on items.druid = annotations.druid").where("items.visibility_value = #{SolrDocument.visibility_mappings[:visible]} OR items.visibility_value is null").order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)  
-  end
-  
-  def latest_edits
-    self.metadata_updates.joins("LEFT OUTER JOIN items on items.druid = change_logs.druid").where("items.visibility_value = #{SolrDocument.visibility_mappings[:visible]} OR items.visibility_value is null").order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)      
+  def latest(class_name)
+    latest=visible(class_name)
+    latest=self.class.latest_filter(latest)
+    return latest
   end
   
   def metadata_updates

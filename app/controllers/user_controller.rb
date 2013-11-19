@@ -26,7 +26,7 @@ class UserController < ApplicationController
     @user=User.find_by_username(@name)
     if @user
       @order=params[:order] || 'druid'    
-      @annotations=@user.annotations.order(@order).page params[:page] 
+      @annotations=@user.visible('annotations').order(@order).page params[:page] 
     else
       profile_not_found
     end
@@ -38,7 +38,7 @@ class UserController < ApplicationController
     @user=User.find_by_username(@name)
     if @user
       @order=params[:order] || 'druid'    
-      @edits=@user.metadata_updates.order(@order).page params[:page] 
+      @edits=@user.visible('change_logs').order(@order).page params[:page] 
     else
       profile_not_found
     end
@@ -64,7 +64,7 @@ class UserController < ApplicationController
     @curate_view = false 
     @selection = params[:selection].split(',')
     @user = current_user
-    @flags = flagListForStates(@selection, current_user.id, params[:sort] || "druid")
+    @flags = flagListForStates(@selection, @user, params[:sort] || "druid")
     respond_to do |format|
        format.js { render }
     end
@@ -87,9 +87,12 @@ class UserController < ApplicationController
     flags = []
       
       if user == nil #curator, we want all flags
-         temp = Flag.where(:state=>states).order(sort)
+         temp = Flag.scoped
+         temp = temp.where(:state=>states).order(sort)
       else
-        temp = Flag.where(:state=>states, :user_id=> @user.id).order(sort)
+        temp = Flag.scoped
+        temp = User.visibility_filter(temp,'flags')
+        temp = temp.where(:state=>states, :user_id=> @user.id).order(sort)
       end
      
     flags = temp || []  

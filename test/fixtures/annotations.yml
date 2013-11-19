@@ -20,9 +20,17 @@ annotation2:
  json: "{\"src\":\"https://stacks.stanford.edu/image/qb957rw1430/2011-023DUG-3.0_0015_thumb\",\"text\":\"Guy in the background looking sideways\",\"shapes\":[{\"type\":\"rect\",\"geometry\":{\"x\":0.5175,\"width\":0.09250000000000003,\"y\":0.155893536121673,\"height\":0.19391634980988592}}],\"context\":\"http://localhost:3000/item/qb957rw1430\"}" 
           
 annotation3:
+ user: curator  # this is the named "curator" fixture object from the users table
+ druid: 'bb004bn8654'
+ text: 'Testing'
+ updated_at: 10/6/2013
+ json: "{\"src\":\"https://stacks.stanford.edu/image/bb004bn8654/2012-027NADI-1966-b1_4.3_0015_thumb\",\"text\":\"Testing\",\"shapes\":[{\"type\":\"rect\",\"geometry\":{\"x\":0.1375,\"width\":0.09749999999999998,\"y\":0.3726235741444867,\"height\":0.10646387832699616}}],\"context\":\"http://localhost:3000/item/bb004bn8654\"}" 
+
+annotation4:
   user: admin  # this is the named "admin" fixture object from the users table
   druid: 'yt907db4998'
   text: 'Nazi symbol'
   updated_at: 10/6/2013
   json: "{\"src\":\"https://stacks.stanford.edu/image/yt907db4998/2011-023DUG-3.0_0017_thumb\",\"text\":\"Nazi symbol\",\"shapes\":[{\"type\":\"rect\",\"geometry\":{\"x\":0.1375,\"width\":0.09749999999999998,\"y\":0.3726235741444867,\"height\":0.10646387832699616}}],\"context\":\"http://localhost:3000/item/yt907db4998\"}" 
+
 
