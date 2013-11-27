@@ -17,6 +17,7 @@ This is a Blacklight Application for the Revs Digital Library at Stanford Univer
 1. [Optional] If you want to use rvmrc to manage gemsets, copy the .rvmrc example files:
 
         cp .rvmrc.example .rvmrc
+        cd .. && cd revs
 
 1. Install dependencies via bundler for both the main and deploy directories:
 
