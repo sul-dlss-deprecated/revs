@@ -78,45 +78,74 @@
         margin: auto;
       }
     }
-    .nav {
-      border-bottom: 1px solid #dddddd;
-      border-top: 1px solid #dddddd;
-      clear: left;
-      margin-top: 6px;
-      padding-bottom: 3px;
-      > li {
-        &.active > a {color: #990000;}
-        > a {
-          background-color: white;
-          box-shadow: none;
-          color: #000000;
-          font-family: "news-gothic-std","Helvetica","Arial",sans-serif;
-        	font-weight: 700;
-        	text-transform: uppercase;
-        	font-size: 0.965em;
-        	-webkit-font-smoothing: antialiased;
-          padding: 8px 25px 5px 3px;
-          &:hover, &:focus {color: #990000;}
-        }
-      }
-      > li:last-child > a {padding-right: 0}
-    }
   }
   h1 {
     border-bottom: none;
-    font-size: 2.5em;
+    font-size: 2.1em;
     font-family: "news-gothic-std","Helvetica","Arial",sans-serif;
-    margin: 10px 0 5px;
+    margin: 10px 0 0;
   	line-height: 1.5em;
     padding-bottom: 0;
-  }  
+  }
+  h2 {
+    border: none;
+    clear: left;
+    color: #555;
+    font-size: 1em;
+    font-style: italic;
+    font-weight: normal;
+    margin-top: 0;
+    padding-top: 0;
+    text-transform: none;
+  }
   .navbar-inner {
     background-color: white;
     background-image: none;
     border: none;
     box-shadow: none;
-    padding-bottom: 15px;
-    padding-top: 15px;
+    padding-bottom: 10px;
+    padding-top: 5px;
+  }
+}
+
+#menu-bar {
+  border-bottom: 1px solid #dddddd;
+}
+.navbar {
+  margin-bottom: 0;
+  .nav {
+  //  border-bottom: 1px solid #dddddd;
+  //  border-top: 1px solid #dddddd;
+    clear: left;
+    display: inline;
+
+    margin-left: -20px;
+  //  margin-top: 6px;
+    padding-bottom: 3px;
+    > .active > a, > .active > a:hover {
+      background-color: inherit;
+      box-shadow: none;
+      -webkit-box-shadow: none;
+    }
+    > li {
+      float: left;
+      &.active > a {
+        color: #990000;
+      }
+      > a {
+  //      background-color: white;
+        box-shadow: none;
+        color: #000000;
+        font-family: "news-gothic-std","Helvetica","Arial",sans-serif;
+      	font-weight: 700;
+      	text-transform: uppercase;
+      	font-size: 0.965em;
+      	-webkit-font-smoothing: antialiased;
+        padding: 8px 30px 3px 3px;
+        &:hover, &:focus {color: #990000;}
+      }
+    }
+    > li:last-child > a {padding-right: 0}
   }
 }
 
