@@ -218,7 +218,7 @@ en:
     collection_members:
       items_name: 'item'
     collection_members_grid:
-      members_link: 'View All Collection Items'
+      members_link: 'View all collection items'
       collection_link: 'View the collection'
       collection_text: 'Other Collection Items'
       sibling_text: "Other items in %{collection}"
