@@ -116,7 +116,7 @@ module ApplicationHelper
       ['Years','years_mvf'],
       ['Date','full_date'],
       ['Description','description'],
-      ['Marques','marque_mvf'],
+      ['Marque','marque_mvf'],
       ['Models','vehicle_model_mvf'],
       ['Model Years','model_year_mvf'],
       ['People','people_mvf'],
