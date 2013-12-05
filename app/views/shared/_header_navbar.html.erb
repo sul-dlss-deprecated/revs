@@ -52,6 +52,19 @@
           <li class="<%="active" if on_about_pages%>"><%= link_to t('revs.about.word').upcase, about_project_path %></li>
           <li><%= link_to t('revs.revs_program').upcase, 'http://revs.stanford.edu', :target=>'_new' %></li>
         </ul>
+
+        <div class="nav-searchbox">
+          <%= form_tag search_action_url, :method => :get, :class => 'search-form-nav form-search' do %>
+            <%= search_as_hidden_fields(:omit_keys => [:q, :search_field, :qt, :page]).html_safe %>
+            <div class="input-append">
+              <%= text_field_tag :q, params[:q], :class => "search_q q span2 search-query", :id => "q" %>
+              <button type="submit" class="btn btn-small">
+                <%= t('revs.search.search_label') %>
+              </button>
+            </div>
+          <% end %>
+        </div>
+
       </div>
     </div>
   </div>
