@@ -43,27 +43,19 @@
     <div class="span12">
       <div class="nav-collapse">
         <ul class="nav">
-          <li class="<%="active" if on_home_page%>">
+          <li class="<%="active" if on_home_page %>">
             <%= link_to t('revs.nav.home').upcase, root_path %>
           </li>
-          <li class="<%="active" if on_collections_page%>">
+          <li class="<%="active" if on_collections_page %>">
             <%= link_to t('revs.nav.collections').upcase, all_collections_path%>
           </li>
-          <li class="<%="active" if on_about_pages%>"><%= link_to t('revs.about.word').upcase, about_project_path %></li>
+          <li class="<%="active" if on_about_pages %>"><%= link_to t('revs.about.word').upcase, about_project_path %></li>
           <li><%= link_to t('revs.revs_program').upcase, 'http://revs.stanford.edu', :target=>'_new' %></li>
         </ul>
 
-        <div class="nav-searchbox">
-          <%= form_tag search_action_url, :method => :get, :class => 'search-form-nav form-search' do %>
-            <%= search_as_hidden_fields(:omit_keys => [:q, :search_field, :qt, :page]).html_safe %>
-            <div class="input-append">
-              <%= text_field_tag :q, params[:q], :class => "search_q q span2 search-query", :id => "q" %>
-              <button type="submit" class="btn btn-small">
-                <%= t('revs.search.search_label') %>
-              </button>
-            </div>
-          <% end %>
-        </div>
+        <% if on_collections_page || on_detail_page || on_about_pages %>
+          <%= render :partial => "/shared/main_menu_searchbox" %>
+        <% end %>
 
       </div>
     </div>
