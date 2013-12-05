@@ -127,7 +127,7 @@ class ApplicationController < ActionController::Base
   end
 
   def on_detail_page
-    controller_path=='catalog' && action_name='show'
+    controller_path=='catalog' && action_name=='show'
   end
   
   def on_collections_page
