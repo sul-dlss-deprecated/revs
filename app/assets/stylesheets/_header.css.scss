@@ -81,7 +81,7 @@
   }
   h1 {
     border-bottom: none;
-    font-size: 2.1em;
+    font-size: 2.4em;
     font-family: "news-gothic-std","Helvetica","Arial",sans-serif;
     margin: 10px 0 0;
   	line-height: 1.5em;
@@ -91,7 +91,7 @@
     border: none;
     clear: left;
     color: #555;
-    font-size: 1em;
+    font-size: 1.2em;
     font-style: italic;
     font-weight: normal;
     margin-top: 0;
@@ -109,31 +109,28 @@
 }
 
 #menu-bar {
+  background-color: #fff;
   border-bottom: 1px solid #dddddd;
 }
 .navbar {
   margin-bottom: 0;
   .nav {
-  //  border-bottom: 1px solid #dddddd;
-  //  border-top: 1px solid #dddddd;
     clear: left;
     display: inline;
-
     margin-left: -20px;
-  //  margin-top: 6px;
-    padding-bottom: 3px;
     > .active > a, > .active > a:hover {
-      background-color: inherit;
+      background-color: #f7f7f7;
       box-shadow: none;
       -webkit-box-shadow: none;
     }
     > li {
       float: left;
       &.active > a {
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
         color: #990000;
       }
       > a {
-  //      background-color: white;
         box-shadow: none;
         color: #000000;
         font-family: "news-gothic-std","Helvetica","Arial",sans-serif;
@@ -141,11 +138,35 @@
       	text-transform: uppercase;
       	font-size: 0.965em;
       	-webkit-font-smoothing: antialiased;
-        padding: 8px 30px 3px 3px;
+        padding: 10px 24px 8px 24px;
         &:hover, &:focus {color: #990000;}
       }
     }
-    > li:last-child > a {padding-right: 0}
+    > li:last-child > a {
+    }
+  }
+  .nav-searchbox {
+    float: right;
+    margin-top: 6px;
+  }
+  .search-form-nav {
+    margin-bottom: 0;
+    margin-right: 20px;
+    .input-append {
+      margin-bottom: 4px;
+    }
+    input {
+      box-shadow: none;
+      padding-bottom: 2px;
+      padding-top: 2px;
+      &:focus {
+        border: 1px solid #fafafa;
+        -webkit-box-shadow: 0 0 6px #007eff;
+        -moz-box-shadow: 0 0 5px #007eff;
+        box-shadow: 0 0 5px #007eff;
+        outline: none;
+      }
+    }
   }
 }
 
