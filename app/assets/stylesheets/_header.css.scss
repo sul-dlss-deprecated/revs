@@ -111,6 +111,7 @@
 #menu-bar {
   background-color: #fff;
   border-bottom: 1px solid #dddddd;
+  padding-left: 40px;
 }
 .navbar {
   margin-bottom: 0;
@@ -170,9 +171,33 @@
   }
 }
 
+@mixin main-menu-mobile-styling {
+  .nav-collapse .btn {
+    overflow: auto;
+    margin-bottom: 6px;
+    padding: 2px 10px 2px;
+  }
+  .navbar .nav > li.active > a {
+    background-color: inherit;
+    border: none;
+    &:hover {
+      background-color: inherit;
+    }
+  }
+  .nav-collapse .nav > li > a:hover {
+    background-color: inherit;
+  }
+}
+
 /* Phones: reduce logo size and center site title and nav elements */
 @media screen and (max-width: 767px) {
   #header-navbar-static-top {
+    h1 {
+      font-size: 2em;
+    }
+    h2 {
+      font-size: 1em;
+    }
     .logo img {
       float: left;
       max-width: 80px;
@@ -182,7 +207,18 @@
       h1 {float: none;}
     }
   }
+  .navbar .nav-searchbox {
+    float: none;
+    margin-top: 30px;
+    text-align: center;
+    .search-query {
+      min-height: 26px;
+      width: 150px;
+    }
+  }
+  @include main-menu-mobile-styling;
 }
+
 /* Tablets: reduce logo size and add some extra space between logo
    and site title and nav elements */
 @media screen and (min-width: 768px) and (max-width: 979px) {
@@ -191,8 +227,35 @@
       float: right;
       max-width: 100px;
     }
-    &.navbar {
-      .site-header-content {margin-left: 30px;}
+  }
+  .navbar {
+    .container {
+      width: 724px;
+      margin: 0 auto;
     }
+    .nav-searchbox {
+      float: none;
+      margin-top: 30px;
+      text-align: center;
+      .search-query {
+        width: 150px;
+      }
+    }
+  }
+  @include main-menu-mobile-styling;
+}
+
+/* Phones: reduce logo size and center site title and nav elements */
+@media screen and (max-width:480px) {
+  #header-navbar-static-top.navbar {
+    h1 {
+      font-size: 1.8em;
+    }
+    h2 {
+      display: none;
+    }
+  }
+  .navbar .nav > li > a {
+    padding: 10px 12px;
   }
 }

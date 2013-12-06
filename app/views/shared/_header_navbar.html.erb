@@ -25,39 +25,37 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <div class="row">
+      <!-- <div class="row"> -->
         <!-- <div class="span3">
           <%#= link_to(image_tag("revs-logo.png", :title=>t('revs.digital_library') , :alt => t('revs.digital_library')), root_path, :class => "logo")%>
         </div> -->
-        <div class="span12 site-header-content">
+        <div class="site-header-content">
           <h1><%=application_name%></h1>
           <h2>Connecting the past, present and future of the automobile</h2>
         </div>
-      </div>
+      <!-- </div> -->
     </div>
   </div>
 </div>
 
 <div id="menu-bar">
-  <div class="row menu-bar navbar container">
-    <div class="span12">
-      <div class="nav-collapse">
-        <ul class="nav">
-          <li class="<%="active" if on_home_page %>">
-            <%= link_to t('revs.nav.home').upcase, root_path %>
-          </li>
-          <li class="<%="active" if on_collections_page %>">
-            <%= link_to t('revs.nav.collections').upcase, all_collections_path%>
-          </li>
-          <li class="<%="active" if on_about_pages %>"><%= link_to t('revs.about.word').upcase, about_project_path %></li>
-          <li><%= link_to t('revs.revs_program').upcase, 'http://revs.stanford.edu', :target=>'_new' %></li>
-        </ul>
+  <div class="menu-bar navbar container">
+    <div class="nav-collapse">
+      <ul class="nav">
+        <li class="<%="active" if on_home_page %>">
+          <%= link_to t('revs.nav.home').upcase, root_path %>
+        </li>
+        <li class="<%="active" if on_collections_page %>">
+          <%= link_to t('revs.nav.collections').upcase, all_collections_path%>
+        </li>
+        <li class="<%="active" if on_about_pages %>"><%= link_to t('revs.about.word').upcase, about_project_path %></li>
+        <li class="hidden-phone"><%= link_to t('revs.revs_program').upcase, 'http://revs.stanford.edu', :target=>'_new' %></li>
+      </ul>
 
-        <% if on_collections_page || on_detail_page || on_about_pages %>
-          <%= render :partial => "/shared/main_menu_searchbox" %>
-        <% end %>
+      <% if on_collections_page || on_detail_page || on_about_pages %>
+        <%= render :partial => "/shared/main_menu_searchbox" %>
+      <% end %>
 
-      </div>
     </div>
   </div>
 </div>
