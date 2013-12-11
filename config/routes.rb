@@ -95,6 +95,11 @@ Revs::Application.routes.draw do
         match 'edits', :to => 'tasks#edits', :as=>"edits_table"
       end
     end
+    resources :help do
+      collection do
+        match 'bulk_edits', :to => 'help#bulk_edits', :as => "bulk_edits"
+      end
+    end
   end
     
   match "*gibberish", :to => "catalog#routing_error"

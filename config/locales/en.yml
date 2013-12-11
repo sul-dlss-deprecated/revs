@@ -156,6 +156,7 @@ en:
       set_checked_users: "Set checked users to role"
       sidebar:
         actions: 'Actions'
+        help: "Help"
         administer_users: "Manage Users"
         administer_highlights: "Feature Collections"
     curator:
@@ -361,3 +362,9 @@ en:
       view_profile_page: "View your profile page"
       edit_profile: "Edit Profile"
       your_profile_page: "your profile page"
+    help:
+      sidebar:
+        bulk_edits: "Edit multiple records"
+      curator:
+        page_title: "Curator Help"
+        bulk_edits: "Editing multiple records at one time (bulk editing)"

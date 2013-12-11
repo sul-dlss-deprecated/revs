@@ -1,0 +1,30 @@
+<div id="content" class="span9">
+	
+  <h2><%=t('revs.help.curator.page_title')%></h2>
+
+  <h3><%= t('revs.help.curator.bulk_edits') %></h3>
+  
+  <p>
+    The Revs Digital Library includes a feature that enables a curator to update a single metadata 
+    field...
+  </p>
+
+  <p>When a curator is logged in, there is an additional view on the search results page, called "Curator." Clicking that reveals our bulk editing interface, where each item in the results has checkbox next to it. There is also a control panel at the top where the curator can choose a metadata field to edit and an input box to enter a new value to add to the selected metadata field. When the Update button is clicked every item checked has the new value added to the selected field (see attached screenshot).</p>
+
+  <p>  So, for example, a knowledgeable curator could do the search we did on Monday, "porsche," and then within a minute or two update all relevant items found to assign "Porsche" to their Marque field using these steps:</p>
+
+  <ol>  
+    <li>Switch to the Curator view of the search results (455 found)</li>
+    <li>Change the number of item displayed to "50 per page" (quicker to process all 455 items)</li>
+    <li>Select Marque from the "Update" dropdown menu</li>
+    <li>Enter "Porsche" in the "new value" input box</li>
+    <li>Click the "Select all" checkbox in the left column (assumes most items shown are candidates for our update)</li>
+    <li>Scan down the page and uncheck any item that shouldn't have "Porsche" added to its Marque field</li>
+    <li>Click the update button</li>
+  </ol>
+
+  <p>  Steps 3 - 7 would have to be repeated for each of the results pages, but I think it would take a couple of minutes at most to update all 455 items this way. This process can be done with any metadata field, though marque would be one of the easiest since another productive strategy would be to select a model value from the Model facet box, where the model is always associated with a specific marque (e.g., Model > "911" has 87 items that could be given the Marque value "Porsche" in less than a minute using the steps above).</p>
+
+</div>
+
+<%= render :partial => 'devise/shared/show_curator_sidebar' %>

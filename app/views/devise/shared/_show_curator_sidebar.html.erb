@@ -8,11 +8,18 @@
           <li class="nav-header"><%= t('revs.admin.sidebar.actions') %></li>
           <li><%= link_to t('revs.curator.sidebar.view_edited_items'), edits_table_curator_tasks_path %></li>
           <li><%= link_to t('revs.curator.sidebar.view_flagged_items'), curator_tasks_path %></li>
-		      <li><%= link_to t('revs.curator.sidebar.annotations'), annotations_table_curator_tasks_path%>
+		      <li><%= link_to t('revs.curator.sidebar.annotations'), annotations_table_curator_tasks_path%></li>
         </ul>
       <% end %>
 
       <%= render :partial=>'/devise/shared/dashboards', :locals=>{:user=>current_user} %>
+
+      <% if can? :curate, :all  %>
+        <ul class="nav nav-list">
+          <li class="nav-header"><%= t('revs.admin.sidebar.help') %></li>
+          <li><%= link_to t('revs.help.sidebar.bulk_edits'), bulk_edits_curator_help_index_path %></li>
+        </ul>
+      <% end %>
 
     <% end %>
 
