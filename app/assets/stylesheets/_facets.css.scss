@@ -1,5 +1,8 @@
 #facets {
-  h5 {background-color: #fff;}
+  h5 {
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+  }
   a {
     color: #990000;
     font-size: 14px;
@@ -8,6 +11,9 @@
   a:hover {text-decoration: underline;}
   span.selected {
     color: #333333;
+  }
+  ul {
+    padding-bottom: 0;
   }
 }
 
