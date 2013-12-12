@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
   end
   
   def store_referred_page
-    if [new_user_session_url,new_user_session_path,new_user_registration_url,new_user_registration_path].include?(previous_page) # referral pages cannot be sign in or sign up page
+    if [new_user_session_url,new_user_session_path,new_user_registration_url,new_user_registration_path,new_user_password_path,new_user_confirmation_path,new_user_unlock_path].include?(previous_page) # referral pages cannot be sign in or sign up page
       session[:login_redirect] = root_path 
     else
       session[:login_redirect] = previous_page 
