@@ -364,7 +364,7 @@ en:
       your_profile_page: "your profile page"
     help:
       sidebar:
-        bulk_edits: "Edit multiple records"
+        bulk_edits: "Edit records in bulk"
       curator:
         page_title: "Curator Help"
-        bulk_edits: "Editing multiple records at one time (bulk editing)"
+        bulk_edits: "Edit multiple records in bulk (bulk editing)"
