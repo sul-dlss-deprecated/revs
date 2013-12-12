@@ -1,0 +1,38 @@
+.help {
+  h3 {
+    font-size: 17.5px;
+  }
+  h4 {
+    font-size: 16px;
+  }
+  p {
+    font-size: 14px;
+    padding-right: 15px;
+  }
+  ol {
+
+  }
+  ul {
+    font-size: 14px;
+    &.alpha {
+      list-style-type: upper-alpha;
+    }
+  }
+  img {
+    background: #fff;
+    border: 1px solid #ccc;
+    display: block;
+    margin: 25px auto;
+    padding: 5px;
+    width: 95%;
+    -webkit-box-shadow: 3px 6px 18px -7px rgba(153,153,153,1);
+    -moz-box-shadow: 3px 6px 18px -7px rgba(153,153,153,1);
+    box-shadow: 3px 6px 18px -7px rgba(153,153,153,1);
+  }
+  code {
+    background-color: #fff;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    color: inherit;
+  }
+}

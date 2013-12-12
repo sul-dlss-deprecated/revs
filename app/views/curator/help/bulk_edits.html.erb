@@ -1,29 +1,42 @@
-<div id="content" class="span9">
-	
+<div id="content" class="span9 help">
+
   <h2><%=t('revs.help.curator.page_title')%></h2>
 
   <h3><%= t('revs.help.curator.bulk_edits') %></h3>
-  
+
   <p>
-    The Revs Digital Library includes a feature that enables a curator to update a single metadata 
-    field...
+    The Revs Digital Library includes a feature that enables a curator to update a single metadata field with a given value for multiple records at one time. This can be a very efficient way to add new values, or update existing values, for a group of related item records. For example, a group of photographs taken at a specific race on the same date probably share the same location information; if you notice that these records have inconsistent or non-existent location metadata, you can use the bulk edit feature to update the location field for the entire group of records in a single task.
   </p>
 
-  <p>When a curator is logged in, there is an additional view on the search results page, called "Curator." Clicking that reveals our bulk editing interface, where each item in the results has checkbox next to it. There is also a control panel at the top where the curator can choose a metadata field to edit and an input box to enter a new value to add to the selected metadata field. When the Update button is clicked every item checked has the new value added to the selected field (see attached screenshot).</p>
+  <p>When you are logged into Revs as a curator and conduct a search, you'll see an additional view available on the search results page, called <code>Curator</code> The screenshot below shows the Curator view for a search on <code>Thompson Raceway</code> narrowed by <code>Year > 1966</code>:</p>
 
-  <p>  So, for example, a knowledgeable curator could do the search we did on Monday, "porsche," and then within a minute or two update all relevant items found to assign "Porsche" to their Marque field using these steps:</p>
+  <%= image_tag("help/curator-bulk-editing-01.png") %>
 
-  <ol>  
-    <li>Switch to the Curator view of the search results (455 found)</li>
-    <li>Change the number of item displayed to "50 per page" (quicker to process all 455 items)</li>
-    <li>Select Marque from the "Update" dropdown menu</li>
-    <li>Enter "Porsche" in the "new value" input box</li>
-    <li>Click the "Select all" checkbox in the left column (assumes most items shown are candidates for our update)</li>
-    <li>Scan down the page and uncheck any item that shouldn't have "Porsche" added to its Marque field</li>
-    <li>Click the update button</li>
-  </ol>
+  <p>Unique to the Curator view of the search results are the checkboxes next to each result item and the bulk edit selection panel at the top of the results. You can use these elements to quickly update multiple records with the same value for any metadata field.</p>
 
-  <p>  Steps 3 - 7 would have to be repeated for each of the results pages, but I think it would take a couple of minutes at most to update all 455 items this way. This process can be done with any metadata field, though marque would be one of the easiest since another productive strategy would be to select a model value from the Model facet box, where the model is always associated with a specific marque (e.g., Model > "911" has 87 items that could be given the Marque value "Porsche" in less than a minute using the steps above).</p>
+  <%= image_tag("help/curator-bulk-editing-02.png") %>
+
+  <ul class="alpha">
+    <li>To make a bulk edit for many items at once, we recommend changing the result items shown per page to the maximum (i.e., only items shown on the page are affected by your bulk edit selections).</li>
+    <li>Select the items you want to be updated. The <code>Select all</code> checkbox is a quick way to select all items on the page for editing; you can deselect individually any items that you do not want to update after selecting all items with the <code>Select all</code> checkbox.</li>
+    <li>Select the field you want to update from the <code>Update</code> dropdown menu.</li>
+    <li>Enter the new value for the field you selected in the previous step in the <code>new value</code> input box. When you click the <code>Update</code> button, this value will be applied to every item you have checked.</li>
+    <li>Verify that only the items you want to be updated will be processed by reviewing the status information next to each item.</li>
+    <li>Click the <code>Update</code> button to submit the update.</li>
+  </ul>
+
+  <p>Note that for large sets of records you will have to repeat most of these steps for each page of search results, so it is helpful to set the number of results <code>per page</code> dropdown to the maximum value.</p>
+
+  <h4>Ideas for bulk edits</h4>
+
+  <p>The bulk edit feature can be used to update sets of records with the same, incorrect value, but it can also be used to improve the Revs Digital Library by quickly adding values to fields that have currently contain no values, enriching the metadata record for those items and making the Revs search and browse features more effective for end-users. Here are some ideas that knowledgable curators might use to update records with the bulk edit feature:</p>
+
+  <ul>
+    <li>Update the <code>Marque</code> field for a set of records with a distinct <code>Model</code> value. For example, many records have <code>Model > 911</code>. Can the <code>Marque</code> field for all or most of these be updated to "Porsche"?</li>
+    <li>Update the <code>Location</code> field for a set of records that represent a race or event that takes place at the same location.</li>
+    <li>Update the <code>Event</code> field for records clearly associated with that event.</li>
+    <li>Update the <code>Venue</code> field for records clearly associated with a given venue.</li>
+  </ul>
 
 </div>
 
