@@ -36,7 +36,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
     login_as(user_login)
     visit catalog_path('sc411ff4198')
     find('.flag-details').should be_visible
-    page.should have_content("Flag this item")
+    page.should have_content("Flag problem with this item")
     page.should have_content("user comment") # the text of the flag
     find(".num-flags-badge").should have_content("1")
 
