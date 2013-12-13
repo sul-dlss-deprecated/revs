@@ -46,7 +46,7 @@ en:
       updated: 'The flag was updated.'
       resolved_fix: 'The flag was marked as fixed.'
       resolved_wont_fix: "The flag was marked as won't fix."
-      flag: 'Flag this item'
+      flag: 'Flag problem with this item'
       resolution_notes_optional: 'Resolution Notes (optional)'
       resolution_notes: 'Resolution notes: '
       resolve: 'Resolve'

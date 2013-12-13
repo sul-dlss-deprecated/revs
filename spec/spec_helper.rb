@@ -93,12 +93,12 @@ end
 
 # Flags
 def should_allow_flagging
-  page.should have_button('Flag this item')
+  page.should have_button('Flag problem with this item')
   page.should_not have_css('#flag-details-link.hidden')
 end
 
 def should_not_allow_flagging
-  page.should_not have_button('Flag this item')
+  page.should_not have_button('Flag problem with this item')
 end
 
 def should_deny_access(path)
