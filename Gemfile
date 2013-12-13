@@ -60,7 +60,7 @@ group :development, :staging, :test do
 end
 
 group :staging, :production do
-  gem 'mysql', "2.8.1"
+  gem 'mysql2'
 end
 
 # gems necessary for capistrano deployment

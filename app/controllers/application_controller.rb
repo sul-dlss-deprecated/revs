@@ -1,3 +1,4 @@
+# encoding: utf-8
 class ApplicationController < ActionController::Base
   # Adds a few additional behaviors into the application controller 
   
