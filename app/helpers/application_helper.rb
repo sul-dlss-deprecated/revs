@@ -91,7 +91,11 @@ module ApplicationHelper
   def user_flags_resolved_count(user)
     return user_flags_count(user) - user_flags_unresolved_count(user)
   end
-  
+
+  def display_sidebar_searchbox
+    action_name == 'index' && controller_name == 'catalog'
+  end
+
   def on_edit_page
     ["edit","update"].include? action_name
   end
