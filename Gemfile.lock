@@ -167,7 +167,7 @@ GEM
       subexec (~> 0.2.1)
     mini_portile (0.5.1)
     multi_json (1.8.2)
-    mysql (2.8.1)
+    mysql2 (0.3.14)
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
     net-sftp (2.1.2)
@@ -306,7 +306,7 @@ DEPENDENCIES
   lyberteam-gems-devel (>= 1.0.0)
   meta_request
   mini_magick
-  mysql (= 2.8.1)
+  mysql2
   net-ssh-krb
   omniauth
   rails (~> 3)
