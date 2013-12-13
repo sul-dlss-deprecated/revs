@@ -52,9 +52,7 @@
         <li class="hidden-phone"><%= link_to t('revs.revs_program').upcase, 'http://revs.stanford.edu', :target=>'_new' %></li>
       </ul>
 
-      <% if on_collections_page || on_detail_page || on_about_pages %>
-        <%= render :partial => "/shared/main_menu_searchbox" %>
-      <% end %>
+      <%= render :partial => "/shared/main_menu_searchbox" unless display_sidebar_searchbox %>
 
     </div>
   </div>
