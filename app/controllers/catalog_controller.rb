@@ -210,6 +210,7 @@ class CatalogController < ApplicationController
     config.add_facet_field 'model_year_ssim', :label => 'Model Year', :sort => 'index'
     config.add_facet_field 'model_ssim', :label => 'Model'
     config.add_facet_field 'collection_ssim', :label => "Collection"
+    config.add_facet_field 'photographer_ssi', :label => "Photographer"
     
     # config.add_facet_field 'example_query_facet_field', :label => 'Publish Date', :query => {
     #    :years_5 => { :label => 'within 5 Years', :fq => "pub_date:[#{Time.now.year - 5 } TO *]" },
