@@ -30,7 +30,7 @@
     <div class="control-group">
       <label class="control-label" for="user_username"><%= t('revs.authentication.username') %></label>
       <div class="controls">
-        <%= text_field_tag 'user[username]', @username, :autofocus => true, :tabindex => "2",
+        <%= text_field_tag 'user[username]', @username, :tabindex => "2",
             :class=>'user-login-email', :id=>'register-username',
             :"data-trigger"=>"manual", :placeholder => t('revs.user.username_public_display') %>
         <p id="duplicate-username-warning" class="hidden text-info">

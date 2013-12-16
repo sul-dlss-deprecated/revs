@@ -63,6 +63,10 @@ module ApplicationHelper
     "lang-#{I18n.locale}"
   end
 
+  def put_cursor_in_searchbox?
+    params[:q].to_s.empty? and params[:f].to_s.empty? and params[:id].nil? and controller_name != 'sessions' and controller_name != 'registrations'
+  end
+
   def item_link(item,opts={})
     if item.nil?  
       return t('revs.curator.not_found')
