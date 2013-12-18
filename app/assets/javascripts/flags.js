@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
 $('select#state_selection').change(function() { 
-	jQuery.ajax({type: "GET", dataType: "script", url: "/flags/update_flag_table/"+$('select#state_selection').val()})
+	jQuery.ajax({type: "GET", dataType: "script", url: "/flags/update_flag_table/"+$('select#state_selection').val(), data: "username=" + $('#profile_username').val()})
 });
 
 $('select#curator_flag_selection').change(function() { 

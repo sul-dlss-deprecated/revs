@@ -4,6 +4,8 @@
  
  <% if @flags.count > 0 %>
  
+    <%= hidden_field_tag 'profile_username', @user.username %>
+    
     <%= select_tag 'state_selection',options_from_collection_for_select(Flag.for_dropdown, :first, :last, :selected => @selection.join(",")) %>	
 	
     <%= render :partial => 'user/flags_table', :locals=>{:selection=>@selection, :user=>@user, :flags=> @flags , :curate_view=>false} %>

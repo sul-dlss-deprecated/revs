@@ -2,6 +2,7 @@ class UserController < ApplicationController
   
   #Class Vars
   
+  before_filter :check_for_curator_logged_in, :only=>[:curator_update_flag_table]
   
   # user profile pages
   
@@ -63,7 +64,7 @@ class UserController < ApplicationController
   def update_flag_table
     @curate_view = false 
     @selection = params[:selection].split(',')
-    @user = current_user
+    @user = User.where(:username=>params[:username]).first
     @flags = flagListForStates(@selection, @user, params[:sort] || "druid")
     respond_to do |format|
        format.js { render }
@@ -72,7 +73,6 @@ class UserController < ApplicationController
   
   def curator_update_flag_table
     @curate_view = true 
-    @user = current_user
     @selection = params[:selection].split(',') 
     @flags = flagListForStates(@selection, nil,params[:sort] || "druid")
     respond_to do |format|
