@@ -33,7 +33,7 @@
     <% end %>
 
         <table class="table table-bordered table-condensed table-hover table-striped">
-          <th><%= link_to t('revs.curator.item_title'), edits_table_curator_tasks_path(:order=>'druid', :tab=>@tab_list_item  ) %></th>
+          <th><%= t('revs.curator.item_title') %></th>
           <th class="right"><%= link_to t('revs.curator.edit_count'), edits_table_curator_tasks_path(:order=>'num_edits DESC', :tab=>@tab_list_item  ) %></th>
           <th><%= link_to t('revs.curator.edit_update'), edits_table_curator_tasks_path(:order=>'updated_at DESC', :tab=>@tab_list_item  ) %></th>
           <% @edits_by_item.each do |result| %>

@@ -97,7 +97,7 @@ Revs::Application.routes.draw do
     end
     resources :help do
       collection do
-        match 'bulk_edits', :to => 'help#bulk_edits', :as => "bulk_edits"
+        match ':action(/:id)(.:format)'       
       end
     end
   end

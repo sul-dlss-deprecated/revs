@@ -8,7 +8,7 @@ class Curator::TasksController < ApplicationController
      s = params[:selection] || Flag.open
      @selection = s.split(',')
      @order=params[:order] || 'num_flags DESC'
-     @order_all=params[:order_all] || "druid"
+     @order_all=params[:order_all] || "created_at DESC"
      @flags_grouped=Flag.select('*,COUNT("druid") as num_flags').group("druid").order(@order).page(params[:pagina2]).per(Flag.per_table_page)
      @flag_states = Flag.groupByFlagState
      @tab = params[:tab]
@@ -17,8 +17,8 @@ class Curator::TasksController < ApplicationController
    end
    
    def annotations
-     @order = params[:order] || "druid"
-     @order_all = params[:order2] || "druid"
+     @order = params[:order] || "created_at DESC"
+     @order_all = params[:order2] || "created_at DESC"
      #@annotations = Kaminari.paginate_array(Annotation.order(@order).all).page(params[:page]).per(Annotation.per_table_page)
      @annotations = Annotation.select('*,COUNT("druid") as num_annotations').group("druid").order(@order).page(params[:pagina2]).per(Annotation.per_table_page)
      @annotations_list = Kaminari.paginate_array(Annotation.order(@order2).all).page(params[:pagina]).per(Annotation.per_table_page)
