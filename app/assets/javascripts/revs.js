@@ -89,6 +89,7 @@ $(document).ready(function(){
 	});
 
 	$('#contact_us_link').click(function() {
+    $(".report-problem")[0].reset();
 	  $('#report-problem-form').slideToggle('slow');
 	  return false;
 	});
