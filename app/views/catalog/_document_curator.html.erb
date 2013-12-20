@@ -20,7 +20,13 @@
 
       <div class="update-field-value">
 			  <%= text_field_tag 'bulk_edit[new_value]' ,@bulk_edit.nil? ? '' : @bulk_edit[:new_value], class: 'span4', placeholder: 'new value'%>
-        <%= submit_tag t('revs.nav.update'), :id=>'bulk-update-button', :class => 'btn btn-small', :disable_with => t('revs.nav.please_wait'), :confirm=> t('revs.curator.are_you_sure_apply_updates') %>
+        <%= submit_tag t('revs.nav.update'), 
+          :id=>'bulk-update-button', 
+          :class => 'btn btn-small',
+          :disable_with => t('revs.nav.please_wait'),
+				  :show_loading_indicator=>"true",
+				  :confirm=>t('revs.curator.are_you_sure_apply_updates')
+				  %>
       </div>
 
     </div>

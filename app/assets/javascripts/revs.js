@@ -1,4 +1,6 @@
 $(document).ready(function(){
+	
+	setup_links_that_disable();
 	  
 	// Modal behavior for collection member show page.
 	$("[data-modal-selector]").on('click', function(){
@@ -53,6 +55,10 @@ $(document).ready(function(){
      updateBulkEditStatus();
    });
 
+	 $('#bulk-update-button').click(function() {
+//			alert('dude');
+		});
+		
    // Enter/leave curator edit mode
    $('#edit_mode_link').click(function() { // click the curator edit mode action link
     if (curatorEditMode() == 'false'){ // currently not in edit mode, click is to enter edit mode
@@ -208,3 +214,54 @@ function updateEditStatus(field,context) {
     $(context).find('.edit-field-value > .new-value').hide();
   }
 }
+
+// href links with the disable_after_click=true attribute will be automatically disabled after clicking to prevent double clicks
+function setup_links_that_disable() {
+	$("[show_loading_indicator='true']").each(function(){
+    $(this).click(function(e){
+	    ajax_loading_indicator($(this)); // show loading indicator in UI
+	    });
+    });
+  $("[disable_after_click='true']").each(function(){
+    $(this).click(function(e){
+      e.preventDefault(); // stop default href behavior
+      ajax_loading_indicator($(this)); // show loading indicator in UI
+      url=$(this).attr("href"); // grab the URL
+      $(this).attr("href","#"); // remove it so even if clicked again, nothing will happen!
+      $(this).parent().addClass('disabled'); // disable the parent's element visually
+      window.location.href=url; // go to the URL
+      });
+    });
+}
+
+function ajax_loading_indicator(element) {
+  $("body").css("cursor", "progress");
+	$('#loading-message').removeClass('hidden');
+  if (element) {
+      element.animate({opacity:0.25});
+  		element.addClass("disabled");
+  		if (element.attr("disable_with") != '') { 
+  			element.attr("enable_with",element.text()); // store the current text
+  			element.text(element.attr("disable_with"));  // change the text
+  			}		
+    }
+}
+
+function ajax_loading_done(element) {
+  $("body").css("cursor", "auto");
+	$('#loading-message').addClass('hidden');
+  if (!!element) {
+    element.animate({opacity:1.0});
+    element.removeAttr("disabled");
+    element.removeClass("disabled");
+		if (element.attr("enable_with") != '') { element.text(element.attr("enable_with"));} // change the text back		
+    }
+}
+
+// if the user clicks cancel on a confirm box, we need to hide the ajax loader
+$(document).on('confirm:complete', function(e,answer) {
+	element=$(e.target);
+	if (answer == false && element.attr('show_loading_indicator') == 'true') {
+ 		ajax_loading_done(element);
+ 	}
+});

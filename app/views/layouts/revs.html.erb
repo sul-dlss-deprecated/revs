@@ -63,7 +63,10 @@
                                 <%= render :partial=>'/flash_msg' %>
                               </div>
                             </div>    
-                        </div>              
+                        </div>   
+                        <div id="loading-message" class="hidden">
+                            &nbsp;&nbsp;&nbsp;<%=t('revs.nav.please_wait')%>&nbsp; <%= image_tag 'ajax-loader.gif'%>&nbsp;&nbsp;&nbsp;
+                        </div>           
                         <div class="row">	
                              <%= yield %>
                              </div>   
