@@ -113,6 +113,10 @@
               <%= link_to "#{t('revs.messages.view_all')} »", user_edits_path(@user.username) %>
             </p>
           <% end %>
+        <% else %>
+          <p class="muted">
+            <em><%=t('revs.curator.you_can_edit_items')%></em>
+          </p>
         <% end %>
       <% end %>      
     </div>

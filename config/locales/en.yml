@@ -195,6 +195,7 @@ en:
       metadata_edit_history_hide: "Hide metadata edit history"
       metadata_edit_history_description: "This item has been edited on"
       are_you_sure_apply_updates: "Are you sure you want to apply this update to all selected items?"
+      you_can_edit_items: "Items you edit will be listed here."
     dashboards: 'Dashboards'
     citations:
         view: 'View full citation page with image download'

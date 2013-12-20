@@ -91,6 +91,7 @@ $(document).ready(function(){
 	});
 
 	$('#report-problem-form .cancel-link').click(function() {
+    $(".report-problem")[0].reset();
 	  $('#report-problem-form').slideUp('fast');
 	  return false;
 	});
