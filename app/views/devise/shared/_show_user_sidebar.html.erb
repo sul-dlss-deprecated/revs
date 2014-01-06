@@ -1,39 +1,48 @@
 <div id="sidebar" class="span3">
   <div id="sidebar-nav">
 
-      <ul class="nav nav-list account">
-        <li class="nav-header">
-          <%= t('revs.authentication.sidebar.account') %>
-          <% unless @user.role == 'user' %>
-            <span class="label label-revs lowercase"><%= @user.role.capitalize %></span>
-            <% end %>
-          </li>
-          <li>
-            <%= t('revs.user.joined_on') %>
-            <%= show_as_date(@user.created_at) %></li>
-          <li>
-            <%= t('revs.user.profile_page') %>
-            <span class="label <%= @user.public ? 'label-success' : '' %>">
-              <%= @user.public ? t('revs.user.public').downcase : t('revs.user.private').downcase %>
-            </span>
-          </li>
-      </ul>
-
-    <ul class="nav nav-list">
-      <li class="nav-header"><%= t('revs.authentication.sidebar.actions') %></li>
-
-      <li>
+    <ul class="nav nav-list account">
+      <li class="nav-header">
+        <%= t('revs.authentication.sidebar.account') %>
+        <% unless @user.role == 'user' %>
+          <span class="label label-revs lowercase"><%= @user.role.capitalize %></span>
+        <% end %>
+        </li>
+      <li class="account-date">
+        <%= t('revs.user.joined_on') %>
+        <%= show_as_date(@user.created_at) %>
+      </li>
+      <li class="account-profile">
        <% unless on_user_profile_page %>
         <%= link_to t('revs.user.view_profile_page'), user_profile_name_path(@user.username) %>
        <% end %>
         <% unless on_edit_page %>
           <%= link_to t('revs.user.update_your_profile').humanize, edit_user_registration_path %>
         <% end %>
+        <span class="label <%= @user.public ? 'label-success' : '' %>">
+          <%= @user.public ? t('revs.user.public').downcase : t('revs.user.private').downcase %>
+        </span>
       </li>
       <% unless current_user.sunet_user? %>
         <li><%= link_to t('revs.user.change_password'), edit_user_account_path%></li>
         <li><%= link_to t('revs.user.change_email'), edit_user_account_path%></li>
       <% end %>
+      <% if current_user.sunet_user? %>
+        <li>
+          <%= button_to t('revs.user.sign_out'), webauth_logout_path, :method=>:delete,
+                :class => "btn-link" %>
+        </li>
+      <% else %>
+        <li>
+          <%= button_to t('revs.user.sign_out'), destroy_user_session_path, :method=>:delete,
+                :class => "btn-link" %>
+        </li>
+      <% end %>
+    </ul>
+
+    <ul class="nav nav-list">
+      <li class="nav-header"><%= t('revs.authentication.sidebar.actions') %></li>
+
       <% if user_annotations_count(@user) > 0 %>
         <li><%= link_to t('revs.user.view_your_annotations'),
                 user_annotations_path(@user.username) %></li>
@@ -44,13 +53,6 @@
       <% if user_edits_count(@user) > 0 %>
         <li><%= link_to t('revs.user.view_your_edits'), user_edits_path(@user.username) %></li>
       <% end %>      
-      <% if current_user.sunet_user? %>
-        <li><%= button_to t('revs.user.sign_out'), webauth_logout_path, :method=>:delete,
-                :class => "btn-link" %></li>
-      <% else %>
-        <li><%= button_to t('revs.user.sign_out'), destroy_user_session_path, :method=>:delete,
-                :class => "btn-link" %></li>
-      <% end %>
     </ul>
 
     <%= render :partial=>'/devise/shared/dashboards', :locals=>{:user=>@user} %>
