@@ -358,11 +358,14 @@ en:
       view_your_annotations: "View your annotations"
       view_your_flags: "View your flags"
       view_your_edits: "View your edits"
+      view_your_favorites: "View your favorites"
+      view_your_galleries: "View your galleries"
       view_all_edits: "View all edits"
       view_all_flags: "View all flags"
       view_profile_page: "View your profile page"
       edit_profile: "Edit Profile"
       your_profile_page: "your profile page"
+      create_new_gallery: "Create new gallery"
     help:
       sidebar:
         bulk_edits: "Edit records in bulk"

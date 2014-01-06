@@ -43,6 +43,20 @@
     <ul class="nav nav-list">
       <li class="nav-header"><%= t('revs.authentication.sidebar.actions') %></li>
 
+      <%# Placeholder pending implementation of user favorites feature %>
+      <%# if user_favorites_count(@user) > 0 %>
+        <li>
+          <%#= link_to t('revs.user.view_your_favorites'), user_favorites_path(@user.username) %>
+        </li>
+      <%# end %>
+
+      <%# Placeholder pending implementation of user galleries feature %>
+      <%# if user_galleries_count(@user) > 0 %>
+        <li>
+          <%#= link_to t('revs.user.view_your_galleries'), user_galleries_path(@user.username) %>
+        </li>
+      <%# end %>
+
       <% if user_annotations_count(@user) > 0 %>
         <li><%= link_to t('revs.user.view_your_annotations'),
                 user_annotations_path(@user.username) %></li>
@@ -52,7 +66,10 @@
       <% end %>
       <% if user_edits_count(@user) > 0 %>
         <li><%= link_to t('revs.user.view_your_edits'), user_edits_path(@user.username) %></li>
-      <% end %>      
+      <% end %>
+
+      <li><%= link_to t('revs.user.create_new_gallery'), "#" %></li>
+
     </ul>
 
     <%= render :partial=>'/devise/shared/dashboards', :locals=>{:user=>@user} %>
