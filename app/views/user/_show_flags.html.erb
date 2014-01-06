@@ -1,0 +1,30 @@
+<h3>
+  <%=t('revs.flags.plural')%>
+  <span class="activity-count"><%= user_flags_unresolved_count(@user).to_s.rjust(1, '0') %></span>
+</h3>
+
+<% if @user.latest('flags').size > 0 %>
+  <ul>
+  <% @user.latest('flags').each do |flag| %>
+				  <% if flag.solr_document and not flag.resolved%>
+	          <li class="activity-item">
+	            <ul>
+	              <li><%= link_to(image_tag(flag.solr_document.images.first), item_path(flag.solr_document)) %></li>
+	              <li class="item-title"><%= item_link(flag.solr_document,:truncate=>true) %></li>
+	              <li><%= show_as_datetime(flag.created_at) %></li>
+	            </ul>
+	          </li>
+	       <% end %>
+  <% end %>
+  </ul>
+  <% if user_flags_unresolved_count(@user) > Revs::Application.config.num_latest_user_activity %>
+    <p class="more-link">
+      <%= pluralize(user_flags_count(@user) - Revs::Application.config.num_latest_user_activity, 'flag') %> <%=t('revs.messages.not_shown')%>.
+      <%= link_to "#{t('revs.messages.view_all')} »", user_flags_path(@user.username) %>
+    </p>
+  <% end %>
+<% else %>
+  <p class="muted">
+    <em><%=t('revs.flags.you_can_flag_problems')%></em>
+  </p>
+<% end %>

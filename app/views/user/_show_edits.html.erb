@@ -1,0 +1,30 @@
+<h3>
+  <%=t('revs.curator.edits')%>
+  <span class="activity-count"><%= user_edits_count(@user).to_s.rjust(1, '0') %></span>
+</h3>
+
+<% if @user.latest('change_logs').size > 0 %>
+  <ul>
+  <% @user.latest('change_logs').each do |edit| %>
+  			  	<% if edit.solr_document %>
+  	          <li class="activity-item">
+  	            <ul>
+  	              <li><%= link_to(image_tag(edit.solr_document.images.first), item_path(edit.solr_document)) %></li>
+  	              <li class="item-title"><%= item_link(edit.solr_document,:truncate=>true) %></li>
+  	              <li><%= show_as_datetime(edit.created_at) %></li>
+  	            </ul>
+  	          </li>
+  			   <% end %>
+  <% end %>
+  </ul>
+  <% if user_edits_count(@user) > Revs::Application.config.num_latest_user_activity %>
+    <p class="more-link">
+      <%= pluralize(user_edits_count(@user) - Revs::Application.config.num_latest_user_activity, 'edits') %> <%=t('revs.messages.not_shown')%>.
+      <%= link_to "#{t('revs.messages.view_all')} »", user_edits_path(@user.username) %>
+    </p>
+  <% end %>
+<% else %>
+  <p class="muted">
+    <em><%=t('revs.curator.you_can_edit_items')%></em>
+  </p>
+<% end %>

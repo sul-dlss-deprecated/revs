@@ -1,0 +1,31 @@
+<h3>
+  <%=t('revs.annotations.plural')%>
+  <span class="activity-count"><%= user_annotations_count(@user).to_s.rjust(1, '0') %></span>
+</h3>
+
+<% if @user.latest("annotations").size > 0 %>
+  <ul>
+  <% @user.latest("annotations").each do |annotation| %>
+			  	<% if annotation.solr_document %>
+	          <li class="activity-item">
+	            <ul>
+	              <li><%= link_to(image_tag(annotation.solr_document.images.first), item_path(annotation.solr_document)) %><li>
+	              <li class="item-title"><%= item_link(annotation.solr_document,:truncate=>true) %></li>
+	              <li class="annotation"><%= truncate(annotation.text) %></li>
+	              <li><%= show_as_datetime(annotation.created_at) %></li>
+	            </ul>
+	          </li>
+			   <% end %>
+  <% end %>
+  </ul>
+  <% if user_annotations_count(@user) > Revs::Application.config.num_latest_user_activity %>
+    <p class="more-link">
+      <%= pluralize(user_annotations_count(@user) - Revs::Application.config.num_latest_user_activity, 'annotation') %> <%=t('revs.messages.not_shown')%>.
+      <%= link_to "#{t('revs.messages.view_all')} »", user_annotations_path(@user.username) %>
+    </p>
+  <% end %>
+<% else %>
+  <p class="muted">
+	        <em><%=t('revs.annotations.you_can_annotate_images')%></em>  
+  </p>
+<% end %>

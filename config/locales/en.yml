@@ -212,6 +212,13 @@ en:
         annotation_created: "Annotation created"
         annotation_text: "Annotation text"
         annotator: "Annotator"
+    favorites:
+      head: "Favorites"
+      you_can_save_favorites: "Items you save as favorites will be shown here."
+    user_galleries:
+      head: "Galleries"
+      you_can_create_galleries_html: "You can %{href} and add items to it from the Item Details page."
+      you_can_create_galleries_linktext: "create your own gallery"
     collection:
       collection_detail: 'Collection Detail'
       member_detail: 'Item Detail'
