@@ -152,6 +152,12 @@
     }
   }
   .item-actions {
+    #flags_link {
+      padding: 2px 15px 2px 0;
+    }
+    &.nav-list > li > a {
+      padding: 2px 15px;
+    }
     a:hover i {
       color: #990000;
     }
@@ -184,11 +190,6 @@
         display: inline-block;
       }
       #item-edit-history-accordion {
-        .icon {
-          font-size: 18px;
-          margin-left: 3px;
-          padding-right: 4px;
-        }
         + #item-edit-history .edit-history-list  {
           margin: 6px 0 12px 25px;
           background: #f8f8f8;
