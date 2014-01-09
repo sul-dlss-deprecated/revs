@@ -18,7 +18,10 @@ $(document).ready(function(){
     $('.flag-details').toggleClass('active');
     return false;
   });
-  
+
+  // Initialize Bootstrap tooltip
+  $('.help').tooltip();
+
   // admin users select all
   $( '#admin-select-all-users' ).click( function () {
      $( 'input[type="checkbox"]' ).prop('checked', this.checked);

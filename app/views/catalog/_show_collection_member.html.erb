@@ -67,7 +67,7 @@
 			  </div>
 			
         <ul class="nav nav-list item-actions">
-          <li class="nav-header"><%=t('revs.admin.sidebar.actions')%><i class="icon-cog"></i></li>
+          <li class="nav-header"><%=t('revs.admin.sidebar.actions')%></li>
 
           <li>
             <%= link_to("<i class='icon-picture'></i> #{t('revs.citations.view')}".html_safe,
@@ -97,6 +97,12 @@
 						  
 							  <div id="flags_link">
 									<%= render :partial=>'flags/link'%>
+                  <%# only show help icon if user can add flags %>
+                  <% if can?(:add_new_flag_to, @document) %>
+                    <%= link_to "#", :class => "help hidden-offscreen showOnLoad", :data => { :toggle => "tooltip", :placement => "left", :title => "#{t('revs.flags.help')}" } do %>
+                      <i class="icon-question-sign"></i>
+                    <% end %>
+                  <% end %>
 								</div>
 								
 				        <div id="new_flag_form">
@@ -122,7 +128,7 @@
 				
         <% if can? :curate, :all %>
           <ul class="nav nav-list item-actions curator-actions showOnLoad hidden-offscreen">
-            <li class="nav-header"><%=t('revs.curator.curator_actions')%><i class="icon-cog"></i></li>
+            <li class="nav-header"><%=t('revs.curator.curator_actions')%></li>
             <% if can? :update_metadata, :all
                 edit_mode_link_text = in_curator_edit_mode ? t('revs.curator.leave_edit_mode') : t('revs.curator.enter_edit_mode') 
                 %>

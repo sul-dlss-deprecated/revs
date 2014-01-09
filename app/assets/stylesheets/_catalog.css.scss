@@ -152,6 +152,14 @@
     }
   }
   .item-actions {
+    .help {
+      float: right;
+      margin-right: -35px;
+      i {
+        color: #999;
+        font-size: 16px;
+      }
+    }
     #flags_link {
       padding: 2px 15px 2px 0;
     }

@@ -71,6 +71,7 @@ en:
       flagging_user: "Flagging User"
       resolution_time: "Resolution Time"
       no_results: "There are no flags with this status."
+      help: "Use the Flag problem action to tell us about a problem with the metadata for this item. To report more general problems, please use the Report a problem link at the top of the web site."
     nav:
       home: 'Home'
       collections: 'Collections'
