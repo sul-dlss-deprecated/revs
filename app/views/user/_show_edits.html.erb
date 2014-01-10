@@ -19,7 +19,7 @@
   </ul>
   <% if user_edits_count(@user) > Revs::Application.config.num_latest_user_activity %>
     <p class="more-link">
-      <%= pluralize(user_edits_count(@user) - Revs::Application.config.num_latest_user_activity, 'edits') %> <%=t('revs.messages.not_shown')%>.
+      <%= pluralize(user_edits_count(@user) - Revs::Application.config.num_latest_user_activity, 'edit') %> <%=t('revs.messages.not_shown')%>.
       <%= link_to "#{t('revs.messages.view_all')} »", user_edits_path(@user.username) %>
     </p>
   <% end %>
