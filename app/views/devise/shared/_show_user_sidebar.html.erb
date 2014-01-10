@@ -1,4 +1,4 @@
-<div id="sidebar" class="span3">
+<div id="sidebar" class="span3 user-dashboard-sidebar">
   <div id="sidebar-nav">
 
     <ul class="nav nav-list account">
@@ -19,7 +19,7 @@
         <% unless on_edit_page %>
           <%= link_to t('revs.user.update_your_profile').humanize, edit_user_registration_path %>
         <% end %>
-        <span class="label <%= @user.public ? 'label-success' : '' %>">
+        <span class="label profile-visibility <%= @user.public ? 'label-success' : '' %>">
           <%= @user.public ? t('revs.user.public').downcase : t('revs.user.private').downcase %>
         </span>
       </li>

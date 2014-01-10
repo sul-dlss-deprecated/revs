@@ -87,6 +87,7 @@
     }
   }
   .profile-activity {
+    margin-top: 18px;
     ul {
       list-style-type: none;
       margin: 0;
@@ -115,6 +116,7 @@
     }
     h3 {
       border-bottom: 1px solid #ddd;
+      clear: left;
       color: #777;
       font-size: 1.25em;
       margin-bottom: 15px;
@@ -159,7 +161,9 @@
   }
 }
 @media screen and (min-width: 768px) and (max-width: 979px) {
-
+  .profile-visibility {
+    display: none;
+  }
 }
 @media screen and (max-width: 767px) {
   .blacklight-user {
@@ -177,6 +181,11 @@
         margin-bottom: 12px;
       }
     }
+  }
+  #sidebar.user-dashboard-sidebar {
+    border-top: 2px solid #ddd;
+    margin-top: 12px;
+    padding-top: 12px;
   }
 }
 @media screen and (max-width: 479px) {
