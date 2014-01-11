@@ -50,6 +50,11 @@ class AboutController < ApplicationController
     render :show
   end
 
+  def boom
+    # a quick way to raise an exception for testing exception notification
+    boom!
+  end
+  
   protected
   def authorize
     not_authorized unless can? :read,:about_pages

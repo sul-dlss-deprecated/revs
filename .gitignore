@@ -31,5 +31,6 @@ jetty/solr/test/conf/solrconfig.xml
 
 # Ignore public/uploads dir where user avatars are stored
 /public/uploads/
+/public/assets/
 
 nohup.out

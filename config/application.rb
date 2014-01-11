@@ -43,7 +43,7 @@ module Revs
 
     # Custom i18n.load_path to pick up locale files in subdirectories
     config.i18n.load_path += Dir["#{Rails.root.to_s}/config/locales/**/*.{rb,yml}"]
-
+        
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
 
@@ -90,3 +90,6 @@ end
 
 EDITSTORE_PROJECT='Revs'  # the name of your project in the editstore database -- this must exist in the edistore database "projects" table in both production and development to work properly
 
+Squash::Ruby.configure :api_host => 'https://sul-squash-prod.stanford.edu',
+                       :api_key => 'a22b8edb-fc4a-446b-9ae6-54186b53c0d0',
+                       :disabled => (Rails.env.development? || Rails.env.test?)

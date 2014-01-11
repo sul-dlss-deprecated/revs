@@ -22,10 +22,4 @@ class RevsMailer < ActionMailer::Base
     mail(:to=>"news@revsinstitute.org",:from=>opts[:from],:subject=>"Request to be added to Revs Institute Mailing List from Revs Digital Library",:body=>"User at #{opts[:from]} wishes to subscribe to the Revs Institute Mailing List")
   end
   
-  def error_notification(opts={})
-    @exception=opts[:exception]
-    @mode=Rails.env
-    mail(:to=>Revs::Application.config.exception_recipients, :subject=>"Revs Digital Library Exception Notification running in #{@mode} mode")
-  end
-  
 end

@@ -3,6 +3,7 @@ require 'bundler/setup'
 require 'bundler/capistrano'
 require 'dlss/capistrano'
 require 'pathname'
+require 'squash/rails/capistrano2'
 
 set :stages, %W(staging development production)
 set :bundle_flags, "--quiet"
@@ -102,6 +103,7 @@ namespace :deploy do
   end
 end
 
+before 'deploy:assets:precompile', 'squash:write_revision'
 after "deploy:create_symlink", "deploy:migrate"
 after "deploy:update", "deploy:cleanup" 
 after "deploy:update", "deploy:dev_options_set"

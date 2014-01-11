@@ -254,6 +254,10 @@ GEM
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
     sqlite3 (1.3.8)
+    squash_rails (1.3.1)
+      squash_ruby
+    squash_ruby (1.4.0)
+      json
     subexec (0.2.3)
     therubyracer (0.12.0)
       libv8 (~> 3.16.14.0)
@@ -315,5 +319,7 @@ DEPENDENCIES
   rvm-capistrano
   sass-rails (~> 3.2.3)
   sqlite3
+  squash_rails
+  squash_ruby
   therubyracer
   uglifier (>= 1.0.3)
