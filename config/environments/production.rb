@@ -1,7 +1,6 @@
 Revs::Application.configure do  
   # Settings specified here will take precedence over those in config/application.rb
   config.exception_error_page = true # show a friendly 500 error page if true
-  config.exception_recipients = '' # list of email addresses, comma separated, that will be notified when an exception occurs - leave blank for no emails
   config.action_mailer.default_url_options = { :host => 'revslib.stanford.edu' }
 
   # Code is not reloaded between requests

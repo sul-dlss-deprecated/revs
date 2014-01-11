@@ -83,5 +83,8 @@ gem 'json', '~> 1.7.7'
 gem "bootstrap-sass"
 gem "font-awesome-rails"
 
+gem 'squash_ruby', :require => 'squash/ruby'
+gem 'squash_rails', :require => 'squash/rails'
+
 #Bulk Metadata Loading Gems
 gem 'countries'

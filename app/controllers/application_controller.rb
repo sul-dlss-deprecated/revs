@@ -1,15 +1,23 @@
 # encoding: utf-8
+require 'squash/rails' 
+   
 class ApplicationController < ActionController::Base
   # Adds a few additional behaviors into the application controller 
   
    include Blacklight::Controller
    include DateHelper
    include SolrQueryHelper
-  
+
+   # include squash.io
+   include Squash::Ruby::ControllerMethods
+   enable_squash_client
+   #
+    
+  rescue_from Exception, :with=>:exception_on_website
+      
   # Please be sure to impelement current_user and user_session. Blacklight depends on 
   # these methods in order to perform user specific actions. 
 
-  rescue_from Exception, :with=>:exception_on_website
   helper_method :application_name,:current_role,:on_home_page,:on_collections_page,:on_about_pages,:on_detail_page,:show_terms_dialog?, :sunet_user_signed_in?
   layout "revs"
 
@@ -165,9 +173,9 @@ class ApplicationController < ActionController::Base
   end
         
   def exception_on_website(exception)
+   
     @exception=exception
-
-    RevsMailer.error_notification(:exception=>@exception).deliver unless Revs::Application.config.exception_recipients.blank? 
+    notify_squash exception
 
     if Revs::Application.config.exception_error_page
         logger.error(@exception.message)
