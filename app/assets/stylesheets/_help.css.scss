@@ -4,6 +4,7 @@
   }
   h4 {
     font-size: 16px;
+    margin-top: 30px;
   }
   p {
     font-size: 14px;
@@ -22,9 +23,7 @@
     background: #fff;
     border: 1px solid #ccc;
     display: block;
-    margin: 25px auto;
     padding: 5px;
-    width: 95%;
     -webkit-box-shadow: 3px 6px 18px -7px rgba(153,153,153,1);
     -moz-box-shadow: 3px 6px 18px -7px rgba(153,153,153,1);
     box-shadow: 3px 6px 18px -7px rgba(153,153,153,1);
@@ -34,5 +33,24 @@
     border: none;
     border-bottom: 1px solid #ddd;
     color: inherit;
+  }
+  img.help-image-full-width {
+    margin: 25px auto 40px;
+    width: 90%;
+  }
+  img.help-image-left {
+    float: left;
+    margin-top: 0;
+    margin-right: 30px;
+  }
+  img.help-image-right {
+    float: right;
+    margin: 0 10px 0 30px;
+  }
+  .facet-box {
+    width: 150px;
+  }
+  .edit-form-fields {
+    width: 230px;
   }
 }

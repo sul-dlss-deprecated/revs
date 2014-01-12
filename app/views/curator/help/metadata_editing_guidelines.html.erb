@@ -1,0 +1,12 @@
+<div id="content" class="span9 help">
+
+  <h2><%=t('revs.help.curator.page_title')%></h2>
+
+  <h3><%= t('revs.help.curator.metadata_editing_guidelines') %></h3>
+
+  <%= t('revs.help.metadata_editing_guidelines_html',
+    :href => link_to(t("revs.help.bulk_edit_link_text"), :controller=>'curator/help',:action=>'bulk_edits')) %>
+
+</div>
+
+<%= render :partial => 'devise/shared/show_curator_sidebar' %>

@@ -377,6 +377,8 @@ en:
     help:
       sidebar:
         bulk_edits: "Edit records in bulk"
+        metadata_editing_guidelines: "Metadata editing guidelines"
       curator:
         page_title: "Curator Help"
         bulk_edits: "Edit multiple records in bulk (bulk editing)"
+        metadata_editing_guidelines: "Metadata editing guidelines"
