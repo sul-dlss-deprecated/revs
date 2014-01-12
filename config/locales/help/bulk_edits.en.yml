@@ -6,16 +6,16 @@ en:
           The Revs Digital Library includes a feature that enables a curator to update a single metadata field with a given value for multiple records at one time. This can be a very efficient way to add new values, or update existing values, for a group of related item records. For example, a group of photographs taken at a specific race on the same date probably share the same location information; if you notice that these records have inconsistent or non-existent location metadata, you can use the bulk edit feature to update the location field for the entire group of records in a single task.
         </p>
         <p>When you are logged into Revs as a curator and conduct a search, you'll see an additional view available on the search results page, called <code>Curator</code> The screenshot below shows the Curator view for a search on <code>Thompson Raceway</code> narrowed by <code>Year > 1966</code>:</p>
-        <img alt="Curator-bulk-editing-01" src="/assets/help/curator-bulk-editing-01.png">
+        <img class="help-image-full-width" alt="Curator bulk editing view toggle" src="/assets/help/curator-bulk-editing-01.png">
         <p>Unique to the Curator view of the search results are the checkboxes next to each result item and the bulk edit selection panel at the top of the results. You can use these elements to quickly update multiple records with the same value for any metadata field.</p>
-        <img alt="Curator-bulk-editing-02" src="/assets/help/curator-bulk-editing-02.png">
+        <img class="help-image-full-width" alt="Curator bulk editing controls" src="/assets/help/curator-bulk-editing-02.png">
         <ul class="alpha">
           <li>To make a bulk edit for many items at once, we recommend changing the result items shown per page to the maximum (i.e., only items shown on the page are affected by your bulk edit selections).</li>
           <li>Select the items you want to be updated. The <code>Select all</code> checkbox is a quick way to select all items on the page for editing; you can deselect individually any items that you do not want to update after selecting all items with the <code>Select all</code> checkbox.</li>
           <li>Select the field you want to update from the <code>Update</code> dropdown menu.</li>
           <li>Enter the new value for the field you selected in the previous step in the <code>new value</code> input box. When you click the <code>Update</code> button, this value will be applied to every item you have checked.</li>
           <li>Verify that only the items you want to be updated will be processed by reviewing the status information next to each item.</li>
-          <li>Click the <code>Update</code> button to submit the update.</li>
+          <li>Click the <code>Update</code> button to submit the update. If you are updating many records, the change might take several seconds to complete.</li>
         </ul>
         <p>Note that for large sets of records you will have to repeat most of these steps for each page of search results, so it is helpful to set the number of results <code>per page</code> dropdown to the maximum value.</p>
         <h4>Ideas for bulk edits</h4>
