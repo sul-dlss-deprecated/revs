@@ -24,6 +24,8 @@
 
 @import "improved-modal/bootstrap-modal";
 
+
+
 @import "global";
 @import "layout";
 @import "header";
@@ -45,3 +47,6 @@
 @import "font-awesome";
 
 @import "stanford_footer";
+
+/* load print last */
+@import "print";
