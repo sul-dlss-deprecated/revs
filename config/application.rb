@@ -31,9 +31,15 @@ module Revs
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     config.time_zone = 'Pacific Time (US & Canada)'
 
+    config.i18n.enforce_available_locales = true
+
+    # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
+    # the I18n.default_locale when a translation can not be found)
+    config.i18n.fallbacks = true
+
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-    # config.i18n.default_locale = :de
+    config.i18n.default_locale = :en
 
     # Custom i18n.load_path to pick up locale files in subdirectories
     config.i18n.load_path += Dir["#{Rails.root.to_s}/config/locales/**/*.{rb,yml}"]

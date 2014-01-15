@@ -32,6 +32,10 @@ describe("User Registration",:type=>:request,:integration=>true) do
     user.username.should == @username
     user.email.should == @email
     user.public.should == false
+    
+    favorites=Gallery.last
+    favorites.gallery_type.should == 'favorites'
+    favorites.user_id.should == user.id
 
   end
 

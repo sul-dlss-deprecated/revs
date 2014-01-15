@@ -27,10 +27,13 @@ class User < ActiveRecord::Base
   has_many :annotations, :dependent => :destroy
   has_many :flags, :dependent => :destroy
   has_many :change_logs, :dependent => :destroy
+  has_many :galleries, :dependent => :destroy
+  
   before_validation :assign_default_role, :if=>lambda{no_role?}
   before_save :trim_names
   after_create :signup_for_mailing_list, :if=>lambda{subscribe_to_mailing_list=='1'}
   after_create :signup_for_revs_institute_mailing_list, :if=>lambda{subscribe_to_revs_mailing_list=='1'}
+  after_create :create_default_favorites_list
   validate :check_role_name
   validates :username, :uniqueness => { :case_sensitive => false }
   validates :username, :length => { :in => 5..50}
@@ -49,6 +52,10 @@ class User < ActiveRecord::Base
   
   def self.latest_filter(things)
     things.order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
+  end
+  
+  def create_default_favorites_list
+    Gallery.get_favorites_list(self.id)
   end
   
   def visible(class_name)

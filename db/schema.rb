@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131101233228) do
+ActiveRecord::Schema.define(:version => 20140115201239) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "user_id"
@@ -67,6 +67,20 @@ ActiveRecord::Schema.define(:version => 20131101233228) do
   add_index "flags", ["state"], :name => "index_flags_on_state"
   add_index "flags", ["user_id"], :name => "index_flags_on_user_id"
 
+  create_table "galleries", :force => true do |t|
+    t.integer  "user_id",                         :null => false
+    t.boolean  "public",       :default => false, :null => false
+    t.string   "title"
+    t.text     "description"
+    t.string   "gallery_type",                    :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+  end
+
+  add_index "galleries", ["gallery_type"], :name => "index_galleries_on_gallery_type"
+  add_index "galleries", ["public"], :name => "index_galleries_on_public"
+  add_index "galleries", ["user_id"], :name => "index_galleries_on_user_id"
+
   create_table "items", :force => true do |t|
     t.string   "druid"
     t.integer  "visibility_value"
@@ -75,6 +89,17 @@ ActiveRecord::Schema.define(:version => 20131101233228) do
   end
 
   add_index "items", ["druid"], :name => "index_items_on_druid", :unique => true
+
+  create_table "saved_items", :force => true do |t|
+    t.string   "druid",       :null => false
+    t.integer  "gallery_id",  :null => false
+    t.text     "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "saved_items", ["druid"], :name => "index_saved_items_on_druid"
+  add_index "saved_items", ["gallery_id"], :name => "index_saved_items_on_gallery_id"
 
   create_table "searches", :force => true do |t|
     t.text     "query_params"
