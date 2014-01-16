@@ -6,12 +6,20 @@
     <%= devise_error_messages! %>
     <%= f.hidden_field :reset_password_token %>
 
-    <div><%= f.label :password, t('revs.user.new_password') %><br />
-    <%= f.password_field :password, :autofocus => true %></div>
+    <div class="control-group">
+      <label class="control-label" for="user_password"><%= f.label :password, t('revs.user.new_password') %></label>
+      <div class="controls">
+        <%= f.password_field :password, :autofocus => true, :placeholder => t('revs.user.set_password') %>
+      </div>
+    </div>
 
-    <div><%= f.label :password_confirmation, t('revs.user.new_password_confirm') %><br />
-    <%= f.password_field :password_confirmation %></div>
-
+    <div class="control-group">
+      <label class="control-label" for="user_password_confirmation"><%= f.label :password, t('revs.user.new_password_confirm') %></label>
+      <div class="controls">
+        <%= f.password_field :password_confirmation %>
+      </div>
+    </div>
+    
     <div class="control-group">
       <div class="controls">
         <%= f.submit t('revs.user.change_password_linktext'), :id=>'submit', :class => "btn" %>
@@ -20,7 +28,5 @@
   <% end %>
 
 </div>
-
-<%= render "devise/shared/links" %>
 
 <%= render :partial => 'devise/shared/show_devise_sidebar' %>

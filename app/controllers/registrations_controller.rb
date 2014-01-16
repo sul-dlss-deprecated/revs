@@ -17,6 +17,8 @@ class RegistrationsController < Devise::RegistrationsController
       redirect_to :root, :alert=>t('revs.authentication.stanford_create_warning')
       return false
     else
+      @username=params[:user][:username]
+      @email=params[:user][:email]
       super
     end
   end

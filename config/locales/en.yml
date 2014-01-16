@@ -333,7 +333,7 @@ en:
       confirm_password: "confirm password"
       didnt_receive_confirmation: "Didn't receive confirmation instructions?"
       didnt_receive_unlock: "Didn't receive unlock instructions?"
-      set_password: "set password"
+      set_password: "minimum of 8 characters"
       account_locked: "Your account on the Revs Digital Library has been locked due to an excessive number of unsuccessful sign in attempts"
       account_locked_instructions: "Click the link below to unlock your account"
       account_locked_linktext: "Unlock my account"
