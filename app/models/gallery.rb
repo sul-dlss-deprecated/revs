@@ -14,10 +14,12 @@ class Gallery < ActiveRecord::Base
   # returns the default favorites gallery for the given user ID (and create it does not exist) - returns the gallery
   def self.get_favorites_list(user_id)
     gallery=self.where(:user_id=>user_id,:gallery_type=>:favorites).limit(1)
-    if gallery.size == 1
+    if gallery.size == 1 # already there, return it!
       return gallery.first
-    else
+    elsif gallery.size == 0 # doesn't have one yet, create it!
       return self.create(:user_id=>user_id,:gallery_type=>:favorites)
+    else # more than one, that's a problem that should never occur
+      raise "more than one favorites list for user #{user_id}"
     end
   end
   
