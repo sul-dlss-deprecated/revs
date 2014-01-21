@@ -69,6 +69,14 @@
         <ul class="nav nav-list item-actions">
           <li class="nav-header"><%=t('revs.admin.sidebar.actions')%></li>
 
+          <% in_favorites = true # replace this with real knowledge of whether the item is in user favorites
+             favorites_link_text = in_favorites ? t('revs.favorites.remove_from_favorites') : t('revs.favorites.save_to_favorites')
+             favorites_link_icon = in_favorites ? "icon-heart" : "icon-heart-empty"
+          %>
+          <li>
+            <%= link_to("<i class='#{favorites_link_icon}'></i> <span>#{favorites_link_text}</span>".html_safe, '#', :id=>'favorites_link', :class=>"showOnLoad hidden-offscreen") %>
+          </li>
+
           <li>
             <%= link_to("<i class='icon-picture'></i> #{t('revs.citations.view')}".html_safe,
             "#{Revs::Application.config.purl}/#{@document[:id]}") %>
