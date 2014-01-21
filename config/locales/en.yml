@@ -216,6 +216,8 @@ en:
     favorites:
       head: "Favorites"
       you_can_save_favorites: "Items you save as favorites will be shown here."
+      save_to_favorites: "Save to favorites"
+      remove_from_favorites: "Remove from favorites"
     user_galleries:
       head: "Galleries"
       you_can_create_galleries_html: "You can %{href} and add items to it from the Item Details page."
