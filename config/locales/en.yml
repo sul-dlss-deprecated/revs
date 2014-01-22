@@ -143,7 +143,7 @@ en:
       dashboard: "Administrator Dashboard"
       your_account: "This is your account. To update your password, visit %{your_account_linktext}. You cannot update your own role."
       waiting_confirmation_from_user: "Currently waiting confirmation from user of their email address"
-      search_by_email: "Search by email"
+      search_by_email: "Search by email or name"
       name: "Name"
       stanford: "Stanford?"
       role: "Role"
