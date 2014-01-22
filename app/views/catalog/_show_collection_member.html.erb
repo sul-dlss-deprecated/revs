@@ -71,7 +71,7 @@
 
           <li>
             <%= link_to("<i class='icon-picture'></i> #{t('revs.citations.view')}".html_safe,
-            "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'new') %>
+            "#{Revs::Application.config.purl}/#{@document[:id]}") %>
           </li>
 
 					<% if (can?(:read, Annotation) || can?(:create, Annotation)) 
