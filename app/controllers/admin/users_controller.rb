@@ -3,13 +3,13 @@ class Admin::UsersController < ApplicationController
   before_filter :check_for_admin_logged_in
 
   def index
-    @email=params[:email]
+    @search=params[:search]
     @order=params[:order] || 'email'
     users_per_page = params[:per_page] || 50
     @role = params[:role] || "curator"
     
-    if !@email.blank?
-      @users=User.where(['email like ?',"#{@email}%"]).order(@order).page(params[:page]).per(users_per_page)
+    if !@search.blank?
+      @users=User.where(['email like ? OR username like ? OR first_name like ? OR last_name like ?',"%#{@search}%","%#{@search}%","%#{@search}%","%#{@search}%"]).order(@order).page(params[:page]).per(users_per_page)
     else
       @users=User.order(@order).page(params[:page]).per(users_per_page)
     end
