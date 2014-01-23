@@ -89,7 +89,3 @@ module Revs
 end
 
 EDITSTORE_PROJECT='Revs'  # the name of your project in the editstore database -- this must exist in the edistore database "projects" table in both production and development to work properly
-
-Squash::Ruby.configure :api_host => 'https://sul-squash-prod.stanford.edu',
-                       :api_key => 'a22b8edb-fc4a-446b-9ae6-54186b53c0d0',
-                       :disabled => (Rails.env.development? || Rails.env.test?)

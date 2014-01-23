@@ -39,6 +39,10 @@ Revs::Application.configure do
   config.active_support.deprecation = :stderr
 end
 
+Squash::Ruby.configure :api_host => 'https://squash-dev.stanford.edu',
+                       :api_key => '20f28544-89ff-42f8-b310-4d79a70a9b29',
+                       :disabled => true
+                       
 Revs::Application.config.simulate_sunet_user = "sunetuser" # if this has a value, then this will simulate you being logged in as a sunet user
 Revs::Application.config.purl_plugin_server = "test"
 Revs::Application.config.purl = "//purl-test.stanford.edu"

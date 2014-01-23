@@ -41,6 +41,10 @@ Revs::Application.configure do
   config.assets.debug = true
 end
 
+Squash::Ruby.configure :api_host => 'https://squash-dev.stanford.edu',
+                       :api_key => '20f28544-89ff-42f8-b310-4d79a70a9b29',
+                       :disabled => true
+                       
 Revs::Application.config.simulate_sunet_user = "sunetuser" # if set to anything but false, then this will simulate you being logged in as a sunet user of this name # DONT DO THIS IN PRODUCTION
 Revs::Application.config.purl_plugin_server = "prod"
 Revs::Application.config.purl_plugin_location = "//image-viewer.stanford.edu/assets/purl_embed_jquery_plugin.js"

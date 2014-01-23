@@ -66,6 +66,12 @@ Revs::Application.configure do
   GA.tracker = "UA-7219229-17" # revs digital library
   
 end
+
+Squash::Ruby.configure :api_host => 'https://sul-squash-prod.stanford.edu',
+                       :api_key => 'a22b8edb-fc4a-446b-9ae6-54186b53c0d0',
+                       :disabled => false,
+                       :revision_file => 'REVISION'
+
 Revs::Application.config.simulate_sunet_user = false # SET TO BLANK OR FALSE IN PRODUCTION (it should be ignored in production anyway) if this has a value, then this will simulate you being logged in as a sunet userRevs::Application.config.purl_plugin_server = "prod"
 Revs::Application.config.purl = "//purl.stanford.edu"
 Revs::Application.config.purl_plugin_server = "prod"

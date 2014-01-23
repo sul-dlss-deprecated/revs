@@ -10,8 +10,6 @@ class ApplicationController < ActionController::Base
 
    # include squash.io
    include Squash::Ruby::ControllerMethods
-   enable_squash_client
-   #
     
   rescue_from Exception, :with=>:exception_on_website
       
