@@ -363,7 +363,7 @@ namespace :revs do
   task :cleanup_marques => :environment do
     Revs::Application.config.use_editstore = false
 
-    results=Blacklight.solr.select(:params => {:q=>'automobile',:rows=>'200000'})
+    results=Blacklight.solr.select(:params => {:q=>'automobiles OR automobile',:rows=>'200000'})
     puts "Found #{results['response']['docs'].size} documents with the term automobile"
     results['response']['docs'].each do |result|
       doc=SolrDocument.new(result)
