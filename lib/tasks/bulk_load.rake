@@ -341,6 +341,42 @@ namespace :revs do
     end 
   end
   
+  desc "Cleanup formats in solr documents by removing extra spaces in specific format fields"
+  task :cleanup_formats => :environment do
+    Revs::Application.config.use_editstore = false
+
+    formats_to_cleanup=["black-and-white film ","black-and-white negatives/color negatives "]
+
+    formats_to_cleanup.each do |format_to_cleanup|
+      results=Blacklight.solr.select(:params => {:fq=>'format_ssim:"' + format_to_cleanup + '"',:rows=>'200000'})
+      puts "Found #{results['response']['docs'].size} documents with '#{format_to_cleanup}'"
+      results['response']['docs'].each do |result|
+        doc=SolrDocument.new(result)
+        doc.update_solr('format_ssim','update',[format_to_cleanup.strip])
+        puts "Updating #{doc.id}"
+      end
+    end
+
+  end
+
+  desc "Cleanup marques in solr documents by removing 'automobile'"
+  task :cleanup_marques => :environment do
+    Revs::Application.config.use_editstore = false
+
+    results=Blacklight.solr.select(:params => {:q=>'automobile',:rows=>'200000'})
+    puts "Found #{results['response']['docs'].size} documents with the term automobile"
+    results['response']['docs'].each do |result|
+      doc=SolrDocument.new(result)
+      marques=doc.marque
+      if marques.class == Array 
+        doc.update_solr('marque_ssim','update',marques.map{|marque| RevsUtils.clean_marque_name(marque)})
+      end
+      puts "Updating #{doc.id}"
+    end
+
+  end
+
+  
   class RevsUtils    
     extend Revs::Utils
     include Revs::Utils
