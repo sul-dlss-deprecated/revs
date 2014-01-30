@@ -79,6 +79,14 @@ def login_as(login, password = nil)
   click_button "submit"
 end
 
+def should_have_button(name)
+  page.should have_selector("input[type=submit][value='#{name}']")  
+end
+
+def should_not_have_button(name)
+  page.should_not have_selector("input[type=submit][value='#{name}']")  
+end
+
 def logout
   sign_out_button="Sign out"
   click_button(sign_out_button) if has_button?(sign_out_button)
