@@ -80,6 +80,7 @@ class Ability
     can_read_flags
     can_annotate(user)
     can_flag(user)
+    can_save_favorites_and_galleries(user)
   end
   
   def can_view_about_pages
@@ -105,7 +106,14 @@ class Ability
   
   def can_annotate(user)
     can :create, Annotation # can create new annotations
-    can [:update,:destroy], Annotation, :user_id => user.id # can update and destroy their own annotations and flags
+    can [:update,:destroy], Annotation, :user_id => user.id # can update and destroy their own annotations
+  end
+
+  def can_save_favorites_and_galleries(user)
+    can :create, SavedItem # can create new saved items
+    can :create, Gallery, :user_id=>user.id # can create new galleries for themselves
+    can [:update,:destroy], SavedItem, :user_id => user.id # can update and destroy their own Saved Items
+    can [:update,:destroy], Gallery, :user_id => user.id # can update and destroy their own Galleries
   end
 
   def can_flag(user)

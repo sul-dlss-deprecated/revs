@@ -66,6 +66,10 @@ def login_pw
   'password'
 end
 
+def get_user(login)
+  User.where(:username=>login).limit(1).first
+end
+
 def login_as(login, password = nil)
   password ||= login_pw
   logout

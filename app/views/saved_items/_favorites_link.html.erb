@@ -1,0 +1,14 @@
+<% 
+if @document.is_favorite?(current_user) 
+  favorites_link_icon = "icon-heart"
+  favorites_link_text = t('revs.favorites.remove_from_favorites')
+  url=saved_item_path(@document.id)
+  method = :delete
+else
+  favorites_link_icon = "icon-heart-empty"
+  favorites_link_text = t('revs.favorites.save_to_favorites')
+  url = saved_items_path(:id=>@document.id)
+  method = :post
+end 
+%>
+<%=link_to("<i class='#{favorites_link_icon}'></i> #{favorites_link_text}".html_safe,url,:remote=>true,:method=>method) %>        
