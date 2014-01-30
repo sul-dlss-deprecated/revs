@@ -206,6 +206,10 @@ class SolrDocument
     @annotations ||= Annotation.for_image_with_user(id,user).order('created_at desc')
   end
 
+  def is_favorite?(user)
+    Gallery.get_favorites_list(user.id).saved_items.where(:druid=>id).size == 1
+  end
+  
   def edits
     @edits ||= ChangeLog.includes(:user).where(:druid=>id,:operation=>'metadata update').order('created_at desc')
   end

@@ -15,6 +15,17 @@ class SavedItem < ActiveRecord::Base
     gallery=Gallery.get_favorites_list(user_id) # creates the default favorites list if it does not exist
     return self.create(:druid=>druid,:gallery_id=>gallery.id,:description=>description)
   end
+    
+  def self.remove_favorite(params={})
+    user_id=params[:user_id]
+    druid=params[:druid]
+    gallery=Gallery.get_favorites_list(user_id) 
+    self.where(:druid=>druid,:gallery_id=>gallery.id).limit(1).first.destroy if gallery
+  end
+  
+  def self.get_favorites(user_id)
+    Gallery.get_favorites_list(user_id).saved_items
+  end
   
   def only_one_favorite_per_user_per_druid
     errors.add(:druid, :cannot_be_more_than_one_favorite_per_user_per_druid) if self.class.where(:druid=>self.druid,:gallery_id=>self.gallery_id).size != 0

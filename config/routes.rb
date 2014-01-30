@@ -61,6 +61,9 @@ Revs::Application.routes.draw do
     end
   end
   
+  resources :galleries
+  resources :saved_items
+    
   resources :flags do
     collection do
       get 'for_image/:id', :to => 'flags#index_by_druid'
