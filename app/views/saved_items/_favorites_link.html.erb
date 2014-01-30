@@ -11,4 +11,5 @@ else
   method = :post
 end 
 %>
-<%=link_to("<i class='#{favorites_link_icon}'></i> #{favorites_link_text}".html_safe,url,:remote=>true,:method=>method) %>        
+
+<i class='#{favorites_link_icon}'></i> <%=button_to("#{favorites_link_text}",url,:remote=>true,:method=>method) %>        
