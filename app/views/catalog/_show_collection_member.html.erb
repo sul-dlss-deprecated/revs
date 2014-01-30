@@ -70,20 +70,12 @@
           <li class="nav-header"><%=t('revs.admin.sidebar.actions')%></li>
 
 					<% if can?(:create, SavedItem) %>
-<<<<<<< HEAD
 					  <li>
               <div id="favorites_link">
                 <%= render :partial=>'saved_items/favorites_link'%>
               </div>
             </li>
           <% end %>
-=======
-					  <li><div id="favorites_link">
-              <%= render :partial=>'saved_items/favorites_link'%>						
-            </div>
-          </li>
-         <% end %>
->>>>>>> 0dc2f5120c362cb10633e78973f22fb100363d2a
 
           <li>
             <%= link_to("<i class='icon-picture'></i> #{t('revs.citations.view')}".html_safe,
