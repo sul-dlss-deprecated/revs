@@ -38,7 +38,7 @@
       padding: 0;
     }
     > li >, > li > div {
-      a, a:visited {
+      div, a, a:visited, input.btn-link {
         color: #333;
         text-decoration: none;
         i {
@@ -152,6 +152,24 @@
     }
   }
   .item-actions {
+    li:hover {
+      background: #eee;
+    }
+    #favorites_link {
+      height: 24px;
+      i.icon-heart {
+        color: #990000;
+      }
+      .button_to {
+        display: inline-block;
+        margin-bottom: 0;
+        input[type=submit] {
+          font-size: 13px;
+          padding-left: 0;
+          padding-top: 0;
+        }
+      }
+    }
     .help {
       float: right;
       margin-right: -35px;
@@ -166,7 +184,7 @@
     &.nav-list > li > a {
       padding: 2px 15px;
     }
-    a:hover i {
+    a:hover i, div:hover i {
       color: #990000;
     }
     a#hide_annotations_link {
@@ -302,7 +320,7 @@
       &.active {
         background-color: #eeeeee;
       }
-      &:hover, &.flagged {
+      &:hover {
         i {
           color: #990000;
         }
