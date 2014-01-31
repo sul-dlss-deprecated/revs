@@ -50,13 +50,6 @@
         </li>
       <%# end %>
 
-      <%# Placeholder pending implementation of user galleries feature %>
-      <%# if user_galleries_count(@user) > 0 %>
-        <li>
-          <%#= link_to t('revs.user.view_your_galleries'), user_galleries_path(@user.username) %>
-        </li>
-      <%# end %>
-
       <% if user_annotations_count(@user) > 0 %>
         <li><%= link_to t('revs.user.view_your_annotations'),
                 user_annotations_path(@user.username) %></li>
@@ -68,7 +61,6 @@
         <li><%= link_to t('revs.user.view_your_edits'), user_edits_path(@user.username) %></li>
       <% end %>
 
-      <li><%= link_to t('revs.user.create_new_gallery'), "#" %></li>
 
     </ul>
 
