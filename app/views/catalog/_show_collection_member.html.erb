@@ -77,11 +77,6 @@
             </li>
           <% end %>
 
-          <li>
-            <%= link_to("<i class='icon-picture'></i> #{t('revs.citations.view')}".html_safe,
-            "#{Revs::Application.config.purl}/#{@document[:id]}") %>
-          </li>
-
 					<% if (can?(:read, Annotation) || can?(:create, Annotation))
    					  @annotations = @document.annotations(current_user)
 							annotation_link_text = can?(:create, Annotation) ?  t('revs.annotations.add') : t('revs.annotations.view')
@@ -99,6 +94,11 @@
 	              <%= render(:partial => "annotations/all", :locals=>{:annotations=>@annotations}) if @annotations.size > 0 %>
 	        	 </div>
 					<% end %>
+
+          <li>
+            <%= link_to("<i class='icon-picture'></i> #{t('revs.citations.view')}".html_safe,
+            "#{Revs::Application.config.purl}/#{@document[:id]}") %>
+          </li>
 
           <% if (can?(:read, Flag) || can?(:add_new_flag_to, @document))	%>
             	<li>
