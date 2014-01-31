@@ -32,7 +32,7 @@ namespace :revs do
 
   desc "Check development options"
   task :dev_options_set => :environment do
-    if Revs::Application.config.simulate_sunet_user || !Revs::Application.config.use_editstore || !Revs::Application.config.restricted_beta
+    if Revs::Application.config.simulate_sunet_user || !Revs::Application.config.use_editstore
       puts '**************************************************************'
       puts '****** WARNING: SOME DEVELOPMENT ONLY OPTIONS ARE SET ********'
       puts '**************************************************************'

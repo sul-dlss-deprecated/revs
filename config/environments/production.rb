@@ -76,5 +76,5 @@ Revs::Application.config.simulate_sunet_user = false # SET TO BLANK OR FALSE IN 
 Revs::Application.config.purl = "//purl.stanford.edu"
 Revs::Application.config.purl_plugin_server = "prod"
 Revs::Application.config.purl_plugin_location = "//image-viewer.stanford.edu/assets/purl_embed_jquery_plugin.js"
-Revs::Application.config.restricted_beta = true # if set to true, then only beta users (and sunet users) can view the site
+Revs::Application.config.restricted_beta = false # if set to true, then only beta users (and sunet users) can view the site
 Revs::Application.config.use_editstore = true # if set to true, then all changes will be saved to editstore database (SHOULD BE TRUE IN PRODUCTION!)
