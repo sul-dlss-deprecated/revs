@@ -11,7 +11,7 @@
        <% end %>
 
         <% if not local_assigns[:curate_view] %>
-          <th><%= link_to t('revs.collection_members.items_name').titleize, user_flags_path(:name=>user.username,:order=>'druid', :selection=>local_assigns[:selection].join(',')) %></th>
+          <th><%= t('revs.collection_members.items_name').titleize %></th>
         <% end%>
 
         <th><%= t('revs.flags.comment')%></th>

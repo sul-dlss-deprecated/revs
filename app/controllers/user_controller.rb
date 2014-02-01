@@ -26,8 +26,20 @@ class UserController < ApplicationController
     @name=params[:name]
     @user=User.find_by_username(@name)
     if @user
-      @order=params[:order] || 'druid'    
+      @order=params[:order] || 'created_at DESC'    
       @annotations=@user.visible('annotations').order(@order).page params[:page] 
+    else
+      profile_not_found
+    end
+  end
+
+  # all of the user's favorites
+  def favorites
+    @name=params[:name]
+    @user=User.find_by_username(@name)
+    if @user
+      @order=params[:order] || 'created_at DESC'
+      @favorites=@user.favorites.order(@order).page params[:page] 
     else
       profile_not_found
     end
@@ -38,7 +50,7 @@ class UserController < ApplicationController
     @name=params[:name]
     @user=User.find_by_username(@name)
     if @user
-      @order=params[:order] || 'druid'    
+      @order=params[:order] || 'created_at DESC'    
       @edits=@user.visible('change_logs').order(@order).page params[:page] 
     else
       profile_not_found
@@ -53,7 +65,7 @@ class UserController < ApplicationController
     @selection = s.split(',')
     
     if @user
-      @order=params[:order] || 'druid'    
+      @order=params[:order] || 'created_at DESC'    
       @flags=flagListForStates(@selection, @user, @order)
       
     else

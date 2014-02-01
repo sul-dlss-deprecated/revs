@@ -23,7 +23,7 @@
       <%= link_to "#{t('revs.messages.view_all')} »", user_edits_path(@user.username) %>
     </p>
   <% end %>
-<% else %>
+<% elsif is_logged_in_user?(@user) %>
   <p class="muted">
     <em><%=t('revs.curator.you_can_edit_items')%></em>
   </p>

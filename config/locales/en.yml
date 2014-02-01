@@ -57,7 +57,7 @@ en:
       flagged: 'Flagged'
       comment_optional: 'Comment (optional)'
       comment: 'Comment'
-      singluar: 'Flag'
+      singular: 'Flag'
       plural: 'Flags'
       resolve: 'Resolve'
       none: 'This user does not have any flags.'
@@ -214,12 +214,14 @@ en:
         annotation_text: "Annotation text"
         annotator: "Annotator"
     favorites:
+      singular: "favorite"
       head: "Favorites"
       you_can_save_favorites: "Items you save as favorites will be shown here."
       save_to_favorites: "Save to favorites"
       remove_from_favorites: "Remove from favorites"
       saved: "Item has been saved to favorites."
-      removed: "Item has been removed from favorites."      
+      removed: "Item has been removed from favorites."  
+      none: 'This user does not have any favorites.'    
     user_galleries:
       head: "Galleries"
       you_can_create_galleries_html: "You can %{href} and add items to it from the Item Details page."
@@ -370,6 +372,7 @@ en:
       view_your_annotations: "View your annotations"
       view_your_flags: "View your flags"
       view_your_edits: "View your edits"
+      view_all_favorites: "View all favorites"
       view_your_favorites: "View your favorites"
       view_your_galleries: "View your galleries"
       view_all_edits: "View all edits"

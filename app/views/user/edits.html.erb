@@ -7,7 +7,7 @@
  <%= paginate @edits, :params => {:order=>@order} %>
  <table class="table table-bordered table-condensed table-hover table-striped">
    <tr>
-     <th><%= link_to t('revs.collection_members.items_name').titleize, user_edits_path(:id=>@id,:order=>'druid') %></th>
+     <th><%= t('revs.collection_members.items_name').titleize %></th>
      <th><%= link_to t('revs.messages.created'), user_edits_path(:id=>@id,:order=>'created_at DESC') %></th>
    </tr>
    <% @edits.each do |edit|%>
@@ -25,9 +25,6 @@
 
 
 </div>
-	<% if is_logged_in_user?(@user) %>
-		<%= render :partial => 'devise/shared/show_user_sidebar' %>
-	<% else %>
-		<%= render :partial => 'devise/shared/show_public_profile_user_sidebar' %>
-	<% end %>
+<%= render :partial => 'side_nav' %>
+
 

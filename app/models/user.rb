@@ -42,6 +42,11 @@ class User < ActiveRecord::Base
 
   delegate :can?, :cannot?, :to => :ability # this saves us some typing so we can ask user.can? instead of user.ability.can?
   
+  # get the user's favorites 
+  def favorites
+    Gallery.get_favorites_list(id).saved_items
+  end
+  
   def self.roles
     ROLES
   end
@@ -66,9 +71,13 @@ class User < ActiveRecord::Base
   end
   
   def latest(class_name)
-    latest=visible(class_name)
-    latest=self.class.latest_filter(latest)
-    return latest
+    if class_name=='favorites'
+      return favorites.order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
+    else
+      latest=visible(class_name)
+      latest=self.class.latest_filter(latest)
+      return latest
+    end
   end
   
   def metadata_updates

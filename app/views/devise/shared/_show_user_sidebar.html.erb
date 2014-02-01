@@ -54,6 +54,9 @@
         <li><%= link_to t('revs.user.view_your_annotations'),
                 user_annotations_path(@user.username) %></li>
       <% end %>
+      <% if user_favorites_count(@user) > 0 %>
+        <li><%= link_to t('revs.user.view_your_favorites'), user_favorites_path(@user.username) %></li>
+      <% end %> 
       <% if user_flags_count(@user) > 0 %>
         <li><%= link_to t('revs.user.view_your_flags'), user_flags_path(@user.username) %></li>
       <% end %>

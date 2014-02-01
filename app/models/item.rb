@@ -4,6 +4,7 @@ class Item < WithSolrDocument
     
  has_many :annotations, :foreign_key=>:druid, :primary_key=>:druid
  has_many :flags, :foreign_key=>:druid, :primary_key=>:druid
+ has_many :saved_items, :foreign_key=>:druid, :primary_key=>:druid
  
   validates :druid, :is_druid=>true
   validates :druid, :uniqueness=>true

@@ -1,0 +1,30 @@
+<div id="content" class="span9">
+
+  <h2><%= display_user_name(@user) %><span class="lowercase">'s</span> <%=t('revs.favorites.head')%></h2>
+ 
+ <% if @favorites.count > 0 %>
+    	
+    <%= paginate @favorites, :params => {:order=>@order} %>
+    <table class="table table-bordered table-condensed table-hover table-striped">
+      <tr>
+        <th><%= t('revs.collection_members.items_name').titleize %></th>
+        <th><%= link_to t('revs.messages.created'), user_favorites_path(:id=>@id,:order=>'created_at DESC') %></th>
+      </tr>
+      <% @favorites.each do |favorite|%>
+       <tr>
+         <td><%= item_link(favorite.solr_document) %></td>
+				 <td><%= show_as_datetime(favorite.created_at.in_time_zone) %></td>
+       </tr>
+      <% end %>
+    </table>    
+	
+ <% else %>
+    <%=t('revs.favorites.none')%>
+<% end %>
+
+
+
+</div>
+
+<%= render :partial => 'side_nav' %>
+

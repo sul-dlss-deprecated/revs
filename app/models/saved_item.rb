@@ -1,6 +1,7 @@
-class SavedItem < ActiveRecord::Base
+class SavedItem < WithSolrDocument
   
   belongs_to :gallery
+  belongs_to :item, :foreign_key=>:druid, :primary_key=>:druid
   
   attr_accessible :druid, :gallery_id, :description
   

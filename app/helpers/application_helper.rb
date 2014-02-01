@@ -76,6 +76,10 @@ module ApplicationHelper
     end
   end
   
+  def user_favorites_count(user)
+    user.favorites.count
+  end
+  
   def user_annotations_count(user)
     user.visible('annotations').count
   end

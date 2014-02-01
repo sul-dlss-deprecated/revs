@@ -1,0 +1,5 @@
+<% if is_logged_in_user?(@user) %>
+	<%= render :partial => 'devise/shared/show_user_sidebar' %>
+<% else %>
+	<%= render :partial => 'devise/shared/show_public_profile_user_sidebar' %>
+<% end %>
