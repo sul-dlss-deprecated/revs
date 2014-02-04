@@ -4,8 +4,21 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-#one: {}
-# column: value
-#
-#two: {}
-#  column: value
+curator_fav1:
+  gallery: curator_favs
+  druid: 'bb004bn8654'
+
+curator_fav2:
+  gallery: curator_favs
+  druid: 'qb957rw1430'
+
+curator_fav3:
+  gallery: curator_favs
+  druid: 'qk978vx9753'
+
+curator_fav4:
+  gallery: curator_favs
+  druid: 'yh093pt9555'
+  
+  
+  
