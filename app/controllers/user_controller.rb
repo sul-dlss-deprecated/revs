@@ -32,7 +32,7 @@ class UserController < ApplicationController
       profile_not_found
     end
   end
-  
+
   # all of the user's favorites
   def favorites
     @name=params[:name]
@@ -43,17 +43,6 @@ class UserController < ApplicationController
     else
       profile_not_found
     end
-  end
-  
-  #all of the user'sgalleries
-  def galleries
-    @name=params[:name]
-     @user=User.find_by_username(@name)
-     if @user
-     else
-       profile_not_found
-     end
-     
   end
 
   # all of the user's item edits

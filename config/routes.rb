@@ -38,7 +38,6 @@ Revs::Application.routes.draw do
   # public user profile pages
   match 'user/:name/favorites', :to=>'user#favorites', :as=>'user_favorites', :via=>:get, :constraints => {:name => /\D+.+/} 
   match 'user/:name/annotations', :to=>'user#annotations', :as=>'user_annotations', :via=>:get, :constraints => {:name => /\D+.+/} 
-  match 'user/:name/galleries', :to=>'user#galleries', :as=>'user_galleries', :via=>:get, :constraints => {:name => /\D+.+/} 
   match 'user/:name/flags', :to=>'user#flags', :as=>'user_flags', :via=>:get, :constraints => {:name => /\D+.+/} 
   match 'user/:name/edits', :to=>'user#edits', :as=>'user_edits', :via=>:get, :constraints => {:name => /\D+.+/} 
   match 'user/:id', :to=>'user#show', :as=>'user_profile_id', :via=>:get, :constraints => {:id => /\d+/} # all digits is assumed to be an ID
