@@ -1,30 +1,45 @@
-<div id="content" class="span9">
+<div id="content" class="span9 favorites-index">
 
   <h2><%= display_user_name(@user) %><span class="lowercase">'s</span> <%=t('revs.favorites.head')%></h2>
- 
- <% if @favorites.count > 0 %>
-    	
-    <%= paginate @favorites, :params => {:order=>@order} %>
-    <table class="table table-bordered table-condensed table-hover table-striped">
-      <tr>
-        <th><%= t('revs.collection_members.items_name').titleize %></th>
-        <th><%= link_to t('revs.messages.created'), user_favorites_path(:id=>@id,:order=>'created_at DESC') %></th>
-      </tr>
-      <% @favorites.each do |favorite|%>
-       <tr>
-         <td><%= item_link(favorite.solr_document) %></td>
-				 <td><%= show_as_datetime(favorite.created_at.in_time_zone) %></td>
-       </tr>
-      <% end %>
-    </table>    
-	
- <% else %>
-    <%=t('revs.favorites.none')%>
-<% end %>
 
+  <% if @favorites.count > 0 %>
+    <!-- span below is placeholder. this is how it should look, but needs to use real pagination -->
+    <span class="prev-next">
+      « Previous |  <strong>1</strong> - <strong>10</strong> of <strong>15</strong> |  <a href="/?f%5Bformat_ssim%5D%5B%5D=black-and-white+negatives&amp;page=2" rel="next">Next »</a>
+    </span>
+    <div class="saved-items">
+      <%= paginate @favorites, :params => {:order=>@order} %>
+        <% @favorites.each do |favorite| %>
+          <div class="row item">
+            <div class="span5">
+              <ul>
+                <li><%= link_to(image_tag(favorite.solr_document.images.first), item_path(favorite.solr_document)) %><li>
+                <li class="item-title"><%= item_link(favorite.solr_document) %></li>
+                <li class="item-creation-date">Saved on <%= show_as_datetime(favorite.created_at.in_time_zone) %></li>
+                <li class="favorite-item-actions">
+                  <%=button_to("#{t('revs.favorites.remove_from_favorites')}", saved_item_path(favorite.solr_document.id), :method=> :delete, class: 'btn btn-link') %> 
+                  |
+                  <!-- this link should turn on edit mode for annotation field below -->
+                  <%= link_to "Edit annotation", "#" %>
+                </li>
+              </ul>
+            </div>
+            <div class="span4">
+              <!-- Content of this p needs to be replaced with 'favorite.description' -->
+              <p class="item-annotation">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit.</p>
+            </div>
+          </div>
+        <% end %>
+      </div>
 
+   <% else %>
+      <%=t('revs.favorites.none')%>
+   <% end %>
+
+   <div class="span9 pagination">
+     Pagination, if necessary, goes here
+   </div>
 
 </div>
 
 <%= render :partial => 'side_nav' %>
-
