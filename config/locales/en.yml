@@ -247,7 +247,7 @@ en:
         curator: 'Curator'
       search_label: 'Search'
       facets:
-        title: 'Browse'
+        title: 'Limit your search'
     sidebar:
       navigation:
         title: 'Navigation'
