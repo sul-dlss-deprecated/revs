@@ -376,6 +376,35 @@ namespace :revs do
 
   end
 
+  desc "Move flags to favorites for a user, run with rake revs:move_flags_to_favs['jsummer5@stanford.edu']"
+  task :move_flags_to_favs, [:username] => :environment do |t, args|
+      username=args[:username]  # jsummer5@stanford.edu
+      user=User.where(:username=>username).limit(1).first
+      if user.nil?
+        puts "#{username} not found"
+      else
+        flags=user.flags
+        if flags.size == 0 
+          puts "#{username} has no flags"          
+        else
+          puts "Moving #{flags.size} flags for #{username} to favorites"
+          flags.each do |flag|
+            existing_fav=user.favorites.where(:druid=>flag.druid)
+            if existing_fav.size == 0 # favorite doesn't exist yet, so add it
+              favorite=SavedItem.save_favorite(:user_id=>user.id,:description=>flag.comment,:druid=>flag.druid)
+              if favorite.id != nil 
+                flag.destroy
+                puts "Favorite added for #{flag.druid}; flag removed"
+              else
+                puts "Favorite could not be added for #{flag.druid}; flag NOT removed"
+              end
+            else
+              puts "favorite already exists for #{flag.druid}; flag NOT removed"
+            end
+        end
+      end
+    end
+  end
   
   class RevsUtils    
     extend Revs::Utils

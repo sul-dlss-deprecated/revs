@@ -10,7 +10,7 @@ class SavedItemsController < ApplicationController
     if gallery_id
       # save to specified gallery
     else
-      SavedItem.save_favorite(:user_id=>user_id,:druid=>druid)
+      @item=SavedItem.save_favorite(:user_id=>user_id,:druid=>druid)
       @message=t('revs.favorites.saved')
     end
 
