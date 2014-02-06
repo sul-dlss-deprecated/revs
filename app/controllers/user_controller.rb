@@ -1,8 +1,8 @@
 class UserController < ApplicationController
     
   before_filter :check_for_curator_logged_in, :only=>[:curator_update_flag_table] # only curators can reach this action
+  before_filter :check_for_profile_existence, :except=>[:update_flag_table,:curator_update_flag_table] # these pages are visible to anyone
   before_filter :check_for_profile_visible, :only=>[:show,:show_by_name,:favorites] # these pages are only visible for the current user or public profiles
-  before_filter :check_for_profile_existence, :except=>[:show,:show_by_name,:favorites] # these pages are visible to anyone
   
   # user profile pages
   

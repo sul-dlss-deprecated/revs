@@ -21,7 +21,7 @@
        <% end %>
 
        <% if local_assigns[:curate_view] %>
-        <th><%= link_to t('revs.curator.flag_created'), flags_table_curator_tasks_path(:order_all=>'created_at DESC', :selection=>local_assigns[:selection].join(','), :tab=>@tab_list_flag)%></th>
+        <th><%= link_to t('revs.curator.flag_created'), flags_table_curator_tasks_path(:order=>'created_at DESC', :selection=>local_assigns[:selection].join(','), :tab=>@tab_list_flag)%></th>
        <% end %>
 
 

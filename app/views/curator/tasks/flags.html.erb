@@ -8,24 +8,21 @@
   </h3>
 
    <ul class="nav nav-tabs">
-	    <li class="<%="active" if @tab == @tab_list_item%>">
-		<a href="#flags-by-item" data-toggle="tab"><%=t('revs.curator.flagged_items_by_item') %></a>
-	  </li>
-    <li class="<%="active" if @tab == @tab_list_flag%>">
-      <a href="#flags-by-flag" data-toggle="tab"><%= t('revs.curator.flagged_items_by_status') %></a>
-	  </li>
+	    <li class="<%="active" if @tab == @tab_list_item%>"><a href="#<%=@tab_list_item%>" data-toggle="tab"><%=t('revs.curator.flagged_items_by_item') %></a></li>
+      <li class="<%="active" if @tab == @tab_list_flag%>"><a href="#<%=@tab_list_flag%>" data-toggle="tab"><%= t('revs.curator.flagged_items_by_status') %></a></li>
+      <li class="<%="active" if @tab == @tab_list_user%>"><a href="#<%=@tab_list_user%>" data-toggle="tab"><%= t('revs.curator.edited_items_by_user') %></a></li>
   </ul>
 
   <div class="tab-content">
-    <div class="tab-pane <%="active" if @tab == @tab_list_item %>" id="<%=@tab_list_item%>">
+    <div  id="<%=@tab_list_item%>" class="tab-pane <%="active" if @tab == @tab_list_item %>">
       <table class="admin table table-bordered table-condensed table-hover table-striped">
         <tr>
           <th><%= t('revs.curator.item_title') %></th>
-		      <th class="right"><%=link_to t('revs.flags.all_flags_name'), flags_table_curator_tasks_path(:order=>'num_flags DESC')%></th>
+		      <th class="right"><%=link_to t('revs.flags.all_flags_name'), flags_table_curator_tasks_path(:order_all=>'num_flags DESC')%></th>
 		      <th class="right"><%= t('revs.flags.open_state_display_name')%></th>
           <th class="right"><%= t('revs.flags.fixed_state_diplay_name')%></th>
           <th class="right"><%= t('revs.flags.wont_fix_state_display_name')%></th>
-          <th><%= link_to t('revs.message.date'), flags_table_curator_tasks_path(:order=>'created_at desc') %></th>
+          <th><%= link_to t('revs.message.date'), flags_table_curator_tasks_path(:order_all=>'created_at desc') %></th>
         </tr>
 
       <% @flags_grouped.each do |flag|%>
@@ -41,12 +38,31 @@
      
       </table>
 
-	    <%= paginate @flags_grouped, :param_name => :pagina2, :params => {:order=>@order, :tab=>@tab} %>
+	    <%= paginate @flags_grouped, :param_name => :pagina2, :params => {:order_all=>@order_all, :tab=>@tab_list_item} %>
       </div>
 
-      <div class="tab-pane <%="active" if @tab == @tab_list_flag %>" id="<%=@tab_list_flag%>">
+      <div  id="<%=@tab_list_flag%>" class="tab-pane <%="active" if @tab == @tab_list_flag %>">
         <%= select_tag 'curator_flag_selection', options_from_collection_for_select(Flag.for_dropdown, :first, :last, :selected => @selection.join(",")) %>
         <%= render :partial => 'user/flags_table', :locals=>{:selection=>@selection, :flags=>@flags, :user=>current_user,:curate_view=>true }%>
+      </div>
+      
+      <div id="<%=@tab_list_user%>" class="tab-pane <%="active" if @tab == @tab_list_user%>">
+        
+        <table class="table table-bordered table-condensed table-hover table-striped">
+          <th><%=t('revs.curator.username') %></th>
+          <th class="right"><%=link_to t('revs.curator.flags_made'), flags_table_curator_tasks_path(:order3=>'num_flags DESC', :tab=>@tab_list_user) %></th>
+          <th><%=link_to t('revs.curator.last_edit'), flags_table_curator_tasks_path(:order_user=>'flags.updated_at DESC', :tab=>@tab_list_user) %></th>
+          <% @flags_by_user.each do |result| %>
+            <tr>
+              <td><%=display_user_name(result.user,true)%></td>
+              <td class="right"><%= result.num_flags%></td>
+              <td><%=show_as_date(result.updated_at)%></td>
+            </tr>
+          <% end %>
+        </table>
+        
+        <%= paginate @flags_by_user, :param_name => :pagina3, :params => {:order_user=>@order_user, :tab=>@tab_list_user} %>
+  	    
       </div>
 
   </div>
