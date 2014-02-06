@@ -3,17 +3,25 @@ class Curator::TasksController < ApplicationController
   before_filter :check_for_curator_logged_in
   before_filter :ajax_only, :only=>[:set_edit_mode,:edit_metadata,:set_top_priority_item]
 
-    # get all flags grouped by druid with counts
    def index
+     redirect_to flags_table_curator_tasks_path # later we can replace with a landing page
+   end
+
+    # get all flags grouped by druid with counts
+   def flags
      s = params[:selection] || Flag.open
      @selection = s.split(',')
      @order=params[:order] || 'num_flags DESC'
      @order_all=params[:order_all] || "created_at DESC"
      @flags_grouped=Flag.select('*,COUNT("druid") as num_flags').group("druid").order(@order).page(params[:pagina2]).per(Flag.per_table_page)
      @flag_states = Flag.groupByFlagState
-     @tab = params[:tab]
      #@flags_grouped = Kaminari.paginate_array(Flag.all).page(params[:pagina2]).per(Flag.per_table_page)
      @flags = Kaminari.paginate_array(Flag.where(:state => @selection).order(@order_all)).page(params[:pagina]).per(Flag.per_table_page)
+
+     @tab_list_item = 'flags-by-item'
+     @tab_list_user = 'flags-by-user'
+     @tab_list_flag = 'flags-by-flag'
+     @tab = params[:tab] || @tab_list_item
    end
    
    def annotations

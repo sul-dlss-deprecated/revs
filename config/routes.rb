@@ -98,6 +98,8 @@ Revs::Application.routes.draw do
         put 'item/:id/set_visibility', :to => 'tasks#set_visibility', :as => 'set_visibility'
         match 'annotations', :to => 'tasks#annotations', :as=>"annotations_table"        
         match 'edits', :to => 'tasks#edits', :as=>"edits_table"
+        match 'flags', :to => 'tasks#flags', :as=>"flags_table"
+        match 'favorites', :to => 'tasks#favorites', :as=>"favorites_table"
       end
     end
     resources :help do

@@ -7,38 +7,25 @@
     <span class="object-count muted">(<%= Flag.count %> total, <%= Flag.unresolved_count %> unresolved)</span>
   </h3>
 
-  <ul class="nav nav-tabs">
-    <% if params[:tab] != "flags-by-flag"%>
-	    <li class="active">
-	  <% else %>
-	    <li class>
-	  <% end %>
+   <ul class="nav nav-tabs">
+	    <li class="<%="active" if @tab == @tab_list_item%>">
 		<a href="#flags-by-item" data-toggle="tab"><%=t('revs.curator.flagged_items_by_item') %></a>
 	  </li>
-
-    <% if params[:tab] == "flags-by-flag"%>
-	    <li class="active">
-	  <% else %>
-	    <li class>
-	  <% end %>
-        <a href="#flags-by-flag" data-toggle="tab"><%= t('revs.curator.flagged_items_by_status') %></a>
+    <li class="<%="active" if @tab == @tab_list_flag%>">
+      <a href="#flags-by-flag" data-toggle="tab"><%= t('revs.curator.flagged_items_by_status') %></a>
 	  </li>
   </ul>
 
   <div class="tab-content">
-	  <% if params[:tab] != "flags-by-flag"%>
-      <div class="tab-pane active" id="flags-by-item">
-	  <% else %>
-		  <div id="flags-by-item" class="tab-pane">
-	  <% end%>
+    <div class="tab-pane <%="active" if @tab == @tab_list_item %>" id="<%=@tab_list_item%>">
       <table class="admin table table-bordered table-condensed table-hover table-striped">
         <tr>
           <th><%= t('revs.curator.item_title') %></th>
-		      <th class="right"><%=link_to t('revs.flags.all_flags_name'), curator_tasks_path(:order=>'num_flags DESC')%></th>
+		      <th class="right"><%=link_to t('revs.flags.all_flags_name'), flags_table_curator_tasks_path(:order=>'num_flags DESC')%></th>
 		      <th class="right"><%= t('revs.flags.open_state_display_name')%></th>
           <th class="right"><%= t('revs.flags.fixed_state_diplay_name')%></th>
           <th class="right"><%= t('revs.flags.wont_fix_state_display_name')%></th>
-          <th><%= link_to t('revs.message.date'), curator_tasks_path(:order=>'created_at desc') %></th>
+          <th><%= link_to t('revs.message.date'), flags_table_curator_tasks_path(:order=>'created_at desc') %></th>
         </tr>
 
       <% @flags_grouped.each do |flag|%>
@@ -54,18 +41,13 @@
      
       </table>
 
-	    <%= paginate @flags_grouped, :param_name => :pagina2, :params => {:order=>@order, :tab=>"flags-by-item"} %>
+	    <%= paginate @flags_grouped, :param_name => :pagina2, :params => {:order=>@order, :tab=>@tab} %>
       </div>
 
-	<% if params[:tab]=="flags-by-flag"%>
-    <div class="tab-pane active" id="flags-by-flag">
-	<% else %>
-	  <div class="tab-pane" id="flags-by-flag">
-	<% end %>
-
-  <%= select_tag 'curator_flag_selection', options_from_collection_for_select(Flag.for_dropdown, :first, :last, :selected => @selection.join(",")) %>
-  <%= render :partial => 'user/flags_table', :locals=>{:selection=>@selection, :flags=>@flags, :user=>current_user,:curate_view=>true }%>
-    </div>
+      <div class="tab-pane <%="active" if @tab == @tab_list_flag %>" id="<%=@tab_list_flag%>">
+        <%= select_tag 'curator_flag_selection', options_from_collection_for_select(Flag.for_dropdown, :first, :last, :selected => @selection.join(",")) %>
+        <%= render :partial => 'user/flags_table', :locals=>{:selection=>@selection, :flags=>@flags, :user=>current_user,:curate_view=>true }%>
+      </div>
 
   </div>
 
