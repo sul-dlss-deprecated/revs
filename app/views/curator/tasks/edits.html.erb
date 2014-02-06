@@ -54,17 +54,12 @@
     <% end %>
 
         <table class="table table-bordered table-condensed table-hover table-striped">
-          <th><%=link_to t('revs.curator.username'), edits_table_curator_tasks_path(:order2=>'user_id ASC', :tab=>@tab_list_user) %></th>
+          <th><%=t('revs.curator.username') %></th>
           <th class="right"><%=link_to t('revs.curator.edits_made'), edits_table_curator_tasks_path(:order2=>'num_edits DESC', :tab=>@tab_list_user) %></th>
           <th><%=link_to t('revs.curator.edit_update'), edits_table_curator_tasks_path(:order2=>'updated_at DESC', :tab=>@tab_list_user) %></th>
           <% @edits_by_user.each do |result| %>
             <tr>
-              <td><% if result.user.public?%>
-                <%=link_to result.user.to_s,user_profile_id_path(result.user_id) %>
-              <% else %>
-                <%=result.user.to_s%>
-              <% end %>
-              </td>
+              <td><%=display_user_name(result.user,true)%></td>
               <td class="right"><%= result.num_edits%></td>
               <td><%=show_as_date(result.updated_at)%></td>
             </tr>

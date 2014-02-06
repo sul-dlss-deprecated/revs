@@ -24,9 +24,14 @@ module ApplicationHelper
     user_signed_in? && user == current_user
   end
     
-  # pass in a user, if it's the currently logged in user, you will always get the fullname; otherwise you will get the appropriate name for public display  
-  def display_user_name(user)
-     is_logged_in_user?(user) ? user.full_name : user.to_s
+  # pass in a user, if it's the currently logged in user, you will always get the fullname; otherwise you will get the appropriate name for public display; if you pass in true as a second parameter, you will get a link back to the user's profile if public  
+  def display_user_name(user,linked=false)
+     display = is_logged_in_user?(user) ? user.full_name : user.to_s
+     if linked
+       user.public? ? link_to(user.to_s,user_profile_id_path(user.id)) : display
+     else
+       return display
+     end
   end
   
   def available_sizes

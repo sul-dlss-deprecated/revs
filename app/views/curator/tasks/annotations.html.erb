@@ -54,13 +54,13 @@
         <table class="table table-bordered table-condensed table-hover table-striped">
           <th><%= t('revs.curator.item_title') %></th>
           <th><%=t('revs.annotations.annotation_text')%></th>
-          <th><%=t('revs.annotations.annotator')%></th>
+          <th><%=t('revs.curator.username') %></th>
           <th><%=link_to t('revs.curator.created_on'), annotations_table_curator_tasks_path(:order2=>'created_at', :tab=>@tab_list_all  )%></th>
           <%@annotations_list.each do |annotation| %>
             <tr>
               <td><%=item_link(annotation.solr_document,:truncate=>true)%></td>
               <td><%= annotation.text%></td>
-              <td><%= User.where(:id=>annotation.user_id)[0].username%></td>
+              <td><%=display_user_name(annotation.user,true)%></td>
               <td><%= show_as_datetime(annotation.created_at.in_time_zone)%></td>
             </tr>
           <% end %>
