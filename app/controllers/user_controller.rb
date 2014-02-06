@@ -39,7 +39,8 @@ class UserController < ApplicationController
     @user=User.find_by_username(@name)
     if @user
       @order=params[:order] || 'created_at DESC'
-      @favorites=@user.favorites.order(@order).page params[:page] 
+      current_page = params[:page] || 1
+      @favorites=Kaminari.paginate_array(@user.favorites.order(@order)).page(current_page).per(SavedItem.favorites_per_page)
     else
       profile_not_found
     end

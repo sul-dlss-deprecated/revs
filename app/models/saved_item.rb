@@ -9,6 +9,13 @@ class SavedItem < WithSolrDocument
   validates :druid, :is_druid=>true
   validate :only_one_favorite_per_user_per_druid
   
+  FAVORITES_PER_PAGE = 10
+  
+  
+  def self.favorites_per_page
+    return FAVORITES_PER_PAGE
+  end
+  
   def self.save_favorite(params={})
     user_id=params[:user_id]
     druid=params[:druid]

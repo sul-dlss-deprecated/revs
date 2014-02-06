@@ -4,11 +4,11 @@
 
   <% if @favorites.count > 0 %>
     <!-- span below is placeholder. this is how it should look, but needs to use real pagination -->
-    <span class="prev-next">
-      « Previous |  <strong>1</strong> - <strong>10</strong> of <strong>15</strong> |  <a href="/?f%5Bformat_ssim%5D%5B%5D=black-and-white+negatives&amp;page=2" rel="next">Next »</a>
+    <span class="prev-next">   
+       <%= paginate @favorites, :params => {:order=>@order} %>
     </span>
     <div class="saved-items">
-      <%= paginate @favorites, :params => {:order=>@order} %>
+     
         <% @favorites.each do |favorite| %>
           <div class="row item">
             <div class="span5">
@@ -37,7 +37,7 @@
    <% end %>
 
    <div class="span9 pagination">
-     Pagination, if necessary, goes here
+     <%= paginate @favorites %>
    </div>
 
 </div>
