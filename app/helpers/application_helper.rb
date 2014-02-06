@@ -30,7 +30,7 @@ module ApplicationHelper
      if linked
        user.public? ? link_to(user.to_s,user_profile_id_path(user.id)) : display
      else
-       return display
+       display
      end
   end
   

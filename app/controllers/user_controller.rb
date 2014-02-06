@@ -1,77 +1,44 @@
 class UserController < ApplicationController
-  
-  #Class Vars
-  
-  before_filter :check_for_curator_logged_in, :only=>[:curator_update_flag_table]
+    
+  before_filter :check_for_curator_logged_in, :only=>[:curator_update_flag_table] # only curators can reach this action
+  before_filter :check_for_profile_visible, :only=>[:show,:show_by_name,:favorites] # these pages are only visible for the current user or public profiles
+  before_filter :check_for_profile_existence, :except=>[:show,:show_by_name,:favorites] # these pages are visible to anyone
   
   # user profile pages
   
   # public user profile page by ID (e.g. /user/134)
   def show
-    @id=params[:id]
-    @user=User.find_by_id(@id)
-    render_profile  
   end
   
-   
   # public user profile page by name (e.g. /user/peter)
   def show_by_name
-    @name=params[:name]
-    @user=User.find_by_username(@name)
-    render_profile
+    render :show
   end
       
   # all of the user's annotations
   def annotations
-    @name=params[:name]
-    @user=User.find_by_username(@name)
-    if @user
-      @order=params[:order] || 'created_at DESC'    
-      @annotations=@user.visible('annotations').order(@order).page params[:page] 
-    else
-      profile_not_found
-    end
+    @order=params[:order] || 'created_at DESC'    
+    @annotations=@user.visible('annotations').order(@order).page params[:page] 
   end
 
-  # all of the user's favorites
+  # all of the user's favorites, only show if the profile is public
   def favorites
-    @name=params[:name]
-    @user=User.find_by_username(@name)
-    if @user
-      @order=params[:order] || 'created_at DESC'
-      current_page = params[:page] || 1
-      @favorites=Kaminari.paginate_array(@user.favorites.order(@order)).page(current_page).per(SavedItem.favorites_per_page)
-    else
-      profile_not_found
-    end
+    @order=params[:order] || 'created_at DESC'
+    @favorites=Kaminari.paginate_array(@user.favorites.order(@order)).page(current_page).per(SavedItem.favorites_per_page)
   end
 
   # all of the user's item edits
   def edits
-    @name=params[:name]
-    @user=User.find_by_username(@name)
-    if @user
-      @order=params[:order] || 'created_at DESC'    
-      @edits=@user.visible('change_logs').order(@order).page params[:page] 
-    else
-      profile_not_found
-    end
+    @order=params[:order] || 'created_at DESC'    
+    @edits=@user.visible('change_logs').order(@order).page params[:page] 
   end
   
   # all of the user's flags
   def flags
-    @name=params[:name]
-    @user=User.find_by_username(@name)
     s = params[:selection] || Flag.open
-    @selection = s.split(',')
-    
-    if @user
-      @order=params[:order] || 'created_at DESC'    
-      @flags=flagListForStates(@selection, @user, @order)
-      
-    else
-      profile_not_found
-    end
+    @selection = s.split(',')    
+    @order=params[:order] || 'created_at DESC'    
+    @flags=flagListForStates(@selection, @user, @order)      
   end
   
   def update_flag_table
@@ -92,9 +59,7 @@ class UserController < ApplicationController
        format.js { render }
     end
   end
-  
-  
-  
+
   
   def flagListForStates(states, user, sort)
     flags = []
@@ -112,22 +77,5 @@ class UserController < ApplicationController
       
     return Kaminari.paginate_array(flags).page(params[:pagina]).per(Flag.per_table_page)
   end
-  
-  private
-  def render_profile
-    if (@user && (@user==current_user || @user.public == true)) # if this is the currently logged in user or the profile is public, show the profile
-      render :show
-    else
-      profile_not_found
-    end
-  end
-  
-  def profile_not_found
-    flash[:error]=t('revs.authentication.user_not_found')
-    redirect_to previous_page  
-  end
-  
-  
-
   
 end

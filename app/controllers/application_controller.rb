@@ -44,6 +44,10 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def profile_visible?(user)
+    (user && (user==current_user || user.public == true)) # if this is the currently logged in user or the profile is public, then the profile is visible
+  end
+  
   def after_sign_in_path_for(resource)
     session[:login_redirect]  || root_path
   end
@@ -82,6 +86,23 @@ class ApplicationController < ActionController::Base
 
   def check_for_curator_logged_in
     not_authorized unless can? :curate, :all
+  end
+
+  def check_for_profile_visible
+    check_for_profile_existence
+    profile_not_found unless profile_visible? @user
+  end
+  
+  def check_for_profile_existence
+    @id=params[:id]
+    @name=params[:name]
+    @user = (@id.blank? ? User.find_by_username(@name) : User.find_by_id(@id))
+    profile_not_found unless @user
+  end
+  
+  def profile_not_found
+    flash[:error]=t('revs.authentication.user_not_found')
+    redirect_to previous_page 
   end
     
   def ajax_only
