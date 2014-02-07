@@ -17,23 +17,20 @@ class UserController < ApplicationController
       
   # all of the user's annotations
   def annotations
-    current_page = params[:page] || 1
-    @order=params[:order] || 'created_at DESC'    
-    @annotations=@user.visible('annotations').order(@order).page current_page
+    get_current_page_and_order
+    @annotations=@user.visible('annotations').order(@order).page @current_page
   end
 
   # all of the user's favorites, only show if the profile is public
   def favorites
-    current_page = params[:page] || 1
-    @order=params[:order] || 'created_at DESC'
-    @favorites=Kaminari.paginate_array(@user.favorites.order(@order)).page(current_page).per(SavedItem.favorites_per_page)
+    get_current_page_and_order
+    @favorites=Kaminari.paginate_array(@user.favorites.order(@order)).page(@current_page).per(SavedItem.favorites_per_page)
   end
 
   # all of the user's item edits
   def edits
-    current_page = params[:page] || 1
-    @order=params[:order] || 'created_at DESC'    
-    @edits=@user.visible('change_logs').order(@order).page current_page
+    get_current_page_and_order
+    @edits=@user.visible('change_logs').order(@order).page @current_page
   end
   
   # all of the user's flags
@@ -80,5 +77,12 @@ class UserController < ApplicationController
       
     return Kaminari.paginate_array(flags).page(params[:pagina]).per(Flag.per_table_page)
   end
+  
+  private
+  def get_current_page_and_order
+    @current_page = params[:page] || 1
+    @order=params[:order] || 'created_at DESC'
+  end
+  
   
 end

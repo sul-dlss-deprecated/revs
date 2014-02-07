@@ -19,6 +19,10 @@ curator_fav3:
 curator_fav4:
   gallery: curator_favs
   druid: 'yh093pt9555'
+
+admin_fav1:
+  gallery: admin_favs
+  druid: 'yh093pt9555'  
   
   
   

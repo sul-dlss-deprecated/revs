@@ -132,11 +132,12 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     page.should have_content "A Somewhat Shorter Than Ave"     
   end
 
-  it "show a non logged in users annotations/flags/edits with just their username, even if the profile is private" do
+  it "show a non logged in users annotations/flags/edits with just their username, even if the profile is private, but should not show favorites" do
     admin_account=User.find_by_username(admin_login)
     admin_account.public.should == false
     visit user_annotations_path(admin_account.username)
     page.should_not have_content admin_account.full_name
+    page.should_not have_content I18n.t('revs.user.view_all_favorites') # no favorites link since profile is private
     page.should have_content "#{admin_account.username}'s Annotations"
     page.should have_content "Guy in the background looking sideways"
     visit user_flags_path(admin_account.username)    
@@ -145,6 +146,17 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     visit user_edits_path(admin_account.username)    
     page.should have_content "#{admin_account.username}'s Item Edits"
     page.should have_content "A Somewhat Shorter Than Ave"
+    visit user_favorites_path(admin_account.username)  # we should NOT be able to see the favorites
+    current_path.should_not ==  user_favorites_path(admin_account.username) 
+    page.should have_content I18n.t('revs.authentication.user_not_found')
+    
+    # make admin account public and check that favorites now show up
+    admin_account.public=true
+    admin_account.save
+    visit user_annotations_path(admin_account.username)
+    page.should have_content I18n.t('revs.user.view_all_favorites') # favorites link shows up since profile is public
+    visit user_favorites_path(admin_account.username)  # we should be able to see the favorites
+    current_path.should ==  user_favorites_path(admin_account.username) 
   end
 
   it "show a non logged in users annotations/flags with their full name if their profile is public" do

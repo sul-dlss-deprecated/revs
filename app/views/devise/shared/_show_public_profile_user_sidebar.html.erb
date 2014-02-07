@@ -5,6 +5,9 @@
       <li class="nav-header"><%= t('revs.authentication.sidebar.actions') %></li>
       <% if @user.public %>
 				<li><%= link_to t('revs.user.view_profile'), user_profile_name_path(@user.username) %></li>
+				<% if user_favorites_count(@user) > 0 %>
+          <li><%= link_to t('revs.user.view_all_favorites'), user_favorites_path(@user.username) %></li>
+        <% end %>
       <% end %>
       <% if user_edits_count(@user) > 0 %>
         <li><%= link_to t('revs.user.view_all_edits'), user_edits_path(@user.username) %></li>

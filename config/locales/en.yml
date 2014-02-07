@@ -164,9 +164,10 @@ en:
       not_found: 'Item not found'
       sidebar:
         actions: 'Actions'
-        annotations: 'View Annotations'
-        view_flagged_items: "View Flags"
-        view_edited_items: "View Edits"
+        view_annotations: 'View All Annotations'
+        view_flagged_items: "View All Flags"
+        view_edited_items: "View All Edits"
+        view_favorited_items: "View All Favorites"
       curator_actions: 'Curator Actions'
       enter_edit_mode: 'Enter metadata edit mode'
       leave_edit_mode: 'Leave metadata edit mode'

@@ -7,3 +7,7 @@
 curator_favs:
   user: curator  # this is the named "curator" fixture object from the users table
   gallery_type: 'favorites'
+
+admin_favs:
+  user: admin  # this is the named "admin" fixture object from the users table
+  gallery_type: 'favorites'  
