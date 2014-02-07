@@ -223,7 +223,7 @@ en:
       save_to_favorites: "Save to favorites"
       remove_from_favorites: "Remove from favorites"
       saved: "Item has been saved to favorites."
-      removed: "Item has been removed from favorites."  
+      removed: "has been removed from favorites."  
       none: 'This user does not have any favorites.'    
     user_galleries:
       head: "Galleries"

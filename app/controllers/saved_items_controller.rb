@@ -28,14 +28,16 @@ class SavedItemsController < ApplicationController
     druid=params[:id]
     user_id=current_user.id
     gallery_id=params[:gallery_id]
+    
+    @document=SolrDocument.find(druid)
     if gallery_id
       # remove from specified gallery
     else
       SavedItem.remove_favorite(:user_id=>user_id,:druid=>druid)
-      @message=t('revs.favorites.removed')
+      @message="#{@document.title} "+t('revs.favorites.removed')
     end
 
-    @document=SolrDocument.find(druid)
+    
     respond_to do |format|
       format.html { flash[:success]=@message
                     redirect_to previous_page}
