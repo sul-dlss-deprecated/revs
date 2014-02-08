@@ -47,6 +47,11 @@ class User < ActiveRecord::Base
     Gallery.get_favorites_list(id).saved_items
   end
   
+  # get all of the user's saved items in any of their galleries
+  def saved_items
+    SavedItem.includes(:gallery).where("galleries.user_id=#{self.id}")
+  end
+  
   def self.roles
     ROLES
   end

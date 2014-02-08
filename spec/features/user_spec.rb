@@ -90,11 +90,11 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     login_as(user_login)
     visit  user_profile_name_path(user_login)
     current_path.should ==  user_profile_name_path(user_login)
-    ["Annotations 1","air intake?","Flags","Sebring 12 Hour, Green Park..."].each {|title| page.should have_content(title)}
+    ["Annotations 1","air intake?","Flags","Sebring 12 Hour, Green Park Straight, January 4"].each {|title| page.should have_content(title)}
   end
 
   it "should show correct number of item edits made by user on that user's profile page, along with most recent item edits" do
-    edited_titles=["A Somewhat Shorter Than Ave...","Marlboro Governor's Cup, Ap...","Thompson Raceway, May 1"]
+    edited_titles=["A Somewhat Shorter Than Average Title","Marlboro Governor's Cup, April 2-3","Thompson Raceway, May 1"]
     login_as(curator_login)
     visit user_profile_name_path(curator_login)
     current_path.should == user_profile_name_path(curator_login)

@@ -83,7 +83,7 @@ describe("Curator Section",:type=>:request,:integration=>true) do
       login_as(curator_login)
       visit edits_table_curator_tasks_path
       current_path.should == edits_table_curator_tasks_path
-      edited_titles=["A Somewhat Shorter Than Ave... 3","Marlboro Governor's Cup, Ap... 1","Thompson Raceway, May 1 1","Curator Revs 4","admin1 1"]
+      edited_titles=["A Somewhat Shorter Than Average Title 3","Marlboro Governor's Cup, April 2-3","Thompson Raceway, May 1 1","Curator Revs 4","admin1 1"]
       edited_titles.each {|title| page.should have_content(title)}
       page.should have_content 'By Item'
       page.should have_content 'By User'
@@ -94,7 +94,7 @@ describe("Curator Section",:type=>:request,:integration=>true) do
       it "should show a list of flagged items and link to a page with flagged items" do
         login_as(curator_login)
         visit curator_tasks_path
-        ["Record 1","Sebring 12 Hour, Green Park..."].each {|title| page.should have_content(title)}
+        ["Record 1","Sebring 12 Hour, Green Park Straight, January 4"].each {|title| page.should have_content(title)}
         click_link 'Record 1'
         current_path.should == catalog_path('yt907db4998')
       end

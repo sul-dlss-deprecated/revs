@@ -40,7 +40,7 @@
        <tr>
          <td><%= item_link(flag.solr_document,:truncate=>true) %></td>
          <% if local_assigns[:curate_view]%>
-           <td><%=display_user_name(User.find(flag.user_id))%></td>
+           <td><%=display_user_name(flag.user,user_flags_path(flag.user.username))%></td>
          <% end%>
         <td><%= flag.comment %></td>
         <td><%= show_as_datetime(flag.created_at.in_time_zone) %></td>

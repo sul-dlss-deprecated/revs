@@ -24,14 +24,10 @@ module ApplicationHelper
     user_signed_in? && user == current_user
   end
     
-  # pass in a user, if it's the currently logged in user, you will always get the fullname; otherwise you will get the appropriate name for public display; if you pass in true as a second parameter, you will get a link back to the user's profile if public  
-  def display_user_name(user,linked=false)
+  # pass in a user, if it's the currently logged in user, you will get the full name; otherwise you will get the appropriate name for public display; if you pass in a url as a second parameter, you will get a link back to that url
+  def display_user_name(user,link=nil)
      display = is_logged_in_user?(user) ? user.full_name : user.to_s
-     if linked
-       user.public? ? link_to(user.to_s,user_profile_id_path(user.id)) : display
-     else
-       display
-     end
+     link ? link_to(display,link) : display
   end
   
   def available_sizes
@@ -76,7 +72,8 @@ module ApplicationHelper
     if item.nil?  
       return t('revs.curator.not_found')
     else
-      name=opts[:truncate] ? truncate(item.title) : item.title
+      length = (opts[:length].to_i == 0 ? 100 : opts[:length].to_i)
+      name=opts[:truncate] ? truncate(item.title,:length=>length) : item.title
       return link_to name,catalog_path(item.id)
     end
   end

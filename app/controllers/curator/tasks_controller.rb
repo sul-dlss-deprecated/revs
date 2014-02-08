@@ -7,7 +7,6 @@ class Curator::TasksController < ApplicationController
      redirect_to flags_table_curator_tasks_path # later we can replace with a landing page
    end
 
-    # get all flags grouped by druid with counts
    def flags
      s = params[:selection] || Flag.open
      
@@ -54,6 +53,18 @@ class Curator::TasksController < ApplicationController
      @tab_list_item = 'edits-by-item'
      @tab_list_user = 'edits-by-user'
      @tab = params[:tab] || @tab_list_item
+   end
+   
+   def favorites
+      @order = params[:order] || "num_favorites DESC"
+      @order_user = params[:order_user] || "num_galleries DESC"
+
+      @favorites_by_item=SavedItem.select("count(id) as num_favorites,druid,updated_at").includes(:gallery).group('druid').order(@order).page(params[:pagina])
+      @favorites_by_user=Gallery.select("count(id) as num_galleries,updated_at,user_id").includes(:user,:saved_items).group('user_id').page(params[:pagina2])
+
+      @tab_list_item = 'favorites-by-item'
+      @tab_list_user = 'favorites-by-user'
+      @tab = params[:tab] || @tab_list_item
    end
    
    # an ajax call to set the curator edit mode
