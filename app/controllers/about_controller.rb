@@ -3,16 +3,16 @@ class AboutController < ApplicationController
   before_filter :authorize
   
   # To create a new about page, create a partial with the URL name you want containing the actul page content
-  # If your action has logic that needs to be run before the view, create a method, call "show" at the end of it, create a view partical o match,
+  # If your action has logic that needs to be run before the view, create a method, call "show" at the end of it, create a view partial to match,
   # and add a custom route in the routes.rb file    
   def contact
     
     @from=params[:from]
     @subject=params[:subject]
+    @message=params[:message]
     @name=params[:name]
     @email=params[:email]
-    @message=params[:message]
-
+    
     if request.post?
       
       unless @message.blank? # message is required
