@@ -9,6 +9,7 @@ class RevsMailer < ActionMailer::Base
     @name=params[:name]
     @subject=params[:subject]
     @from=params[:from]
+    @username=params[:username]
     to=Revs::Application.config.contact_us_recipients[@subject]
     cc=Revs::Application.config.contact_us_cc_recipients[@subject]
     mail(:to=>to, :cc=>cc, :subject=>"Contact Message from Revs Digital Library - #{@subject}") 

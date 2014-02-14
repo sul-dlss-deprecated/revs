@@ -12,6 +12,7 @@ class AboutController < ApplicationController
     @message=params[:message]
     @name=params[:name]
     @email=params[:email]
+    params[:username]=(current_user ? current_user.username : "")
     
     if request.post?
       
@@ -38,7 +39,7 @@ class AboutController < ApplicationController
       end
     end
     
-    request.xhr? ? render('contact.js') : show # ajax requests need to exectue some JS, non-ajax requests render the form
+    request.xhr? ? render('contact',:format=>:js) : show # ajax requests need to exectue some JS, non-ajax requests render the form
     
   end
 

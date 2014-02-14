@@ -9,6 +9,9 @@
 <p>Subject: <%=@subject%></p>
 <p>Name: <%=@name%></p>
 <p>Email: <%=@email%></p>
+<% if !@username.blank? %>
+<p>Username: <%=@username%></p>
+<% end %>
 <p>Message: <%=@message%></p>
 <p>Source Page: <%=@from%></p>
 <p>User agent: <%=@request.env["HTTP_USER_AGENT"]%></p>
