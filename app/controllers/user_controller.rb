@@ -26,6 +26,8 @@ class UserController < ApplicationController
     get_current_page_and_order
     @favorites=Kaminari.paginate_array(@user.favorites.order(@order)).page(@current_page).per(SavedItem.favorites_per_page)
   end
+  
+ 
 
   # all of the user's item edits
   def edits

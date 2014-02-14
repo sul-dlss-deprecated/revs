@@ -1,8 +1,7 @@
 <div id="content" class="span9 favorites-index">
-
   <h2><%= display_user_name(@user) %><span class="lowercase">'s</span> <%=t('revs.favorites.head')%></h2>
 
-  <% if @favorites.count > 0 %>
+  <% if @favorites.count > 0%>
     <!-- span below is placeholder. this is how it should look, but needs to use real pagination -->
     <span class="prev-next">   
        <%= paginate @favorites, :params => {:order=>@order} %>
@@ -18,15 +17,28 @@
                 <li class="item-creation-date">Saved on <%= show_as_datetime(favorite.created_at.in_time_zone) %></li>
                 <li class="favorite-item-actions">
                   <%=button_to("#{t('revs.favorites.remove_from_favorites')}", saved_item_path(favorite.solr_document.id), :method=> :delete, class: 'btn btn-link') %> 
+                  <% if can?(:update, SavedItem)%>
                   |
                   <!-- this link should turn on edit mode for annotation field below -->
-                  <%= link_to "Edit annotation", "#" %>
+                  <%= link_to "#{t('revs.favorites.edit_annotation')}", "/user/#{@name}/favorites/edit/"+favorite.solr_document.id+"#"%>
+                  <% end%>
                 </li>
               </ul>
             </div>
             <div class="span4">
               <!-- Content of this p needs to be replaced with 'favorite.description' -->
-              <p class="item-annotation">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit.</p>
+              <% if favorite.druid != params[:editable]%>
+              <p class="item-annotation">
+                <%=favorite.description%>                
+              </p>
+              
+              <% else %>
+                <%= form_for(favorite, :remote=>true) do |f| %>
+                  <%= f.label t('revs.annotations.singular')%>
+                  <%= f.text_area :description, :rows => '2', :class => "input-xlarge", :value=>favorite.description %>
+                  <%= f.submit t('revs.nav.update'), :class => "flag-button btn btn-small" %>
+                <% end %>
+              <% end %>
             </div>
           </div>
         <% end %>

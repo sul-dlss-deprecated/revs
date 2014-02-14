@@ -46,4 +46,8 @@ class SavedItemsController < ApplicationController
 
   end
   
+  def update
+    druid=params[:id]
+  end
+  
 end

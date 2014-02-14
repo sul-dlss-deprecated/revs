@@ -226,7 +226,8 @@ en:
       remove_from_favorites: "Remove from favorites"
       saved: "Item has been saved to favorites."
       removed: "has been removed from favorites."  
-      none: 'This user does not have any favorites.'    
+      none: 'This user does not have any favorites.'  
+      edit_annotation: 'Edit Annotation'  
     user_galleries:
       head: "Galleries"
       you_can_create_galleries_html: "You can %{href} and add items to it from the Item Details page."
