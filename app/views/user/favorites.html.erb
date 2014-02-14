@@ -16,9 +16,13 @@
                 <li class="item-title"><%= item_link(favorite.solr_document) %></li>
                 <li class="item-creation-date">Saved on <%= show_as_datetime(favorite.created_at.in_time_zone) %></li>
                 <li class="favorite-item-actions">
+                  <%if can? :destroy, favorite%>
                   <%=button_to("#{t('revs.favorites.remove_from_favorites')}", saved_item_path(favorite.solr_document.id), :method=> :delete, class: 'btn btn-link') %> 
-                  <% if can? :update, favorite%>
+                  <% end %>
+                  <% if (can? :destroy, favorite) and (can? :update, favorite) %>
                   |
+                  <% end %>
+                  <% if can? :update, favorite%>
                   <!-- this link should turn on edit mode for annotation field below -->
                   <%= link_to "#{t('revs.favorites.edit_annotation')}", "/user/#{@name}/favorites/edit/"+favorite.solr_document.id+"#"%>
                   <% end%>
