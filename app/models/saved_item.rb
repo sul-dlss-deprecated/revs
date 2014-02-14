@@ -11,6 +11,14 @@ class SavedItem < WithSolrDocument
   
   FAVORITES_PER_PAGE = 10
   
+  # some helper methods to connect us to the user this saved_item belongs to (which we need to go through the gallery to get to)
+  def user
+    gallery.user
+  end
+  
+  def user_id
+    user.id
+  end
   
   def self.favorites_per_page
     return FAVORITES_PER_PAGE
