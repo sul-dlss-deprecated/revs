@@ -8,7 +8,7 @@ gem 'bundler', '>= 1.2.0'
 gem 'editstore', '>= 1.1.5'
 gem 'revs-utils', '>= 0.0.8'
 
-gem 'rails', '~> 3'
+gem 'rails', '~> 3.2.17'
 
 gem 'google-analytics-rails'
 
