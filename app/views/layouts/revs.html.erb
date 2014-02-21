@@ -21,7 +21,11 @@
     <!-- Two stylesheets below are for Stanford Identity footer -->
     <link href="https://www.stanford.edu/su-identity/css/su-identity.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700' rel='stylesheet' type='text/css'>
-
+    <% if @document && !@document.description.blank?%>
+      <meta name="description" content="<%=@document.description.gsub("\"","'")%>">
+    <% elsif on_home_page %>
+      <meta name="description" content="The Digital Library is built on top of the Stanford Digital Repository to provide a web based platform for discovery of automotive research and images. The Stanford Digital Repository ensures each digital object is preserved, made available via a permanent persistent URL (web address), enforces content rights and restrictions and provides a common storage mechanism for other applications to build upon.">    
+    <% end %>
 		<%= analytics_init if Rails.env.production? %>
 
     <%= stylesheet_link_tag    "application", media: "all" %>
