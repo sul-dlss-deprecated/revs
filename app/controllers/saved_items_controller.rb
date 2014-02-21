@@ -26,17 +26,17 @@ class SavedItemsController < ApplicationController
   # if no gallery ID is passed in, assume its the default favorites list
   def destroy
     druid=params[:id]
-    user_id=current_user.id
+    user_id = current_user.id
     gallery_id=params[:gallery_id]
     
     @document=SolrDocument.find(druid)
-    if gallery_id
+    if params[:gallery_d]
       # remove from specified gallery
     else
       SavedItem.remove_favorite(:user_id=>user_id,:druid=>druid)
       @message="#{@document.title} "+t('revs.favorites.removed')
     end
-
+    
     
     respond_to do |format|
       format.html { flash[:success]=@message
@@ -47,7 +47,29 @@ class SavedItemsController < ApplicationController
   end
   
   def update
-    druid=params[:id]
+    @div = "#description#{params[:id]}"
+    item = SavedItem.find_by_id(params[:id])
+    puts params[:saved_item]
+    description = params[:saved_item][:description]
+    item.update_attributes({:description => description})
+    @message = t('revs.favorites.annotation_updated')
+    @favorite =  SavedItem.find_by_id(params[:id]) #refetch with new description
+    puts params
+    respond_to do |format|
+      format.html { flash[:success]=@message
+                    redirect_to users_favorites_path}
+      format.js { render }
+    end
+  end
+  
+  def edit
+    @div = "#description#{params[:id]}"
+    @favorite = SavedItem.find_by_id(params[:id])
+    @target = params[:id]
+    respond_to do |format|
+      format.html { redirect_to user_favorites_path(current_user.username, :edit_id => params[:id])}
+      format.js { render }
+    end
   end
   
 end

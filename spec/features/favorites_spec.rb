@@ -61,7 +61,7 @@ describe("Favorites",:type=>:request,:integration=>true) do
     visit user_profile_name_path(user_login)
     page.should have_content I18n.t('revs.favorites.you_can_save_favorites')
     visit user_favorites_path(user_login)
-    page.should have_content I18n.t('revs.favorites.none')
+    page.should have_content I18n.t('revs.favorites.personal_none')
 
   end
 

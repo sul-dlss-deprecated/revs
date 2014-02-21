@@ -7,7 +7,7 @@ class SavedItem < WithSolrDocument
   
   validates :gallery_id, :numericality => { :only_integer => true }
   validates :druid, :is_druid=>true
-  validate :only_one_favorite_per_user_per_druid
+  validate :only_one_favorite_per_user_per_druid, :on => :create
   
   FAVORITES_PER_PAGE = 10
   
@@ -45,6 +45,10 @@ class SavedItem < WithSolrDocument
   
   def only_one_favorite_per_user_per_druid
     errors.add(:druid, :cannot_be_more_than_one_favorite_per_user_per_druid) if self.class.where(:druid=>self.druid,:gallery_id=>self.gallery_id).size != 0
+  end
+  
+  def self.find_by_id(id)
+    return self.where(:id=>id).first
   end
   
 end

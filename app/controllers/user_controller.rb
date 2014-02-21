@@ -24,7 +24,18 @@ class UserController < ApplicationController
   # all of the user's favorites, only show if the profile is public
   def favorites
     get_current_page_and_order
-    @favorites=Kaminari.paginate_array(@user.favorites.order(@order)).page(@current_page).per(SavedItem.favorites_per_page)
+    unsorted_favorites = @user.favorites
+    
+    #If the user has just been deleted favorites, @current_page might exceed the number of favorites
+    max_pages = unsorted_favorites.count / SavedItem.favorites_per_page
+    
+    #Add in one extra page for any overflows over the current amount
+    max_pages += 1 if unsorted_favorites.count % SavedItem.favorites_per_page != 0   
+
+    #Reset @current_page if needed
+    @current_page = max_pages.to_s if @current_page.to_i > max_pages
+    
+    @favorites=Kaminari.paginate_array(unsorted_favorites.order(@order)).page(@current_page).per(SavedItem.favorites_per_page)
   end
   
  

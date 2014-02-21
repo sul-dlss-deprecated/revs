@@ -36,7 +36,6 @@ Revs::Application.routes.draw do
   match 'collection/:id', :to=> 'catalog#show', :as =>'collection'
   
   # public user profile pages
-  match 'user/:name/favorites/edit/:editable', :to=>'user#favorites', :as=>'user_favorites', :via=>:get, :constraints => {:name => /\D+.+/} 
   match 'user/:name/favorites', :to=>'user#favorites', :as=>'user_favorites', :via=>:get, :constraints => {:name => /\D+.+/} 
   match 'user/:name/annotations', :to=>'user#annotations', :as=>'user_annotations', :via=>:get, :constraints => {:name => /\D+.+/} 
   match 'user/:name/flags', :to=>'user#flags', :as=>'user_flags', :via=>:get, :constraints => {:name => /\D+.+/} 

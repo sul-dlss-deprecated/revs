@@ -1,0 +1,13 @@
+   <% if favorite.id.to_s != edit_id or not can? :update, favorite%>
+  <p class="item-annotation">
+    <%=favorite.description%>                
+  </p>
+
+  <% else %>
+    <%= form_for(favorite, :remote=>true, :method=>:put) do |f| %>
+      <%= f.label t('revs.annotations.singular')%>
+      <%= f.text_area :description, :rows => '2', :class => "input-xlarge", :value=>favorite.description %>
+      <%= f.submit t('revs.nav.update'), :class => "flag-button btn btn-small" %>
+    <% end %>
+  <% end %>
+  

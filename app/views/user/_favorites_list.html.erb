@@ -1,0 +1,66 @@
+<% if not defined?(edit_id)%>
+  <% edit_id = params[:edit_id] || nil%>
+<%end%>
+
+<% if not defined?(favorites_for_list) || favorites_for_list == nil%>
+  <%favorites_for_list = []%>
+<%end%>
+
+
+ <%if favorites_for_list.count > 0%>
+   <span class="prev-next">   
+     <%= paginate favorites_for_list, :params => {:order=>@order}%>
+   </span>
+
+    <div class="saved-items" id="favorites_list">
+         <%favorites_for_list.each do |favorite| %>
+           <div class="row item">
+             <div class="span5">
+               <ul>
+                 <li><%= link_to(image_tag(favorite.solr_document.images.first), item_path(favorite.solr_document)) %><li>
+                 <li class="item-title"><%= item_link(favorite.solr_document) %></li>
+                 <li class="item-creation-date">Saved on <%= show_as_datetime(favorite.created_at.in_time_zone) %></li>
+                 <li class="favorite-item-actions">
+                   <%if can? :destroy, favorite%>
+                      <%=button_to("#{t('revs.favorites.remove_from_favorites')}", saved_item_path(favorite.solr_document.id), :method=> :delete, class: 'btn btn-link') %>
+                   <% end %>
+                   <% if (can? :destroy, favorite) and (can? :update, favorite) %>
+                   |
+                   <% end %>
+                   <% if can? :update, favorite%>
+                   <!-- this link should turn on edit mode for annotation field below -->
+                   <%= link_to "#{t('revs.favorites.edit_annotation')}", edit_saved_item_path(favorite.id), :remote => true %>
+                   <% end%>
+                 </li>
+               </ul>
+             </div>
+             <div class="span4">
+               <div id='<%="description"+favorite.id.to_s%>'>
+                 <%=render :partial => 'saved_items/description', :locals => {:favorite => favorite, :edit_id=> edit_id || nil} %>
+               </div>
+             </div>
+           </div>
+         <% end %>
+  
+     </div>
+     
+     <div class="span9 pagination">
+       <%= paginate favorites_for_list, :params => {:order=>@order} %>
+     </div>
+     
+ <%else%>
+ 
+   <%if params[:name] != nil%>
+     <%owner_name = params[:name]%>
+   <%end%>
+ 
+ 
+   <%if current_user != nil and current_user.username == owner_name%>
+     <%=t('revs.favorites.personal_none')%>
+   <%else%>
+    <%=t('revs.favorites.none')%>
+   <%end%>
+   
+   
+ <%end%>
+   
