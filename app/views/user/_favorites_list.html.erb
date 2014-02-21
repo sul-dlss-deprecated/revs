@@ -19,17 +19,17 @@
                <ul>
                  <li><%= link_to(image_tag(favorite.solr_document.images.first), item_path(favorite.solr_document)) %><li>
                  <li class="item-title"><%= item_link(favorite.solr_document) %></li>
-                 <li class="item-creation-date">Saved on <%= show_as_datetime(favorite.created_at.in_time_zone) %></li>
+                 <li class="item-creation-date"><%=t('revs.messages.saved_on')%> <%= show_as_datetime(favorite.created_at.in_time_zone) %></li>
                  <li class="favorite-item-actions">
                    <%if can? :destroy, favorite%>
-                      <%=button_to("#{t('revs.favorites.remove_from_favorites')}", saved_item_path(favorite.solr_document.id), :method=> :delete, class: 'btn btn-link') %>
+                      <%=button_to(t('revs.favorites.remove_from_favorites'), saved_item_path(favorite.solr_document.id,:page=>params[:page],:order=>params[:order]), :method=> :delete, class: 'btn btn-link') %>
                    <% end %>
                    <% if (can? :destroy, favorite) and (can? :update, favorite) %>
                    |
                    <% end %>
                    <% if can? :update, favorite%>
                    <!-- this link should turn on edit mode for annotation field below -->
-                   <%= link_to "#{t('revs.favorites.edit_annotation')}", edit_saved_item_path(favorite.id), :remote => true %>
+                   <%= link_to t('revs.favorites.edit_annotation'), edit_saved_item_path(favorite.id,:page=>params[:page],:order=>params[:order]), :remote => true %>
                    <% end%>
                  </li>
                </ul>
@@ -49,13 +49,8 @@
      </div>
      
  <%else%>
- 
-   <%if params[:name] != nil%>
-     <%owner_name = params[:name]%>
-   <%end%>
- 
- 
-   <%if current_user != nil and current_user.username == owner_name%>
+  
+   <% if is_logged_in_user?(@user)%>
      <%=t('revs.favorites.personal_none')%>
    <%else%>
     <%=t('revs.favorites.none')%>

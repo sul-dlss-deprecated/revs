@@ -126,7 +126,7 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     page.should have_content "Guy in the background looking sideways"
     visit user_flags_path(admin_account.username)    
     page.should have_content "#{admin_account.full_name}'s Flags"
-    page.should have_content "This user does not have any flags."   
+    page.should have_content "You do not have any flags."   
     visit user_edits_path(admin_account.username)    
     page.should have_content "#{admin_account.full_name}'s Item Edits"
     page.should have_content "A Somewhat Shorter Than Ave"     

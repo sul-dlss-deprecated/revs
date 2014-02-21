@@ -19,7 +19,11 @@
  </table>
 	
  <% else %>
-    <%=t('revs.edits.none')%>
+  <% if is_logged_in_user?(@user)%>
+    <%=t('revs.edits.personal_none')%>
+  <%else%>
+   <%=t('revs.edits.none')%>
+ <% end %>
 <% end %>
 
 

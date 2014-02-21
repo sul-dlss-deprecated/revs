@@ -24,6 +24,7 @@ en:
       switch_off: "Off"
       never: "never"
       saved: 'Changes saved.'
+      saved_on: 'Saved on'
       switch_yes: "yes"
       switch_no: "no"
       status: "Status"
@@ -61,6 +62,7 @@ en:
       plural: 'Flags'
       resolve: 'Resolve'
       none: 'This user does not have any flags.'
+      personal_none: 'You do not have any flags.'
       you_can_flag_problems: 'You can flag problems you see with item metadata from the Item Details page.'
       you: "You"
       open_state_display_name: 'Open'
@@ -207,6 +209,7 @@ en:
         view: 'View full citation page with image download'
     edits:
         none: 'This user does not have any edits.'
+        personal_none: 'You do not have any edits.'
     annotations:
         add: 'View/add annotations'
         view: 'View annotations'
@@ -214,6 +217,7 @@ en:
         singular: 'Annotation'
         plural: 'Annotations'
         none: 'This user does not have any annotations.'
+        personal_none: 'You do not have any favorites.'
         you_can_annotate_images: 'You can annotate item images from the Item Details page.'
         annotation_created: "Annotation created"
         annotation_text: "Annotation text"
@@ -228,8 +232,8 @@ en:
       removed: "has been removed from favorites."  
       none: 'This user does not have any favorites.'
       personal_none: 'You do not have any favorites.'  
-      edit_annotation: 'Edit Annotation'
-      annotation_updated: "Annotation Updated."  
+      edit_annotation: 'Edit item note'
+      annotation_updated: "Item note updated."  
     user_galleries:
       head: "Galleries"
       you_can_create_galleries_html: "You can %{href} and add items to it from the Item Details page."

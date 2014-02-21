@@ -49,15 +49,13 @@ class SavedItemsController < ApplicationController
   def update
     @div = "#description#{params[:id]}"
     item = SavedItem.find_by_id(params[:id])
-    puts params[:saved_item]
     description = params[:saved_item][:description]
     item.update_attributes({:description => description})
     @message = t('revs.favorites.annotation_updated')
     @favorite =  SavedItem.find_by_id(params[:id]) #refetch with new description
-    puts params
     respond_to do |format|
       format.html { flash[:success]=@message
-                    redirect_to users_favorites_path}
+                    redirect_to user_favorites_path(current_user.username,:page=>params[:page],:order=>params[:order])}
       format.js { render }
     end
   end
@@ -67,7 +65,7 @@ class SavedItemsController < ApplicationController
     @favorite = SavedItem.find_by_id(params[:id])
     @target = params[:id]
     respond_to do |format|
-      format.html { redirect_to user_favorites_path(current_user.username, :edit_id => params[:id])}
+      format.html { redirect_to user_favorites_path(current_user.username, :edit_id => params[:id],:page=>params[:page],:order=>params[:order])}
       format.js { render }
     end
   end

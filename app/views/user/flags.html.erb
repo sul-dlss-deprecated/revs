@@ -12,7 +12,11 @@
     
 	
  <% else %>
-    <%=t('revs.flags.none')%>
+  <% if is_logged_in_user?(@user)%>
+    <%=t('revs.flags.personal_none')%>
+  <%else%>
+   <%=t('revs.flags.none')%>
+ <% end %>
 <% end %>
 
 </div>

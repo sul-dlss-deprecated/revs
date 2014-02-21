@@ -19,9 +19,13 @@
       <% end %>
     </table>
  <% else %>
+   <% if is_logged_in_user?(@user)%>
+     <%=t('revs.annotations.personal_none')%>
+   <%else%>
     <%=t('revs.annotations.none')%>
-<% end %>
-
+  <% end %>
+  <% end %>
+  
 </div>
 <%= render :partial => 'side_nav' %>
 
