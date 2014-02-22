@@ -6,7 +6,7 @@ class SavedItem < WithSolrDocument
   attr_accessible :druid, :gallery_id, :description
   validates :gallery_id, :numericality => { :only_integer => true }
   validates :druid, :is_druid=>true
-  validate :only_one_favorite_per_user_per_druid, :on => :create
+  validate :only_one_saved_item_per_druid_per_gallery, :on => :create
   
   FAVORITES_PER_PAGE = 10
   
@@ -30,6 +30,13 @@ class SavedItem < WithSolrDocument
     gallery=Gallery.get_favorites_list(user_id) # creates the default favorites list if it does not exist
     return self.create(:druid=>druid,:gallery_id=>gallery.id,:description=>description)
   end
+
+  def self.save_to_gallery(params={})
+    druid=params[:druid]
+    description=params[:description]
+    gallery_id=params[:gallery_id]
+    return self.create(:druid=>druid,:gallery_id=>gallery_id,:description=>description)
+  end
     
   def self.remove_favorite(params={})
     user_id=params[:user_id]
@@ -42,8 +49,8 @@ class SavedItem < WithSolrDocument
     Gallery.get_favorites_list(user_id).saved_items
   end
   
-  def only_one_favorite_per_user_per_druid
-    errors.add(:druid, :cannot_be_more_than_one_favorite_per_user_per_druid) if self.class.where(:druid=>self.druid,:gallery_id=>self.gallery_id).size != 0
+  def only_one_saved_item_per_druid_per_gallery
+    errors.add(:druid, :cannot_be_more_than_one_saved_item_per_druid_per_gallery) if self.class.where(:druid=>self.druid,:gallery_id=>self.gallery_id).size != 0
   end
   
   def self.find_by_id(id)

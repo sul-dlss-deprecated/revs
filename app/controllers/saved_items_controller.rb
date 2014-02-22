@@ -4,16 +4,44 @@ class SavedItemsController < ApplicationController
 
   # if no gallery ID is passed in, assume its the default favorites list
   def create
-    druid=params[:id]
+    
+    saved_item=params[:saved_item]
     user_id=current_user.id
-    gallery_id=params[:gallery_id]
-    if gallery_id
-      # save to specified gallery
-    else
+    
+    if saved_item # this is a form post to add an item to a gallery
+      
+      gallery_id=saved_item[:gallery_id]
+      druid=saved_item[:druid]
+      
+      if gallery_id.blank? # user is adding item to a new gallery, so create it
+        gallery=Gallery.create(:user_id=>user_id,:public=>false,:gallery_type=>:user,:title=>"#{t('revs.user_galleries.singular').titlecase} #{t('revs.curator.created_on').downcase} #{show_as_date(Time.now)}")
+        gallery_id=gallery.id
+      end
+      
+      @item=SavedItem.save_to_gallery(:druid=>druid,:gallery_id=>gallery_id)
+      if @item.valid?
+        @message=t('revs.user_galleries.saved')
+      elsif @item.errors.include?(:druid)
+        @message=t('revs.user_galleries.not_saved')
+      else
+        @message=t('revs.error.not_saved')
+      end
+      @gallery_type=saved_item[:gallery_type]
+    
+    else # this is a post to save a favorite
+    
+      druid=params[:id]
+      gallery_id=params[:gallery_id]
+      @gallery_type=params[:gallery_type]
       @item=SavedItem.save_favorite(:user_id=>user_id,:druid=>druid)
-      @message=t('revs.favorites.saved')
+      if @item.valid?
+        @message=t('revs.favorites.saved')
+      else
+        @message=t('revs.error.not_saved')
+      end
+    
     end
-
+    
     @document=SolrDocument.find(druid)
     respond_to do |format|
       format.html { flash[:success]=@message
@@ -34,7 +62,7 @@ class SavedItemsController < ApplicationController
       # remove from specified gallery
     else
       SavedItem.remove_favorite(:user_id=>user_id,:druid=>druid)
-      @message="#{@document.title} "+t('revs.favorites.removed')
+      @message=t('revs.favorites.removed')
     end
     
     

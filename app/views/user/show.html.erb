@@ -31,10 +31,11 @@
     <div class="span4">
       <%= render :partial => 'show_favorites' %>
     </div>
-
+    
     <div class="span4 offset1">
-      <%= render :partial => 'show_flags' %>
+      <%= render :partial => 'show_galleries' %>
     </div>
+    
   </div>
 
   <div class="row profile-activity">
@@ -43,12 +44,19 @@
     </div>
 
     <div class="span4 offset1">
+      <%= render :partial => 'show_flags' %>
+    </div>
+
+  </div>
+  
+  <div class="row profile-activity">
+    <div class="span4">
       <% if @user.can? :curate, :all %>
         <%= render :partial => 'show_edits' %>
       <% end %>
     </div>
   </div>
-
+    
 </div>
 
 <%= render :partial => 'side_nav' %>

@@ -74,11 +74,19 @@
 					<% if can?(:create, SavedItem) %>
 					  <li>
               <div id="favorites_link">
-                <%= render :partial=>'saved_items/favorites_link'%>
+                <%= render :partial=>'saved_items/add_to_favorites'%>
               </div>
             </li>
           <% end %>
 
+					<% if can?(:create, Gallery) && can?(:create, SavedItem)%>
+					  <li>
+					    <div id="user_galleries">
+                <%= render(:partial => "saved_items/add_to_gallery") %>
+              </div>
+            </li>
+          <% end %>
+          
 					<% if (can?(:read, Annotation) || can?(:create, Annotation))
    					  @annotations = @document.annotations(current_user)
 							annotation_link_text = can?(:create, Annotation) ?  t('revs.annotations.add') : t('revs.annotations.view')
@@ -88,7 +96,7 @@
 
 					  <% if can?(:create, Annotation) || @annotations.size > 0 %>
 							<li>
-		             <%= link_to(("<span class='#{annotation_link_class} id='annotation-link-text'><i class='icon-edit'></i> #{annotation_link_text}</span>".html_safe + content_tag(:span, @annotations.size, :class => "#{display_class(@annotations.size)} num-annotations-badge badge badge-revs")).html_safe,'#',:id=>annotation_link_id,:class=>"annotation_links showOnLoad hidden-offscreen") %>
+		             <%= link_to(("<span class='#{annotation_link_class}' id='annotation-link-text'><i class='icon-edit'></i> #{annotation_link_text}</span>".html_safe + content_tag(:span, @annotations.size, :class => "#{display_class(@annotations.size)} num-annotations-badge badge badge-revs")).html_safe,'#',:id=>annotation_link_id,:class=>"annotation_links showOnLoad hidden-offscreen") %>
 		             <%= link_to(("<i class='icon-edit'></i> #{t('revs.annotations.hide')}".html_safe + content_tag(:span, @annotations.size, :class => "#{display_class(@annotations.size)} num-annotations-badge badge badge-revs")).html_safe, '#',:id=>'hide_annotations_link',:class=>"hidden-offscreen") %>
 		          </li>
 				    <% end %>

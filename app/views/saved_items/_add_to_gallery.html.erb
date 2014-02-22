@@ -1,0 +1,10 @@
+<i class="icon-plus"></i><%=link_to t('revs.user_galleries.add_to_gallery'),'#',:id=>'add_to_gallery_link'%>
+
+ <div id="add_to_gallery_form">
+   <%= form_for(SavedItem.new, :remote=>true) do |f| %>
+     <%= f.hidden_field :druid, :value=>@document.id %>
+     <%= f.hidden_field :gallery_type, :value=>'user' %>
+     <%= f.select :gallery_id,options_from_collection_for_select(current_user.galleries.order(:title), :id, :title), :include_blank => t('revs.user_galleries.new_gallery') %>
+     <%= f.submit t('revs.user_galleries.add'), :class => "gallery-button btn btn-small" %>
+   <% end %>
+ </div>

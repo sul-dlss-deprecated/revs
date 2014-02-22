@@ -6,12 +6,24 @@ en:
     errors:
       messages:
         not_valid: 'is not valid'
+      models:
+        gallery:
+          attributes:
+            gallery_type:
+              cannot_be_more_than_one_favorites_list_per_user: 'there cannot be more than one favorites list per user'
+        saved_item:
+          attributes:
+            druid:
+              cannot_be_more_than_one_saved_item_per_druid_per_gallery: 'you cannot saved the same item twice to the same gallery'
   revs:
     digital_library: 'Revs Digital Library'
+    tagline: 'Connecting the past, present and future of the automobile'
     revs_program: 'Revs Program at Stanford'
     revs_institute: 'Revs Institute'
     stanford_library: 'Stanford University Libraries'
     routing_error: "Sorry, the page you were looking for was not found."
+    errors:
+      not_saved: 'An error occurred and the item was not saved.'
     actions:
       delete: 'Delete'
       remove: 'Remove'
@@ -236,7 +248,7 @@ en:
       save_to_favorites: "Save to favorites"
       remove_from_favorites: "Remove from favorites"
       saved: "Item has been saved to favorites."
-      removed: "has been removed from favorites."  
+      removed: "Item has been removed from favorites."  
       none: 'This user does not have any favorites.'
       personal_none: 'You do not have any favorites.'  
       edit_item_note: 'Edit item note'
@@ -247,8 +259,15 @@ en:
       you_can_add_a_note_linktext: 'add a note'
     user_galleries:
       head: "Galleries"
+      singular: "gallery"
       you_can_create_galleries_html: "You can %{href} and add items to it from the Item Details page."
       you_can_create_galleries_linktext: "create your own gallery"
+      none: 'This user does not have any galleries.'
+      add_to_gallery: 'Add to gallery'
+      add: 'Add'
+      new_gallery: 'New gallery'
+      saved: 'Item saved to gallery.'
+      not_saved: 'The item is already in the selected gallery.'
     collection:
       collection_detail: 'Collection Detail'
       member_detail: 'Item Detail'
@@ -401,6 +420,7 @@ en:
       view_your_edits: "View your edits"
       view_all_favorites: "View all favorites"
       view_your_favorites: "View your favorites"
+      view_all_galleries: "View all galleries"
       view_your_galleries: "View your galleries"
       view_all_edits: "View all edits"
       view_all_flags: "View all flags"
