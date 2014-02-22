@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   # Please be sure to impelement current_user and user_session. Blacklight depends on 
   # these methods in order to perform user specific actions. 
 
-  helper_method :application_name,:current_role,:on_home_page,:on_collections_page,:on_about_pages,:on_detail_page,:show_terms_dialog?, :sunet_user_signed_in?
+  helper_method :application_name,:tag_line,:current_role,:on_home_page,:on_collections_page,:on_about_pages,:on_detail_page,:show_terms_dialog?, :sunet_user_signed_in?
   layout "revs"
 
   protect_from_forgery
@@ -30,6 +30,10 @@ class ApplicationController < ActionController::Base
   
   def application_name
     t('revs.digital_library')
+  end
+  
+  def tag_line
+    t('revs.tagline')
   end
   
   def previous_page

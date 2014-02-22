@@ -82,6 +82,10 @@ module ApplicationHelper
     user.favorites.count
   end
   
+  def user_galleries_count(user)
+    user.galleries.count
+  end
+  
   def user_annotations_count(user)
     user.visible('annotations').count
   end
