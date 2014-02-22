@@ -45,6 +45,9 @@
       <% if user_favorites_count(@user) > 0 %>
         <li><%= link_to t('revs.user.view_your_favorites'), user_favorites_path(@user.username) %></li>
       <% end %>
+      <% if user_galleries_count(@user) > 0 %>
+        <li><%= link_to t('revs.user.view_your_galleries'), user_galleries_path(@user.username) %></li>
+      <% end %>
       <% if user_annotations_count(@user) > 0 %>
         <li><%= link_to t('revs.user.view_your_annotations'),user_annotations_path(@user.username) %></li>
       <% end %>

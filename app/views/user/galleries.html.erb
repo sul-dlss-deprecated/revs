@@ -1,0 +1,18 @@
+<div id="content" class="span9">
+
+  <h2><%= display_user_name(@user) %><span class="lowercase">'s</span> <%=t('revs.user_galleries.head')%></h2>
+ 
+ <% if @galleries.count > 0 %>
+ 	    
+ <% else %>
+  <% if is_logged_in_user?(@user)%>
+   <%= t('revs.user_galleries.you_can_create_galleries_html', :href => link_to(t("revs.user_galleries.you_can_create_galleries_linktext"), "#")) %>
+  <%else%>
+   <%=t('revs.user_galleries.none')%>
+ <% end %>
+<% end %>
+
+</div>
+<%= render :partial => 'side_nav' %>
+
+
