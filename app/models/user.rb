@@ -27,7 +27,6 @@ class User < ActiveRecord::Base
   has_many :annotations, :dependent => :destroy
   has_many :flags, :dependent => :destroy
   has_many :change_logs, :dependent => :destroy
-  has_many :galleries, :dependent => :destroy
   
   before_validation :assign_default_role, :if=>lambda{no_role?}
   before_save :trim_names
@@ -50,6 +49,11 @@ class User < ActiveRecord::Base
   # get all of the user's saved items in any of their galleries
   def saved_items
     SavedItem.includes(:gallery).where("galleries.user_id=#{self.id}")
+  end
+  
+  # all of the user's galleries (except for the default favorite)
+  def galleries
+    Gallery.get_all(id)
   end
   
   def self.roles

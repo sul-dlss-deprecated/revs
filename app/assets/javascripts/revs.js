@@ -19,6 +19,14 @@ $(document).ready(function(){
     return false;
   });
 
+  // Collapse Add to Gallery details if JavaScript (open by default for no-JS browsers).
+  $('#add_to_gallery_form').hide();
+  // Toggle details (new flag form and posted flags) when Flag action is selected.
+  $('#add_to_gallery_link').click(function(){
+    $('#add_to_gallery_form').slideToggle('slow');
+    return false;
+  });
+
   // Initialize Bootstrap tooltip
   $('.help').tooltip();
 

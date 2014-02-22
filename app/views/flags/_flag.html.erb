@@ -23,10 +23,9 @@
 
     <% if flag.resolved and can? :administer, flag %>
       <div class="resolution-history">
-        <%#= t('revs.flags.resolver_id')%> <%#= flag.resolving_user %>
         <span>
           <label><%= t('revs.flags.resolver_username')%></label>
-          <%= User.find(flag.resolving_user).username %>
+          <%= User.find(flag.resolving_user).to_s %>
         </span>
         <% if !flag.resolution.empty? %>
           <span>

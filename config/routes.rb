@@ -37,6 +37,7 @@ Revs::Application.routes.draw do
   
   # public user profile pages
   match 'user/:name/favorites', :to=>'user#favorites', :as=>'user_favorites', :via=>:get, :constraints => {:name => /\D+.+/} 
+  match 'user/:name/galleries', :to=>'user#galleries', :as=>'user_galleries', :via=>:get, :constraints => {:name => /\D+.+/} 
   match 'user/:name/annotations', :to=>'user#annotations', :as=>'user_annotations', :via=>:get, :constraints => {:name => /\D+.+/} 
   match 'user/:name/flags', :to=>'user#flags', :as=>'user_flags', :via=>:get, :constraints => {:name => /\D+.+/} 
   match 'user/:name/edits', :to=>'user#edits', :as=>'user_edits', :via=>:get, :constraints => {:name => /\D+.+/} 
@@ -63,8 +64,7 @@ Revs::Application.routes.draw do
   end
   
   resources :galleries
-  resources :saved_items do
-  end
+  resources :saved_items
     
   resources :flags do
     collection do
@@ -101,6 +101,7 @@ Revs::Application.routes.draw do
         match 'edits', :to => 'tasks#edits', :as=>"edits_table"
         match 'flags', :to => 'tasks#flags', :as=>"flags_table"
         match 'favorites', :to => 'tasks#favorites', :as=>"favorites_table"
+        match 'galleries', :to => 'tasks#galleries', :as=>"galleries_table"
       end
     end
     resources :help do
