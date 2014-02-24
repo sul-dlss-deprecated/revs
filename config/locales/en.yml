@@ -233,6 +233,7 @@ en:
       none: 'This user does not have any favorites.'
       personal_none: 'You do not have any favorites.'  
       edit_annotation: 'Edit item note'
+      annotation: 'Item note'
       annotation_updated: "Item note updated."  
     user_galleries:
       head: "Galleries"
