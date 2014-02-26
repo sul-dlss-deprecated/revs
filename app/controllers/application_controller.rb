@@ -45,7 +45,7 @@ class ApplicationController < ActionController::Base
   end
   
   def profile_visible?(user)
-    (user && (user==current_user || user.public == true)) # if this is the currently logged in user or the profile is public, then the profile is visible
+    (user && (user==current_user || (user.public == true && user.active == true))) # if this is the currently logged in user or the profile is public, then the profile is visible
   end
   
   def after_sign_in_path_for(resource)
@@ -97,7 +97,7 @@ class ApplicationController < ActionController::Base
     @id=params[:id]
     @name=params[:name]
     @user = (@id.blank? ? User.find_by_username(@name) : User.find_by_id(@id))
-    profile_not_found unless @user
+    profile_not_found unless (@user && @user.active)
   end
   
   def profile_not_found

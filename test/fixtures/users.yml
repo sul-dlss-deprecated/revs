@@ -16,6 +16,7 @@ admin:
   bio: 'I am an administrator. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.'
   role: 'admin'
   public: false
+  active: true
 
 curator:
   email: curator1@example.com
@@ -27,7 +28,8 @@ curator:
   bio: 'I am a curator and pellentesque habitant morbi tristique senectus et netus et malesuada fames.'
   role: 'curator'
   public: true
-  
+  active: true
+    
 user:
   email: user1@example.com
   username: user1
@@ -40,7 +42,8 @@ user:
   twitter: 'RevsTesting'
   role: 'user'
   public: true
-    
+  active: true
+      
 sunet_user:
   email: sunetuser@stanford.edu
   username: sunetuser@stanford.edu
@@ -52,7 +55,8 @@ sunet_user:
   bio: 'I am a Stanford web user. Vestibulum tortor quam, feugiat vitae, ultricies eget.'
   role: 'user'
   public: true
-
+  active: true
+  
 beta_user:
   email: beta1@example.com
   username: beta1
@@ -63,4 +67,4 @@ beta_user:
   bio: 'I am a Beta user. Vestibulum tortor quam, feugiat vitae, ultricies eget.'
   role: 'beta'
   public: true
-  
+  active: true

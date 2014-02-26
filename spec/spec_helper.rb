@@ -37,7 +37,7 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
   
-
+  config.include Devise::TestHelpers, :type => :controller
   
 end
 
