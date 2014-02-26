@@ -94,7 +94,6 @@ describe("Favorites",:type=>:request,:integration=>true) do
     end
     #Check Out Pagination 
     visit user_favorites_path(user_login)
-    save_and_open_page
     page.should have_content @Next
     page.should have_content "Last"
     
