@@ -7,11 +7,24 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
     @starting_page=catalog_path('qb957rw1430')
   end
 
+  it "should not show the annotations for a disabled user" do
+    visit @starting_page
+    find(".num-annotations-badge").should have_content("2")   # there is a user and an admin annotations
+    disable_user(user_login)
+
+    visit @starting_page
+    find(".num-annotations-badge").should have_content("1")   # the user annotation is not visible
+    page.should have_content('Guy in the background looking sideways') #admin annotation, still there
+    page.should_not have_content('air intake?') # user annotation, now hidden
+  end
+  
   it "should show the number of annotations in an image and allow logged in users to add a new one" do
     login_as(user_login)
     visit @starting_page
     should_allow_annotations    
     find(".num-annotations-badge").should have_content("2")     
+    page.should have_content('Guy in the background looking sideways')
+    page.should have_content('air intake?')
   end
 
   it "should not show annotations link to a non-logged in user when there are no annotations" do

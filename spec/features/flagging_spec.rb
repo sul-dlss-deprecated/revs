@@ -20,14 +20,26 @@ describe("Flagging",:type=>:request,:integration=>true) do
     
   end
 
-
   it "should allow non-logged in users to view flags for items that have them" do
 
     visit catalog_path('sc411ff4198')
     page.should_not have_css('#flag-details-link.hidden')
-    page.should have_content("Flagged")
+    page.should have_content(I18n.t('revs.flags.plural'))
     page.should have_content("user comment") # the text of the flag
     find(".num-flags-badge").should have_content("1")
+    
+  end
+
+  it "should hide flags for a disabled user account" do
+
+    # deactivate a user so their flags are hidden
+    disable_user(user_login)
+    
+    visit catalog_path('sc411ff4198')
+    page.should_not have_css('#flag-details-link.hidden')
+    page.should have_content(I18n.t('revs.flags.plural'))
+    page.should_not have_content("user comment") # the text of the flag is not there
+    find(".num-flags-badge").should have_content("0")
     
   end
   
