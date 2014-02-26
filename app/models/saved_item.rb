@@ -4,7 +4,6 @@ class SavedItem < WithSolrDocument
   belongs_to :item, :foreign_key=>:druid, :primary_key=>:druid
   
   attr_accessible :druid, :gallery_id, :description
-  
   validates :gallery_id, :numericality => { :only_integer => true }
   validates :druid, :is_druid=>true
   validate :only_one_favorite_per_user_per_druid, :on => :create

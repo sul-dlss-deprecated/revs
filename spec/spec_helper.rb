@@ -8,7 +8,6 @@ require 'capybara/rspec'
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
-
 RSpec.configure do |config|
   # ## Mock Framework
   #
@@ -39,6 +38,19 @@ RSpec.configure do |config|
   
 
   
+end
+
+
+def item_druids
+  return  ["bb004bn8654","bg152pb0116", "dd482qk0417", "hj660zx8618", "jg267fg4283", "kn529wc4372", "nn572km4370", "pt012cb4647", "qb957rw1430", "qk978vx9753", "qt854jh3199", "sc411ff4198", "td830rb1584",  "xf058ys1313", "yh093pt9555", "yt907db4998", "zp006sp7532"] 
+end
+
+def default_hidden_druids
+  return ["bb004bn8654"]
+end
+
+def collection_druids
+  return ['wn860zc7322','kz071cg8658']
 end
 
 # the following must match what are in the users.yml fixtures
@@ -379,3 +391,14 @@ def full_search_array(search, complex)
   end
   return searches.uniq
 end
+  
+def get_title_from_druid(druid)
+  return get_solrdoc_from_druid(druid)['title_tsi']
+end
+
+def get_solrdoc_from_druid(druid)
+  return Blacklight.solr.select(:params =>{:q=>"id:#{druid}"})["response"]["docs"][0]
+end
+  
+  
+  
