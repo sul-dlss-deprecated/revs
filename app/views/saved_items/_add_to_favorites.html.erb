@@ -1,7 +1,10 @@
 <%
+item_note_text=""
 if @document.is_favorite?(current_user)
   favorites_link_icon = "icon-heart"
   favorites_link_text = t('revs.favorites.remove_from_favorites')
+  item_note=current_user.favorites.where(:druid=>@document.id).first
+  item_note_text="#{t('revs.favorites.annotation')}: #{item_note.description}" if (!item_note.nil? && !item_note.description.blank?)
   url=saved_item_path(@document.id)
   method = :delete
 else
@@ -13,4 +16,4 @@ end
 %>
 
 <i class="<%= favorites_link_icon %>"></i>
-<%=button_to("#{favorites_link_text}", url, :remote=>true, :method=>method, class: 'btn btn-link') %>
+<%=button_to("#{favorites_link_text}", url, :remote=>true, :method=>method, class: 'btn btn-link', title: "#{item_note_text}") %>

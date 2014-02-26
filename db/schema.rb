@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140115201239) do
+ActiveRecord::Schema.define(:version => 20140225181300) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "user_id"
@@ -143,8 +143,10 @@ ActiveRecord::Schema.define(:version => 20140115201239) do
     t.string   "twitter"
     t.string   "avatar"
     t.integer  "spam_flags",             :default => 0,     :null => false
+    t.boolean  "active",                 :default => true,  :null => false
   end
 
+  add_index "users", ["active"], :name => "index_users_on_active"
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
   add_index "users", ["email"], :name => "index_users_on_email"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true

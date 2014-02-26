@@ -156,6 +156,27 @@
 			<% end %>
     <% end %>
 
+    <% unless current_user==@user%>
+      <div class="control-group">
+         <%= f.label :public, t('revs.user.account_is'), :class => 'control-label' %>
+         <div class="controls">
+           <label class="radio">
+             <%= f.radio_button :active, true, :class => "radio" %>
+             <%= t('revs.user.active') %>
+           </label>
+           <label class="radio">
+             <%= f.radio_button :active, false, :class => "radio" %>
+             <%= t('revs.user.inactive') %>
+           </label>
+	          <span class="help-block first">
+             <small>
+               <%= t('revs.user.inactive_help') %>
+             </small>
+           </span>
+         </div>
+       </div>
+    <% end %>
+    
     <div class="control-group">
       <div class="controls">
         <%= f.submit t('revs.nav.update'), :class => "btn" %>

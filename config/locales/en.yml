@@ -245,6 +245,7 @@ en:
       none: 'This user does not have any favorites.'
       personal_none: 'You do not have any favorites.'  
       edit_annotation: 'Edit item note'
+      annotation: 'Item note'
       annotation_updated: "Item note updated."  
     user_galleries:
       head: "Galleries"
@@ -385,6 +386,10 @@ en:
       remove_avatar: "Remove avatar"
       public: "Public"
       private: "Private"
+      active: "Active"
+      account_is: "User account is"
+      inactive: "Inactive"
+      inactive_help: "Inactive users cannot log in and their profile page is never shown. Use this feature to disable malicious or spam users."
       preview: "Preview"
       joined_on: "Joined on"
       my_profile_page: "My profile page is"

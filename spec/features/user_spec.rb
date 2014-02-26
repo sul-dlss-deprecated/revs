@@ -40,6 +40,7 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     user_account=User.find_by_username(user_login)
     admin_account.public.should == false
     user_account.public.should == true
+    user_account.active.should == true
 
     # admin user profile is not public
     visit user_profile_id_path(admin_account.id)
@@ -54,7 +55,30 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     current_path.should == user_profile_name_path(user_account.username)
     [user_account.full_name,user_account.bio].each {|content| page.should have_content content}    
   end
-  
+
+  it "should not show the public profile of a user whose account is marked as inactive" do
+    user_account=User.find_by_username(user_login)
+    user_account.public.should == true
+    user_account.active = false
+    user_account.save
+
+    # regular user profile is public but inactive and should not be shown
+    visit user_profile_id_path(user_account.id)
+    current_path.should == root_path
+    visit user_profile_name_path(user_account.username)
+    current_path.should == root_path
+  end
+
+  it "should not allow an inactive user to login" do
+    user_account=User.find_by_username(user_login)
+    user_account.active = false
+    user_account.save
+    login_as(user_login)
+    current_path.should == new_user_session_path
+    visit user_profile_name_path(user_login)
+    current_path.should_not == user_profile_name_path(user_login)    
+  end
+      
   it "should show my user profile page when logged in, even if your profile is marked as private" do
     # admin user profile is not public
     admin_account=User.find_by_username(admin_login)

@@ -31,7 +31,7 @@
         <th class="centered"><%= link_to t('revs.admin.confirmed'),
                 admin_users_path(:order=>'confirmed_at desc',:serach=>@search) %></th>
         <th class="centered"><%=t('revs.authentication.sidebar.actions')%></th>
-        <th class="centered"></th>
+        <th class="centered">&nbsp;</th>
       </tr>
       <% @users.each do |user|%>
        <tr>

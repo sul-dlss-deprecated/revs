@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :username, :email, :sunet, :password, :password_confirmation, :remember_me,
                   :role, :bio, :first_name, :last_name, :public, :url, :twitter, :login,
-                  :subscribe_to_mailing_list, :subscribe_to_revs_mailing_list,
+                  :subscribe_to_mailing_list, :subscribe_to_revs_mailing_list, :active, 
                   :avatar, :avatar_cache, :remove_avatar
   attr_accessor :subscribe_to_mailing_list, :subscribe_to_revs_mailing_list # not persisted, just used on the signup form
   attr_accessor :login # virtual method that will refer to either email or username
@@ -70,6 +70,15 @@ class User < ActiveRecord::Base
   
   def create_default_favorites_list
     Gallery.get_favorites_list(self.id)
+  end
+  
+  # determines if account is active (could be locked or manually made inactive)
+  def active_for_authentication?
+    super && active
+  end
+  
+  def inactive_message
+    active ? super : :account_has_been_deactivated
   end
   
   def visible(class_name)
