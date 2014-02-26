@@ -70,6 +70,12 @@ def get_user(login)
   User.where(:username=>login).limit(1).first
 end
 
+def disable_user(login)
+  user=get_user(login)
+  user.active=false
+  user.save  
+end
+
 def login_as(login, password = nil)
   password ||= login_pw
   logout
