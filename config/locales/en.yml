@@ -25,18 +25,24 @@ en:
     errors:
       not_saved: 'An error occurred and the item was not saved.'
     actions:
+      delete: 'Delete'
       remove: 'Remove'
       edit: 'Edit'
+      confirm_delete: 'Are you sure?  This action cannot be undone.'
     messages:
       date: 'Date'
       not_shown: 'not shown'
       view_all: 'View all'
       created: 'Created'
+      created_by: 'Created by'
       switch_on: "On"
       switch_off: "Off"
       never: "never"
       saved: 'Changes saved.'
+      added: 'Added'
+      last_updated: 'Last updated'
       saved_on: 'Saved on'
+      total_views: 'Total views'
       switch_yes: "yes"
       switch_no: "no"
       status: "Status"
@@ -145,7 +151,7 @@ en:
         account: 'Your account'
       user_not_found: 'The user was not found or their profile is not public.'
       account_locked: |
-         Account is locked due to too many invalid login attempts.
+         Account is automatically locked after too many invalid login attempts.
          Lock the account immediately by checking the box.
          The user can unlock by verifying their email address or you can unlock by unchecking this box.
       lock_account: "Lock account"
@@ -253,11 +259,13 @@ en:
       you_can_create_galleries_html: "You can %{href} and add items to it from the Item Details page."
       you_can_create_galleries_linktext: "create your own gallery"
       none: 'This user does not have any galleries.'
+      personal_none: 'You do not have any galleries.'
       add_to_gallery: 'Add to gallery'
       add: 'Add'
       new_gallery: 'New gallery'
       saved: 'Item saved to gallery.'
       not_saved: 'The item is already in the selected gallery.'
+      in_gallery: 'In galleries'
     collection:
       collection_detail: 'Collection Detail'
       member_detail: 'Item Detail'
@@ -389,7 +397,7 @@ en:
       active: "Active"
       account_is: "User account is"
       inactive: "Inactive"
-      inactive_help: "Inactive users cannot log in and their profile page is never shown. Use this feature to disable malicious or spam users."
+      inactive_help: "Inactive users cannot log in, their flags and annotations are hidden and their profile page is never shown. Use this feature to disable malicious or spam users."
       preview: "Preview"
       joined_on: "Joined on"
       my_profile_page: "My profile page is"

@@ -7,7 +7,7 @@ class Gallery < ActiveRecord::Base
 
   GALLERIES_PER_PAGE = 10
 
-  attr_accessible :user_id,:public,:title,:description,:gallery_type
+  attr_accessible :user_id,:public,:title,:description,:gallery_type,:views
   
   validate :check_gallery_type
   validates :title, :presence=>true

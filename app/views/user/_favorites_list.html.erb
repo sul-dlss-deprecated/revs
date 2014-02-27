@@ -2,18 +2,13 @@
   <% edit_id = params[:edit_id] || nil%>
 <%end%>
 
-<% if not defined?(favorites_for_list) || favorites_for_list == nil%>
-  <%favorites_for_list = []%>
-<%end%>
-
-
- <%if favorites_for_list.count > 0%>
-   <span class="prev-next">   
-     <%= paginate favorites_for_list, :params => {:order=>@order}%>
-   </span>
+ <%if @favorites.count > 0%>
+ <div class="span9 pagination">
+   <%= paginate @favorites, :params => {:order=>@order} %>
+ </div>
 
     <div class="saved-items" id="favorites_list">
-         <%favorites_for_list.each do |favorite| %>
+         <%@favorites.each do |favorite| %>
            <div class="row item">
              <div class="span5">
                <ul>
@@ -45,7 +40,7 @@
      </div>
      
      <div class="span9 pagination">
-       <%= paginate favorites_for_list, :params => {:order=>@order} %>
+       <%= paginate @favorites, :params => {:order=>@order} %>
      </div>
      
  <%else%>
