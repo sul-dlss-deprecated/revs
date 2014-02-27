@@ -204,6 +204,10 @@ class SolrDocument
     @flags ||= Flag.includes(:user).where(:druid=>id).where(:'users.active'=>true).order('flags.created_at desc')
   end
 
+  def saved_items
+    @saved_items ||= SavedItem.includes(:gallery).where(:druid=>id).order('saved_items.created_at desc')
+  end
+
   def annotations(user)
     @annotations ||= Annotation.for_image_with_user(id,user)
   end
@@ -349,7 +353,7 @@ class SolrDocument
   
   # propoage unique information to database as well when saving solr document
   def update_item
-    @item=Item.fetch(id)
+    @item=Item.find(id)
     @item.visibility_value=visibility_value
     @item.save
   end

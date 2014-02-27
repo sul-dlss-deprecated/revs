@@ -1,0 +1,51 @@
+<%if @galleries.count > 0%>
+  <div class="span9 pagination">
+     <%= paginate @galleries, :params => {:order=>@order}%>
+   </div>
+
+    <div class="saved-items" id="galleries">
+         <%@galleries.each do |gallery| %>
+           <div class="row item">
+             <div class="span9">
+               <ul>
+                 <li><%= link_to(image_tag(gallery.saved_items.first.solr_document.images.first), gallery_path(gallery.id)) %><li>
+                 <li class="item-title"><%= link_to(gallery.title,gallery_path(gallery.id)) %></li>
+                 <li class="item-creation-date"><strong><%=t('revs.collection.total_items')%>:</strong> <%= gallery.saved_items.count %></li>
+                 <li class="item-creation-date"><strong><%=t('revs.messages.total_views')%>:</strong> <%= gallery.views %></li>
+                 <li class="item-creation-date"><strong><%=t('revs.messages.added')%>:</strong> <%= show_as_datetime(gallery.created_at.in_time_zone) %></li>
+                 <li class="item-creation-date"><strong><%=t('revs.messages.last_updated')%>:</strong> <%= show_as_datetime(gallery.updated_at.in_time_zone) %></li>
+                 <li class="item-description"><%= gallery.description %></li>
+                 
+                 <li class="favorite-item-actions">
+                   <% if can? :read, gallery %>
+                     <%= link_to t('revs.actions.view'), gallery_path(gallery.id) %> |                   
+                   <% end %>
+                   <% if can? :update, gallery%>
+                      <%= link_to t('revs.actions.edit'), edit_gallery_path(gallery.id,:page=>params[:page],:order=>params[:order]) %> |
+                   <% end%>
+                   <% if can? :destroy, gallery%>
+                      <%=button_to(t('revs.actions.delete'), gallery_path(gallery.id,:page=>params[:page],:order=>params[:order]), :confirm=>t('revs.actions.confirm_delete'), :method=> :delete, class: 'btn btn-link') %>
+                   <% end %>
+                 </li>
+               </ul>
+             </div>
+           </div>
+         <% end %>
+  
+     </div>
+     
+     <div class="span9 pagination">
+       <%= paginate @galleries, :params => {:order=>@order} %>
+     </div>
+     
+ <%else%>
+  
+   <% if is_logged_in_user?(@user)%>
+     <%=t('revs.user_galleries.personal_none')%>
+   <%else%>
+    <%=t('revs.user_galleries.none')%>
+   <%end%>
+   
+   
+ <%end%>
+   

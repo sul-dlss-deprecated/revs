@@ -2,7 +2,29 @@
   <span class="activity-count"><%= user_galleries_count(@user).to_s.rjust(1, '0') %></span>
 </h3>
 
-  <% if is_logged_in_user?(@user) %>
+  <% if user_galleries_count(@user) > 0 %>
+
+    <ul>
+    <% @user.latest('galleries').each do |gallery| %>
+  	          <li class="activity-item">
+  	            <ul>
+  	              <li><%= link_to(image_tag(gallery.saved_items.first.solr_document.images.first), gallery_path(gallery.id)) %><li>
+  	              <li class="item-title"><%= link_to(gallery.title,gallery_path(gallery.id)) %></li>
+  	              <% unless gallery.description.blank? %><li class="annotation"><%= truncate(gallery.description) %></li><% end %>
+  	              <li><%= show_as_datetime(gallery.created_at) %></li>
+  	            </ul>
+  	          </li>
+    <% end %>
+    </ul>
+    <% if user_galleries_count(@user) > Revs::Application.config.num_latest_user_activity %>
+      <p class="more-link">
+        <%= pluralize(user_galleries_count(@user) - Revs::Application.config.num_latest_user_activity, t('revs.user_galleries.singular').downcase) %> <%=t('revs.messages.not_shown')%>.
+        <%= link_to "#{t('revs.messages.view_all')} »", user_galleries_path(@user.username) %>
+      </p>
+    <% end %>
+  
+
+  <% elsif is_logged_in_user?(@user) %>
     <p class="muted">
   	  <em><%= t('revs.user_galleries.you_can_create_galleries_html', :href => link_to(t("revs.user_galleries.you_can_create_galleries_linktext"), "#")) %></em>  
     </p>

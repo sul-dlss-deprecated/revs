@@ -56,13 +56,14 @@ class Ability
   def admin_actions(user)
     can_act_as_guest_user
     can_act_as_logged_in_user(user)
+    can_view_any_profile
     can_curate
     can_update_metadata
     can_administer
   end
   
   # defined abilities
-  private
+  #private
   def can_act_as_guest_user
     # any user of the website (even those not logged in) can perform these actions
     can_view_about_pages # anyone can see the about and home page no matter what
@@ -70,6 +71,8 @@ class Ability
       can_view_items
       can_read_annotations
       can_read_flags
+      can_view_public_galleries
+      can_view_public_profiles
     end
   end
   
@@ -81,6 +84,7 @@ class Ability
     can_annotate(user)
     can_flag(user)
     can_save_favorites_and_galleries(user)
+    can_view_own_profile(user)
   end
   
   def can_view_about_pages
@@ -104,6 +108,23 @@ class Ability
     can :update_flag_table, User 
   end
   
+  def can_view_public_galleries
+    can :read, Gallery, :public=>true
+  end
+
+  def can_view_public_profiles
+    can [:show,:show_by_name,:favorites], User, :public=>true, :active=>true # note that I could not get the confirmation of public and active profile checking to work here, so this is actually confirmed in the user controller via a before filter
+    can [:annotations,:edits,:galleries,:flags], User, :active=>true # all annotations, edits, galleries, and flags are visible when user is active (note that I could not get the confirmation of an active profile checking to work here, so this is actually confirmed in the user controller via a before filter)
+  end
+
+  def can_view_own_profile(user)
+    can :all, User, :user_id=>user.id
+  end
+
+  def can_view_any_profile
+    can :all, User
+  end
+    
   def can_annotate(user)
     can :create, Annotation # can create new annotations
     can [:update,:destroy], Annotation, :user_id => user.id # can update and destroy their own annotations
@@ -112,8 +133,8 @@ class Ability
   def can_save_favorites_and_galleries(user)
     can :create, SavedItem # can create new saved items
     can :create, Gallery, :user_id=>user.id # can create new galleries for themselves
-    can [:update,:destroy,:cancel], SavedItem, :user_id => user.id # can update and destroy their own Saved Items
-    can [:update,:destroy], Gallery, :user_id => user.id # can update and destroy their own Galleries
+    can [:read,:update,:destroy], SavedItem, :user_id => user.id # can view, update and destroy their own Saved Items
+    can [:read,:update,:destroy], Gallery, :user_id => user.id # can view, update and destroy their own Galleries
   end
 
   def can_flag(user)
