@@ -13,8 +13,10 @@ en:
     stanford_library: 'Stanford University Libraries'
     routing_error: "Sorry, the page you were looking for was not found."
     actions:
+      delete: 'Delete'
       remove: 'Remove'
       edit: 'Edit'
+      confirm_delete: 'Are you sure?  This action cannot be undone.'
     messages:
       date: 'Date'
       not_shown: 'not shown'
@@ -232,9 +234,12 @@ en:
       removed: "has been removed from favorites."  
       none: 'This user does not have any favorites.'
       personal_none: 'You do not have any favorites.'  
-      edit_annotation: 'Edit item note'
-      annotation: 'Item note'
-      annotation_updated: "Item note updated."  
+      edit_item_note: 'Edit item note'
+      add_item_note: 'Add item note'
+      item_note: 'Item note'
+      item_note_updated: "Item note updated."  
+      you_can_add_a_note_html: "You can %{href} to your favorite."
+      you_can_add_a_note_linktext: 'add a note'
     user_galleries:
       head: "Galleries"
       you_can_create_galleries_html: "You can %{href} and add items to it from the Item Details page."

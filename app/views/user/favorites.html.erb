@@ -1,15 +1,8 @@
 <div id="content" class="span9 favorites-index">
- 
    <h2><%= display_user_name(@user) %><span class="lowercase">'s</span> <%=t('revs.favorites.head')%></h2>
    <div id = "favorites_area">
-     <%=render :partial => "favorites_list", :locals => {:favorites_for_list => @favorites}%>
-   </div>
-   
- 
-
-
-   
-
+     <%=render :partial => "favorites_list" %>
+   </div>      
 </div>
 
 <%= render :partial => 'side_nav' %>

@@ -2,18 +2,13 @@
   <% edit_id = params[:edit_id] || nil%>
 <%end%>
 
-<% if not defined?(favorites_for_list) || favorites_for_list == nil%>
-  <%favorites_for_list = []%>
-<%end%>
-
-
- <%if favorites_for_list.count > 0%>
-   <span class="prev-next">   
-     <%= paginate favorites_for_list, :params => {:order=>@order}%>
-   </span>
+ <%if @favorites.count > 0%>
+ <div class="span9 pagination">
+   <%= paginate @favorites, :params => {:order=>@order} %>
+ </div>
 
     <div class="saved-items" id="favorites_list">
-         <%favorites_for_list.each do |favorite| %>
+         <%@favorites.each do |favorite| %>
            <div class="row item">
              <div class="span5">
                <ul>
@@ -22,20 +17,20 @@
                  <li class="item-creation-date"><%=t('revs.messages.saved_on')%> <%= show_as_datetime(favorite.created_at.in_time_zone) %></li>
                  <li class="favorite-item-actions">
                    <%if can? :destroy, favorite%>
-                      <%=button_to(t('revs.favorites.remove_from_favorites'), saved_item_path(favorite.solr_document.id,:page=>params[:page],:order=>params[:order]), :method=> :delete, class: 'btn btn-link') %>
+                      <%=button_to(t('revs.favorites.remove_from_favorites'), saved_item_path(favorite.solr_document.id,:page=>params[:page],:order=>params[:order]), :method=> :delete, :confirm=>t('revs.actions.confirm_delete'),class: 'btn btn-link') %>
                    <% end %>
                    <% if (can? :destroy, favorite) and (can? :update, favorite) %>
                    |
                    <% end %>
                    <% if can? :update, favorite%>
                    <!-- this link should turn on edit mode for annotation field below -->
-                   <%= link_to t('revs.favorites.edit_annotation'), edit_saved_item_path(favorite.id,:page=>params[:page],:order=>params[:order]), :remote => true %>
+                   <%= link_to (favorite.description.blank? ? t('revs.favorites.add_item_note') : t('revs.favorites.edit_item_note')), edit_saved_item_path(favorite.id,:page=>params[:page],:order=>params[:order]), :remote => true, :id=>"item_note_link_#{favorite.id}" %>
                    <% end%>
                  </li>
                </ul>
              </div>
              <div class="span4">
-               <div id='<%="description"+favorite.id.to_s%>'>
+               <div id="<%="description#{favorite.id}"%>">
                  <%=render :partial => 'saved_items/description', :locals => {:favorite => favorite, :edit_id=> edit_id || nil} %>
                </div>
              </div>
@@ -45,7 +40,7 @@
      </div>
      
      <div class="span9 pagination">
-       <%= paginate favorites_for_list, :params => {:order=>@order} %>
+       <%= paginate @favorites, :params => {:order=>@order} %>
      </div>
      
  <%else%>
@@ -58,4 +53,3 @@
    
    
  <%end%>
-   
