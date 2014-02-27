@@ -5,6 +5,7 @@ class Item < WithSolrDocument
  has_many :annotations, :foreign_key=>:druid, :primary_key=>:druid
  has_many :flags, :foreign_key=>:druid, :primary_key=>:druid
  has_many :saved_items, :foreign_key=>:druid, :primary_key=>:druid
+ has_many :change_logs, :foreign_key=>:druid, :primary_key=>:druid
  
   validates :druid, :is_druid=>true
   validates :druid, :uniqueness=>true
@@ -17,7 +18,7 @@ class Item < WithSolrDocument
   end
   
   # find by druid or create the row if it does not exist yet
-  def self.fetch(druid)
+  def self.find(druid)
     item=self.where(:druid=>druid).first
     return (item ? item : Item.create(:druid=>druid,:visibility_value=> SolrDocument.visibility_mappings[:visible]))
   end

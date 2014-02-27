@@ -91,6 +91,8 @@ class User < ActiveRecord::Base
   def latest(class_name)
     if class_name=='favorites'
       return favorites.order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
+    elsif class_name=='galleries'
+      return galleries.order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
     else
       latest=visible(class_name)
       latest=self.class.latest_filter(latest)

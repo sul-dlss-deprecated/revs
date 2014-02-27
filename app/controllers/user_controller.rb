@@ -1,8 +1,11 @@
 class UserController < ApplicationController
     
-  before_filter :check_for_curator_logged_in, :only=>[:curator_update_flag_table] # only curators can reach this action
-  before_filter :check_for_profile_existence, :except=>[:update_flag_table,:curator_update_flag_table] # these pages are visible to anyone
-  before_filter :check_for_profile_visible, :only=>[:show,:show_by_name,:favorites] # these pages are only visible for the current user or public profiles
+  before_filter :load_user_profile, :except=>[:update_flag_table,:curator_update_flag_table] # we need to be sure the profile exists before doing anything
+  before_filter :confirm_public, :only=>[:show,:show_by_name,:favorites]
+  before_filter :confirm_active, :except=>[:update_flag_table,:curator_update_flag_table]
+  
+  # TODO we should be able to do the confirmation of confirm_public and confirm_active in the Ability class via cancan, but I could not get it to work
+  load_and_authorize_resource
   
   # user profile pages
   
@@ -23,6 +26,7 @@ class UserController < ApplicationController
 
   # all of the user's favorites, only show if the profile is public
   def favorites
+        
     get_current_page_and_order
     unsorted_favorites = @user.favorites
     
@@ -101,5 +105,14 @@ class UserController < ApplicationController
     @order=params[:order] || 'created_at DESC'
   end
   
+  # we need to be sure the user is viewing an active profile (or is an administrator, who can do all)
+  def confirm_active
+    profile_not_found unless @user.active == true || can?(:administer, :all)
+  end
+
+  # we need to be sure the user is viewing a public profile (or is themselves or an administrator, who can do all)  
+  def confirm_public
+    profile_not_found unless @user == current_user || @user.public == true || can?(:administer, :all)
+  end
   
 end
