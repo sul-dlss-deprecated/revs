@@ -250,9 +250,12 @@ en:
       removed: "Item has been removed from favorites."  
       none: 'This user does not have any favorites.'
       personal_none: 'You do not have any favorites.'  
-      edit_annotation: 'Edit item note'
-      annotation: 'Item note'
-      annotation_updated: "Item note updated."  
+      edit_item_note: 'Edit item note'
+      add_item_note: 'Add item note'
+      item_note: 'Item note'
+      item_note_updated: "Item note updated."  
+      you_can_add_a_note_html: "You can %{href} to your favorite."
+      you_can_add_a_note_linktext: 'add a note'
     user_galleries:
       head: "Galleries"
       singular: "gallery"

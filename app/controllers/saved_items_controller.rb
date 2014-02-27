@@ -76,10 +76,13 @@ class SavedItemsController < ApplicationController
   
   def update
     @div = "#description#{params[:id]}"
-    item = SavedItem.find_by_id(params[:id])
-    description = params[:saved_item][:description]
-    item.update_attributes({:description => description})
-    @message = t('revs.favorites.annotation_updated')
+    unless params[:cancel]
+      item = SavedItem.find_by_id(params[:id])
+      description = params[:saved_item][:description]
+      item.update_attributes({:description => description})
+      @message = t('revs.favorites.item_note_updated')
+      @link_text = t('revs.favorites.edit_item_note')
+    end
     @favorite =  SavedItem.find_by_id(params[:id]) #refetch with new description
     respond_to do |format|
       format.html { flash[:success]=@message

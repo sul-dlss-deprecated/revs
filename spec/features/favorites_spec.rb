@@ -114,12 +114,13 @@ describe("Favorites",:type=>:request,:integration=>true) do
       click_button(@save_favorites_button)
       visit user_favorites_path(user_login)
       page.should have_content get_title_from_druid(@druid1)
-      page.should have_content I18n.t('revs.favorites.edit_annotation')
+      page.should have_content I18n.t('revs.favorites.add_item_note')
       page.should have_no_content new_description
-      click_link(I18n.t('revs.favorites.edit_annotation'))
+      click_link(I18n.t('revs.favorites.add_item_note'))
       page.should have_content I18n.t('revs.nav.update')
       fill_in('saved_item_description', :with => new_description)
       click_button(I18n.t('revs.nav.update'))
+      page.should have_content I18n.t('revs.favorites.edit_item_note')
       
       #Go check databse to make sure this was updated
       user = get_user(user_login)
