@@ -1,4 +1,8 @@
-<i class="icon-plus"></i><%=link_to t('revs.user_galleries.add_to_gallery'),'#',:id=>'add_to_gallery_link'%>
+<% 
+galleries = @document.saved_items.where(:'galleries.user_id' => current_user.id).collect {|saved_item| saved_item.gallery.title}
+in_gallery_text= galleries.blank? ? "" : "#{t('revs.user_galleries.in_gallery')}: #{galleries.join(', ')}"
+%>
+<i class="icon-plus"></i><%=link_to t('revs.user_galleries.add_to_gallery'),'#',:id=>'add_to_gallery_link', :title=>in_gallery_text%>
 
  <div id="add_to_gallery_form">
    <%= form_for(SavedItem.new, :remote=>true) do |f| %>
