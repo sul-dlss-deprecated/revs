@@ -112,7 +112,7 @@ class Ability
   def can_save_favorites_and_galleries(user)
     can :create, SavedItem # can create new saved items
     can :create, Gallery, :user_id=>user.id # can create new galleries for themselves
-    can [:update,:destroy], SavedItem, :user_id => user.id # can update and destroy their own Saved Items
+    can [:update,:destroy,:cancel], SavedItem, :user_id => user.id # can update and destroy their own Saved Items
     can [:update,:destroy], Gallery, :user_id => user.id # can update and destroy their own Galleries
   end
 
