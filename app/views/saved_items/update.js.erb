@@ -1,5 +1,7 @@
 $('<%=@div%>').html("<%= escape_javascript(render :partial => 'saved_items/description', :locals=>{:edit_id => nil, :favorite=>@favorite})%>");
-$('.flash_messages').append("<%= escape_javascript(render :partial => 'shared/flash_success_message') %>");
+<% unless @message.blank? %>
+	$('.flash_messages').append("<%= escape_javascript(render :partial => 'shared/flash_success_message') %>");
+<% end %>
 <% unless @link_text.blank? %>
 	$("#item_note_link_<%=@favorite.id%>").html("<%=@link_text %>");
 <% end %>

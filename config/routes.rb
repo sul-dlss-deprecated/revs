@@ -64,7 +64,11 @@ Revs::Application.routes.draw do
   end
   
   resources :galleries
-  resources :saved_items
+  resources :saved_items do
+    collection do
+      get 'cancel/:id', :to => 'saved_items#cancel', :as=>'cancel'
+    end
+  end
     
   resources :flags do
     collection do
