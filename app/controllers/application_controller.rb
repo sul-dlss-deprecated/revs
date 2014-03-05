@@ -204,6 +204,7 @@ class ApplicationController < ActionController::Base
         logger.error(@exception.message)
         logger.error(@exception.backtrace.join("\n"))
         render "500", :status => 500
+        return false
       else
         raise(@exception)
      end

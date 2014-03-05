@@ -31,6 +31,7 @@ class CatalogController < ApplicationController
     @force_render_home = true
     index
     render :action=>:index, status=>:not_found
+    return false
   end
   
   def index
