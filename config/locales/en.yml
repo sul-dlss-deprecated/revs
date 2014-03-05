@@ -86,8 +86,9 @@ en:
       send: 'Send'
       cancel: 'Cancel'
       go_back: 'Go back'
-      report_problem: 'Report a problem'
-      content_corrections: 'Are there problems with the metadata for this item? If you create an account and login, you can flag this item with a comment.'
+      feedback: 'Feedback'
+      content_corrections: 'Are there problems with the metadata for this item? If you %{create_an_account_link}, you can flag this item with a comment, or you can also provide %{feedback_link} now.'
+      create_an_account: 'create an account'      
       more: 'More'
       please_wait: 'Please wait...'
     contact:
