@@ -1,3 +1,5 @@
+<% document_counter = 0 unless !defined?(document_counter) %>
+
 <div class="<%= render_document_class document %> document">
   <%= link_to_document document,
         :label => image_tag(document.images(:large).first,
