@@ -18,6 +18,10 @@ class Admin::UsersController < ApplicationController
   def edit
     @user=User.find(params[:id])
   end
+  
+  def show
+    redirect_to :action=>:index
+  end
     
   def update
     if params[:user][:password].blank? # if the admin user didn't enter a new password, remove them from the hash so they don't try to get updated
