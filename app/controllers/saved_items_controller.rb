@@ -58,13 +58,14 @@ class SavedItemsController < ApplicationController
     gallery_id=params[:gallery_id]
     
     @document=SolrDocument.find(druid)
-    if params[:gallery_d]
+    if gallery_id
+      SavedItem.where(:gallery_id=>gallery_id,:druid=>druid).destroy
+      @message=t('revs.user_galleries.removed')
       # remove from specified gallery
     else
       SavedItem.remove_favorite(:user_id=>user_id,:druid=>druid)
       @message=t('revs.favorites.removed')
     end
-    
     
     respond_to do |format|
       format.html { flash[:success]=@message

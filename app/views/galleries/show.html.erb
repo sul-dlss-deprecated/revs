@@ -1,5 +1,9 @@
-<h2><%=@gallery.title%></h2>
+<div id="content" class="span9">
+  
+  <h2><%=@gallery.title%></h2>
 
-<% if @gallery.user != current_user %>
-  <h3><%="#{t('revs.messages.created_by')} #{@gallery.user.to_s}"%></h3>
-<% end %>  
+  <% if @gallery.user != current_user %>
+    <h3><%="#{t('revs.messages.created_by')} #{@gallery.user.to_s}"%></h3>
+  <% end %>  
+  
+</div>

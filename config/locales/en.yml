@@ -271,7 +271,14 @@ en:
       add_to_gallery: 'Add to gallery'
       add: 'Add'
       new_gallery: 'New gallery'
+      view: 'View gallery'
+      edit: 'Edit Gallery'
+      title: 'Gallery title'
+      description: 'Gallery description'
       saved: 'Item saved to gallery.'
+      removed: "Item has been removed from the gallery."  
+      gallery_removed: "The gallery was removed."
+      gallery_updated: "The gallery was updated."
       not_saved: 'The item is already in the selected gallery.'
       in_gallery: 'In galleries'
     collection:
@@ -402,6 +409,7 @@ en:
       remove_avatar: "Remove avatar"
       public: "Public"
       private: "Private"
+      privacy: "Privacy"
       active: "Active"
       account_is: "User account is"
       inactive: "Inactive"
