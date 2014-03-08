@@ -5,10 +5,13 @@
 
     <div class="saved-items" id="galleries">
          <%@galleries.each do |gallery| %>
-           <div class="row item">
+           <div id="gallery_<%=gallery.id%>" class="row item">
              <div class="span9">
                <ul>
-                 <li><%= link_to(image_tag(gallery.saved_items.first.solr_document.images.first), gallery_path(gallery.id)) %><li>
+                 <li><%= link_to(image_tag(gallery.image), gallery_path(gallery.id)) if gallery.image %><li>
+                   <span class="label profile-visibility <%= gallery.public ? 'label-success' : '' %>">
+                     <%= gallery.public ? t('revs.user.public').downcase : t('revs.user.private').downcase %>
+                   </span>
                  <li class="item-title"><%= link_to(gallery.title,gallery_path(gallery.id)) %></li>
                  <li class="item-creation-date"><strong><%=t('revs.collection.total_items')%>:</strong> <%= gallery.saved_items.count %></li>
                  <li class="item-creation-date"><strong><%=t('revs.messages.total_views')%>:</strong> <%= gallery.views %></li>
@@ -18,13 +21,13 @@
                  
                  <li class="favorite-item-actions">
                    <% if can? :read, gallery %>
-                     <%= link_to t('revs.actions.view'), gallery_path(gallery.id) %> |                   
+                     <%= link_to t('revs.user_galleries.view'), gallery_path(gallery.id) %> |                   
                    <% end %>
                    <% if can? :update, gallery%>
                       <%= link_to t('revs.actions.edit'), edit_gallery_path(gallery.id,:page=>params[:page],:order=>params[:order]) %> |
                    <% end%>
                    <% if can? :destroy, gallery%>
-                      <%=button_to(t('revs.actions.delete'), gallery_path(gallery.id,:page=>params[:page],:order=>params[:order]), :confirm=>t('revs.actions.confirm_delete'), :method=> :delete, class: 'btn btn-link') %>
+                      <%=button_to(t('revs.actions.delete'), gallery_path(gallery.id,:page=>params[:page],:order=>params[:order]), :confirm=>t('revs.actions.confirm_delete'), :method=> :delete, :remote=>true, class: 'btn btn-link') %>
                    <% end %>
                  </li>
                </ul>

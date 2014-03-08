@@ -18,6 +18,11 @@ class Gallery < ActiveRecord::Base
     return GALLERIES_PER_PAGE
   end
   
+  def image
+    item=saved_items(:order=>'sort_order ASC,created_at DESC').limit(1)
+    item.size == 0 ? nil : item.first.solr_document.images.first
+  end
+  
   # returns the default favorites gallery for the given user ID (and create it does not exist) - returns the gallery
   def self.get_favorites_list(user_id)
     gallery=self.where(:user_id=>user_id,:gallery_type=>:favorites).limit(1)
