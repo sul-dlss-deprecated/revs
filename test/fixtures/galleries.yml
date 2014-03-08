@@ -10,4 +10,16 @@ curator_favs:
 
 admin_favs:
   user: admin  # this is the named "admin" fixture object from the users table
-  gallery_type: 'favorites'  
+  gallery_type: 'favorites'
+
+user_gal1:
+  user: user  # this is the named "user" fixture object from the users table
+  gallery_type: 'user'    
+  title: 'My Awesome Gallery'
+  description: 'It is super duper cool.'
+
+user_gal2:
+  user: user  # this is the named "user" fixture object from the users table
+  gallery_type: 'user'    
+  title: 'Porsche Gallery'
+  description: ''  

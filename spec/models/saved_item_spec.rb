@@ -9,21 +9,21 @@ describe SavedItem do
   end
   
   it "should save a favorite in a user's favorite gallery, and create the gallery if it does not exist yet" do
-    Gallery.where(:user_id=>@user.id).size.should == 0 # no favorites gallery yet for this user
+    Gallery.where(:user_id=>@user.id,:gallery_type=>'favorites').size.should == 0 # no favorites gallery yet for this user
     @user.favorites.size == 0
     SolrDocument.find(@druid1).is_favorite?(@user).should be_false
     SolrDocument.find(@druid2).is_favorite?(@user).should be_false
     SavedItem.save_favorite(:user_id=>@user.id,:druid=>@druid1,:description=>'test').id.should_not be_nil # save a favorite
-    Gallery.where(:user_id=>@user.id).size.should == 1 # new favorites gallery
+    Gallery.where(:user_id=>@user.id,:gallery_type=>'favorites').size.should == 1 # new favorites gallery
     Gallery.get_favorites_list(@user.id).class.should == Gallery # we can find the new gallery
     SavedItem.get_favorites(@user.id).size.should == 1 # there is one saved favorite for this user
     @user.favorites.size == 1
     SavedItem.save_favorite(:user_id=>@user.id,:druid=>@druid2,:description=>'test2').id.should_not be_nil # save another one
-    Gallery.where(:user_id=>@user.id).size.should == 1 # still only one favorites gallery
+    Gallery.where(:user_id=>@user.id,:gallery_type=>'favorites').size.should == 1 # still only one favorites gallery
     SavedItem.get_favorites(@user.id).size.should == 2 # but now two saved items in this gallery
     @user.favorites.size == 2
     SavedItem.save_favorite(:user_id=>@user.id,:druid=>@druid2,:description=>'test2').id.should be_nil # save the same druid, which should not add it again
-    Gallery.where(:user_id=>@user.id).size.should == 1 # still only one favorites gallery
+    Gallery.where(:user_id=>@user.id,:gallery_type=>'favorites').size.should == 1 # still only one favorites gallery
     SavedItem.get_favorites(@user.id).size.should == 2 # still only two saved items in this gallery    
     @user.favorites.size == 2
     SolrDocument.find(@druid1).is_favorite?(@user).should be_true
@@ -35,13 +35,13 @@ describe SavedItem do
     SolrDocument.find(@druid1).is_favorite?(@user).should be_false
     Gallery.get_favorites_list(@user.id).class.should == Gallery # we can find the new gallery
     SavedItem.save_favorite(:user_id=>@user.id,:druid=>@druid1,:description=>'test').id.should_not be_nil # save a favorite
-    Gallery.where(:user_id=>@user.id).size.should == 1 # new favorites gallery
+    Gallery.where(:user_id=>@user.id,:gallery_type=>'favorites').size.should == 1 # new favorites gallery
     SavedItem.get_favorites(@user.id).size.should == 1 # there is one saved favorite for this user
     @user.favorites.size == 1
     SolrDocument.find(@druid1).is_favorite?(@user).should be_true
     SavedItem.remove_favorite(:user_id=>@user.id,:druid=>@druid1)
     SavedItem.get_favorites(@user.id).size.should == 0 # there are no saved favorites for this user
-    Gallery.where(:user_id=>@user.id).size.should == 1 # but gallery still exists
+    Gallery.where(:user_id=>@user.id,:gallery_type=>'favorites').size.should == 1 # but gallery still exists
     SolrDocument.find(@druid1).is_favorite?(@user).should be_false
     @user.favorites.size == 0
   end
