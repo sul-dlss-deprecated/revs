@@ -30,7 +30,7 @@ class CatalogController < ApplicationController
     flash.now[:error]=t('revs.routing_error')
     @force_render_home = true
     index
-    render :action=>:index, status=>:not_found
+    render :action=>:index, :format=>:html, :status=>:not_found
     return false
   end
   
@@ -81,7 +81,7 @@ class CatalogController < ApplicationController
  
     end
     
-    super
+   super
         
     # if we get this far, it may have been a search operation, so if we only have one search result, just go directly there
     redirect_to item_path(@response['response']['docs'].first['id']) if (@response['response']['numFound'] == 1 && can?(:read,:item_pages))
