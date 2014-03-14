@@ -30,7 +30,7 @@ class CatalogController < ApplicationController
     flash.now[:error]=t('revs.routing_error')
     @force_render_home = true
     index
-    render :action=>:index, status=>:not_found
+    render :action=>:index, :format=>:html, :status=>:not_found
     return false
   end
   
