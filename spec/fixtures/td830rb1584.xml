@@ -20,4 +20,6 @@
   <field name="states_ssi">IN</field>
   <field name="vehicle_markings_tsi">Oil streaks</field>
   <field name="priority_isi">2</field>
+  <field name="copyright_ss">This is the copyright statement - different from default.</field>
+  <field name="use_and_reproduction_ss">This is the use and reproduction statement - different from default.</field>
 </doc>
