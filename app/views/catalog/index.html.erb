@@ -6,7 +6,7 @@
 
 <div id="content" class="span9">   
 
-    <% unless has_search_parameters? %>
+    <% if on_home_page %>
 	    <%# if there are no input/search related params, display the "home" partial -%>
 	    <%= render 'home' %>
     <% else %>
