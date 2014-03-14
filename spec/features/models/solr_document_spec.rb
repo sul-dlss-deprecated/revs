@@ -2,6 +2,22 @@ require "spec_helper"
 
 describe SolrDocument, :integration => true do
 
+  describe "rights and copyright" do
+  
+    it "should retrieve the default rights and copyright statements if not found in solr document" do
+      doc=SolrDocument.find('bb004bn8654') # fixture with none specified
+      doc.use_and_reproduction.should == "Users must contact the The Revs Institute for Automotive Research for re-use and reproduction information."
+      doc.copyright.should == "Courtesy of the Revs Institute for Automotive Research. All rights reserved unless otherwise indicated."
+    end
+
+    it "should retrieve the rights and copyright statements if found in solr document" do
+      doc=SolrDocument.find('td830rb1584') # fixtures with values specified
+      doc.use_and_reproduction.should == "This is the use and reproduction statement - different from default."
+      doc.copyright.should == "This is the copyright statement - different from default."
+    end
+    
+  end
+  
   describe "validation" do
 
     before :each do
