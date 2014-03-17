@@ -1,4 +1,4 @@
-<% document_counter = 0 unless !defined?(document_counter) %>
+<% document_counter = 0 if !defined?(document_counter) || document_counter.nil? %>
 
 <div class="<%= render_document_class document %> document">
   <%= link_to_document document,

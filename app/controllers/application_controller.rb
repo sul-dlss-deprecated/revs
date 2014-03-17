@@ -135,7 +135,7 @@ class ApplicationController < ActionController::Base
       format.xml  { render :xml => message, :status=>401 }
       format.json { render :json => {:message=>"^#{message}"}, :status=>401}
     end
-    return
+    return false
 
   end
 
