@@ -139,7 +139,10 @@ module ApplicationHelper
       ['Venue','venue'],
       ['Track','track'],
       ['Event','event'],
-      ['Location','location'],
+      ['Street','city_section'],
+      ['City','city'],
+      ['State','state'],
+      ['Country','country'],
       ['Group/Class','group_class'],
       ['Race Data','race_data'],
       ['Photographer','photographer']

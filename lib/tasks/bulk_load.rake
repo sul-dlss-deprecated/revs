@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'jettywrapper' unless Rails.env.production? 
 require 'rest_client'
 require 'csv'
@@ -103,10 +105,10 @@ namespace :revs do
         
         #Load each sheet we are taking data from
           files.each do |file|
-             data = read_csv_with_headers(file)
+             data = RevsUtils.read_csv_with_headers(file)
              #Make sure the always there files are present
                always_present.each do |header|
-                 log.warn("File #{file} lacks required header: #{header}") if data.headers().include?(header) == false
+                 log.warn("File #{file} lacks required header: #{header}") if data[0].keys.include?(header) == false
                end
                data.each do |row|
                  out_array = []
@@ -193,12 +195,11 @@ namespace :revs do
       log.level = Logger::ERROR
       
       #Load in the CSV, with the top row being taken as the header
-      #changes = CSV.parse(File.read(file), :headers => true )
-      changes = read_csv_with_headers(file)
+      changes = RevsUtils.read_csv_with_headers(file)
       
       #Ensure we can handle all headers we've found
       bad_header = false 
-      changes.headers().each do |header|
+      changes[0].keys.each do |header|
         if not known_headers.include?(header.strip.downcase)
           bad_header = true
           log.error("In document #{file} the #{header} is an unsupported header")
@@ -298,7 +299,7 @@ namespace :revs do
              end
            
            
-             (changes.headers()+additional_fields-ignore_fields).each do |key|
+             (changes[0].keys+additional_fields-ignore_fields).each do |key|
                key = key.strip.downcase
                #First make sure we have a real change
                if row[key] != nil
@@ -323,8 +324,8 @@ namespace :revs do
              end
            
              success = doc.save
-           
-             log.error("In document #{file} save error for #{save_id} "+" #{changes.headers()-ignore_fields+additional_fields} #{row}") if(not success and local_testing)
+             
+             log.error("In document #{file} save error for #{save_id} "+" #{changes[0].keys-ignore_fields+additional_fields} #{row}") if(not success and local_testing)
              log.error("In document #{file} save error for #{row[sourceid]}") if(not success and not local_testing)
              error_count  += 1 if not success 
            
@@ -414,11 +415,7 @@ namespace :revs do
   def load_csv_files_from_directory(file_location)
     return Dir.glob(File.join(file_location, @csv_extension_wild))
   end
-  
-  def read_csv_with_headers(file)
-     return CSV.parse(File.read(file), :headers => true )
-  end
-  
+
   def find_doc_via_blacklight(source)
      return Blacklight.solr.select(:params =>{:q=>'source_id_ssi:"'+ source+'"'})["response"]["docs"][0]
   end
