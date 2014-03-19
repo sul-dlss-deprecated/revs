@@ -5,6 +5,7 @@
     <div class="row result-item">
 
       <div class="span3 result-thumbnail">
+        <% raise "Object missing image for #{document.id}" if document.images.nil? %>
         <%= link_to_document document,
               :label => image_tag(document.images(:large).first,
               :alt => document.title.html_safe,

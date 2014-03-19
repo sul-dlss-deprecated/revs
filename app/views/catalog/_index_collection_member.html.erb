@@ -1,6 +1,7 @@
 <% document_counter = 0 if !defined?(document_counter) || document_counter.nil? %>
 
 <div class="<%= render_document_class document %> document">
+  <% raise "Object missing image for #{document.id}" if document.images.nil? %>
   <%= link_to_document document,
         :label => image_tag(document.images(:large).first,
         :alt => document.title.html_safe,

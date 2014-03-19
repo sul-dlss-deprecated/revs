@@ -21,6 +21,22 @@ namespace :revs do
   @max_expected_collection_size = 2147483647
   @id = "id"
   
+  desc "Find all objects with missing image"
+  #Run Me: rake revs:missing_images["John Dugdale Collection"]
+  task :missing_images, [:collection_name] => :environment do |t, args| 
+    num_missing=0
+    q="collection_ssim:\"#{args[:collection_name]}\""
+    @all_docs = Blacklight.solr.select(:params => {:q => q, :rows=>'100000'})
+    puts "#{@all_docs['response']['numFound']} documents match search and #{@all_docs['response']['docs'].size} returned"
+    @all_docs['response']['docs'].each do |doc|
+      item=SolrDocument.new(doc)
+      if item.is_item? && (item.images.nil? || item.images.size != 1)
+        puts "#{item.id}" 
+        num_missing += 1
+      end
+    end
+    puts "#{@all_docs['response']['docs'].size} scanned; #{num_missing} are missing an image"
+  end
   
   desc "Go back and touch every SolrDocument so that it will update the year field to use the sortable year field, remove the UUID from previous pass.."
   #Run Me: rake revs:touch_all["UUID"]
