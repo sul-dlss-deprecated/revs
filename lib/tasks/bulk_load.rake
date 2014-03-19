@@ -22,8 +22,9 @@ namespace :revs do
   @id = "id"
   
   desc "Find all objects with missing image"
-  #Run Me: rake revs:missing_images["John Dugdale Collection"]
-  task :missing_images, [:collection_name] => :environment do |t, args| 
+  #Run Me: rake revs:missing_images["John Dugdale Collection"] to just show items
+  #Run Me: rake revs:missing_images["John Dugdale Collection","delete] to delete from solr index
+  task :missing_images, [:collection_name,:delete] => :environment do |t, args| 
     num_missing=0
     q="collection_ssim:\"#{args[:collection_name]}\""
     @all_docs = Blacklight.solr.select(:params => {:q => q, :rows=>'100000'})
@@ -31,7 +32,13 @@ namespace :revs do
     @all_docs['response']['docs'].each do |doc|
       item=SolrDocument.new(doc)
       if item.is_item? && (item.images.nil? || item.images.size != 1)
-        puts "#{item.id}" 
+        puts "#{item.id}  ---   #{item.identifier}" 
+        if !args[:delete].nil? && args[:delete]="delete"
+          url="#{Blacklight.solr.options[:url]}/update?commit=true"
+          params="<delete><query>id:#{item.id}</query></delete>"
+          puts "DELETING!"
+          RestClient.post url, params,:content_type => :xml, :accept=>:xml
+        end
         num_missing += 1
       end
     end
@@ -69,7 +76,7 @@ namespace :revs do
            slice = prod_notes.slice! args[:uuid] #Remove the UUID, multiple times if needed
         end
         doc = SolrDocument.find(druid)
-        result_b = update_multi_fields(doc, [[:production_notes, prod_notes]])  #Slice off the UUID and save agaib
+        result_b = update_multi_fields(doc, [[:production_notes, prod_notes]])  #Slice off the UUID and save again
         
         if result_a and result_b
           collection_success_count += 1
