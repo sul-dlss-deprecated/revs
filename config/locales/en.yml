@@ -103,7 +103,7 @@ en:
       subject: 'Subject'
       message: 'Message'
       describe_problem: 'Please describe your question or problem.'
-      image_license_agreement: "Image License Agreement"
+      image_license_agreement: "permission to use requirements"
       image_reuse_agreement: "To re-use this image, please review the %{license_agreement_link}"
       reuse_contact: "and %{reuse_contact_link}"
       contact_linktext: "contact the Revs Institute"
