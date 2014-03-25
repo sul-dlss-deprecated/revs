@@ -87,11 +87,12 @@ en:
       cancel: 'Cancel'
       go_back: 'Go back'
       feedback: 'Feedback'
-      content_corrections: 'Are there problems with the metadata for this item? If you %{create_an_account_link}, you can flag this item with a comment, or you can also provide %{feedback_link} now.'
+      content_corrections: 'Do you have corrections to the metadata for this item? If you %{create_an_account_link}, you can flag this item with a comment, or you can also provide %{feedback_link} now.'
       create_an_account: 'create an account'      
       more: 'More'
       please_wait: 'Please wait...'
     contact:
+      instructions: 'If you are asking about access to or re-use of images shown on this website, please select "Terms of use" from the subject line.'  
       select_topic: 'Select a topic...'
       problem: 'Problem with the website'
       other_questions: 'Other questions'
@@ -104,7 +105,7 @@ en:
       message: 'Message'
       describe_problem: 'Please describe your question or problem.'
       image_license_agreement: "permission to use requirements"
-      image_reuse_agreement: "To re-use this image, please review the %{license_agreement_link}"
+      image_reuse_agreement: "To request access or to re-use this image, please review the %{license_agreement_link}"
       reuse_contact: "and %{reuse_contact_link}"
       contact_linktext: "contact the Revs Institute"
       reuse_contact_message: "Request for image ID %{reuse_contact_message_doc} at %{reuse_contact_message_url}"
