@@ -49,7 +49,7 @@ en:
       updated: 'The flag was updated.'
       resolved_fix: 'The flag was marked as fixed.'
       resolved_wont_fix: "The flag was marked as won't fix."
-      flag: 'Flag problem with this item'
+      flag: 'Flag correction to this item'
       resolution_notes_optional: 'Resolution Notes (optional)'
       resolution_notes: 'Resolution notes: '
       resolve: 'Resolve'
@@ -65,7 +65,7 @@ en:
       resolve: 'Resolve'
       none: 'This user does not have any flags.'
       personal_none: 'You do not have any flags.'
-      you_can_flag_problems: 'You can flag problems you see with item metadata from the Item Details page.'
+      you_can_flag_problems: 'You can flag corrections you see with item metadata from the Item Details page.'
       you: "You"
       open_state_display_name: 'Open'
       fixed_state_diplay_name: 'Fixed'
@@ -75,7 +75,7 @@ en:
       flagging_user: "Flagging User"
       resolution_time: "Resolution Time"
       no_results: "There are no flags with this status."
-      help: "Use the Flag problem action to tell us about a problem with the metadata for this item. To report more general problems, please use the Report a problem link at the top of the web site."
+      help: "Use the Flag action to tell us about a correction to the metadata for this item. To report more general problems, please use the Feedback link at the top of the web site."
     nav:
       home: 'Home'
       collections: 'Collections'

@@ -195,6 +195,8 @@
         <% end  # end curator actions %>
 
         <div class="license-image">
+          <%=@document.copyright %>
+          
           <%= t('revs.contact.image_reuse_agreement',
               :license_agreement_link => link_to(t('revs.contact.image_license_agreement'),
               'http://revsinstitute.org/research-education/permission-to-use',:target=>'_blank')).html_safe %>
