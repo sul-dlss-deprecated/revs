@@ -114,38 +114,38 @@ end
 
 # Annotations
 def should_allow_annotations  
-  page.should have_content('View/add annotations')
+  page.should have_content(I18n.t('revs.annotations.add'))
 end
 
 def should_not_allow_annotations  
-  page.should_not have_content('View/add annotations')
+  page.should_not have_content(I18n.t('revs.annotations.add'))
 end
 
 # Flags
 def should_allow_flagging
-  page.should have_button('Flag problem with this item')
+  page.should have_button(I18n.t('revs.flags.flag'))
   page.should_not have_css('#flag-details-link.hidden')
 end
 
 def should_not_allow_flagging
-  page.should_not have_button('Flag problem with this item')
+  page.should_not have_button(I18n.t('revs.flags.flag'))
 end
 
 def should_deny_access(path)
   visit path
   current_path.should == root_path
-  page.should have_content('You are not authorized to perform this action.')
+  page.should have_content(I18n.t('revs.messages.not_authorized'))
 end
 
 def should_deny_access_for_beta(path)
   visit path
   current_path.should == root_path
-  page.should have_content("The Revs Digital Library is currently in limited beta release.")
+  page.should have_content('The Revs Digital Library is currently in limited beta release.')
 end
 
 def should_allow_admin_section
   visit admin_dashboard_path
-  page.should have_content('Administrator Dashboard')
+  page.should have_content(I18n.t('revs.user.admin_dashboard'))
   current_path.should == admin_dashboard_path
 end
 
