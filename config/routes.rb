@@ -48,7 +48,7 @@ Revs::Application.routes.draw do
   match 'contact', :to=> 'about#contact', :as=>'contact_us'
   match 'about/contact', :to=> 'about#contact' # specific contact us about page
   match 'about/boom', :to => 'about#boom' # test exception
-  match 'about/:id', :to => 'about#show' # catch anything else and direct to show page with ID parameter of partial to show
+  match 'about/:id', :to => 'about#show', :as=>'about_pages' # catch anything else and direct to show page with ID parameter of partial to show
   
   # term acceptance dialog
   match 'accept_terms', :to=> 'application#accept_terms', :as=> 'accept_terms', :via=>:post

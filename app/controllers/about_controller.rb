@@ -18,6 +18,7 @@ class AboutController < ApplicationController
       
       unless @message.blank? # message is required
         RevsMailer.contact_message(:params=>params,:request=>request).deliver 
+        RevsMailer.auto_response(:email=>@email,:subject=>@subject).deliver unless @email.blank?
         
         if @subject=='metadata'
           flash[:notice]=t("revs.about.contact_message_sent_about_metadata")

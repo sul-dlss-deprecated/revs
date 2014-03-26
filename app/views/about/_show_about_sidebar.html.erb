@@ -2,15 +2,16 @@
 	<div id="sidebar-nav">
 	  <ul class="nav nav-list">
 	    <li class="nav-header"><%=t('revs.about.word')%></li>
-			<li><%= link_to t('revs.about.project_title'), :controller => "about",  :action => "show", :id => "project" %></li>
-			<li><%= link_to t('revs.about.project_team'), :controller => "about", :action => "show", :id => "team" %></li>
-			<li><%= link_to t('revs.about.acknowledgements'), :controller => "about", :action => "show", :id => "acknowledgements" %></li>
+			<li><%= link_to t('revs.about.project_title'), about_pages_path(:id=>'project') %></li>
+			<li><%= link_to t('revs.about.project_team'), about_pages_path(:id=>'team') %></li>
+			<li><%= link_to t('revs.about.acknowledgements'), about_pages_path(:id=>'acknowledgements')%></li>
+			<li><%= link_to t('revs.about.faq_title'), about_pages_path(:id=>'faq')%></li>
 	  </ul>
 
 	  <ul class="nav nav-list">
 	    <li class="nav-header"><%=t('revs.about.contact')%></li>
-			<li><%= link_to t('revs.about.contact_us'), :controller => "about", :action => "contact" %></li>
-			<li><%= link_to t('revs.about.use_policy'), :controller => "about", :action => "show", :id=> "terms_of_use" %></li>
+			<li><%= link_to t('revs.about.contact_us'), contact_us_path %></li>
+			<li><%= link_to t('revs.about.use_policy'), about_pages_path(:id=>'use_policy') %></li>
 	  </ul>
 
 	  <ul class="nav nav-list">

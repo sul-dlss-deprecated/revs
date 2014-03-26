@@ -21,10 +21,25 @@ en:
       acknowledgements_text_html: 'The Revs Digital Library acknowledges the support of the %{revs_institute}, the %{stanford_library}, and the %{revs_program}.'
       copyright_infringement: 'report alleged copyright infringement to Stanford'
       terms_of_use_policy: 'Stanford University Terms of Use Policy'
+      faq_title: 'Frequently Asked Questions (FAQ)'
+      faq_text_html: |
+        <p>
+          <strong>How do I let you know about corrections or problems with a title or other piece of information about an image?</strong>
+          <br /><br />The best way to let us know is to %{sign_up_link} for an account and use the "flag a correction" feature on any page.  If don't have an account and don't want to create one, you can also %{corrections_link}, but we may not be able to respond individually.
+        </p>
+        <p>
+          <strong>I would like to reuse images on my own website, in a publication, for research or for commercial purposes. Can I do this?</strong>
+          <br /><br />All of the content is currently under a full copyright from the Revs Institute and you should review their %{reuse_link}.  You can also review Stanford's %{terms_of_use_link}.
+        </p>
+        <p>
+          <strong>When I try and download a full size image, it asks me to login with a SUNET ID.  What is that and I can I get one?</strong>
+          <br /><br />High resolution images are only available to members of the Stanford community through a prior agreement.  SUNET IDs are only available to authorized Stanford users and we cannot create one for you.  If you wish 
+          to obtain a high resolution image for any reason, please review %{reuse_link}.
+        </p>
       terms_of_use_text_html: |
         Any of the content displayed on this site may be under copyright, and it is up to the user to comply with the content's specific copyright provisions. 
         Each piece of content may have a different license and re-use requirement, which may be shown with the content.  If a license is not shown, you
-        should assume full rights remain with the owner.  For questions about terms of use, you may contact us and review the %{terms_of_use_link}.
+        should assume full rights remain with the owner.  For questions about terms of use, you may %{contact_us_link}, review the %{reuse_link} and review the %{terms_of_use_link}.
         You may also %{copyright_infringement_link}.
       team_text_html: |
         <ul>
@@ -32,7 +47,8 @@ en:
           <li><a href="http://library.stanford.edu/people/tcramer">Tom Cramer</a> - Chief Technology Strategist & Associate Director, Digital Library Systems & Services</li>
           <li><a href="http://library.stanford.edu/people/snydman">Stuart Snydman</a> - Manager, Digital Production & Web Application Development</li>
           <li><a href="http://library.stanford.edu/people/petucket">Peter Mangiafico</a> - Product Manager, Revs Project</li>
-          <li>Gary Geisler - Digital Library Software Engineer</li>
+          <li>Gary Geisler - Digital Library Web Developer</li>
+          <li>Carrick Rogers - Digital Library Software Engineer</li>
           <li><a href="http://library.stanford.edu/people/jkeck">Jessie Keck</a> - Digital Library Software Engineer</li>
         </ul>
       project_text_html: |

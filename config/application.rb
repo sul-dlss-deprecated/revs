@@ -77,9 +77,11 @@ module Revs
     # Revs App Specific Configuration
     config.stacks_url = YAML.load_file("#{Rails.root}/config/stacks.yml")[Rails.env]["url"]                                                                                                                                                                                                                                 
     config.contact_us_topics = {'default'=>'revs.contact.select_topic', 'metadata'=>'revs.contact.metadata_issue','terms of use'=>'revs.contact.terms_of_use', 'error'=>'revs.contact.problem','other'=>'revs.contact.other_questions'} # sets the list of topics shown in the contact us page
-    config.contact_us_recipients = {'default'=>'digcoll@jirasul.stanford.edu', 'terms of use'=>'info@revsinstitute.org','metadata'=>'digcoll@jirasul.stanford.edu','error'=>'digcoll@jirasul.stanford.edu','other'=>'digcoll@jirasul.stanford.edu'} # sets the email address for each contact us topic configed aboveend
+    config.contact_us_recipients = {'default'=>'digcoll@jirasul.stanford.edu', 'terms of use'=>'TPurcell@revsinstitute.org','metadata'=>'digcoll@jirasul.stanford.edu','error'=>'digcoll@jirasul.stanford.edu','other'=>'digcoll@jirasul.stanford.edu'} # sets the email address for each contact us topic configed aboveend
     config.contact_us_cc_recipients = {'default'=>'revs-other@jirasul.stanford.edu', 'metadata'=>'revs-metadata-comment@jirasul.stanford.edu', 'error'=>'revs-problems@jirasul.stanford.edu','other'=>'revs-other@jirasul.stanford.edu'} # sets the CC email address for each contact us topic configed above
 
+    config.revs_reuse_link='http://revsinstitute.org/research-education/permission-to-use/'
+    
     config.num_latest_user_activity = 3 # the latest number of flags/annotations to show on the user profile page     
     config.num_flags_per_item_per_user = 5 # the number of times each user is allowed to flag a particular item
     #config.flag_sort_display = {FLAG_STATES[:open]=> I18n.t('revs.flags.open_state_display_name'),FLAG_STATES[:fixed]=> I18n.t('revs.flags.fixed_state_display_name'),FLAG_STATES[:wont_fix]=> I18n.t('revs.flags.wont_fix_state_display_name')}

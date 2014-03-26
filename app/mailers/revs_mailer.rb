@@ -15,6 +15,12 @@ class RevsMailer < ActionMailer::Base
     mail(:to=>to, :cc=>cc, :subject=>"Contact Message from Revs Digital Library - #{@subject}") 
   end
 
+  def auto_response(opts={})
+    @email=opts[:email]
+    @subject=opts[:subject]
+    mail(:to=>@email,:subject=>I18n.t('revs.contact.thanks'))
+  end
+  
   def mailing_list_signup(opts={})
     mail(:to=>"revs-program-join@lists.stanford.edu",:from=>opts[:from],:subject=>"Request to be added to Revs Mailing List",:body=>"Subscribe")
   end

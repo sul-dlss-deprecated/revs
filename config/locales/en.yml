@@ -92,7 +92,9 @@ en:
       more: 'More'
       please_wait: 'Please wait...'
     contact:
-      instructions_html: 'If you are asking about access or re-use of images, select "Terms of use" as the subject or view <a target=_blank href="http://revsinstitute.org/research-education/permission-to-use/">permission information and contact the Revs Institute</a> directly.'  
+      us: 'contact us'
+      instructions_html: 'If you are asking about access or re-use of images, select "Terms of use" as the subject or view %{reuse_link}.'
+      permission_information: 'permission information and contact the Revs Institute'  
       select_topic: 'Select a topic...'
       problem: 'Problem with the website'
       other_questions: 'Other questions'
@@ -109,6 +111,7 @@ en:
       reuse_contact: "and %{reuse_contact_link}"
       contact_linktext: "contact the Revs Institute"
       reuse_contact_message: "Request for image ID %{reuse_contact_message_doc} at %{reuse_contact_message_url}"
+      thanks: 'Thanks for contacting the Revs Digital Library'
     authentication:
       new_user: 'New user?'
       sign_in: 'Sign in'
