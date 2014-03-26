@@ -92,7 +92,7 @@ en:
       more: 'More'
       please_wait: 'Please wait...'
     contact:
-      instructions: 'If you are asking about access to or re-use of images shown on this website, please select "Terms of use" from the subject line.'  
+      instructions_html: 'If you are asking about access or re-use of images, select "Terms of use" as the subject or view <a target=_blank href="http://revsinstitute.org/research-education/permission-to-use/">permission information and contact the Revs Institute</a> directly.'  
       select_topic: 'Select a topic...'
       problem: 'Problem with the website'
       other_questions: 'Other questions'
