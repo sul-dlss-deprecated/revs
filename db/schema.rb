@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140227180528) do
+ActiveRecord::Schema.define(:version => 20140225181300) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "user_id"
@@ -75,7 +75,6 @@ ActiveRecord::Schema.define(:version => 20140227180528) do
     t.string   "gallery_type",                    :null => false
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
-    t.integer  "views",        :default => 0,     :null => false
   end
 
   add_index "galleries", ["gallery_type"], :name => "index_galleries_on_gallery_type"
@@ -92,12 +91,11 @@ ActiveRecord::Schema.define(:version => 20140227180528) do
   add_index "items", ["druid"], :name => "index_items_on_druid", :unique => true
 
   create_table "saved_items", :force => true do |t|
-    t.string   "druid",                      :null => false
-    t.integer  "gallery_id",                 :null => false
+    t.string   "druid",       :null => false
+    t.integer  "gallery_id",  :null => false
     t.text     "description"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
-    t.integer  "sort_order",  :default => 0, :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   add_index "saved_items", ["druid"], :name => "index_saved_items_on_druid"
