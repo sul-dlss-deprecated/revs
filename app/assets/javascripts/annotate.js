@@ -70,8 +70,8 @@ function updateAnnotationsPanel(num_annotations,druid) {
 function showAnnotations() {	
 	togglePURLEmbed();
 	toggleThumbImage();
-	enableAnnotations();
 	loadAnnotations();
+	enableAnnotations();
 }
 
 function hideAnnotations() {

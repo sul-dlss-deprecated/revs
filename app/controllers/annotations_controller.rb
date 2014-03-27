@@ -60,18 +60,27 @@ class AnnotationsController < ApplicationController
     annotation_json=params[:annotation]
     annotation_hash=JSON.parse(annotation_json)
     
-    @annotation=Annotation.find(params[:id])
-    @annotation.json=annotation_json
-    @annotation.text=annotation_hash['text']
-    @annotation.save
+    unless params[:id].nil?
+    
+      @annotation=Annotation.find(params[:id])
+      @annotation.json=annotation_json
+      @annotation.text=annotation_hash['text']
+      @annotation.save
 
-    respond_to do |format|
-      format.js   { render }
-      format.xml  { render :xml => @annotation.to_xml }
-      format.json { render :json=> @annotation.to_json }
-      format.html { render :partial => "all", :locals=>{:annotations=>[@annotation]}}      
+      respond_to do |format|
+        format.js   { render }
+        format.xml  { render :xml => @annotation.to_xml }
+        format.json { render :json=> @annotation.to_json }
+        format.html { render :partial => "all", :locals=>{:annotations=>[@annotation]}}      
+      end
+
+    else
+      
+      render :nothing=>true
+      
     end
-           
+    
+    
   end
   
   def destroy
