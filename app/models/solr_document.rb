@@ -209,7 +209,7 @@ class SolrDocument
   end
 
   def annotations(user)
-    @annotations ||= Annotation.for_image_with_user(id,user).where(:'users.active'=>true).order('annotations.created_at desc')
+    @annotations ||= Annotation.for_image_with_user(id,user)
   end
 
   def is_favorite?(user)

@@ -21,7 +21,7 @@ class Annotation < WithSolrDocument
 
   # pass in a druid and a user and get the annotations for that image, with the appropriate json additions required for display annotations on the image
   def self.for_image_with_user(druid,user)
-    annotations=Annotation.includes(:user).where(:druid=>druid)
+    annotations=Annotation.includes(:user).where(:druid=>druid,'users.active'=>true).order('annotations.created_at desc')
     annotations.each do |annotation| # loop through all annotations
       annotation_hash=JSON.parse(annotation.json) # parse the annotation json into a ruby object
       annotation_hash[:editable]=user ? user.can?(:update, annotation) : false 
