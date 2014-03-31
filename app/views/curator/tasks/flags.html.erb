@@ -8,8 +8,8 @@
   </h3>
 
    <ul class="nav nav-tabs">
-     <li class="<%="active" if @tab == @tab_list_flag%>"><a href="#<%=@tab_list_flag%>" data-toggle="tab"><%= t('revs.curator.by_status') %></a></li>
 	    <li class="<%="active" if @tab == @tab_list_item%>"><a href="#<%=@tab_list_item%>" data-toggle="tab"><%=t('revs.curator.by_item') %></a></li>
+      <li class="<%="active" if @tab == @tab_list_flag%>"><a href="#<%=@tab_list_flag%>" data-toggle="tab"><%= t('revs.curator.by_status') %></a></li>
       <li class="<%="active" if @tab == @tab_list_user%>"><a href="#<%=@tab_list_user%>" data-toggle="tab"><%= t('revs.curator.by_user') %></a></li>
   </ul>
 

@@ -24,7 +24,7 @@ class Curator::TasksController < ApplicationController
      @tab_list_item = 'flags-by-item'
      @tab_list_user = 'flags-by-user'
      @tab_list_flag = 'flags-by-flag'
-     @tab = params[:tab] || @tab_list_flag
+     @tab = params[:tab] || @tab_list_item
    end
    
    def annotations
