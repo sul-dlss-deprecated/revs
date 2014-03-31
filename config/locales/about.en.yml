@@ -21,6 +21,7 @@ en:
       acknowledgements_text_html: 'The Revs Digital Library acknowledges the support of the %{revs_institute}, the %{stanford_library}, and the %{revs_program}.'
       copyright_infringement: 'report alleged copyright infringement to Stanford'
       terms_of_use_policy: 'Stanford University Terms of Use Policy'
+      faq_title_nav: 'Frequently Asked Questions'
       faq_title: 'Frequently Asked Questions (FAQ)'
       faq_text_html: |
         <p>
