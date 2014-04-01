@@ -43,6 +43,7 @@
 
       <div  id="<%=@tab_list_flag%>" class="tab-pane <%="active" if @tab == @tab_list_flag %>">
         <%= select_tag 'curator_flag_selection', options_from_collection_for_select(Flag.for_dropdown, :first, :last, :selected => @selection.join(",")) %>
+        "Hello world"
         <%= render :partial => 'user/flags_table', :locals=>{:selection=>@selection, :flags=>@flags, :user=>current_user,:curate_view=>true }%>
       </div>
       

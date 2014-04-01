@@ -13,7 +13,7 @@
              <div class="span5">
                <ul>
                  <li><%= link_to(image_tag(favorite.solr_document.images.first), item_path(favorite.solr_document)) %><li>
-                 <li class="item-title"><%= item_link(favorite.solr_document) %></li>
+                 <li class="item-title"><%= item_link(favorite.solr_document, :target=>'_blank') %></li>
                  <li class="item-creation-date"><%=t('revs.messages.saved_on')%> <%= show_as_datetime(favorite.created_at.in_time_zone) %></li>
                  <li class="favorite-item-actions">
                    <%if can? :destroy, favorite%>
