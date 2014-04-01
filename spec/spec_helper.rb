@@ -277,8 +277,6 @@ def check_flag_was_marked_fix(content, expected_total_flags, resolution, flag_id
   check_flag_resolution_in_db(content, resolution, Flag.fixed, flag_id)
 end
 
-
-
 def check_flag_resolution_on_page(content, message, expected_total_flags)
   page.should have_content(message)
   Flag.count.should == expected_total_flags

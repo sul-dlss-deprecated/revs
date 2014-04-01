@@ -4,6 +4,8 @@ describe("Curator Section",:type=>:request,:integration=>true) do
   
   before :each do
     logout
+    @comment_field='flag_comment'
+    @flag_button=I18n.t('revs.flags.flag')
   end
   
   
@@ -98,6 +100,37 @@ describe("Curator Section",:type=>:request,:integration=>true) do
         click_link 'Record 1'
         current_path.should == catalog_path('yt907db4998')
       end
+      
+      it "Should show a refresh button on the list of all open flags by flag state" do
+        login_as(curator_login)
+        visit curator_tasks_path
+        page.should have_content I18n.t('revs.flags.refresh_list')
+      end
+    
+      #TODO: Test refresh button once we have phanton.js running on jenkins
+      # it "The refresh button should refresh the list of all open flags" do
+#         druid = "dd482qk0417"
+#         message = "Sample Flag To Test Refresh"
+#         login_as(curator_login)
+#         visit curator_tasks_path
+#         #Make sure the flag is not there
+#         page.should have_no_content message
+#         
+#         #Add it
+#         add_a_flag(curator_login, druid, message)
+#         
+#         #Return to the page and make sure it is there
+#         visit curator_tasks_path
+#         page.should have_content message
+#         
+#         #Delete the last flag
+#         Flag.last.delete
+#         
+#         click I18n.t('revs.flags.refresh_list')
+#         page.should have_no_content message
+#       end
+    
+      
       
     end
     
