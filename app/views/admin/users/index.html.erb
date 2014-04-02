@@ -9,6 +9,7 @@
   <% end %>
 
   <% if @users.size > 0 %>
+    <p><%= "There are #{@users.size} total users." %></p>
     <%= paginate @users, :params => {:order=>@order} %>
   	<%= form_tag(bulk_update_role_admin_users_path, method: 'post', class:'form-inline') do %>
     <p><%=t('revs.admin.set_checked_users')%> <%= select_tag 'role',options_for_select(User.roles,@role),class:"span2"%> <%= submit_tag t('revs.nav.update'), :class => 'btn btn-small' %>
