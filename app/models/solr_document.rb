@@ -11,8 +11,9 @@ class SolrDocument
   include VisibilityHelper
   include DateHelper
   include SolrQueryHelper     
- 
+
   extend Revs::Utils
+  include Revs::Utils 
       
   # Email uses the semantic field mappings below to generate the body of an email.
   SolrDocument.use_extension( Blacklight::Solr::Document::Email )
