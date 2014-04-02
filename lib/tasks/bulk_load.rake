@@ -169,7 +169,7 @@ namespace :revs do
     model_year = 'model_year'
     collection_name = "collection_name"
     collection_names = "collection_names"
-    ignore_fields = [sourceid, location, marque, filename, collection_name]  
+    ignore_fields = [sourceid, location, filename, collection_name]  
     location_fields = ['country', 'city', 'state']
     additional_fields = location_fields + [full_date]#add other arrays here if we do anymore splitting
     comma = ","
