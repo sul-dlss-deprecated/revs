@@ -16,6 +16,7 @@ $(document).ready(function(){
   $('.flag-details').click(function(){
     $('#new_flag, #all_flags').slideToggle('slow');
     $('.flag-details').toggleClass('active');
+		$('#flag_comment').focus();
     return false;
   });
 
