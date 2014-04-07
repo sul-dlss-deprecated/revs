@@ -10,7 +10,7 @@
 		<div class="control-group">
 		  <label class="control-label" for="subject"><%=t('revs.contact.subject')%></label>
 		  <div class="controls">
-		    <%= select_tag 'subject',options_from_collection_for_select(translate_options(Revs::Application.config.contact_us_topics), :first, :last, @subject) %>
+		    <%= select_tag 'subject',options_from_collection_for_select(translate_options(Revs::Application.config.contact_us_topics), :first, :last, @subject),:class => "span3" %>
 		  </div>
 		</div>
 	<% else %>

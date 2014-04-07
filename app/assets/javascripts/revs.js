@@ -89,6 +89,14 @@ $(document).ready(function(){
 		anno.highlightAnnotation(annotation);
 	});
 
+	$('#feedback_link').click(function() {
+      $(".report-problem")[0].reset();
+  		$("#subject").val('metadata');
+		  $('#message').html('Suggest corrections for this item:');
+		  $('#report-problem-form').slideToggle('slow');
+		  return false;
+		});
+		
 	$('#contact_us_link').click(function() {
     $(".report-problem")[0].reset();
 	  $('#report-problem-form').slideToggle('slow');
