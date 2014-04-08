@@ -314,11 +314,7 @@ DEPENDENCIES
   omniauth
   rails (~> 3.2.17)
   rest-client
-<<<<<<< HEAD
-  revs-utils (>= 1.0.3)
-=======
   revs-utils (>= 1.0.4)
->>>>>>> master
   rspec-rails
   rvm-capistrano
   sass-rails (~> 3.2.3)
