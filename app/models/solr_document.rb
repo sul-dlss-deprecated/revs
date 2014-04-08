@@ -348,7 +348,7 @@ class SolrDocument
     ChangeLog.create(:druid=>id,:user_id=>user.id,:operation=>'metadata update',:note=>unsaved_edits.to_s) if (valid? && user)  
   end
   
-  # propoage unique information to database as well when saving solr document
+  # propogate unique information to database as well when saving solr document
   def update_item
     @item=Item.fetch(id)
     @item.visibility_value=visibility_value
