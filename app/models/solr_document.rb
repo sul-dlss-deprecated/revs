@@ -11,7 +11,7 @@ class SolrDocument
   include VisibilityHelper
   include DateHelper
   include SolrQueryHelper     
- 
+
   extend Revs::Utils
   include Revs::Utils
       

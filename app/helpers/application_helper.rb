@@ -74,6 +74,7 @@ module ApplicationHelper
     else
       length = (opts[:length].to_i == 0 ? 100 : opts[:length].to_i)
       name=opts[:truncate] ? truncate(item.title,:length=>length) : item.title
+      return link_to name,catalog_path(item.id),target: '_blank' if opts[:target] == '_blank' #support new tab if needed
       return link_to name,catalog_path(item.id)
     end
   end

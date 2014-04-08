@@ -59,6 +59,7 @@ en:
       public_visibility_show: "Show this item to the public"
       public_visibility_hide: "Hide this item from public view"
     flags:
+      refresh_list: 'Refresh list'
       are_you_sure: 'Are you sure you want to remove this flag?'
       created: 'The item was flagged.'
       removed: 'The flag was removed.'

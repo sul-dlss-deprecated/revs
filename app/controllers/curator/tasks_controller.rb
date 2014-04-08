@@ -12,7 +12,7 @@ class Curator::TasksController < ApplicationController
      
      @selection = s.split(',')
      @order=params[:order] || 'num_flags DESC'
-     @order_all=params[:order_all] || "created_at DESC"
+     @order_all=params[:order_all] || "druid"
      @order_user = params[:order_user] || "flags.updated_at DESC"
      
      @flags_grouped=Flag.select('*,COUNT("druid") as num_flags').group("druid").order(@order).page(params[:pagina2]).per(Flag.per_table_page)
@@ -24,7 +24,7 @@ class Curator::TasksController < ApplicationController
      @tab_list_item = 'flags-by-item'
      @tab_list_user = 'flags-by-user'
      @tab_list_flag = 'flags-by-flag'
-     @tab = params[:tab] || @tab_list_item
+     @tab = params[:tab] || @tab_list_flag
    end
    
    def annotations

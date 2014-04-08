@@ -16,6 +16,7 @@ $(document).ready(function(){
   $('.flag-details').click(function(){
     $('#new_flag, #all_flags').slideToggle('slow');
     $('.flag-details').toggleClass('active');
+		$('#flag_comment').focus();
     return false;
   });
 
@@ -96,6 +97,14 @@ $(document).ready(function(){
 		anno.highlightAnnotation(annotation);
 	});
 
+	$('#feedback_link').click(function() {
+      $(".report-problem")[0].reset();
+  		$("#subject").val('metadata');
+		  $('#message').html('Suggest corrections for this item:');
+		  $('#report-problem-form').slideToggle('slow');
+		  return false;
+		});
+		
 	$('#contact_us_link').click(function() {
     $(".report-problem")[0].reset();
 	  $('#report-problem-form').slideToggle('slow');

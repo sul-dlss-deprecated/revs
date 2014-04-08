@@ -8,6 +8,9 @@ $('select#curator_flag_selection').change(function() {
 	jQuery.ajax({type: "GET", dataType: "script", url: "/flags/update_curator_flag_table/"+$('select#curator_flag_selection').val()})
 });
 
+$('div#refresh_flags').click(function() { 
+	jQuery.ajax({type: "GET", dataType: "script", url: "/flags/update_curator_flag_table/"+$('select#curator_flag_selection').val()})
+});
 
 
 });

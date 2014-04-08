@@ -136,7 +136,7 @@
 							<% if cannot?(:create, Flag) %>
 							<li>
 							  <span id="feedback_link">
-							    <%= t('revs.nav.content_corrections',:create_an_account_link=>link_to(t('revs.nav.create_an_account'),new_user_session_path),:feedback_link=>link_to(t('revs.nav.feedback'),contact_us_path(:from=>request.path,:subject=>'metadata'))).html_safe %>
+							    <%= t('revs.nav.content_corrections',:create_an_account_link=>link_to(t('revs.nav.create_an_account'),new_user_session_path),:feedback_link=>link_to(t('revs.nav.feedback'),contact_us_path(:from=>request.path,:subject=>'metadata',:message=>"Correction to \"#{@document.title}\" (identifier: #{@document.identifier})"))).html_safe %>
 							  </span>
 							</li>
 	          	<% end %>

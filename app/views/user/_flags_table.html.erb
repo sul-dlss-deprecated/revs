@@ -38,7 +38,7 @@
 
       <% flags.each do |flag| %>
        <tr>
-         <td><%= item_link(flag.solr_document,:truncate=>true) %></td>
+         <td><%= item_link(flag.solr_document,:truncate=>true, :target => '_blank') %></td>
          <% if local_assigns[:curate_view]%>
            <td><%=display_user_name(flag.user,user_flags_path(flag.user.username))%></td>
          <% end%>

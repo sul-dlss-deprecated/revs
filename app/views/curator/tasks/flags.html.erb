@@ -8,8 +8,8 @@
   </h3>
 
    <ul class="nav nav-tabs">
+     <li class="<%="active" if @tab == @tab_list_flag%>"><a href="#<%=@tab_list_flag%>" data-toggle="tab"><%= t('revs.curator.by_status') %></a></li>
 	    <li class="<%="active" if @tab == @tab_list_item%>"><a href="#<%=@tab_list_item%>" data-toggle="tab"><%=t('revs.curator.by_item') %></a></li>
-      <li class="<%="active" if @tab == @tab_list_flag%>"><a href="#<%=@tab_list_flag%>" data-toggle="tab"><%= t('revs.curator.by_status') %></a></li>
       <li class="<%="active" if @tab == @tab_list_user%>"><a href="#<%=@tab_list_user%>" data-toggle="tab"><%= t('revs.curator.by_user') %></a></li>
   </ul>
 
@@ -43,6 +43,7 @@
 
       <div  id="<%=@tab_list_flag%>" class="tab-pane <%="active" if @tab == @tab_list_flag %>">
         <%= select_tag 'curator_flag_selection', options_from_collection_for_select(Flag.for_dropdown, :first, :last, :selected => @selection.join(",")) %>
+        <div id='refresh_flags' class='flag-button btn btn-small'><%=t('revs.flags.refresh_list')%></div>
         <%= render :partial => 'user/flags_table', :locals=>{:selection=>@selection, :flags=>@flags, :user=>current_user,:curate_view=>true }%>
       </div>
       

@@ -169,7 +169,7 @@ namespace :revs do
     model_year = 'model_year'
     collection_name = "collection_name"
     collection_names = "collection_names"
-    ignore_fields = [sourceid, location, marque, filename, collection_name]  
+    ignore_fields = [sourceid, location, filename, collection_name]  
     location_fields = ['country', 'city', 'state']
     additional_fields = location_fields + [full_date]#add other arrays here if we do anymore splitting
     comma = ","
@@ -277,7 +277,7 @@ namespace :revs do
              if row[format] != nil
                current_format = target[SolrDocument.field_mappings[:formats][:field]]
                current_format = current_format.sort if current_format != nil
-               format_changes = RevsUtils.revs_check_format(row[format].strip.downcase.split(seperator)).sort
+               format_changes = RevsUtils.revs_check_formats(row[format].strip.downcase.split(seperator)).sort
                
                #We have changes 
                if current_format != format_changes
