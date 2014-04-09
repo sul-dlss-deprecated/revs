@@ -275,11 +275,13 @@ en:
       view: 'View gallery'
       edit: 'Edit Gallery'
       title: 'Gallery title'
+      create_new_gallery: 'Create a new gallery'
       description: 'Gallery description'
       saved: 'Item saved to gallery.'
       removed: "Item has been removed from the gallery."  
       gallery_removed: "The gallery was removed."
       gallery_updated: "The gallery was updated."
+      gallery_created: "The gallery was created."
       not_saved: 'The item is already in the selected gallery.'
       in_gallery: 'In galleries'
     collection:

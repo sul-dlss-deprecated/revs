@@ -6,15 +6,35 @@ class GalleriesController < ApplicationController
     @gallery.update_attributes(:views=>@gallery.views+1 )    
   end
   
+  def new
+  end
+  
+  def create
+    @gallery=Gallery.create(params[:gallery])
+    @gallery.user_id=current_user.id
+    @gallery.gallery_type=:user
+    if @gallery.save
+      @message=t('revs.user_galleries.gallery_created')
+      flash[:success]=@message
+      redirect_to user_galleries_path(current_user.username)
+    else
+      render :new
+    end
+  end
+  
   def edit
     
   end
   
   def update
    @gallery.update_attributes(params[:gallery])  
-   @message=t('revs.user_galleries.gallery_updated')
-   flash[:success]=@message
-   redirect_to user_galleries_path(current_user.username)
+   if @gallery.valid?
+     @message=t('revs.user_galleries.gallery_updated')
+     flash[:success]=@message
+     redirect_to user_galleries_path(current_user.username)
+   else
+     render :edit
+    end
   end
   
   def destroy
