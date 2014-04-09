@@ -322,9 +322,9 @@ namespace :revs do
              if row[model_year] != nil
                row[model_year] = RevsUtils.parse_years(row[model_year]).join(seperator)
              end
-           
+             
              #puts (changes[0].keys+additional_fields-ignore_fields)
-             (changes[0].keys+additional_fields-ignore_fields).each do |key|
+             (changes[0].keys+additional_fields-ignore_fields).uniq.each do |key|
                key = key.strip.downcase
                #First make sure we have a real change
                if row[key] != nil
