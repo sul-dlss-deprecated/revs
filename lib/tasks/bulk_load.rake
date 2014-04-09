@@ -161,6 +161,7 @@ namespace :revs do
     marque = "marque"
     filename = @filename
     year = "date"
+    years = "years"
     full_date = "full_date"
     seperator =  @seperator
     assigner = @assigner
@@ -171,7 +172,7 @@ namespace :revs do
     collection_names = "collection_names"
     ignore_fields = [sourceid, location, filename, collection_name]  
     location_fields = ['country', 'city', 'state']
-    additional_fields = location_fields + [full_date]#add other arrays here if we do anymore splitting
+    additional_fields = location_fields + [full_date, years]#add other arrays here if we do anymore splitting
     comma = ","
     comma_splits = [marque, model]
     file_ext = ".tif"
@@ -180,7 +181,7 @@ namespace :revs do
     #Map the csv names to the field names from 
     csv_to_solr = {'label' => 'title',   
                    model  => 'vehicle_model',
-                   year => 'years',
+                   year => years,
                    format => 'formats',
                    collection_name => collection_names, 
                    'inst_notes' => 'institutional_notes',
@@ -307,6 +308,7 @@ namespace :revs do
              #We could have a full date, a year, or a span of years, handle that.
              if row[year] != nil
                is_full_date = RevsUtils.get_full_date(row[year])
+              
                if is_full_date
                  row[full_date] = row[year]
                  row[year] = nil if year != full_date
@@ -321,7 +323,7 @@ namespace :revs do
                row[model_year] = RevsUtils.parse_years(row[model_year]).join(seperator)
              end
            
-           
+             #puts (changes[0].keys+additional_fields-ignore_fields)
              (changes[0].keys+additional_fields-ignore_fields).each do |key|
                key = key.strip.downcase
                #First make sure we have a real change
