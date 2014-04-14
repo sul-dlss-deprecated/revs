@@ -4,11 +4,14 @@ require 'bundler/capistrano'
 require 'dlss/capistrano'
 require 'pathname'
 require 'squash/rails/capistrano2'
+require 'whenever/capistrano'
 
 set :stages, %W(staging development production)
 set :bundle_flags, "--quiet"
 set :repository, "https://github.com/sul-dlss/revs"
 set :deploy_via, :remote_cache
+set :whenever_command, "bundle exec whenever"
+set :whenever_environment, defer { stage }
 
 require 'capistrano/ext/multistage'
 
