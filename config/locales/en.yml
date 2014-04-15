@@ -158,6 +158,7 @@ en:
       stanford: "Stanford?"
       role: "Role"
       per_page: "Per page"
+      login_count: "# Logins"
       filter: "Show"
       registered_on: "Registered on"
       confirmed: "Confirmed?"
@@ -167,6 +168,8 @@ en:
       user_roles_updated: "Successfully updated %{num} users to the role '%{role}'"
       no_user_roles_updated: "You did not select any users to update"
       set_checked_users: "Set checked users to role"
+      last_sign_in: 'Last sign in'
+      num_logins: 'Number of logins'
       sidebar:
         actions: 'Actions'
         help: "Help"
@@ -344,7 +347,7 @@ en:
       forgot_password: "Forgot your password?"
       send_password_instructions: "Send me reset password instructions"
       profile_page: 'Your Revs profile page'
-      user_dashboard: 'User Dashboard'
+      user_dashboard: 'Your Dashboard'
       curator_dashboard: 'Curator Dashboard'
       admin_dashboard: 'Administrator Dashboard'
       resend_confirmation: "Resend confirmation instructions"

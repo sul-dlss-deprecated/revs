@@ -148,6 +148,7 @@ class ApplicationController < ActionController::Base
      # if we have a webauthed user who is not yet signed in, let's sign them in or create them a new user account if needed
     user=(User.where(:sunet=>request.env["WEBAUTH_USER"]).first || User.create_new_sunet_user(request.env["WEBAUTH_USER"])) 
     sign_in user unless request.path==user_session_path    
+    user.increment!(:login_count)
   end
   
   def sunet_user_signed_in?

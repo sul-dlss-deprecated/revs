@@ -41,7 +41,7 @@
     </ul>
 
     <ul class="nav nav-list">
-      <li class="nav-header"><%= t('revs.authentication.sidebar.actions') %></li>
+      <li class="nav-header"><%= t('revs.authentication.sidebar.actions') if has_activity?(@user) %></li>
       <% if user_favorites_count(@user) > 0 %>
         <li><%= link_to t('revs.user.view_your_favorites'), user_favorites_path(@user.username) %></li>
       <% end %>
@@ -56,7 +56,8 @@
       <% end %>
     </ul>
 
-    <%= render :partial=>'/devise/shared/dashboards', :locals=>{:user=>@user} %>
 
+    <%= render(:partial=>'/devise/shared/dashboards', :locals=>{:user=>@user}) if can?(:curate, :all) || can?(:administer, :all)%>
+  
   </div>
 </div>

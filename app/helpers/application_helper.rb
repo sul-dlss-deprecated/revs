@@ -79,6 +79,10 @@ module ApplicationHelper
     end
   end
   
+  def has_activity?(user)
+    user_favorites_count(@user) > 0 || user_annotations_count(@user) > 0 || user_flags_count(@user) > 0 || user_edits_count(@user) > 0
+  end
+  
   def user_favorites_count(user)
     user.favorites.count
   end

@@ -14,7 +14,7 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     login_as(user_login)
     user_account=User.find_by_username(user_login)
     visit user_profile_name_path(user_account.username)
-    page.should have_content("User Dashboard")
+    page.should have_content(I18n.t("revs.user.user_dashboard"))
     page.should have_content("#{user_account.full_name}")
     click_link 'Update your profile'
 
@@ -40,7 +40,7 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     login_as(user_login)
     user_account=User.find_by_username(user_login)
     visit user_profile_name_path(user_account.username)
-    page.should have_content("User Dashboard")
+    page.should have_content(I18n.t("revs.user.user_dashboard"))
     page.should have_content("#{user_account.full_name}")
     click_link 'Update your profile'
 
@@ -58,12 +58,15 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
   it "should allow a logged in user to update their password" do
    
     new_password='new_password'
+    user_account=User.find_by_username(user_login)
+    user_account.login_count.should == 0
     
     login_as(user_login)
     user_account=User.find_by_username(user_login)
+    user_account.login_count.should == 1
     
     visit user_profile_name_path(user_account.username)
-    page.should have_content("User Dashboard")
+    page.should have_content(I18n.t("revs.user.user_dashboard"))
     page.should have_content("#{user_account.full_name}")
     click_link 'Change your password'
 
@@ -87,7 +90,7 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     fill_in "user_password", :with => new_password
     click_button "submit"
     visit user_profile_name_path(user_account.username)
-    page.should have_content("User Dashboard")
+    page.should have_content(I18n.t("revs.user.user_dashboard"))
     page.should have_content("#{user_account.full_name}")
     
   end
@@ -96,9 +99,12 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
 
     new_bio='I work at Stanford. That makes me smart.'
     new_last_name='Professor'
+    sunet_account=User.find_by_username(sunet_login)
+    sunet_account.login_count.should == 0
     
     visit webauth_login_path
     sunet_account=User.find_by_username(sunet_login)
+    sunet_account.login_count.should == 1
     
     visit user_profile_name_path(sunet_account.username) # user profile page
     page.should have_content sunet_account.full_name

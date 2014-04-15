@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140227180528) do
+ActiveRecord::Schema.define(:version => 20140415215212) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "user_id"
@@ -146,6 +146,7 @@ ActiveRecord::Schema.define(:version => 20140227180528) do
     t.string   "avatar"
     t.integer  "spam_flags",             :default => 0,     :null => false
     t.boolean  "active",                 :default => true,  :null => false
+    t.integer  "login_count",            :default => 0,     :null => false
   end
 
   add_index "users", ["active"], :name => "index_users_on_active"
