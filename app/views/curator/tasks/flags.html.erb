@@ -14,15 +14,22 @@
   </ul>
 
   <div class="tab-content">
+    
+    <div  id="<%=@tab_list_flag%>" class="tab-pane <%="active" if @tab == @tab_list_flag %>">
+      <%= select_tag 'curator_flag_selection', options_from_collection_for_select(Flag.for_dropdown, :first, :last, :selected => @selection.join(",")) %>
+      <div id='refresh_flags' class='flag-button btn btn-small'><%=t('revs.flags.refresh_list')%></div>
+      <%= render :partial => 'user/flags_table', :locals=>{:selection=>@selection, :flags=>@flags, :user=>current_user,:curate_view=>true }%>
+    </div>
+    
     <div  id="<%=@tab_list_item%>" class="tab-pane <%="active" if @tab == @tab_list_item %>">
       <table class="admin table table-bordered table-condensed table-hover table-striped">
         <tr>
           <th><%= t('revs.curator.item_title') %></th>
-		      <th class="right"><%=link_to t('revs.flags.all_flags_name'), flags_table_curator_tasks_path(:order_all=>'num_flags DESC')%></th>
+		      <th class="right"><%= link_to t('revs.flags.all_flags_name'), flags_table_curator_tasks_path(:order_all=>'num_flags desc',:tab=>@tab_list_item) %></th>
 		      <th class="right"><%= t('revs.flags.open_state_display_name')%></th>
           <th class="right"><%= t('revs.flags.fixed_state_diplay_name')%></th>
           <th class="right"><%= t('revs.flags.wont_fix_state_display_name')%></th>
-          <th><%= link_to t('revs.message.date'), flags_table_curator_tasks_path(:order_all=>'created_at desc') %></th>
+          <th><%= link_to t('revs.message.date'), flags_table_curator_tasks_path(:order_all=>'created_at desc',:tab=>@tab_list_item) %></th>
         </tr>
 
       <% @flags_grouped.each do |flag|%>
@@ -40,19 +47,13 @@
 
 	    <%= paginate @flags_grouped, :param_name => :pagina2, :params => {:order_all=>@order_all, :tab=>@tab_list_item} %>
       </div>
-
-      <div  id="<%=@tab_list_flag%>" class="tab-pane <%="active" if @tab == @tab_list_flag %>">
-        <%= select_tag 'curator_flag_selection', options_from_collection_for_select(Flag.for_dropdown, :first, :last, :selected => @selection.join(",")) %>
-        <div id='refresh_flags' class='flag-button btn btn-small'><%=t('revs.flags.refresh_list')%></div>
-        <%= render :partial => 'user/flags_table', :locals=>{:selection=>@selection, :flags=>@flags, :user=>current_user,:curate_view=>true }%>
-      </div>
       
       <div id="<%=@tab_list_user%>" class="tab-pane <%="active" if @tab == @tab_list_user%>">
         
         <table class="table table-bordered table-condensed table-hover table-striped">
           <tr>
             <th><%=t('revs.curator.username') %></th>
-            <th class="right"><%=link_to t('revs.curator.flags_made'), flags_table_curator_tasks_path(:order3=>'num_flags DESC', :tab=>@tab_list_user) %></th>
+            <th class="right"><%=link_to t('revs.curator.flags_made'), flags_table_curator_tasks_path(:order_user=>'num_flags DESC', :tab=>@tab_list_user) %></th>
             <th><%=link_to t('revs.curator.last_edit'), flags_table_curator_tasks_path(:order_user=>'flags.updated_at DESC', :tab=>@tab_list_user) %></th>
           </tr>
           <% @flags_by_user.each do |result| %>
