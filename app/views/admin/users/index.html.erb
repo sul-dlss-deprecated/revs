@@ -4,12 +4,16 @@
 
   <h3><%= t('revs.admin.administer_users') %></h3>
   <%= form_tag admin_users_path, :method=>:get, :class => 'form-search' do %>
-    <%= text_field_tag :search, @search, :class => 'input-large' %>
-    <%= submit_tag t('revs.admin.search_by_email'), :class => 'btn btn-small' %>
+    <p>
+      <%= t('revs.admin.filter') %>: <%= select_tag 'filter',options_for_select({'All users'=>'all','Stanford users'=>'stanford','Non-Stanford users'=>'non-stanford'},@filter),class:"span2"%>
+      <%= t('revs.admin.per_page') %>: <%= select_tag 'per_page',options_for_select(['10','50','100','200'],@per_page),class:"span1"%>
+      </p>
+        <%=t('revs.admin.search_by_email')%>: <%= text_field_tag :search, @search, :class => 'input-large' %>
+        <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-small' %>
   <% end %>
 
   <% if @users.size > 0 %>
-    <p><%= "There are #{@users.size} total users." %></p>
+    <p><%= "#{@users.size} out of #{User.count} users displayed" %></p>
     <%= paginate @users, :params => {:order=>@order} %>
   	<%= form_tag(bulk_update_role_admin_users_path, method: 'post', class:'form-inline') do %>
     <p><%=t('revs.admin.set_checked_users')%> <%= select_tag 'role',options_for_select(User.roles,@role),class:"span2"%> <%= submit_tag t('revs.nav.update'), :class => 'btn btn-small' %>
@@ -18,19 +22,21 @@
     <table id="admin-users" class="admin table table-bordered table-condensed table-hover table-striped">
       <tr>
         <th><%= link_to t('revs.user.email_address'),
-                admin_users_path(:order=>'email',:serach=>@search) %></th>
+                admin_users_path(:order=>'email',:search=>@search,:filter=>@filter,:per_page=>@per_page) %></th>
         <th><%= link_to t('revs.authentication.username'),
-                admin_users_path(:order=>'username',:serach=>@search) %></th>
+                admin_users_path(:order=>'username',:search=>@search,:filter=>@filter,:per_page=>@per_page) %></th>
         <th><%= link_to t('revs.admin.name'),
-                admin_users_path(:order=>'last_name',:serach=>@search) %></th>
+                admin_users_path(:order=>'last_name',:search=>@search,:filter=>@filter,:per_page=>@per_page) %></th>
         <th class="centered"><%= link_to t('revs.admin.stanford'),
-                admin_users_path(:order=>'sunet',:serach=>@search) %></th>
+                admin_users_path(:order=>'sunet',:search=>@search,:filter=>@filter,:per_page=>@per_page) %></th>
         <th><%= link_to t('revs.admin.role'),
-                admin_users_path(:order=>'role asc',:serach=>@search) %></th>
+                admin_users_path(:order=>'role asc',:search=>@search,:filter=>@filter,:per_page=>@per_page) %></th>
+        <th><%= link_to t('revs.admin.login_count'),
+                admin_users_path(:order=>'login_count desc',:search=>@search,:filter=>@filter,:per_page=>@per_page) %></th>                
         <th><%= link_to t('revs.admin.registered_on'),
-                admin_users_path(:order=>'created_at desc',:serach=>@search) %></th>
+                admin_users_path(:order=>'created_at desc',:search=>@search,:filter=>@filter,:per_page=>@per_page) %></th>
         <th class="centered"><%= link_to t('revs.admin.confirmed'),
-                admin_users_path(:order=>'confirmed_at desc',:serach=>@search) %></th>
+                admin_users_path(:order=>'confirmed_at desc',:search=>@search,:filter=>@filter,:per_page=>@per_page) %></th>
         <th class="centered"><%=t('revs.authentication.sidebar.actions')%></th>
         <th class="centered">&nbsp;</th>
       </tr>
@@ -41,6 +47,7 @@
          <td><%= user.full_name %></td>
          <td class="centered"><%= user.sunet_user? ? t('revs.messages.switch_yes') : t('revs.messages.switch_no') %></td>
          <td><%= user.role %></td>
+         <td><%= user.login_count %></td>
          <td><%= show_as_datetime(user.created_at.in_time_zone) %></td>
          <td class="centered"><%= user.confirmed_at.blank? ? t('revs.messages.switch_no') : t('revs.messages.switch_yes') %></td>
          <td class="centered"><%= link_to "[#{t('revs.actions.edit')}]", edit_admin_user_path(user.id),:id=>"edit-#{user.id}" %></td>

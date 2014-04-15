@@ -26,8 +26,9 @@
 
     <div class="control-group">
       <div class="controls">
-        Last sign in:
-        <%=@user.last_sign_in_at.blank? ? t('revs.messages.never') : show_as_datetime(@user.last_sign_in_at.in_time_zone)%>
+        <strong><%=t('revs.admin.last_sign_in')%>:</strong> <%=@user.last_sign_in_at.blank? ? t('revs.messages.never') : show_as_datetime(@user.last_sign_in_at.in_time_zone)%> |
+        <strong><%=t('revs.admin.num_logins')%>:</strong> <%=@user.login_count %>
+        
       </div>
     </div>
 

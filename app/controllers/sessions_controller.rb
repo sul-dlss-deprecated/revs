@@ -11,7 +11,7 @@ class SessionsController < Devise::SessionsController
   # sign in form submit method
   def create
     user=User.where('email=? or username=?',params[:user][:login],params[:user][:login])
-    if user.size == 1 && user.first.sunet_user?
+    if user.size == 1 && user.first.sunet_user? # sunet users should not be able to log in this way -- boot them over to the home page with a webauth message
       sign_out
       redirect_to :root, :alert=>t('revs.authentication.stanford_webauth')
       return false
