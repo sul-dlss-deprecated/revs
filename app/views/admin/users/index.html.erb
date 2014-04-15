@@ -4,11 +4,16 @@
 
   <h3><%= t('revs.admin.administer_users') %></h3>
   <%= form_tag admin_users_path, :method=>:get, :class => 'form-search' do %>
+    <p>
+      <%= t('revs.admin.filter') %>: <%= select_tag 'filter',options_for_select({'All users'=>'all','Stanford users'=>'stanford','Non-Stanford users'=>'non-stanford'},@filter),class:"span2"%>
+      <%= t('revs.admin.per_page') %>: <%= select_tag 'per_page',options_for_select(['10','50','100','200'],@per_page),class:"span1"%>
+      </p>
     <%= text_field_tag :search, @search, :class => 'input-large' %>
     <%= submit_tag t('revs.admin.search_by_email'), :class => 'btn btn-small' %>
   <% end %>
 
   <% if @users.size > 0 %>
+    <p><%= "#{@users.size} out of #{User.count} users displayed" %></p>
     <%= paginate @users, :params => {:order=>@order} %>
   	<%= form_tag(bulk_update_role_admin_users_path, method: 'post', class:'form-inline') do %>
     <p><%=t('revs.admin.set_checked_users')%> <%= select_tag 'role',options_for_select(User.roles,@role),class:"span2"%> <%= submit_tag t('revs.nav.update'), :class => 'btn btn-small' %>

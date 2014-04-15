@@ -5,14 +5,24 @@ class Admin::UsersController < ApplicationController
   def index
     @search=params[:search]
     @order=params[:order] || 'email'
-    users_per_page = params[:per_page] || 50
-    @role = params[:role] || "curator"
+    @per_page = params[:per_page] || 50
+    @role = params[:role] || 'curator'
+    @filter = params[:filter] || 'all'
+    
+    @users = User.scoped
     
     if !@search.blank?
-      @users=User.where(['email like ? OR username like ? OR first_name like ? OR last_name like ?',"%#{@search}%","%#{@search}%","%#{@search}%","%#{@search}%"]).order(@order).page(params[:page]).per(users_per_page)
-    else
-      @users=User.order(@order).page(params[:page]).per(users_per_page)
+      @users=@users.where(['email like ? OR username like ? OR first_name like ? OR last_name like ?',"%#{@search}%","%#{@search}%","%#{@search}%","%#{@search}%"])
     end
+    
+    if @filter == 'stanford'
+      @users=@users.where("sunet != '' AND sunet is not null")    
+    elsif @filter == 'non-stanford'
+      @users=@users.where("sunet == '' OR sunet is null")
+    end
+
+    @users=@users.order(@order).page(params[:page]).per(@per_page)
+
   end
 
   def edit

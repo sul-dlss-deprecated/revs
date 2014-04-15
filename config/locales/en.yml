@@ -157,6 +157,8 @@ en:
       name: "Name"
       stanford: "Stanford?"
       role: "Role"
+      per_page: "Per page"
+      filter: "Show"
       registered_on: "Registered on"
       confirmed: "Confirmed?"
       no_users_found: "No users were found with an email address of '%{with_email_address}'"
