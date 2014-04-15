@@ -11,14 +11,13 @@ class Curator::TasksController < ApplicationController
      s = params[:selection] || Flag.open
      
      @selection = s.split(',')
-     @order=params[:order] || 'num_flags DESC'
-     @order_all=params[:order_all] || "druid"
-     @order_user = params[:order_user] || "flags.updated_at DESC"
+     @order=params[:order] || "created_at DESC"
+     @order_all=params[:order_all] || "created_at DESC"
+     @order_user = params[:order_user] || "num_flags DESC"
      
-     @flags_grouped=Flag.select('*,COUNT("druid") as num_flags').group("druid").order(@order).page(params[:pagina2]).per(Flag.per_table_page)
      @flag_states = Flag.groupByFlagState
-     #@flags_grouped = Kaminari.paginate_array(Flag.all).page(params[:pagina2]).per(Flag.per_table_page)
-     @flags = Kaminari.paginate_array(Flag.where(:state => @selection).order(@order_all)).page(params[:pagina]).per(Flag.per_table_page)
+     @flags = Kaminari.paginate_array(Flag.where(:state => @selection).order(@order)).page(params[:pagina]).per(Flag.per_table_page)
+     @flags_grouped=Flag.select('*,COUNT("druid") as num_flags').group("druid").order(@order_all).page(params[:pagina2]).per(Flag.per_table_page)
      @flags_by_user=Flag.select('*,count(id) as num_flags').includes(:user).group("user_id").order(@order_user).page(params[:pagina3]).per(Flag.per_table_page)
 
      @tab_list_item = 'flags-by-item'
