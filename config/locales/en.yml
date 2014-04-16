@@ -43,6 +43,7 @@ en:
       public_visibility_show: "Show this item to the public"
       public_visibility_hide: "Hide this item from public view"
     flags:
+      anonymous_not_shown: 'Flags added anonymously are not shown.'
       refresh_list: 'Refresh list'
       are_you_sure: 'Are you sure you want to remove this flag?'
       created: 'The item was flagged.'
@@ -333,6 +334,7 @@ en:
       sign_up: 'Sign up'
       sign_out: 'Sign out'
       sign_in_with: "Sign in with %{provider}"
+      anonymous: 'Web user'
       email_address: "Email Address"
       email_address_already_registered: "That email address is already registered"
       reset_password_if_forgot_linktext: "Reset your password"

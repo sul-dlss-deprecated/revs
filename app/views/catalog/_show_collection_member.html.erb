@@ -108,7 +108,7 @@
 							  <div id="flags_link">
 									<%= render :partial=>'flags/link'%>
                   <%# only show help icon if user can add flags %>
-                  <% if can?(:add_new_flag_to, @document) %>
+                  <% if can? :add_new_flag_to, @document  %>
                     <%= link_to "#", :class => "help hidden-offscreen showOnLoad", :data => { :toggle => "tooltip", :placement => "left", :title => "#{t('revs.flags.help')}" } do %>
                       <i class="icon-question-sign"></i>
                     <% end %>
@@ -118,7 +118,7 @@
 				        <div id="new_flag_form">
 							  	<%= render :partial=>"flags/new",:locals=>{:druid=>@document.id, :flags=>@document.flags} %>
 								</div>
-
+                
 								<div id="all_flags">
                   <%= render :partial=>"flags/all",:locals=>{:flags=>@document.flags} %>
                 </div>

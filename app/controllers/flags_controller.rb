@@ -20,7 +20,10 @@ class FlagsController < ApplicationController
   def create
     
     flag_info=params[:flag]
-    @flag.update_attributes(:flag_type=>flag_info[:flag_type],:comment=>flag_info[:comment],:druid=>flag_info[:druid],:user_id=>current_user.id)
+    @flag.flag_type=flag_info[:flag_type]
+    @flag.comment=flag_info[:comment]
+    @flag.druid=flag_info[:druid]
+    @flag.user_id=current_user.id if user_signed_in?
     @flag.state= Flag.open
     @flag.save
     @all_flags=Flag.where(:druid=>flag_info[:druid])
@@ -66,7 +69,7 @@ class FlagsController < ApplicationController
     @document=SolrDocument.find(@druid)
     
     #If a different user is deleting the flag, penalize the creating user for spam.
-    if(@flag.user_id != current_user.id)
+    if(@flag.user_id != current_user.id) && !@flag.user.nil?
       @user = User.find_by_id(@flag.user_id)
       @user.spam_flags += 1 
       @user.save

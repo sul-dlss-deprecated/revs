@@ -125,9 +125,11 @@ end
 def should_allow_flagging
   page.should have_button(I18n.t('revs.flags.flag'))
   page.should_not have_css('#flag-details-link.hidden')
+  page.should have_content(I18n.t('revs.flags.flag'))
 end
 
 def should_not_allow_flagging
+  page.should_not have_content(I18n.t('revs.flags.flag'))
   page.should_not have_button(I18n.t('revs.flags.flag'))
 end
 
@@ -226,11 +228,14 @@ def get_a_flag_by_content(content)
     return nil 
 end
 
-
-def add_a_flag(user, druid, content)
-  login_as_user_and_goto_druid(user,druid)
+def create_flag(content)
   fill_in @comment_field, :with=>content
   click_button @flag_button
+end
+
+def login_and_add_a_flag(user, druid, content)
+  login_as_user_and_goto_druid(user,druid)
+  create_flag(content)
 end
 
 def check_flag_was_created(user, druid, content, flag_count)
@@ -239,8 +244,7 @@ def check_flag_was_created(user, druid, content, flag_count)
   
   #check the database for the comment and ensure the flag count was incremented
   return check_database_for_flag(user, flag_count, content)
-  
-  
+    
 end
 
 def check_page_for_flag(user, druid, content)

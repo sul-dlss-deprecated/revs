@@ -18,7 +18,7 @@ describe("Admin Section",:type=>:request,:integration=>true) do
     it "should allow an admin user to return to the page they were on and then see the admin interface and curator interface" do
       starting_page=catalog_path('qb957rw1430')
       visit starting_page
-      should_not_allow_flagging
+      should_allow_flagging
       should_not_allow_annotations      
       login_as(admin_login)
       current_path.should == starting_page

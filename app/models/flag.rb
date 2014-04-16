@@ -11,10 +11,14 @@ class Flag < WithSolrDocument
   attr_accessible :druid, :comment, :flag_type, :user_id, FLAG_TYPES
   
   validates :druid, :is_druid=>true
-  validates :user_id, :numericality => { :only_integer => true }
+  validate :check_user_id
   validate :check_flag_type
   
   FLAGS_PER_TABLE_PAGE = 25
+
+  def check_user_id
+    errors.add(:user_id, :not_valid) unless (user_id.nil? || user_id.is_a?(Integer))
+  end
   
   def check_flag_type
     errors.add(:flag_type, :not_valid) unless FLAG_TYPES.include? flag_type.to_s
