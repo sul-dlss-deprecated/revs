@@ -44,6 +44,28 @@ namespace :revs do
     end
     puts "#{@all_docs['response']['docs'].size} scanned; #{num_missing} are missing an image"
   end
+
+  desc "Find all objects with an image that has a space in the filename"
+  #Run Me: rake revs:images_with_spaces["John Dugdale Collection"] to just show items
+  task :images_with_spaces, [:collection_name,:delete] => :environment do |t, args| 
+    num_with_spaces=0
+    q="collection_ssim:\"#{args[:collection_name]}\""
+    @all_docs = Blacklight.solr.select(:params => {:q => q, :rows=>'100000'})
+    puts "#{@all_docs['response']['numFound']} documents match search and #{@all_docs['response']['docs'].size} returned"
+    @all_docs['response']['docs'].each do |doc|
+      item=SolrDocument.new(doc)
+      if item.is_item? && !item.images.nil? && item.images.size != 0
+        item.images.each do |image|
+          if !image.match(/\s/).nil?
+            puts "#{item.id}  ---   #{item.identifier}" 
+            num_with_spaces += 1
+            next
+          end
+        end
+      end
+    end
+    puts "#{@all_docs['response']['docs'].size} scanned; #{num_with_spaces} have a space in the image"
+  end
   
   desc "Go back and touch every SolrDocument so that it will update the year field to use the sortable year field, remove the UUID from previous pass.."
   #Run Me: rake revs:touch_all["UUID"]

@@ -19,7 +19,7 @@ class Ability
 
     send("#{user.role.downcase}_actions",user) unless user.no_role? # this lets us define abilities by creating methods called "ROLENAME_actions"
 
-    guest_actions
+    can_act_as_guest_user(user)
     
     beta_actions(user) if user.sunet_user?  # sunet users are automatically included in the beta
             
@@ -28,25 +28,19 @@ class Ability
   # roles defintions (ROLENAME_actions)
 
   # unlogged in users
-  def guest_actions
-    can_act_as_guest_user
-  end
 
   # logged in user
   def user_actions(user)
-    can_act_as_guest_user # can do anything a guest can
     can_act_as_logged_in_user(user) unless Revs::Application.config.restricted_beta # also have logged in privileges if we are not in beta
   end
         
    # logged in beta user, gets logged in user actions
   def beta_actions(user)
-    can_act_as_guest_user
     can_act_as_logged_in_user(user)
   end
   
   # curator role can do anything a logged in user can + curate and update metadata
   def curator_actions(user)
-    can_act_as_guest_user
     can_act_as_logged_in_user(user)
     can_curate
     can_update_metadata
@@ -54,7 +48,6 @@ class Ability
   
    # administrator can do anything a logged in user can, a curator can, as well as adminster
   def admin_actions(user)
-    can_act_as_guest_user
     can_act_as_logged_in_user(user)
     can_view_any_profile
     can_curate
@@ -63,8 +56,7 @@ class Ability
   end
   
   # defined abilities
-  #private
-  def can_act_as_guest_user
+  def can_act_as_guest_user(user)
     # any user of the website (even those not logged in) can perform these actions
     can_view_about_pages # anyone can see the about and home page no matter what
     unless Revs::Application.config.restricted_beta # if we are in private beta, guests can do nothing else, otherwise they can view items and read annotations and flags
@@ -73,6 +65,7 @@ class Ability
       can_read_flags
       can_view_public_galleries
       can_view_public_profiles
+      can_flag_anonymous if user.id.nil? # if this is really an anonymous user, add this ability -- if they are logged in, it will added in later specifically for logged in users
     end
   end
   
@@ -82,7 +75,7 @@ class Ability
     can_read_annotations
     can_read_flags
     can_annotate(user)
-    can_flag(user)
+    can_flag_logged_in(user)
     can_save_favorites_and_galleries(user)
     can_view_own_profile(user)
   end
@@ -136,13 +129,20 @@ class Ability
     can [:read,:update,:destroy,:cancel], SavedItem, :user_id => user.id # can update and destroy their own Saved Items
     can [:read,:update,:destroy], Gallery, :user_id => user.id # can update and destroy their own Galleries
   end
-
-  def can_flag(user)
-    can :create, Flag # can create new flags
+  
+  def can_flag_anonymous
+    can :create, Flag # can create new flags  
+    can :add_new_flag_to, SolrDocument do |doc|
+      doc.flags.where("user_id is null OR user_id=''").where(:state=>Flag.open).count < Revs::Application.config.num_flags_per_item_per_user
+    end    
+  end
+  
+  def can_flag_logged_in(user)
+    can :create, Flag # can create new flags  
     can [:update,:destroy], Flag, :user_id => user.id # can update and destroy their own annotations and flags
     can :add_new_flag_to, SolrDocument do |doc|
          doc.flags.where(:user_id=>user.id, :state=>Flag.open).count < Revs::Application.config.num_flags_per_item_per_user
-     end # can only add new flags to a solr document with less than a certain number of flags for any given user
+    end # can only add new flags to a solr document with less than a certain number of flags for any given user
   end
     
   def can_curate

@@ -1,6 +1,9 @@
 <% if flags.size > 0 %>
+  <% unless user_signed_in? %>
+    <p><%= t('revs.flags.anonymous_not_shown') %></p>
+  <% end %>
 	<% flags.each do |flag| %>
-	    <%if not flag.resolved or can? :administer, all %>	
+	    <%if (!flag.resolved || can?(:administer, all)) && ((!flag.user_id.nil?) || (flag.user_id.nil? && user_signed_in?)) # logged in users see all flags, including anonymous; non-logged in users do not see anonymous flags%>
 		     <%= render :partial=>'flags/flag',:locals=>{:flag=>flag}%>
 		<% end %>
 	<% end %>

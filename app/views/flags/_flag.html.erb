@@ -1,39 +1,46 @@
-<div class="flag-info">
-  
-     <%= image_tag((flag.user.avatar.url.blank? ? asset_url('default-avatar_32x32.png') : flag.user.avatar.url(:tiny)), :class => "user-image user-image-tiny") %>
-    <%=flag.user == current_user ? t('revs.flags.you') : flag.user.to_s%> on <%=show_as_date(flag.created_at)%>
-    <% if !flag.resolved and can? :resolve, flag %>
-      <span class="label label-warning pull-right unresolved-label">Unresolved</span>
-    <% end %>
-    <blockquote><%= flag.comment%></blockquote>
+<% if (!flag.user_id.nil?) || (flag.user_id.nil? && user_signed_in?) # logged in users see all flags, including anonymous; non-logged in users do not see anonymous flags%>
+  <div class="flag-info">
 
-    <% if can? :destroy, flag %>
-      <%= button_to t('revs.actions.remove'),flag_path(flag.id), :method=>:delete,:remote=>true, :confirm=>t('revs.flags.are_you_sure'), :class => "btn btn-mini btn-danger" %>
-    <% end %>
+      <%= image_tag((flag.user.nil? || flag.user.avatar.url.blank? ? asset_url('default-avatar_32x32.png') : flag.user.avatar.url(:tiny)), :class => "user-image user-image-tiny") %>
+      <% if flag.user.nil? %>
+        <%= t('revs.user.anonymous') %>
+      <% else %>
+        <%= flag.user == current_user ? t('revs.flags.you') : flag.user.to_s%>
+      <% end %>
+      on <%=show_as_date(flag.created_at)%>
+      <% if !flag.resolved and can? :resolve, flag %>
+        <span class="label label-warning pull-right unresolved-label">Unresolved</span>
+      <% end %>
+      <blockquote><%= flag.comment%></blockquote>
 
-    <% if not flag.resolved and can? :resolve, flag %>
-       <%= form_for flag do |f| %>
-        <%= f.label :resolution, t('revs.flags.resolution_notes_optional')%>
-        <%= f.text_area :resolution, :rows => '2', :class => "input-xlarge" %>
-        <%= f.hidden_field :druid, :value=>flag.druid%>
-        <%= f.submit t('revs.flags.fixed'), :class => "flag-button btn btn-small", :name => t('revs.flags.resolve')%>
-        <%= f.submit t('revs.flags.wont_fix'), :class => "flag-button btn btn-small", :name => t('revs.flags.resolve')%>
-       <% end %>
-    <% end %>
+      <% if can? :destroy, flag %>
+        <%= button_to t('revs.actions.remove'),flag_path(flag.id), :method=>:delete,:remote=>true, :confirm=>t('revs.flags.are_you_sure'), :class => "btn btn-mini btn-danger" %>
+      <% end %>
 
+      <% if not flag.resolved and can? :resolve, flag %>
+         <%= form_for flag do |f| %>
+          <%= f.label :resolution, t('revs.flags.resolution_notes_optional')%>
+          <%= f.text_area :resolution, :rows => '2', :class => "input-xlarge" %>
+          <%= f.hidden_field :druid, :value=>flag.druid%>
+          <%= f.submit t('revs.flags.fixed'), :class => "flag-button btn btn-small", :name => t('revs.flags.resolve')%>
+          <%= f.submit t('revs.flags.wont_fix'), :class => "flag-button btn btn-small", :name => t('revs.flags.resolve')%>
+         <% end %>
+      <% end %>
+      
     <% if flag.resolved and can? :administer, flag %>
       <div class="resolution-history">
         <span>
           <label><%= t('revs.flags.resolver_username')%></label>
           <%= User.find(flag.resolving_user).to_s %>
         </span>
-        <% if !flag.resolution.empty? %>
-          <span>
-            <label><%= t('revs.flags.resolution_notes')%></label>
-            <%= flag.resolution %>
-          </span>
-        <% end %>
-      </div>
-    <% end %>
+          <% if !flag.resolution.empty? %>
+            <span>
+              <label><%= t('revs.flags.resolution_notes')%></label>
+              <%= flag.resolution %>
+            </span>
+          <% end %>
+        </div>
+      <% end %>
 
-</div>
+  </div>
+<% end %>

@@ -27,7 +27,7 @@ describe("Curator Section",:type=>:request,:integration=>true) do
     it "should allow a curator to return to the page they were on and then see the curator interface, but not the admin interface" do
       starting_page=catalog_path('qb957rw1430')
       visit starting_page
-      should_not_allow_flagging
+      should_allow_flagging
       should_not_allow_annotations
       login_as(curator_login)
       current_path.should == starting_page
@@ -117,7 +117,7 @@ describe("Curator Section",:type=>:request,:integration=>true) do
 #         page.should have_no_content message
 #         
 #         #Add it
-#         add_a_flag(curator_login, druid, message)
+#         login_and_add_a_flag(curator_login, druid, message)
 #         
 #         #Return to the page and make sure it is there
 #         visit curator_tasks_path

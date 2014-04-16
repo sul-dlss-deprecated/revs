@@ -25,7 +25,7 @@ describe("User registration system",:type=>:request,:integration=>true) do
   it "should allow a user to return to the page they were on and not see the admin or curator interface (since they are not admins or curators)" do
     starting_page=catalog_path('qb957rw1430')
     visit starting_page
-    should_not_allow_flagging
+    should_allow_flagging # anonymous users can flag items
     should_not_allow_annotations
     login_as(user_login)
     current_path.should == starting_page
