@@ -105,7 +105,7 @@ en:
       cancel: 'Cancel'
       go_back: 'Go back'
       feedback: 'Feedback'
-      content_corrections: 'Do you have corrections to the metadata for this item? If you %{create_an_account_link}, you can flag this item with a comment, or you can also provide %{feedback_link} now.'
+      content_corrections: 'Do you have corrections to the metadata for this item? Flag a correction above. If you %{create_an_account_link}, you can see when your flags are resolved.'
       create_an_account: 'create an account'      
       more: 'More'
       please_wait: 'Please wait...'
@@ -175,9 +175,9 @@ en:
       stanford: "Stanford?"
       role: "Role"
       per_page: "Per page"
-      login_count: "# Logins"
+      login_count: "Logins"
       filter: "Show"
-      registered_on: "Registered on"
+      registered_on: "Registered"
       confirmed: "Confirmed?"
       no_users_found: "No users were found with an email address of '%{with_email_address}'"
       none_found: "None found"
@@ -236,7 +236,7 @@ en:
       you_can_edit_items: "Items you edit will be listed here."
     dashboards: 'Dashboards'
     citations:
-        view: 'View full citation page with image download'
+        view: 'View full citation page'
     edits:
         none: 'This user does not have any edits.'
         personal_none: 'You do not have any edits.'
