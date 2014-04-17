@@ -3,6 +3,8 @@
   <h2><%= t('revs.user.admin_dashboard') %></h2>
 
   <h3><%= t('revs.admin.administer_users') %></h3>
+  <p><%= "There are a total of #{User.count} registered users overall." %></p>
+
   <%= form_tag admin_users_path, :method=>:get, :class => 'form-search' do %>
     <p>
       <%= t('revs.admin.filter') %>: <%= select_tag 'filter',options_for_select({'All users'=>'all','Stanford users'=>'stanford','Non-Stanford users'=>'non-stanford'},@filter),class:"span2"%>
@@ -13,8 +15,7 @@
   <% end %>
 
   <% if @users.size > 0 %>
-    <p><%= "#{@users.size} out of #{User.count} users displayed" %></p>
-    <%= paginate @users, :params => {:order=>@order} %>
+  <%= page_entries_info @users %>
   	<%= form_tag(bulk_update_role_admin_users_path, method: 'post', class:'form-inline') do %>
     <p><%=t('revs.admin.set_checked_users')%> <%= select_tag 'role',options_for_select(User.roles,@role),class:"span2"%> <%= submit_tag t('revs.nav.update'), :class => 'btn btn-small' %>
       <!--<input type="checkbox" name="select-all" id="admin-select-all-users"> --> <%#=t('revs.nav.select_all')%> 
@@ -55,9 +56,9 @@
           </td>
        </tr>
       <% end %>
-    </table>
-    
+    </table>    
     <% end %>
+    <%= paginate @users, :params => {:order=>@order} %>
 
   <% else %>
     <%= t('revs.admin.no_users_found', :with_email_address => @search) if @search %>

@@ -3,6 +3,7 @@
   <h2><%= display_user_name(@user) %><span class="lowercase">'s</span> <%=t('revs.annotations.plural')%></h2>
 
  <% if @annotations.size > 0 %>
+    <%= page_entries_info @annotations %>
     <%= paginate @annotations, :params => {:order=>@order} %>
     <table class="table table-bordered table-condensed table-hover table-striped">
       <tr>
