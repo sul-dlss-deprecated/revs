@@ -44,7 +44,7 @@
       <% end %>
      
       </table>
-
+      <%= page_entries_info @flags_grouped %>
 	    <%= paginate @flags_grouped, :param_name => :pagina2, :params => {:order_all=>@order_all, :tab=>@tab_list_item} %>
       </div>
       
@@ -64,7 +64,7 @@
             </tr>
           <% end %>
         </table>
-        
+        <%= page_entries_info @flags_by_user %>
         <%= paginate @flags_by_user, :param_name => :pagina3, :params => {:order_user=>@order_user, :tab=>@tab_list_user} %>
   	    
       </div>

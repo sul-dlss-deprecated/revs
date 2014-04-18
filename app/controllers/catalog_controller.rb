@@ -28,10 +28,7 @@ class CatalogController < ApplicationController
   
   def routing_error
     flash.now[:error]=t('revs.routing_error')
-    @force_render_home = true
-    index
-    render :action=>:index, :format=>:html, :status=>:not_found
-    return false
+    render "application/404.html.erb", :status => :not_found
   end
   
   def index
@@ -82,7 +79,7 @@ class CatalogController < ApplicationController
     end
     
     super
-    
+
     routing_error && return if @response['response']['docs'].nil?
         
     # if we get this far, it may have been a search operation, so if we only have one search result, just go directly there

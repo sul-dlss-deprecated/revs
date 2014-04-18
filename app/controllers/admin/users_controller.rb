@@ -18,7 +18,7 @@ class Admin::UsersController < ApplicationController
     if @filter == 'stanford'
       @users=@users.where("sunet != '' AND sunet is not null")    
     elsif @filter == 'non-stanford'
-      @users=@users.where("sunet == '' OR sunet is null")
+      @users=@users.where("sunet = '' OR sunet is null")
     end
 
     @users=@users.order(@order).page(params[:page]).per(@per_page)

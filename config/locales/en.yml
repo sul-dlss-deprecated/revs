@@ -237,6 +237,7 @@ en:
     dashboards: 'Dashboards'
     citations:
         view: 'View full citation page'
+        view_and_download: 'View full citation page with image download'
     edits:
         none: 'This user does not have any edits.'
         personal_none: 'You do not have any edits.'

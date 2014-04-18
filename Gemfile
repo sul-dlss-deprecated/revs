@@ -10,8 +10,6 @@ gem 'revs-utils', '>= 1.0.5'
 
 gem 'rails', '~> 3.2.17'
 
-gem 'google-analytics-rails'
-
 # user authentication and roles
 gem 'devise', '~> 2.2.5'
 gem 'omniauth'

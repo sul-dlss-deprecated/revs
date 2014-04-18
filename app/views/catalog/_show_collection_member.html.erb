@@ -106,7 +106,7 @@
 					<% end %>
 
           <li>
-            <%= link_to("<i class='icon-picture'></i> #{t('revs.citations.view')}".html_safe,
+            <%= link_to("<i class='icon-picture'></i> #{sunet_user_signed_in? ? t('revs.citations.view_and_download') : t('revs.citations.view')}".html_safe,
             "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>"_new") %>
           </li>
 

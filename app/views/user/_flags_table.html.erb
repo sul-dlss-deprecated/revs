@@ -67,5 +67,6 @@
 
   <% end %>
 
+  <%= page_entries_info @flags %>
  <%= paginate @flags, :param_name => :pagina, :params => {:order=>@order, :tab=>@tab} %>
 </div>

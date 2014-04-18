@@ -27,7 +27,8 @@
               <td class="right"><%= annotation.num_annotations%></td>
             </tr>
           <% end %>
-        </table>
+        </table>        
+        <%= page_entries_info @annotations %>
         <%= paginate @annotations,:param_name => :pagina2,  :params => {:order=>@order, :tab=>@tab_group} %>
       </div>
 
@@ -49,11 +50,12 @@
             </tr>
           <% end %>
         </table>
-
+        <%= page_entries_info @annotations_list %>
         <%= paginate @annotations_list,:param_name => :pagina,  :params => {:order_all=>@order_all, :tab=>@tab_list_all} %>
       </div>
 
       <div id='annotations-user' class="tab-pane <%="active" if @tab == @tab_list_user%>">
+
         <table class="table table-bordered table-condensed table-hover table-striped">
           <tr>
             <th><%=t('revs.curator.username') %></th>
@@ -68,7 +70,8 @@
             </tr>
           <% end %>
         </table>
-        
+
+        <%= page_entries_info @annotations_by_user %>        
         <%= paginate @annotations_by_user, :param_name => :pagina3, :params => {:order_user=>@order_user, :tab=>@tab_list_user} %> 
      </div>
 

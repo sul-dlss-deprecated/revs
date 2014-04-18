@@ -30,6 +30,7 @@
             </tr>
           <% end %>
         </table>
+        <%= page_entries_info @favorites_by_item %>        
         <%= paginate @favorites_by_item,:param_name => :pagina,  :params => {:order=>@order, :tab=>@tab_list_item} %>
       </div>
 
@@ -52,6 +53,7 @@
           <% end %>
         </table>
 
+        <%= page_entries_info @favorites_by_user %>
         <%= paginate @favorites_by_user,:param_name => :pagina2,  :params => {:order_user=>@order_user, :tab=>@tab_list_user} %>
       </div>
 
