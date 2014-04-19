@@ -2,7 +2,7 @@
 
   <h2><%=t('revs.user_galleries.new_gallery')%></h2>
   
-  <%= render :partial=>'shared/validation_errors', :locals=>{:obj=>@gallery} %>
+  <%= validation_errors(@gallery) %>
 	
   <%= form_for(Gallery.new, :method => :post, :class => "form-horizontal" ) do |f| %>  
     <%= render :partial=>'form',:locals=>{:f=>f} %>

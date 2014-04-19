@@ -1,9 +1,29 @@
-<div id="content" class="span9">
+<div class="row item" class="span9">
   
-  <h2><%=@gallery.title%></h2>
+    <h2><%= @gallery.title %></h2>
 
-  <% if @gallery.user != current_user %>
-    <h3><%="#{t('revs.messages.created_by')} #{@gallery.user.to_s}"%></h3>
-  <% end %>  
+    <% if @gallery.user != current_user %>
+      <h3><%="#{t('revs.messages.created_by')} #{@gallery.user.to_s}"%></h3>
+    <% end %>  
   
+     <%= link_to(image_tag(@gallery.image), gallery_path(@gallery.id)) if @gallery.image %>
+       <span class="label profile-visibility <%= @gallery.public ? 'label-success' : '' %>">
+         <%= @gallery.public ? t('revs.user.public').downcase : t('revs.user.private').downcase %>
+       </span>
+     
+       <p><%=t('revs.collections.total_items')%>: <%=@gallery.saved_items.size%> | <%=t('revs.messages.created')%>: <%=show_as_date(@gallery.created_at)%> | <%=t('revs.messages.last_updated')%>: <%=show_as_date(@gallery.updated_at)%></p>
+     
+       <p><%=@gallery.description%></p>
+     
+           <% if can? :update, @gallery%>
+              <%= link_to t('revs.actions.edit'), edit_gallery_path(@gallery) %> |
+           <% end%>
+           <% if can? :destroy, @gallery%>
+              <%=button_to(t('revs.actions.delete'), gallery_path(@gallery), :confirm=>t('revs.actions.confirm_delete'), :method=> :delete, class: 'btn btn-link') %>
+           <% end %>
+</div>
+
+<div id="content" class="span9 favorites-index">
+   <div id = "favorites_area">
+   </div>      
 </div>

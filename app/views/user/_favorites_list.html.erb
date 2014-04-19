@@ -3,9 +3,6 @@
 <%end%>
 
  <%if @favorites.count > 0%>
- <div class="span9 pagination">
-   <%= paginate @favorites, :params => {:order=>@order} %>
- </div>
 
     <div class="saved-items" id="favorites_list">
          <%@favorites.each do |favorite| %>
@@ -40,6 +37,7 @@
      </div>
      
      <div class="span9 pagination">
+       <%= page_entries_info @favorites %>
        <%= paginate @favorites, :params => {:order=>@order} %>
      </div>
      

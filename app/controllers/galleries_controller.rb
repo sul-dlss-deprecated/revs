@@ -3,7 +3,9 @@ class GalleriesController < ApplicationController
   load_and_authorize_resource  # ensures only people who have access via cancan (defined in ability.rb) can do this
 
   def show
+    @current_page = params[:page] || 1
     @gallery.update_attributes(:views=>@gallery.views+1 )    
+    @favorites=@gallery.saved_items.page(@current_page).per(SavedItem.favorites_per_page)
   end
   
   def new
@@ -31,7 +33,7 @@ class GalleriesController < ApplicationController
    if @gallery.valid?
      @message=t('revs.user_galleries.gallery_updated')
      flash[:success]=@message
-     redirect_to user_galleries_path(current_user.username)
+     redirect_to redirect_to user_galleries_path(current_user.username)
    else
      render :edit
     end
@@ -46,7 +48,7 @@ class GalleriesController < ApplicationController
       
     respond_to do |format|
       format.html { flash[:success]=@message
-                    redirect_to previous_page}
+                    redirect_to user_galleries_path(current_user.username)}
       format.js { render }
     end
   end
