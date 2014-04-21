@@ -24,7 +24,7 @@ $(document).ready(function(){
   $('#add_to_gallery_form').hide();
   // Toggle details (new flag form and posted flags) when Flag action is selected.
   $('#add_to_gallery_link').click(function(){
-    $('#add_to_gallery_form').slideToggle('slow');
+    $('#add_to_gallery_form').slideToggle('fast');
     return false;
   });
 

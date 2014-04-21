@@ -193,6 +193,19 @@
         color: #990000;
       }
     }
+    #user_galleries a i {
+     margin-left: 1px;
+     margin-right: 14px;
+    }
+    #add_to_gallery_form form {
+      margin-bottom: 6px;
+      margin-top: 8px;
+    }
+    select#saved_item_gallery_id {
+      vertical-align: inherit;
+      font-size: 13px;
+      margin-left: 23px;
+    }
     .nav-header {
       i {
         background-image: none;
