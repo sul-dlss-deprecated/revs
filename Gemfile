@@ -19,6 +19,8 @@ gem 'cancan'
 gem 'carrierwave'
 gem "mini_magick"
 
+gem 'whenever', :require => false
+
 # paging
 gem 'kaminari'
 
