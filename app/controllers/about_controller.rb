@@ -12,13 +12,16 @@ class AboutController < ApplicationController
     @message=params[:message]
     @name=params[:name]
     @email=params[:email]
+    @auto_response=params[:auto_response]
     params[:username]=(current_user ? current_user.username : "")
     
     if request.post?
       
       unless @message.blank? # message is required
         RevsMailer.contact_message(:params=>params,:request=>request).deliver 
-        RevsMailer.auto_response(:email=>@email,:subject=>@subject).deliver unless @email.blank?
+        if (!@email.blank? && @auto_response == "true")
+          RevsMailer.auto_response(:email=>@email,:subject=>@subject).deliver 
+        end
         
         if @subject=='metadata'
           flash[:notice]=t("revs.about.contact_message_sent_about_metadata")
