@@ -5,6 +5,7 @@
 	<div id="contact-us-errors" class="contact-us-errors alert alert-error hidden"></div>
 
 	<%= hidden_field_tag 'from',@from%>
+	<%= hidden_field_tag 'auto_response',@auto_response || true%>
 
 	<% if Revs::Application.config.contact_us_topics.size > 1 %>
 		<div class="control-group">
