@@ -140,11 +140,13 @@
     }
   }
 }
+#favorites_area {
+  margin-top: 20px;
+}
 
 .favorites-index {
   .saved-items {
     border-top: 2px dotted #dedede;
-    margin-top: 30px;
     padding-top: 12px;
   }
   .row.item {

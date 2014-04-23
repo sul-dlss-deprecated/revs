@@ -4,6 +4,10 @@
 
  <% if @favorites.count > 0 %>
 
+  <div class="entries-info">
+    <%= page_entries_info @favorites %>
+  </div>
+
   <div class="saved-items" id="favorites_list">
      <%@favorites.each do |favorite| %>
        <div class="row item">
