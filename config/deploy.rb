@@ -9,6 +9,7 @@ require 'whenever/capistrano'
 set :stages, %W(staging development production)
 set :bundle_flags, "--quiet"
 set :repository, "https://github.com/sul-dlss/revs"
+set :whenever_command, "bundle exec whenever"
 set :deploy_via, :remote_cache
 set :whenever_command, "bundle exec whenever"
 set :whenever_environment, defer { stage }
