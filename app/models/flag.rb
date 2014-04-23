@@ -16,6 +16,17 @@ class Flag < WithSolrDocument
   
   FLAGS_PER_TABLE_PAGE = 25
 
+  def self.create_new(flag_info,user)
+    flag=Flag.new
+    flag.flag_type=flag_info[:flag_type]
+    flag.comment=flag_info[:comment]
+    flag.druid=flag_info[:druid]
+    flag.user_id=user.id unless user.blank?
+    flag.state= Flag.open
+    flag.save 
+    return flag 
+  end
+  
   def check_user_id
     errors.add(:user_id, :not_valid) unless (user_id.nil? || user_id.is_a?(Integer))
   end

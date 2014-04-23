@@ -204,7 +204,7 @@ class ApplicationController < ActionController::Base
     if Revs::Application.config.exception_error_page
         logger.error(@exception.message)
         logger.error(@exception.backtrace.join("\n"))
-        render "application/500.html.erb", :status => 500
+        render "application/500", :formats=>[:html], :status => 500
         return false
       else
         raise(@exception)

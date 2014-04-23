@@ -20,12 +20,7 @@ class FlagsController < ApplicationController
   def create
     
     flag_info=params[:flag]
-    @flag.flag_type=flag_info[:flag_type]
-    @flag.comment=flag_info[:comment]
-    @flag.druid=flag_info[:druid]
-    @flag.user_id=current_user.id if user_signed_in?
-    @flag.state= Flag.open
-    @flag.save
+    @flag=Flag.create_new(flag_info,current_user)
     @all_flags=Flag.where(:druid=>flag_info[:druid])
     @document=SolrDocument.find(flag_info[:druid])
     @message=t('revs.flags.created')

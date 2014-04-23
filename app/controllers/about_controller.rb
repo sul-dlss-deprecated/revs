@@ -18,13 +18,18 @@ class AboutController < ApplicationController
     if request.post?
       
       unless @message.blank? # message is required
-        RevsMailer.contact_message(:params=>params,:request=>request).deliver 
+        RevsMailer.contact_message(:params=>params,:request=>request).deliver unless @email.blank? && @subject=='metadata' # don't bother creating a jira ticket if user doesn't supply email and its a metadata update, since we will create an anonymous flag anyway
         if (!@email.blank? && @auto_response == "true")
           RevsMailer.auto_response(:email=>@email,:subject=>@subject).deliver 
         end
         
         if @subject=='metadata'
           flash[:notice]=t("revs.about.contact_message_sent_about_metadata")
+          # create a flag for this if its feedback that is coming from a specific druid page
+          unless @from.blank? #
+            druid=@from.match(/\D\D\d\d\d\D\D\d\d\d\d/)
+            Flag.create_new({:flag_type=>:error,:comment=>@message,:druid=>druid.to_s},current_user) unless druid.blank?
+          end
         else
           flash[:notice]=t("revs.about.contact_message_sent")          
         end
