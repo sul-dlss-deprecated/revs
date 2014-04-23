@@ -1,5 +1,3 @@
-<p><%= link_to(t("revs.user_galleries.create_new_gallery"), new_gallery_path) %></p>
-
 <%if @galleries.count > 0%>
   <div class="span9 pagination">
      <%= paginate @galleries, :params => {:order=>@order}%>
