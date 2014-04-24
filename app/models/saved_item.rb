@@ -2,7 +2,8 @@ class SavedItem < WithSolrDocument
   
   belongs_to :gallery
   belongs_to :item, :foreign_key=>:druid, :primary_key=>:druid
-  
+  acts_as_list scope: :gallery
+
   attr_accessible :druid, :gallery_id, :description
   validates :gallery_id, :numericality => { :only_integer => true }
   validates :druid, :is_druid=>true

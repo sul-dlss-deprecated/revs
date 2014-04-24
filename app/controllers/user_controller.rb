@@ -39,7 +39,7 @@ class UserController < ApplicationController
     #Reset @current_page if needed
     @current_page = max_pages.to_s if @current_page.to_i > max_pages
     
-    @favorites=Kaminari.paginate_array(unsorted_favorites.order(@order)).page(@current_page).per(SavedItem.favorites_per_page)
+    @saved_items=Kaminari.paginate_array(unsorted_favorites.order(@order)).page(@current_page).per(SavedItem.favorites_per_page)
   end
   
  def galleries

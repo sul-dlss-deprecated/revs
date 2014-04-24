@@ -1,7 +1,7 @@
 class Gallery < ActiveRecord::Base
   
   belongs_to :user
-  has_many :saved_items, :dependent => :destroy
+  has_many :saved_items, :order=>"position ASC", :dependent => :destroy
   
   GALLERY_TYPES=%w{favorites user}
 

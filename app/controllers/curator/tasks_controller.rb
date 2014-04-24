@@ -58,8 +58,8 @@ class Curator::TasksController < ApplicationController
       @order = params[:order] || "num_favorites DESC"
       @order_user = params[:order_user] || "num_galleries DESC"
 
-      @favorites_by_item=SavedItem.select("count(id) as num_favorites,druid,updated_at").includes(:gallery).group('druid').order(@order).page(params[:pagina])
-      @favorites_by_user=Gallery.select("count(id) as num_galleries,updated_at,user_id").includes(:user,:saved_items).group('user_id').page(params[:pagina2])
+      @saved_items_by_item=SavedItem.select("count(id) as num_favorites,druid,updated_at").includes(:gallery).group('druid').order(@order).page(params[:pagina])
+      @saved_items_by_user=Gallery.select("count(id) as num_galleries,updated_at,user_id").includes(:user,:saved_items).group('user_id').order(@order_user).page(params[:pagina2])
 
       @tab_list_item = 'favorites-by-item'
       @tab_list_user = 'favorites-by-user'

@@ -22,7 +22,7 @@
             <th class="right"><%= link_to t('revs.curator.total_times_saved'), favorites_table_curator_tasks_path(:order=>'num_favorites DESC', :tab=>@tab_list_item  ) %></th>
             <th><%= link_to t('revs.curator.last_edit'), favorites_table_curator_tasks_path(:order=>'updated_at DESC', :tab=>@tab_list_item  ) %></th>
           </tr>
-          <% @favorites_by_item.each do |result| %>
+          <% @saved_items_by_item.each do |result| %>
             <tr>
               <td><%=item_link(result.solr_document,:truncate=>true)%></td>
               <td class="right"><%= result.num_favorites%></td>
@@ -30,8 +30,8 @@
             </tr>
           <% end %>
         </table>
-        <%= page_entries_info @favorites_by_item %>        
-        <%= paginate @favorites_by_item,:param_name => :pagina,  :params => {:order=>@order, :tab=>@tab_list_item} %>
+        <%= page_entries_info @saved_items_by_item %>        
+        <%= paginate @saved_items_by_item,:param_name => :pagina,  :params => {:order=>@order, :tab=>@tab_list_item} %>
       </div>
 
       <div id='<%=@tab_list_user%>' class="tab-pane <%="active" if @tab == @tab_list_user%>">
@@ -43,7 +43,7 @@
             <th class="right"><%=t('revs.curator.favorites_made') %></th>
             <th><%=link_to t('revs.curator.last_edit'), favorites_table_curator_tasks_path(:order_user=>'updated_at DESC', :tab=>@tab_list_user) %></th>
           </tr>
-          <% @favorites_by_user.each do |result| %>
+          <% @saved_items_by_user.each do |result| %>
             <tr>
               <td><%=display_user_name(result.user,result.user.public || result.user == current_user ? user_favorites_path(result.user.username) : nil)%></td>
               <td class="right"><%= result.num_galleries%></td>
@@ -53,8 +53,8 @@
           <% end %>
         </table>
 
-        <%= page_entries_info @favorites_by_user %>
-        <%= paginate @favorites_by_user,:param_name => :pagina2,  :params => {:order_user=>@order_user, :tab=>@tab_list_user} %>
+        <%= page_entries_info @saved_items_by_user %>
+        <%= paginate @saved_items_by_user,:param_name => :pagina2,  :params => {:order_user=>@order_user, :tab=>@tab_list_user} %>
       </div>
 
   </div>

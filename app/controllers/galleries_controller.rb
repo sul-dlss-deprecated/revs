@@ -5,7 +5,7 @@ class GalleriesController < ApplicationController
   def show
     @current_page = params[:page] || 1
     @gallery.update_attributes(:views=>@gallery.views+1 )    
-    @favorites=@gallery.saved_items.page(@current_page).per(SavedItem.favorites_per_page)
+    @saved_item=@gallery.saved_items.page(@current_page).per(SavedItem.favorites_per_page)
   end
   
   def new

@@ -1,0 +1,79 @@
+<script type="text/javascript">
+
+  $(document).ready(function(){
+
+  $("#saved_items_list").sortable({
+    axis: 'y',
+    dropOnEmpty: false,
+    handle: '.handle',
+    cursor: 'crosshair',
+    items: 'div.saved-item-row',
+    opacity: 0.4,
+    scroll: true,
+    update: function(){
+    $.ajax({
+    type: 'post',
+    data: $('#saved_items_list').sortable('serialize'),
+    dataType: 'script',
+    complete: function(request){$('#saved_items_list').effect('highlight');},
+      url: '/saved_items/sort'})
+      }
+    });
+  });
+</script>
+
+<% 
+if not defined?(edit_id)
+  edit_id = params[:edit_id] || nil 
+end%>
+
+ <%if saved_items.count > 0%>
+
+    <div class="saved-items" id="saved_items_list">
+         <%saved_items.each do |saved_item| %>
+           <div id="saved_item_<%="#{saved_item.id}"%>" class="row item saved-item-row">
+             <div class="span5">
+               <ul id="saved_items">
+                 <li>
+                    <%= link_to(image_tag(saved_item.solr_document.images.first), item_path(saved_item.solr_document)) %></li>
+                   <li class="item-title"><span class="handle">[drag]</span> <%= item_link(saved_item.solr_document, :target=>'_blank') %></li>
+                   <li class="item-creation-date"><%=t('revs.messages.saved_on')%> <%= show_as_datetime(saved_item.created_at.in_time_zone) %></li>
+                   <li class="saved_item-item-actions">
+                     <%if can? :destroy, saved_item%>
+                        <%=button_to(t('revs.favorites.remove_from_favorites'), saved_item_path(saved_item.solr_document.id,:page=>params[:page],:order=>params[:order]), :method=> :delete, :confirm=>t('revs.actions.confirm_delete'),class: 'btn btn-link') %>
+                     <% end %>
+                     <% if (can? :destroy, saved_item) and (can? :update, saved_item) %>
+                     |
+                     <% end %>
+                     <% if can? :update, saved_item%>
+                     <!-- this link should turn on edit mode for annotation field below -->
+                     <%= link_to (saved_item.description.blank? ? t('revs.favorites.add_item_note') : t('revs.favorites.edit_item_note')), edit_saved_item_path(saved_item.id,:page=>params[:page],:order=>params[:order]), :remote => true, :id=>"item_note_link_#{saved_item.id}" %>
+                     <% end%>
+                 </li>
+               </ul>
+             </div>
+             <div class="span4">
+               <div id="<%="description#{saved_item.id}"%>">
+                 <%=render :partial => 'saved_items/description', :locals => {:saved_item => saved_item, :edit_id=> edit_id || nil} %>
+               </div>
+             </div>
+           </div>
+         <% end %>
+  
+     </div>
+     
+     <div class="span9 pagination">
+       <%= page_entries_info saved_items %>
+       <%= paginate saved_items, :params => {:order=>@order} %>
+     </div>
+     
+ <%else%>
+  
+   <% if is_logged_in_user?(@user)%>
+     <%=t('revs.favorites.personal_none')%>
+   <%else%>
+    <%=t('revs.favorites.none')%>
+   <%end%>
+   
+   
+ <%end%>
