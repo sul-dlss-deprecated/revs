@@ -46,6 +46,7 @@ en:
       switch_yes: "yes"
       switch_no: "no"
       status: "Status"
+      reorder: "Drag and drop to reorder"
       changes_not_saved: "Please note, in %{rails_env} your metadata changes will NOT be permanently saved."
       not_authorized: 'You are not authorized to perform this action.'
       in_beta_not_authorized_html: "The Revs Digital Library is currently in limited beta release.  If you have an account, <a href='/users/sign_in'>please sign in</a> (Stanford users should <a href='/users/webauth_login'>sign in via webauth</a>). If you do not have an account and would like to be notified when the site is public, please <a href='/users/sign_up'>sign up</a> and request to be added to the mailing lists."
@@ -269,6 +270,7 @@ en:
       item_note_updated: "Item note updated."  
       you_can_add_a_note_html: "You can %{href} to your favorite."
       you_can_add_a_note_linktext: 'add a note'
+      cannot_sort: 'You can reorder the items if you display them all on one page by selecting more "per page".'
     user_galleries:
       head: "Galleries"
       singular: "gallery"

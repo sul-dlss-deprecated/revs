@@ -1,1 +1,2 @@
 $('<%=@div%>').html("<%= escape_javascript(render :partial => 'saved_items/description', :locals=>{:saved_item=>@saved_item, :edit_id => @target})%>");
+$('#saved_item_description').focus();

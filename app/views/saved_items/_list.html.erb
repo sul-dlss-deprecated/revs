@@ -1,33 +1,44 @@
-<script type="text/javascript">
-
-  $(document).ready(function(){
-
-  $("#saved_items_list").sortable({
-    axis: 'y',
-    dropOnEmpty: false,
-    handle: '.handle',
-    cursor: 'crosshair',
-    items: 'div.saved-item-row',
-    opacity: 0.4,
-    scroll: true,
-    update: function(){
-    $.ajax({
-    type: 'post',
-    data: $('#saved_items_list').sortable('serialize'),
-    dataType: 'script',
-    complete: function(request){$('#saved_items_list').effect('highlight');},
-      url: '/saved_items/sort'})
-      }
-    });
-  });
-</script>
-
 <% 
 if not defined?(edit_id)
   edit_id = params[:edit_id] || nil 
 end%>
 
  <%if saved_items.count > 0%>
+
+  <% if can?(:update,saved_items.first) && saved_items.total_count < @per_page # sorting is only available if we are showing all items and you can update the items%>
+    <script type="text/javascript">
+
+      $(document).ready(function(){
+
+        $("#saved_items_list").sortable({
+          axis: 'y',
+          dropOnEmpty: false,
+          handle: '.handle',
+          cursor: 'crosshair',
+          items: 'div.saved-item-row',
+          opacity: 0.4,
+          scroll: true,
+          update: function(){
+          $.ajax({
+          type: 'post',
+          data: $('#saved_items_list').sortable('serialize'),
+          dataType: 'script',
+          complete: function(request){$('#saved_items_list').effect('highlight');},
+            url: '/saved_items/sort'})
+            }
+          });
+
+        $('.handle').removeClass('hidden hidden-offscreen');
+        $('.handle').show();
+
+      });
+    </script>
+  <% end %>
+
+  <% if saved_items.total_count > @per_page && can?(:update,saved_items.first) %>
+    <p><%= t('revs.favorites.cannot_sort')%></p>
+  <% end %>
+
   <%= form_tag request.path, :method=>:get, :class => 'form-search' do %>
     <%= render :partial=>'shared/per_page_dropdown' %>
   <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-small' %>
@@ -43,7 +54,7 @@ end%>
                <ul id="saved_items">
                  <li>
                     <%= link_to(image_tag(saved_item.solr_document.images.first), item_path(saved_item.solr_document)) %></li>
-                   <li class="item-title"><span class="handle">[drag]</span> <%= item_link(saved_item.solr_document, :target=>'_blank') %></li>
+                   <li class="item-title"><%if can?(:update,saved_item)%><span class="hidden handle"><i title="<%=t('revs.messages.reorder')%>" class="icon-move"></i></span><% end %> <%= item_link(saved_item.solr_document, :target=>'_blank') %></li>
                    <li class="item-creation-date"><%=t('revs.messages.saved_on')%> <%= show_as_datetime(saved_item.created_at.in_time_zone) %></li>
                    <li class="saved_item-item-actions">
                      <%if can? :destroy, saved_item%>

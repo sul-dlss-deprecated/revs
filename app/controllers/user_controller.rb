@@ -21,12 +21,11 @@ class UserController < ApplicationController
   # all of the user's annotations
   def annotations
     get_current_page_and_order
-    @annotations=@user.visible('annotations').order(@order).page @current_page
+    @annotations=@user.visible('annotations').order(@order).page(@current_page).per(@per_page)
   end
 
   # all of the user's favorites, only show if the profile is public
   def favorites
-        
     get_current_page_and_order
     unsorted_favorites = @user.favorites
     
@@ -51,7 +50,7 @@ class UserController < ApplicationController
   # all of the user's item edits
   def edits
     get_current_page_and_order
-    @edits=@user.visible('change_logs').order(@order).page @current_page
+    @edits=@user.visible('change_logs').order(@order).page(@current_page).per(@per_page)
   end
   
   # all of the user's flags

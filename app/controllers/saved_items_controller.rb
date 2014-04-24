@@ -92,7 +92,15 @@ class SavedItemsController < ApplicationController
   
   def sort
     return unless request.xhr?
-    puts params["saved_item"]
+    i=1
+    params["saved_item"].each do |saved_item_id|
+      saved_item=SavedItem.where(:id=>saved_item_id) if saved_item_id.to_i != 0
+      if saved_item
+        saved_item.first.position = i
+        saved_item.first.save
+        i+=1
+      end
+    end
     # saved_items = SavedItem.all
     # saved_items.each do |saved_item|
     #   saved_item.position = params['saved_item'].index(saved_item.id.to_s) + 1
