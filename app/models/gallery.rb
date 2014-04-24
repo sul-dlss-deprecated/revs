@@ -5,18 +5,12 @@ class Gallery < ActiveRecord::Base
   
   GALLERY_TYPES=%w{favorites user}
 
-  GALLERIES_PER_PAGE = 10
-
   attr_accessible :user_id,:public,:title,:description,:gallery_type,:views
   
   validate :check_gallery_type
   validates :title, :presence=>true
   validates :user_id, :numericality => { :only_integer => true }
   validate :only_one_favorites_list_per_user
-  
-  def self.galleries_per_page
-    return GALLERIES_PER_PAGE
-  end
   
   def image
     item=saved_items(:order=>'sort_order ASC,created_at DESC').limit(1)

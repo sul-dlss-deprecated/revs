@@ -3,9 +3,8 @@ class Admin::UsersController < ApplicationController
   before_filter :check_for_admin_logged_in
 
   def index
+    get_current_page_and_order
     @search=params[:search]
-    @order=params[:order] || 'email'
-    @per_page = params[:per_page] || 50
     @role = params[:role] || 'curator'
     @filter = params[:filter] || 'all'
     
@@ -21,7 +20,7 @@ class Admin::UsersController < ApplicationController
       @users=@users.where("sunet = '' OR sunet is null")
     end
 
-    @users=@users.order(@order).page(params[:page]).per(@per_page)
+    @users=@users.order(@order).page(@current_page).per(@per_page)
 
   end
 

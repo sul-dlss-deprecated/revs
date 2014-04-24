@@ -28,6 +28,10 @@ if not defined?(edit_id)
 end%>
 
  <%if saved_items.count > 0%>
+  <%= form_tag request.path, :method=>:get, :class => 'form-search' do %>
+    <%= render :partial=>'shared/per_page_dropdown' %>
+  <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-small' %>
+  <% end %>
   <div class="entries-info">
     <%= page_entries_info @saved_items %>
    </div>

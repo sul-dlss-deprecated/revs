@@ -3,9 +3,9 @@ class GalleriesController < ApplicationController
   load_and_authorize_resource  # ensures only people who have access via cancan (defined in ability.rb) can do this
 
   def show
-    @current_page = params[:page] || 1
+    get_current_page_and_order
     @gallery.update_attributes(:views=>@gallery.views+1 )    
-    @saved_item=@gallery.saved_items.page(@current_page).per(SavedItem.favorites_per_page)
+    @saved_item=@gallery.saved_items.page(@current_page).per(@per_page)
   end
   
   def new

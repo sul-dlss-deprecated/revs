@@ -14,8 +14,6 @@ class Flag < WithSolrDocument
   validate :check_user_id
   validate :check_flag_type
   
-  FLAGS_PER_TABLE_PAGE = 25
-
   def self.create_new(flag_info,user)
     flag=Flag.new
     flag.flag_type=flag_info[:flag_type]
@@ -34,11 +32,7 @@ class Flag < WithSolrDocument
   def check_flag_type
     errors.add(:flag_type, :not_valid) unless FLAG_TYPES.include? flag_type.to_s
   end
-  
-  def self.per_table_page
-    return FLAGS_PER_TABLE_PAGE
-  end
-  
+
   def self.fixed
     return FLAG_STATES[:fixed]
   end

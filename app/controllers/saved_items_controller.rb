@@ -90,6 +90,17 @@ class SavedItemsController < ApplicationController
     end
   end
   
+  def sort
+    return unless request.xhr?
+    puts params["saved_item"]
+    # saved_items = SavedItem.all
+    # saved_items.each do |saved_item|
+    #   saved_item.position = params['saved_item'].index(saved_item.id.to_s) + 1
+    #   saved_item.save
+    # end
+   render :nothing => true
+  end
+
   def cancel
     @div = "#description#{params[:id]}"
     @saved_item =  SavedItem.find_by_id(params[:id]) 

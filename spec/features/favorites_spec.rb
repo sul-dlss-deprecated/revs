@@ -84,11 +84,14 @@ describe("Favorites",:type=>:request,:integration=>true) do
   
   it "should allow a user to see a list of his favorites that paginates and allow the user to move between pages" do
     
+    original_default_per_page=Revs::Application.config.num_default_per_page
+    Revs::Application.config.num_default_per_page=5 # make it a smaller number to facilitate paging test
+
     description = "This is a decription "
     login_as(user_login)
     
     #Get a two page list of druids
-    fav_druids = (item_druids-default_hidden_druids).first(SavedItem.favorites_per_page*2)
+    fav_druids = (item_druids-default_hidden_druids).first(Revs::Application.config.num_default_per_page*2)
     fav_druids.each do |druid| 
       visit catalog_path(druid)
       click_button(@save_favorites_button) 
@@ -103,6 +106,8 @@ describe("Favorites",:type=>:request,:integration=>true) do
 
     page.should_not have_content @Next
     page.should have_content @Previous
+
+    Revs::Application.config.num_default_per_page=original_default_per_page
   end
   
 

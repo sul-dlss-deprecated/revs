@@ -15,7 +15,6 @@ class Annotation < WithSolrDocument
   validates :text, :presence=>true
   validates :user_id, :numericality => { :only_integer => true }
   
-   ANNOTATIONS_PER_TABLE_PAGE = 25
    ANNOTATION_ALL = 'all'
    ANNOTATION_NONE = 'none'
 
@@ -39,10 +38,6 @@ class Annotation < WithSolrDocument
   
   def self.show_none
     return  ANNOTATION_NONE
-  end
-  
-  def self.per_table_page
-    return ANNOTATIONS_PER_TABLE_PAGE 
   end
   
   def add_annotation_to_solr

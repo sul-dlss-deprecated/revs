@@ -190,7 +190,13 @@ class ApplicationController < ActionController::Base
   def current_ability
     current_user ? current_user.ability : User.new.ability
   end
-        
+  
+  def get_current_page_and_order
+   @current_page = params[:page] || 1
+   @order=params[:order] || 'created_at DESC'
+   @per_page=(params[:per_page] || Revs::Application.config.num_default_per_page).to_i
+  end
+
   def exception_on_website(exception)
    
     @exception=exception

@@ -31,20 +31,20 @@ class UserController < ApplicationController
     unsorted_favorites = @user.favorites
     
     #If the user has just been deleted favorites, @current_page might exceed the number of favorites
-    max_pages = unsorted_favorites.count / SavedItem.favorites_per_page
+    max_pages = unsorted_favorites.count / @per_page
     
     #Add in one extra page for any overflows over the current amount
-    max_pages += 1 if unsorted_favorites.count % SavedItem.favorites_per_page != 0   
+    max_pages += 1 if unsorted_favorites.count % @per_page != 0   
 
     #Reset @current_page if needed
     @current_page = max_pages.to_s if @current_page.to_i > max_pages
     
-    @saved_items=Kaminari.paginate_array(unsorted_favorites.order(@order)).page(@current_page).per(SavedItem.favorites_per_page)
+    @saved_items=Kaminari.paginate_array(unsorted_favorites.order(@order)).page(@current_page).per(@per_page)
   end
   
  def galleries
    get_current_page_and_order
-   @galleries=@user.galleries.page(@current_page).per(Gallery.galleries_per_page)
+   @galleries=@user.galleries.page(@current_page).per(@per_page)
  end
  
 
@@ -96,15 +96,10 @@ class UserController < ApplicationController
      
     flags = temp || []  
       
-    return Kaminari.paginate_array(flags).page(params[:pagina]).per(Flag.per_table_page)
+    return Kaminari.paginate_array(flags).page(params[:pagina]).per(Revs::Application.config.num_default_per_page)
   end
   
-  private
-  def get_current_page_and_order
-    @current_page = params[:page] || 1
-    @order=params[:order] || 'created_at DESC'
-  end
-  
+  private  
   # we need to be sure the user is viewing an active profile (or is an administrator, who can do all)
   def confirm_active
     profile_not_found unless @user.active == true || can?(:administer, :all)
