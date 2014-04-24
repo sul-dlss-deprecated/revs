@@ -95,13 +95,13 @@ describe("Favorites",:type=>:request,:integration=>true) do
     #Check Out Pagination 
     visit user_favorites_path(user_login)
     page.should have_content @Next
-    page.should have_content "Last"
+    page.should have_content "Previous"
     
     #Make Sure We Go To the Second Page
     click_link(@Next)
 
     
-    page.should have_content "First"
+    page.should have_content @Next
     page.should have_content "Previous"
   end
   

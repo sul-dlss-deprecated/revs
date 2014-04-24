@@ -357,6 +357,12 @@ select:focus {
     }
   }
 }
+
+.entries-info {
+  text-align: right;
+  margin-bottom: 5px;
+}
+
 @media screen and (max-width: 768px) {
   .pagination {clear: both;}
   #sidebar {

@@ -57,6 +57,7 @@
       <% if user_edits_count(@user) > 0 %>
         <li><%= link_to t('revs.user.view_your_edits'), user_edits_path(@user.username) %></li>
       <% end %>
+      <li><%= link_to(t("revs.user_galleries.create_new_gallery"), new_gallery_path) %></li>
     </ul>
 
 

@@ -28,6 +28,9 @@ if not defined?(edit_id)
 end%>
 
  <%if saved_items.count > 0%>
+  <div class="entries-info">
+    <%= page_entries_info @saved_items %>
+   </div>
 
     <div class="saved-items" id="saved_items_list">
          <%saved_items.each do |saved_item| %>
