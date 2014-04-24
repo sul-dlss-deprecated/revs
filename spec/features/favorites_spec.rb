@@ -9,6 +9,7 @@ describe("Favorites",:type=>:request,:integration=>true) do
     @druid1='qk978vx9753'
     @druid2='dd482qk0417'
     @Next = "Next"
+    @Previous = "Previous"
   end
   
   it "should not show save/remove favorites link for non-logged in users" do
@@ -95,14 +96,13 @@ describe("Favorites",:type=>:request,:integration=>true) do
     #Check Out Pagination 
     visit user_favorites_path(user_login)
     page.should have_content @Next
-    page.should have_content "Previous"
+    page.should_not have_content @Previous
     
     #Make Sure We Go To the Second Page
     click_link(@Next)
 
-    
-    page.should have_content @Next
-    page.should have_content "Previous"
+    page.should_not have_content @Next
+    page.should have_content @Previous
   end
   
 
