@@ -101,11 +101,9 @@ class SavedItemsController < ApplicationController
         i+=1
       end
     end
-    # saved_items = SavedItem.all
-    # saved_items.each do |saved_item|
-    #   saved_item.position = params['saved_item'].index(saved_item.id.to_s) + 1
-    #   saved_item.save
-    # end
+    # @saved_item=SavedItem.find(params[:id])
+    # @saved_item.position=params[:position]
+    # @saved_item.save
    render :nothing => true
   end
 

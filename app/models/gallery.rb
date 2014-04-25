@@ -1,7 +1,7 @@
 class Gallery < ActiveRecord::Base
   
   belongs_to :user
-  has_many :saved_items, :order=>"position ASC", :dependent => :destroy
+  has_many :saved_items, :order=>"position ASC, created_at DESC", :dependent => :destroy
   
   GALLERY_TYPES=%w{favorites user}
 
@@ -13,7 +13,7 @@ class Gallery < ActiveRecord::Base
   validate :only_one_favorites_list_per_user
   
   def image
-    item=saved_items(:order=>'sort_order ASC,created_at DESC').limit(1)
+    item=saved_items(:order=>'position ASC,created_at DESC').limit(1)
     item.size == 0 ? nil : item.first.solr_document.images.first
   end
   
