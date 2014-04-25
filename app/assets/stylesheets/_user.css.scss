@@ -201,6 +201,45 @@
   }
 }
 
+.thumbnail-column, .edit-content {
+  display: inline-block;
+}
+
+.thumbnail-column {
+  margin-right: 20px;
+  vertical-align: top;
+}
+
+.edit-content {
+  ul.inline > li {
+    font-size: 13px;
+    padding-left: 0;
+    padding-right: 0;
+    &:after {
+      content: " \00b7";
+    }
+    &:last-child:after {
+      content: none;
+    }
+    .item-stats-heading {
+      font-weight: 600;
+    }
+  }
+  form {
+    margin-top: 20px;
+    label {
+      font-weight: 600;
+      &.radio {
+        font-weight: 500;
+      }
+    }
+    .control-group.buttons {
+      margin-top: 30px;
+    }
+  }
+}
+
+
 // Responsive styles
 @media screen and (min-width: 1200px) {
   #new_user {
@@ -250,6 +289,11 @@
   .favorites-index .row.item .item-annotation {
     clear: left;
     margin-left: 0;
+  }
+}
+@media screen and (max-width: 979px) {
+  .thumbnail-column {
+    display: none;
   }
 }
 @media screen and (max-width: 479px) {

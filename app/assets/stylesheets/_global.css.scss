@@ -248,6 +248,11 @@ span.content-type {
   margin-top: 4px;
 }
 
+// Assumes 'Cancel' btn-link is to right of submit button
+form .controls > #submit.btn {
+  margin-right: 12px;
+}
+
 .badge {
   border-radius: 5px;
   padding: 1px 5px 2px;
@@ -294,6 +299,10 @@ select:focus {
   font-size: 12px;
   margin-left: 3px;
   vertical-align: top;
+}
+
+.thumbnail-preview {
+  @include image_border_thumbnail;
 }
 
 // Override Bootstrip Tooltip styling

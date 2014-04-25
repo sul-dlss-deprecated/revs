@@ -1,32 +1,32 @@
     <div class="control-group">
       <%= f.label :title, t('revs.user_galleries.title'), :class => 'control-label' %>
       <div class="controls">
-        <%= f.text_field :title, :class => "input-xlarge" %>
+        <%= f.text_field :title, :class => "input-xxlarge" %>
       </div>
     </div>
 
     <div class="control-group">
       <%= f.label :description, t('revs.user_galleries.description'), :class => 'control-label' %>
       <div class="controls">
-        <%= f.text_area :description, :rows => "5", :class => "input-xlarge" %>
+        <%= f.text_area :description, :rows => "6", :class => "input-xxlarge" %>
       </div>
     </div>
 
     <div class="control-group">
       <%= f.label :public, t('revs.user.privacy'), :class => 'control-label' %>
       <div class="controls">
-        <label class="radio">
+        <label class="radio inline">
           <%= f.radio_button :public, true, :class => "radio" %>
           <%= t('revs.user.public') %>
         </label>
-        <label class="radio">
+        <label class="radio inline">
           <%= f.radio_button :public, false, :class => "radio" %>
           <%= t('revs.user.private') %>
         </label>
       </div>
     </div>
   
-    <div class="control-group">
+    <div class="control-group buttons">
       <div class="controls">  
       <%= f.submit t('revs.nav.save_changes'), :id=>'submit', :class => "btn" %>
       <%= link_to t('revs.nav.cancel'),user_galleries_path(current_user.username)%>

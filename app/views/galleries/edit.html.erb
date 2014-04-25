@@ -4,15 +4,34 @@
 
   <%= validation_errors(@gallery) %>
 	  
-  <%= image_tag(@gallery.image) if @gallery.image %>
-  
-  <strong><%=t('revs.collection.total_items')%>:</strong> <%= @gallery.saved_items.count %> |
-  <strong><%=t('revs.messages.total_views')%>:</strong> <%= @gallery.views %> |
-  <strong><%=t('revs.messages.added')%>:</strong> <%= show_as_datetime(@gallery.created_at.in_time_zone) %> |
-  <strong><%=t('revs.messages.last_updated')%>:</strong> <%= show_as_datetime(@gallery.updated_at.in_time_zone) %>
+    <% if @gallery.image %>
+      <div class="thumbnail-column">
+        <%= image_tag(@gallery.image, class: "thumbnail-preview") %>
+      </div>
+    <% end %>
 
-  <%= form_for(@gallery, :url => gallery_path(@gallery), :method => :put, :class => "form-horizontal" ) do |f| %>  
-    <%= render :partial=>'form',:locals=>{:f=>f} %>
-  <% end %>
+  <div class="edit-content">
+    <ul class="inline">
+      <li>
+        <span class="item-stats-heading"><%=t('revs.user_galleries.total_items')%>:</span>
+        <%= @gallery.saved_items.count %>
+      </li>
+      <li>
+        <span class="item-stats-heading"><%=t('revs.messages.total_views')%>:</span>
+        <%= @gallery.views %>
+      </li>
+      <li>
+        <span class="item-stats-heading"><%=t('revs.messages.added')%>:</span>
+        <%= show_as_datetime(@gallery.created_at.in_time_zone) %>
+      </li>
+      <li>
+        <span class="item-stats-heading"><%=t('revs.messages.last_updated')%>:</span>
+        <%= show_as_datetime(@gallery.updated_at.in_time_zone) %>
+      </li>
+    </ul>
+    <%= form_for(@gallery, :url => gallery_path(@gallery), :method => :put, :class => "form-horizontal" ) do |f| %>
+      <%= render :partial=>'form',:locals=>{:f=>f} %>
+    <% end %>
+  </div>
     
 </div>
