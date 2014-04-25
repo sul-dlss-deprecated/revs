@@ -15,7 +15,7 @@ gem 'devise', '~> 2.2.5'
 gem 'omniauth'
 gem 'cancan'
 
-gem 'acts_as_list'
+gem 'ranked-model'
 
 # image (user avatar) uploading
 gem 'carrierwave'

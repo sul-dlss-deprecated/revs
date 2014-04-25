@@ -10,20 +10,22 @@ end%>
 
       $(document).ready(function(){
 
-        $("#saved_items_list").sortable({
+          $("#saved_items_list").sortable({
           axis: 'y',
           dropOnEmpty: false,
           handle: '.handle',
-          cursor: 'crosshair',
+          cursor: 'move',
           items: 'div.saved-item-row',
           opacity: 0.4,
           scroll: true,
-          update: function(){
+          update: function(e,ui){
+            item_id=ui.item.data('saved-item-id');
+            position=ui.item.index();
             $.ajax({
-            type: 'post',
-            data: $('#saved_items_list').sortable('serialize'),
-            dataType: 'script',
-            url: '/saved_items/sort'})
+              type: 'post',
+              data: {id: item_id, position: position},
+              dataType: 'script',
+              url: '/saved_items/sort'})
             }
           });
 
@@ -31,26 +33,6 @@ end%>
         $('.handle').show();
 
       });
-
-          //$("#saved_items_list").sortable({
-          // axis: 'y',
-          // dropOnEmpty: false,
-          // handle: '.handle',
-          // cursor: 'move',
-          // items: 'div.saved-item-row',
-          // opacity: 0.4,
-          // scroll: true,
-          // update: function(e,ui){
-          //   item_id=ui.item.data('saved-item-id');
-          //   position=ui.item.index();
-          //   $.ajax({
-          //     type: 'post',
-          //     data: {id: item_id, position: position},
-          //     dataType: 'script',
-          //     url: '/saved_items/sort'})
-          //   }
-          // });
-
     </script>
   <% end %>
 

@@ -92,19 +92,10 @@ class SavedItemsController < ApplicationController
   
   def sort
     return unless request.xhr?
-    i=1
-    params["saved_item"].each do |saved_item_id|
-      saved_item=SavedItem.where(:id=>saved_item_id) if saved_item_id.to_i != 0
-      if saved_item
-        saved_item.first.position = i
-        saved_item.first.save
-        i+=1
-      end
-    end
-    # @saved_item=SavedItem.find(params[:id])
-    # @saved_item.position=params[:position]
-    # @saved_item.save
-   render :nothing => true
+    @saved_item=SavedItem.find(params[:id])
+    @saved_item.position=params[:position]
+    @saved_item.save
+    render :nothing => true
   end
 
   def cancel

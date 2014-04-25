@@ -2,8 +2,10 @@ class SavedItem < WithSolrDocument
   
   belongs_to :gallery
   belongs_to :item, :foreign_key=>:druid, :primary_key=>:druid
-  acts_as_list scope: :gallery
-
+ 
+  include RankedModel
+  ranks :row_order,:column => :position, :with_same => :gallery_id
+  
   attr_accessible :druid, :gallery_id, :description
   validates :gallery_id, :numericality => { :only_integer => true }
   validates :druid, :is_druid=>true
