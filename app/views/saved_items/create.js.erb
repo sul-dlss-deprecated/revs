@@ -1,5 +1,6 @@
 <% if @gallery_type.to_s == 'user' %>
-	$('#user_galleries').html("<%= escape_javascript(render :partial => 'add_to_gallery') %>");
+	$('#add_to_gallery_form').html("<%= escape_javascript(render :partial => 'saved_items/add_to_gallery_form') %>");
+    $('#add_to_gallery_form').slideToggle('fast');
 <% elsif @gallery_type.blank? || @gallery_type == 'favorites' %>
 	$('#favorites_link').html("<%= escape_javascript(render :partial => 'add_to_favorites') %>");
 <% end %>

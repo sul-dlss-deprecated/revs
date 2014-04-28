@@ -270,7 +270,7 @@ en:
       item_note_updated: "Item note updated."  
       you_can_add_a_note_html: "You can %{href} to your favorite."
       you_can_add_a_note_linktext: 'add a note'
-      cannot_sort: 'You can reorder the items if you display them all on one page by selecting more "per page".'
+      sort_mode: 'Organize list'
     user_galleries:
       head: "Galleries"
       singular: "gallery"

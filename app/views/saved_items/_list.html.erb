@@ -37,13 +37,9 @@ end%>
   <% end %>
 
   <% if saved_items.total_count > @per_page && can?(:update,saved_items.first) # display a message to the user if the list is sortable but not all items are being shown%>
-    <p><%= t('revs.favorites.cannot_sort')%></p>
+    <p class="hidden showOnLoad"><%= link_to t('revs.favorites.sort_mode'),"#{request.path}?per_page=500000"%></p>
   <% end %>
 
-  <%= form_tag request.path, :method=>:get, :class => 'form-search' do %>
-    <%= render :partial=>'shared/per_page_dropdown' %>
-  <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-small' %>
-  <% end %>
   <div class="entries-info">
     <%= page_entries_info @saved_items %>
    </div>
