@@ -27,6 +27,8 @@ class SavedItemsController < ApplicationController
         @message=t('revs.error.not_saved')
       end
       @gallery_type=saved_item[:gallery_type]
+
+      session[:default_gallery_id]=gallery_id # store default gallery in session so it will be pre-selected the next time
     
     else # this is a post to save a favorite
     

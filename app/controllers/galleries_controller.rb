@@ -33,7 +33,7 @@ class GalleriesController < ApplicationController
    if @gallery.valid?
      @message=t('revs.user_galleries.gallery_updated')
      flash[:success]=@message
-     redirect_to redirect_to user_galleries_path(current_user.username)
+     redirect_to user_galleries_path(current_user.username)
    else
      render :edit
     end
