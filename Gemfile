@@ -80,7 +80,7 @@ gem 'gssapi', :git => 'https://github.com/cbeer/gssapi.git'
 gem 'jquery-rails'
 gem 'rest-client'
 
-gem 'json', '~> 1.7.7'
+gem 'json', '~> 1.8'
 
 gem "bootstrap-sass"
 gem "font-awesome-rails"
