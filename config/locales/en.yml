@@ -295,6 +295,8 @@ en:
       not_saved: 'The item is already in the selected gallery.'
       in_gallery: 'In galleries'
       total_items: 'Items'
+      you_can_add_a_description_html: "You can %{href} to your gallery."
+      you_can_add_a_description_linktext: 'add a description'
     collection:
       collection_detail: 'Collection Detail'
       member_detail: 'Item Detail'
