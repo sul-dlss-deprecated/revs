@@ -4,8 +4,10 @@
   
   <%= validation_errors(@gallery) %>
 	
-  <%= form_for(Gallery.new, :method => :post, :class => "form-horizontal" ) do |f| %>  
-    <%= render :partial=>'form',:locals=>{:f=>f} %>
-  <% end %>
+  <div class="edit-content">
+    <%= form_for(Gallery.new, :method => :post, :class => "form-horizontal" ) do |f| %>
+      <%= render :partial=>'form',:locals=>{:f=>f} %>
+    <% end %>
+  </div>
     
 </div>
