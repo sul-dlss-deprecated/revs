@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   # Please be sure to impelement current_user and user_session. Blacklight depends on 
   # these methods in order to perform user specific actions. 
 
-  helper_method :application_name,:tag_line,:current_role,:on_home_page,:on_collections_page,:on_about_pages,:on_detail_page,:show_terms_dialog?,:sunet_user_signed_in?,:in_search_result?
+  helper_method :application_name,:tag_line,:current_role,:on_home_page,:on_collections_page,:on_about_pages,:on_detail_page,:show_terms_dialog?,:sunet_user_signed_in?,:in_search_result?,:list_type_interpolator,:item_type_interpolator
   layout "revs"
 
   protect_from_forgery
@@ -181,6 +181,14 @@ class ApplicationController < ActionController::Base
     else
       redirect_to params[:return_to]
     end
+  end
+ 
+  def list_type_interpolator(gallery_type)
+    (gallery_type == 'favorites' ? t('revs.favorites.plural') : t('revs.user_galleries.singular'))
+  end
+
+  def item_type_interpolator(gallery_type)
+    (gallery_type == 'favorites' ? t('revs.favorites.singular') : t('revs.collection_members.items_name'))
   end
 
   def current_role

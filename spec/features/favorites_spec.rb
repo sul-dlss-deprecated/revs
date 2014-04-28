@@ -5,7 +5,7 @@ describe("Favorites",:type=>:request,:integration=>true) do
   before :each do
     logout 
     @save_favorites_button=I18n.t('revs.favorites.save_to_favorites')
-    @remove_favorites_button=I18n.t('revs.favorites.remove_from_favorites')
+    @remove_favorites_button=I18n.t('revs.favorites.remove_from_favorites',:list_type=>'favorites')
     @druid1='qk978vx9753'
     @druid2='dd482qk0417'
     @Next = "Next"
@@ -63,7 +63,7 @@ describe("Favorites",:type=>:request,:integration=>true) do
     visit user_profile_name_path(user_login)
     page.should have_content I18n.t('revs.favorites.you_can_save_favorites')
     visit user_favorites_path(user_login)
-    page.should have_content I18n.t('revs.favorites.personal_none')
+    page.should have_content I18n.t('revs.favorites.none')
 
   end
 
@@ -150,14 +150,14 @@ describe("Favorites",:type=>:request,:integration=>true) do
     user.favorites.size.should == 1
     visit user_favorites_path(user_login)
     page.should have_content get_title_from_druid(@druid1)
-    click_button(I18n.t('revs.favorites.remove_from_favorites'))
+    click_button(@remove_favorites_button)
     user = get_user(user_login)
     user.favorites.size.should == 0
     logout
     login_as(user_login)
     visit user_favorites_path(user_login)
     page.should have_no_content get_title_from_druid(@druid1)
-    page.should have_content I18n.t('revs.favorites.personal_none')
+    page.should have_content I18n.t('revs.favorites.none')
     
     
   end

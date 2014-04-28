@@ -256,28 +256,30 @@ en:
         annotator: "Annotator"
     favorites:
       singular: "favorite"
+      plural: "favorites"
       head: "Favorites"
       you_can_save_favorites: "Items you save as favorites will be shown here."
       save_to_favorites: "Save to favorites"
-      remove_from_favorites: "Remove from favorites"
+      remove_from_favorites: "Remove from %{list_type}"
       saved: "Item has been saved to favorites."
-      removed: "Item has been removed from favorites."  
-      none: 'This user does not have any favorites.'
-      personal_none: 'You do not have any favorites.'  
+      removed: "Item has been removed from %{list_type}."  
+      none: 'There are no favorites.'
       edit_item_note: 'Edit item note'
       add_item_note: 'Add item note'
       item_note: 'Item note'
       item_note_updated: "Item note updated."  
-      you_can_add_a_note_html: "You can %{href} to your favorite."
+      you_can_add_a_note_html: "You can %{href} to your %{item_type}."
       you_can_add_a_note_linktext: 'add a note'
-      sort_mode: 'Organize list'
+      sort_mode: 'Reorder'
     user_galleries:
       head: "Galleries"
       singular: "gallery"
+      plural: "galleries"
       you_can_create_galleries_html: "You can %{href} and add items to it from the Item Details page."
       you_can_create_galleries_linktext: "create your own gallery"
       none: 'This user does not have any galleries.'
       personal_none: 'You do not have any galleries.'
+      no_items: 'There are no items in this gallery.'
       add_to_gallery: 'Add to gallery'
       add: 'Add'
       new_gallery: 'New gallery'
@@ -287,7 +289,6 @@ en:
       create_new_gallery: 'Create a new gallery'
       description: 'Gallery description'
       saved: 'Item saved to gallery.'
-      removed: "Item has been removed from the gallery."  
       gallery_removed: "The gallery was removed."
       gallery_updated: "The gallery was updated."
       gallery_created: "The gallery was created."

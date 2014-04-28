@@ -13,7 +13,7 @@ class Gallery < ActiveRecord::Base
   validate :only_one_favorites_list_per_user
   
   def image
-    item=saved_items(:order=>'position ASC,created_at DESC').limit(1)
+    item=saved_items.limit(1)
     item.size == 0 ? nil : item.first.solr_document.images.first
   end
   

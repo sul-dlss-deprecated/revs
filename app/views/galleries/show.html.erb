@@ -25,5 +25,6 @@
 
 <div id="content" class="span9 favorites-index">
    <div id = "favorites_area">
+     <%=render :partial => "saved_items/list", :locals=>{:saved_items=>Kaminari.paginate_array(@gallery.saved_items.order(@order)).page(@current_page).per(@per_page),:gallery_type=>'user'} %>
    </div>      
 </div>
