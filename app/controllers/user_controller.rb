@@ -50,7 +50,8 @@ class UserController < ApplicationController
   # all of the user's item edits
   def edits
     get_current_page_and_order
-    @edits=@user.visible('change_logs').order(@order).page(@current_page).per(@per_page)
+    @order="change_logs.#{@order}" if @order.downcase == 'created_at desc'
+    @edits=@user.visible('change_logs').group('change_logs.druid').order(@order).page(@current_page).per(@per_page)
   end
   
   # all of the user's flags
