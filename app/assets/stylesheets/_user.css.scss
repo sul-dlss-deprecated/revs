@@ -170,9 +170,8 @@
       }
     }
     .item-annotation {
-      font-style: italic;
-      margin-bottom: 6px;
-      margin: 3px 0px 6px 12px;
+      margin-top: 3px;
+      margin-bottom: 0;
     }
     .item-creation-date {
       font-size: 13px;
@@ -253,12 +252,14 @@
   }
   ul {
     display: inline-block;
+    vertical-align: bottom;
     span {
       color: #888;
     }
   }
-  .item-description {
+  .item-description, .item-annotation {
     display: inline-block;
+    font-size: 13px;
     > span {
       font-style: italic;
     }
@@ -317,17 +318,16 @@
     margin-top: 12px;
     padding-top: 12px;
   }
-  .favorites-index .row.item .item-annotation {
-    clear: left;
-    margin-left: 0;
-  }
 }
 @media screen and (max-width: 979px) {
   .thumbnail-column {
     display: none;
   }
   .saved-items .item-description {
-    margin-top: 12px;
+    margin-top: 8px;
+  }
+  .favorites-index .row.item .item-annotation {
+    margin-top: 0;
   }
 }
 @media screen and (max-width: 479px) {

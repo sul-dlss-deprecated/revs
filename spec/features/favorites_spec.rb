@@ -10,6 +10,8 @@ describe("Favorites",:type=>:request,:integration=>true) do
     @druid2='dd482qk0417'
     @Next = "Next"
     @Previous = "Previous"
+    @add_new_description=I18n.t('revs.favorites.you_can_add_a_note_html', :item_type=>'favorite',:href=>'add a note')
+    @add_new_description_link= I18n.t('revs.favorites.you_can_add_a_note_linktext')
   end
   
   it "should not show save/remove favorites link for non-logged in users" do
@@ -119,9 +121,9 @@ describe("Favorites",:type=>:request,:integration=>true) do
       click_button(@save_favorites_button)
       visit user_favorites_path(user_login)
       page.should have_content get_title_from_druid(@druid1)
-      page.should have_content I18n.t('revs.favorites.add_item_note')
+      page.should have_content @add_new_description
       page.should have_no_content new_description
-      click_link(I18n.t('revs.favorites.add_item_note'))
+      click_link(@add_new_description_link)
       page.should have_content I18n.t('revs.nav.update')
       fill_in('saved_item_description', :with => new_description)
       click_button(I18n.t('revs.nav.update'))
