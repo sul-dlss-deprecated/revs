@@ -1,4 +1,4 @@
-<div class="row item" class="span9">
+<div id="content" class="span9">
   
     <h2><%= @gallery.title %></h2>
 
@@ -7,9 +7,11 @@
     <% end %>  
   
      <%= link_to(image_tag(@gallery.image), gallery_path(@gallery.id)) if @gallery.image %>
+     <% if @gallery.user == current_user # this label is only necessary if the current user is viewing their own galleries, otherwise only public will be shown anyway %>
        <span class="label profile-visibility <%= @gallery.public ? 'label-success' : '' %>">
-         <%= @gallery.public ? t('revs.user.public').downcase : t('revs.user.private').downcase %>
+         <%= (@gallery.public ? t('revs.user.public').downcase : t('revs.user.private').downcase) %>
        </span>
+      <% end %>
      
        <p><%=t('revs.collections.total_items')%>: <%=@gallery.saved_items.size%> | <%=t('revs.messages.created')%>: <%=show_as_date(@gallery.created_at)%> | <%=t('revs.messages.last_updated')%>: <%=show_as_date(@gallery.updated_at)%></p>
      
@@ -21,10 +23,13 @@
            <% if can? :destroy, @gallery%>
               <%=button_to(t('revs.actions.delete'), gallery_path(@gallery), :confirm=>t('revs.actions.confirm_delete'), :method=> :delete, class: 'btn btn-link') %>
            <% end %>
-</div>
 
-<div id="content" class="span9 favorites-index">
-   <div id = "favorites_area">
+   <div id = "favorites_area" class="span9 favorites-index">
      <%=render :partial => "saved_items/list", :locals=>{:saved_items=>Kaminari.paginate_array(@gallery.saved_items.order(@order)).page(@current_page).per(@per_page),:gallery_type=>'user'} %>
    </div>      
+
 </div>
+
+<%= render :partial => 'user/side_nav', :locals=>{:user=>@gallery.user} %>
+
+

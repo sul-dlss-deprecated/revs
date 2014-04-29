@@ -10,7 +10,7 @@
 
         <div class="item-title">
           <%= link_to(gallery.title,gallery_path(gallery.id)) %>
-          <% if gallery.public %>
+          <% if gallery.public && @user == current_user # this label is only necessary if the current user is viewing their own galleries, otherwise only public will be shown anyway%>
             <span class="label label-success">
               <%= t('revs.user.public').downcase %>
             </span>
@@ -26,10 +26,12 @@
               <span><%=t('revs.user_galleries.total_items')%>: </span>
               <%= gallery.saved_items.count %>
             </li>
-            <li class="item-creation-date">
-              <span><%=t('revs.messages.total_views')%>: </span>
-              <%= gallery.views %>
-            </li>
+            <% if can? :update, gallery%>
+              <li class="item-creation-date">
+                <span><%=t('revs.messages.total_views')%>: </span>
+                <%= gallery.views %>
+              </li>
+            <% end %>
             <li class="item-creation-date">
               <span><%=t('revs.messages.added')%>: </span>
               <%= show_as_datetime(gallery.created_at.in_time_zone) %>
@@ -40,10 +42,10 @@
             </li>
             <li class="saved-item-actions">
               <% if can? :read, gallery %>
-                <%= link_to t('revs.user_galleries.view'), gallery_path(gallery.id) %> |
+                <%= link_to t('revs.user_galleries.view'), gallery_path(gallery.id) %>
               <% end %>
               <% if can? :update, gallery%>
-                <%= link_to t('revs.actions.edit'), edit_gallery_path(gallery.id,:page=>params[:page],:order=>params[:order]) %> |
+                 | <%= link_to t('revs.actions.edit'), edit_gallery_path(gallery.id,:page=>params[:page],:order=>params[:order]) %> |
               <% end%>
               <% if can? :destroy, gallery%>
                 <%=button_to(t('revs.actions.delete'), gallery_path(gallery.id,:page=>params[:page],:order=>params[:order]), :confirm=>t('revs.actions.confirm_delete'), :method=> :delete, :remote=>true, class: 'btn btn-link') %>

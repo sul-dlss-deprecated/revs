@@ -24,7 +24,7 @@ class UserController < ApplicationController
     @annotations=@user.visible('annotations').order(@order).page(@current_page).per(@per_page)
   end
 
-  # all of the user's favorites, only show if the profile is public
+  # all of the user's favorites, only show if the entire profile is public (enfornced with before_filter above)
   def favorites
     get_current_page_and_order
     unsorted_favorites = @user.favorites
@@ -43,7 +43,9 @@ class UserController < ApplicationController
   
  def galleries
    get_current_page_and_order
-   @galleries=@user.galleries.page(@current_page).per(@per_page)
+   @galleries=@user.galleries
+   @galleries=@galleries.where(:public=>true) unless @user == current_user # only show public galleries listed unless it is the current user
+   @galleries=@galleries.page(@current_page).per(@per_page)
  end
  
 
