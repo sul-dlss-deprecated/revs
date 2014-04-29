@@ -2,7 +2,7 @@
 
   <h2><%= display_user_name(@user) %><span class="lowercase">'s</span> <%=t('revs.curator.edits')%></h2>
  
- <% if @edits.count > 0 %>
+ <% unless @edits.blank? %>
  	<%= page_entries_info @edits %>
  <%= paginate @edits, :params => {:order=>@order} %>
  <table class="table table-bordered table-condensed table-hover table-striped">
