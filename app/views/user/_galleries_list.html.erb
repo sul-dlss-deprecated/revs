@@ -38,7 +38,7 @@
               <span><%=t('revs.messages.last_updated')%>: </span>
               <%= show_as_datetime(gallery.updated_at.in_time_zone) %>
             </li>
-            <li class="favorite-item-actions">
+            <li class="saved-item-actions">
               <% if can? :read, gallery %>
                 <%= link_to t('revs.user_galleries.view'), gallery_path(gallery.id) %> |
               <% end %>
