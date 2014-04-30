@@ -1,35 +1,70 @@
-<div id="content" class="span9">
-  
-    <h2><%= @gallery.title %></h2>
+<div class="span9">
+  <h2>
+    <%= @gallery.title %>
+    <span class="label profile-visibility <%= @gallery.public ? 'label-success' : '' %>">
+      <%= @gallery.public ? t('revs.user.public').downcase : t('revs.user.private').downcase %>
+    </span>
+  </h2>
 
-    <% if @gallery.user != current_user %>
-      <h3><%="#{t('revs.messages.created_by')} #{@gallery.user.to_s}"%></h3>
-    <% end %>  
-  
-     <%= link_to(image_tag(@gallery.image), gallery_path(@gallery.id)) if @gallery.image %>
-     <% if @gallery.user == current_user # this label is only necessary if the current user is viewing their own galleries, otherwise only public will be shown anyway %>
-       <span class="label profile-visibility <%= @gallery.public ? 'label-success' : '' %>">
-         <%= (@gallery.public ? t('revs.user.public').downcase : t('revs.user.private').downcase) %>
-       </span>
-      <% end %>
-     
-       <p><%=t('revs.collections.total_items')%>: <%=@gallery.saved_items.size%> | <%=t('revs.messages.created')%>: <%=show_as_date(@gallery.created_at)%> | <%=t('revs.messages.last_updated')%>: <%=show_as_date(@gallery.updated_at)%></p>
-     
-       <p><%=@gallery.description%></p>
-     
-           <% if can? :update, @gallery%>
-              <%= link_to t('revs.actions.edit'), edit_gallery_path(@gallery) %> |
-           <% end%>
-           <% if can? :destroy, @gallery%>
-              <%=button_to(t('revs.actions.delete'), gallery_path(@gallery), :confirm=>t('revs.actions.confirm_delete'), :method=> :delete, class: 'btn btn-link') %>
-           <% end %>
+  <% if @gallery.user != current_user %>
+    <h3><%="#{t('revs.messages.created_by')} #{@gallery.user.to_s}"%></h3>
+  <% end %>
 
-   <div id = "favorites_area" class="span9 favorites-index">
-     <%=render :partial => "saved_items/list", :locals=>{:saved_items=>Kaminari.paginate_array(@gallery.saved_items.order(@order)).page(@current_page).per(@per_page),:gallery_type=>'user'} %>
-   </div>      
+  <div class="row">
+    <% if @gallery.image %>
+      <div class="span2 hidden-phone">
+        <%= link_to(image_tag(@gallery.image, class: "thumbnail-preview"), gallery_path(@gallery.id)) %>
+      </div>
+    <% end %>
+
+    <div class="span7 gallery-details">
+      <ul class="inline item-stats">
+        <li>
+          <span class="item-stats-heading"><%=t('revs.user_galleries.total_items')%>:</span>
+          <%= @gallery.saved_items.size %>
+        </li>
+        <li>
+          <span class="item-stats-heading"><%=t('revs.messages.total_views')%>:</span>
+          <%= @gallery.views %>
+        </li>
+        <li>
+          <span class="item-stats-heading"><%=t('revs.messages.added')%>:</span>
+          <%= show_as_datetime(@gallery.created_at.in_time_zone) %>
+        </li>
+        <li>
+          <span class="item-stats-heading"><%=t('revs.messages.last_updated')%>:</span>
+          <%= show_as_datetime(@gallery.updated_at.in_time_zone) %>
+        </li>
+      </ul>
+  
+      <p class="gallery-description"><%=@gallery.description%></p>
+
+      <div id="saved_items" class="gallery-actions">
+        <% if can? :update, @gallery%>
+          <%= link_to t('revs.user_galleries.edit'), edit_gallery_path(@gallery) %> |
+        <% end%>
+        <% if can? :destroy, @gallery%>
+          <%= button_to(t('revs.user_galleries.delete'), gallery_path(@gallery), :confirm=>t('revs.actions.confirm_delete'), :method=> :delete, class: 'btn btn-link') %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  
+
+  <div class="row">
+    <div id="content" class="span9 favorites-index">
+       <div id="favorites_area">
+         <%=render :partial => "saved_items/list", :locals=>{:saved_items=>Kaminari.paginate_array(@gallery.saved_items.order(@order)).page(@current_page).per(@per_page),:gallery_type=>'user'} %>
+       </div>
+    </div>
+  </div>
 
 </div>
 
-<%= render :partial => 'user/side_nav', :locals=>{:user=>@gallery.user} %>
 
+
+<div class="span3">
+  <%= render :partial => 'user/side_nav', :locals=>{:user=>@gallery.user} %>
+</div>
 

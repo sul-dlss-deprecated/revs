@@ -119,11 +119,11 @@ img {
 	-ms-interpolation-mode: bicubic;
 }
 
-a {
+a, .btn-link {
 	color: #990000;
 	text-decoration: none;
 }
-a:hover {
+a:hover, .btn-link:hover {
 	color: #660000;
 	text-decoration: underline;
 }
@@ -216,10 +216,6 @@ span.content-type {
   display: inline;
 }
 #sidebar-nav {
-  span.label, span.badge {
-    font-weight: normal;
-    margin-left: 6px;
-  }
   .nav-header .label {
     margin-left: 12px;
   }
@@ -237,6 +233,15 @@ span.content-type {
         display: inline-block;
     }
   }
+}
+
+span.label, span.badge {
+  font-weight: normal;
+  margin-left: 6px;
+}
+
+h2 span.label {
+  text-transform: capitalize;
 }
 
 .inline-help-block {
