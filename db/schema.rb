@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140423230025) do
+ActiveRecord::Schema.define(:version => 20140430211825) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "user_id"
@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(:version => 20140423230025) do
 
   add_index "saved_items", ["druid"], :name => "index_saved_items_on_druid"
   add_index "saved_items", ["gallery_id"], :name => "index_saved_items_on_gallery_id"
+  add_index "saved_items", ["position"], :name => "index_saved_items_on_position"
 
   create_table "searches", :force => true do |t|
     t.text     "query_params"
