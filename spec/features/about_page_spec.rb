@@ -22,7 +22,7 @@ describe("About Pages",:type=>:request,:integration=>true) do
   it "should show the contact us page" do
     visit '/about/contact'
     page.should have_content(@contact_us)
-    fill_in 'name', :with=>'Spongebob Squarepants'
+    fill_in 'fullname', :with=>'Spongebob Squarepants'
     click_button 'Send'
     page.should have_content(I18n.t("revs.about.contact_error")) # problem if you don't enter a message
     fill_in 'message', :with=>'I live in a pineapple under the sea.'
