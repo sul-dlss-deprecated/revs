@@ -10,7 +10,7 @@ class AboutController < ApplicationController
     @from=params[:from]
     @subject=params[:subject]
     @message=params[:message]
-    @name=params[:name]
+    @fullname=params[:fullname]
     @email=params[:email]
     @auto_response=params[:auto_response]
     params[:username]=(current_user ? current_user.username : "")
@@ -35,7 +35,7 @@ class AboutController < ApplicationController
         end
         
         @message=nil
-        @name=nil
+        @fullname=nil
         @email=nil
         unless @from.blank? || request.xhr? # if this not an ajax request and we have a page to return to, go there
           redirect_to(@from)
