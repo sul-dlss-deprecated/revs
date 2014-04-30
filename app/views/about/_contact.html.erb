@@ -28,7 +28,7 @@
 	<div class="control-group">
 	  <label class="control-label" for="name"><%=t('revs.contact.name')%></label>
 	  <div class="controls">
-	    <%=text_field_tag 'name', @name || (current_user ? current_user.full_name : ""), :placeholder => t('revs.contact.name') %>
+	    <%=text_field_tag 'fullname', @fullname || (current_user ? current_user.full_name : ""), :placeholder => t('revs.contact.name') %>
 	  </div>
 	</div>
 
