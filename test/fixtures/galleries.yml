@@ -15,11 +15,13 @@ admin_favs:
 user_gal1:
   user: user  # this is the named "user" fixture object from the users table
   gallery_type: 'user'    
+  public: true
   title: 'My Awesome Gallery'
   description: 'It is super duper cool.'
 
 user_gal2:
   user: user  # this is the named "user" fixture object from the users table
   gallery_type: 'user'    
+  public: false
   title: 'Porsche Gallery'
-  description: ''  
+  description: 'this one is private'  
