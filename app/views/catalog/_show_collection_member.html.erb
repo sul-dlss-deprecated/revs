@@ -61,15 +61,22 @@
       </div>
     <% end %>
 
+    <% if from_gallery? %>
+      <div class="row results-nav">
+        <div class="span2 back-to-results">
+          <%= link_to t('revs.nav.return_to_gallery').html_safe, gallery_path(params[:gallery_id],extract_paging_params(params)) %>
+        </div>
+        <div class="span3 results-pagination">
+          <span class="previousNextDocument">
+            <%# show previous | next nav for gallery? %>
+          </span>
+        </div>
+      </div>
+    <% end %>
+
     <div class="row">
       <div class="span5">
         <h4 class="show-document-title"><%=@document.title%></h4>
-
-          <% if from_gallery? %>
-              <div id="return_to_gallery">
-                 <%=link_to t('revs.nav.return_to_gallery',:gallery_name=>@gallery.title),gallery_path(params[:gallery_id],extract_paging_params(params)) %>
-              </div>
-          <% end %>
 
           <% if from_favorites? %>
               <div id="return_to_favorites">

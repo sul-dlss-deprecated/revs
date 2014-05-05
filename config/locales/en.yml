@@ -110,7 +110,7 @@ en:
       create_an_account: 'create an account'      
       more: 'More'
       please_wait: 'Please wait...'
-      return_to_gallery: 'Return to gallery "%{gallery_name}"'
+      return_to_gallery: '&laquo; return to gallery'
       return_to_favorites: "Return to %{user_name}'s favorites"
     contact:
       us: 'contact us'

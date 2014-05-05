@@ -139,7 +139,7 @@ describe("Galleries",:type=>:request,:integration=>true) do
   it "should allow a user to return to the gallery view page after clicking on a gallery item" do
     item_name="A Somewhat Shorter Than Average Title"
     hidden_item_name="Bryar 250 Trans-American:10"
-    return_link_name="Return to gallery \"#{@gallery1_title}\""
+    return_link_name="return to gallery"
     gallery1=Gallery.where(:title=>@gallery1_title).first
     visit gallery_path(gallery1)
     click_link item_name
