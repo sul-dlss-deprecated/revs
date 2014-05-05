@@ -24,5 +24,12 @@ admin_fav1:
   gallery: admin_favs
   druid: 'yh093pt9555'  
   
+user_gal1:
+  gallery: user_gal1
+  druid: 'bb004bn8654'
+
+user_gal2:
+  gallery: user_gal1
+  druid: 'qb957rw1430'
   
   

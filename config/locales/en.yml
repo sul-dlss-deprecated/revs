@@ -110,6 +110,8 @@ en:
       create_an_account: 'create an account'      
       more: 'More'
       please_wait: 'Please wait...'
+      return_to_gallery: 'Return to gallery "%{gallery_name}"'
+      return_to_favorites: "Return to %{user_name}'s favorites"
     contact:
       us: 'contact us'
       instructions_html: 'If you are asking about access or re-use of images, select "Request an image or terms of use question" as the subject or view %{reuse_link}.'

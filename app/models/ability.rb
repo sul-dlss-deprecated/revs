@@ -102,7 +102,7 @@ class Ability
   end
   
   def can_view_public_galleries
-    can :read, Gallery, :public=>true
+    can [:read], Gallery, :public=>true
   end
 
   def can_view_public_profiles

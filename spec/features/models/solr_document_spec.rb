@@ -250,7 +250,7 @@ describe SolrDocument, :integration => true do
     it "should indicate which is the highest priority number for a collection" do 
       collection=SolrDocument.find('wn860zc7322')
       collection.current_top_priority.should == 1
-      collection.first_image.should == 'https://stacks-test.stanford.edu/image/yt907db4998/2011-023DUG-3.0_0017_thumb'
+      collection.first_image.should == 'https://stacks.stanford.edu/image/yt907db4998/2011-023DUG-3.0_0017_thumb'
       item1=SolrDocument.find('yt907db4998')
       item1.priority.should == 1
       item2=SolrDocument.find('qb957rw1430')
@@ -263,7 +263,7 @@ describe SolrDocument, :integration => true do
       item2.set_top_priority
       collection=SolrDocument.find('wn860zc7322')
       collection.current_top_priority.should == 2
-      collection.first_image.should == 'https://stacks-test.stanford.edu/image/qb957rw1430/2011-023DUG-3.0_0015_thumb'
+      collection.first_image.should == 'https://stacks.stanford.edu/image/qb957rw1430/2011-023DUG-3.0_0015_thumb'
       collection.first_item.id.should == 'qb957rw1430'
       # reindex document we changed
       reindex_solr_docs(['qb957rw1430','yt907db4998','wn860zc7322'])

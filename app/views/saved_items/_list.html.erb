@@ -1,6 +1,8 @@
 <% 
 if not defined?(edit_id)
   edit_id = params[:edit_id] || nil 
+
+item_link_params=(gallery_type=='user' ? {:gallery_id=>@gallery.id} : {:user=>@user.username,:favorite_user_name=>@user.to_s})
 end%>
 
  <%if saved_items.count > 0%>
@@ -46,45 +48,47 @@ end%>
 
   <div class="saved-items" id="saved_items_list">
     <% saved_items.each do |saved_item| %>
-      <div id="saved_item_<%="#{saved_item.id}"%>" data-saved-item-id="<%="#{saved_item.id}"%>" class="row item saved-item-row">
+      <% if saved_item.solr_document.visibility == :visible || (saved_item.solr_document.visibility == :hidden && can?(:view_hidden, saved_item.solr_document))%>
+        <div id="saved_item_<%="#{saved_item.id}"%>" data-saved-item-id="<%="#{saved_item.id}"%>" class="row item saved-item-row">
 
-        <div class="item-title">
-          <% if can?(:update,saved_item) %>
-            <span class="hidden handle">
-              <i title="<%=t('revs.messages.reorder')%>" class="icon-move"></i>
-            </span>
-          <% end %>
-          <%= item_link(saved_item.solr_document, :target=>'_blank') %>
-        </div>
-
-        <div class="span5 item-details">
-          <div class="thumbnail-preview">
-            <%= link_to(image_tag(saved_item.solr_document.images.first), item_path(saved_item.solr_document)) %>
+          <div class="item-title">
+            <% if can?(:update,saved_item) %>
+              <span class="hidden handle">
+                <i title="<%=t('revs.messages.reorder')%>" class="icon-move"></i>
+              </span>
+            <% end %>
+            <%= item_link(saved_item.solr_document,:params=>paging_params(item_link_params)) %>
           </div>
-          <ul id="saved_items">
-            <li class="item-creation-date">
-              <span><%=t('revs.messages.added') %>: </span>
-              <%= show_as_datetime(saved_item.created_at.in_time_zone) %>
-            </li>
-            <li class="saved-item-actions">
-              <% if can? :destroy, saved_item %>
-                <%= button_to(t('revs.favorites.remove_from_favorites', :list_type=>list_type_interpolator(gallery_type)), saved_item_path(saved_item.solr_document.id, :gallery_id=>saved_item.gallery_id, :page=>params[:page],:order=>params[:order]), :method=> :delete, :confirm=>t('revs.actions.confirm_delete'), class: 'btn btn-link') %>
-              <% end %>
-              <% if can? :update, saved_item and !saved_item.description.blank? %>
-                <!-- this link should turn on edit mode for annotation field below -->
-                | <%= link_to (t('revs.favorites.edit_item_note')), edit_saved_item_path(saved_item.id, :page=>params[:page],:order=>params[:order]), :remote => true, :id=>"item_note_link_#{saved_item.id}" %>
-              <% end %>
-            </li>
-          </ul>
-        </div>
 
-        <div class="span4 pull-right item-description">
-          <div id="<%="description#{saved_item.id}"%>">
-            <%=render :partial => 'saved_items/description', :locals => {:saved_item => saved_item, :edit_id=> edit_id || nil} %>
+          <div class="span5 item-details">
+            <div class="thumbnail-preview">
+              <%= link_to(image_tag(saved_item.image), item_path(saved_item.solr_document,paging_params(item_link_params))) %>
+            </div>
+            <ul id="saved_items">
+              <li class="item-creation-date">
+                <span><%=t('revs.messages.added') %>: </span>
+                <%= show_as_datetime(saved_item.created_at.in_time_zone) %>
+              </li>
+              <li class="saved-item-actions">
+                <% if can? :destroy, saved_item %>
+                  <%= button_to(t('revs.favorites.remove_from_favorites', :list_type=>list_type_interpolator(gallery_type)), saved_item_path(saved_item.solr_document.id, paging_params({:gallery_id=>saved_item.gallery_id})), :method=> :delete, :confirm=>t('revs.actions.confirm_delete'), class: 'btn btn-link') %>
+                <% end %>
+                <% if can? :update, saved_item and !saved_item.description.blank? %>
+                  <!-- this link should turn on edit mode for annotation field below -->
+                  | <%= link_to (t('revs.favorites.edit_item_note')), edit_saved_item_path(saved_item.id, paging_params), :remote => true, :id=>"item_note_link_#{saved_item.id}" %>
+                <% end %>
+              </li>
+            </ul>
           </div>
-        </div>
 
-      </div>
+          <div class="span4 pull-right item-description">
+            <div id="<%="description#{saved_item.id}"%>">
+              <%=render :partial => 'saved_items/description', :locals => {:saved_item => saved_item, :edit_id=> edit_id || nil} %>
+            </div>
+          </div>
+
+        </div>
+      <% end %>
     <% end %>
   </div>
 

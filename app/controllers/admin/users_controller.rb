@@ -3,7 +3,7 @@ class Admin::UsersController < ApplicationController
   before_filter :check_for_admin_logged_in
 
   def index
-    get_current_page_and_order
+    get_paging_params
     @search=params[:search]
     @role = params[:role] || 'curator'
     @filter = params[:filter] || 'all'
@@ -48,6 +48,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def bulk_update_role
+    get_paging_params
     @role=params[:role]
     @selected_users=params[:selected_users]
     if @selected_users
@@ -56,7 +57,7 @@ class Admin::UsersController < ApplicationController
     else
       flash[:error]=t('revs.admin.no_user_roles_updated')
     end
-    redirect_to admin_users_path(:email=>params[:email],:order=>params[:order],:per_page=>params[:per_page],:role=>@role)
+    redirect_to admin_users_path(paging_params({:email=>params[:email],:role=>@role}))
   end
   
   def destroy

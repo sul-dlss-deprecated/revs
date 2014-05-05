@@ -19,6 +19,14 @@ class SavedItem < WithSolrDocument
   def user_id
     user.id
   end
+  
+  def image
+    self.solr_document.images.first
+  end
+
+  def title
+    self.solr_document.title
+  end
 
   def self.save_favorite(params={})
     user_id=params[:user_id]

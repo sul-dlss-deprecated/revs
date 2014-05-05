@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="span12 collection-members">
+    <div class="row">
+        <div class="span8">
+          <h5><%=@gallery.title%> <span class="muted">(<%=@saved_items.size%> of <%=@gallery.saved_items.size%>)</span></h5>
+        </div>
+            <div class="span2 offset1 controls">
+             <%=link_to t('revs.user_galleries.view_gallery'),gallery_path(params[:gallery_id],extract_paging_params(params))%>
+        </div>
+    </div>
+    <%- @saved_items.each do |saved_item| -%>
+      <div class="item">
+        <%= link_to(image_tag(saved_item.image), item_path(saved_item.solr_document,extract_paging_params(params).merge({:gallery_id=>params[:gallery_id]}))) %>
+      </div>
+    <%- end -%>
+  </div>
+</div>

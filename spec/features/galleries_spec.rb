@@ -135,5 +135,20 @@ describe("Galleries",:type=>:request,:integration=>true) do
     login_as(admin_login)
     expect {delete gallery_path(gallery1)}.not_to change(Gallery, :count)
   end 
+
+  it "should allow a user to return to the gallery view page after clicking on a gallery item" do
+    item_name="A Somewhat Shorter Than Average Title"
+    hidden_item_name="Bryar 250 Trans-American:10"
+    return_link_name="Return to gallery \"#{@gallery1_title}\""
+    gallery1=Gallery.where(:title=>@gallery1_title).first
+    visit gallery_path(gallery1)
+    click_link item_name
+    page.should have_content(item_name)
+    page.should have_content(@gallery1_title)
+    page.should_not have_content(hidden_item_name)
+    page.should have_content return_link_name
+    click_link return_link_name
+    current_path.should == gallery_path(gallery1)
+  end
    
 end

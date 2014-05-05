@@ -17,6 +17,7 @@ class ApplicationController < ActionController::Base
   # these methods in order to perform user specific actions. 
 
   helper_method :application_name,:tag_line,:current_role,:on_home_page,:on_collections_page,:on_about_pages,:on_detail_page,:show_terms_dialog?,:sunet_user_signed_in?,:in_search_result?,:list_type_interpolator,:item_type_interpolator
+  helper_method :paging_params,:extract_paging_params,:from_gallery?,:from_favorites?,:is_logged_in_user?
   layout "revs"
 
   protect_from_forgery
@@ -59,7 +60,12 @@ class ApplicationController < ActionController::Base
       return true
     end
   end
-       
+
+  # pass in a user, tells you if it's the currently logged in user
+  def is_logged_in_user?(user)
+    user_signed_in? && user == current_user
+  end
+
   def after_sign_out_path_for(resource_or_scope) # back to home page after sign out
     root_path
   end
@@ -199,11 +205,31 @@ class ApplicationController < ActionController::Base
     current_user ? current_user.ability : User.new.ability
   end
   
-  def get_current_page_and_order
+  # add paging params to an incoming hash of other parameters
+  def paging_params(others={})
+    others.merge({:order=>@order,:per_page=>@per_page,:page=>@current_page})
+  end
+
+  # get the current paging params and set instance variables
+  def get_paging_params
    @current_page = params[:page] || 1
    @order=params[:order] || 'created_at DESC'
    @per_page=(params[:per_page] || Revs::Application.config.num_default_per_page).to_i
   end
+
+  # extract relevant paging params from params hash to add to some links
+  def extract_paging_params(params)
+    params.dup.keep_if {|k,v| ['order','page','per_page'].include? k}
+  end
+
+  def from_gallery?
+    !params[:gallery_id].blank?
+  end
+
+  def from_favorites?
+    !params[:favorite_user_name].blank?
+  end
+
 
   def exception_on_website(exception)
    

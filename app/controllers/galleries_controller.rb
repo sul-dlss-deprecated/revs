@@ -2,8 +2,10 @@ class GalleriesController < ApplicationController
 
   load_and_authorize_resource  # ensures only people who have access via cancan (defined in ability.rb) can do this
 
+  before_filter :ajax_only, :only=>[:grid]
+
   def show
-    get_current_page_and_order
+    get_paging_params
     @gallery.update_attributes(:views=>@gallery.views+1 )    
     @saved_item=@gallery.saved_items.page(@current_page).per(@per_page)
   end
@@ -27,7 +29,7 @@ class GalleriesController < ApplicationController
   def edit
     
   end
-  
+
   def update
    @gallery.update_attributes(params[:gallery])  
    if @gallery.valid?

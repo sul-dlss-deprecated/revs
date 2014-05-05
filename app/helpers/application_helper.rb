@@ -33,11 +33,6 @@ module ApplicationHelper
       </script>
     HTML
   end
-  
-  # pass in a user, tells you if it's the currently logged in user
-  def is_logged_in_user?(user)
-    user_signed_in? && user == current_user
-  end
     
   # pass in a user, if it's the currently logged in user, you will get the full name; otherwise you will get the appropriate name for public display; if you pass in a url as a second parameter, you will get a link back to that url
   def display_user_name(user,link=nil)
@@ -83,14 +78,17 @@ module ApplicationHelper
     params[:q].to_s.empty? and params[:f].to_s.empty? and params[:id].nil? and controller_name != 'sessions' and controller_name != 'registrations'
   end
 
+  # crete a link to an item
+  # opts[:length] can be set to the length to truncate the text title (defaults to 100)
+  # opts[:truncate] can be set to true or false to indicate if long titles should be truncated (defaults to false)
+  # opts[:target] can be set to "_blank" or another value to target the link
   def item_link(item,opts={})
     if item.nil?  
       return t('revs.curator.not_found')
     else
       length = (opts[:length].to_i == 0 ? 100 : opts[:length].to_i)
       name=opts[:truncate] ? truncate(item.title,:length=>length) : item.title
-      return link_to name,catalog_path(item.id),target: '_blank' if opts[:target] == '_blank' #support new tab if needed
-      return link_to name,catalog_path(item.id)
+      return link_to name,item_path(item.id,opts[:params]),target: opts[:target]
     end
   end
   

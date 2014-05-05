@@ -200,6 +200,10 @@ function loadCollectionMembersGrid(id,page_type) {
   jQuery.ajax({type: "GET", dataType: "script", url: "/show_collection_members_grid/" + id + "?on_page=" + page_type});
 }
 
+function loadGalleryItemGrid(gallery_id) {
+  jQuery.ajax({type: "GET", dataType: "script", url: "/galleries/grid/" + gallery_id});
+}
+
 function setupItemDetailPanels() {
   // Swap icon used in Item Details accordion when toggling metadata sections
   $('.accordion-body').collapse({

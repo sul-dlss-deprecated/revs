@@ -96,6 +96,20 @@ class CatalogController < ApplicationController
       not_authorized if @document.visibility == :hidden && cannot?(:view_hidden, SolrDocument)
     end
     
+    if from_gallery? # if we are coming from a gallery link, grab the gallery and items to show at the bottom of the page
+      @galleries=Gallery.where(:id=>params[:gallery_id])
+      if @galleries.size != 1 # we should only have one, otherwise something is wrong
+        not_authorized
+        return 
+      end
+      @gallery=@galleries.first
+      if (!is_logged_in_user?(@gallery.user) && !@gallery.public)  # we should not be see the gallery items if its not public and that user is not logged in
+        not_authorized
+        return
+      end
+      @saved_items=@gallery.saved_items.limit(CatalogController.blacklight_config.collection_member_grid_items)
+    end
+
   end
   
   # an ajax call to show just the collection members grid at the bottom of the page

@@ -20,13 +20,13 @@ class UserController < ApplicationController
       
   # all of the user's annotations
   def annotations
-    get_current_page_and_order
+    get_paging_params
     @annotations=@user.visible('annotations').order(@order).page(@current_page).per(@per_page)
   end
 
   # all of the user's favorites, only show if the entire profile is public (enfornced with before_filter above)
   def favorites
-    get_current_page_and_order
+    get_paging_params
     unsorted_favorites = @user.favorites
     
     #If the user has just been deleted favorites, @current_page might exceed the number of favorites
@@ -42,7 +42,7 @@ class UserController < ApplicationController
   end
   
  def galleries
-   get_current_page_and_order
+   get_paging_params
    @galleries=@user.galleries
    @galleries=@galleries.where(:public=>true) unless @user == current_user # only show public galleries listed unless it is the current user
    @galleries=@galleries.page(@current_page).per(@per_page)
@@ -51,16 +51,16 @@ class UserController < ApplicationController
 
   # all of the user's item edits
   def edits
-    get_current_page_and_order
+    get_paging_params
     @order="change_logs.#{@order}" if @order.downcase == 'created_at desc'
     @edits=@user.visible('change_logs').group('change_logs.druid').order(@order).page(@current_page).per(@per_page)
   end
   
   # all of the user's flags
   def flags
+    get_paging_params
     s = params[:selection] || Flag.open
     @selection = s.split(',')    
-    @order=params[:order] || 'created_at DESC'    
     @flags=flagListForStates(@selection, @user, @order)      
   end
   

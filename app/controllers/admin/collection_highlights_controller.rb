@@ -24,7 +24,6 @@ class Admin::CollectionHighlightsController < ApplicationController
   def set_highlight
     @collection=SolrDocument.find(params[:id])
     @collection.update_solr('highlighted_ssi','update',params[:highlighted])
-    puts params[:id] + " " + params[:highlighted]
     expire_fragment('home')
     render :nothing=>true
   end
