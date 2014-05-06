@@ -91,6 +91,8 @@ class User < ActiveRecord::Base
   def latest(class_name)
     if class_name=='favorites'
       return favorites.order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
+    elsif class_name=='change_logs'
+      return metadata_updates.order('change_logs.created_at desc').limit(Revs::Application.config.num_latest_user_activity)
     else
       latest=visible(class_name)
       latest=self.class.latest_filter(latest)
@@ -99,7 +101,7 @@ class User < ActiveRecord::Base
   end
   
   def metadata_updates
-    change_logs.where(:operation=>'metadata update')
+    visible('change_logs').group('change_logs.druid').where(:operation=>'metadata update')
   end
   
   # override devise method --- stanford users are never timed out; regular users are timed out according to devise rules

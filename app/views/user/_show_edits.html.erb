@@ -3,7 +3,7 @@
   <span class="activity-count"><%= user_edits_count(@user).to_s.rjust(1, '0') %></span>
 </h3>
 
-<% if @user.latest('change_logs').size > 0 %>
+<% if !@user.latest('change_logs').blank? %>
   <ul>
   <% @user.latest('change_logs').each do |edit| %>
   			  	<% if edit.solr_document %>

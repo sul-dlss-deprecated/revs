@@ -122,7 +122,7 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     login_as(curator_login)
     visit user_profile_name_path(curator_login)
     current_path.should == user_profile_name_path(curator_login)
-    page.should have_content 'Item Edits 4'
+    page.should have_content 'Item Edits 3'
     edited_titles.each {|title| page.should have_content(title)}    
     visit user_edits_path(curator_login)
     edited_titles.each {|title| page.should have_content(title)}        

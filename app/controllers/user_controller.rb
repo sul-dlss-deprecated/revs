@@ -38,13 +38,11 @@ class UserController < ApplicationController
     @favorites=Kaminari.paginate_array(unsorted_favorites.order(@order)).page(@current_page).per(SavedItem.favorites_per_page)
   end
   
- 
-
   # all of the user's item edits
   def edits
     get_current_page_and_order
     @order="change_logs.#{@order}" if @order.downcase == 'created_at desc'
-    @edits=@user.visible('change_logs').group('change_logs.druid').order(@order).page(@current_page)
+    @edits=@user.metadata_updates.order(@order).page(@current_page)
   end
   
   # all of the user's flags
