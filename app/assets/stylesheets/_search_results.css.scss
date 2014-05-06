@@ -187,32 +187,7 @@
   margin-top: 16px;
 }
 .gallery_toggle {
-  font-size: 12px;
-	.active {
-		color: black;
-		cursor: default;
-		&:hover{
-			text-decoration: none;
-		}
-	}
-	.nav-pills {
-    margin-bottom: 0;
-    li > a {
-      background-color: lighten($header_bg_color, 10%);
-      border: 1px solid darken($header_bg_color, 5%);
-      margin-left: 6px;
-      padding-top: 4px;
-      padding-bottom: 4px;
-    }
-    li > a:hover {
-      background-color: lighten($header_bg_color, 5%);
-    }
-    li > a.active, a.active:hover {
-      background-color: desaturate($active_link_color, 20%);
-      border: 1px solid darken($header_bg_color, 10%);
-      color: lighten($header_bg_color, 5%);
-    }
-  }
+  @include result-controls;
 }
 
 .prev-next {
