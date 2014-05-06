@@ -1,0 +1,38 @@
+/* Mixins */
+@mixin red-top_border {
+  border-top: 5px solid #990000;
+  padding-top: 10px;
+}
+
+@mixin gray-top_border {
+  border-top: 5px solid #DDDDDD;
+  padding-top: 10px;
+}
+
+@mixin page-header {
+  @include gray-top_border;
+  color: #990000;
+  margin-top: 0;
+  padding-top: 10px;
+  text-transform: uppercase;
+}
+
+@mixin member-section-header {
+  @include gray-top_border;
+  color: #990000;
+  margin-top: 0;
+  padding-top: 10px;
+  text-transform: uppercase;
+}
+
+@mixin image_border_thumbnail {
+  border: 1px solid #bbb;
+  box-shadow: 2px 2px #ddd;
+}
+
+@mixin hidden-visibility-overlay-label {
+  font-weight: 500;
+  position: absolute;
+  right: 0;
+  top: 0;
+}

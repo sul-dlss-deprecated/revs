@@ -1,0 +1,14 @@
+/* Variables */
+
+$body_bg_color: #f7f7f7;
+
+$header_bg_color: #DDDDDD;
+
+$active_link_color: #990000;
+
+$container_bg_color: #f7f7f7;
+
+/* constraint (you searched for:) details: */
+$constraint_bg_color: lighten($header_bg_color, 10%);
+$constraint_border_color: darken($header_bg_color, 5%);
+$constraint_border_active_color: #FFD27A !default;
