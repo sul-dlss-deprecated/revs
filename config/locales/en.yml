@@ -273,7 +273,7 @@ en:
       item_note_updated: "Item note updated."  
       you_can_add_a_note_html: "You can %{href} to your %{item_type}."
       you_can_add_a_note_linktext: 'add a note'
-      sort_mode: 'Reorder'
+      sort_mode: 'Reorder items'
     user_galleries:
       head: "Galleries"
       singular: "gallery"
