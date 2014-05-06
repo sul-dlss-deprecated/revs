@@ -111,6 +111,8 @@ GEM
     ffi (1.9.0)
     font-awesome-rails (3.2.1.3)
       railties (>= 3.2, < 5.0)
+    friendly_id (4.0.10.1)
+      activerecord (>= 3.0, < 4.0)
     grit (2.5.0)
       diff-lcs (~> 1.1)
       mime-types (~> 1.15)
@@ -302,6 +304,7 @@ DEPENDENCIES
   druid-tools (>= 0.2.0)
   editstore (>= 1.1.5)
   font-awesome-rails
+  friendly_id (~> 4.0.10)
   gssapi!
   jettywrapper
   jquery-rails

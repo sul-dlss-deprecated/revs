@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140430211825) do
+ActiveRecord::Schema.define(:version => 20140505234601) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "user_id"
@@ -76,10 +76,12 @@ ActiveRecord::Schema.define(:version => 20140430211825) do
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
     t.integer  "views",        :default => 0,     :null => false
+    t.string   "slug"
   end
 
   add_index "galleries", ["gallery_type"], :name => "index_galleries_on_gallery_type"
   add_index "galleries", ["public"], :name => "index_galleries_on_public"
+  add_index "galleries", ["slug"], :name => "index_galleries_on_slug", :unique => true
   add_index "galleries", ["user_id"], :name => "index_galleries_on_user_id"
 
   create_table "items", :force => true do |t|

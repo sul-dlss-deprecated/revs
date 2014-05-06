@@ -1,6 +1,12 @@
 class Gallery < ActiveRecord::Base
   
   belongs_to :user
+  extend FriendlyId
+  friendly_id :title, :use => [:slugged]
+
+  include RankedModel
+  ranks :row_order,:column => :position
+
   has_many :saved_items, :order=>"position ASC, created_at DESC", :dependent => :destroy
   
   GALLERY_TYPES=%w{favorites user}

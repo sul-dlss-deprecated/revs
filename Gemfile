@@ -17,6 +17,8 @@ gem 'cancan'
 
 gem 'ranked-model'
 
+gem 'friendly_id', '~> 4.0.10'
+
 # image (user avatar) uploading
 gem 'carrierwave'
 gem "mini_magick"
