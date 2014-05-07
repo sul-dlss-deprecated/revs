@@ -13,6 +13,8 @@ class Flag < WithSolrDocument
   validates :druid, :is_druid=>true
   validate :check_user_id
   validate :check_flag_type
+  validate :check_flag_state
+
   
   def self.create_new(flag_info,user)
     flag=Flag.new
@@ -32,6 +34,10 @@ class Flag < WithSolrDocument
   def check_flag_type
     errors.add(:flag_type, :not_valid) unless FLAG_TYPES.include? flag_type.to_s
   end
+
+   def check_flag_state
+    errors.add(:state, :not_valid) unless FLAG_STATES.values.include? state.to_s
+  end 
 
   def self.fixed
     return FLAG_STATES[:fixed]

@@ -77,8 +77,11 @@ ActiveRecord::Schema.define(:version => 20140505234601) do
     t.datetime "updated_at",                      :null => false
     t.integer  "views",        :default => 0,     :null => false
     t.string   "slug"
+    t.boolean  "featured",     :default => false, :null => false
+    t.integer  "position"
   end
 
+  add_index "galleries", ["featured"], :name => "index_galleries_on_featured"
   add_index "galleries", ["gallery_type"], :name => "index_galleries_on_gallery_type"
   add_index "galleries", ["public"], :name => "index_galleries_on_public"
   add_index "galleries", ["slug"], :name => "index_galleries_on_slug", :unique => true
