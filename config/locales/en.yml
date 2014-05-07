@@ -15,6 +15,10 @@ en:
           attributes:
             druid:
               cannot_be_more_than_one_saved_item_per_druid_per_gallery: 'you cannot saved the same item twice to the same gallery'
+  helpers:
+    page_entries_info:
+      more_pages:
+        display_entries: "<b>%{first}&nbsp;-&nbsp;%{last}</b> of <b>%{total}</b>"
   revs:
     digital_library: 'Revs Digital Library'
     tagline: 'Connecting the past, present and future of the automobile'
