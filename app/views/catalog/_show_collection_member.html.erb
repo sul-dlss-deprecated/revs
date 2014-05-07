@@ -181,7 +181,7 @@
                   <p><%=t('revs.curator.metadata_edit_history_description')%>:</p>
                   <ul>
                     <% @document.edits.each do |edit| %>
-                      <li><%=show_as_date(edit.created_at)%> by <%=edit.user.to_s%></li>
+                      <li><%=show_as_datetime(edit.created_at.in_time_zone)%> by <%=edit.user.to_s%></li>
                     <% end %>
                   </ul>
                 </div>

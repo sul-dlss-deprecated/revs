@@ -3,7 +3,7 @@
   <span class="activity-count"><%= user_edits_count(@user).to_s.rjust(1, '0') %></span>
 </h3>
 
-<% if @user.latest('change_logs').size > 0 %>
+<% if !@user.latest('change_logs').blank? %>
   <ul>
   <% @user.latest('change_logs').each do |edit| %>
   			  	<% if edit.solr_document %>
@@ -11,7 +11,7 @@
   	            <ul>
   	              <li><%= link_to(image_tag(edit.solr_document.images.first), item_path(edit.solr_document)) %></li>
   	              <li class="item-title"><%= item_link(edit.solr_document,:truncate=>true) %></li>
-  	              <li><%= show_as_datetime(edit.created_at) %></li>
+  	              <li><%= show_as_datetime(edit.created_at.in_time_zone) %></li>
   	            </ul>
   	          </li>
   			   <% end %>

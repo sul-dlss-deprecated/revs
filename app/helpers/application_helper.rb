@@ -113,7 +113,7 @@ module ApplicationHelper
   end
   
   def user_edits_count(user)
-    user.visible('change_logs').count
+    user.metadata_updates.count.keys.count
   end
   
   def user_flags_unresolved_count(user)

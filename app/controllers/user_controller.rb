@@ -48,7 +48,6 @@ class UserController < ApplicationController
    @galleries=@galleries.page(@current_page).per(@per_page)
  end
  
-
   # all of the user's item edits
   def edits
     get_paging_params
