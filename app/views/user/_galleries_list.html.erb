@@ -1,7 +1,14 @@
 <% if @galleries.count > 0 %>
 
-  <div class="entries-info">
-    <%= page_entries_info @galleries %>
+  <div class="row results-controls">
+    <div class="span4">
+    </div>
+
+    <div class="span5 saved-item-pagination">
+      <span class="prev-next">
+        <%= page_entries_info @galleries %>
+      </span>
+    </div>
   </div>
 
   <div class="saved-items" id="galleries">
