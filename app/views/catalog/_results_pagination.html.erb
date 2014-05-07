@@ -1,9 +1,7 @@
 <% if paginate_params(@response).num_pages > 1 %>
- <div class="row record-padding">
-  <div class="span9">
-    <div class="pagination">
+  <div class="row record-padding">
+    <div class="span9">
       <%= paginate_rsolr_response @response, :outer_window => 2, :theme => 'blacklight' %>
     </div>
   </div>
- </div>
 <% end %>

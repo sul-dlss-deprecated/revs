@@ -68,9 +68,7 @@
     <% end %>
   </div>
 
-  <div class="span9 pagination">
-   <%= paginate @galleries, :params => {:order=>@order}, :outer_window => 2, :theme => 'blacklight' %>
-  </div>
+  <%= paginate @galleries, :params => {:order=>@order}, :outer_window => 2, :theme => 'blacklight' %>
 
 <% else %>
 
