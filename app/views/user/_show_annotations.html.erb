@@ -12,7 +12,7 @@
 	              <li><%= link_to(image_tag(annotation.solr_document.images.first), item_path(annotation.solr_document)) %><li>
 	              <li class="item-title"><%= item_link(annotation.solr_document,:truncate=>true) %></li>
 	              <li class="annotation"><%= truncate(annotation.text) %></li>
-	              <li><%= show_as_datetime(annotation.created_at) %></li>
+	              <li><%= show_as_datetime(annotation.created_at.in_time_zone) %></li>
 	            </ul>
 	          </li>
 			   <% end %>

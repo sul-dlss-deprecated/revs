@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140505234601) do
+ActiveRecord::Schema.define(:version => 20140415215212) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "user_id"
@@ -75,13 +75,10 @@ ActiveRecord::Schema.define(:version => 20140505234601) do
     t.string   "gallery_type",                    :null => false
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
-    t.integer  "views",        :default => 0,     :null => false
-    t.string   "slug"
   end
 
   add_index "galleries", ["gallery_type"], :name => "index_galleries_on_gallery_type"
   add_index "galleries", ["public"], :name => "index_galleries_on_public"
-  add_index "galleries", ["slug"], :name => "index_galleries_on_slug", :unique => true
   add_index "galleries", ["user_id"], :name => "index_galleries_on_user_id"
 
   create_table "items", :force => true do |t|
@@ -99,12 +96,10 @@ ActiveRecord::Schema.define(:version => 20140505234601) do
     t.text     "description"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-    t.integer  "position"
   end
 
   add_index "saved_items", ["druid"], :name => "index_saved_items_on_druid"
   add_index "saved_items", ["gallery_id"], :name => "index_saved_items_on_gallery_id"
-  add_index "saved_items", ["position"], :name => "index_saved_items_on_position"
 
   create_table "searches", :force => true do |t|
     t.text     "query_params"

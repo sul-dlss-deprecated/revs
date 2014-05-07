@@ -193,6 +193,7 @@ en:
       flagging_user: "Flagged by"
       flag_created: "Flagged on"
       created_on: "Created on"
+      edited_on: "Edited on"
       resolver_username: "Resolved by"
       resolution_notes: "Resolution notes"
       resolution_date: "Resolved on"

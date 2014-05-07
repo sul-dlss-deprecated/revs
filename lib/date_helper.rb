@@ -5,7 +5,7 @@ module DateHelper
   end
 
   def show_as_datetime(datetime)
-    datetime.blank? ? "" : date_object(datetime).strftime('%B %e, %Y')  
+    datetime.blank? ? "" : date_object(datetime).strftime('%B %e, %Y %l:%M %p')  
   end
 
   def date_object(input)

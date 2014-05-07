@@ -11,7 +11,7 @@
   	            <ul>
   	              <li><%= link_to(image_tag(edit.solr_document.images.first), item_path(edit.solr_document)) %></li>
   	              <li class="item-title"><%= item_link(edit.solr_document,:truncate=>true) %></li>
-  	              <li><%= show_as_datetime(edit.created_at) %></li>
+  	              <li><%= show_as_datetime(edit.created_at.in_time_zone) %></li>
   	            </ul>
   	          </li>
   			   <% end %>
