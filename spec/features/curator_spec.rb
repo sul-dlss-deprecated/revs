@@ -63,9 +63,9 @@ describe("Curator Section",:type=>:request,:integration=>true) do
       login_as(curator_login)
       visit catalog_path('qb957rw1430')
       page.should have_content 'metadata edit history'
-      page.should have_content 'May 8, 2013 by Curator Revs'
-      page.should have_content 'April 5, 2013 by admin1'
-      page.should have_content 'January 4, 2013 by Curator Revs'
+      page.should have_content 'May 8, 2013 5:00 PM by Curator Revs'
+      page.should have_content 'April 5, 2013 5:00 PM by admin1'
+      page.should have_content 'January 4, 2013 4:00 PM by Curator Revs'
     end
 
     it "should now allow a non-curator to view edited item history on an item page" do
