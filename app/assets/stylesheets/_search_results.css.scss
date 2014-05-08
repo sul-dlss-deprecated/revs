@@ -124,6 +124,7 @@
   border-top: 2px solid #dedede;
   display: block;
   margin: 18px 0 0;
+  position: relative;
   form {
     margin: 10px 5px;
     .checkbox-toggle {
@@ -157,12 +158,20 @@
     }
     .update-field {
       display: inline-block;
+      margin-left: 15px;
       padding-top: 5px;
+      label.radio.update {
+        display: block;
+      }
+      input[type="radio"] {
+        margin-right: 5px;
+      }
     }
     .update-field-value {
       display: inline-block;
-      float: right;
-      padding-top: 2px;
+      position: absolute;
+      bottom: 8px;
+      right: 10px;
       .btn {
         margin-left: 6px;
       }
@@ -171,6 +180,7 @@
       float: none;
       height: auto;
       padding-top: 0;
+      margin-left: 3px;
     }
     .controls > .checkbox {
       padding-top: 0;
@@ -266,32 +276,23 @@ span.constraints-label {margin-right: 0.5em;}
   }
 }
 @media screen and (max-width: 979px) {
-  .curator-edit-options form {
-    .update-field-value, .update-field {
-      display: block;
-      float: none;
+  .curator-edit-options {
+    position: inherit;
+    .controls-row {
+      margin-left: 3px;
     }
-    .update-field {
-      margin-bottom: 6px;
-      padding-top: 0;
-    }
-    .update-field-value, .update-field-value .btn  {
-      margin-bottom: 0;
-    }
-    #bulk_edit_new_value {
-      margin-bottom: 0;
-      width: 80%;
-    }
-    .help-inline {
-      margin-left: 0;
-    }
-    select {
-      display: inline-block;
-      margin: 8px 0 8px;
-      width: 170px;
-    }
-    #select-all {
-      margin-bottom: 12px;
+    form {
+      .update-field-value {
+        display: block;
+        position: inherit;
+        input {
+          margin-top: 12px;
+        }
+      }
+      .update-field {
+        display: block;
+        margin-left: 0;
+      }
     }
   }
 }
@@ -326,6 +327,12 @@ span.constraints-label {margin-right: 0.5em;}
       width: 100%;
     }
   }
+  .curator-edit-options form .update-field select {
+    margin-top: 10px;
+  }
+  .curator-edit-options form .update-field-value input[type='submit'] {
+    float: right;
+  }
 }
 @media (max-width: 480px) {
   #documents.detailed {
@@ -352,5 +359,10 @@ span.constraints-label {margin-right: 0.5em;}
    #bulk_edit_new_value {
      width: 400px;
    }
+  }
+}
+@media screen and (min-width: 1200px) {
+  .curator-edit-options form .update-field {
+    margin-left: 30px;
   }
 }
