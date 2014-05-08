@@ -14,7 +14,9 @@
       </label>
 
       <div class="update-field">
-        <span class="help-inline">Update</span>
+        <span class="help-inline"><%=radio_button_tag 'bulk_edit[action]','update',@bulk_edit.nil? ? true : @bulk_edit[:action] == 'update'%> <%=t('revs.nav.update')%></span><br />
+        <span class="help-inline"><%=radio_button_tag 'bulk_edit[action]','remove',@bulk_edit.nil? ? false : @bulk_edit[:action] == 'remove'%> <%=t('revs.nav.remove')%> </span>
+
 				<%= select_tag 'bulk_edit[attribute]',options_for_select(bulk_update_fields,@bulk_edit.nil? ? '' : @bulk_edit[:attribute]),class:"span2"%>
       </div>
 

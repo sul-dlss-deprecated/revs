@@ -104,6 +104,7 @@ en:
       collections: 'Collections'
       select_all: 'Select all'
       update: 'Update'
+      remove: 'Remove'
       save_changes: 'Save Changes'
       submit: 'Submit'
       send: 'Send'

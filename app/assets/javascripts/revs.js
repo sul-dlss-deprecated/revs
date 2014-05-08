@@ -51,6 +51,20 @@ $(document).ready(function(){
         });
       }
    });
+
+   // radio button for curator to bulk update values should ensure text box to enter new values is shown
+     $( '.curator-edit-options #bulk_edit_action_update' ).click( function () {
+      $( '#bulk_edit_new_value' ).show();
+    });
+   // radio button for curator to bulk remove values should ensure text box to enter new values is hidden
+     $( '.curator-edit-options #bulk_edit_action_remove' ).click( function () {
+      $( '#bulk_edit_new_value' ).hide();
+    });
+    if ($( '#bulk_edit_action_remove' ).is(':checked')) {
+      $( '#bulk_edit_new_value' ).hide();
+      $( '#bulk_edit_new_value' ).val('');
+    } // if the radio button starts in the checked state, hide the new value box and clear its value
+
    // Called when an individual checkbox is checked or unchecked.
    // Update row status message if user changes individual checkbox
    $('.result-item-checkbox > input[type="checkbox"]').change(function() {
