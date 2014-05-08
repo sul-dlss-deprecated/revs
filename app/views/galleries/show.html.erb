@@ -1,9 +1,11 @@
 <div class="span9">
   <h2>
     <%= @gallery.title %>
-    <span class="label profile-visibility <%= @gallery.public ? 'label-success' : '' %>">
-      <%= @gallery.public ? t('revs.user.public').downcase : t('revs.user.private').downcase %>
-    </span>
+    <% if is_logged_in_user?(current_user) %>
+      <span class="label profile-visibility <%= @gallery.public ? 'label-success' : '' %>">
+        <%= @gallery.public ? t('revs.user.public').downcase : t('revs.user.private').downcase %>
+      </span>
+    <% end %>
   </h2>
 
   <% if @gallery.user != current_user %>
