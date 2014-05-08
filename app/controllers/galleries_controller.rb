@@ -6,6 +6,7 @@ class GalleriesController < ApplicationController
 
   def show
     get_paging_params
+    @reorder=params[:reorder]
     @gallery.update_attributes(:views=>@gallery.views+1 )    
     @saved_item=@gallery.saved_items.page(@current_page).per(@per_page)
   end

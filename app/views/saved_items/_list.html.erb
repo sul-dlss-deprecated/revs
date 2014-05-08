@@ -7,7 +7,7 @@ end%>
 
  <%if saved_items.count > 0%>
 
-  <% if can?(:update,saved_items.first) && saved_items.total_count < @per_page # sorting is only available if we are showing all items and you can update the items%>
+  <% if can?(:update,saved_items.first) && @reorder # sorting is only available if we are in reorder mode and you can update the items%>
     <script type="text/javascript">
 
       $(document).ready(function(){
@@ -46,7 +46,7 @@ end%>
         <div id="saved_item_<%="#{saved_item.id}"%>" data-saved-item-id="<%="#{saved_item.id}"%>" class="row item saved-item-row">
 
           <div class="item-title">
-            <% if can?(:update,saved_item) %>
+            <% if can?(:update,saved_item) && @reorder%>
               <span class="hidden handle">
                 <i title="<%=t('revs.messages.reorder')%>" class="icon-move"></i>
               </span>

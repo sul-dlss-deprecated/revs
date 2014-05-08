@@ -27,6 +27,7 @@ class UserController < ApplicationController
   # all of the user's favorites, only show if the entire profile is public (enfornced with before_filter above)
   def favorites
     get_paging_params
+    @reorder=params[:reorder]
     unsorted_favorites = @user.favorites
     
     #If the user has just been deleted favorites, @current_page might exceed the number of favorites
