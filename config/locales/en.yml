@@ -76,8 +76,9 @@ en:
       resolution_notes_optional: 'Resolution Notes (optional)'
       resolution_notes: 'Resolution notes: '
       resolve: 'Resolve'
-      resolver_id: ' Resolving User ID'
       fixed: 'Fixed Issue'
+      your_closed_flags: 'View your closed flags'
+      all_closed_flags: 'View all closed flags'
       wont_fix: "Won't Fix Issue"
       resolver_username: 'Resolved by: '
       flagged: 'Flagged'
@@ -87,6 +88,8 @@ en:
       plural: 'Flags'
       resolve: 'Resolve'
       none: 'This user does not have any flags.'
+      flag_history: "Flagged by %{flagger} on %{flag_date} with comment '%{comment}'. Marked as %{state_name} by %{resolver} on %{resolve_date}"
+      flag_history_comment: "with comment '%{comment}'"
       personal_none: 'You do not have any flags.'
       you_can_flag_problems: 'You can flag corrections you see with item metadata from the Item Details page.'
       you: "You"
@@ -241,7 +244,7 @@ en:
       metadata_edit_history_show: "View metadata edit history"
       metadata_edit_history_hide: "Hide metadata edit history"
       metadata_edit_history_description: "This item was edited on"
-      are_you_sure_apply_updates: "Are you sure you want to apply this update to all selected items?"
+      are_you_sure_apply_updates: "Are you sure you want to change each of the selected items?  This action cannot be undone."
       you_can_edit_items: "Items you edit will be listed here."
     dashboards: 'Dashboards'
     citations:

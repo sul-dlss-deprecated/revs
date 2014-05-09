@@ -112,6 +112,30 @@ end
 
 # some helper methods to do some quick checks
 
+# Flagging history
+def show_show_your_flagging_history(user_comment,curator_comment)
+  page.should_not have_content I18n.t('revs.flags.all_closed_flags')
+  page.should have_content I18n.t('revs.flags.your_closed_flags')
+  page.should have_content user_comment
+  page.should have_content curator_comment 
+end
+
+# Flagging history
+def show_not_show_flagging_history(user_comment,curator_comment)
+  page.should_not have_content I18n.t('revs.flags.all_closed_flags')
+  page.should_not have_content I18n.t('revs.flags.your_closed_flags')
+  page.should_not have_content user_comment
+  page.should_not have_content curator_comment 
+end
+
+# Flagging history
+def show_show_all_flagging_history(user_comment,curator_comment)
+  page.should have_content I18n.t('revs.flags.all_closed_flags')
+  page.should_not have_content I18n.t('revs.flags.your_closed_flags')
+  page.should have_content user_comment
+  page.should have_content curator_comment 
+end
+
 # Annotations
 def should_allow_annotations  
   page.should have_content(I18n.t('revs.annotations.add'))

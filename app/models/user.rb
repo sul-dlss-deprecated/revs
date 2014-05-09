@@ -102,8 +102,10 @@ class User < ActiveRecord::Base
     else
       latest=visible(class_name)
       latest=self.class.latest_filter(latest)
-      return latest
     end
+    latest=latest.where(:state=>Flag.open) if class_name=='flags'      
+    return latest
+
   end
   
   def metadata_updates

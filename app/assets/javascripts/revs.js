@@ -44,12 +44,10 @@ $(document).ready(function(){
    // Select all rows for edit when 'select all' checkbox is selected.
    $( '.curator-edit-options #select-all' ).click( function () {
       $( '.curator input[type="checkbox"]' ).prop('checked', this.checked);
-      if ($('#bulk_edit_attribute option:selected').text() != "Field to update...") { // don't do anything else if no real field is selected in menu
-        var field = $('#bulk_edit_attribute option:selected').text(); // current field selected in the select menu
-        $('#documents.curator .result-item').each(function() { // loop through all result item rows
-          updateEditStatus(field,'.result-item'); // update status message
-        });
-      }
+      var field = $('#bulk_edit_attribute option:selected').text(); // current field selected in the select menu
+      $('#documents.curator .result-item').each(function() { // loop through all result item rows
+        updateEditStatus(field,'.result-item'); // update status message
+      });
    });
 
    // radio button for curator to bulk update values should ensure text box to enter new values is shown

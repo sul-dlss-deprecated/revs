@@ -153,6 +153,38 @@
 
             </li>
 
+            <% if can?(:add_new_flag_to, @document) && current_user  # flagging history area
+              closed_flags=@document.flags.where(:state=>Flag.closed) # get all closed flags
+              if cannot?(:curate,:all) # non curators can only see their OWN closed flags
+                closed_flags=closed_flags.where(:user_id=>current_user.id)
+                label_text=t('revs.flags.your_closed_flags')
+              else
+                label_text=t('revs.flags.all_closed_flags')
+              end
+              if closed_flags.size > 0  # show the flagging history to logged in users%>
+                <li id="item-flag-history-accordion">
+                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#item-flag-history-accordion" href="#item-flag-history">
+                    <i class="icon-list-ol"></i>
+                    <%=label_text%>
+                    <span class="<%=display_class(closed_flags.size)%> badge badge-revs num-closed-flags-badge">
+                     <%= closed_flags.size%>
+                   </span>
+                  </a>
+                </li>
+                <div id="item-flag-history" class="collapse">
+                  <div class="flag-history-list">
+                    <ul>
+                      <% closed_flags.each do |flag| %>
+                        <li><%=t('revs.flags.flag_history',:flagger=>(flag.user == current_user ? 'you' : flag.user.to_s),:comment=>flag.comment,:flag_date=>show_as_datetime(flag.created_at.in_time_zone),:state_name=>flag.state_display_name,:resolver=>(flag.resolving_user == current_user.id ? 'you' : flag.resolving_username),:resolve_date=>show_as_datetime(flag.resolved_time.in_time_zone))%>
+                          <%=t('revs.flags.flag_history_comment',:comment=>flag.resolution) unless flag.resolution.blank? %>
+                        </li>
+                      <% end %>
+                    </ul>
+                  </div>
+                </div>
+                <% end # end check for a logged in user having resolved flags%>
+            <% end # end check for user has ability to add flags%>
+
 							<% if !user_signed_in? && can?(:add_new_flag_to, @document)%>
 							<li>
 							  <span id="feedback_link">

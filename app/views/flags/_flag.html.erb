@@ -8,7 +8,7 @@
         <%= flag.user == current_user ? t('revs.flags.you') : flag.user.to_s%>
       <% end %>
       on <%=show_as_date(flag.created_at)%>
-      <% if !flag.resolved and can? :resolve, flag %>
+      <% if !flag.resolved? and can? :resolve, flag %>
         <span class="label label-warning pull-right unresolved-label">Unresolved</span>
       <% end %>
       <blockquote><%= flag.comment%></blockquote>
@@ -17,7 +17,7 @@
         <%= button_to t('revs.actions.remove'),flag_path(flag.id), :method=>:delete,:remote=>true, :confirm=>t('revs.flags.are_you_sure'), :class => "btn btn-mini btn-danger" %>
       <% end %>
 
-      <% if not flag.resolved and can? :resolve, flag %>
+      <% if !flag.resolved? and can? :resolve, flag %>
          <%= form_for flag do |f| %>
           <%= f.label :resolution, t('revs.flags.resolution_notes_optional')%>
           <%= f.text_area :resolution, :rows => '2', :class => "input-xlarge" %>
@@ -27,11 +27,11 @@
          <% end %>
       <% end %>
       
-    <% if flag.resolved and can? :administer, flag %>
+    <% if flag.resolved? and can? :administer, flag %>
       <div class="resolution-history">
         <span>
           <label><%= t('revs.flags.resolver_username')%></label>
-          <%= User.find(flag.resolving_user).to_s %>
+          <%= flag.resolving_username %>
         </span>
           <% if !flag.resolution.empty? %>
             <span>

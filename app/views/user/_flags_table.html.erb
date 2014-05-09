@@ -50,7 +50,7 @@
 
       <% flags.each do |flag| %>
        <tr>
-         <td><%= item_link(flag.solr_document,:truncate=>true, :target => '_blank') %></td>
+         <td><%= item_link(flag.solr_document,:truncate=>true, :target => (local_assigns[:curate_view] ? '_blank' : '')) %></td>
          <% if local_assigns[:curate_view]%>
            <td><%=flag.user.nil? ? t('revs.user.anonymous') : display_user_name(flag.user,user_flags_path(flag.user.username))%></td>
          <% end%>
@@ -60,7 +60,7 @@
        <% if Flag.display_resolved_columns(local_assigns[:selection])%>
         <td>
           <% if flag.resolving_user != nil %>
-            <%= display_user_name(User.find(flag.resolving_user))%>
+            <%= flag.resolving_username%>
           <%end%>
         </td>
         <td><%= flag.resolution%></td>
