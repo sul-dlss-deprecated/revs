@@ -453,7 +453,32 @@ namespace :revs do
       end
     end
   end
-  
+
+  desc "Move annotations to flags for a user, run with rake revs:move_annotations_to_flags['Doug Nye']"
+  task :move_annotations_to_flags, [:username] => :environment do |t, args|
+      username=args[:username]  
+      user=User.where(:username=>username).limit(1).first
+      if user.nil?
+        puts "#{username} not found"
+      else
+        annotations=user.annotations
+        if annotations.size == 0 
+          puts "#{username} has no annotations"          
+        else
+          puts "Moving #{annotations.size} annotations for #{username} to flags"
+          annotations.each do |annotation|
+            flag=Flag.create_new({:flag_type=>:error,:comment=>annotation.text,:druid=>annotation.druid},user)
+            if flag.id != nil 
+              annotation.destroy
+              puts "Flag added for #{annotation.druid}; annotation removed"
+            else
+              puts "Flag could not be added for #{annotation.druid}; annotation NOT removed"
+            end
+          end
+        end
+      end
+    end
+
   class RevsUtils    
     extend Revs::Utils
     include Revs::Utils
@@ -494,6 +519,5 @@ namespace :revs do
     end
     return doc.save #Returns true if this all worked
   end
-
 
 end
