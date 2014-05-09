@@ -8,31 +8,33 @@
   </h3>
   
   <ul class="nav nav-tabs">
-      <li class="<%="active" if @tab == @tab_group%>"><a href="#annotations-grouped" data-toggle="tab"><%=t('revs.curator.by_item') %></a></li>
+      <li class="<%="active" if @tab == @tab_list_item%>"><a href="#annotations-grouped" data-toggle="tab"><%=t('revs.curator.by_item') %></a></li>
       <li class="<%="active" if @tab == @tab_list_all%>"><a href="#annotations-list" data-toggle="tab"><%= t('revs.curator.by_annotation') %></a></li>
       <li class="<%="active" if @tab == @tab_list_user%>"><a href="#annotations-user" data-toggle="tab"><%= t('revs.curator.by_user') %></a></li>
   </ul>
 
   <div class="tab-content">
-      <div id='annotations-grouped' class="tab-pane <%="active" if @tab == @tab_group%>">
+      <div id='annotations-grouped' class="tab-pane <%="active" if @tab == @tab_list_item%>">
+          <%= page_entries_info @annotations_by_item, :entry_name=>'annotations' %>
 
         <table class="table table-bordered table-condensed table-hover table-striped">
           <tr>
             <th><%= t('revs.curator.item_title') %></th>
-            <th class="right"><%= link_to t('revs.annotations.count'), annotations_table_curator_tasks_path(:order=>'num_annotations DESC',  :tab=>@tab_group) %></th>
+            <th class="right"><%= link_to t('revs.annotations.count'), annotations_table_curator_tasks_path(:order=>'num_annotations DESC',  :tab=>@tab_list_item) %></th>
           </tr>
-          <% @annotations.each do |annotation| %>
+
+          <% @annotations_by_item.each do |annotation| %>
             <tr>
               <td><%=item_link(annotation.solr_document,:truncate=>true)%></td>
               <td class="right"><%= annotation.num_annotations%></td>
             </tr>
           <% end %>
         </table>        
-        <%= page_entries_info @annotations %>
-        <%= paginate @annotations,:param_name => :pagina2,  :params => {:order=>@order, :tab=>@tab_group} %>
+        <%= paginate @annotations_by_item,:param_name => :pagina,  :params => {:order=>@order_by_item, :tab=>@tab_list_item} %>
       </div>
 
       <div id='annotations-list' class="tab-pane <%="active" if @tab == @tab_list_all%>">
+        <%= page_entries_info @annotations_list, :entry_name=>'annotations' %>
 
         <table class="table table-bordered table-condensed table-hover table-striped">
           <tr>
@@ -50,28 +52,26 @@
             </tr>
           <% end %>
         </table>
-        <%= page_entries_info @annotations_list %>
-        <%= paginate @annotations_list,:param_name => :pagina,  :params => {:order_all=>@order_all, :tab=>@tab_list_all} %>
+        <%= paginate @annotations_list,:param_name => :pagina2,  :params => {:order_all=>@order_all, :tab=>@tab_list_all} %>
       </div>
 
       <div id='annotations-user' class="tab-pane <%="active" if @tab == @tab_list_user%>">
+                <%= page_entries_info @annotations_by_user, :entry_name=>'annotations' %>        
 
         <table class="table table-bordered table-condensed table-hover table-striped">
           <tr>
             <th><%=t('revs.curator.username') %></th>
             <th class="right"><%=link_to t('revs.curator.annotations_made'), annotations_table_curator_tasks_path(:order_user=>'num_annotations DESC', :tab=>@tab_list_user) %></th>
-            <th><%=link_to t('revs.curator.last_edit'), annotations_table_curator_tasks_path(:order_user=>'annotations.updated_at DESC', :tab=>@tab_list_user) %></th>
+            <th><%=link_to t('revs.curator.first_created'), annotations_table_curator_tasks_path(:order_user=>'annotations.created_at DESC', :tab=>@tab_list_user) %></th>
           </tr>
           <% @annotations_by_user.each do |result| %>
             <tr>
               <td><%=display_user_name(result.user,user_annotations_path(result.user.username))%></td>
               <td class="right"><%= result.num_annotations%></td>
-              <td><%=show_as_date(result.updated_at)%></td>
+              <td><%=show_as_date(result.created_at)%></td>
             </tr>
           <% end %>
         </table>
-
-        <%= page_entries_info @annotations_by_user %>        
         <%= paginate @annotations_by_user, :param_name => :pagina3, :params => {:order_user=>@order_user, :tab=>@tab_list_user} %> 
      </div>
 

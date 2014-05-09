@@ -2,6 +2,7 @@ class Curator::TasksController < ApplicationController
 
   before_filter :check_for_curator_logged_in
   before_filter :ajax_only, :only=>[:set_edit_mode,:edit_metadata,:set_top_priority_item]
+  before_filter :get_per_page
 
    def index
      redirect_to flags_table_curator_tasks_path # later we can replace with a landing page
@@ -10,7 +11,6 @@ class Curator::TasksController < ApplicationController
    def flags
      s = params[:selection] || Flag.open
      
-     @per_page=Revs::Application.config.num_default_per_page
      @selection = s.split(',')
      @order=params[:order] || "created_at DESC"
      @order_all=params[:order_all] || "created_at DESC"
@@ -28,19 +28,18 @@ class Curator::TasksController < ApplicationController
    end
    
    def annotations
-     @order = params[:order] || "created_at DESC"
+     @order_by_item = params[:order_by_item] || "num_annotations DESC"
      @order_all = params[:order_all] || "created_at DESC"
-     @order_user = params[:order_user] || "annotations.updated_at DESC"
+     @order_user = params[:order_user] || "annotations.created_at DESC"
      
-     #@annotations = Kaminari.paginate_array(Annotation.order(@order).all).page(params[:page]).per(@per_page)
-     @annotations = Annotation.select('*,COUNT("druid") as num_annotations').group("druid").order(@order).includes(:user).page(params[:pagina2]).per(@per_page)
-     @annotations_list = Kaminari.paginate_array(Annotation.order(@order_all).all).page(params[:pagina]).per(@per_page)
+     @annotations_by_item = Annotation.select('druid,COUNT("druid") as num_annotations').group("druid").order(@order_by_item).includes(:user).page(params[:pagina]).per(@per_page)
+     @annotations_list = Annotation.order(@order_all).page(params[:pagina2]).per(@per_page)
      @annotations_by_user=Annotation.select('*,count(id) as num_annotations').includes(:user).group("user_id").order(@order_user).page(params[:pagina3]).per(@per_page)
      
      @tab_group = 'annotations-group'
      @tab_list_all = 'annotations-list'
      @tab_list_user = 'annotations-by-user'
-     @tab = params[:tab] || @tab_group
+     @tab = params[:tab] || @tab_list_item
    end
    
    def edits
@@ -101,6 +100,11 @@ class Curator::TasksController < ApplicationController
      @document=SolrDocument.find(params[:id])
      @document.set_top_priority
      flash[:success] = t('revs.messages.set_top_priority')
+   end
+
+   private
+   def get_per_page
+     @per_page=params[:per_page] || Revs::Application.config.num_default_per_page
    end
 
 end
