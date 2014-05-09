@@ -46,7 +46,7 @@
           <%= link_to t('revs.user_galleries.edit'), edit_gallery_path(@gallery) %> |
         <% end%>
         <% if can? :destroy, @gallery%>
-          <%= button_to(t('revs.user_galleries.delete'), gallery_path(@gallery), :confirm=>t('revs.actions.confirm_delete'), :method=> :delete, class: 'btn btn-link') %>
+          <%= button_to(t('revs.user_galleries.delete'), gallery_path(@gallery.id), :confirm=>t('revs.actions.confirm_delete'), :method=> :delete, class: 'btn btn-link') %>
         <% end %>
       </div>
     </div>

@@ -200,7 +200,7 @@ class SolrDocument
   ######################
   
   ######################
-  # provides the equivalent of an ActiveRecord has_many relationship with flags, annotations, edits, images and siblings
+  # provides the equivalent of an ActiveRecord has_many relationship with flags, annotations, edits, images and siblings, and helper methods to determine if its a user favorite and which specific user galleries it is in
   def flags
     @flags ||= Flag.includes(:user).where(:druid=>id).where("users.active='t' OR users.active='1' OR flags.user_id IS null").order('flags.created_at desc')
   end
@@ -217,6 +217,10 @@ class SolrDocument
     Gallery.get_favorites_list(user.id).saved_items.where(:druid=>id).size == 1
   end
   
+  def in_galleries(user)
+    Gallery.where(:"saved_items.druid"=>id,:user_id=>user,:gallery_type=>'user').includes(:saved_items)
+  end
+
   def edits
     @edits ||= ChangeLog.includes(:user).where(:druid=>id,:operation=>'metadata update').where(:'users.active'=>true).order('change_logs.created_at desc')
   end

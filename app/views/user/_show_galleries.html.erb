@@ -9,7 +9,7 @@
   	          <li class="activity-item">
   	            <ul>
   	              <li><%= link_to(image_tag(gallery.image), gallery_path(gallery)) if gallery.image %><li>
-  	              <li class="item-title"><%= link_to(gallery.title,gallery_path(gallery.id)) %></li>
+  	              <li class="item-title"><%= link_to(gallery.title,gallery_path(gallery)) %></li>
   	              <% unless gallery.description.blank? %><li class="annotation"><%= truncate(gallery.description) %></li><% end %>
   	              <li><%= show_as_datetime(gallery.created_at) %></li>
   	            </ul>
