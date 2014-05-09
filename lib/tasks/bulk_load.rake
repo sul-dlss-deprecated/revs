@@ -469,6 +469,8 @@ namespace :revs do
           annotations.each do |annotation|
             flag=Flag.create_new({:flag_type=>:error,:comment=>annotation.text,:druid=>annotation.druid},user)
             if flag.id != nil 
+              flag.created_at=annotation.created_at # have the date match the annotation date
+              flag.save
               annotation.destroy
               puts "Flag added for #{annotation.druid}; annotation removed"
             else
