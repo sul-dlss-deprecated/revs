@@ -18,6 +18,7 @@ user_gal1:
   public: true
   title: 'My Awesome Gallery'
   description: 'It is super duper cool.'
+  position: 1
 
 user_gal2:
   user: user  # this is the named "user" fixture object from the users table
@@ -25,3 +26,4 @@ user_gal2:
   public: false
   title: 'Porsche Gallery'
   description: 'this one is private'  
+  position: 50  
