@@ -73,16 +73,22 @@
         </div>
       </div>
     <% end %>
+    <% if from_favorites? %>
+      <div class="row results-nav">
+        <div class="span2 back-to-results">
+           <%=link_to t('revs.nav.return_to_favorites',:user_name=>params[:favorite_user_name]),user_favorites_path(params[:user],extract_paging_params(params)) %>
+        </div>
+        <div class="span3 results-pagination">
+          <span class="previousNextDocument">
+            <%# show previous | next nav for gallery? %>
+          </span>
+        </div>
+      </div>
+    <% end %>
 
     <div class="row">
       <div class="span5">
         <h4 class="show-document-title"><%=@document.title%></h4>
-
-          <% if from_favorites? %>
-              <div id="return_to_favorites">
-                 <%=link_to t('revs.nav.return_to_favorites',:user_name=>params[:favorite_user_name]),user_favorites_path(params[:user],extract_paging_params(params)) %>
-              </div>
-          <% end %>
 
 				<div id="item_details">
           <%= render :partial => "show_default_collection_member", :locals => {:document => @document} %>
@@ -91,7 +97,7 @@
         <ul class="nav nav-list item-actions">
           <li class="nav-header"><%=t('revs.admin.sidebar.actions')%></li>
 
-					<% if can?(:create, SavedItem) %>
+					<% if can?(:create, SavedItem) && (@document.visibility != :hidden || @document.is_favorite?(current_user))%>
 					  <li>
               <div id="favorites_link">
                 <%= render :partial=>'saved_items/add_to_favorites'%>
@@ -99,7 +105,7 @@
             </li>
           <% end %>
 
-					<% if can?(:create, Gallery) && can?(:create, SavedItem)%>
+					<% if can?(:create, Gallery) && can?(:create, SavedItem) && @document.visibility != :hidden%>
 					  <li>
 					    <div id="user_galleries">
                 <%= render(:partial => "saved_items/add_to_gallery") %>

@@ -19,7 +19,7 @@
   </ul>
   <% if user_flags_unresolved_count(@user) > Revs::Application.config.num_latest_user_activity %>
     <p class="more-link">
-      <%= pluralize(user_flags_count(@user) - Revs::Application.config.num_latest_user_activity, t('revs.flags.singular').downcase) %> <%=t('revs.messages.not_shown')%>.
+      <%= pluralize(user_flags_unresolved_count(@user) - Revs::Application.config.num_latest_user_activity, t('revs.flags.singular').downcase) %> <%=t('revs.messages.not_shown')%>.
       <%= link_to "#{t('revs.messages.view_all')} »", user_flags_path(@user.username) %>
     </p>
   <% end %>

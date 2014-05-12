@@ -65,7 +65,7 @@ end%>
               </li>
               <li class="saved-item-actions">
                 <% if can? :destroy, saved_item %>
-                  <%= button_to(t('revs.favorites.remove_from_favorites', :list_type=>list_type_interpolator(gallery_type)), saved_item_path(saved_item.solr_document.id, paging_params({:gallery_id=>saved_item.gallery_id})), :method=> :delete, :confirm=>t('revs.actions.confirm_delete'), class: 'btn btn-link') %>
+                  <%= button_to(t('revs.favorites.remove_from_favorites', :list_type=>list_type_interpolator(gallery_type)), saved_item_path(saved_item.solr_document.id, paging_params(item_link_params)), :method=> :delete, :confirm=>t('revs.actions.confirm_delete'), class: 'btn btn-link') %>
                 <% end %>
                 <% if can? :update, saved_item and !saved_item.description.blank? %>
                   <!-- this link should turn on edit mode for annotation field below -->

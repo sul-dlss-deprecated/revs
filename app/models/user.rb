@@ -60,6 +60,7 @@ class User < ActiveRecord::Base
     ROLES
   end
   
+  # only returning visible items for given class and query
   def self.visibility_filter(things,class_name)
     things.joins("LEFT OUTER JOIN items on items.druid = #{class_name}.druid").where("items.visibility_value = #{SolrDocument.visibility_mappings[:visible]} OR items.visibility_value is null")    
   end

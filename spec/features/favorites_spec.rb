@@ -102,7 +102,7 @@ describe("Favorites",:type=>:request,:integration=>true) do
     visit user_favorites_path(user_login)
     page.should have_content @Next
     page.should_not have_content @Previous
-    
+
     #Make Sure We Go To the Second Page
     click_link(@Next)
 
@@ -160,9 +160,15 @@ describe("Favorites",:type=>:request,:integration=>true) do
     visit user_favorites_path(user_login)
     page.should have_no_content get_title_from_druid(@druid1)
     page.should have_content I18n.t('revs.favorites.none')
-    
-    
   end
-  
+ 
+   it "should not allow a curator to add a hidden item to their favorites or gallery" do
+    hidden_druid=default_hidden_druids.first
+    login_as(curator_login)
+    visit catalog_path(hidden_druid)
+    page.should have_no_content @save_favorites_button
+    page.should have_no_content I18n.t('revs.user_galleries.add_to_gallery')
+    should_not_have_button("Add") # add to gallery button
+  end 
   
 end
