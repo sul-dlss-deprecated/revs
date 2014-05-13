@@ -62,7 +62,7 @@ describe("Galleries",:type=>:request,:integration=>true) do
     page.should have_content I18n.t('revs.user_galleries.none')
   end
 
-  it "should not allow a user to view a public gallery but not a private gallery" do
+  it "should allow a user to view a public gallery but not a private gallery" do
     user=get_user(user_login)
     gallery1=Gallery.where(:title=>@gallery1_title).first
     gallery2=Gallery.where(:title=>@gallery2_title).first

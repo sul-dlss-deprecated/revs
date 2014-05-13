@@ -37,7 +37,7 @@ describe("Favorites",:type=>:request,:integration=>true) do
     should_have_button(@remove_favorites_button)    
 
     user.favorites.where(:druid=>@druid1).size.should == 1 # favorite is now saved
-    user.favorites.size.should == 1 # user now has one favorite
+    user.favorites.reload.size.should == 1 # user now has one favorite
         
     # druid2 is not a favorite yet
     visit catalog_path(@druid2)
@@ -46,7 +46,7 @@ describe("Favorites",:type=>:request,:integration=>true) do
     click_button(@save_favorites_button) # save it!
 
     user.favorites.where(:druid=>@druid2).size.should == 1 # favorite is now saved
-    user.favorites.size.should == 2 # user now has two favorites
+    user.favorites.reload.size.should == 2 # user now has two favorites
 
     click_button(@remove_favorites_button) # get rid of the favorite
 
@@ -55,7 +55,7 @@ describe("Favorites",:type=>:request,:integration=>true) do
     
     # favorite is gone
     user.favorites.where(:druid=>@druid2).size.should == 0 # favorite is now gone
-    user.favorites.size.should == 1 # user now has one favorite    
+    user.favorites.reload.size.should == 1 # user now has one favorite    
     
   end
   
@@ -170,5 +170,14 @@ describe("Favorites",:type=>:request,:integration=>true) do
     page.should have_no_content I18n.t('revs.user_galleries.add_to_gallery')
     should_not_have_button("Add") # add to gallery button
   end 
+
+  it "should automatically create the default favorites list if it does not exist for an existing user when they login" do
+    beta_user=get_user(beta_login)
+    beta_user.favorites_list.should be_nil # doesn't exist yet
+    login_as(beta_login)
+    beta_user=get_user(beta_login)
+    beta_user.favorites_list.should_not be_nil # created it
+    beta_user.favorites_list.class.should == Gallery
+  end
   
 end

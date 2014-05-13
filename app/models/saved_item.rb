@@ -32,7 +32,7 @@ class SavedItem < WithSolrDocument
     user_id=params[:user_id]
     druid=params[:druid]
     description=params[:description]
-    gallery=Gallery.get_favorites_list(user_id) # creates the default favorites list if it does not exist
+    gallery=User.find(user_id).favorites_list
     return self.create(:druid=>druid,:gallery_id=>gallery.id,:description=>description)
   end
 
@@ -46,16 +46,12 @@ class SavedItem < WithSolrDocument
   def self.remove_favorite(params={})
     user_id=params[:user_id]
     druid=params[:druid]
-    gallery=Gallery.get_favorites_list(user_id) 
-    self.where(:druid=>druid,:gallery_id=>gallery.id).limit(1).first.destroy if gallery
+    gallery=User.find(user_id).favorites_list
+    return self.where(:druid=>druid,:gallery_id=>gallery.id).limit(1).first.destroy
   end
   
   def only_one_saved_item_per_druid_per_gallery
     errors.add(:druid, :cannot_be_more_than_one_saved_item_per_druid_per_gallery) if self.class.where(:druid=>self.druid,:gallery_id=>self.gallery_id).size != 0
-  end
-  
-  def self.find_by_id(id)
-    return self.where(:id=>id).first
   end
   
 end

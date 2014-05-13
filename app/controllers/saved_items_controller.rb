@@ -75,12 +75,11 @@ class SavedItemsController < ApplicationController
   
   def update
     @div = "#description#{params[:id]}"
-    item = SavedItem.find_by_id(params[:id])
-    description = params[:saved_item][:description]
-    item.update_attributes({:description => description})
+    @saved_item = SavedItem.find(params[:id])
+    @saved_item.description = params[:saved_item][:description]
+    @saved_item.save
     @message = t('revs.favorites.item_note_updated')
     @link_text = t('revs.favorites.edit_item_note')
-    @saved_item =  SavedItem.find_by_id(params[:id]) #refetch with new description
     respond_to do |format|
       format.html { flash[:success]=@message
                     redirect_to user_favorites_path(current_user.username,:page=>params[:page],:order=>params[:order])}
@@ -98,7 +97,7 @@ class SavedItemsController < ApplicationController
 
   def cancel
     @div = "#description#{params[:id]}"
-    @saved_item =  SavedItem.find_by_id(params[:id]) 
+    @saved_item =  SavedItem.find(params[:id]) 
     @message=""
     @link_text=""
     respond_to do |format|
@@ -109,7 +108,7 @@ class SavedItemsController < ApplicationController
   
   def edit
     @div = "#description#{params[:id]}"
-    @saved_item = SavedItem.find_by_id(params[:id])
+    @saved_item = SavedItem.find(params[:id])
     @target = params[:id]
     respond_to do |format|
       format.html { redirect_to user_favorites_path(current_user.username, :edit_id => params[:id],:page=>params[:page],:order=>params[:order])}

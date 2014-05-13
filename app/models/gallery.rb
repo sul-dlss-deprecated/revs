@@ -7,7 +7,7 @@ class Gallery < ActiveRecord::Base
   include RankedModel
   ranks :row_order,:column => :position
 
-  has_many :saved_items, :order=>"position ASC, created_at DESC", :dependent => :destroy
+  has_many :saved_items, :order=>"position ASC", :dependent => :destroy
 
   GALLERY_TYPES=%w{favorites user}
 
@@ -21,18 +21,6 @@ class Gallery < ActiveRecord::Base
   def image
     item=saved_items.limit(1)
     item.size == 0 ? nil : item.first.solr_document.images.first
-  end
-  
-  # returns the default favorites gallery for the given user ID (and create it does not exist) - returns the gallery
-  def self.get_favorites_list(user_id)
-    user=User.find(user_id)
-    gallery=user.favorites_list
-    gallery=self.create_favorites_list(user_id) if gallery.blank?      
-    return gallery
-  end
-  
-  def self.create_favorites_list(user_id)
-      gallery=self.create(:user_id=>user_id,:gallery_type=>:favorites,:title=>I18n.t('revs.favorites.head'))
   end
 
   def only_one_favorites_list_per_user

@@ -105,7 +105,7 @@ class UserController < ApplicationController
   def load_user_profile
     @id=params[:id]
     @name=params[:name]
-    @user = (@id.blank? ? User.find_by_username(@name) : User.find_by_id(@id))
+    @user = (@id.blank? ? User.find_by_username(@name) : User.find(@id))
     if @user
       @latest_annotations=@user.annotations.limit(Revs::Application.config.num_latest_user_activity)
       @latest_flags=@user.flags.where(:state=>Flag.open).limit(Revs::Application.config.num_latest_user_activity)
