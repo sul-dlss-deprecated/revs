@@ -235,7 +235,7 @@ en:
       first_created: "First created"
       edits_made: "Edits made"
       flags_made: "Flags made"
-      galleries_made: "Total Galleries (includes 'favorites' list)"
+      galleries_made: "Total Galleries (includes private and 'favorites' lists)"
       favorites_made: "Total Saved Items"
       total_times_saved: "Saves in galleries/favorites"
       annotations_made: "Annotations made"
