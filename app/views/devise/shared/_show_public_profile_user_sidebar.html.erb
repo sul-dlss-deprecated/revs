@@ -5,20 +5,20 @@
       <li class="nav-header"><%= t('revs.authentication.sidebar.actions') %></li>
       <% if @user.public %>
 				<li><%= link_to t('revs.user.view_profile'), user_profile_name_path(@user.username) %></li>
-				<% if user_favorites_count(@user) > 0 %>
+				<% if favorites_count(@user) > 0 %>
           <li><%= link_to t('revs.user.view_all_favorites'), user_favorites_path(@user.username) %></li>
         <% end %>
       <% end %>
-      <% if user_galleries_count(@user) > 0 %>
+      <% if galleries_count(@user) > 0 %>
         <li><%= link_to t('revs.user.view_all_galleries'), user_galleries_path(@user.username) %></li>
       <% end %>
-      <% if user_edits_count(@user) > 0 %>
+      <% if edits_count(@user) > 0 %>
         <li><%= link_to t('revs.user.view_all_edits'), user_edits_path(@user.username) %></li>
       <% end %>
-			<% if user_annotations_count(@user) > 0 %>
+			<% if annotations_count(@user) > 0 %>
         <li><%= link_to t('revs.user.view_all_annotations'), user_annotations_path(@user.username) %></li>
       <% end %>
-			<% if user_flags_count(@user) > 0 %>
+			<% if flags_count(@user) > 0 %>
         <li><%= link_to t('revs.user.view_all_flags'), user_flags_path(@user.username) %></li>
       <% end %>
     </ul>

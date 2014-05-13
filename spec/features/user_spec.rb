@@ -124,13 +124,13 @@ describe("User registration system",:type=>:request,:integration=>true) do
     login_as(user_login) # this user has annotations
     visit user_profile_name_path(user_login)
     current_path.should == user_profile_name_path(user_login)
-    page.should have_content 'View your annotations'
+    page.should have_content I18n.t('revs.user.view_your_annotations')
     logout
 
-    login_as(curator_login) # this user does not have annotations
-    visit user_profile_name_path(curator_login)
-    current_path.should == user_profile_name_path(curator_login)
-    page.should_not have_content 'View your annotations'
+    login_as(beta_login) # this user does not have annotations
+    visit user_profile_name_path(beta_login)
+    current_path.should == user_profile_name_path(beta_login)
+    page.should_not have_content I18n.t('revs.user.view_your_annotations')
   end
 
   it "should show correct number of annotations made by user on that user's profile page, along with most recent annotations and flags" do
@@ -144,6 +144,19 @@ describe("User registration system",:type=>:request,:integration=>true) do
     visit  user_profile_name_path(user_login)
     current_path.should ==  user_profile_name_path(user_login)
     ["Annotations 1","air intake?","Flags","Sebring 12 Hour, Green Park Straight, January 4"].each {|title| page.should have_content(title)}
+  end
+
+  it "should show hidden item annotations to the curator, but not to non-logged in user" do
+    login_as(curator_login)
+    visit user_profile_name_path(curator_login)
+    current_path.should == user_profile_name_path(curator_login)
+    page.should have_content 'Annotations 1' # the curators annotation is hidden, but visible to them since they are logged in
+    page.should have_content I18n.t('revs.user.view_your_annotations')
+    logout
+
+    visit user_profile_name_path(curator_login)
+    current_path.should ==  user_profile_name_path(curator_login)
+    page.should have_content I18n.t('revs.annotations.none') # none are visible since the only one is hidden
   end
 
   it "should show correct number of item edits made by user on that user's profile page, along with most recent item edits" do

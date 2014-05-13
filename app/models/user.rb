@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
 
+  include Blacklight::User
+
   # class generated with CarrierWave
   mount_uploader :avatar, AvatarUploader
   validates_integrity_of  :avatar
@@ -24,25 +26,22 @@ class User < ActiveRecord::Base
   attr_accessor :subscribe_to_mailing_list, :subscribe_to_revs_mailing_list # not persisted, just used on the signup form
   attr_accessor :login # virtual method that will refer to either email or username
   
-  has_many :annotations, :dependent => :destroy
-  has_many :flags, :dependent => :destroy
-  has_many :change_logs, :dependent => :destroy
-  has_one  :favorites_list, :conditions=>'gallery_type="favorites"', :dependent => :destroy, :class_name=>'Gallery'
-  has_many :galleries, :conditions=>'gallery_type="user"', :dependent => :destroy
-  has_many :saved_items, :through=>:galleries
+  # all other has_many associations are done via custom methods below so we can add visibility filtering for items
+  has_one :favorites_list, :conditions=>'gallery_type="favorites"', :dependent => :destroy, :class_name=>'Gallery'
 
   before_validation :assign_default_role, :if=>lambda{no_role?}
   before_save :trim_names
   after_create :signup_for_mailing_list, :if=>lambda{subscribe_to_mailing_list=='1'}
   after_create :signup_for_revs_institute_mailing_list, :if=>lambda{subscribe_to_revs_mailing_list=='1'}
-  after_save :create_default_favorites_list # create the default favorites list if it doesn't exist when a user logs in
   after_create :create_default_favorites_list # create the default favorites list when accounts are created
+
+  after_save :create_default_favorites_list # create the default favorites list if it doesn't exist when a user logs in
+  before_destroy :destroy_associated_items
 
   validate :check_role_name
   validates :username, :uniqueness => { :case_sensitive => false }
   validates :username, :length => { :in => 5..50}
   validates :username, :format => { :with => /\A\D.+/,:message => "must start with a letter" }
-  include Blacklight::User
 
   delegate :can?, :cannot?, :to => :ability # this saves us some typing so we can ask user.can? instead of user.ability.can?
   
@@ -65,23 +64,58 @@ class User < ActiveRecord::Base
     ROLES
   end
   
-  # only returning visible items for given class and query
-  def self.visibility_filter(things,class_name)
-    things.joins("LEFT OUTER JOIN items on items.druid = #{class_name}.druid").where("items.visibility_value = #{SolrDocument.visibility_mappings[:visible]} OR items.visibility_value is null")    
+  # only returning visible items for given class and query depending on user ability passed in
+  def self.visibility_filter(things,class_name,user=nil)
+    user.blank? || user.cannot?(:view_hidden, SolrDocument) ? things.joins("LEFT OUTER JOIN items on items.druid = #{class_name}.druid").where("items.visibility_value = #{SolrDocument.visibility_mappings[:visible]} OR items.visibility_value is null") : things
   end
+ 
   #### class level methods
 
-  ### other associations
-  # get the user's favorites 
-  def favorites
-    favorites_list.saved_items 
+  # if we kill this user, destroy the associated items (needed since we do custom has_many getters)
+  def destroy_associated_items
+    galleries.destroy_all
+    annotations.destroy_all
+    flags.destroy_all
+    change_logs.destroy_all
+  end
+
+  def saved_items(user=nil)
+    self.class.visibility_filter(SavedItem.includes(:gallery).where(:'galleries.user_id'=>id),'saved_items',user)
+  end
+
+  ### has_many custom associations, so we can add visibility filtering 
+  # get the user's galleries,  pass in a second user (like the logged in user) to decide if public galleries should be returned as well
+  def galleries(user=nil)
+    galleries=Gallery.where(:user_id=>id,:gallery_type=>'user')
+    galleries=galleries.where(:public=>true) if user.blank? || user != self
+    galleries
+  end
+
+  # get the user's favorites, pass in a second user (like the logged in user) to decide if hidden item favorites should be returned as well
+  def favorites(user=nil)
+    self.class.visibility_filter(favorites_list.saved_items(user),'saved_items',user)
+  end
+
+  # get the user's annotations, pass in a second user (like the logged in user) to decide if hidden item annotations should be returned as well
+  def annotations(user=nil)
+    self.class.visibility_filter(Annotation.where(:user_id=>id),'annotations',user)
+  end
+
+  # get the user's flags, pass in a second user (like the logged in user) to decide if hidden item flags should be returned as well
+  def flags(user=nil)
+    self.class.visibility_filter(Flag.where(:user_id=>id),'flags',user)
   end
 
   # get just metadata updates from the change logs, grouped by druid
-  def metadata_updates
-    visible('change_logs').group('change_logs.druid').where(:operation=>'metadata update')
+  def change_logs(user=nil)
+    self.class.visibility_filter(ChangeLog.where(:user_id=>id),'change_logs',user)
   end
-  ### other associations
+
+  # get just metadata updates from the change logs, grouped by druid
+  def metadata_updates(user=nil)
+    change_logs(user).where(:user_id=>id,:operation=>'metadata update').group('change_logs.druid')
+  end
+  ### associations
 
   # create the default favoritest list unless it already exists (done at account create and login, just to be sure it exists)
   def create_default_favorites_list
@@ -103,13 +137,6 @@ class User < ActiveRecord::Base
   def after_database_authentication
     self.increment!(:login_count)
     create_default_favorites_list
-  end
- 
-  def visible(class_name)
-    visible=eval("self.#{class_name}")
-    visible=self.class.visibility_filter(visible,class_name)
-    visible=visible.where(:operation=>'metadata update') if class_name=='change_logs' 
-    return visible   
   end
   
   # override devise method --- stanford users are never timed out; regular users are timed out according to devise rules

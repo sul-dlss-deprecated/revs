@@ -93,35 +93,35 @@ module ApplicationHelper
   end
   
   def has_activity?(user)
-    user_favorites_count(@user) > 0 || user_annotations_count(@user) > 0 || user_flags_count(@user) > 0 || user_edits_count(@user) > 0
+    favorites_count(user) > 0 || annotations_count(user) > 0 || flags_count(user) > 0 || edits_count(user) > 0 || galleries_count(user) > 0
   end
   
-  def user_favorites_count(user)
-    user.favorites.count
+  def favorites_count(user)
+    user.favorites(current_user).count
   end
   
-  def user_galleries_count(user)
-    user.galleries.count
+  def galleries_count(user)
+    user.galleries(current_user).count
   end
   
-  def user_annotations_count(user)
-    user.visible('annotations').count
+  def annotations_count(user)
+    user.annotations(current_user).count
   end
 
-  def user_flags_count(user)
-    user.visible('flags').count
+  def flags_count(user)
+    user.flags(current_user).count
   end
   
-  def user_edits_count(user)
+  def edits_count(user)
     user.metadata_updates.count.keys.count
   end
   
-  def user_flags_unresolved_count(user)
-    return user.visible('flags').unresolved_count
+  def flags_unresolved_count(user)
+    return user.flags(current_user).where(:state=>Flag.open).count
   end
   
-  def user_flags_resolved_count(user)
-    return user_flags_count(user) - user_flags_unresolved_count(user)
+  def flags_resolved_count(user)
+    return flags_count(user) - flags_unresolved_count(user)
   end
 
   def display_sidebar_searchbox

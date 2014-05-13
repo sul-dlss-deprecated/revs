@@ -1,6 +1,6 @@
 <h3>
   <%=t('revs.curator.edits')%>
-  <span class="activity-count"><%= user_edits_count(@user).to_s.rjust(1, '0') %></span>
+  <span class="activity-count"><%= edits_count(@user).to_s.rjust(1, '0') %></span>
 </h3>
 
 <% if !@latest_edits.blank? %>
@@ -17,9 +17,9 @@
   			   <% end %>
   <% end %>
   </ul>
-  <% if user_edits_count(@user) > Revs::Application.config.num_latest_user_activity %>
+  <% if edits_count(@user) > Revs::Application.config.num_latest_user_activity %>
     <p class="more-link">
-      <%= pluralize(user_edits_count(@user) - Revs::Application.config.num_latest_user_activity, 'edit') %> <%=t('revs.messages.not_shown')%>.
+      <%= pluralize(edits_count(@user) - Revs::Application.config.num_latest_user_activity, 'edit') %> <%=t('revs.messages.not_shown')%>.
       <%= link_to "#{t('revs.messages.view_all')} »", user_edits_path(@user.username) %>
     </p>
   <% end %>

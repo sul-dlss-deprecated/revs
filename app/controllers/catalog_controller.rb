@@ -103,11 +103,11 @@ class CatalogController < ApplicationController
         return 
       end
       @gallery=@galleries.first
-      if (!is_logged_in_user?(@gallery.user) && !@gallery.public)  # we should not be see the gallery items if its not public and that user is not logged in
+      if (!is_logged_in_user?(@gallery.user) && !@gallery.public)  # we should not see the gallery items if its not public and that user is not logged in
         not_authorized
         return
       end
-      @saved_items=@gallery.saved_items.limit(CatalogController.blacklight_config.collection_member_grid_items)
+      @saved_items=@gallery.saved_items(current_user).limit(CatalogController.blacklight_config.collection_member_grid_items)
     end
 
   end

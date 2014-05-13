@@ -69,21 +69,40 @@ describe("Favorites",:type=>:request,:integration=>true) do
 
   end
 
-  it "should show favorites on a user's profile page if they have favorites and full favorites page should show all of them" do
-    
+  it "should show favorites on a user's profile page if they have favorites and full favorites page should show all of them, including hidden ones since this is a curator" do
     login_as(curator_login)
     visit user_profile_name_path(curator_login)
     page.should_not have_content I18n.t('revs.favorites.you_can_save_favorites')
     page.should have_content "#{I18n.t('revs.favorites.head')} 4"
     page.should have_content "1 #{I18n.t('revs.favorites.singular')} not shown"
     visit user_favorites_path(curator_login)
-    page.should have_content "Bryar 250 Trans-American:10"
+    page.should have_content "Bryar 250 Trans-American:10" # this one is hidden, but shows up for curators
     page.should have_content "A Somewhat Shorter Than Average Title"
     page.should have_content "Thompson Raceway, May 1 -- AND A long title can go here so let's see how it looks when it is really long"
     page.should have_content "Marlboro 12 Hour, August 12-14"
-
   end
-  
+ 
+   it "should not show hidden favorites to a non-logged in user on a public user's profile page if they are hidden" do
+    visit user_profile_name_path(curator_login)
+    page.should_not have_content I18n.t('revs.favorites.you_can_save_favorites')
+    page.should have_content "#{I18n.t('revs.favorites.head')} 3"
+    visit user_favorites_path(curator_login)
+    page.should_not have_content "Bryar 250 Trans-American:10" # this one is hidden, and does not show up for non logged in users
+    page.should have_content "A Somewhat Shorter Than Average Title"
+    page.should have_content "Thompson Raceway, May 1 -- AND A long title can go here so let's see how it looks when it is really long"
+    page.should have_content "Marlboro 12 Hour, August 12-14"
+  end
+
+   it "should not show hidden favorites to a logged in user on their own profile page if they are not curators/admins" do
+    login_as(user2_login)
+    visit user_profile_name_path(user2_login)
+    page.should_not have_content I18n.t('revs.favorites.you_can_save_favorites')
+    page.should have_content "#{I18n.t('revs.favorites.head')} 1"
+    visit user_favorites_path(user2_login)
+    page.should have_content "Lime Rock Continental, September 1"
+    page.should_not have_content "Bryar 250 Trans-American:10" # this one is hidden, and does not show up for non logged in users
+  end
+
   it "should allow a user to see a list of his favorites that paginates and allow the user to move between pages" do
     
     original_default_per_page=Revs::Application.config.num_default_per_page

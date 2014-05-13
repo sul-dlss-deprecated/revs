@@ -58,6 +58,10 @@ def user_login
   'user1'   
 end
 
+def user2_login
+  'user2'   
+end
+
 def sunet_login
   'sunetuser@stanford.edu'
 end

@@ -26,12 +26,12 @@
 
         <div class="span4 item-details">
           <div class="thumbnail-preview">
-            <%= link_to(image_tag(gallery.image), gallery_path(gallery)) if gallery.image %>
+            <%= link_to(image_tag(gallery.image(current_user)), gallery_path(gallery)) if gallery.image(current_user) %>
           </div>
           <ul>
             <li class="item-creation-date">
               <span><%=t('revs.user_galleries.total_items')%>: </span>
-              <%= gallery.saved_items.count %>
+              <%= gallery.saved_items(current_user).count %>
             </li>
             <% if can? :update, gallery%>
               <li class="item-creation-date">
@@ -55,7 +55,7 @@
                  | <%= link_to t('revs.actions.edit'), edit_gallery_path(gallery,:page=>params[:page],:order=>params[:order]), :id=>"edit_#{gallery.id}" %> |
               <% end%>
               <% if can? :destroy, gallery%>
-                <%=button_to(t('revs.actions.delete'), gallery_path(gallery,:page=>params[:page],:order=>params[:order]), :id=>"delete_#{gallery.id}", :confirm=>t('revs.actions.confirm_delete'), :method=> :delete, :remote=>true, class: 'btn btn-link') %>
+                <%=button_to(t('revs.actions.delete'), gallery_path(gallery.id,:page=>params[:page],:order=>params[:order]), :id=>"delete_#{gallery.id}", :confirm=>t('revs.actions.confirm_delete'), :method=> :delete, :remote=>true, class: 'btn btn-link') %>
               <% end %>
             </li>
           </ul>

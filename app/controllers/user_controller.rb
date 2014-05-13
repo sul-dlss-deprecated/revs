@@ -21,14 +21,14 @@ class UserController < ApplicationController
   # all of the user's annotations
   def annotations
     get_paging_params
-    @annotations=@user.visible('annotations').order(@order).page(@current_page).per(@per_page)
+    @annotations=@user.annotations(current_user).order(@order).page(@current_page).per(@per_page)
   end
 
   # all of the user's favorites, only show if the entire profile is public (enfornced with before_filter above)
   def favorites
     get_paging_params
     @reorder=params[:reorder]
-    unsorted_favorites = @user.favorites
+    unsorted_favorites = @user.favorites(current_user)
     
     #If the user has just been deleted favorites, @current_page might exceed the number of favorites
     max_pages = unsorted_favorites.count / @per_page
@@ -44,9 +44,7 @@ class UserController < ApplicationController
   
  def galleries
    get_paging_params
-   @galleries=@user.galleries
-   @galleries=@galleries.where(:public=>true) unless @user == current_user # only show public galleries listed unless it is the current user
-   @galleries=@galleries.page(@current_page).per(@per_page)
+   @galleries=@user.galleries(current_user).page(@current_page).per(@per_page)
  end
  
   # all of the user's item edits
@@ -88,12 +86,9 @@ class UserController < ApplicationController
     flags = []
       
       if user == nil #curator, we want all flags
-         temp = Flag.scoped
-         temp = temp.where(:state=>states).order(sort)
+         temp = Flag.where(:state=>states).order(sort)
       else
-        temp = Flag.scoped
-        temp = User.visibility_filter(temp,'flags')
-        temp = temp.where(:state=>states, :user_id=> @user.id).order(sort)
+        temp = user.flags(current_user).where(:state=>states, :user_id=> @user.id).order(sort)
       end
      
     flags = temp || []  
@@ -108,11 +103,11 @@ class UserController < ApplicationController
     @user = (@id.blank? ? User.find_by_username(@name) : User.find(@id))
     if @user
       @user.create_default_favorites_list # create the default favorites list if for some reason it does not exist
-      @latest_annotations=@user.annotations.limit(Revs::Application.config.num_latest_user_activity)
-      @latest_flags=@user.flags.where(:state=>Flag.open).limit(Revs::Application.config.num_latest_user_activity)
-      @latest_edits=@user.metadata_updates.order('change_logs.created_at desc').limit(Revs::Application.config.num_latest_user_activity)
-      @latest_galleries=@user.galleries.order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
-      @latest_favorites=@user.favorites.order('saved_items.created_at desc').limit(Revs::Application.config.num_latest_user_activity)
+      @latest_annotations=@user.annotations(current_user).order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
+      @latest_flags=@user.flags(current_user).where(:state=>Flag.open).order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
+      @latest_edits=@user.metadata_updates(current_user).order('change_logs.created_at desc').limit(Revs::Application.config.num_latest_user_activity)
+      @latest_galleries=@user.galleries(current_user).order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
+      @latest_favorites=@user.favorites(current_user).order('saved_items.created_at desc').limit(Revs::Application.config.num_latest_user_activity)
     else
       profile_not_found
     end

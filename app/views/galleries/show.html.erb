@@ -13,9 +13,9 @@
   <% end %>
 
   <div class="row">
-    <% if @gallery.image %>
+    <% if @gallery.image(current_user) %>
       <div class="span2 hidden-phone">
-        <%= link_to(image_tag(@gallery.image, class: "thumbnail-preview"), gallery_path(@gallery.id)) %>
+        <%= link_to(image_tag(@gallery.image(current_user), class: "thumbnail-preview"), gallery_path(@gallery.id)) %>
       </div>
     <% end %>
 
@@ -23,7 +23,7 @@
       <ul class="inline item-stats">
         <li>
           <span class="item-stats-heading"><%=t('revs.user_galleries.total_items')%>:</span>
-          <%= @gallery.saved_items.size %>
+          <%= @gallery.saved_items(current_user).size %>
         </li>
         <li>
           <span class="item-stats-heading"><%=t('revs.messages.total_views')%>:</span>
@@ -55,7 +55,7 @@
   <div class="row">
     <div id="content" class="span9 favorites-index">
        <div id="favorites_area">
-         <%=render :partial => "saved_items/list", :locals=>{:saved_items=>Kaminari.paginate_array(@gallery.saved_items.order(@order)).page(@current_page).per(@per_page),:gallery_type=>'user'} %>
+         <%=render :partial => "saved_items/list", :locals=>{:saved_items=>Kaminari.paginate_array(@gallery.saved_items(current_user).order(@order)).page(@current_page).per(@per_page),:gallery_type=>'user'} %>
        </div>
     </div>
   </div>

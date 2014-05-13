@@ -21,7 +21,7 @@ describe("Galleries",:type=>:request,:integration=>true) do
     user=get_user(user_login)
     gallery=user.galleries.where(:title=>@gallery1_title).first
     login_as(user_login)
-    gallery.saved_items.count == 0 # no items in this gallery yet
+    gallery.saved_items(user).count == 0 # no items in this gallery yet
     
     visit catalog_path(@druid1)
     should_have_button(@add_to_gallery)
@@ -29,7 +29,7 @@ describe("Galleries",:type=>:request,:integration=>true) do
     click_button @add_to_gallery
     
     gallery.reload
-    gallery.saved_items.count == 1 # now we have an item in this gallery
+    gallery.saved_items(user).count == 1 # now we have an item in this gallery
   end
   
   it "should show user galleries on their profile page and should show the page with all user galleries" do
@@ -81,7 +81,7 @@ describe("Galleries",:type=>:request,:integration=>true) do
     new_gallery_description='It rulz'
     user=get_user(user_login)
     login_as(user_login)
-    user.galleries.count.should == 2 # these are from the fixtures
+    user.galleries(user).count.should == 2 # these are from the fixtures
     visit new_gallery_path
     fill_in 'gallery_title', :with=>new_gallery_title
     fill_in 'gallery_description', :with=>new_gallery_description
@@ -89,7 +89,7 @@ describe("Galleries",:type=>:request,:integration=>true) do
     current_path.should == user_galleries_path(user_login)
     page.should have_content(new_gallery_title)
     page.should have_content(new_gallery_description)
-    user.galleries.count.should == 3 # now we have a new gallery
+    user.galleries(user).count.should == 3 # now we have a new gallery
     new_gallery=user.galleries.last
     new_gallery.public = false # default to private
     new_gallery.title=new_gallery_title
@@ -99,13 +99,13 @@ describe("Galleries",:type=>:request,:integration=>true) do
   it "should allow a logged in user to delete their own gallery" do
     user=get_user(user_login)
     login_as(user_login)
-    user.galleries.count.should == 2 # these are from the fixtures
+    user.galleries(user).count.should == 2 # these are from the fixtures
     visit user_galleries_path(user_login)
     page.should have_content(@gallery1_title)
     gallery1=Gallery.where(:title=>@gallery1_title).first
     click_button "delete_#{gallery1.id}"
     page.should_not have_content(@gallery1_title)
-    user.galleries.count.should == 1 # you just deleted it
+    user.galleries(user).count.should == 1 # you just deleted it
   end 
 
   it "should allow a logged in user to edit their own gallery" do

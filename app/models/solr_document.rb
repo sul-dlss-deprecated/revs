@@ -218,7 +218,7 @@ class SolrDocument
   end
   
   def in_galleries(user)
-    Gallery.where(:"saved_items.druid"=>id,:user_id=>user,:gallery_type=>'user').includes(:saved_items)
+    Gallery.where(:"saved_items.druid"=>id,:user_id=>user,:gallery_type=>'user').includes(:all_saved_items)
   end
 
   def edits
