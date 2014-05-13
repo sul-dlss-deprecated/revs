@@ -50,10 +50,6 @@ class SavedItem < WithSolrDocument
     self.where(:druid=>druid,:gallery_id=>gallery.id).limit(1).first.destroy if gallery
   end
   
-  def self.get_favorites(user_id)
-    Gallery.get_favorites_list(user_id).saved_items
-  end
-  
   def only_one_saved_item_per_druid_per_gallery
     errors.add(:druid, :cannot_be_more_than_one_saved_item_per_druid_per_gallery) if self.class.where(:druid=>self.druid,:gallery_id=>self.gallery_id).size != 0
   end

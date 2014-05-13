@@ -94,18 +94,6 @@ class ApplicationController < ActionController::Base
     not_authorized unless can? :curate, :all
   end
   
-  def load_user_profile
-    @id=params[:id]
-    @name=params[:name]
-    @user = (@id.blank? ? User.find_by_username(@name) : User.find_by_id(@id))
-    profile_not_found unless @user
-  end
-  
-  def profile_not_found
-    flash[:error]=t('revs.authentication.user_not_found')
-    redirect_to root_path 
-  end
-  
   def in_search_result?
     @previous_document || @next_document
   end

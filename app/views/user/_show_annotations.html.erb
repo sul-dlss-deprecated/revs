@@ -3,9 +3,9 @@
   <span class="activity-count"><%= user_annotations_count(@user).to_s.rjust(1, '0') %></span>
 </h3>
 
-<% if @user.latest("annotations").size > 0 %>
+<% if user_annotations_count(@user) > 0 %>
   <ul>
-  <% @user.latest("annotations").each do |annotation| %>
+  <% @latest_annotations.each do |annotation| %>
 			  	<% if annotation.solr_document %>
 	          <li class="activity-item">
 	            <ul>

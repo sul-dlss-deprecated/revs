@@ -4,7 +4,7 @@
 
 <% if user_favorites_count(@user) > 0 %>
   <ul>
-  <% @user.latest('favorites').each do |favorite| %>
+  <% @latest_favorites.each do |favorite| %>
 	          <li class="activity-item">
 	            <ul>
 	              <li><%= link_to(image_tag(favorite.solr_document.images.first), item_path(favorite.solr_document)) %><li>

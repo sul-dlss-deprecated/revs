@@ -214,7 +214,7 @@ class SolrDocument
   end
 
   def is_favorite?(user)
-    Gallery.get_favorites_list(user.id).saved_items.where(:druid=>id).size == 1
+    user.favorites.where(:druid=>id).size == 1
   end
   
   def in_galleries(user)

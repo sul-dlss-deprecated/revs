@@ -53,7 +53,7 @@ class UserController < ApplicationController
   def edits
     get_paging_params
     @order="change_logs.#{@order}" if @order.downcase == 'created_at desc'
-    @edits=@user.visible('change_logs').group('change_logs.druid').order(@order).page(@current_page).per(@per_page)
+    @edits=@user.metadata_updates.order(@order).page(@current_page).per(@per_page)
   end
   
   # all of the user's flags
@@ -102,6 +102,26 @@ class UserController < ApplicationController
   end
   
   private  
+  def load_user_profile
+    @id=params[:id]
+    @name=params[:name]
+    @user = (@id.blank? ? User.find_by_username(@name) : User.find_by_id(@id))
+    if @user
+      @latest_annotations=@user.annotations.limit(Revs::Application.config.num_latest_user_activity)
+      @latest_flags=@user.flags.where(:state=>Flag.open).limit(Revs::Application.config.num_latest_user_activity)
+      @latest_edits=@user.metadata_updates.order('change_logs.created_at desc').limit(Revs::Application.config.num_latest_user_activity)
+      @latest_galleries=@user.galleries.order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
+      @latest_favorites=@user.favorites.order('saved_items.created_at desc').limit(Revs::Application.config.num_latest_user_activity)
+    else
+      profile_not_found
+    end
+  end
+  
+  def profile_not_found
+    flash[:error]=t('revs.authentication.user_not_found')
+    redirect_to root_path 
+  end
+  
   # we need to be sure the user is viewing an active profile (or is an administrator, who can do all)
   def confirm_active
     profile_not_found unless @user.active == true || can?(:administer, :all)

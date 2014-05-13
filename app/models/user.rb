@@ -5,8 +5,8 @@ class User < ActiveRecord::Base
   validates_integrity_of  :avatar
   validates_processing_of :avatar
 
-  # user abilities and permissions are defined in the ability.rb class == if you add or change names here, you will need both
-  #  update the ability class, and update the strings stored in the user "role" column
+  # user abilities and permissions are defined in the ability.rb class == if you add or change names here, you will need to both
+  #  update the ability class, and update the strings stored in the user "role" column (only if role names change)
   ROLES=%w{admin curator beta user}
   DEFAULT_ROLE='user' # the default role that any logged in user will have
   
@@ -27,7 +27,10 @@ class User < ActiveRecord::Base
   has_many :annotations, :dependent => :destroy
   has_many :flags, :dependent => :destroy
   has_many :change_logs, :dependent => :destroy
-  
+  has_one  :favorites_list, :conditions=>'gallery_type="favorites"', :dependent => :destroy, :class_name=>'Gallery'
+  has_many :galleries, :conditions=>'gallery_type="user"', :dependent => :destroy
+  has_many :saved_items, :through=>:galleries
+
   before_validation :assign_default_role, :if=>lambda{no_role?}
   before_save :trim_names
   after_create :signup_for_mailing_list, :if=>lambda{subscribe_to_mailing_list=='1'}
@@ -41,21 +44,21 @@ class User < ActiveRecord::Base
 
   delegate :can?, :cannot?, :to => :ability # this saves us some typing so we can ask user.can? instead of user.ability.can?
   
-  # get the user's favorites 
-  def favorites
-    Gallery.get_favorites_list(id).saved_items
+  #### class level methods
+  def self.create_new_sunet_user(sunet)
+    password=self.create_sunet_user_password
+    user = User.new(:email=>"#{sunet}@stanford.edu",:sunet=>sunet,:username=>"#{sunet}@stanford.edu",:password => password, :password_confirmation => password, :role=>DEFAULT_ROLE)
+    user.skip_confirmation!
+    user.save!
+    user
   end
   
-  # get all of the user's saved items in any of their galleries
-  def saved_items
-    SavedItem.includes(:gallery).where("galleries.user_id=#{self.id}")
+  # passwords are irrelvant and never used for SUNET users, but we need to set one in the user table to make devise happy
+  # we override the sign_in method from devise (in controllers/sessions_controller) to prevent SUNET users from logging in using this password anyway
+  def self.create_sunet_user_password
+    SecureRandom.hex(16)
   end
-  
-  # all of the user's galleries (except for the default favorite)
-  def galleries
-    Gallery.get_all(id)
-  end
-  
+
   def self.roles
     ROLES
   end
@@ -64,15 +67,26 @@ class User < ActiveRecord::Base
   def self.visibility_filter(things,class_name)
     things.joins("LEFT OUTER JOIN items on items.druid = #{class_name}.druid").where("items.visibility_value = #{SolrDocument.visibility_mappings[:visible]} OR items.visibility_value is null")    
   end
-  
-  def self.latest_filter(things)
-    things.order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
+  #### class level methods
+
+  ### other associations
+  # get the user's favorites 
+  def favorites
+    favorites_list=create_default_favorites_list if favorites_list.blank? # user doesn't have a favorites list yet, create it      
+    favorites_list.saved_items 
   end
-  
+
+  # get just metadata updates from the change logs, grouped by druid
+  def metadata_updates
+    visible('change_logs').group('change_logs.druid').where(:operation=>'metadata update')
+  end
+  ### other associations
+
   def create_default_favorites_list
     Gallery.get_favorites_list(self.id)
   end
-  
+
+
   # determines if account is active (could be locked or manually made inactive)
   def active_for_authentication?
     super && active
@@ -91,26 +105,6 @@ class User < ActiveRecord::Base
     visible=self.class.visibility_filter(visible,class_name)
     visible=visible.where(:operation=>'metadata update') if class_name=='change_logs' 
     return visible   
-  end
-  
-  def latest(class_name)
-    if class_name=='favorites'
-      return favorites.order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
-    elsif class_name=='galleries'
-      return galleries.order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
-    elsif class_name=='change_logs'
-      return metadata_updates.order('change_logs.created_at desc').limit(Revs::Application.config.num_latest_user_activity)
-    else
-      latest=visible(class_name)
-      latest=self.class.latest_filter(latest)
-    end
-    latest=latest.where(:state=>Flag.open) if class_name=='flags'      
-    return latest
-
-  end
-  
-  def metadata_updates
-    visible('change_logs').group('change_logs.druid').where(:operation=>'metadata update')
   end
   
   # override devise method --- stanford users are never timed out; regular users are timed out according to devise rules
@@ -132,20 +126,6 @@ class User < ActiveRecord::Base
     else
       where(conditions).first
     end
-  end
-      
-  def self.create_new_sunet_user(sunet)
-    password=self.create_sunet_user_password
-    user = User.new(:email=>"#{sunet}@stanford.edu",:sunet=>sunet,:username=>"#{sunet}@stanford.edu",:password => password, :password_confirmation => password, :role=>DEFAULT_ROLE)
-    user.skip_confirmation!
-    user.save!
-    user
-  end
-  
-  # passwords are irrelvant and never used for SUNET users, but we need to set one in the user table to make devise happy
-  # we override the sign_in method from devise (in controllers/sessions_controller) to prevent SUNET users from logging in using this password anyway
-  def self.create_sunet_user_password
-    SecureRandom.hex(16)
   end
   
   def sunet_user?

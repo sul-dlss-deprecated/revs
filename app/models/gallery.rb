@@ -8,7 +8,7 @@ class Gallery < ActiveRecord::Base
   ranks :row_order,:column => :position
 
   has_many :saved_items, :order=>"position ASC, created_at DESC", :dependent => :destroy
-  
+
   GALLERY_TYPES=%w{favorites user}
 
   attr_accessible :user_id,:public,:title,:description,:gallery_type,:views
@@ -25,21 +25,16 @@ class Gallery < ActiveRecord::Base
   
   # returns the default favorites gallery for the given user ID (and create it does not exist) - returns the gallery
   def self.get_favorites_list(user_id)
-    gallery=self.where(:user_id=>user_id,:gallery_type=>:favorites).limit(1)
-    if gallery.size == 1 # already there, return it!
-      return gallery.first
-    elsif gallery.size == 0 # doesn't have one yet, create it!
-      return self.create(:user_id=>user_id,:gallery_type=>:favorites,:title=>I18n.t('revs.favorites.head'))
-    else # more than one, that's a problem that should never occur
-      raise "more than one favorites list for user #{user_id}"
-    end
+    user=User.find(user_id)
+    gallery=user.favorites_list
+    gallery=self.create_favorites_list(user_id) if gallery.blank?      
+    return gallery
   end
   
-  # returns all galleries for the given user, except for the favorites
-  def self.get_all(user_id)
-    self.where(:user_id=>user_id,:gallery_type=>:user)
+  def self.create_favorites_list(user_id)
+      gallery=self.create(:user_id=>user_id,:gallery_type=>:favorites,:title=>I18n.t('revs.favorites.head'))
   end
-  
+
   def only_one_favorites_list_per_user
     errors.add(:gallery_type, :cannot_be_more_than_one_favorites_list_per_user) if gallery_type.to_s == 'favorites' && self.class.where(:user_id=>self.user_id,:gallery_type=>:favorites).size != 0
   end

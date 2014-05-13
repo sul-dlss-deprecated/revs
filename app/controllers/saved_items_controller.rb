@@ -56,11 +56,10 @@ class SavedItemsController < ApplicationController
   # if no gallery ID is passed in, assume its the default favorites list
   def destroy
     druid=params[:id]
-    user_id = current_user.id
     gallery_id=params[:gallery_id]
     
     @document=SolrDocument.find(druid)
-    @gallery=gallery_id ? Gallery.find(gallery_id) : Gallery.get_favorites_list(user_id)
+    @gallery=gallery_id ? Gallery.find(gallery_id) : current_user.favorites_list
     if @gallery    
       SavedItem.where(:gallery_id=>@gallery.id,:druid=>druid).first.destroy
       @message=t('revs.favorites.removed',:list_type=>list_type_interpolator(@gallery.gallery_type))

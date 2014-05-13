@@ -3,9 +3,9 @@
   <span class="activity-count"><%= user_flags_unresolved_count(@user).to_s.rjust(1, '0') %></span>
 </h3>
 
-<% if @user.latest('flags').size > 0 %>
+<% if user_flags_unresolved_count(@user) > 0 %>
   <ul>
-  <% @user.latest('flags').each do |flag| %>
+  <% @latest_flags.each do |flag| %>
 				  <% if flag.solr_document && !flag.resolved?%>
 	          <li class="activity-item">
 	            <ul>
