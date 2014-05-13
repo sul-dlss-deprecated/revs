@@ -35,8 +35,8 @@ class User < ActiveRecord::Base
   before_save :trim_names
   after_create :signup_for_mailing_list, :if=>lambda{subscribe_to_mailing_list=='1'}
   after_create :signup_for_revs_institute_mailing_list, :if=>lambda{subscribe_to_revs_mailing_list=='1'}
-  after_save :create_default_favorites_list
-  after_create :create_default_favorites_list
+  after_save :create_default_favorites_list # create the default favorites list if it doesn't exist when a user logs in
+  after_create :create_default_favorites_list # create the default favorites list when accounts are created
 
   validate :check_role_name
   validates :username, :uniqueness => { :case_sensitive => false }
@@ -85,7 +85,10 @@ class User < ActiveRecord::Base
 
   # create the default favoritest list unless it already exists (done at account create and login, just to be sure it exists)
   def create_default_favorites_list
-    Gallery.create(:user_id=>id,:gallery_type=>:favorites,:title=>I18n.t('revs.favorites.head')) if favorites_list.blank?
+    if favorites_list.blank?
+      new_favorites_list=Gallery.create(:user_id=>id,:gallery_type=>:favorites,:title=>I18n.t('revs.favorites.head')) 
+      self.reload
+    end
   end
 
   # determines if account is active (could be locked or manually made inactive)

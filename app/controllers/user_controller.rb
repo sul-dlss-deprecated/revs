@@ -107,6 +107,7 @@ class UserController < ApplicationController
     @name=params[:name]
     @user = (@id.blank? ? User.find_by_username(@name) : User.find(@id))
     if @user
+      @user.create_default_favorites_list # create the default favorites list if for some reason it does not exist
       @latest_annotations=@user.annotations.limit(Revs::Application.config.num_latest_user_activity)
       @latest_flags=@user.flags.where(:state=>Flag.open).limit(Revs::Application.config.num_latest_user_activity)
       @latest_edits=@user.metadata_updates.order('change_logs.created_at desc').limit(Revs::Application.config.num_latest_user_activity)

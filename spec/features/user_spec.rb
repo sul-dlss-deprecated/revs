@@ -109,6 +109,17 @@ describe("User registration system",:type=>:request,:integration=>true) do
     
   end
 
+  it "should show a user's profile even if they don't have a favorites list yet, which will be created upon viewing" do
+    beta_user=get_user(beta_login)
+    beta_user.favorites_list.should be_nil # doesn't exist yet
+    visit user_profile_name_path(beta_login)
+    beta_user.reload
+    beta_user.favorites_list.should_not be_nil # favorites list now exists for this user, so we can render the page
+    current_path.should == user_profile_name_path(beta_login)
+    [beta_user.to_s,beta_user.bio].each {|content| page.should have_content content}
+  end
+
+
   it "should show link to annotations made by user on that user's profile page, only if user has made annotations" do
     login_as(user_login) # this user has annotations
     visit user_profile_name_path(user_login)
