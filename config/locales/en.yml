@@ -36,6 +36,8 @@ en:
       action_browse_collections_linktext: 'Revs collections'
       tell_us_html: '%{href} what you were looking for'
       tell_us_linktext: 'Tell us'
+      unexpected: "Oops! An unexpected error has occurred."
+      500_message: "We apologize for the inconvenience. The error has been logged and we have notified system administrators. Until we fix the problem, here are some things you can do:"
     actions:
       delete: 'Delete'
       remove: 'Remove'

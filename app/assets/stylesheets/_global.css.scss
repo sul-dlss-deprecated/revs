@@ -277,6 +277,14 @@ select:focus {
   i {
     margin-right: 10px;
   }
+  &:before {
+    z-index: -1;
+    position: absolute;
+    left: 35%;
+    top: 40%;
+    content: url(asset-path("500-page.png", image));
+    opacity: 0.05;
+  }
 }
 
 // Hide element offscreen but still readable by screen readers
@@ -296,6 +304,10 @@ select:focus {
 @media screen and (max-width: 979px) {
   .error-page {
     margin-left: 20px;
+    &:before {
+      left: 15%;
+      top: 45%;
+    }
   }
 }
 
@@ -307,5 +319,14 @@ select:focus {
   }
   #report-problem-form {
     margin-left: 20px;
+  }
+  .error-page:before {
+    left: 10%;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .error-page:before {
+    display: none;
   }
 }
