@@ -117,7 +117,7 @@ $(document).ready(function(){
 		  return false;
 		});
 		
-	$('#contact_us_link').click(function() {
+	$('#contact_us_link, .error-page-feedback').click(function() {
     $(".report-problem")[0].reset();
 	  $('#report-problem-form').slideToggle('slow');
 	  return false;

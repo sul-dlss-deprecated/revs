@@ -255,6 +255,30 @@ select:focus {
 
 .handle:hover{cursor: move;}
 
+// Error page styling
+.error-page {
+  margin-left: 50px;
+  h2 {
+    border-top: none;
+    font-size: 1.5em;
+    font-weight: 500;
+    padding-top: none;
+    text-transform: none;
+  }
+  p {
+    font-size: 14px;
+  }
+  ul {
+    list-style-type: none;
+    li {
+      line-height: 2em;
+    }
+  }
+  i {
+    margin-right: 10px;
+  }
+}
+
 // Hide element offscreen but still readable by screen readers
 .hidden-offscreen {
   position: absolute !important;
@@ -267,6 +291,12 @@ select:focus {
 .entries-info {
   text-align: right;
   margin-bottom: 5px;
+}
+
+@media screen and (max-width: 979px) {
+  .error-page {
+    margin-left: 20px;
+  }
 }
 
 @media screen and (max-width: 768px) {
