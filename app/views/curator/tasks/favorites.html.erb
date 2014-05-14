@@ -47,7 +47,7 @@
             <tr>
               <td><%=display_user_name(result.user,result.user.public || result.user == current_user ? user_profile_name_path(result.user.username) : nil)%></td>
               <td class="right"><%= result.num_galleries%></td>
-              <td class="right"><%= SavedItem.includes(:gallery).where(:'galleries.user_id'=>result.user.id).count %></td>
+              <td class="right"><%= result.user.all_saved_items.count %></td>
               <td><%= show_as_date(result.updated_at)%></td>
             </tr>
           <% end %>

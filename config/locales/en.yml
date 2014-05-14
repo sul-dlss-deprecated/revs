@@ -399,6 +399,7 @@ en:
       sign_in_with: "Sign in with %{provider}"
       anonymous: 'Web user'
       email_address: "Email Address"
+      your: "Your"
       email_address_already_registered: "That email address is already registered"
       reset_password_if_forgot_linktext: "Reset your password"
       reset_password_if_forgot: "%{reset_password_linktext} if you forgot it"
@@ -412,7 +413,7 @@ en:
       forgot_password: "Forgot your password?"
       send_password_instructions: "Send me reset password instructions"
       profile_page: 'Your Revs profile page'
-      user_dashboard: 'Your Dashboard'
+      user_dashboard: '%{name} Dashboard'
       curator_dashboard: 'Curator Dashboard'
       admin_dashboard: 'Administrator Dashboard'
       resend_confirmation: "Resend confirmation instructions"

@@ -46,7 +46,7 @@ describe("Galleries",:type=>:request,:integration=>true) do
 
   it "should show only the user's public galleries on their public profile page" do
     user=get_user(user_login)
-    visit user_galleries_path(user_login)
+    visit user_profile_id_path(user.id)
     page.should have_content @gallery1_title # public gallery
     page.should_not have_content @gallery2_title # private gallery
     click_link I18n.t('revs.user.view_all_galleries')

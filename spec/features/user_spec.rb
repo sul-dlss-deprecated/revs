@@ -243,7 +243,7 @@ describe("User registration system",:type=>:request,:integration=>true) do
     login_as(admin_login)
     visit user_profile_name_path(admin_login)
     current_path.should == user_profile_name_path(admin_login)
-    page.should have_content  I18n.t('revs.user.user_dashboard')
+    page.should have_content(I18n.t("revs.user.user_dashboard",:name=>I18n.t('revs.user.your')))
     page.should have_content  I18n.t('revs.user.curator_dashboard')
     page.should have_content  I18n.t('revs.user.admin_dashboard')
     logout
@@ -251,7 +251,7 @@ describe("User registration system",:type=>:request,:integration=>true) do
     login_as(curator_login)
     visit user_profile_name_path(curator_login)
     current_path.should ==  user_profile_name_path(curator_login)
-    page.should have_content  I18n.t('revs.user.user_dashboard')
+    page.should have_content(I18n.t("revs.user.user_dashboard",:name=>I18n.t('revs.user.your')))
     page.should have_content  I18n.t('revs.user.curator_dashboard')
     page.should_not have_content  I18n.t('revs.user.admin_dashboard')
     logout
@@ -259,7 +259,7 @@ describe("User registration system",:type=>:request,:integration=>true) do
     login_as(user_login)
     visit user_profile_name_path(user_login)
     current_path.should ==  user_profile_name_path(user_login)
-    page.should have_content I18n.t('revs.user.user_dashboard')
+    page.should have_content(I18n.t("revs.user.user_dashboard",:name=>I18n.t('revs.user.your')))
     page.should_not have_content  I18n.t('revs.user.curator_dashboard')
     page.should_not have_content  I18n.t('revs.user.admin_dashboard')
   end
@@ -278,5 +278,60 @@ describe("User registration system",:type=>:request,:integration=>true) do
     find_link('@RevsTesting').visible?
   end
 
- 
+  it "should destroy all dependent annotations, galleries, flags and saved items when a user is removed" do
+    
+    user=get_user(user_login)
+    user_flags=user.all_flags.count
+    total_flags=Flag.count
+    user_flags.should == 1 
+    total_flags.should == 3
+
+    user_annotations=user.all_annotations.count
+    total_annotations=Annotation.count
+    user_annotations.should == 1
+    total_annotations.should == 4
+
+    user_galleries=user.all_galleries.count
+    user_galleries_public=user.galleries.count
+    user_galleries_including_private=user.galleries(user).count
+    total_galleries=Gallery.count
+    user_galleries.should == 3
+    user_galleries_public.should == 1
+    user_galleries_including_private.should == 2
+    total_galleries.should == 6
+
+    user_saved_items=user.all_saved_items.count
+    total_saved_items=SavedItem.count
+    user_saved_items.should == 2
+    total_saved_items.should == 9
+
+    # now kill the user
+    user.destroy
+
+    # now check the counts have gone down by the right amounts
+    Flag.count.should == total_flags - user_flags
+    Annotation.count.should == total_annotations - user_annotations
+    Gallery.count.should == total_galleries - user_galleries
+    SavedItem.count.should == total_saved_items - user_saved_items
+
+  end
+
+  it "should destroy all dependent change logs when a curator is removed" do
+    
+    curator=get_user(curator_login)
+    curator_change_logs=curator.all_change_logs.count
+    curator_metadata_updates=curator.metadata_updates.count.keys.count
+    total_change_logs=ChangeLog.count
+    curator_change_logs.should == 4 
+    curator_metadata_updates.should == 3 
+    total_change_logs.should == 5
+
+    # now kill the user
+    curator.destroy
+
+    # now check the counts have gone down by the right amounts
+    ChangeLog.count.should == total_change_logs - curator_change_logs
+
+  end 
+
 end

@@ -18,16 +18,9 @@ class Gallery < ActiveRecord::Base
   validates :user_id, :numericality => { :only_integer => true }
   validate :only_one_favorites_list_per_user
   
-  before_destroy :destroy_associated_items
-
   def image(user=nil)
     item=saved_items(user).limit(1)
     item.size == 0 ? nil : item.first.solr_document.images.first
-  end
-
-  # if we kill this gallery, destroy the associated items (needed since we do custom has_many getters)
-  def destroy_associated_items
-    all_saved_items.destroy_all
   end
 
   # custom has_many association, so we can add visibility filtering -- get the galleries items, pass in a second user (like the logged in user) to decide if hidden items should be returned as well

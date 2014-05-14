@@ -26,8 +26,13 @@ class User < ActiveRecord::Base
   attr_accessor :subscribe_to_mailing_list, :subscribe_to_revs_mailing_list # not persisted, just used on the signup form
   attr_accessor :login # virtual method that will refer to either email or username
   
-  # all other has_many associations are done via custom methods below so we can add visibility filtering for items
+  # all "regular" has_many associations are done via custom methods below so we can add visibility filtering for items
+  # the "all_CLASS" has_many associations are provided for convience, and to facilitate dependent destroying easily
   has_one :favorites_list, :conditions=>'gallery_type="favorites"', :dependent => :destroy, :class_name=>'Gallery'
+  has_many :all_galleries, :class_name=>'Gallery', :dependent=>:destroy
+  has_many :all_annotations, :class_name=>'Annotation', :dependent=>:destroy
+  has_many :all_change_logs, :class_name=>'ChangeLog', :dependent=>:destroy
+  has_many :all_flags, :class_name=>'Flag', :dependent=>:destroy
 
   before_validation :assign_default_role, :if=>lambda{no_role?}
   before_save :trim_names
@@ -36,7 +41,6 @@ class User < ActiveRecord::Base
   after_create :create_default_favorites_list # create the default favorites list when accounts are created
 
   after_save :create_default_favorites_list # create the default favorites list if it doesn't exist when a user logs in
-  before_destroy :destroy_associated_items
 
   validate :check_role_name
   validates :username, :uniqueness => { :case_sensitive => false }
@@ -70,13 +74,8 @@ class User < ActiveRecord::Base
   end
  
   #### class level methods
-
-  # if we kill this user, destroy the associated items (needed since we do custom has_many getters)
-  def destroy_associated_items
-    galleries.destroy_all
-    annotations.destroy_all
-    flags.destroy_all
-    change_logs.destroy_all
+  def all_saved_items
+    SavedItem.includes(:gallery).where(:'galleries.user_id'=>id)
   end
 
   def saved_items(user=nil)
