@@ -258,6 +258,7 @@ select:focus {
 // Error page styling
 .error-page {
   margin-left: 50px;
+  position: relative;
   h2 {
     border-top: none;
     font-size: 1.5em;
@@ -277,14 +278,15 @@ select:focus {
   i {
     margin-right: 10px;
   }
-  &:before {
-    z-index: -1;
-    position: absolute;
-    left: 35%;
-    top: 40%;
-    content: url(asset-path("500-page.png", image));
-    opacity: 0.05;
-  }
+}
+// Show image on 500 page
+.error-500:before {
+  z-index: -1;
+  position: absolute;
+  left: 35%;
+  top: 80%;
+  content: url(asset-path("500-page.png", image));
+  opacity: 0.05;
 }
 
 // Hide element offscreen but still readable by screen readers
@@ -303,10 +305,10 @@ select:focus {
 
 @media screen and (max-width: 979px) {
   .error-page {
-    margin-left: 20px;
-    &:before {
-      left: 15%;
-      top: 45%;
+    margin-left: 0;
+    .error-500:before {
+      left: 10%;
+      top: 110%;
     }
   }
 }
@@ -320,13 +322,13 @@ select:focus {
   #report-problem-form {
     margin-left: 20px;
   }
-  .error-page:before {
+  .error-500:before {
     left: 10%;
   }
 }
 
 @media screen and (max-width: 479px) {
-  .error-page:before {
+  .error-500:before {
     display: none;
   }
 }

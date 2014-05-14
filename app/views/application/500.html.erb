@@ -1,16 +1,18 @@
 <div class="span9 error-page">
-  <h2><i class='icon-exclamation-sign'></i><%= t('revs.errors.unexpected') %></h2>
-  <p><%= t('revs.errors.500_message') %></p>
-  <ul>
-    <li>
-      <i class='icon-search'></i>
-      <%= t('revs.errors.action_search_html',
-        :href => link_to(t('revs.errors.action_search_linktext'), root_url)) %>.
-    </li>
-    <li>
-      <i class='icon-sitemap'></i>
-      <%= t('revs.errors.action_browse_collections_html',
-        :href => link_to(t('revs.errors.action_browse_collections_linktext'), all_collections_url)) %>.
-    </li>
-  </ul>
+  <div class="error-500">
+    <h2><i class='icon-exclamation-sign'></i><%= t('revs.errors.unexpected') %></h2>
+    <p><%= t('revs.errors.500_message') %></p>
+    <ul>
+      <li>
+        <i class='icon-search'></i>
+        <%= t('revs.errors.action_search_html',
+          :href => link_to(t('revs.errors.action_search_linktext'), root_url)) %>.
+      </li>
+      <li>
+        <i class='icon-sitemap'></i>
+        <%= t('revs.errors.action_browse_collections_html',
+          :href => link_to(t('revs.errors.action_browse_collections_linktext'), all_collections_url)) %>.
+      </li>
+    </ul>
+  </div>
 </div>
