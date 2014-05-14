@@ -31,7 +31,7 @@ en:
       sorry: "We're sorry, but there was a problem finding the page you requested."
       404_message: "The resource might have moved or you might have mistyped the address. Here's what you can do:"
       action_search_html: "Search or browse from the %{href}"
-      action_search_linktext: 'Revs homepage'
+      action_search_linktext: '%{project} homepage'
       action_browse_collections_html: "Browse one of the %{href}"
       action_browse_collections_linktext: 'Revs collections'
       tell_us_html: '%{href} what you were looking for'
