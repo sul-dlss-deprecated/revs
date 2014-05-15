@@ -4,7 +4,7 @@
 
   <div class="row profile-vitals">
     <div class="span2">
-      <%= image_tag((@user.avatar.url.blank? ? asset_url('default-avatar.png') : @user.avatar.url(:thumb)), :class => "user-image") %>
+      <%= image_tag(@user.avatar.url(:thumb), :class => "user-image") %>
     </div>
     <div class="span6 offset1 user-bio">
       <% unless @user.bio.blank? %>

@@ -278,6 +278,7 @@ en:
         annotation_created: "Annotation created"
         annotation_text: "Annotation text"
         annotator: "Annotator"
+        are_you_sure: "Are you sure you want to remove this annotation?"
     favorites:
       singular: "favorite"
       plural: "favorites"

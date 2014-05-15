@@ -1,7 +1,7 @@
 <% if (!flag.user_id.nil?) || (flag.user_id.nil? && user_signed_in?) # logged in users see all flags, including anonymous; non-logged in users do not see anonymous flags%>
   <div class="flag-info">
 
-      <%= image_tag((flag.user.nil? || flag.user.avatar.url.blank? ? asset_url('default-avatar_32x32.png') : flag.user.avatar.url(:tiny)), :class => "user-image user-image-tiny") %>
+      <%= image_tag((flag.user.nil? ? asset_url('default-avatar_32x32.png') : flag.user.avatar.url(:tiny)), :class => "user-image user-image-tiny") %>
       <% if flag.user.nil? %>
         <%= t('revs.user.anonymous') %>
       <% else %>
