@@ -167,6 +167,18 @@ def should_deny_access(path)
   page.should have_content(I18n.t('revs.messages.not_authorized'))
 end
 
+def should_deny_access_to_named_gallery(title)
+  gallery=Gallery.where(:title=>title).first
+  should_deny_access gallery_path(gallery)
+end
+
+def should_allow_access_to_named_gallery(title)
+  gallery=Gallery.where(:title=>title).first
+  visit gallery_path(gallery)
+  current_path.should == gallery_path(gallery)
+  page.should have_content title
+end
+
 def should_deny_access_for_beta(path)
   visit path
   current_path.should == root_path

@@ -103,10 +103,10 @@ class CatalogController < ApplicationController
         return 
       end
       @gallery=@galleries.first
-      # if @gallery.can_view_gallery  # we should not see the gallery items if its not public and that user is not logged in
-      #   not_authorized
-      #   return
-      # end
+      if cannot? :read, @gallery  # we should not see the gallery items in the grid at the bottom of the page if we don't have permission to
+         not_authorized
+         return
+      end
       @saved_items=@gallery.saved_items(current_user).limit(CatalogController.blacklight_config.collection_member_grid_items)
     end
 

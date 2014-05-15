@@ -62,7 +62,7 @@
         </div>
 
         <div class="span5 pull-right item-description">
-          <% if gallery.description.blank? %>
+          <% if gallery.description.blank? && can?(:update, gallery)%>
             <span class="muted">
               <%= t('revs.user_galleries.you_can_add_a_description_html', :href => link_to(t("revs.user_galleries.you_can_add_a_description_linktext"), edit_gallery_path(gallery,:page=>params[:page],:order=>params[:order]))) %>
             </span>

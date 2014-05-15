@@ -12,7 +12,7 @@ en:
             gallery_type:
               cannot_be_more_than_one_favorites_list_per_user: 'there cannot be more than one favorites list per user'
             visibility:
-              must_be_selected: 'must be selected.  Private galleries are only visible to you, public galleries are visible to all.'
+              must_be_selected: 'must be selected.'
         saved_item:
           attributes:
             druid:
@@ -131,7 +131,7 @@ en:
       more: 'More'
       please_wait: 'Please wait...'
       return_to_gallery: '&laquo; return to gallery'
-      return_to_favorites: "Return to %{user_name}'s favorites"
+      return_to_favorites: "&laquo; return to %{user_name}'s favorites"
     contact:
       us: 'contact us'
       instructions_html: 'If you are asking about access or re-use of images, select "Request an image or terms of use question" as the subject or view %{reuse_link}.'
@@ -324,6 +324,9 @@ en:
       total_items: 'Items'
       you_can_add_a_description_html: "You can %{href} to your gallery."
       you_can_add_a_description_linktext: 'add a description'
+      public: 'Public - anyone can see it'
+      private: 'Private - only you can see it'
+      curator: 'Curator - only other curators can see it'
     collection:
       collection_detail: 'Collection Detail'
       member_detail: 'Item Detail'
@@ -454,7 +457,7 @@ en:
       remove_avatar: "Remove avatar"
       public: "Public"
       private: "Private"
-      privacy: "Privacy"
+      Visibility: "Visibility"
       active: "Active"
       account_is: "User account is"
       inactive: "Inactive"

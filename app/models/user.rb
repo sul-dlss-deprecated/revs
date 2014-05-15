@@ -70,7 +70,7 @@ class User < ActiveRecord::Base
   
   # only returning visible items for given class and query depending on user ability passed in
   def self.visibility_filter(things,class_name,user=nil)
-    user.blank? || user.cannot?(:view_hidden, SolrDocument) ? things.joins("LEFT OUTER JOIN items on items.druid = #{class_name}.druid").where("items.visibility_value = #{SolrDocument.visibility_mappings[:visible]} OR items.visibility_value is null") : things
+    (user.blank? || user.cannot?(:view_hidden, SolrDocument)) ? things.joins("LEFT OUTER JOIN items on items.druid = #{class_name}.druid").where("items.visibility_value = #{SolrDocument.visibility_mappings[:visible]} OR items.visibility_value is null") : things
   end
  
   #### class level methods
@@ -86,9 +86,10 @@ class User < ActiveRecord::Base
   # get the user's galleries,  pass in a second user (like the logged in user) to decide what other galleries should be returned as well
   def galleries(user=nil)
     galleries=Gallery.where(:user_id=>id,:gallery_type=>'user')
-    all_visibilities=['public']
-    all_visibilities << 'curator' if !user.blank? && %w{curator admin}.include?(user.role)
-    all_visibilities << 'private' if !user.blank? && user == self
+    all_visibilities=[]
+    all_visibilities << 'public' # anyone can see public galleries
+    all_visibilities << 'curator' if !user.blank? && user.can?(:curate, :all) # curators can see any curator galleries
+    all_visibilities << 'private' if !user.blank? && user == self # you can see your own galleries
     galleries=galleries.where(:visibility => all_visibilities)
     galleries
   end

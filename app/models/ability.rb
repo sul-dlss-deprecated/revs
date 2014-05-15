@@ -63,7 +63,7 @@ class Ability
       can_view_items
       can_read_annotations
       can_read_flags
-      can_view_galleries(user)
+      can_view_public_galleries
       can_view_public_profiles
       can_flag_anonymous if user.id.nil? # if this is really an anonymous user, add this ability -- if they are logged in, it will added in later specifically for logged in users
     end
@@ -100,13 +100,9 @@ class Ability
     can :index_by_druid, Flag  
     can :update_flag_table, User 
   end
-  
-  def can_view_galleries(user)
-    can [:read], Gallery, :visibility=>'public'
-    can [:read], Gallery, :visibility=>'private', :user_id => user.id # can read their own private galleries
-    if %w{curator admin}.include? user.role
-      can [:read], Gallery, :visibility=>'curator' # curators can see any other curator galleries
-    end
+
+  def can_view_public_galleries
+    can :read, Gallery, :visibility=>'public'
   end
 
   def can_view_public_profiles
@@ -157,6 +153,7 @@ class Ability
     can :update, Flag
     can :curator_update_flag_table, User  
     can :view_hidden, SolrDocument
+    can [:read], Gallery, :visibility=>'curator' # curators can see any other curator galleries
   end
   
   def can_update_metadata

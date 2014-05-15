@@ -22,6 +22,13 @@ curator_favs:
   position: 1
   visibility: 'public'
 
+curator_only_gallery:
+  user: curator  # this is the named "curator" fixture object from the users table
+  gallery_type: 'user'
+  position: 2
+  title: 'Stuff to work on'
+  visibility: 'curator'
+
 admin_favs:
   user: admin  # this is the named "admin" fixture object from the users table
   gallery_type: 'favorites'

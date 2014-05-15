@@ -13,20 +13,20 @@
     </div>
 
     <div class="control-group">
-      <%= f.label :public, t('revs.user.privacy'), :class => 'control-label' %>
+      <%= f.label :public, t('revs.user.visibility'), :class => 'control-label' %>
       <div class="controls">
         <label class="radio inline">
           <%= f.radio_button :visibility, :public, :class => "radio" %>
-          <%= t('revs.user.public') %>
+          <%= t('revs.user_galleries.public') %>
         </label>
         <label class="radio inline">
           <%= f.radio_button :visibility, :private, :class => "radio" %>
-          <%= t('revs.user.private') %>
+          <%= t('revs.user_galleries.private') %>
         </label>
         <% if %w{curator admin}.include? current_user.role %>
           <label class="radio inline">
             <%= f.radio_button :visibility, :curator, :class => "radio" %>
-            <%= t('revs.search.gallery_toggle.curator') %>
+            <%= t('revs.user_galleries.curator') %>
           </label>
         <% end %>
       </div>

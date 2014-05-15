@@ -10,6 +10,7 @@ describe("Galleries",:type=>:request,:integration=>true) do
     @gallery_drop_down='saved_item_gallery_id'
     @gallery1_title='My Awesome Gallery'
     @gallery2_title='Porsche Gallery'
+    @curator_only_gallery_title='Stuff to work on'
   end
   
   it "should not show the add to gallery button for non-logged in users" do
@@ -39,7 +40,7 @@ describe("Galleries",:type=>:request,:integration=>true) do
     page.should have_content @gallery1_title 
     page.should have_content @gallery2_title
     click_link I18n.t('revs.user.view_your_galleries')
-    page.should have_content "#{user.full_name}'s #{I18n.t('revs.user_galleries.head')}"
+    page.should have_content "#{user.to_s}'s #{I18n.t('revs.user_galleries.head')}"
     page.should have_content @gallery1_title 
     page.should have_content @gallery2_title
   end
@@ -50,9 +51,39 @@ describe("Galleries",:type=>:request,:integration=>true) do
     page.should have_content @gallery1_title # public gallery
     page.should_not have_content @gallery2_title # private gallery
     click_link I18n.t('revs.user.view_all_galleries')
-    page.should have_content "#{user.full_name}'s #{I18n.t('revs.user_galleries.head')}"
+    page.should have_content "#{user.to_s}'s #{I18n.t('revs.user_galleries.head')}"
     page.should have_content @gallery1_title  # public
     page.should_not have_content @gallery2_title # private
+    should_deny_access_to_named_gallery(@gallery2_title) # can't get to the private gallery directly
+  end
+
+  it "should not show a curator only gallery to a non-curator and a non-logged in user" do
+    curator=get_user(curator_login)
+    visit user_profile_id_path(curator.id)
+    page.should_not have_content @curator_only_gallery_title # curator gallery
+    page.should_not have_content  I18n.t('revs.user.view_all_galleries')
+    should_deny_access_to_named_gallery(@curator_only_gallery_title) # can't get to the curator only gallery directly when not logged in
+
+    login_as(user_login)
+    visit user_profile_id_path(curator.id)
+    page.should_not have_content @curator_only_gallery_title # curator gallery
+    page.should_not have_content  I18n.t('revs.user.view_all_galleries')
+    should_deny_access_to_named_gallery(@curator_only_gallery_title) # can't get to the curator only gallery directly when logged in as a non-curator
+  end
+
+   it "should allow the curator or administrator access to the curator only gallery" do
+    curator=get_user(curator_login)   
+    login_as(curator_login)
+    visit user_profile_id_path(curator.id)
+    page.should have_content @curator_only_gallery_title # curator gallery
+    page.should have_content  I18n.t('revs.user.view_your_galleries')
+    should_allow_access_to_named_gallery(@curator_only_gallery_title) # can get to the curator only gallery directly when logged in as yourself
+
+    login_as(admin_login)
+    visit user_profile_id_path(curator.id)
+    page.should have_content @curator_only_gallery_title # curator gallery
+    page.should have_content  I18n.t('revs.user.view_all_galleries')
+    should_allow_access_to_named_gallery(@curator_only_gallery_title) # can get to the curator only gallery directly when logged in as an admin
   end
 
   it "should not show any galleries when a user doesn't have any" do
@@ -141,7 +172,7 @@ describe("Galleries",:type=>:request,:integration=>true) do
   it "should allow a user to return to the gallery view page after clicking on a gallery item" do
     item_name="A Somewhat Shorter Than Average Title"
     hidden_item_name="Bryar 250 Trans-American:10"
-    return_link_name="return to gallery"
+    return_link_name=I18n.t('revs.nav.return_to_gallery').gsub('&laquo; ','')
     gallery1=Gallery.where(:title=>@gallery1_title).first
     visit gallery_path(gallery1)
     click_link item_name
