@@ -89,5 +89,7 @@ end%>
   <%= paginate saved_items, :params => {:order=>@order} %>
 
  <% else %>
-   <%= gallery_type == 'user' ? t('revs.user_galleries.no_items') : t('revs.favorites.none')%> 
+   <p class="alert alert-info">
+     <%= gallery_type == 'user' ? t('revs.user_galleries.no_items') : t('revs.favorites.none')%>
+  </p>
  <% end %>
