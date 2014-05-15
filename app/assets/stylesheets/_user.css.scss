@@ -202,7 +202,7 @@
   vertical-align: top;
 }
 
-.edit-content, .gallery-details {
+.edit-content, .gallery-metadata {
   ul.item-stats {
     margin-bottom: 20px;
     > li {
@@ -260,6 +260,11 @@
 }
 
 .gallery-details {
+  img {
+    max-width: 100px;
+  }
+}
+.gallery-metadata {
   margin-left: 0;
   ul.item-stats {
     margin-bottom: 10px;
@@ -306,7 +311,7 @@
       width: 100%;
     }
   }
-  .gallery-details {
+  .gallery-metadata {
     margin-left: 20px;
   }
 }
