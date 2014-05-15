@@ -261,6 +261,7 @@
 
 .gallery-details {
   img {
+    margin-top: 4px;
     max-width: 100px;
   }
 }
@@ -279,6 +280,9 @@
         vertical-align: inherit;
       }
     }
+  }
+  .label-info {
+    margin-left: 0;
   }
 }
 

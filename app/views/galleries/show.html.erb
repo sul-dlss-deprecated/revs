@@ -6,10 +6,6 @@
     <% end %>
   </h2>
 
-  <% if @gallery.user != current_user %>
-    <h3><%="#{t('revs.messages.created_by')} #{@gallery.user.to_s}"%></h3>
-  <% end %>
-
   <div class="row gallery-details">
     <% if @gallery.image(current_user) %>
       <div class="span2 hidden-phone">
@@ -36,7 +32,13 @@
           <%= show_as_datetime(@gallery.updated_at.in_time_zone) %>
         </li>
       </ul>
-  
+
+      <% if @gallery.user != current_user %>
+        <span class="label label-info">
+          <%= "#{t('revs.messages.created_by')} #{@gallery.user.to_s}" %>
+        </span>
+      <% end %>
+
       <p class="gallery-description"><%=@gallery.description%></p>
 
       <div id="saved_items" class="gallery-actions">
