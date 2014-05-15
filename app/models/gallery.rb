@@ -20,7 +20,7 @@ class Gallery < ActiveRecord::Base
   
   def image(user=nil)
     item=saved_items(user).limit(1)
-    item.size == 0 ? nil : item.first.solr_document.images.first
+    item.size == 0 ? 'default-thumbnail.png' : item.first.solr_document.images.first
   end
 
   # custom has_many association, so we can add visibility filtering -- get the galleries items, pass in a second user (like the logged in user) to decide if hidden items should be returned as well
