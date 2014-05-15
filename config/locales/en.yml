@@ -11,6 +11,8 @@ en:
           attributes:
             gallery_type:
               cannot_be_more_than_one_favorites_list_per_user: 'there cannot be more than one favorites list per user'
+            visibility:
+              must_be_selected: 'must be selected.  Private galleries are only visible to you, public galleries are visible to all.'
         saved_item:
           attributes:
             druid:

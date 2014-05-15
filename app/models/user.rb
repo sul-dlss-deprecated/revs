@@ -83,10 +83,13 @@ class User < ActiveRecord::Base
   end
 
   ### has_many custom associations, so we can add visibility filtering 
-  # get the user's galleries,  pass in a second user (like the logged in user) to decide if public galleries should be returned as well
+  # get the user's galleries,  pass in a second user (like the logged in user) to decide what other galleries should be returned as well
   def galleries(user=nil)
     galleries=Gallery.where(:user_id=>id,:gallery_type=>'user')
-    galleries=galleries.where(:public=>true) if user.blank? || user != self
+    all_visibilities=['public']
+    all_visibilities << 'curator' if !user.blank? && %w{curator admin}.include?(user.role)
+    all_visibilities << 'private' if !user.blank? && user == self
+    galleries=galleries.where(:visibility => all_visibilities)
     galleries
   end
 
@@ -119,7 +122,7 @@ class User < ActiveRecord::Base
   # create the default favoritest list unless it already exists (done at account create and login, just to be sure it exists)
   def create_default_favorites_list
     if favorites_list.blank?
-      new_favorites_list=Gallery.create(:user_id=>id,:gallery_type=>:favorites,:title=>I18n.t('revs.favorites.head')) 
+      new_favorites_list=Gallery.create(:user_id=>id,:gallery_type=>:favorites,:visibility=>:public,:title=>I18n.t('revs.favorites.head')) 
       self.reload
     end
   end

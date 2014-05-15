@@ -40,6 +40,17 @@ module ApplicationHelper
      link ? link_to(display,link) : display
   end
   
+  def display_gallery_visibility(gallery)
+    case gallery.visibility.to_sym 
+      when :public 
+        t('revs.user.public').downcase
+       when :private 
+        t('revs.user.private').downcase 
+       when :curator 
+        t('revs.search.gallery_toggle.curator').downcase
+    end 
+  end
+
   def available_sizes
    sizes=["'thumb'","'zoom'"]
    sizes+=["'small'","'medium'","'large'","'xlarge'","'full'"] if sunet_user_signed_in?

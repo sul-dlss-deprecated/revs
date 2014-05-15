@@ -63,7 +63,7 @@ class Ability
       can_view_items
       can_read_annotations
       can_read_flags
-      can_view_public_galleries
+      can_view_galleries(user)
       can_view_public_profiles
       can_flag_anonymous if user.id.nil? # if this is really an anonymous user, add this ability -- if they are logged in, it will added in later specifically for logged in users
     end
@@ -101,8 +101,12 @@ class Ability
     can :update_flag_table, User 
   end
   
-  def can_view_public_galleries
-    can [:read], Gallery, :public=>true
+  def can_view_galleries(user)
+    can [:read], Gallery, :visibility=>'public'
+    can [:read], Gallery, :visibility=>'private', :user_id => user.id # can read their own private galleries
+    if %w{curator admin}.include? user.role
+      can [:read], Gallery, :visibility=>'curator' # curators can see any other curator galleries
+    end
   end
 
   def can_view_public_profiles
@@ -127,7 +131,7 @@ class Ability
     can :create, SavedItem # can create new saved items
     can :create, Gallery, :user_id=>user.id # can create new galleries for themselves
     can [:read,:update,:destroy,:cancel,:sort], SavedItem, :user_id => user.id # can update and destroy their own Saved Items
-    can [:read,:update,:destroy,:sort], Gallery, :user_id => user.id # can update and destroy their own Galleries
+    can [:read,:update,:destroy,:sort], Gallery, :user_id => user.id # can update and destroy their own Galleries regardless of visibility
   end
   
   def can_flag_anonymous

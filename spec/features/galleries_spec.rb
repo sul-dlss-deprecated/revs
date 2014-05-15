@@ -85,15 +85,17 @@ describe("Galleries",:type=>:request,:integration=>true) do
     visit new_gallery_path
     fill_in 'gallery_title', :with=>new_gallery_title
     fill_in 'gallery_description', :with=>new_gallery_description
+    choose 'gallery_visibility_private'
     click_button 'submit'
     current_path.should == user_galleries_path(user_login)
     page.should have_content(new_gallery_title)
     page.should have_content(new_gallery_description)
     user.galleries(user).count.should == 3 # now we have a new gallery
-    new_gallery=user.galleries.last
-    new_gallery.public = false # default to private
-    new_gallery.title=new_gallery_title
-    new_gallery.description=new_gallery_description
+    new_gallery=Gallery.where(:user_id=>user.id).last
+    new_gallery.public.should be_false 
+    new_gallery.visibility.should == 'private'
+    new_gallery.title.should == new_gallery_title
+    new_gallery.description.should == new_gallery_description
   end
 
   it "should allow a logged in user to delete their own gallery" do

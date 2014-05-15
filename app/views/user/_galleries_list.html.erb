@@ -17,9 +17,9 @@
 
         <div class="item-title">
           <%= link_to(gallery.title,gallery_path(gallery)) %>
-          <% if gallery.public && @user == current_user # this label is only necessary if the current user is viewing their own galleries, otherwise only public will be shown anyway%>
-            <span class="label label-success">
-              <%= t('revs.user.public').downcase %>
+          <% if gallery.visibility == 'curator' || @user == current_user # this label is not necessary if this a public gallery not being viewed by the current user%>
+            <span class="label <%= gallery.public ? 'label-success' : '' %>">
+              <%= display_gallery_visibility(gallery) %>
             </span>
           <% end %>
         </div>

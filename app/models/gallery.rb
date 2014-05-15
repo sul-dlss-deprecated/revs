@@ -8,16 +8,23 @@ class Gallery < ActiveRecord::Base
   ranks :row_order,:column => :position
 
   GALLERY_TYPES=%w{favorites user}
+  VISIBILITY_TYPES=%w{public private curator}
 
-  attr_accessible :user_id,:public,:title,:description,:gallery_type,:views
+  attr_accessible :user_id,:title,:description,:gallery_type,:views,:visibility
   
   has_many :all_saved_items, :class_name=>'SavedItem', :dependent=>:destroy
 
   validate :check_gallery_type
+  validate :check_visibility
+
   validates :title, :presence=>true
   validates :user_id, :numericality => { :only_integer => true }
   validate :only_one_favorites_list_per_user
-  
+
+  def public
+    visibility.to_sym == :public
+  end
+
   def image(user=nil)
     item=saved_items(user).limit(1)
     item.size == 0 ? 'default-thumbnail.png' : item.first.solr_document.images.first
@@ -35,5 +42,9 @@ class Gallery < ActiveRecord::Base
   def check_gallery_type
     errors.add(:gallery_type, :not_valid) unless GALLERY_TYPES.include? gallery_type.to_s
   end
-  
+
+  def check_visibility
+    errors.add(:visibility, :must_be_selected) unless VISIBILITY_TYPES.include? visibility.to_s
+  end 
+
 end

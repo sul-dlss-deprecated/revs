@@ -8,30 +8,30 @@ user_favs:
   user: user  # this is the named "user" fixture object from the users table
   gallery_type: 'favorites'
   position: 1
-  public: true
+  visibility: 'public'
 
 user2_favs:
   user: user2  # this is the named "user2" fixture object from the users table
   gallery_type: 'favorites'
   position: 1
-  public: true
+  visibility: 'public'
 
 curator_favs:
   user: curator  # this is the named "curator" fixture object from the users table
   gallery_type: 'favorites'
   position: 1
-  public: true
+  visibility: 'public'
 
 admin_favs:
   user: admin  # this is the named "admin" fixture object from the users table
   gallery_type: 'favorites'
   position: 1
-  public: true
+  visibility: 'public'
 
 user_gal1:
   user: user  # this is the named "user" fixture object from the users table
   gallery_type: 'user'    
-  public: true
+  visibility: 'public'
   title: 'My Awesome Gallery'
   description: 'It is super duper cool.'
   position: 1
@@ -39,7 +39,7 @@ user_gal1:
 user_gal2:
   user: user  # this is the named "user" fixture object from the users table
   gallery_type: 'user'    
-  public: false
+  visibility: 'private'
   title: 'Porsche Gallery'
   description: 'this one is private'  
   position: 50  

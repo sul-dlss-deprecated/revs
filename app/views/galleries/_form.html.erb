@@ -16,13 +16,19 @@
       <%= f.label :public, t('revs.user.privacy'), :class => 'control-label' %>
       <div class="controls">
         <label class="radio inline">
-          <%= f.radio_button :public, true, :class => "radio" %>
+          <%= f.radio_button :visibility, :public, :class => "radio" %>
           <%= t('revs.user.public') %>
         </label>
         <label class="radio inline">
-          <%= f.radio_button :public, false, :class => "radio" %>
+          <%= f.radio_button :visibility, :private, :class => "radio" %>
           <%= t('revs.user.private') %>
         </label>
+        <% if %w{curator admin}.include? current_user.role %>
+          <label class="radio inline">
+            <%= f.radio_button :visibility, :curator, :class => "radio" %>
+            <%= t('revs.search.gallery_toggle.curator') %>
+          </label>
+        <% end %>
       </div>
     </div>
   
