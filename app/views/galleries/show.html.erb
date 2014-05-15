@@ -25,11 +25,11 @@
         </li>
         <li>
           <span class="item-stats-heading"><%=t('revs.messages.added')%>:</span>
-          <%= show_as_datetime(@gallery.created_at.in_time_zone) %>
+          <%= show_as_date(@gallery.created_at.in_time_zone) %>
         </li>
         <li>
           <span class="item-stats-heading"><%=t('revs.messages.last_updated')%>:</span>
-          <%= show_as_datetime(@gallery.updated_at.in_time_zone) %>
+          <%= show_as_date(@gallery.updated_at.in_time_zone) %>
         </li>
       </ul>
 

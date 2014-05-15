@@ -47,11 +47,11 @@
             <% end %>
             <li class="item-creation-date">
               <span><%=t('revs.messages.added')%>: </span>
-              <%= show_as_datetime(gallery.created_at.in_time_zone) %>
+              <%= show_as_date(gallery.created_at.in_time_zone) %>
             </li>
             <li class="item-creation-date">
               <span><%=t('revs.messages.last_updated')%>: </span>
-              <%= show_as_datetime(gallery.updated_at.in_time_zone) %>
+              <%= show_as_date(gallery.updated_at.in_time_zone) %>
             </li>
             <li class="saved-item-actions">
               <% if can? :read, gallery %>
@@ -67,7 +67,7 @@
           </ul>
         </div>
 
-        <div class="span5 pull-right item-description">
+        <div class="span4 pull-right item-description">
           <% if gallery.description.blank? && can?(:update, gallery)%>
             <span class="muted">
               <%= t('revs.user_galleries.you_can_add_a_description_html', :href => link_to(t("revs.user_galleries.you_can_add_a_description_linktext"), edit_gallery_path(gallery,:page=>params[:page],:order=>params[:order]))) %>
