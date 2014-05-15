@@ -200,6 +200,10 @@
 .thumbnail-column {
   margin-right: 20px;
   vertical-align: top;
+  img {
+    max-width: 100px;
+    margin-top: 4px;
+  }
 }
 
 .edit-content, .gallery-metadata {
