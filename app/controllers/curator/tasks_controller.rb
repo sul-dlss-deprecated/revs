@@ -2,7 +2,7 @@ class Curator::TasksController < ApplicationController
 
   before_filter :check_for_curator_logged_in
   before_filter :ajax_only, :only=>[:set_edit_mode,:edit_metadata,:set_top_priority_item]
-  before_filter :get_per_page
+  before_filter :get_paging_params
 
    def index
      redirect_to flags_table_curator_tasks_path # later we can replace with a landing page
@@ -65,6 +65,10 @@ class Curator::TasksController < ApplicationController
       @tab_list_user = 'favorites-by-user'
       @tab = params[:tab] || @tab_list_item
    end
+
+   def galleries
+      @galleries=Gallery.where(:gallery_type=>'user',:visibility => current_user.gallery_visibility_filter(current_user)).page(@current_page).per(@per_page)
+   end
    
    # an ajax call to set the curator edit mode
    def set_edit_mode
@@ -100,11 +104,6 @@ class Curator::TasksController < ApplicationController
      @document=SolrDocument.find(params[:id])
      @document.set_top_priority
      flash[:success] = t('revs.messages.set_top_priority')
-   end
-
-   private
-   def get_per_page
-     @per_page=params[:per_page] || Revs::Application.config.num_default_per_page
    end
 
 end

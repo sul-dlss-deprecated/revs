@@ -1,0 +1,15 @@
+<div id="content" class="span9 favorites-index">
+	
+  <h2><%=t('revs.user.curator_dashboard')%></h2>
+
+  <h3>
+    <%= t('revs.user_galleries.galleries') %>
+  </h3>
+
+  <div id="galleries_area">
+    <%= render :partial=>'user/galleries_list' %>
+  </div>
+
+</div>
+
+<%= render :partial => 'devise/shared/show_curator_sidebar' %>

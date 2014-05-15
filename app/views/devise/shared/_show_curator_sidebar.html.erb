@@ -9,7 +9,8 @@
           <li><%= link_to_unless_current t('revs.curator.sidebar.view_flagged_items'), flags_table_curator_tasks_path %></li>
           <li><%= link_to_unless_current t('revs.curator.sidebar.view_favorited_items'), favorites_table_curator_tasks_path %></li>
           <li><%= link_to_unless_current t('revs.curator.sidebar.view_edited_items'), edits_table_curator_tasks_path %></li>
-		      <li><%= link_to_unless_current t('revs.curator.sidebar.view_annotations'), annotations_table_curator_tasks_path%></li>		      
+		      <li><%= link_to_unless_current t('revs.curator.sidebar.view_annotations'), annotations_table_curator_tasks_path%></li>	
+          <li><%= link_to_unless_current t('revs.curator.sidebar.view_galleries'), galleries_table_curator_tasks_path%></li>          	      
         </ul>
       <% end %>
 

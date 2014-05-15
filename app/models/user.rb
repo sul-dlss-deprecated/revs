@@ -72,8 +72,20 @@ class User < ActiveRecord::Base
   def self.visibility_filter(things,class_name,user=nil)
     (user.blank? || user.cannot?(:view_hidden, SolrDocument)) ? things.joins("LEFT OUTER JOIN items on items.druid = #{class_name}.druid").where("items.visibility_value = #{SolrDocument.visibility_mappings[:visible]} OR items.visibility_value is null") : things
   end
- 
+
   #### class level methods
+  
+  # indicate which galleries should be shown based on the user passed in
+  
+  def gallery_visibility_filter(user)
+    all_visibilities=[]
+    all_visibilities << 'public' # anyone can see public galleries
+    all_visibilities << 'curator' if !user.blank? && user.can?(:curate, :all) # curators can see any curator galleries
+    all_visibilities << 'private' if !user.blank? && user == self # you can see your own galleries
+    return all_visibilities
+  end
+
+  ### has_many custom associations, so we can add visibility filtering   
   def all_saved_items
     SavedItem.includes(:gallery).where(:'galleries.user_id'=>id)
   end
@@ -82,16 +94,9 @@ class User < ActiveRecord::Base
     self.class.visibility_filter(SavedItem.includes(:gallery).where(:'galleries.user_id'=>id),'saved_items',user)
   end
 
-  ### has_many custom associations, so we can add visibility filtering 
-  # get the user's galleries,  pass in a second user (like the logged in user) to decide what other galleries should be returned as well
+ # get the user's galleries,  pass in a second user (like the logged in user) to decide what other galleries should be returned as well
   def galleries(user=nil)
-    galleries=Gallery.where(:user_id=>id,:gallery_type=>'user')
-    all_visibilities=[]
-    all_visibilities << 'public' # anyone can see public galleries
-    all_visibilities << 'curator' if !user.blank? && user.can?(:curate, :all) # curators can see any curator galleries
-    all_visibilities << 'private' if !user.blank? && user == self # you can see your own galleries
-    galleries=galleries.where(:visibility => all_visibilities)
-    galleries
+    Gallery.where(:user_id=>id,:gallery_type=>'user',:visibility => gallery_visibility_filter(user))
   end
 
   # get the user's favorites, pass in a second user (like the logged in user) to decide if hidden item favorites should be returned as well

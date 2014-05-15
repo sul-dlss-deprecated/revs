@@ -39,6 +39,12 @@
                 <%= gallery.views %>
               </li>
             <% end %>
+            <% if request.path == galleries_table_curator_tasks_path # the curator gallery view shows creators as well%>
+               <li class="item-creation-date">
+                <span><%=t('revs.messages.created_by')%>: </span>
+                <%= gallery.user == current_user ? t('revs.flags.you') : gallery.user.to_s %>
+              </li>
+            <% end %>
             <li class="item-creation-date">
               <span><%=t('revs.messages.added')%>: </span>
               <%= show_as_datetime(gallery.created_at.in_time_zone) %>
