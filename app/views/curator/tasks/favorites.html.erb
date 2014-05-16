@@ -45,7 +45,7 @@
           </tr>
           <% @saved_items_by_user.each do |result| %>
             <tr>
-              <td><%=display_user_name(result.user,result.user.public || result.user == current_user ? user_profile_name_path(result.user.username) : nil)%></td>
+              <td><%=display_user_name(result.user,result.user.public || result.user == current_user || can?(:read,User) ? user_profile_name_path(result.user.username) : nil)%></td>
               <td class="right"><%= result.num_galleries%></td>
               <td class="right"><%= result.user.all_saved_items.count %></td>
               <td><%= show_as_date(result.updated_at)%></td>

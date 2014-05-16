@@ -3,7 +3,7 @@
 
     <ul class="nav nav-list">
       <li class="nav-header"><%= t('revs.authentication.sidebar.actions') %></li>
-      <% if @user.public %>
+      <% if @user.public || can?(:read, User)%>
 				<li><%= link_to_unless_current t('revs.user.view_profile'), user_profile_name_path(@user.username) %></li>
 				<% if favorites_count(@user) > 0 %>
           <li><%= link_to_unless_current t('revs.user.view_all_favorites'), user_favorites_path(@user.username) %></li>
