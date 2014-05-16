@@ -324,6 +324,7 @@ en:
       in_gallery: 'In galleries'
       in_your_galleries: 'This item is currently in your galleries:'
       total_items: 'Items'
+      item: 'item'
       you_can_add_a_description_html: "You can %{href} to your gallery."
       you_can_add_a_description_linktext: 'add a description'
       public: 'Public'
