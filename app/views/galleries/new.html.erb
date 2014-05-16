@@ -5,7 +5,7 @@
   <%= validation_errors(@gallery) %>
 	
   <div class="edit-content">
-    <%= form_for(Gallery.new, :method => :post, :class => "form-horizontal" ) do |f| %>
+    <%= form_for(@gallery, :method => :post, :class => "form-horizontal" ) do |f| %>
       <%= render :partial=>'form',:locals=>{:f=>f} %>
     <% end %>
   </div>
