@@ -206,6 +206,9 @@
       font-size: 13px;
       margin-left: 23px;
     }
+    #current_in_galleries {
+      margin-left: 24px;
+    }
     .nav-header {
       i {
         background-image: none;
@@ -379,6 +382,14 @@
         float: left;
         clear: none;
       }
+    }
+    #new_saved_item input[type="submit"] {
+      float: right;
+      margin-right: 12px;
+    }
+    #current_in_galleries {
+      clear: right;
+      padding-top: 12px;
     }
   }
 }
