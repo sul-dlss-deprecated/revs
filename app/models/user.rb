@@ -81,7 +81,7 @@ class User < ActiveRecord::Base
     all_visibilities=[]
     all_visibilities << 'public' # anyone can see public galleries
     all_visibilities << 'curator' if !user.blank? && user.can?(:curate, :all) # curators can see any curator galleries
-    all_visibilities << 'private' if !user.blank? && user == self # you can see your own galleries
+    all_visibilities << 'private' if !user.blank? && user == self
     return all_visibilities
   end
 

@@ -50,6 +50,7 @@ class Ability
   def admin_actions(user)
     can_act_as_logged_in_user(user)
     can_view_any_profile
+    can_view_any_gallery
     can_curate
     can_update_metadata
     can_administer
@@ -115,9 +116,13 @@ class Ability
   end
 
   def can_view_any_profile
-    can :all, User
+    can :read, User
   end
     
+  def can_view_any_gallery
+    can :read, Gallery
+  end  
+
   def can_annotate(user)
     can :create, Annotation # can create new annotations
     can [:update,:destroy], Annotation, :user_id => user.id # can update and destroy their own annotations
