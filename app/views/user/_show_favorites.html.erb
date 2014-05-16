@@ -5,14 +5,14 @@
 <% if favorites_count(@user) > 0 %>
   <ul>
   <% @latest_favorites.each do |favorite| %>
-	          <li class="activity-item">
-	            <ul>
-	              <li><%= link_to(image_tag(favorite.solr_document.images.first), item_path(favorite.solr_document)) %><li>
-	              <li class="item-title"><%= item_link(favorite.solr_document,:truncate=>true, :length => 55) %></li>
-	              <% unless favorite.description.blank? %><li class="annotation"><%= truncate(favorite.description) %></li><% end %>
-	              <li><%= show_as_date(favorite.created_at.in_time_zone) %></li>
-	            </ul>
-	          </li>
+    <li class="activity-item">
+      <ul>
+        <li><%= link_to(image_tag(favorite.solr_document.images.first), item_path(favorite.solr_document)) %><li>
+        <li class="item-title"><%= item_link(favorite.solr_document,:truncate=>true, :length => 55) %></li>
+        <% unless favorite.description.blank? %><li class="annotation"><%= truncate(favorite.description) %></li><% end %>
+        <li><%= t('revs.messages.added')%> <%= show_as_date(favorite.created_at.in_time_zone) %></li>
+      </ul>
+    </li>
   <% end %>
   </ul>
   <% if favorites_count(@user) > Revs::Application.config.num_latest_user_activity %>
