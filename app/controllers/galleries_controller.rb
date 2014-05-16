@@ -12,6 +12,7 @@ class GalleriesController < ApplicationController
   end
   
   def new
+    @gallery.visibility='private'
   end
   
   def create

@@ -107,7 +107,7 @@ describe("Galleries",:type=>:request,:integration=>true) do
     should_deny_access(new_gallery_path) 
   end
 
-  it "should allow a logged in user to create a gallery" do
+  it "should allow a logged in user to create a gallery with private as the default" do
     new_gallery_title='This is my new gallery'
     new_gallery_description='It rulz'
     user=get_user(user_login)
@@ -116,7 +116,6 @@ describe("Galleries",:type=>:request,:integration=>true) do
     visit new_gallery_path
     fill_in 'gallery_title', :with=>new_gallery_title
     fill_in 'gallery_description', :with=>new_gallery_description
-    choose 'gallery_visibility_private'
     click_button 'submit'
     current_path.should == user_galleries_path(user_login)
     page.should have_content(new_gallery_title)
@@ -125,6 +124,28 @@ describe("Galleries",:type=>:request,:integration=>true) do
     new_gallery=Gallery.where(:user_id=>user.id).last
     new_gallery.public.should be_false 
     new_gallery.visibility.should == 'private'
+    new_gallery.title.should == new_gallery_title
+    new_gallery.description.should == new_gallery_description
+  end
+
+  it "should allow a logged in user to create a gallery set as public" do
+    new_gallery_title='This is my new gallery'
+    new_gallery_description='It rulz'
+    user=get_user(user_login)
+    login_as(user_login)
+    user.galleries(user).count.should == 2 # these are from the fixtures
+    visit new_gallery_path
+    fill_in 'gallery_title', :with=>new_gallery_title
+    fill_in 'gallery_description', :with=>new_gallery_description
+    choose 'gallery_visibility_public'
+    click_button 'submit'
+    current_path.should == user_galleries_path(user_login)
+    page.should have_content(new_gallery_title)
+    page.should have_content(new_gallery_description)
+    user.galleries(user).count.should == 3 # now we have a new gallery
+    new_gallery=Gallery.where(:user_id=>user.id).last
+    new_gallery.public.should be_true
+    new_gallery.visibility.should == 'public'
     new_gallery.title.should == new_gallery_title
     new_gallery.description.should == new_gallery_description
   end
