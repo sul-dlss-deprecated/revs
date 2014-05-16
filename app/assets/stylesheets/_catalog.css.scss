@@ -197,9 +197,12 @@
      margin-left: 1px;
      margin-right: 15px;
     }
-    #add_to_gallery_form form {
-      margin-bottom: 6px;
-      margin-top: 8px;
+    #add_to_gallery_form {
+      margin-bottom: 10px;
+      form {
+        margin-bottom: 6px;
+        margin-top: 8px;
+      }
     }
     select#saved_item_gallery_id {
       vertical-align: inherit;
@@ -208,6 +211,10 @@
     }
     #current_in_galleries {
       margin-left: 24px;
+      padding-bottom: 6px;
+      a {
+        color: $active_link_color;
+      }
     }
     .nav-header {
       i {
