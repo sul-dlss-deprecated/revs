@@ -191,6 +191,11 @@
     font-size: 0.9em;
     margin-top: 0;
   }
+  .edit_saved_item {
+    input[type="submit"] {
+      margin-right: 6px;
+    }
+  }
 }
 
 .thumbnail-column, .edit-content {
