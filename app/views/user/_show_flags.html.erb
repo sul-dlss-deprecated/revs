@@ -6,15 +6,15 @@
 <% if flags_unresolved_count(@user) > 0 %>
   <ul>
   <% @latest_flags.each do |flag| %>
-				  <% if flag.solr_document && !flag.resolved?%>
-	          <li class="activity-item">
-	            <ul>
-	              <li><%= link_to(image_tag(flag.solr_document.images.first), item_path(flag.solr_document)) %></li>
-	              <li class="item-title"><%= item_link(flag.solr_document,:truncate=>true) %></li>
-	              <li><%= show_as_date(flag.created_at.in_time_zone) %></li>
-	            </ul>
-	          </li>
-	       <% end %>
+	  <% if flag.solr_document && !flag.resolved?%>
+      <li class="activity-item">
+        <ul>
+          <li><%= link_to(image_tag(flag.solr_document.images.first), item_path(flag.solr_document)) %></li>
+          <li class="item-title"><%= item_link(flag.solr_document,:truncate=>true) %></li>
+          <li><%= t('revs.flags.flagged')%> <%= show_as_date(flag.created_at.in_time_zone) %></li>
+        </ul>
+      </li>
+   <% end %>
   <% end %>
   </ul>
   <% if flags_unresolved_count(@user) > Revs::Application.config.num_latest_user_activity %>
