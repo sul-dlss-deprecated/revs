@@ -6,16 +6,16 @@
 <% if annotations_count(@user) > 0 %>
   <ul>
   <% @latest_annotations.each do |annotation| %>
-			  	<% if annotation.solr_document %>
-	          <li class="activity-item">
-	            <ul>
-	              <li><%= link_to(image_tag(annotation.solr_document.images.first), item_path(annotation.solr_document)) %><li>
-	              <li class="item-title"><%= item_link(annotation.solr_document,:truncate=>true) %></li>
-	              <li class="annotation"><%= truncate(annotation.text) %></li>
-	              <li><%= show_as_date(annotation.created_at.in_time_zone) %></li>
-	            </ul>
-	          </li>
-			   <% end %>
+    <% if annotation.solr_document %>
+      <li class="activity-item">
+        <ul>
+          <li><%= link_to(image_tag(annotation.solr_document.images.first), item_path(annotation.solr_document)) %><li>
+          <li class="item-title"><%= item_link(annotation.solr_document,:truncate=>true) %></li>
+          <li class="annotation"><%= truncate(annotation.text) %></li>
+          <li><%= t('revs.messages.added')%> <%= show_as_date(annotation.created_at.in_time_zone) %></li>
+        </ul>
+      </li>
+   <% end %>
   <% end %>
   </ul>
   <% if annotations_count(@user) > Revs::Application.config.num_latest_user_activity %>
