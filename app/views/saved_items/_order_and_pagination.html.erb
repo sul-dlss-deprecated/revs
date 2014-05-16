@@ -2,7 +2,7 @@
 
   <div class="span4">
     <div class="reorder-controls">
-      <% if !@reorder && can?(:update, saved_items.first) # if we have the ability to edit items but we are not currently in sort mode, show the control%>
+      <% if saved_items.count > 1 && !@reorder && can?(:update, saved_items.first) # if we have the ability to edit items but we are not currently in sort mode, show the control%>
         <ul class="nav nav-pills hidden showOnLoad">
           <li>
             <%= link_to t('revs.favorites.sort_mode'), url_for(params.merge({:reorder=>true,:page=>1,:per_page=>500000})) %>
