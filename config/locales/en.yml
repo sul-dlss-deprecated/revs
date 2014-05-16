@@ -132,6 +132,7 @@ en:
       please_wait: 'Please wait...'
       return_to_gallery: '&laquo; return to gallery'
       return_to_favorites: "&laquo; return to %{user_name}'s favorites"
+      return_to_search_results: '&laquo; search results'
     contact:
       us: 'contact us'
       instructions_html: 'If you are asking about access or re-use of images, select "Request an image or terms of use question" as the subject or view %{reuse_link}.'
