@@ -65,7 +65,7 @@ class FlagsController < ApplicationController
     
     #If a different user is deleting the flag, penalize the creating user for spam.
     if(@flag.user_id != current_user.id) && !@flag.user.nil?
-      @user = User.find_by_id(@flag.user_id)
+      @user = User.find(@flag.user_id)
       @user.spam_flags += 1 
       @user.save
     end

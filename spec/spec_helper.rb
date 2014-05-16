@@ -58,6 +58,10 @@ def user_login
   'user1'   
 end
 
+def user2_login
+  'user2'   
+end
+
 def sunet_login
   'sunetuser@stanford.edu'
 end
@@ -112,6 +116,30 @@ end
 
 # some helper methods to do some quick checks
 
+# Flagging history
+def show_show_your_flagging_history(user_comment,curator_comment)
+  page.should_not have_content I18n.t('revs.flags.all_closed_flags')
+  page.should have_content I18n.t('revs.flags.your_closed_flags')
+  page.should have_content user_comment
+  page.should have_content curator_comment 
+end
+
+# Flagging history
+def show_not_show_flagging_history(user_comment,curator_comment)
+  page.should_not have_content I18n.t('revs.flags.all_closed_flags')
+  page.should_not have_content I18n.t('revs.flags.your_closed_flags')
+  page.should_not have_content user_comment
+  page.should_not have_content curator_comment 
+end
+
+# Flagging history
+def show_show_all_flagging_history(user_comment,curator_comment)
+  page.should have_content I18n.t('revs.flags.all_closed_flags')
+  page.should_not have_content I18n.t('revs.flags.your_closed_flags')
+  page.should have_content user_comment
+  page.should have_content curator_comment 
+end
+
 # Annotations
 def should_allow_annotations  
   page.should have_content(I18n.t('revs.annotations.add'))
@@ -137,6 +165,18 @@ def should_deny_access(path)
   visit path
   current_path.should == root_path
   page.should have_content(I18n.t('revs.messages.not_authorized'))
+end
+
+def should_deny_access_to_named_gallery(title)
+  gallery=Gallery.where(:title=>title).first
+  should_deny_access gallery_path(gallery)
+end
+
+def should_allow_access_to_named_gallery(title)
+  gallery=Gallery.where(:title=>title).first
+  visit gallery_path(gallery)
+  current_path.should == gallery_path(gallery)
+  page.should have_content title
 end
 
 def should_deny_access_for_beta(path)

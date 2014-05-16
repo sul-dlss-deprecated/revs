@@ -1,10 +1,10 @@
 <div id="content" class="span9">
 
-  <h2><%=t('revs.user.user_dashboard')%></h2>
+  <h2><%=t('revs.user.user_dashboard',:name=>(is_logged_in_user?(@user) ? t('revs.user.your') : "#{@user.to_s}'s"))%> </h2>
 
   <div class="row profile-vitals">
     <div class="span2">
-      <%= image_tag((@user.avatar.url.blank? ? asset_url('default-avatar.png') : @user.avatar.url(:thumb)), :class => "user-image") %>
+      <%= image_tag(@user.avatar.url(:thumb), :class => "user-image") %>
     </div>
     <div class="span6 offset1 user-bio">
       <% unless @user.bio.blank? %>
@@ -31,10 +31,11 @@
     <div class="span4">
       <%= render :partial => 'show_favorites' %>
     </div>
-
+    
     <div class="span4 offset1">
-      <%= render :partial => 'show_flags' %>
+      <%= render :partial => 'show_galleries' %>
     </div>
+    
   </div>
 
   <div class="row profile-activity">
@@ -43,12 +44,19 @@
     </div>
 
     <div class="span4 offset1">
+      <%= render :partial => 'show_flags' %>
+    </div>
+
+  </div>
+  
+  <div class="row profile-activity">
+    <div class="span4">
       <% if @user.can? :curate, :all %>
         <%= render :partial => 'show_edits' %>
       <% end %>
     </div>
   </div>
-
+    
 </div>
 
 <%= render :partial => 'side_nav' %>

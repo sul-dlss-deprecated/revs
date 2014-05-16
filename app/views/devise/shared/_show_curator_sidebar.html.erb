@@ -6,10 +6,11 @@
       <% if can? :curate, :all  %>
         <ul class="nav nav-list">
           <li class="nav-header"><%= t('revs.admin.sidebar.actions') %></li>
-          <li><%= link_to t('revs.curator.sidebar.view_favorited_items'), favorites_table_curator_tasks_path %></li>
-          <li><%= link_to t('revs.curator.sidebar.view_edited_items'), edits_table_curator_tasks_path %></li>
-          <li><%= link_to t('revs.curator.sidebar.view_flagged_items'), curator_tasks_path %></li>
-		      <li><%= link_to t('revs.curator.sidebar.view_annotations'), annotations_table_curator_tasks_path%></li>		      
+          <li><%= link_to_unless_current t('revs.curator.sidebar.view_flagged_items'), flags_table_curator_tasks_path %></li>
+          <li><%= link_to_unless_current t('revs.curator.sidebar.view_favorited_items'), favorites_table_curator_tasks_path %></li>
+          <li><%= link_to_unless_current t('revs.curator.sidebar.view_edited_items'), edits_table_curator_tasks_path %></li>
+		      <li><%= link_to_unless_current t('revs.curator.sidebar.view_annotations'), annotations_table_curator_tasks_path%></li>	
+          <li><%= link_to_unless_current t('revs.curator.sidebar.view_galleries'), galleries_table_curator_tasks_path%></li>          	      
         </ul>
       <% end %>
 
@@ -18,8 +19,8 @@
       <% if can? :curate, :all  %>
         <ul class="nav nav-list">
           <li class="nav-header"><%= t('revs.admin.sidebar.help') %></li>
-          <li><%= link_to t('revs.help.sidebar.metadata_editing_guidelines'), :controller=>'curator/help', :action=>'metadata_editing_guidelines' %></li>
-          <li><%= link_to t('revs.help.sidebar.bulk_edits'), :controller=>'curator/help', :action=>'bulk_edits' %></li>
+          <li><%= link_to_unless_current t('revs.help.sidebar.metadata_editing_guidelines'), :controller=>'curator/help', :action=>'metadata_editing_guidelines' %></li>
+          <li><%= link_to_unless_current t('revs.help.sidebar.bulk_edits'), :controller=>'curator/help', :action=>'bulk_edits' %></li>
         </ul>
       <% end %>
 

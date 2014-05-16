@@ -14,7 +14,7 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     login_as(user_login)
     user_account=User.find_by_username(user_login)
     visit user_profile_name_path(user_account.username)
-    page.should have_content(I18n.t("revs.user.user_dashboard"))
+    page.should have_content(I18n.t("revs.user.user_dashboard",:name=>I18n.t('revs.user.your')))
     page.should have_content("#{user_account.full_name}")
     click_link 'Update your profile'
 
@@ -40,7 +40,7 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     login_as(user_login)
     user_account=User.find_by_username(user_login)
     visit user_profile_name_path(user_account.username)
-    page.should have_content(I18n.t("revs.user.user_dashboard"))
+    page.should have_content(I18n.t("revs.user.user_dashboard",:name=>I18n.t('revs.user.your')))
     page.should have_content("#{user_account.full_name}")
     click_link 'Update your profile'
 
@@ -66,7 +66,7 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     user_account.login_count.should == 1
     
     visit user_profile_name_path(user_account.username)
-    page.should have_content(I18n.t("revs.user.user_dashboard"))
+    page.should have_content(I18n.t("revs.user.user_dashboard",:name=>I18n.t('revs.user.your')))
     page.should have_content("#{user_account.full_name}")
     click_link 'Change your password'
 
@@ -90,7 +90,7 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     fill_in "user_password", :with => new_password
     click_button "submit"
     visit user_profile_name_path(user_account.username)
-    page.should have_content(I18n.t("revs.user.user_dashboard"))
+    page.should have_content(I18n.t("revs.user.user_dashboard",:name=>I18n.t('revs.user.your')))
     page.should have_content("#{user_account.full_name}")
     
   end

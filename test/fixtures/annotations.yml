@@ -21,7 +21,7 @@ annotation2:
           
 annotation3:
  user: curator  # this is the named "curator" fixture object from the users table
- druid: 'bb004bn8654'
+ druid: 'bb004bn8654' # this item is hidden
  text: 'Testing'
  updated_at: 10/6/2013
  json: "{\"src\":\"https://stacks.stanford.edu/image/bb004bn8654/2012-027NADI-1966-b1_4.3_0015_thumb\",\"text\":\"Testing\",\"shapes\":[{\"type\":\"rect\",\"geometry\":{\"x\":0.1375,\"width\":0.09749999999999998,\"y\":0.3726235741444867,\"height\":0.10646387832699616}}],\"context\":\"http://localhost:3000/item/bb004bn8654\"}" 

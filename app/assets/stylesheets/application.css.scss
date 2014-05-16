@@ -24,7 +24,10 @@
 
 @import "improved-modal/bootstrap-modal";
 
-
+@import "variables";
+@import "mixins";
+@import "bootstrap_overrides";
+@import "blacklight_overrides";
 
 @import "global";
 @import "layout";
@@ -36,7 +39,7 @@
 @import "annotations";
 @import "facets";
 @import "catalog";
-@import "galleries";
+@import "saved_items";
 
 @import "collection_members_grid";
 @import "carousel";

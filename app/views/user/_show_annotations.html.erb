@@ -1,11 +1,11 @@
 <h3>
   <%=t('revs.annotations.plural')%>
-  <span class="activity-count"><%= user_annotations_count(@user).to_s.rjust(1, '0') %></span>
+  <span class="activity-count"><%= annotations_count(@user).to_s.rjust(1, '0') %></span>
 </h3>
 
-<% if @user.latest("annotations").size > 0 %>
+<% if annotations_count(@user) > 0 %>
   <ul>
-  <% @user.latest("annotations").each do |annotation| %>
+  <% @latest_annotations.each do |annotation| %>
 			  	<% if annotation.solr_document %>
 	          <li class="activity-item">
 	            <ul>
@@ -18,9 +18,9 @@
 			   <% end %>
   <% end %>
   </ul>
-  <% if user_annotations_count(@user) > Revs::Application.config.num_latest_user_activity %>
+  <% if annotations_count(@user) > Revs::Application.config.num_latest_user_activity %>
     <p class="more-link">
-      <%= pluralize(user_annotations_count(@user) - Revs::Application.config.num_latest_user_activity, t('revs.annotations.singular').downcase) %> <%=t('revs.messages.not_shown')%>.
+      <%= pluralize(annotations_count(@user) - Revs::Application.config.num_latest_user_activity, t('revs.annotations.singular').downcase) %> <%=t('revs.messages.not_shown')%>.
       <%= link_to "#{t('revs.messages.view_all')} »", user_annotations_path(@user.username) %>
     </p>
   <% end %>

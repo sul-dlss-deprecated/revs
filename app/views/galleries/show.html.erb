@@ -1,0 +1,67 @@
+<div class="span9">
+  <h2>
+    <%= @gallery.title %>
+    <% if is_logged_in_user?(current_user) %>
+      <span class="label profile-visibility <%= @gallery.public ? 'label-success' : '' %>"><%= display_gallery_visibility(@gallery) %></span>
+    <% end %>
+  </h2>
+
+  <div class="row gallery-details">
+    <% if @gallery.image(current_user) %>
+      <div class="span2 hidden-phone">
+        <%= link_to(image_tag(@gallery.image(current_user), class: "thumbnail-preview"), gallery_path(@gallery.id)) %>
+      </div>
+    <% end %>
+
+    <div class="span7 gallery-metadata">
+      <ul class="inline item-stats">
+        <li>
+          <span class="item-stats-heading"><%=t('revs.user_galleries.total_items')%>:</span>
+          <%= @gallery.saved_items(current_user).size %>
+        </li>
+        <li>
+          <span class="item-stats-heading"><%=t('revs.messages.total_views')%>:</span>
+          <%= @gallery.views %>
+        </li>
+        <li>
+          <span class="item-stats-heading"><%=t('revs.messages.added')%>:</span>
+          <%= show_as_date(@gallery.created_at.in_time_zone) %>
+        </li>
+        <li>
+          <span class="item-stats-heading"><%=t('revs.messages.last_updated')%>:</span>
+          <%= show_as_date(@gallery.updated_at.in_time_zone) %>
+        </li>
+      </ul>
+
+      <% if @gallery.user != current_user %>
+        <span class="label label-info">
+          <%= "#{t('revs.messages.created_by')} #{@gallery.user.to_s}" %>
+        </span>
+      <% end %>
+
+      <p class="gallery-description"><%=@gallery.description%></p>
+
+      <div id="saved_items" class="gallery-actions">
+        <% if can? :update, @gallery%>
+          <%= link_to t('revs.user_galleries.edit'), edit_gallery_path(@gallery) %> |
+        <% end%>
+        <% if can? :destroy, @gallery%>
+          <%= button_to(t('revs.user_galleries.delete'), gallery_path(@gallery.id), :confirm=>t('revs.actions.confirm_delete'), :method=> :delete, class: 'btn btn-link') %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div id="content" class="span9 favorites-index">
+       <div id="favorites_area">
+         <%=render :partial => "saved_items/list", :locals=>{:saved_items=>Kaminari.paginate_array(@gallery.saved_items(current_user).order(@order)).page(@current_page).per(@per_page),:gallery_type=>'user'} %>
+       </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="span3">
+  <%= render :partial => 'user/side_nav', :locals=>{:user=>@gallery.user} %>
+</div>

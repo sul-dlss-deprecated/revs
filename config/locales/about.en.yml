@@ -5,7 +5,7 @@ en:
       project_title: 'About the Revs Digital Library'
       related_sites: 'Related Sites'
       contact_us: 'Contact Us'
-      contact_title: 'Contact'
+      contact_title: 'Contact Us'
       contact_message_sent: 'Thanks - your message has been sent.'
       contact_message_sent_about_metadata: 'Thanks - we have received your corrections.  We may not be able to correct all problems immediately or respond individually but the corrections are appreciated and are logged for review.'
       contact_error: 'You need to enter some message text.'

@@ -16,7 +16,8 @@ class ApplicationController < ActionController::Base
   # Please be sure to impelement current_user and user_session. Blacklight depends on 
   # these methods in order to perform user specific actions. 
 
-  helper_method :application_name,:current_role,:on_home_page,:on_collections_page,:on_about_pages,:on_detail_page,:show_terms_dialog?,:sunet_user_signed_in?,:in_search_result?
+  helper_method :application_name,:tag_line,:current_role,:on_home_page,:on_collections_page,:on_about_pages,:on_detail_page,:show_terms_dialog?,:sunet_user_signed_in?,:in_search_result?,:list_type_interpolator,:item_type_interpolator
+  helper_method :paging_params,:extract_paging_params,:from_gallery?,:from_favorites?,:is_logged_in_user?
   layout "revs"
 
   protect_from_forgery
@@ -32,6 +33,10 @@ class ApplicationController < ActionController::Base
     t('revs.digital_library')
   end
   
+  def tag_line
+    t('revs.tagline')
+  end
+  
   def previous_page
     request.referrer || root_path
   end
@@ -42,10 +47,6 @@ class ApplicationController < ActionController::Base
     else
       session[:login_redirect] = previous_page 
     end
-  end
-  
-  def profile_visible?(user)
-    (user && (user==current_user || (user.public == true && user.active == true))) # if this is the currently logged in user or the profile is public, then the profile is visible
   end
   
   def after_sign_in_path_for(resource)
@@ -59,7 +60,12 @@ class ApplicationController < ActionController::Base
       return true
     end
   end
-       
+
+  # pass in a user, tells you if it's the currently logged in user
+  def is_logged_in_user?(user)
+    user_signed_in? && user == current_user
+  end
+
   def after_sign_out_path_for(resource_or_scope) # back to home page after sign out
     root_path
   end
@@ -86,23 +92,6 @@ class ApplicationController < ActionController::Base
 
   def check_for_curator_logged_in
     not_authorized unless can? :curate, :all
-  end
-
-  def check_for_profile_visible
-    check_for_profile_existence
-    profile_not_found unless profile_visible? @user
-  end
-  
-  def check_for_profile_existence
-    @id=params[:id]
-    @name=params[:name]
-    @user = (@id.blank? ? User.find_by_username(@name) : User.find_by_id(@id))
-    profile_not_found unless (@user && @user.active)
-  end
-  
-  def profile_not_found
-    flash[:error]=t('revs.authentication.user_not_found')
-    redirect_to previous_page 
   end
   
   def in_search_result?
@@ -187,6 +176,14 @@ class ApplicationController < ActionController::Base
       redirect_to params[:return_to]
     end
   end
+ 
+  def list_type_interpolator(gallery_type)
+    (gallery_type == 'favorites' ? t('revs.favorites.plural') : t('revs.user_galleries.singular'))
+  end
+
+  def item_type_interpolator(gallery_type)
+    (gallery_type == 'favorites' ? t('revs.favorites.singular') : t('revs.collection_members.items_name'))
+  end
 
   def current_role
     current_user ? current_user.role : 'none'
@@ -195,7 +192,33 @@ class ApplicationController < ActionController::Base
   def current_ability
     current_user ? current_user.ability : User.new.ability
   end
-        
+  
+  # add paging params to an incoming hash of other parameters
+  def paging_params(others={})
+    others.merge({:order=>@order,:per_page=>@per_page,:page=>@current_page})
+  end
+
+  # get the current paging params and set instance variables
+  def get_paging_params
+   @current_page = params[:page] || 1
+   @order=params[:order] || 'created_at DESC'
+   @per_page=(params[:per_page] || Revs::Application.config.num_default_per_page).to_i
+  end
+
+  # extract relevant paging params from params hash to add to some links
+  def extract_paging_params(params)
+    params.dup.keep_if {|k,v| ['order','page','per_page'].include? k}
+  end
+
+  def from_gallery?
+    !params[:gallery_id].blank?
+  end
+
+  def from_favorites?
+    !params[:favorite_user_name].blank?
+  end
+
+
   def exception_on_website(exception)
    
     @exception=exception

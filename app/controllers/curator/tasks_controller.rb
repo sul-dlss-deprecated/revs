@@ -2,6 +2,7 @@ class Curator::TasksController < ApplicationController
 
   before_filter :check_for_curator_logged_in
   before_filter :ajax_only, :only=>[:set_edit_mode,:edit_metadata,:set_top_priority_item]
+  before_filter :get_paging_params
 
    def index
      redirect_to flags_table_curator_tasks_path # later we can replace with a landing page
@@ -16,9 +17,9 @@ class Curator::TasksController < ApplicationController
      @order_user = params[:order_user] || "num_flags DESC"
      
      @flag_states = Flag.groupByFlagState
-     @flags = Kaminari.paginate_array(Flag.where(:state => @selection).order(@order)).page(params[:pagina]).per(Flag.per_table_page)
-     @flags_grouped=Flag.select('*,COUNT("druid") as num_flags').group("druid").order(@order_all).page(params[:pagina2]).per(Flag.per_table_page)
-     @flags_by_user=Flag.select('*,count(id) as num_flags').includes(:user).group("user_id").order(@order_user).page(params[:pagina3]).per(Flag.per_table_page)
+     @flags = Kaminari.paginate_array(Flag.where(:state => @selection).order(@order)).page(params[:pagina]).per(@per_page)
+     @flags_grouped=Flag.select('*,COUNT("druid") as num_flags').group("druid").order(@order_all).page(params[:pagina2]).per(@per_page)
+     @flags_by_user=Flag.select('*,count(id) as num_flags').includes(:user).group("user_id").order(@order_user).page(params[:pagina3]).per(@per_page)
 
      @tab_list_item = 'flags-by-item'
      @tab_list_user = 'flags-by-user'
@@ -27,27 +28,26 @@ class Curator::TasksController < ApplicationController
    end
    
    def annotations
-     @order = params[:order] || "created_at DESC"
+     @order_by_item = params[:order_by_item] || "num_annotations DESC"
      @order_all = params[:order_all] || "created_at DESC"
-     @order_user = params[:order_user] || "annotations.updated_at DESC"
+     @order_user = params[:order_user] || "annotations.created_at DESC"
      
-     #@annotations = Kaminari.paginate_array(Annotation.order(@order).all).page(params[:page]).per(Annotation.per_table_page)
-     @annotations = Annotation.select('*,COUNT("druid") as num_annotations').group("druid").order(@order).includes(:user).page(params[:pagina2]).per(Annotation.per_table_page)
-     @annotations_list = Kaminari.paginate_array(Annotation.order(@order_all).all).page(params[:pagina]).per(Annotation.per_table_page)
-     @annotations_by_user=Annotation.select('*,count(id) as num_annotations').includes(:user).group("user_id").order(@order_user).page(params[:pagina3]).per(Annotation.per_table_page)
+     @annotations_by_item = Annotation.select('druid,COUNT("druid") as num_annotations').group("druid").order(@order_by_item).includes(:user).page(params[:pagina]).per(@per_page)
+     @annotations_list = Annotation.order(@order_all).page(params[:pagina2]).per(@per_page)
+     @annotations_by_user=Annotation.select('*,count(id) as num_annotations').includes(:user).group("user_id").order(@order_user).page(params[:pagina3]).per(@per_page)
      
      @tab_group = 'annotations-group'
      @tab_list_all = 'annotations-list'
      @tab_list_user = 'annotations-by-user'
-     @tab = params[:tab] || @tab_group
+     @tab = params[:tab] || @tab_list_item
    end
    
    def edits
      @order = params[:order] || "num_edits DESC"
      @order_user = params[:order_user] || "num_edits DESC"
      
-     @edits_by_item=ChangeLog.select("count(id) as num_edits,druid,updated_at").where(:operation=>'metadata update').group('druid').order(@order).page(params[:pagina])
-     @edits_by_user=ChangeLog.select("count(id) as num_edits,user_id,updated_at").where(:operation=>'metadata update').includes(:user).group('user_id').order(@order_user).page(params[:pagina2])
+     @edits_by_item=ChangeLog.select("count(id) as num_edits,druid,updated_at").where(:operation=>'metadata update').group('druid').order(@order).page(params[:pagina]).per(@per_page)
+     @edits_by_user=ChangeLog.select("count(id) as num_edits,user_id,updated_at").where(:operation=>'metadata update').includes(:user).group('user_id').order(@order_user).page(params[:pagina2]).per(@per_page)
 
      @tab_list_item = 'edits-by-item'
      @tab_list_user = 'edits-by-user'
@@ -58,12 +58,18 @@ class Curator::TasksController < ApplicationController
       @order = params[:order] || "num_favorites DESC"
       @order_user = params[:order_user] || "num_galleries DESC"
 
-      @favorites_by_item=SavedItem.select("count(id) as num_favorites,druid,updated_at").includes(:gallery).group('druid').order(@order).page(params[:pagina])
-      @favorites_by_user=Gallery.select("count(id) as num_galleries,updated_at,user_id").includes(:user,:saved_items).group('user_id').page(params[:pagina2])
+      @saved_items_by_item=SavedItem.select("count(id) as num_favorites,druid,updated_at").includes(:gallery).group('druid').order(@order).page(params[:pagina]).per(@per_page)
+      @saved_items_by_user=Gallery.select("count(id) as num_galleries,updated_at,user_id").includes(:user,:all_saved_items).group('user_id').order(@order_user).page(params[:pagina2]).per(@per_page)
 
       @tab_list_item = 'favorites-by-item'
       @tab_list_user = 'favorites-by-user'
       @tab = params[:tab] || @tab_list_item
+   end
+
+   def galleries
+      visibilities=['public','curator']
+      visibilities << 'private' if can? :administer, :all  # admins can even see private galleries of any user
+      @galleries=Gallery.where(:gallery_type=>'user',:visibility => visibilities).page(@current_page).per(@per_page)
    end
    
    # an ajax call to set the curator edit mode

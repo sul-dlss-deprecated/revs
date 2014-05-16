@@ -49,13 +49,14 @@ class Ability
    # administrator can do anything a logged in user can, a curator can, as well as adminster
   def admin_actions(user)
     can_act_as_logged_in_user(user)
+    can_view_any_profile
+    can_view_any_gallery
     can_curate
     can_update_metadata
     can_administer
   end
   
   # defined abilities
-  private
   def can_act_as_guest_user(user)
     # any user of the website (even those not logged in) can perform these actions
     can_view_about_pages # anyone can see the about and home page no matter what
@@ -63,6 +64,8 @@ class Ability
       can_view_items
       can_read_annotations
       can_read_flags
+      can_view_public_galleries
+      can_view_public_profiles
       can_flag_anonymous if user.id.nil? # if this is really an anonymous user, add this ability -- if they are logged in, it will added in later specifically for logged in users
     end
   end
@@ -75,6 +78,7 @@ class Ability
     can_annotate(user)
     can_flag_logged_in(user)
     can_save_favorites_and_galleries(user)
+    can_view_own_profile(user)
   end
   
   def can_view_about_pages
@@ -97,7 +101,28 @@ class Ability
     can :index_by_druid, Flag  
     can :update_flag_table, User 
   end
-  
+
+  def can_view_public_galleries
+    can :read, Gallery, :visibility=>'public'
+  end
+
+  def can_view_public_profiles
+    can [:show,:show_by_name,:favorites,:saved_items], User, :public=>true, :active=>true # note that I could not get the confirmation of public and active profile checking to work here, so this is actually confirmed in the user controller via a before filter
+    can [:annotations,:edits,:galleries,:flags], User, :active=>true # all annotations, edits, galleries, and flags are visible when user is active (note that I could not get the confirmation of an active profile checking to work here, so this is actually confirmed in the user controller via a before filter)
+  end
+
+  def can_view_own_profile(user)
+    can :all, User, :user_id=>user.id
+  end
+
+  def can_view_any_profile
+    can :read, User
+  end
+    
+  def can_view_any_gallery
+    can :read, Gallery
+  end  
+
   def can_annotate(user)
     can :create, Annotation # can create new annotations
     can [:update,:destroy], Annotation, :user_id => user.id # can update and destroy their own annotations
@@ -106,8 +131,8 @@ class Ability
   def can_save_favorites_and_galleries(user)
     can :create, SavedItem # can create new saved items
     can :create, Gallery, :user_id=>user.id # can create new galleries for themselves
-    can [:update,:destroy,:cancel], SavedItem, :user_id => user.id # can update and destroy their own Saved Items
-    can [:update,:destroy], Gallery, :user_id => user.id # can update and destroy their own Galleries
+    can [:read,:update,:destroy,:cancel,:sort], SavedItem, :user_id => user.id # can update and destroy their own Saved Items
+    can [:read,:update,:destroy,:sort], Gallery, :user_id => user.id # can update and destroy their own Galleries regardless of visibility
   end
   
   def can_flag_anonymous
@@ -133,6 +158,7 @@ class Ability
     can :update, Flag
     can :curator_update_flag_table, User  
     can :view_hidden, SolrDocument
+    can [:read], Gallery, :visibility=>'curator' # curators can see any other curator galleries
   end
   
   def can_update_metadata

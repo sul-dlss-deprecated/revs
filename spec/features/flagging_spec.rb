@@ -242,7 +242,24 @@ describe("Flagging",:type=>:request,:integration=>true) do
         #Ensure the Flag Was Resolved via a message on the page to the user and in the database
         check_flag_was_marked_wont_fix(user_comment, initial_flag_count+1, curator_comment, flag_id)
       
-      
+        #Ensure the flag shows up in the flag history for the curator
+        show_show_all_flagging_history(user_comment,curator_comment)
+
+        #Ensure the flag doesn't show up in history for a non-logged in user or for a regular user who did not create it
+        logout
+        visit catalog_path(druid)
+        show_not_show_flagging_history(user_comment,curator_comment)
+        login_as_user_and_goto_druid(beta_login,druid)
+        show_not_show_flagging_history(user_comment,curator_comment)
+
+        #Ensure the flag show up in history for a the logged in user who created it
+        login_as_user_and_goto_druid(user_login,druid)
+        show_show_your_flagging_history(user_comment,curator_comment)
+
+        #Ensure the flag show up in history for an admin  user
+        login_as_user_and_goto_druid(admin_login,druid)
+        show_show_all_flagging_history(user_comment,curator_comment)
+
     end
     
     it "should allow a curator to resolve a flag as fixed" do

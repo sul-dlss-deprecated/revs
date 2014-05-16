@@ -2,7 +2,7 @@
 item_note_text=""
 if @document.is_favorite?(current_user)
   favorites_link_icon = "icon-heart"
-  favorites_link_text = t('revs.favorites.remove_from_favorites')
+  favorites_link_text = t('revs.favorites.remove_from_favorites',:list_type=>t('revs.favorites.plural'))
   item_note=current_user.favorites.where(:druid=>@document.id).first
   item_note_text="#{t('revs.favorites.item_note')}: #{item_note.description}" if (!item_note.nil? && !item_note.description.blank?)
   url=saved_item_path(@document.id)

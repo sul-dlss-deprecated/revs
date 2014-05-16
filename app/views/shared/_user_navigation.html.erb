@@ -13,7 +13,7 @@
       <% end %>
 
       <li class="divider"></li>
-      <li><%= link_to t('revs.user.user_dashboard'), user_profile_name_path(current_user.username) %></li>
+      <li><%= link_to t('revs.user.user_dashboard',:name=>t('revs.user.your')), user_profile_name_path(current_user.username) %></li>
       <% if can? :curate, :all %>
         <li><%= link_to t('revs.user.curator_dashboard'), curator_tasks_path %></li>
       <% end %>

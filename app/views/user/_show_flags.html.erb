@@ -1,12 +1,12 @@
 <h3>
   <%=t('revs.flags.plural')%>
-  <span class="activity-count"><%= user_flags_unresolved_count(@user).to_s.rjust(1, '0') %></span>
+  <span class="activity-count"><%= flags_unresolved_count(@user).to_s.rjust(1, '0') %></span>
 </h3>
 
-<% if @user.latest('flags').size > 0 %>
+<% if flags_unresolved_count(@user) > 0 %>
   <ul>
-  <% @user.latest('flags').each do |flag| %>
-				  <% if flag.solr_document and not flag.resolved%>
+  <% @latest_flags.each do |flag| %>
+				  <% if flag.solr_document && !flag.resolved?%>
 	          <li class="activity-item">
 	            <ul>
 	              <li><%= link_to(image_tag(flag.solr_document.images.first), item_path(flag.solr_document)) %></li>
@@ -17,9 +17,9 @@
 	       <% end %>
   <% end %>
   </ul>
-  <% if user_flags_unresolved_count(@user) > Revs::Application.config.num_latest_user_activity %>
+  <% if flags_unresolved_count(@user) > Revs::Application.config.num_latest_user_activity %>
     <p class="more-link">
-      <%= pluralize(user_flags_count(@user) - Revs::Application.config.num_latest_user_activity, t('revs.flags.singular').downcase) %> <%=t('revs.messages.not_shown')%>.
+      <%= pluralize(flags_unresolved_count(@user) - Revs::Application.config.num_latest_user_activity, t('revs.flags.singular').downcase) %> <%=t('revs.messages.not_shown')%>.
       <%= link_to "#{t('revs.messages.view_all')} »", user_flags_path(@user.username) %>
     </p>
   <% end %>

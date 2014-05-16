@@ -15,6 +15,10 @@ gem 'devise', '~> 2.2.5'
 gem 'omniauth'
 gem 'cancan'
 
+gem 'ranked-model'
+
+gem 'friendly_id', '~> 4.0.10'
+
 # image (user avatar) uploading
 gem 'carrierwave'
 gem "mini_magick"
@@ -78,7 +82,7 @@ gem 'gssapi', :git => 'https://github.com/cbeer/gssapi.git'
 gem 'jquery-rails'
 gem 'rest-client'
 
-gem 'json', '~> 1.7.7'
+gem 'json', '~> 1.8'
 
 gem "bootstrap-sass"
 gem "font-awesome-rails"

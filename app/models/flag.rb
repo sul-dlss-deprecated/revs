@@ -13,8 +13,7 @@ class Flag < WithSolrDocument
   validates :druid, :is_druid=>true
   validate :check_user_id
   validate :check_flag_type
-  
-  FLAGS_PER_TABLE_PAGE = 25
+  validate :check_flag_state
 
   def self.create_new(flag_info,user)
     flag=Flag.new
@@ -26,25 +25,17 @@ class Flag < WithSolrDocument
     flag.save 
     return flag 
   end
-  
-  def check_user_id
-    errors.add(:user_id, :not_valid) unless (user_id.nil? || user_id.is_a?(Integer))
-  end
-  
-  def check_flag_type
-    errors.add(:flag_type, :not_valid) unless FLAG_TYPES.include? flag_type.to_s
-  end
-  
-  def self.per_table_page
-    return FLAGS_PER_TABLE_PAGE
-  end
-  
+
   def self.fixed
     return FLAG_STATES[:fixed]
   end
   
   def self.wont_fix
     return FLAG_STATES[:wont_fix]
+  end
+
+  def self.closed
+    [FLAG_STATES[:wont_fix],FLAG_STATES[:fixed]]
   end
   
   def self.open
@@ -55,23 +46,8 @@ class Flag < WithSolrDocument
     return FLAG_STATE_DISPLAYS
   end
 
-  # get total flag unresolved count, or for a specific druid if you pass it in
-  def self.unresolved_count(druid=nil)
-    counts=Flag.where(:state=>'open')
-    counts=counts.where(:druid=>druid) if druid
-    counts.size
-  end
-  
-  def resolved
-    return (self.state == FLAG_STATES[:wont_fix] or self.state == FLAG_STATES[:fixed])
-  end
-  
-  def state_display_name
-    return FLAG_STATE_DISPLAYS[self.state]
-  end
-  
   def self.display_resolved_columns(options)
-    return (options.include? Flag.fixed or options.include? Flag.wont_fix)
+    self.closed.map {|closed_state| options.include? closed_state}.include? true
   end
   
   def self.groupByFlagState
@@ -81,6 +57,38 @@ class Flag < WithSolrDocument
   def self.queryFlagGroup(flag_group, druid, state)
     return flag_group[[druid,state]] || 0
   end
+
+  # get total flag unresolved count, or for a specific druid if you pass it in
+  def self.unresolved_count(druid=nil)
+    counts=Flag.where(:state=>Flag.open)
+    counts=counts.where(:druid=>druid) if druid
+    counts.size
+  end
+  
+  def resolving_username
+    User.find(resolving_user).to_s
+  end
+
+  def check_user_id
+    errors.add(:user_id, :not_valid) unless (user_id.nil? || user_id.is_a?(Integer))
+  end
+  
+  def check_flag_type
+    errors.add(:flag_type, :not_valid) unless FLAG_TYPES.include? flag_type.to_s
+  end
+
+   def check_flag_state
+    errors.add(:state, :not_valid) unless FLAG_STATES.values.include? state.to_s
+  end 
+  
+  def resolved?
+    (self.class.closed.include? state)
+  end
+  
+  def state_display_name
+    return FLAG_STATE_DISPLAYS[self.state]
+  end
+
   
  
   

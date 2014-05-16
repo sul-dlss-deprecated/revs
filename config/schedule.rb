@@ -5,5 +5,3 @@ if ['production','staging'].include? @environment
     rake "blacklight:delete_old_searches[5]"
   end
 end
-
-# Learn more: http://github.com/javan/whenever

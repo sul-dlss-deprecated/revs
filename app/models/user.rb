@@ -1,12 +1,14 @@
 class User < ActiveRecord::Base
 
+  include Blacklight::User
+
   # class generated with CarrierWave
   mount_uploader :avatar, AvatarUploader
   validates_integrity_of  :avatar
   validates_processing_of :avatar
 
-  # user abilities and permissions are defined in the ability.rb class == if you add or change names here, you will need both
-  #  update the ability class, and update the strings stored in the user "role" column
+  # user abilities and permissions are defined in the ability.rb class == if you add or change names here, you will need to both
+  #  update the ability class, and update the strings stored in the user "role" column (only if role names change)
   ROLES=%w{admin curator beta user}
   DEFAULT_ROLE='user' # the default role that any logged in user will have
   
@@ -24,50 +26,113 @@ class User < ActiveRecord::Base
   attr_accessor :subscribe_to_mailing_list, :subscribe_to_revs_mailing_list # not persisted, just used on the signup form
   attr_accessor :login # virtual method that will refer to either email or username
   
-  has_many :annotations, :dependent => :destroy
-  has_many :flags, :dependent => :destroy
-  has_many :change_logs, :dependent => :destroy
-  has_many :galleries, :dependent => :destroy
-  
+  # all "regular" has_many associations are done via custom methods below so we can add visibility filtering for items
+  # the "all_CLASS" has_many associations are provided for convience, and to facilitate dependent destroying easily
+  has_one :favorites_list, :conditions=>'gallery_type="favorites"', :dependent => :destroy, :class_name=>'Gallery'
+  has_many :all_galleries, :class_name=>'Gallery', :dependent=>:destroy
+  has_many :all_annotations, :class_name=>'Annotation', :dependent=>:destroy
+  has_many :all_change_logs, :class_name=>'ChangeLog', :dependent=>:destroy
+  has_many :all_flags, :class_name=>'Flag', :dependent=>:destroy
+
   before_validation :assign_default_role, :if=>lambda{no_role?}
   before_save :trim_names
   after_create :signup_for_mailing_list, :if=>lambda{subscribe_to_mailing_list=='1'}
   after_create :signup_for_revs_institute_mailing_list, :if=>lambda{subscribe_to_revs_mailing_list=='1'}
-  after_create :create_default_favorites_list
+  after_create :create_default_favorites_list # create the default favorites list when accounts are created
+
+  after_save :create_default_favorites_list # create the default favorites list if it doesn't exist when a user logs in
+
   validate :check_role_name
   validates :username, :uniqueness => { :case_sensitive => false }
   validates :username, :length => { :in => 5..50}
   validates :username, :format => { :with => /\A\D.+/,:message => "must start with a letter" }
-  include Blacklight::User
 
   delegate :can?, :cannot?, :to => :ability # this saves us some typing so we can ask user.can? instead of user.ability.can?
   
-  # get the user's favorites 
-  def favorites
-    Gallery.get_favorites_list(id).saved_items
+  #### class level methods
+  def self.create_new_sunet_user(sunet)
+    password=self.create_sunet_user_password
+    user = User.new(:email=>"#{sunet}@stanford.edu",:sunet=>sunet,:username=>"#{sunet}@stanford.edu",:password => password, :password_confirmation => password, :role=>DEFAULT_ROLE)
+    user.skip_confirmation!
+    user.save!
+    user
   end
   
-  # get all of the user's saved items in any of their galleries
-  def saved_items
-    SavedItem.includes(:gallery).where("galleries.user_id=#{self.id}")
+  # passwords are irrelvant and never used for SUNET users, but we need to set one in the user table to make devise happy
+  # we override the sign_in method from devise (in controllers/sessions_controller) to prevent SUNET users from logging in using this password anyway
+  def self.create_sunet_user_password
+    SecureRandom.hex(16)
   end
-  
+
   def self.roles
     ROLES
   end
   
-  def self.visibility_filter(things,class_name)
-    things.joins("LEFT OUTER JOIN items on items.druid = #{class_name}.druid").where("items.visibility_value = #{SolrDocument.visibility_mappings[:visible]} OR items.visibility_value is null")    
+  # only returning visible items for given class and query depending on user ability passed in
+  def self.visibility_filter(things,class_name,user=nil)
+    (user.blank? || user.cannot?(:view_hidden, SolrDocument)) ? things.joins("LEFT OUTER JOIN items on items.druid = #{class_name}.druid").where("items.visibility_value = #{SolrDocument.visibility_mappings[:visible]} OR items.visibility_value is null") : things
   end
+
+  #### class level methods
   
-  def self.latest_filter(things)
-    things.order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
+  # indicate which galleries should be shown based on the user passed in
+  
+  def gallery_visibility_filter(user)
+    all_visibilities=[]
+    all_visibilities << 'public' # anyone can see public galleries
+    all_visibilities << 'curator' if !user.blank? && user.can?(:curate, :all) # curators can see any curator galleries
+    all_visibilities << 'private' if !user.blank? && user == self
+    return all_visibilities
   end
-  
+
+  ### has_many custom associations, so we can add visibility filtering   
+  def all_saved_items
+    SavedItem.includes(:gallery).where(:'galleries.user_id'=>id)
+  end
+
+  def saved_items(user=nil)
+    self.class.visibility_filter(SavedItem.includes(:gallery).where(:'galleries.user_id'=>id),'saved_items',user)
+  end
+
+ # get the user's galleries,  pass in a second user (like the logged in user) to decide what other galleries should be returned as well
+  def galleries(user=nil)
+    Gallery.where(:user_id=>id,:gallery_type=>'user',:visibility => gallery_visibility_filter(user))
+  end
+
+  # get the user's favorites, pass in a second user (like the logged in user) to decide if hidden item favorites should be returned as well
+  def favorites(user=nil)
+    self.class.visibility_filter(favorites_list.saved_items(user),'saved_items',user)
+  end
+
+  # get the user's annotations, pass in a second user (like the logged in user) to decide if hidden item annotations should be returned as well
+  def annotations(user=nil)
+    self.class.visibility_filter(Annotation.where(:user_id=>id),'annotations',user)
+  end
+
+  # get the user's flags, pass in a second user (like the logged in user) to decide if hidden item flags should be returned as well
+  def flags(user=nil)
+    self.class.visibility_filter(Flag.where(:user_id=>id),'flags',user)
+  end
+
+  # get just metadata updates from the change logs, grouped by druid
+  def change_logs(user=nil)
+    self.class.visibility_filter(ChangeLog.where(:user_id=>id),'change_logs',user)
+  end
+
+  # get just metadata updates from the change logs, grouped by druid
+  def metadata_updates(user=nil)
+    change_logs(user).where(:user_id=>id,:operation=>'metadata update').group('change_logs.druid')
+  end
+  ### associations
+
+  # create the default favoritest list unless it already exists (done at account create and login, just to be sure it exists)
   def create_default_favorites_list
-    Gallery.get_favorites_list(self.id)
+    if favorites_list.blank?
+      new_favorites_list=Gallery.create(:user_id=>id,:gallery_type=>:favorites,:visibility=>:public,:title=>I18n.t('revs.favorites.head')) 
+      self.reload
+    end
   end
-  
+
   # determines if account is active (could be locked or manually made inactive)
   def active_for_authentication?
     super && active
@@ -79,29 +144,7 @@ class User < ActiveRecord::Base
   
   def after_database_authentication
     self.increment!(:login_count)
-  end
- 
-  def visible(class_name)
-    visible=eval("self.#{class_name}")
-    visible=self.class.visibility_filter(visible,class_name)
-    visible=visible.where(:operation=>'metadata update') if class_name=='change_logs' 
-    return visible   
-  end
-  
-  def latest(class_name)
-    if class_name=='favorites'
-      return favorites.order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
-    elsif class_name=='change_logs'
-      return metadata_updates.order('change_logs.created_at desc').limit(Revs::Application.config.num_latest_user_activity)
-    else
-      latest=visible(class_name)
-      latest=self.class.latest_filter(latest)
-      return latest
-    end
-  end
-  
-  def metadata_updates
-    visible('change_logs').group('change_logs.druid').where(:operation=>'metadata update')
+    create_default_favorites_list
   end
   
   # override devise method --- stanford users are never timed out; regular users are timed out according to devise rules
@@ -123,20 +166,6 @@ class User < ActiveRecord::Base
     else
       where(conditions).first
     end
-  end
-      
-  def self.create_new_sunet_user(sunet)
-    password=self.create_sunet_user_password
-    user = User.new(:email=>"#{sunet}@stanford.edu",:sunet=>sunet,:username=>"#{sunet}@stanford.edu",:password => password, :password_confirmation => password, :role=>DEFAULT_ROLE)
-    user.skip_confirmation!
-    user.save!
-    user
-  end
-  
-  # passwords are irrelvant and never used for SUNET users, but we need to set one in the user table to make devise happy
-  # we override the sign_in method from devise (in controllers/sessions_controller) to prevent SUNET users from logging in using this password anyway
-  def self.create_sunet_user_password
-    SecureRandom.hex(16)
   end
   
   def sunet_user?

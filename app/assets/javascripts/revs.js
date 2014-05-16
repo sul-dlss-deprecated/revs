@@ -20,6 +20,14 @@ $(document).ready(function(){
     return false;
   });
 
+  // Collapse Add to Gallery details if JavaScript (open by default for no-JS browsers).
+  $('#add_to_gallery_form').hide();
+  // Toggle details (new flag form and posted flags) when Flag action is selected.
+  $('#add_to_gallery_link').on('click', function(){
+    $('#add_to_gallery_form').slideToggle('fast');
+    return false;
+  });
+
   // Initialize Bootstrap tooltip
   $('.help').tooltip();
 
@@ -36,13 +44,25 @@ $(document).ready(function(){
    // Select all rows for edit when 'select all' checkbox is selected.
    $( '.curator-edit-options #select-all' ).click( function () {
       $( '.curator input[type="checkbox"]' ).prop('checked', this.checked);
-      if ($('#bulk_edit_attribute option:selected').text() != "Field to update...") { // don't do anything else if no real field is selected in menu
-        var field = $('#bulk_edit_attribute option:selected').text(); // current field selected in the select menu
-        $('#documents.curator .result-item').each(function() { // loop through all result item rows
-          updateEditStatus(field,'.result-item'); // update status message
-        });
-      }
+      var field = $('#bulk_edit_attribute option:selected').text(); // current field selected in the select menu
+      $('#documents.curator .result-item').each(function() { // loop through all result item rows
+        updateEditStatus(field,'.result-item'); // update status message
+      });
    });
+
+   // radio button for curator to bulk update values should ensure text box to enter new values is shown
+     $( '.curator-edit-options #bulk_edit_action_update' ).click( function () {
+      $( '#bulk_edit_new_value' ).show();
+    });
+   // radio button for curator to bulk remove values should ensure text box to enter new values is hidden
+     $( '.curator-edit-options #bulk_edit_action_remove' ).click( function () {
+      $( '#bulk_edit_new_value' ).hide();
+    });
+    if ($( '#bulk_edit_action_remove' ).is(':checked')) {
+      $( '#bulk_edit_new_value' ).hide();
+      $( '#bulk_edit_new_value' ).val('');
+    } // if the radio button starts in the checked state, hide the new value box and clear its value
+
    // Called when an individual checkbox is checked or unchecked.
    // Update row status message if user changes individual checkbox
    $('.result-item-checkbox > input[type="checkbox"]').change(function() {
@@ -97,7 +117,7 @@ $(document).ready(function(){
 		  return false;
 		});
 		
-	$('#contact_us_link').click(function() {
+	$('#contact_us_link, .error-page-feedback').click(function() {
     $(".report-problem")[0].reset();
 	  $('#report-problem-form').slideToggle('slow');
 	  return false;
@@ -190,6 +210,10 @@ function showOnLoad() {
 
 function loadCollectionMembersGrid(id,page_type) {
   jQuery.ajax({type: "GET", dataType: "script", url: "/show_collection_members_grid/" + id + "?on_page=" + page_type});
+}
+
+function loadGalleryItemGrid(gallery_id) {
+  jQuery.ajax({type: "GET", dataType: "script", url: "/galleries/grid/" + gallery_id});
 }
 
 function setupItemDetailPanels() {

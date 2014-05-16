@@ -1,0 +1,40 @@
+    <div class="control-group">
+      <%= f.label :title, t('revs.user_galleries.title'), :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :title, :class => "input-xxlarge" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :description, t('revs.user_galleries.description'), :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_area :description, :rows => "6", :class => "input-xxlarge" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :public, t('revs.user.visibility'), :class => 'control-label' %>
+      <div class="controls">
+        <label class="radio inline">
+          <%= f.radio_button :visibility, :public, :class => "radio", checked: @gallery.visibility == "public" %>
+          <%= t('revs.user_galleries.public') %>
+        </label>
+        <label class="radio inline">
+          <%= f.radio_button :visibility, :private, :class => "radio", checked: @gallery.visibility == "private" %>
+          <%= t('revs.user_galleries.private') %>
+        </label>
+        <% if %w{curator admin}.include? current_user.role %>
+          <label class="radio inline">
+            <%= f.radio_button :visibility, :curator, :class => "radio", checked: @gallery.visibility == "curator" %>
+            <%= t('revs.user_galleries.curator') %>
+          </label>
+        <% end %>
+      </div>
+    </div>
+  
+    <div class="control-group buttons">
+      <div class="controls">  
+      <%= f.submit t('revs.nav.save_changes'), :id=>'submit', :class => "btn" %>
+      <%= link_to t('revs.nav.cancel'),user_galleries_path(current_user.username)%>
+      </div>
+    </div>

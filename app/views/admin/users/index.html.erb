@@ -8,8 +8,8 @@
   <%= form_tag admin_users_path, :method=>:get, :class => 'form-search' do %>
     <p>
       <%= t('revs.admin.filter') %>: <%= select_tag 'filter',options_for_select({'All users'=>'all','Stanford users'=>'stanford','Non-Stanford users'=>'non-stanford'},@filter),class:"span2"%>
-      <%= t('revs.admin.per_page') %>: <%= select_tag 'per_page',options_for_select(['10','50','100','200'],@per_page),class:"span1"%>
-      </p>
+      <%= render :partial=>'shared/per_page_dropdown' %>
+    </p>
         <%=t('revs.admin.search_by_email')%>: <%= text_field_tag :search, @search, :class => 'input-large' %>
         <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-small' %>
   <% end %>
@@ -51,7 +51,7 @@
          <td><%= user.login_count %></td>
          <td><%= show_as_datetime(user.created_at.in_time_zone) %></td>
          <td class="centered"><%= user.confirmed_at.blank? ? t('revs.messages.switch_no') : t('revs.messages.switch_yes') %></td>
-         <td class="centered"><%= link_to "[#{t('revs.actions.edit')}]", edit_admin_user_path(user.id),:id=>"edit-#{user.id}" %></td>
+         <td class="centered"><%= link_to "[#{t('revs.actions.edit')}]", edit_admin_user_path(user.id),:id=>"edit-#{user.id}" %> | <%= link_to "[#{t('revs.user.view_profile')}]", user_profile_id_path(user.id) %></td>
          <td class="centered"><%= check_box_tag 'selected_users[]', user.id, false, :id=>"bulk_edit_selected_users_#{user.id}"  %>
           </td>
        </tr>

@@ -7,7 +7,7 @@
         <li><%= link_to(t('revs.search.gallery_toggle.detailed'), catalog_index_path(params.merge(:view => 'detailed')), :class=>"#{'active'if params[:view] == 'detailed'}") %></li>
 
         <% if can? :curate, :all  %>
-          <li><%= link_to(t('revs.search.gallery_toggle.curator'), catalog_index_path(params.merge(:view => 'curator')), :class=>"#{'active'if params[:view] == 'curator'}") %></li>
+          <li><%= link_to(t('revs.search.gallery_toggle.curator'), catalog_index_path(params.merge(:view => 'curator')), :class=>"showOnLoad hidden #{'active'if params[:view] == 'curator'}") %></li>
         <% end %>
 
       </ul>

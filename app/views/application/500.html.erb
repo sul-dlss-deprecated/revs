@@ -1,2 +1,19 @@
-<h3>Error</h3>
-<p>We apologize, but an unexpected error has occurred.  We have logged the error and notified system administrators.</p>
+<div class="span9 error-page">
+  <div class="error-500">
+    <h2><i class='icon-exclamation-sign'></i><%= t('revs.errors.unexpected') %></h2>
+    <p><%= t('revs.errors.500_message') %></p>
+    <ul>
+      <li>
+        <i class='icon-search'></i>
+        <%= t('revs.errors.action_search_html',
+          :href => link_to(t('revs.errors.action_search_linktext',
+          :project => t('revs.digital_library')), root_url)) %>.
+      </li>
+      <li>
+        <i class='icon-sitemap'></i>
+        <%= t('revs.errors.action_browse_collections_html',
+          :href => link_to(t('revs.errors.action_browse_collections_linktext'), all_collections_url)) %>.
+      </li>
+    </ul>
+  </div>
+</div>

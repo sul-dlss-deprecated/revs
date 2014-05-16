@@ -27,7 +27,7 @@ class CatalogController < ApplicationController
   end
   
   def routing_error
-    flash.now[:error]=t('revs.routing_error')
+    # flash.now[:error]=t('revs.routing_error')
     render "application/404", :formats=>[:html], :status => :not_found
   end
   
@@ -61,7 +61,7 @@ class CatalogController < ApplicationController
       
       @bulk_edit=params[:bulk_edit]
             
-      if @bulk_edit[:attribute].blank? || @bulk_edit[:new_value].blank? || @bulk_edit[:selected_druids].blank?
+      if @bulk_edit[:attribute].blank? || @bulk_edit[:selected_druids].blank? || (@bulk_edit[:new_value].blank? && @bulk_edit[:action] == 'update')
         flash.now[:error]=t('revs.messages.bulk_update_instructions')
       else
         success=SolrDocument.bulk_update(@bulk_edit,current_user)
@@ -79,7 +79,7 @@ class CatalogController < ApplicationController
     end
     
     super
-        
+
     routing_error && return if @response['response']['docs'].nil?
         
     # if we get this far, it may have been a search operation, so if we only have one search result, just go directly there
@@ -96,6 +96,20 @@ class CatalogController < ApplicationController
       not_authorized if @document.visibility == :hidden && cannot?(:view_hidden, SolrDocument)
     end
     
+    if from_gallery? # if we are coming from a gallery link, grab the gallery and items to show at the bottom of the page
+      @galleries=Gallery.where(:id=>params[:gallery_id])
+      if @galleries.size != 1 # we should only have one, otherwise something is wrong
+        not_authorized
+        return 
+      end
+      @gallery=@galleries.first
+      if cannot? :read, @gallery  # we should not see the gallery items in the grid at the bottom of the page if we don't have permission to
+         not_authorized
+         return
+      end
+      @saved_items=@gallery.saved_items(current_user).limit(CatalogController.blacklight_config.collection_member_grid_items)
+    end
+
   end
   
   # an ajax call to show just the collection members grid at the bottom of the page

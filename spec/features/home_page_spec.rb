@@ -22,10 +22,14 @@ describe("Home Page",:type=>:request,:integration=>true) do
         end
     end
     
-    it "should give a nice error message if we visit a bogus url" do
+    it "should give a nice error message page if we visit a bogus url" do
       visit "/bogusness"
       current_path.should == "/bogusness"
-      page.should have_content("Sorry, the page you were looking for was not found.")
+      page.should have_content I18n.t('revs.errors.sorry')
+      page.should have_content I18n.t('revs.errors.404_message')
+      page.should have_xpath("//a[contains(@href, \"/\")]")
+      page.should have_xpath("//a[contains(@href, \"/collection\")]")
+      page.should have_xpath("//a[contains(@href, \"/contact\")]")
     end
   
 end

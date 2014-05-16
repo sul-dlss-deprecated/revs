@@ -14,18 +14,18 @@
       </li>
       <li class="account-profile">
        <% unless on_user_profile_page %>
-        <%= link_to t('revs.user.view_profile_page'), user_profile_name_path(@user.username) %>
+        <%= link_to_unless_current t('revs.user.view_profile_page'), user_profile_name_path(@user.username) %>
        <% end %>
         <% unless on_edit_page %>
-          <%= link_to t('revs.user.update_your_profile').humanize, edit_user_registration_path %>
+          <%= link_to_unless_current t('revs.user.update_your_profile').humanize, edit_user_registration_path %>
         <% end %>
         <span class="label profile-visibility <%= @user.public ? 'label-success' : '' %>">
           <%= @user.public ? t('revs.user.public').downcase : t('revs.user.private').downcase %>
         </span>
       </li>
       <% unless current_user.sunet_user? %>
-        <li><%= link_to t('revs.user.change_password'), edit_user_account_path%></li>
-        <li><%= link_to t('revs.user.change_email'), edit_user_account_path%></li>
+        <li><%= link_to_unless_current t('revs.user.change_password'), edit_user_account_path%></li>
+        <li><%= link_to_unless_current t('revs.user.change_email'), edit_user_account_path%></li>
       <% end %>
       <% if current_user.sunet_user? %>
         <li>
@@ -42,18 +42,22 @@
 
     <ul class="nav nav-list">
       <li class="nav-header"><%= t('revs.authentication.sidebar.actions') if has_activity?(@user) %></li>
-      <% if user_favorites_count(@user) > 0 %>
-        <li><%= link_to t('revs.user.view_your_favorites'), user_favorites_path(@user.username) %></li>
+      <% if favorites_count(@user) > 0 %>
+        <li><%= link_to_unless_current t('revs.user.view_your_favorites'), user_favorites_path(@user.username) %></li>
       <% end %>
-      <% if user_annotations_count(@user) > 0 %>
-        <li><%= link_to t('revs.user.view_your_annotations'),user_annotations_path(@user.username) %></li>
+      <% if galleries_count(@user) > 0 %>
+        <li><%= link_to_unless_current t('revs.user.view_your_galleries'), user_galleries_path(@user.username) %></li>
       <% end %>
-      <% if user_flags_count(@user) > 0 %>
-        <li><%= link_to t('revs.user.view_your_flags'), user_flags_path(@user.username) %></li>
+      <% if annotations_count(@user) > 0 %>
+        <li><%= link_to_unless_current t('revs.user.view_your_annotations'),user_annotations_path(@user.username) %></li>
       <% end %>
-      <% if user_edits_count(@user) > 0 %>
-        <li><%= link_to t('revs.user.view_your_edits'), user_edits_path(@user.username) %></li>
+      <% if flags_count(@user) > 0 %>
+        <li><%= link_to_unless_current t('revs.user.view_your_flags'), user_flags_path(@user.username) %></li>
       <% end %>
+      <% if edits_count(@user) > 0 %>
+        <li><%= link_to_unless_current t('revs.user.view_your_edits'), user_edits_path(@user.username) %></li>
+      <% end %>
+      <li><%= link_to_unless_current(t("revs.user_galleries.create_new_gallery"), new_gallery_path) %></li>
     </ul>
 
 

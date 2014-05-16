@@ -4,10 +4,49 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+user_favs:
+  user: user  # this is the named "user" fixture object from the users table
+  gallery_type: 'favorites'
+  position: 1
+  visibility: 'public'
+
+user2_favs:
+  user: user2  # this is the named "user2" fixture object from the users table
+  gallery_type: 'favorites'
+  position: 1
+  visibility: 'public'
+
 curator_favs:
   user: curator  # this is the named "curator" fixture object from the users table
   gallery_type: 'favorites'
+  position: 1
+  visibility: 'public'
+
+curator_only_gallery:
+  user: curator  # this is the named "curator" fixture object from the users table
+  gallery_type: 'user'
+  position: 2
+  title: 'Stuff to work on'
+  visibility: 'curator'
 
 admin_favs:
   user: admin  # this is the named "admin" fixture object from the users table
-  gallery_type: 'favorites'  
+  gallery_type: 'favorites'
+  position: 1
+  visibility: 'public'
+
+user_gal1:
+  user: user  # this is the named "user" fixture object from the users table
+  gallery_type: 'user'    
+  visibility: 'public'
+  title: 'My Awesome Gallery'
+  description: 'It is super duper cool.'
+  position: 1
+
+user_gal2:
+  user: user  # this is the named "user" fixture object from the users table
+  gallery_type: 'user'    
+  visibility: 'private'
+  title: 'Porsche Gallery'
+  description: 'this one is private'  
+  position: 50  

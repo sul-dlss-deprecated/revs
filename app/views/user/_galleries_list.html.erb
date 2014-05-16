@@ -1,0 +1,94 @@
+<% if @galleries.count > 0 %>
+
+  <div class="row results-controls">
+    <div class="span4">
+    </div>
+
+    <div class="span5 saved-item-pagination">
+      <span class="prev-next">
+        <%= page_entries_info @galleries %>
+      </span>
+    </div>
+  </div>
+
+  <div class="saved-items" id="galleries">
+    <% @galleries.each do |gallery| %>
+      <div id="gallery_<%=gallery.id%>" class="row item">
+
+        <div class="item-title">
+          <%= link_to(gallery.title,gallery_path(gallery)) %>
+          <% if request.path == galleries_table_curator_tasks_path || (request.path != galleries_table_curator_tasks_path && is_logged_in_user?(gallery.user)) # this label is not necessary if this a public gallery not being viewed by the current user%>
+            <span class="label <%= gallery.public ? 'label-success' : '' %>">
+              <%= display_gallery_visibility(gallery) %>
+            </span>
+          <% end %>
+        </div>
+
+        <div class="span5 item-details">
+          <div class="thumbnail-preview">
+            <%= link_to(image_tag(gallery.image(current_user)), gallery_path(gallery)) if gallery.image(current_user) %>
+          </div>
+          <ul>
+            <li class="item-creation-date">
+              <span><%=t('revs.user_galleries.total_items')%>: </span>
+              <%= gallery.saved_items(current_user).count %>
+            </li>
+            <% if can? :update, gallery%>
+              <li class="item-creation-date">
+                <span><%=t('revs.messages.total_views')%>: </span>
+                <%= gallery.views %>
+              </li>
+            <% end %>
+            <% if request.path == galleries_table_curator_tasks_path # the curator gallery view shows creators as well%>
+               <li class="item-creation-date">
+                <span><%=t('revs.messages.created_by')%>: </span>
+                <%= gallery.user == current_user ? t('revs.flags.you') : gallery.user.to_s %>
+              </li>
+            <% end %>
+            <li class="item-creation-date">
+              <span><%=t('revs.messages.added')%>: </span>
+              <%= show_as_date(gallery.created_at.in_time_zone) %>
+            </li>
+            <li class="item-creation-date">
+              <span><%=t('revs.messages.last_updated')%>: </span>
+              <%= show_as_date(gallery.updated_at.in_time_zone) %>
+            </li>
+            <li class="saved-item-actions">
+              <% if can? :read, gallery %>
+                <%= link_to t('revs.user_galleries.view'), gallery_path(gallery) %>
+              <% end %>
+              <% if can? :update, gallery%>
+                 | <%= link_to t('revs.actions.edit'), edit_gallery_path(gallery,:page=>params[:page],:order=>params[:order]), :id=>"edit_#{gallery.id}" %> |
+              <% end%>
+              <% if can? :destroy, gallery%>
+                <%=button_to(t('revs.actions.delete'), gallery_path(gallery.id,:page=>params[:page],:order=>params[:order]), :id=>"delete_#{gallery.id}", :confirm=>t('revs.actions.confirm_delete'), :method=> :delete, :remote=>true, class: 'btn btn-link') %>
+              <% end %>
+            </li>
+          </ul>
+        </div>
+
+        <div class="span4 pull-right item-description">
+          <% if gallery.description.blank? && can?(:update, gallery)%>
+            <span class="muted">
+              <%= t('revs.user_galleries.you_can_add_a_description_html', :href => link_to(t("revs.user_galleries.you_can_add_a_description_linktext"), edit_gallery_path(gallery,:page=>params[:page],:order=>params[:order]))) %>
+            </span>
+          <% else %>
+            <%= gallery.description %>
+          <% end %>
+        </div>
+
+      </div>
+    <% end %>
+  </div>
+
+  <%= paginate @galleries, :params => {:order=>@order} %>
+
+<% else %>
+
+ <% if is_logged_in_user?(@user) %>
+   <%=t('revs.user_galleries.personal_none') %>
+ <% else %>
+   <%=t('revs.user_galleries.none') %>
+ <% end %>
+
+<% end %>

@@ -33,11 +33,6 @@ module ApplicationHelper
       </script>
     HTML
   end
-  
-  # pass in a user, tells you if it's the currently logged in user
-  def is_logged_in_user?(user)
-    user_signed_in? && user == current_user
-  end
     
   # pass in a user, if it's the currently logged in user, you will get the full name; otherwise you will get the appropriate name for public display; if you pass in a url as a second parameter, you will get a link back to that url
   def display_user_name(user,link=nil)
@@ -45,6 +40,17 @@ module ApplicationHelper
      link ? link_to(display,link) : display
   end
   
+  def display_gallery_visibility(gallery)
+    case gallery.visibility.to_sym 
+      when :public 
+        t('revs.user.public').downcase
+       when :private 
+        t('revs.user.private').downcase 
+       when :curator 
+        t('revs.search.gallery_toggle.curator').downcase
+    end 
+  end
+
   def available_sizes
    sizes=["'thumb'","'zoom'"]
    sizes+=["'small'","'medium'","'large'","'xlarge'","'full'"] if sunet_user_signed_in?
@@ -83,43 +89,50 @@ module ApplicationHelper
     params[:q].to_s.empty? and params[:f].to_s.empty? and params[:id].nil? and controller_name != 'sessions' and controller_name != 'registrations'
   end
 
+  # crete a link to an item
+  # opts[:length] can be set to the length to truncate the text title (defaults to 100)
+  # opts[:truncate] can be set to true or false to indicate if long titles should be truncated (defaults to false)
+  # opts[:target] can be set to "_blank" or another value to target the link
   def item_link(item,opts={})
     if item.nil?  
       return t('revs.curator.not_found')
     else
       length = (opts[:length].to_i == 0 ? 100 : opts[:length].to_i)
       name=opts[:truncate] ? truncate(item.title,:length=>length) : item.title
-      return link_to name,catalog_path(item.id),target: '_blank' if opts[:target] == '_blank' #support new tab if needed
-      return link_to name,catalog_path(item.id)
+      return link_to name,item_path(item.id,opts[:params]),target: opts[:target]
     end
   end
   
   def has_activity?(user)
-    user_favorites_count(@user) > 0 || user_annotations_count(@user) > 0 || user_flags_count(@user) > 0 || user_edits_count(@user) > 0
+    favorites_count(user) > 0 || annotations_count(user) > 0 || flags_count(user) > 0 || edits_count(user) > 0 || galleries_count(user) > 0
   end
   
-  def user_favorites_count(user)
-    user.favorites.count
+  def favorites_count(user)
+    user.favorites(current_user).count
   end
   
-  def user_annotations_count(user)
-    user.visible('annotations').count
+  def galleries_count(user)
+    user.galleries(current_user).count
+  end
+  
+  def annotations_count(user)
+    user.annotations(current_user).count
   end
 
-  def user_flags_count(user)
-    user.visible('flags').count
+  def flags_count(user)
+    user.flags(current_user).count
   end
   
-  def user_edits_count(user)
+  def edits_count(user)
     user.metadata_updates.count.keys.count
   end
   
-  def user_flags_unresolved_count(user)
-    return user.visible('flags').unresolved_count
+  def flags_unresolved_count(user)
+    return user.flags(current_user).where(:state=>Flag.open).count
   end
   
-  def user_flags_resolved_count(user)
-    return user_flags_count(user) - user_flags_unresolved_count(user)
+  def flags_resolved_count(user)
+    return flags_count(user) - flags_unresolved_count(user)
   end
 
   def display_sidebar_searchbox

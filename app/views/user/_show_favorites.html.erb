@@ -1,10 +1,10 @@
 <h3><%= t('revs.favorites.head') %>
-  <span class="activity-count"><%= user_favorites_count(@user).to_s.rjust(1, '0') %></span>
+  <span class="activity-count"><%= favorites_count(@user).to_s.rjust(1, '0') %></span>
 </h3>
 
-<% if user_favorites_count(@user) > 0 %>
+<% if favorites_count(@user) > 0 %>
   <ul>
-  <% @user.latest('favorites').each do |favorite| %>
+  <% @latest_favorites.each do |favorite| %>
 	          <li class="activity-item">
 	            <ul>
 	              <li><%= link_to(image_tag(favorite.solr_document.images.first), item_path(favorite.solr_document)) %><li>
@@ -15,9 +15,9 @@
 	          </li>
   <% end %>
   </ul>
-  <% if user_favorites_count(@user) > Revs::Application.config.num_latest_user_activity %>
+  <% if favorites_count(@user) > Revs::Application.config.num_latest_user_activity %>
     <p class="more-link">
-      <%= pluralize(user_favorites_count(@user) - Revs::Application.config.num_latest_user_activity, t('revs.favorites.singular').downcase) %> <%=t('revs.messages.not_shown')%>.
+      <%= pluralize(favorites_count(@user) - Revs::Application.config.num_latest_user_activity, t('revs.favorites.singular').downcase) %> <%=t('revs.messages.not_shown')%>.
       <%= link_to "#{t('revs.messages.view_all')} »", user_favorites_path(@user.username) %>
     </p>
   <% end %>

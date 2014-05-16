@@ -4,25 +4,54 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+curator_gal1:
+  gallery: curator_only_gallery
+  druid: 'qb957rw1430'
+  position: 5
+
 curator_fav1:
   gallery: curator_favs
-  druid: 'bb004bn8654'
+  druid: 'qb957rw1430'
+  position: 15
 
 curator_fav2:
   gallery: curator_favs
-  druid: 'qb957rw1430'
+  druid: 'qk978vx9753'
+  position: 35
 
 curator_fav3:
   gallery: curator_favs
-  druid: 'qk978vx9753'
-
-curator_fav4:
-  gallery: curator_favs
   druid: 'yh093pt9555'
+  position: 45
 
+curator_fav4_hidden:
+  gallery: curator_favs
+  druid: 'bb004bn8654'
+  position: 55
+
+user2_fav1_hidden:
+  gallery: user2_favs
+  druid: 'bb004bn8654'
+  position: 5
+
+user2_fav2:
+  gallery: user2_favs
+  druid: 'pt012cb4647'
+  position: 15
+  
 admin_fav1:
   gallery: admin_favs
   druid: 'yh093pt9555'  
-  
+  position: 5
+ 
+user_gal1:
+  gallery: user_gal1
+  druid: 'bb004bn8654'
+  position: 5
+
+user_gal2:
+  gallery: user_gal1
+  druid: 'qb957rw1430'
+  position: 15
   
   

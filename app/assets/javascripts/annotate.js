@@ -1,4 +1,5 @@
 anno.addHandler('onAnnotationCreated', function(annotation) {
+	annotation.context=annotation.context.split("?")[0]; // if the item page has querystring parameters, this causes the JSON.parse to fail on the server, so just strip them off here
 	jQuery.ajax({
 		type: "POST",
 		url: "/annotations",
@@ -15,6 +16,7 @@ anno.addHandler('onAnnotationCreated', function(annotation) {
 });
 
 anno.addHandler('onAnnotationUpdated', function(annotation) {
+ 	annotation.context=annotation.context.split("?")[0]; // if the item page has querystring parameters, this causes the JSON.parse to fail on the server, so just strip them off here
 	jQuery.ajax({
 	  type: "PUT",
 		dataType: "JSON",

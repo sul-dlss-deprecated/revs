@@ -1,0 +1,15 @@
+<div id="content" class="span9">
+
+  <h2><%=t('revs.user_galleries.new_gallery')%></h2>
+  
+  <%= validation_errors(@gallery) %>
+	
+  <div class="edit-content">
+    <%= form_for(@gallery, :method => :post, :class => "form-horizontal" ) do |f| %>
+      <%= render :partial=>'form',:locals=>{:f=>f} %>
+    <% end %>
+  </div>
+    
+</div>
+
+<%= render :partial => 'user/side_nav', :locals=>{:user=>@gallery.user} %>

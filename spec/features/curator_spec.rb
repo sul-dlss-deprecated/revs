@@ -98,7 +98,7 @@ describe("Curator Section",:type=>:request,:integration=>true) do
         visit curator_tasks_path
         ["Record 1","Sebring 12 Hour, Green Park Straight, January 4"].each {|title| page.should have_content(title)}
         click_link 'Record 1'
-        current_path.should == catalog_path('yt907db4998')
+        current_path.should == item_path('yt907db4998')
       end
       
       it "Should show a refresh button on the list of all open flags by flag state" do

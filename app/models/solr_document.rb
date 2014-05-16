@@ -13,7 +13,7 @@ class SolrDocument
   include SolrQueryHelper     
 
   extend Revs::Utils
-  include Revs::Utils 
+  include Revs::Utils
       
   # Email uses the semantic field mappings below to generate the body of an email.
   SolrDocument.use_extension( Blacklight::Solr::Document::Email )
@@ -200,9 +200,13 @@ class SolrDocument
   ######################
   
   ######################
-  # provides the equivalent of an ActiveRecord has_many relationship with flags, annotations, edits, images and siblings
+  # provides the equivalent of an ActiveRecord has_many relationship with flags, annotations, edits, images and siblings, and helper methods to determine if its a user favorite and which specific user galleries it is in
   def flags
     @flags ||= Flag.includes(:user).where(:druid=>id).where("users.active='t' OR users.active='1' OR flags.user_id IS null").order('flags.created_at desc')
+  end
+
+  def saved_items
+    @saved_items ||= SavedItem.includes(:gallery).where(:druid=>id).order('saved_items.created_at desc')
   end
 
   def annotations(user)
@@ -210,9 +214,13 @@ class SolrDocument
   end
 
   def is_favorite?(user)
-    Gallery.get_favorites_list(user.id).saved_items.where(:druid=>id).size == 1
+    user.favorites.where(:druid=>id).size == 1
   end
   
+  def in_galleries(user)
+    Gallery.where(:"saved_items.druid"=>id,:user_id=>user,:gallery_type=>'user').includes(:all_saved_items)
+  end
+
   def edits
     @edits ||= ChangeLog.includes(:user).where(:druid=>id,:operation=>'metadata update').where(:'users.active'=>true).order('change_logs.created_at desc')
   end
@@ -350,7 +358,7 @@ class SolrDocument
   
   # propogate unique information to database as well when saving solr document
   def update_item
-    @item=Item.fetch(id)
+    @item=Item.find(id)
     @item.visibility_value=visibility_value
     @item.save
   end

@@ -6,12 +6,40 @@ en:
     errors:
       messages:
         not_valid: 'is not valid'
+      models:
+        gallery:
+          attributes:
+            gallery_type:
+              cannot_be_more_than_one_favorites_list_per_user: 'there cannot be more than one favorites list per user'
+            visibility:
+              must_be_selected: 'must be selected.'
+        saved_item:
+          attributes:
+            druid:
+              cannot_be_more_than_one_saved_item_per_druid_per_gallery: 'you cannot saved the same item twice to the same gallery'
+  helpers:
+    page_entries_info:
+      more_pages:
+        display_entries: "<b>%{first}&nbsp;-&nbsp;%{last}</b> of <b>%{total}</b>"
   revs:
     digital_library: 'Revs Digital Library'
+    tagline: 'Connecting the past, present and future of the automobile'
     revs_program: 'Revs Program at Stanford'
     revs_institute: 'Revs Institute'
     stanford_library: 'Stanford University Libraries'
     routing_error: "Sorry, the page you were looking for was not found."
+    errors:
+      not_saved: 'An error occurred and the item was not saved.'
+      sorry: "We're sorry, but there was a problem finding the page you requested."
+      404_message: "The resource might have moved or you might have mistyped the address. Here's what you can do:"
+      action_search_html: "Search or browse from the %{href}"
+      action_search_linktext: '%{project} homepage'
+      action_browse_collections_html: "Browse one of the %{href}"
+      action_browse_collections_linktext: 'Revs collections'
+      tell_us_html: '%{href} what you were looking for'
+      tell_us_linktext: 'Tell us'
+      unexpected: "Oops! An unexpected error has occurred."
+      500_message: "We apologize for the inconvenience. The error has been logged and we have notified system administrators. Until we fix the problem, here are some things you can do:"
     actions:
       delete: 'Delete'
       remove: 'Remove'
@@ -22,14 +50,19 @@ en:
       not_shown: 'not shown'
       view_all: 'View all'
       created: 'Created'
+      created_by: 'Created by'
       switch_on: "On"
       switch_off: "Off"
       never: "never"
       saved: 'Changes saved.'
+      added: 'Added'
+      last_updated: 'Updated'
       saved_on: 'Saved on'
+      total_views: 'Views'
       switch_yes: "yes"
       switch_no: "no"
       status: "Status"
+      reorder: "Drag and drop to reorder"
       changes_not_saved: "Please note, in %{rails_env} your metadata changes will NOT be permanently saved."
       not_authorized: 'You are not authorized to perform this action.'
       in_beta_not_authorized_html: "The Revs Digital Library is currently in limited beta release.  If you have an account, <a href='/users/sign_in'>please sign in</a> (Stanford users should <a href='/users/webauth_login'>sign in via webauth</a>). If you do not have an account and would like to be notified when the site is public, please <a href='/users/sign_up'>sign up</a> and request to be added to the mailing lists."
@@ -55,8 +88,9 @@ en:
       resolution_notes_optional: 'Resolution Notes (optional)'
       resolution_notes: 'Resolution notes: '
       resolve: 'Resolve'
-      resolver_id: ' Resolving User ID'
       fixed: 'Fixed Issue'
+      your_closed_flags: 'View your closed flags'
+      all_closed_flags: 'View all closed flags'
       wont_fix: "Won't Fix Issue"
       resolver_username: 'Resolved by: '
       flagged: 'Flagged'
@@ -66,6 +100,8 @@ en:
       plural: 'Flags'
       resolve: 'Resolve'
       none: 'This user does not have any flags.'
+      flag_history: "Flagged by %{flagger} on %{flag_date} with comment '%{comment}'. Marked as %{state_name} by %{resolver} on %{resolve_date}"
+      flag_history_comment: "with comment '%{comment}'"
       personal_none: 'You do not have any flags.'
       you_can_flag_problems: 'You can flag corrections you see with item metadata from the Item Details page.'
       you: "You"
@@ -83,6 +119,7 @@ en:
       collections: 'Collections'
       select_all: 'Select all'
       update: 'Update'
+      remove: 'Remove'
       save_changes: 'Save Changes'
       submit: 'Submit'
       send: 'Send'
@@ -93,6 +130,8 @@ en:
       create_an_account: 'create an account'      
       more: 'More'
       please_wait: 'Please wait...'
+      return_to_gallery: '&laquo; return to gallery'
+      return_to_favorites: "&laquo; return to %{user_name}'s favorites"
     contact:
       us: 'contact us'
       instructions_html: 'If you are asking about access or re-use of images, select "Request an image or terms of use question" as the subject or view %{reuse_link}.'
@@ -142,7 +181,7 @@ en:
         account: 'Your account'
       user_not_found: 'The user was not found or their profile is not public.'
       account_locked: |
-         Account is locked due to too many invalid login attempts.
+         Account is automatically locked after too many invalid login attempts.
          Lock the account immediately by checking the box.
          The user can unlock by verifying their email address or you can unlock by unchecking this box.
       lock_account: "Lock account"
@@ -184,6 +223,7 @@ en:
         view_flagged_items: "View All Flags"
         view_edited_items: "View All Edits"
         view_favorited_items: "View All Favorites"
+        view_galleries: "View All Galleries"
       curator_actions: 'Curator Actions'
       enter_edit_mode: 'Enter metadata edit mode'
       leave_edit_mode: 'Leave metadata edit mode'
@@ -205,9 +245,10 @@ en:
       by_user: "By User"
       edit_count: "Edit count"
       last_edit: "Last edit"
+      first_created: "First created"
       edits_made: "Edits made"
       flags_made: "Flags made"
-      galleries_made: "Total Galleries (includes 'favorites' list)"
+      galleries_made: "Total Galleries (includes private and 'favorites' lists)"
       favorites_made: "Total Saved Items"
       total_times_saved: "Saves in galleries/favorites"
       annotations_made: "Annotations made"
@@ -217,7 +258,7 @@ en:
       metadata_edit_history_show: "View metadata edit history"
       metadata_edit_history_hide: "Hide metadata edit history"
       metadata_edit_history_description: "This item was edited on"
-      are_you_sure_apply_updates: "Are you sure you want to apply this update to all selected items?"
+      are_you_sure_apply_updates: "Are you sure you want to change each of the selected items?  This action cannot be undone."
       you_can_edit_items: "Items you edit will be listed here."
     dashboards: 'Dashboards'
     citations:
@@ -238,26 +279,55 @@ en:
         annotation_created: "Annotation created"
         annotation_text: "Annotation text"
         annotator: "Annotator"
+        are_you_sure: "Are you sure you want to remove this annotation?"
     favorites:
       singular: "favorite"
+      plural: "favorites"
       head: "Favorites"
       you_can_save_favorites: "Items you save as favorites will be shown here."
       save_to_favorites: "Save to favorites"
-      remove_from_favorites: "Remove from favorites"
+      remove_from_favorites: "Remove from %{list_type}"
       saved: "Item has been saved to favorites."
-      removed: "has been removed from favorites."  
-      none: 'This user does not have any favorites.'
-      personal_none: 'You do not have any favorites.'  
+      removed: "Item has been removed from %{list_type}."  
+      none: 'There are no favorites.'
       edit_item_note: 'Edit item note'
       add_item_note: 'Add item note'
       item_note: 'Item note'
       item_note_updated: "Item note updated."  
-      you_can_add_a_note_html: "You can %{href} to your favorite."
+      you_can_add_a_note_html: "You can %{href} to your %{item_type}."
       you_can_add_a_note_linktext: 'add a note'
+      sort_mode: 'Reorder items'
     user_galleries:
       head: "Galleries"
+      singular: "gallery"
+      plural: "galleries"
       you_can_create_galleries_html: "You can %{href} and add items to it from the Item Details page."
       you_can_create_galleries_linktext: "create your own gallery"
+      none: 'This user does not have any galleries.'
+      personal_none: 'You do not have any galleries.'
+      no_items: 'There are no items in this gallery.'
+      add_to_gallery: 'Add to gallery'
+      add: 'Add'
+      new_gallery: 'New gallery'
+      view: 'View gallery'
+      edit: 'Edit gallery'
+      delete: 'Delete gallery'
+      title: 'Gallery title'
+      create_new_gallery: 'Create a new gallery'
+      description: 'Gallery description'
+      saved: 'Item saved to gallery.'
+      gallery_removed: "The gallery was removed."
+      gallery_updated: "The gallery was updated."
+      gallery_created: "The gallery was created."
+      not_saved: 'The item is already in the selected gallery.'
+      in_gallery: 'In galleries'
+      in_your_galleries: 'This item is currently in your galleries:'
+      total_items: 'Items'
+      you_can_add_a_description_html: "You can %{href} to your gallery."
+      you_can_add_a_description_linktext: 'add a description'
+      public: 'Public'
+      private: 'Private'
+      curator: 'Curators only'
     collection:
       collection_detail: 'Collection Detail'
       member_detail: 'Item Detail'
@@ -338,6 +408,7 @@ en:
       sign_in_with: "Sign in with %{provider}"
       anonymous: 'Web user'
       email_address: "Email Address"
+      your: "Your"
       email_address_already_registered: "That email address is already registered"
       reset_password_if_forgot_linktext: "Reset your password"
       reset_password_if_forgot: "%{reset_password_linktext} if you forgot it"
@@ -351,7 +422,7 @@ en:
       forgot_password: "Forgot your password?"
       send_password_instructions: "Send me reset password instructions"
       profile_page: 'Your Revs profile page'
-      user_dashboard: 'Your Dashboard'
+      user_dashboard: '%{name} Dashboard'
       curator_dashboard: 'Curator Dashboard'
       admin_dashboard: 'Administrator Dashboard'
       resend_confirmation: "Resend confirmation instructions"
@@ -387,10 +458,11 @@ en:
       remove_avatar: "Remove avatar"
       public: "Public"
       private: "Private"
+      Visibility: "Visibility"
       active: "Active"
       account_is: "User account is"
       inactive: "Inactive"
-      inactive_help: "Inactive users cannot log in and their profile page is never shown. Use this feature to disable malicious or spam users."
+      inactive_help: "Inactive users cannot log in, their flags and annotations are hidden and their profile page is never shown. Use this feature to disable malicious or spam users."
       preview: "Preview"
       joined_on: "Joined on"
       my_profile_page: "My profile page is"
@@ -411,6 +483,7 @@ en:
       view_your_edits: "View your edits"
       view_all_favorites: "View all favorites"
       view_your_favorites: "View your favorites"
+      view_all_galleries: "View all galleries"
       view_your_galleries: "View your galleries"
       view_all_edits: "View all edits"
       view_all_flags: "View all flags"

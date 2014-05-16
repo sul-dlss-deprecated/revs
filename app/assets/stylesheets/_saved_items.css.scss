@@ -1,0 +1,15 @@
+.saved-item-pagination {
+  font-size: 13px;
+  margin-top: 10px;
+  text-align: right;
+}
+
+.reorder-controls {
+  @include result-controls;
+  .nav-pills li > a {
+    margin-left: 0;
+  }
+}
+.saved-items img {
+  max-width: 100px;
+}

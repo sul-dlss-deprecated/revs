@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe("Logged in users",:type=>:request,:integration=>true) do
+describe("User registration system",:type=>:request,:integration=>true) do
 
   before :each do
     logout
@@ -22,7 +22,7 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     page.should_not have_content(sunet_login) # username at top of page  
   end
   
-  it "should allow a user to return to the page they were on and not see the admin or curator interface" do
+  it "should allow a user to return to the page they were on and not see the admin or curator interface (since they are not admins or curators)" do
     starting_page=catalog_path('qb957rw1430')
     visit starting_page
     should_allow_flagging # anonymous users can flag items
@@ -36,8 +36,8 @@ describe("Logged in users",:type=>:request,:integration=>true) do
   end
   
   it "should not show the public profile of a user who does not want their profile public, but should show the public profile page for users who do have it set as public" do
-    admin_account=User.find_by_username(admin_login)
-    user_account=User.find_by_username(user_login)
+    admin_account=get_user(admin_login)
+    user_account=get_user(user_login)
     admin_account.public.should == false
     user_account.public.should == true
     user_account.active.should == true
@@ -56,52 +56,81 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     [user_account.full_name,user_account.bio].each {|content| page.should have_content content}    
   end
 
-  it "should not show the public profile of a user whose account is marked as inactive" do
-    user_account=User.find_by_username(user_login)
+  it "should not show the public profile of a user whose account is marked as inactive, unless they are an admin" do
+    user_account=get_user(user_login)
     user_account.public.should == true
     user_account.active = false
     user_account.save
 
     # regular user profile is public but inactive and should not be shown
     visit user_profile_id_path(user_account.id)
-    current_path.should == root_path
-    visit user_profile_name_path(user_account.username)
-    current_path.should == root_path
+    current_path.should_not == user_profile_id_path(user_account.id)    
+    visit user_profile_name_path(user_login)
+    current_path.should_not == user_profile_name_path(user_login)    
+    
+    login_as(admin_login) # now confirm the admin can still see it
+    visit user_profile_name_path(user_login)
+    current_path.should == user_profile_name_path(user_login)    
   end
 
-  it "should not allow an inactive user to login" do
-    user_account=User.find_by_username(user_login)
+  it "should not allow an inactive user to login, but should allow an admin to view their profile still" do
+    user_account=get_user(user_login)
     user_account.active = false
     user_account.save
     login_as(user_login)
     current_path.should == new_user_session_path
     visit user_profile_name_path(user_login)
-    current_path.should_not == user_profile_name_path(user_login)    
+    current_path.should_not == user_profile_name_path(user_login) 
+    logout
+    login_as(admin_login) # now confirm the admin can still see it
+    visit user_profile_name_path(user_login)
+    current_path.should == user_profile_name_path(user_login)   
   end
       
-  it "should show my user profile page when logged in, even if your profile is marked as private" do
-    # admin user profile is not public
-    admin_account=User.find_by_username(admin_login)
-    admin_account.public.should == false
+  it "should show a user's profile page when logged in as themselves, even if their profile is marked as private, and should always let admins view it" do
+    # make user account private
+    user_account=get_user(user_login)
+    user_account.public = false
+    user_account.save
+
+    login_as(user_login)
+
+    visit user_profile_name_path(user_login)
+    current_path.should == user_profile_name_path(user_login)
+    [user_account.full_name,user_account.bio].each {|content| page.should have_content content}
+    page.should have_content 'private'
+    
+    logout
     login_as(admin_login)
 
-    visit user_profile_name_path(admin_account.username)
-    current_path.should == user_profile_name_path(admin_account.username)
-    [admin_account.full_name,admin_account.bio].each {|content| page.should have_content content}
-    page.should have_content 'private'
+    visit user_profile_name_path(user_login)
+    current_path.should == user_profile_name_path(user_login)
+    [user_account.username,user_account.bio].each {|content| page.should have_content content}
+    
   end
+
+  it "should show a user's profile even if they don't have a favorites list yet, which will be created upon viewing" do
+    beta_user=get_user(beta_login)
+    beta_user.favorites_list.should be_nil # doesn't exist yet
+    visit user_profile_name_path(beta_login)
+    beta_user.reload
+    beta_user.favorites_list.should_not be_nil # favorites list now exists for this user, so we can render the page
+    current_path.should == user_profile_name_path(beta_login)
+    [beta_user.to_s,beta_user.bio].each {|content| page.should have_content content}
+  end
+
 
   it "should show link to annotations made by user on that user's profile page, only if user has made annotations" do
     login_as(user_login) # this user has annotations
     visit user_profile_name_path(user_login)
     current_path.should == user_profile_name_path(user_login)
-    page.should have_content 'View your annotations'
+    page.should have_content I18n.t('revs.user.view_your_annotations')
     logout
 
-    login_as(curator_login) # this user does not have annotations
-    visit user_profile_name_path(curator_login)
-    current_path.should == user_profile_name_path(curator_login)
-    page.should_not have_content 'View your annotations'
+    login_as(beta_login) # this user does not have annotations
+    visit user_profile_name_path(beta_login)
+    current_path.should == user_profile_name_path(beta_login)
+    page.should_not have_content I18n.t('revs.user.view_your_annotations')
   end
 
   it "should show correct number of annotations made by user on that user's profile page, along with most recent annotations and flags" do
@@ -115,6 +144,19 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     visit  user_profile_name_path(user_login)
     current_path.should ==  user_profile_name_path(user_login)
     ["Annotations 1","air intake?","Flags","Sebring 12 Hour, Green Park Straight, January 4"].each {|title| page.should have_content(title)}
+  end
+
+  it "should show hidden item annotations to the curator, but not to non-logged in user" do
+    login_as(curator_login)
+    visit user_profile_name_path(curator_login)
+    current_path.should == user_profile_name_path(curator_login)
+    page.should have_content 'Annotations 1' # the curators annotation is hidden, but visible to them since they are logged in
+    page.should have_content I18n.t('revs.user.view_your_annotations')
+    logout
+
+    visit user_profile_name_path(curator_login)
+    current_path.should ==  user_profile_name_path(curator_login)
+    page.should have_content I18n.t('revs.annotations.none') # none are visible since the only one is hidden
   end
 
   it "should show correct number of item edits made by user on that user's profile page, along with most recent item edits" do
@@ -143,7 +185,7 @@ describe("Logged in users",:type=>:request,:integration=>true) do
 
   it "show the logged in users annotations/flags/edits with their full name, even if the profile is private" do
     login_as(admin_login)
-    admin_account=User.find_by_username(admin_login)
+    admin_account=get_user(admin_login)
     admin_account.public.should == false
     visit user_annotations_path(admin_account.username)
     page.should have_content "#{admin_account.full_name}'s Annotations"
@@ -157,7 +199,7 @@ describe("Logged in users",:type=>:request,:integration=>true) do
   end
 
   it "show a non logged in users annotations/flags/edits with just their username, even if the profile is private, but should not show favorites" do
-    admin_account=User.find_by_username(admin_login)
+    admin_account=get_user(admin_login)
     admin_account.public.should == false
     visit user_annotations_path(admin_account.username)
     page.should_not have_content admin_account.full_name
@@ -184,7 +226,7 @@ describe("Logged in users",:type=>:request,:integration=>true) do
   end
 
   it "show a non logged in users annotations/flags with their full name if their profile is public" do
-    user_account=User.find_by_username(user_login)
+    user_account=get_user(user_login)
     user_account.public.should == true
     visit user_annotations_path(user_account.username)    
     page.should have_content "#{user_account.full_name}'s Annotations"
@@ -201,7 +243,7 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     login_as(admin_login)
     visit user_profile_name_path(admin_login)
     current_path.should == user_profile_name_path(admin_login)
-    page.should have_content  I18n.t('revs.user.user_dashboard')
+    page.should have_content(I18n.t("revs.user.user_dashboard",:name=>I18n.t('revs.user.your')))
     page.should have_content  I18n.t('revs.user.curator_dashboard')
     page.should have_content  I18n.t('revs.user.admin_dashboard')
     logout
@@ -209,7 +251,7 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     login_as(curator_login)
     visit user_profile_name_path(curator_login)
     current_path.should ==  user_profile_name_path(curator_login)
-    page.should have_content  I18n.t('revs.user.user_dashboard')
+    page.should have_content(I18n.t("revs.user.user_dashboard",:name=>I18n.t('revs.user.your')))
     page.should have_content  I18n.t('revs.user.curator_dashboard')
     page.should_not have_content  I18n.t('revs.user.admin_dashboard')
     logout
@@ -217,7 +259,7 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     login_as(user_login)
     visit user_profile_name_path(user_login)
     current_path.should ==  user_profile_name_path(user_login)
-    page.should have_content I18n.t('revs.user.user_dashboard')
+    page.should have_content(I18n.t("revs.user.user_dashboard",:name=>I18n.t('revs.user.your')))
     page.should_not have_content  I18n.t('revs.user.curator_dashboard')
     page.should_not have_content  I18n.t('revs.user.admin_dashboard')
   end
@@ -236,5 +278,60 @@ describe("Logged in users",:type=>:request,:integration=>true) do
     find_link('@RevsTesting').visible?
   end
 
- 
+  it "should destroy all dependent annotations, galleries, flags and saved items when a user is removed" do
+    
+    user=get_user(user_login)
+    user_flags=user.all_flags.count
+    total_flags=Flag.count
+    user_flags.should == 1 
+    total_flags.should == 3
+
+    user_annotations=user.all_annotations.count
+    total_annotations=Annotation.count
+    user_annotations.should == 1
+    total_annotations.should == 4
+
+    user_galleries=user.all_galleries.count
+    user_galleries_public=user.galleries.count
+    user_galleries_including_private=user.galleries(user).count
+    total_galleries=Gallery.count
+    user_galleries.should == 3
+    user_galleries_public.should == 1
+    user_galleries_including_private.should == 2
+    total_galleries.should == 7
+
+    user_saved_items=user.all_saved_items.count
+    total_saved_items=SavedItem.count
+    user_saved_items.should == 2
+    total_saved_items.should == 10
+
+    # now kill the user
+    user.destroy
+
+    # now check the counts have gone down by the right amounts
+    Flag.count.should == total_flags - user_flags
+    Annotation.count.should == total_annotations - user_annotations
+    Gallery.count.should == total_galleries - user_galleries
+    SavedItem.count.should == total_saved_items - user_saved_items
+
+  end
+
+  it "should destroy all dependent change logs when a curator is removed" do
+    
+    curator=get_user(curator_login)
+    curator_change_logs=curator.all_change_logs.count
+    curator_metadata_updates=curator.metadata_updates.count.keys.count
+    total_change_logs=ChangeLog.count
+    curator_change_logs.should == 4 
+    curator_metadata_updates.should == 3 
+    total_change_logs.should == 5
+
+    # now kill the user
+    curator.destroy
+
+    # now check the counts have gone down by the right amounts
+    ChangeLog.count.should == total_change_logs - curator_change_logs
+
+  end 
+
 end

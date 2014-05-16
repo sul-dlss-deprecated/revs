@@ -1,6 +1,7 @@
 <script type="text/javascript">
-  // fetch collection members grid at bottom of the page on a delay so main image loads first unless we are in the context of a search result
-  <% unless in_search_result? %>
+  // fetch collection members grid at bottom of the page on a delay so main image loads first 
+  // unless we are in the context of a search result or coming from a gallery/favorites page
+  <% if !in_search_result? && !from_gallery? && !from_favorites?%>
     var timeout = setTimeout(function() {loadCollectionMembersGrid('<%=document.id%>','item')}, 3000);
   <% end %>
   
@@ -37,7 +38,7 @@
     <div id="annotatable_workspace" class="hidden"><%= image_tag(@document.images(:large).first,:id=>'annotatable_image') %></div>
 
     <noscript>
-        <%= link_to(image_tag(@document.images(:large).first), "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'new') %>
+        <%= link_to(image_tag(@document.images(:large).first), "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'_new') %>
     </noscript>
   </div>
 
@@ -60,6 +61,31 @@
       </div>
     <% end %>
 
+    <% if from_gallery? %>
+      <div class="row results-nav">
+        <div class="span2 back-to-results">
+          <%= link_to t('revs.nav.return_to_gallery').html_safe, gallery_path(params[:gallery_id],extract_paging_params(params)) %>
+        </div>
+        <div class="span3 results-pagination">
+          <span class="previousNextDocument">
+            <%# show previous | next nav for gallery? %>
+          </span>
+        </div>
+      </div>
+    <% end %>
+    <% if from_favorites? %>
+      <div class="row results-nav">
+        <div class="span2 back-to-results">
+           <%=link_to t('revs.nav.return_to_favorites',:user_name=>params[:favorite_user_name]),user_favorites_path(params[:user],extract_paging_params(params)) %>
+        </div>
+        <div class="span3 results-pagination">
+          <span class="previousNextDocument">
+            <%# show previous | next nav for gallery? %>
+          </span>
+        </div>
+      </div>
+    <% end %>
+
     <div class="row">
       <div class="span5">
         <h4 class="show-document-title"><%=@document.title%></h4>
@@ -71,14 +97,22 @@
         <ul class="nav nav-list item-actions">
           <li class="nav-header"><%=t('revs.admin.sidebar.actions')%></li>
 
-					<% if can?(:create, SavedItem) %>
+					<% if can?(:create, SavedItem) && (@document.visibility != :hidden || @document.is_favorite?(current_user))%>
 					  <li>
               <div id="favorites_link">
-                <%= render :partial=>'saved_items/favorites_link'%>
+                <%= render :partial=>'saved_items/add_to_favorites'%>
               </div>
             </li>
           <% end %>
 
+					<% if can?(:create, Gallery) && can?(:create, SavedItem) && @document.visibility != :hidden%>
+					  <li>
+					    <div id="user_galleries">
+                <%= render(:partial => "saved_items/add_to_gallery") %>
+              </div>
+            </li>
+          <% end %>
+          
 					<% if (can?(:read, Annotation) || can?(:create, Annotation))
    					  @annotations = @document.annotations(current_user)
 							annotation_link_text = can?(:create, Annotation) ?  t('revs.annotations.add') : t('revs.annotations.view')
@@ -88,7 +122,7 @@
 
 					  <% if can?(:create, Annotation) || @annotations.size > 0 %>
 							<li>
-		             <%= link_to(("<span class='#{annotation_link_class} id='annotation-link-text'><i class='icon-edit'></i> #{annotation_link_text}</span>".html_safe + content_tag(:span, @annotations.size, :class => "#{display_class(@annotations.size)} num-annotations-badge badge badge-revs")).html_safe,'#',:id=>annotation_link_id,:class=>"annotation_links showOnLoad hidden-offscreen") %>
+		             <%= link_to(("<span class='#{annotation_link_class}' id='annotation-link-text'><i class='icon-edit'></i> #{annotation_link_text}</span>".html_safe + content_tag(:span, @annotations.size, :class => "#{display_class(@annotations.size)} num-annotations-badge badge badge-revs")).html_safe,'#',:id=>annotation_link_id,:class=>"annotation_links showOnLoad hidden-offscreen") %>
 		             <%= link_to(("<i class='icon-edit'></i> #{t('revs.annotations.hide')}".html_safe + content_tag(:span, @annotations.size, :class => "#{display_class(@annotations.size)} num-annotations-badge badge badge-revs")).html_safe, '#',:id=>'hide_annotations_link',:class=>"hidden-offscreen") %>
 		          </li>
 				    <% end %>
@@ -124,6 +158,38 @@
                 </div>
 
             </li>
+
+            <% if can?(:add_new_flag_to, @document) && current_user  # flagging history area
+              closed_flags=@document.flags.where(:state=>Flag.closed) # get all closed flags
+              if cannot?(:curate,:all) # non curators can only see their OWN closed flags
+                closed_flags=closed_flags.where(:user_id=>current_user.id)
+                label_text=t('revs.flags.your_closed_flags')
+              else
+                label_text=t('revs.flags.all_closed_flags')
+              end
+              if closed_flags.size > 0  # show the flagging history to logged in users%>
+                <li id="item-flag-history-accordion">
+                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#item-flag-history-accordion" href="#item-flag-history">
+                    <i class="icon-list-ol"></i>
+                    <%=label_text%>
+                    <span class="<%=display_class(closed_flags.size)%> badge badge-revs num-closed-flags-badge">
+                     <%= closed_flags.size%>
+                   </span>
+                  </a>
+                </li>
+                <div id="item-flag-history" class="collapse">
+                  <div class="flag-history-list">
+                    <ul>
+                      <% closed_flags.each do |flag| %>
+                        <li><%=t('revs.flags.flag_history',:flagger=>(flag.user == current_user ? 'you' : flag.user.to_s),:comment=>flag.comment,:flag_date=>show_as_datetime(flag.created_at.in_time_zone),:state_name=>flag.state_display_name,:resolver=>(flag.resolving_user == current_user.id ? 'you' : flag.resolving_username),:resolve_date=>show_as_datetime(flag.resolved_time.in_time_zone))%>
+                          <%=t('revs.flags.flag_history_comment',:comment=>flag.resolution) unless flag.resolution.blank? %>
+                        </li>
+                      <% end %>
+                    </ul>
+                  </div>
+                </div>
+                <% end # end check for a logged in user having resolved flags%>
+            <% end # end check for user has ability to add flags%>
 
 							<% if !user_signed_in? && can?(:add_new_flag_to, @document)%>
 							<li>
@@ -199,7 +265,7 @@
           
           <%= t('revs.contact.image_reuse_agreement',
               :license_agreement_link => link_to(t('revs.contact.image_license_agreement'),
-              'http://revsinstitute.org/research-education/permission-to-use',:target=>'_blank')).html_safe %>
+              'http://revsinstitute.org/research-education/permission-to-use',:target=>'_new')).html_safe %>
           <%= t('revs.contact.reuse_contact',
               :reuse_contact_link => link_to(t('revs.contact.contact_linktext'),
               contact_us_path(:subject=>'terms of use',
@@ -217,6 +283,12 @@
 </div>
 
 <div id="collection-members-grid">
+
+   <% if from_gallery? # if we are in the context of a gallery, let's show the gallery items here immediately --- for other cases when we are not in search result we will load this area via ajax for performance reasons %>
+     <%= render :partial=>'galleries/grid' %>
+   <% else %>
+   
+<%# if javascript is disabled, we'll just show navigation to the relevant collection %>
   <noscript>
     <div class="row">
       <div class="span12 collection-members">
@@ -233,4 +305,6 @@
       </div>
     </div>
   </noscript>
+   <% end %>
+
 </div>

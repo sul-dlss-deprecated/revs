@@ -67,7 +67,7 @@
     <div class="control-group">
       <%= f.label :avatar, t('revs.user.avatar'), :class => 'control-label' %>
       <div class="controls avatar">
-        <% if current_user.avatar.url.present? %>
+        <% if current_user.avatar.url != current_user.avatar.default_url %>
           <%= image_tag(current_user.avatar.url(:thumb)) %>
           <%= f.label :remove_avatar, :class=> "checkbox inline" do %>
             <%= f.check_box :remove_avatar %> <%= t('revs.user.remove_avatar') %>
