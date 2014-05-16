@@ -8,9 +8,9 @@
 	          <li class="activity-item">
 	            <ul>
 	              <li><%= link_to(image_tag(favorite.solr_document.images.first), item_path(favorite.solr_document)) %><li>
-	              <li class="item-title"><%= item_link(favorite.solr_document,:truncate=>true) %></li>
+	              <li class="item-title"><%= item_link(favorite.solr_document,:truncate=>true, :length => 55) %></li>
 	              <% unless favorite.description.blank? %><li class="annotation"><%= truncate(favorite.description) %></li><% end %>
-	              <li><%= show_as_datetime(favorite.created_at.in_time_zone) %></li>
+	              <li><%= show_as_date(favorite.created_at.in_time_zone) %></li>
 	            </ul>
 	          </li>
   <% end %>
