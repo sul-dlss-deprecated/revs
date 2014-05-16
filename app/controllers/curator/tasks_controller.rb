@@ -69,7 +69,7 @@ class Curator::TasksController < ApplicationController
    def galleries
       visibilities=['public','curator']
       visibilities << 'private' if can? :administer, :all  # admins can even see private galleries of any user
-      @galleries=Gallery.where(:gallery_type=>'user',:visibility => visibilities).page(@current_page).per(@per_page)
+      @galleries=Gallery.where(:gallery_type=>'user').where(['visibility in (?) OR user_id=?',visibilities,current_user.id]).page(@current_page).per(@per_page) # you will also see your own galleries regardless of visibility
    end
    
    # an ajax call to set the curator edit mode
