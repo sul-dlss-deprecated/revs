@@ -7,6 +7,15 @@
   </h3>
 
   <div id="galleries_area">
+
+  <%= form_tag galleries_table_curator_tasks_path, :method=>:get, :class => 'form-search' do %>
+    <p>
+      <%= t('revs.admin.filter') %>: <%= select_tag 'filter',options_for_select(@visibility_options,@filter),class:"span2"%>
+      <%= render :partial=>'shared/per_page_dropdown' %>
+    </p>
+        <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-small' %>
+  <% end %>
+
     <%= render :partial=>'user/galleries_list' %>
   </div>
 
