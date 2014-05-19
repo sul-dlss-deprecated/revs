@@ -67,7 +67,7 @@ class Curator::TasksController < ApplicationController
    end
 
    def galleries
-      @filter=params[:filter]
+      @filter=params[:filter] || 'all'
       @visibility_options={'All galleries'=>'all','Public only'=>'public','Curator only'=>'curator'}
       
       all_visibilities=['public','curator'] 
