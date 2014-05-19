@@ -6,6 +6,7 @@
 
 	<%= hidden_field_tag 'from',@from%>
 	<%= hidden_field_tag 'auto_response',@auto_response || true%>
+	<%= hidden_field_tag 'loadtime',Time.now%>
 
 	<% if Revs::Application.config.contact_us_topics.size > 1 %>
 		<div class="control-group">
@@ -36,6 +37,13 @@
 	  <label class="control-label" for="email"><%=t('revs.contact.email')%></label>
 	  <div class="controls">
 	    <%=text_field_tag 'email', @email || (current_user ? current_user.email : ""), :placeholder => t('revs.contact.email_address') %>
+	  </div>
+	</div>
+
+	<div class="control-group hidden">
+	  <label class="control-label" for="email"><%=t('revs.contact.spambot_label')%></label>
+	  <div class="controls">
+	    <%=text_field_tag 'email_confirm', "", :placeholder => t('revs.contact.spambot') %>
 	  </div>
 	</div>
 

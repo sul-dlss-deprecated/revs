@@ -7,6 +7,7 @@ en:
       contact_us: 'Contact Us'
       contact_title: 'Contact Us'
       contact_message_sent: 'Thanks - your message has been sent.'
+      contact_message_spambot: 'Thanks for your submission.'
       contact_message_sent_about_metadata: 'Thanks - we have received your corrections.  We may not be able to correct all problems immediately or respond individually but the corrections are appreciated and are logged for review.'
       contact_error: 'You need to enter some message text.'
       terms_of_use_title: 'Terms of Use'

@@ -147,6 +147,8 @@ en:
       email_address: 'Email address'
       subject: 'Subject'
       message: 'Message'
+      spambot_label: 'Leave blank'
+      spambot: 'Please leave this field blank - it is used to prevent spam submissions'
       describe_problem: 'Please describe your question or problem.'
       image_license_agreement: "permission to use requirements"
       image_reuse_agreement: "To request access or to re-use this image, please review the %{license_agreement_link}"

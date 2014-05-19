@@ -19,12 +19,35 @@ describe("About Pages",:type=>:request,:integration=>true) do
     page.should have_content(@about_page_title)    
   end
 
-  it "should show the contact us page" do
-    visit '/about/contact'
+  it "should detect a spammer as someone who submits the form too quickly" do
+    visit contact_us_path
     page.should have_content(@contact_us)
-    fill_in 'fullname', :with=>'Spongebob Squarepants'
+    fill_in 'message', :with=>'My annoying spam message'
     click_button 'Send'
-    page.should have_content(I18n.t("revs.about.contact_error")) # problem if you don't enter a message
+    RevsMailer.stub_chain(:contact_message,:deliver).and_return('a mailer')
+    RevsMailer.should_not_receive(:contact_message)
+    page.should have_content(I18n.t("revs.about.contact_message_spambot"))
+    current_path.should == root_path
+  end
+
+  it "should detect a spammer as someone who fills in the hidden form field" do
+    visit contact_us_path
+    page.should have_content(@contact_us)
+    sleep 6.seconds
+    fill_in 'message', :with=>'My annoying spam message'
+    fill_in 'email_confirm', :with=>'hidden field'
+    click_button 'Send'
+    RevsMailer.stub_chain(:contact_message,:deliver).and_return('a mailer')
+    RevsMailer.should_not_receive(:contact_message)
+    page.should have_content(I18n.t("revs.about.contact_message_spambot"))
+    current_path.should == root_path
+  end
+
+  it "should show the contact us page" do
+    visit contact_us_path
+    page.should have_content(@contact_us)
+    sleep 6.seconds
+    fill_in 'fullname', :with=>'Spongebob Squarepants'
     fill_in 'message', :with=>'I live in a pineapple under the sea.'
     RevsMailer.stub_chain(:contact_message,:deliver).and_return('a mailer')
     RevsMailer.should_receive(:contact_message)

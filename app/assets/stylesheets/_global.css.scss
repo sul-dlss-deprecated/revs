@@ -223,6 +223,16 @@ form .controls > #submit.btn {
     width: auto;
   }
 }
+
+#about-section {
+   textarea, input:not([type=submit]):not([type=file]) {
+    width: 80%;
+  }
+  select {
+    width: auto;
+  } 
+}
+
 .cancel-link {
   margin-left: 12px;
 }

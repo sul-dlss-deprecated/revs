@@ -12,44 +12,66 @@ class AboutController < ApplicationController
     @message=params[:message]
     @fullname=params[:fullname]
     @email=params[:email]
+    @spammer=params[:email_confirm] # if this hidden field is filled in, its a spam bot
+    @loadtime=params[:loadtime] # this is the time the page was rendered, if it is submitted too fast, its a spammer
     @auto_response=params[:auto_response]
     params[:username]=(current_user ? current_user.username : "")
     
-    if request.post?
+    if request.post? 
       
-      unless @message.blank? # message is required
-        RevsMailer.contact_message(:params=>params,:request=>request).deliver unless @email.blank? && @subject=='metadata' # don't bother creating a jira ticket if user doesn't supply email and its a metadata update, since we will create an anonymous flag anyway
-        if (!@email.blank? && @auto_response == "true")
-          RevsMailer.auto_response(:email=>@email,:subject=>@subject).deliver 
-        end
+      if is_spammer?
         
-        if @subject=='metadata'
-          flash[:notice]=t("revs.about.contact_message_sent_about_metadata")
-          # create a flag for this if its feedback that is coming from a specific druid page
-          unless @from.blank? #
-            druid=@from.match(/\D\D\d\d\d\D\D\d\d\d\d/)
-            Flag.create_new({:flag_type=>:error,:comment=>@message,:druid=>druid.to_s},current_user) unless druid.blank?
-          end
-        else
-          flash[:notice]=t("revs.about.contact_message_sent")          
-        end
-        
-        @message=nil
-        @fullname=nil
-        @email=nil
-        unless @from.blank? || request.xhr? # if this not an ajax request and we have a page to return to, go there
-          redirect_to(@from)
-          return
-        end
+        flash[:notice]=t("revs.about.contact_message_spambot") # show a friendly but different message to suspected spambots
+        @spammer=true
         @success=true
-      else # validation issue
-        @success=false
-        flash.now[:error]=t("revs.about.contact_error")
-      end
+
+      else
+
+        @spammer = false
+
+        if valid_submission? 
+
+          RevsMailer.contact_message(:params=>params,:request=>request).deliver unless @email.blank? && @subject=='metadata' # don't bother creating a jira ticket if user doesn't supply email and its a metadata update, since we will create an anonymous flag anyway
+          if (!@email.blank? && @auto_response == "true")
+            RevsMailer.auto_response(:email=>@email,:subject=>@subject).deliver 
+          end
+          
+          if @subject=='metadata'
+            flash[:notice]=t("revs.about.contact_message_sent_about_metadata")
+            unless @from.blank? # create a flag for this if its feedback that is coming from a specific druid page
+              druid=@from.match(/\D\D\d\d\d\D\D\d\d\d\d/)
+              Flag.create_new({:flag_type=>:error,:comment=>@message,:druid=>druid.to_s},current_user) unless druid.blank?
+            end
+          else
+            flash[:notice]=t("revs.about.contact_message_sent")          
+          end
+          
+          @message=nil
+          @fullname=nil
+          @email=nil
+          @success=true
+
+        else # validation issue
+          
+          @success=false
+          flash.now[:error]=t("revs.about.contact_error")
+        
+        end # end check for valid submision
+      
+      end # end check for is spammer
+
+    end # end check for posted
+    
+    if request.xhr? # ajax requests render the js 
+      render('contact',:format=>:js)
+    elsif request.post? && @spammer # spammers begone to the home page to make it harder to submit the form again
+      redirect_to root_path
+    elsif request.post? && !@from.blank? # from urls go back to where they started
+      redirect_to @from
+    else # otherwise just render the form
+      show
     end
-    
-    request.xhr? ? render('contact',:format=>:js) : show # ajax requests need to exectue some JS, non-ajax requests render the form
-    
+
   end
 
   def show
@@ -68,6 +90,14 @@ class AboutController < ApplicationController
   protected
   def authorize
     not_authorized unless can? :read,:about_pages
+  end
+
+  def valid_submission?
+    !@message.blank?
+  end
+
+  def is_spammer?
+    !@spammer.blank? || ((Time.now - @loadtime.to_time) < 5) # user filled in a hidden form field or submitted the form in less than 7 seconds
   end
 
 end
