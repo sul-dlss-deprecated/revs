@@ -1,23 +1,49 @@
-<div id="content" class="span9 favorites-index">
+<div id="content" class="span9 admin">
 	
   <h2><%=t('revs.user.curator_dashboard')%></h2>
 
   <h3>
     <%= t('revs.user_galleries.galleries') %>
+    <span class="object-count muted">(<%= Gallery.count %> total)</span>
   </h3>
 
-  <div id="galleries_area">
-
   <%= form_tag galleries_table_curator_tasks_path, :method=>:get, :class => 'form-search' do %>
-    <p>
-      <%= t('revs.admin.filter') %>: <%= select_tag 'filter',options_for_select(@visibility_options,@filter),class:"span2"%>
-      <%= render :partial=>'shared/per_page_dropdown' %>
-    </p>
-        <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-small' %>
+    <%= select_tag 'filter',options_for_select(@visibility_options,@filter),class:"span2"%>
+    <%= render :partial=>'shared/per_page_dropdown' %>
+    <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-small' %>
   <% end %>
 
-    <%= render :partial=>'user/galleries_list' %>
+  <div class="row results-controls">
+    <div class="span4">
+    </div>
+
+    <div class="span5 saved-item-pagination">
+      <span class="prev-next">
+        <%= page_entries_info @galleries, :params => {:filter => @filter} %>
+      </span>
+    </div>
   </div>
+
+  <table class="table table-bordered table-condensed table-hover table-striped">
+    <tr>
+      <th width="50%"><%= t('revs.curator.item_title') %></th>
+      <th>Creator</th>
+      <th class="right"><%=t('revs.user_galleries.total_items')%></th>
+      <th class="right"><%=t('revs.messages.total_views')%></th>
+      <th class="right"><%= t('revs.curator.last_updated') %></th>
+    </tr>
+    <% @galleries.each do |gallery| %>
+      <tr>
+        <td><%= link_to(gallery.title,gallery_path(gallery)) %></td>
+        <td><%= gallery.user == current_user ? t('revs.flags.you') : gallery.user.to_s %></td>
+        <td class="right"><%= gallery.saved_items(current_user).count %></td>
+        <td class="right"><%= gallery.views %></td>
+        <td class="right"><%=show_as_date(gallery.updated_at)%></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <%= paginate @galleries, :param_name => :pagina, :params => {:filter => @filter} %>
 
 </div>
 
