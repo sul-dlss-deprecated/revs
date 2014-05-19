@@ -4,7 +4,7 @@
 
   <h3>
     <%="#{t('revs.flags.flagged')} #{t('revs.collection_members.items_name').titleize.pluralize}"%>
-    <span class="object-count muted">(<%= Flag.count %> total, <%= Flag.unresolved_count %> unresolved)</span>
+    <span class="object-count muted">(<%= Flag.count %> <%=t('revs.messages.total')%>, <%= Flag.unresolved_count %> <%=t('revs.messages.unresolved')%>)</span>
   </h3>
 
    <ul class="nav nav-tabs">

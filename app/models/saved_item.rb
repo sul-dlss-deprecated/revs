@@ -6,28 +6,14 @@ class SavedItem < WithSolrDocument
   include RankedModel
   ranks :row_order,:column => :position, :with_same => :gallery_id
   
+  after_save :update_gallery_last_updated
+
   attr_accessible :druid, :gallery_id, :description
   validates :gallery_id, :numericality => { :only_integer => true }
   validates :druid, :is_druid=>true
   validate :only_one_saved_item_per_druid_per_gallery, :on => :create
     
-  # some helper methods to connect us to the user this saved_item belongs to (which we need to go through the gallery to get to)
-  def user
-    gallery.user
-  end
-  
-  def user_id
-    user.id
-  end
-  
-  def image
-    self.solr_document.images.first
-  end
-
-  def title
-    self.solr_document.title
-  end
-
+  ##### class level methods
   def self.save_favorite(params={})
     user_id=params[:user_id]
     druid=params[:druid]
@@ -48,6 +34,29 @@ class SavedItem < WithSolrDocument
     druid=params[:druid]
     gallery=User.find(user_id).favorites_list
     return self.where(:druid=>druid,:gallery_id=>gallery.id).limit(1).first.destroy
+  end
+  ######
+
+  # when you create/update a saved item, lets touch the gallery so we can keep track of when it was last updated
+  def update_gallery_last_updated
+    gallery.touch
+  end
+
+  # some helper methods to connect us to the user this saved_item belongs to (which we need to go through the gallery to get to)
+  def user
+    gallery.user
+  end
+  
+  def user_id
+    user.id
+  end
+  
+  def image
+    self.solr_document.images.first
+  end
+
+  def title
+    self.solr_document.title
   end
   
   def only_one_saved_item_per_druid_per_gallery

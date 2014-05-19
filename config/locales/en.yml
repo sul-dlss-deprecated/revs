@@ -59,6 +59,8 @@ en:
       last_updated: 'Updated'
       saved_on: 'Saved on'
       total_views: 'Views'
+      total: 'total'
+      unresolved: 'unresolved'
       switch_yes: "yes"
       switch_no: "no"
       status: "Status"

@@ -7,7 +7,7 @@ class GalleriesController < ApplicationController
   def show
     get_paging_params
     @reorder=params[:reorder]
-    @gallery.update_attributes(:views=>@gallery.views+1 )    
+    Gallery.increment_counter(:views, @gallery.id) unless is_logged_in_user?(current_user) # your own views don't count
     @saved_item=@gallery.saved_items(current_user).page(@current_page).per(@per_page)
   end
   

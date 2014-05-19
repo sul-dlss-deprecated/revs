@@ -59,7 +59,7 @@ class Curator::TasksController < ApplicationController
       @order_user = params[:order_user] || "num_galleries DESC"
 
       @saved_items_by_item=SavedItem.select("count(id) as num_favorites,druid,updated_at").includes(:gallery).group('druid').order(@order).page(params[:pagina]).per(@per_page)
-      @saved_items_by_user=Gallery.select("count(id) as num_galleries,updated_at,user_id").includes(:user,:all_saved_items).group('user_id').order(@order_user).page(params[:pagina2]).per(@per_page)
+      @saved_items_by_user=Gallery.select("count(id) as num_galleries,user_id").includes(:user,:all_saved_items).group('user_id').order(@order_user).page(params[:pagina2]).per(@per_page)
 
       @tab_list_item = 'favorites-by-item'
       @tab_list_user = 'favorites-by-user'
@@ -82,7 +82,7 @@ class Curator::TasksController < ApplicationController
       else
         @galleries=@galleries.where(:visibility=>@filter)
       end
-      @galleries=@galleries.page(@current_page).per(@per_page)
+      @galleries=@galleries.order(@order).page(@current_page).per(@per_page)
 
    end
    
