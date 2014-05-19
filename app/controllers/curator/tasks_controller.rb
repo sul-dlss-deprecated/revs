@@ -30,7 +30,7 @@ class Curator::TasksController < ApplicationController
    def annotations
      @order_by_item = params[:order_by_item] || "num_annotations DESC"
      @order_all = params[:order_all] || "created_at DESC"
-     @order_user = params[:order_user] || "annotations.created_at DESC"
+     @order_user = params[:order_user] || "num_annotations DESC"
      
      @annotations_by_item = Annotation.select('druid,COUNT("druid") as num_annotations').group("druid").order(@order_by_item).includes(:user).page(params[:pagina]).per(@per_page)
      @annotations_list = Annotation.order(@order_all).page(params[:pagina2]).per(@per_page)
@@ -46,8 +46,8 @@ class Curator::TasksController < ApplicationController
      @order = params[:order] || "num_edits DESC"
      @order_user = params[:order_user] || "num_edits DESC"
      
-     @edits_by_item=ChangeLog.select("count(id) as num_edits,druid,updated_at").where(:operation=>'metadata update').group('druid').order(@order).page(params[:pagina]).per(@per_page)
-     @edits_by_user=ChangeLog.select("count(id) as num_edits,user_id,updated_at").where(:operation=>'metadata update').includes(:user).group('user_id').order(@order_user).page(params[:pagina2]).per(@per_page)
+     @edits_by_item=ChangeLog.select("count(id) as num_edits,druid").where(:operation=>'metadata update').group('druid').order(@order).page(params[:pagina]).per(@per_page)
+     @edits_by_user=ChangeLog.select("count(id) as num_edits,user_id").where(:operation=>'metadata update').includes(:user).group('user_id').order(@order_user).page(params[:pagina2]).per(@per_page)
 
      @tab_list_item = 'edits-by-item'
      @tab_list_user = 'edits-by-user'
@@ -58,7 +58,7 @@ class Curator::TasksController < ApplicationController
       @order = params[:order] || "num_favorites DESC"
       @order_user = params[:order_user] || "num_galleries DESC"
 
-      @saved_items_by_item=SavedItem.select("count(id) as num_favorites,druid,updated_at").includes(:gallery).group('druid').order(@order).page(params[:pagina]).per(@per_page)
+      @saved_items_by_item=SavedItem.select("count(id) as num_favorites,druid").includes(:gallery).group('druid').order(@order).page(params[:pagina]).per(@per_page)
       @saved_items_by_user=Gallery.select("count(id) as num_galleries,user_id").includes(:user,:all_saved_items).group('user_id').order(@order_user).page(params[:pagina2]).per(@per_page)
 
       @tab_list_item = 'favorites-by-item'

@@ -20,13 +20,11 @@
           <tr>
             <th width="50%"><%= t('revs.curator.item_title') %></th>
             <th class="right"><%= link_to t('revs.curator.total_times_saved'), favorites_table_curator_tasks_path(:order=>'num_favorites DESC', :tab=>@tab_list_item  ) %></th>
-            <th><%= link_to t('revs.curator.last_edit'), favorites_table_curator_tasks_path(:order=>'updated_at DESC', :tab=>@tab_list_item  ) %></th>
           </tr>
           <% @saved_items_by_item.each do |result| %>
             <tr>
               <td><%=item_link(result.solr_document,:truncate=>true)%></td>
               <td class="right"><%= result.num_favorites%></td>
-              <td><%=show_as_date(result.updated_at)%></td>
             </tr>
           <% end %>
         </table>
