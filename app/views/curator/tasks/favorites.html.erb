@@ -20,11 +20,13 @@
           <tr>
             <th width="50%"><%= t('revs.curator.item_title') %></th>
             <th class="right"><%= link_to t('revs.curator.total_times_saved'), favorites_table_curator_tasks_path(:order=>'num_favorites DESC', :tab=>@tab_list_item  ) %></th>
+            <th class="right"><%=link_to t('revs.curator.last_updated'), favorites_table_curator_tasks_path(:order=>'updated_at DESC', :tab=>@tab_list_item) %></th>
           </tr>
           <% @saved_items_by_item.each do |result| %>
             <tr>
               <td><%=item_link(result.solr_document,:truncate=>true)%></td>
               <td class="right"><%= result.num_favorites%></td>
+              <td class="right"><%= show_as_date(result.updated_at.in_time_zone) %></td>
             </tr>
           <% end %>
         </table>
@@ -39,12 +41,14 @@
             <th><%=link_to t('revs.curator.username'),favorites_table_curator_tasks_path(:order_user=>'user_id ASC',:tab=>@tab_list_user) %></th>
             <th class="right"><%=link_to t('revs.curator.galleries_made'), favorites_table_curator_tasks_path(:order_user=>'num_galleries DESC', :tab=>@tab_list_user) %></th>
             <th class="right"><%=t('revs.curator.favorites_made') %></th>
+            <th class="right"><%=link_to t('revs.curator.last_updated'), favorites_table_curator_tasks_path(:order_user=>'updated_at DESC', :tab=>@tab_list_user) %></th>
           </tr>
           <% @saved_items_by_user.each do |result| %>
             <tr>
               <td><%=link_user_name(result.user)%></td>
               <td class="right"><%= result.num_galleries%></td>
               <td class="right"><%= result.user.all_saved_items.count %></td>
+              <td class="right"><%= show_as_date(result.updated_at.in_time_zone) %></td>
             </tr>
           <% end %>
         </table>

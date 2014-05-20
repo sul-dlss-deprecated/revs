@@ -18,8 +18,8 @@ class Curator::TasksController < ApplicationController
      
      @flag_states = Flag.groupByFlagState
      @flags = Kaminari.paginate_array(Flag.where(:state => @selection).order(@order)).page(params[:pagina]).per(@per_page)
-     @flags_grouped=Flag.select('*,COUNT("druid") as num_flags').group("druid").order(@order_all).page(params[:pagina2]).per(@per_page)
-     @flags_by_user=Flag.select('*,count(id) as num_flags').includes(:user).group("user_id").order(@order_user).page(params[:pagina3]).per(@per_page)
+     @flags_grouped=Flag.select('*,COUNT("druid") as num_flags,max(flags.updated_at) as updated_at').group("druid").order(@order_all).page(params[:pagina2]).per(@per_page)
+     @flags_by_user=Flag.select('*,count(id) as num_flags,max(flags.updated_at) as updated_at').includes(:user).group("user_id").order(@order_user).page(params[:pagina3]).per(@per_page)
 
      @tab_list_item = 'flags-by-item'
      @tab_list_user = 'flags-by-user'
@@ -32,9 +32,9 @@ class Curator::TasksController < ApplicationController
      @order_all = params[:order_all] || "created_at DESC"
      @order_user = params[:order_user] || "num_annotations DESC"
      
-     @annotations_by_item = Annotation.select('druid,COUNT("druid") as num_annotations').group("druid").order(@order_by_item).includes(:user).page(params[:pagina]).per(@per_page)
+     @annotations_by_item = Annotation.select('druid,COUNT("druid") as num_annotations,max(annotations.updated_at) as updated_at').group("druid").order(@order_by_item).includes(:user).page(params[:pagina]).per(@per_page)
      @annotations_list = Annotation.order(@order_all).page(params[:pagina2]).per(@per_page)
-     @annotations_by_user=Annotation.select('*,count(id) as num_annotations').includes(:user).group("user_id").order(@order_user).page(params[:pagina3]).per(@per_page)
+     @annotations_by_user=Annotation.select('*,count(id) as num_annotations,max(annotations.updated_at) as updated_at').includes(:user).group("user_id").order(@order_user).page(params[:pagina3]).per(@per_page)
      
      @tab_group = 'annotations-group'
      @tab_list_all = 'annotations-list'
@@ -58,8 +58,8 @@ class Curator::TasksController < ApplicationController
       @order = params[:order] || "num_favorites DESC"
       @order_user = params[:order_user] || "num_galleries DESC"
 
-      @saved_items_by_item=SavedItem.select("count(id) as num_favorites,druid").includes(:gallery).group('druid').order(@order).page(params[:pagina]).per(@per_page)
-      @saved_items_by_user=Gallery.select("count(id) as num_galleries,user_id").includes(:user,:all_saved_items).group('user_id').order(@order_user).page(params[:pagina2]).per(@per_page)
+      @saved_items_by_item=SavedItem.select("count(id) as num_favorites,druid,max(saved_items.updated_at) as updated_at").includes(:gallery).group('druid').order(@order).page(params[:pagina]).per(@per_page)
+      @saved_items_by_user=Gallery.select("count(id) as num_galleries,user_id,max(galleries.updated_at) as updated_at").includes(:user,:all_saved_items).group('user_id').order(@order_user).page(params[:pagina2]).per(@per_page)
 
       @tab_list_item = 'favorites-by-item'
       @tab_list_user = 'favorites-by-user'
