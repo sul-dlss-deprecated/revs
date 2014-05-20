@@ -1,8 +1,9 @@
 .admin {
   h3 {
     color: #555;
-    border-top: 2px dotted #ddd;
-    margin-top: 20px;
+    font-size: 16px;
+    margin-bottom: 25px;
+    margin-top: 10px;
     padding-top: 6px;
   }
 
@@ -27,9 +28,21 @@
       margin: 9px 0;
     }
   }
-  #refresh_flags {
+  .row.results-controls {
+    margin-top: 6px;
+  }
+  .nav-tabs {
     margin-bottom: 10px;
+  }
+  form, select, .btn, #refresh_flags {
+    margin-top: 6px;
+    margin-bottom: 0;
+  }
+  .btn-small {
     margin-left: 6px;
+  }
+  th.edit-count {
+    min-width: 80px;
   }
 }
 
