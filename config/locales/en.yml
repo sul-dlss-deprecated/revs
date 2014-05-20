@@ -254,11 +254,13 @@ en:
       edits_made: "Edits made"
       flags_made: "Flags made"
       last_flagged: 'Last flagged'
-      galleries_made: "Total Galleries (includes private and 'favorites' lists)"
-      favorites_made: "Total Saved Items"
-      total_times_saved: "Saves in galleries/favorites"
+      favorites_made: "Items saved"
+      lists_made: 'Lists made'
+      total_times_saved: "List occurences"
+      last_saved: "Last saved"
+      last_save: "Most recent save"
       annotations_made: "Annotations made"
-      favorites: "Favorites and gallery items"
+      favorites: "Items saved in gallery or favorites lists"
       edit_rating: "Approval rating"
       username: "User"
       metadata_edit_history_show: "View metadata edit history"
