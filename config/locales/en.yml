@@ -227,7 +227,7 @@ en:
         view_annotations: 'View All Annotations'
         view_flagged_items: "View All Flags"
         view_edited_items: "View All Edits"
-        view_favorited_items: "View All Favorites"
+        view_favorited_items: "View All Saved Items"
         view_galleries: "View All Galleries"
       curator_actions: 'Curator Actions'
       enter_edit_mode: 'Enter metadata edit mode'
