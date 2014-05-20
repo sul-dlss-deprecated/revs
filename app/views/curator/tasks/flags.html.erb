@@ -14,14 +14,25 @@
   </ul>
 
   <div class="tab-content">
-    
+
+<%# -- Tab: Flag Status -- %>
     <div  id="<%=@tab_list_flag%>" class="tab-pane <%="active" if @tab == @tab_list_flag %>">
       <%= select_tag 'curator_flag_selection', options_from_collection_for_select(Flag.for_dropdown, :first, :last, :selected => @selection.join(",")) %>
       <div id='refresh_flags' class='flag-button btn btn-small'><%=t('revs.flags.refresh_list')%></div>
       <%= render :partial => 'user/flags_table', :locals=>{:selection=>@selection, :flags=>@flags, :user=>current_user,:curate_view=>true }%>
     </div>
-    
+
+<%# -- Tab: Flag Grouped By Item -- %>
     <div  id="<%=@tab_list_item%>" class="tab-pane <%="active" if @tab == @tab_list_item %>">
+
+        <div class="row results-controls">
+          <div class="span5 offset4 saved-item-pagination">
+            <span>
+              <%= page_entries_info @flags_grouped %>
+            </span>
+          </div>
+        </div>
+
       <table class="admin table table-bordered table-condensed table-hover table-striped">
         <tr>
           <th><%= t('revs.curator.item_title') %></th>
@@ -44,12 +55,23 @@
       <% end %>
      
       </table>
-      <%= page_entries_info @flags_grouped %>
+
 	    <%= paginate @flags_grouped, :param_name => :pagina2, :params => {:order_all=>@order_all, :tab=>@tab_list_item} %>
       </div>
-      
+
+<%# -- Tab: Flag By User -- %>
       <div id="<%=@tab_list_user%>" class="tab-pane <%="active" if @tab == @tab_list_user%>">
-        
+
+        <div class="row results-controls">
+          <div class="span5 offset4 saved-item-pagination">
+            <span>
+              <%# why do I need to reference @flags_by_user before page_entries_info will work? %>
+              <% @flags_by_user.inspect %>
+              <%= page_entries_info @flags_by_user %>
+            </span>
+          </div>
+        </div>
+
         <table class="table table-bordered table-condensed table-hover table-striped">
           <tr>
             <th><%=link_to t('revs.curator.username'), flags_table_curator_tasks_path(:order_user=>'user_id', :tab=>@tab_list_user) %></th>
@@ -64,7 +86,7 @@
             </tr>
           <% end %>
         </table>
-        <%= page_entries_info @flags_by_user %>
+
         <%= paginate @flags_by_user, :param_name => :pagina3, :params => {:order_user=>@order_user, :tab=>@tab_list_user} %>
   	    
       </div>
