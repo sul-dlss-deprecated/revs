@@ -33,7 +33,7 @@
       <th><%=link_to t('revs.curator.username'),galleries_table_curator_tasks_path(:order=>'user_id')%></th>
       <th class="right"><%=t('revs.user_galleries.total_items')%></th>
       <th class="right"><%=link_to t('revs.messages.total_views'),galleries_table_curator_tasks_path(:order=>'views DESC')%></th>
-      <th class="right"><%=link_to t('revs.curator.last_updated'),galleries_table_curator_tasks_path(:order=>'updated_at DESC') %></th>
+      <th><%=link_to t('revs.curator.last_updated'),galleries_table_curator_tasks_path(:order=>'updated_at DESC') %></th>
     </tr>
     <% @galleries.each do |gallery| %>
       <tr>
@@ -44,7 +44,7 @@
         <td><%= link_user_name(gallery.user) %></td>
         <td class="right"><%= gallery.saved_items(current_user).count %></td>
         <td class="right"><%= gallery.views %></td>
-        <td class="right"><%=show_as_date(gallery.updated_at)%></td>
+        <td><%=show_as_date(gallery.updated_at)%></td>
       </tr>
     <% end %>
   </table>
