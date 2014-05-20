@@ -28,7 +28,7 @@
         <div class="row results-controls">
           <div class="span5 offset4 saved-item-pagination">
             <span>
-              <%= page_entries_info @flags_grouped %>
+              <%= page_entries_info @flags_grouped, :entry_name => 'item' %>
             </span>
           </div>
         </div>
@@ -40,7 +40,7 @@
 		      <th class="right"><%= t('revs.flags.open_state_display_name')%></th>
           <th class="right"><%= t('revs.flags.fixed_state_diplay_name')%></th>
           <th class="right"><%= t('revs.flags.wont_fix_state_display_name')%></th>
-          <th class="right"><%=link_to t('revs.curator.last_updated'), flags_table_curator_tasks_path(:order_all=>'updated_at DESC', :tab=>@tab_list_item) %></th>
+          <th><%=link_to t('revs.curator.last_updated'), flags_table_curator_tasks_path(:order_all=>'updated_at DESC', :tab=>@tab_list_item) %></th>
         </tr>
 
       <% @flags_grouped.each do |flag|%>
@@ -50,7 +50,7 @@
           <td class="right"><%= Flag.queryFlagGroup(@flag_states, flag.druid, Flag.open) %></td>
           <td class="right"><%= Flag.queryFlagGroup(@flag_states, flag.druid, Flag.fixed) %></td>
           <td class="right"><%= Flag.queryFlagGroup(@flag_states, flag.druid, Flag.wont_fix) %></td>
-          <td class="right"><%= show_as_date(flag.updated_at.in_time_zone) %></td>
+          <td><%= show_as_date(flag.updated_at.in_time_zone) %></td>
         </tr>
       <% end %>
      
@@ -67,7 +67,7 @@
             <span>
               <%# why do I need to reference @flags_by_user before page_entries_info will work? %>
               <% @flags_by_user.inspect %>
-              <%= page_entries_info @flags_by_user %>
+              <%= page_entries_info @flags_by_user, :entry_name => 'user' %>
             </span>
           </div>
         </div>
@@ -76,13 +76,13 @@
           <tr>
             <th><%=link_to t('revs.curator.username'), flags_table_curator_tasks_path(:order_user=>'user_id', :tab=>@tab_list_user) %></th>
             <th class="right"><%=link_to t('revs.curator.flags_made'), flags_table_curator_tasks_path(:order_user=>'num_flags DESC', :tab=>@tab_list_user) %></th>
-            <th class="right"><%=link_to t('revs.curator.last_updated'), flags_table_curator_tasks_path(:order_user=>'updated_at DESC', :tab=>@tab_list_item) %></th>
+            <th><%=link_to t('revs.curator.last_flagged'), flags_table_curator_tasks_path(:order_user=>'updated_at DESC', :tab=>@tab_list_item) %></th>
           </tr>
           <% @flags_by_user.each do |result| %>
             <tr>
               <td><%=result.user.nil? ? t('revs.user.anonymous') : display_user_name(result.user,user_flags_path(result.user.username))%></td>
               <td class="right"><%= result.num_flags%></td>
-              <td class="right"><%= show_as_date(result.updated_at.in_time_zone) %></td>
+              <td><%= show_as_date(result.updated_at.in_time_zone) %></td>
             </tr>
           <% end %>
         </table>
