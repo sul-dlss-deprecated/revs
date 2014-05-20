@@ -245,6 +245,7 @@ en:
       by_status: "By Flag Status"
       annotations: "Annotations"
       by_annotation: "By Annotation"
+      last_annotation: "Last annotation"
       edits: "Item Edits"
       by_item: "By Item"
       by_user: "By User"
