@@ -6,36 +6,48 @@
   
   <p><%=t('revs.admin.administer_galleries.description')%></p>
 
-  <table id="galleries_list" class="table table-bordered table-condensed table-hover table-striped">
-    <tr>
-      <th><%= link_to t('revs.curator.featured'),galleries_table_curator_tasks_path(:order=>'featured DESC,position ASC') %></th>
-      <th width="40%"><%= link_to t('revs.curator.item_title'),galleries_table_curator_tasks_path(:order=>'title') %></th>
-      <th><%=link_to t('revs.curator.username'),galleries_table_curator_tasks_path(:order=>'user_id')%></th>
-      <th class="right"><%=t('revs.user_galleries.total_items')%></th>
-      <th class="right"><%=link_to t('revs.messages.total_views'),galleries_table_curator_tasks_path(:order=>'views DESC')%></th>
-      <th><%=link_to t('revs.curator.last_updated'),galleries_table_curator_tasks_path(:order=>'updated_at DESC') %></th>
-    </tr>
-    <% @galleries.each do |gallery| %>
-      <tr class="galleries-row" data-gallery-id="<%="#{gallery.id}"%>">
+  <% if @galleries.size > 0 %>
+    <table id="galleries_list" class="admin table table-bordered table-condensed table-hover table-striped">
+      <tr>
+        <th class="centered"><%= t('revs.admin.feature_on_home_page') %></th>
+        <th colspan="2"><%= t('revs.user_galleries.singular').camelize %></th>
+        <th><%= t('revs.curator.username')%></th>
+        <th class="right"><%=t('revs.user_galleries.total_items')%></th>
+        <th class="right"><%=t('revs.messages.total_views')%></th>        
+      </tr>
+      <% @galleries.each do |gallery|%>
+        <tr class="galleries-row" data-gallery-id="<%="#{gallery.id}"%>">
           <td class="centered">
               <%= check_box_tag :highlighted, true,
                   (gallery.featured == true),
                   :id=>"highlight_checkbox_#{gallery.id}",
                   :"data-id"=>gallery.id,
                   :class=>'gallery-highlight-checkbox' %>
-            </td>
-        <td>
+          </td>
+          <td class="feature-collection collection-image">
+            <%= link_to_document(gallery,
+                :label => image_tag(gallery.image,
+                :alt => gallery.title.html_safe,
+                :title => gallery.title.html_safe,
+                :class => "pull-left")) %>
+          </td>
+          <td class="feature-collection">
             <span class="hidden handle">
               <i title="<%=t('revs.messages.reorder')%>" class="icon-move"></i>
             </span>
-          <%= link_to(gallery.title,gallery_path(gallery)) %></td>
-        <td><%= link_user_name(gallery.user) %></td>
-        <td class="right"><%= gallery.saved_items(current_user).count %></td>
-        <td class="right"><%= gallery.views %></td>
-        <td><%=show_as_date(gallery.updated_at)%></td>
-      </tr>
-    <% end %>
-  </table>
+            <%= link_to(gallery.title,gallery_path(gallery)) %>
+            <div><%= truncate(gallery.description, length: 200) %></div>
+          </td>
+          <td><%= link_user_name(gallery.user) %></td>
+          <td class="right"><%= gallery.saved_items(current_user).count %></td>
+          <td class="right"><%= gallery.views %></td>
+        </tr>
+      <% end %>
+    </table>
+
+  <% else %>
+    <%= t('revs.admin.none_found') %>
+  <% end %>
 
 </div>
 

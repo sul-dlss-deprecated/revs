@@ -22,7 +22,7 @@ class Gallery < ActiveRecord::Base
   validate :only_one_favorites_list_per_user
 
   def self.featured
-    self.where("(featured='t' OR featured='1') AND visibility=>'public'").order('position ASC,date_created DESC')
+    self.where(:featured=>true).where(:visibility=>'public').order('position ASC,created_at DESC')
   end
   
   def public
