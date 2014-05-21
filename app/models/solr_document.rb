@@ -222,7 +222,7 @@ class SolrDocument
   end
 
   def edits
-    @edits ||= ChangeLog.includes(:user).where(:druid=>id,:operation=>'metadata update').where("users.active='t' OR users.active='1'").order('change_logs.created_at desc')
+    @edits ||= ChangeLog.includes(:user).where(:druid=>id,:operation=>'metadata update').where(:'users.active'=>true).order('change_logs.created_at desc')
   end
   
   # Return a CollectionMembers object of all of the siblings of a collection member (including self)

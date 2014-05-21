@@ -11,7 +11,7 @@ class Admin::GalleryHighlightsController < ApplicationController
 
   # an ajax call to set which galleries are highlighted
   def set_highlight
-    Gallery.find(params[:id]).update_column(:featured,params[:highlighted])
+    Gallery.find(params[:id]).update_column(:featured,params[:highlighted] == 'true')
     render :nothing=>true
   end
   
