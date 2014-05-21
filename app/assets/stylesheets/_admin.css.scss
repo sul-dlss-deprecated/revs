@@ -34,15 +34,31 @@
   .nav-tabs {
     margin-bottom: 10px;
   }
-  form, select, .btn, #refresh_flags {
+  form, .btn, #refresh_flags, #curator_flag_selection {
     margin-top: 6px;
     margin-bottom: 0;
   }
   .btn-small {
     margin-left: 6px;
   }
-  th.edit-count {
+  th.edit-count, th.admin-actions {
     min-width: 80px;
+  }
+  td > .admin-action-link {
+    display: block;
+  }
+  legend {
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 12px;
+  }
+  form.find-users, form.update-users {
+    .control-group {
+      margin-bottom: 10px;
+    }
+    legend + .control-group {
+      margin-top: 10px;
+    }
   }
 }
 

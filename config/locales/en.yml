@@ -192,19 +192,21 @@ en:
       lock_account: "Lock account"
     admin:
       administer_users: "Manage Users"
+      find_users: "Find users"
+      update_users: "Update users"
       administer_highlights: 
         title: "Feature Collections"
         description: "To feature a collection on the home page, check the box next its name."
       dashboard: "Administrator Dashboard"
       your_account: "This is your account. To update your password, visit %{your_account_linktext}. You cannot update your own role."
       waiting_confirmation_from_user: "Currently waiting confirmation from user of their email address"
-      search_by_email: "Search by email or name"
+      search_by_email: "By name or email"
       name: "Name"
       stanford: "Stanford?"
       role: "Role"
       per_page: "Per page"
       login_count: "Logins"
-      filter: "Show"
+      filter: "By role"
       registered_on: "Registered"
       confirmed: "Confirmed?"
       no_users_found: "No users were found with an email address of '%{with_email_address}'"
@@ -212,7 +214,7 @@ en:
       feature_on_home_page: "Feature"
       user_roles_updated: "Successfully updated %{num} users to the role '%{role}'"
       no_user_roles_updated: "You did not select any users to update"
-      set_checked_users: "Set checked users to role"
+      set_checked_users: "Update selected to role"
       last_sign_in: 'Last sign in'
       num_logins: 'Number of logins'
       sidebar:
@@ -220,6 +222,7 @@ en:
         help: "Help"
         administer_users: "Manage Users"
         administer_highlights: "Feature Collections"
+      registered_users: "registered users"
     curator:
       not_found: 'Item not found'
       sidebar:
