@@ -7,9 +7,12 @@
     <span class="object-count muted">(<%= Gallery.where(:gallery_type=>'user').count %> <%=t('revs.messages.total')%>, <%=Gallery.where(:gallery_type=>'user',:visibility=>'private').count%> <%=t('revs.user_galleries.private').downcase%>)</span>
   </h3>
 
-  <%= form_tag galleries_table_curator_tasks_path, :method=>:get do %>
-    <%= select_tag 'filter',options_for_select(@visibility_options,@filter),class:"span2"%>
-    <%= render :partial=>'shared/per_page_dropdown' %>
+  <%= form_tag galleries_table_curator_tasks_path, :method=>:get, :class => "form-inline" do %>
+    <%= select_tag 'filter',options_for_select(@visibility_options,@filter), class:"span2" %>
+    <label for="per_page" class="control-label">
+      <%= t('revs.admin.per_page') %>
+    </label>
+    <%= select_tag 'per_page', options_for_select({'10'=>'10','25'=>'25','50'=>'50','100'=>'100','500'=>'500'}, @per_page), class: "span2" %>
     <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-small' %>
   <% end %>
 

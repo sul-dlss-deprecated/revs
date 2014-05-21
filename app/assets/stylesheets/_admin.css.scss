@@ -80,7 +80,14 @@
   }
 }
 @media screen and (max-width: 767px) {
-
+  .admin {
+    .form-inline label {
+      margin-top: 12px;
+    }
+    .btn-small {
+      margin-left: 0;
+    }
+  }
 }
 @media screen and (max-width: 479px) {
 
