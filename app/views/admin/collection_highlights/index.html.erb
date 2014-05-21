@@ -11,7 +11,6 @@
       <tr>
         <th class="centered"><%= t('revs.admin.feature_on_home_page') %></th>
         <th colspan="2"><%= t('revs.show.label_collection') %></th>
-        <th><%= t('revs.show.label_description') %></th>
       </tr>
       <% @collections.each do |collection|%>
         <tr>
@@ -22,14 +21,17 @@
                 :"data-id"=>collection.id,
                 :class=>'collection-highlight-checkbox' %>
           </td>
-          <td class="feature-collection">
+          <td class="feature-collection collection-image">
             <%= link_to_document(collection,
                 :label => image_tag(collection.first_image,
-                  :alt => collection.title.html_safe,
-                  :title=>collection.title.html_safe)) %>
+                :alt => collection.title.html_safe,
+                :title => collection.title.html_safe,
+                :class => "pull-left")) %>
           </td>
-          <td><%= link_to collection.title,catalog_path(collection.id) %></td>
-          <td><%= truncate(collection.description,length:200) %></td>
+          <td class="feature-collection">
+            <%= link_to collection.title,catalog_path(collection.id) %>
+            <div><%= truncate(collection.description, length: 200) %></div>
+          </td>
         </tr>
       <% end %>
     </table>
