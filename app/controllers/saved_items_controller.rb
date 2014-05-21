@@ -1,5 +1,7 @@
 class SavedItemsController < ApplicationController
 
+  before_filter :ajax_only, :only=>[:sort]
+
   authorize_resource  # ensures only people who have access via cancan (defined in ability.rb) can do this
 
   # if no gallery ID is passed in, assume its the default favorites list
@@ -88,10 +90,11 @@ class SavedItemsController < ApplicationController
   end
   
   def sort
-    return unless request.xhr?
+    SavedItem.record_timestamps=false
     @saved_item=SavedItem.find(params[:id])
     @saved_item.position=params[:position]
     @saved_item.save
+    SavedItem.record_timestamps=true
     render :nothing => true
   end
 

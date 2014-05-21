@@ -3,6 +3,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   prepend_before_filter :authenticate_scope!, :only => [:edit, :update, :destroy, :edit_account, :update_account]
   before_filter :no_sunet_users, :only=>[ :edit_account, :update_account]
+  before_filter :ajax_only, :only=>[:check_username,:check_email]
   
   # sign up form
   def new
@@ -82,14 +83,12 @@ class RegistrationsController < Devise::RegistrationsController
   
   # ajax call to check usernames
   def check_username
-    return unless request.xhr?
     @user=User.where('username=?',params[:username])    
     @user=[] if user_signed_in? && @user && @user.first==current_user  # this means they are editing their username and its themselves, that is ok
   end
   
   # ajax call to check emails
   def check_email
-    return unless request.xhr?
     @user=User.where('email=?',params[:email])    
     @user=[] if user_signed_in? && @user && @user.first==current_user  # this means they are editing their email address and its themselves, that is ok
   end

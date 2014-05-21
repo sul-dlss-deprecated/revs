@@ -7,17 +7,16 @@
     <span class="object-count muted">(<%= Gallery.where(:gallery_type=>'user').count %> <%=t('revs.messages.total')%>, <%=Gallery.where(:gallery_type=>'user',:visibility=>'private').count%> <%=t('revs.user_galleries.private').downcase%>)</span>
   </h3>
 
-  <%= form_tag galleries_table_curator_tasks_path, :method=>:get, :class => "form-inline" do %>
-    <%= select_tag 'filter',options_for_select(@visibility_options,@filter), class:"span2" %>
-    <label for="per_page" class="control-label">
-      <%= t('revs.admin.per_page') %>
-    </label>
-    <%= select_tag 'per_page', options_for_select({'10'=>'10','25'=>'25','50'=>'50','100'=>'100','500'=>'500'}, @per_page), class: "span2" %>
+  <%= form_tag galleries_table_curator_tasks_path, :method=>:get, :class => 'form-search' do %>
+    <%= select_tag 'filter',options_for_select(@visibility_options,@filter),class:"span2"%>
     <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-small' %>
   <% end %>
 
   <div class="row results-controls">
-    <div class="span5 offset4 saved-item-pagination">
+    <div class="span4">
+    </div>
+
+    <div class="span5 saved-item-pagination">
       <span class="prev-next">
         <%= page_entries_info @galleries, :params => {:filter => @filter} %>
       </span>
@@ -26,7 +25,7 @@
 
   <table class="table table-bordered table-condensed table-hover table-striped">
     <tr>
-      <th width="40%"><%= link_to t('revs.curator.item_title'),galleries_table_curator_tasks_path(:order=>'title') %></th>
+      <th width="50%"><%= link_to t('revs.curator.item_title'),galleries_table_curator_tasks_path(:order=>'title') %></th>
       <% if @filter=='all' %>
          <th><%=link_to t('revs.user.visibility'),galleries_table_curator_tasks_path(:order=>'visibility')%></th>
       <% end %>

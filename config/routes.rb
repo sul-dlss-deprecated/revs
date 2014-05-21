@@ -92,6 +92,12 @@ Revs::Application.routes.draw do
         post 'set_highlight/:id', :to => 'collection_highlights#set_highlight'
       end
     end
+    resources :gallery_highlights do
+      collection do
+        post 'set_highlight/:id', :to => 'gallery_highlights#set_highlight'
+        post 'sort', :to => 'gallery_highlights#sort', :as=>'sort'
+      end      
+    end
   end
   
   # curator pages

@@ -195,8 +195,11 @@ en:
       find_users: "Find users"
       update_users: "Update users"
       administer_highlights: 
-        title: "Feature Collections"
+        title: "Featured Collections"
         description: "To feature a collection on the home page, check the box next its name."
+      administer_galleries: 
+        title: "Featured Galleries"
+        description: "To feature a gallery on the galleries page, check the box next its name.  Drag and drop to change the ordering."        
       dashboard: "Administrator Dashboard"
       your_account: "This is your account. To update your password, visit %{your_account_linktext}. You cannot update your own role."
       waiting_confirmation_from_user: "Currently waiting confirmation from user of their email address"
@@ -221,7 +224,8 @@ en:
         actions: 'Actions'
         help: "Help"
         administer_users: "Manage Users"
-        administer_highlights: "Feature Collections"
+        administer_highlights: "Featured Collections"
+        administer_galleries: "Featured Galleries"
       registered_users: "registered users"
     curator:
       not_found: 'Item not found'

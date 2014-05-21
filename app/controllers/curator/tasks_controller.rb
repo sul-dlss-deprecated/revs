@@ -85,7 +85,7 @@ class Curator::TasksController < ApplicationController
       @galleries=@galleries.order(@order).page(@current_page).per(@per_page)
 
    end
-   
+      
    # an ajax call to set the curator edit mode
    def set_edit_mode
      @document=SolrDocument.find(params[:id])

@@ -21,6 +21,10 @@ class Gallery < ActiveRecord::Base
   validates :user_id, :numericality => { :only_integer => true }
   validate :only_one_favorites_list_per_user
 
+  def self.featured
+    self.where("(featured='t' OR featured='1') AND visibility=>'public'").order('position ASC,date_created DESC')
+  end
+  
   def public
     visibility.to_sym == :public
   end
