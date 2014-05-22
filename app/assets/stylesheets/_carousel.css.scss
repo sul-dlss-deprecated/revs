@@ -49,6 +49,9 @@
     }
   }
 }
+.carousel-inner > .item > img, .carousel-inner > .item > a > img{
+  border: 1px solid #bbb;
+}
 
 @media screen and (max-width: 979px) {
   .carousel {margin-bottom: 5px;}
