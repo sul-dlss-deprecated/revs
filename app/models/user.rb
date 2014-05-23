@@ -149,7 +149,7 @@ class User < ActiveRecord::Base
   
   # override devise method --- stanford users are never timed out; regular users are timed out according to devise rules
   def timedout?(last_access)
-    sunet_user? ? false : super
+    sunet_user? && !last_access.nil? ? ((Time.now-last_access) > Revs::Application.config.sunet_timeout_secs) : super
   end
   
   # Blacklight uses #to_s on your user class to get
