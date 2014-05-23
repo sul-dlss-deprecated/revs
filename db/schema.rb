@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140514215123) do
+ActiveRecord::Schema.define(:version => 20140522203122) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "user_id"
@@ -49,15 +49,16 @@ ActiveRecord::Schema.define(:version => 20140514215123) do
 
   create_table "flags", :force => true do |t|
     t.integer  "user_id"
-    t.string   "druid",                               :null => false
-    t.string   "flag_type",      :default => "error", :null => false
+    t.string   "druid",                                   :null => false
+    t.string   "flag_type",          :default => "error", :null => false
     t.text     "comment"
-    t.datetime "created_at",                          :null => false
-    t.datetime "updated_at",                          :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
     t.string   "resolution"
     t.integer  "resolving_user"
     t.datetime "resolved_time"
-    t.string   "state",          :default => "open"
+    t.string   "state",              :default => "open"
+    t.string   "notification_state"
   end
 
   add_index "flags", ["druid"], :name => "index_flags_on_druid"
@@ -83,6 +84,7 @@ ActiveRecord::Schema.define(:version => 20140514215123) do
 
   add_index "galleries", ["featured"], :name => "index_galleries_on_featured"
   add_index "galleries", ["gallery_type"], :name => "index_galleries_on_gallery_type"
+  add_index "galleries", ["position"], :name => "index_galleries_on_position"
   add_index "galleries", ["slug"], :name => "index_galleries_on_slug", :unique => true
   add_index "galleries", ["user_id"], :name => "index_galleries_on_user_id"
 

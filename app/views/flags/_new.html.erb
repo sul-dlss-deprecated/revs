@@ -4,6 +4,9 @@
    <%= f.hidden_field :flag_type, :value=>'error' %>
    <%= f.label :comment, t('revs.flags.comment_optional')%>
    <%= f.text_area :comment, :rows => '2', :class => "input-xlarge" %>
+   <% if user_signed_in? %>
+     <br /><%= f.check_box :notify_me %> <%= t('revs.flags.notify_me')%>
+   <% end %>
    <%= f.submit t('revs.flags.flag'), :class => "flag-button btn btn-small" %>
  <% end %>
 <% end %>

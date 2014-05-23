@@ -168,7 +168,7 @@
                   <div class="flag-history-list">
                     <ul>
                       <% closed_flags.each do |flag| %>
-                        <li><%=t('revs.flags.flag_history',:flagger=>(flag.user == current_user ? 'you' : flag.user.to_s),:comment=>flag.comment,:flag_date=>show_as_datetime(flag.created_at.in_time_zone),:state_name=>flag.state_display_name,:resolver=>(flag.resolving_user == current_user.id ? 'you' : flag.resolving_username),:resolve_date=>show_as_datetime(flag.resolved_time.in_time_zone))%>
+                        <li><%=t('revs.flags.flag_history',:flagger=>(flag.user == current_user ? t('revs.user.you') : (flag.user.blank? ? t('revs.user.anonymous') : flag.user.to_s)),:comment=>flag.comment,:flag_date=>show_as_datetime(flag.created_at.in_time_zone),:state_name=>flag.state_display_name,:resolver=>(flag.resolving_user == current_user.id ? t('revs.user.you') : flag.resolved_by.to_s),:resolve_date=>show_as_datetime(flag.resolved_time.in_time_zone))%>
                           <%=t('revs.flags.flag_history_comment',:comment=>flag.resolution) unless flag.resolution.blank? %>
                         </li>
                       <% end %>

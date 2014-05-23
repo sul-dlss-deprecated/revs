@@ -1,9 +1,9 @@
 class FlagsController < ApplicationController
 
   load_and_authorize_resource  # ensures only people who have access via cancan (defined in ability.rb) can do this
+  skip_load_resource :only => :create
   
   def index # all flags
-    @flags=Flag.all
     respond_to do |format|
       format.js { render }
     end
@@ -18,7 +18,6 @@ class FlagsController < ApplicationController
   end
   
   def create
-    
     flag_info=params[:flag]
     @flag=Flag.create_new(flag_info,current_user)
     @all_flags=Flag.where(:druid=>flag_info[:druid])
@@ -29,7 +28,6 @@ class FlagsController < ApplicationController
                     redirect_to previous_page}
       format.js { render }
     end
-    
   end
 
   def show
@@ -44,19 +42,21 @@ class FlagsController < ApplicationController
     @flag.resolved_time=Time.now
     @flag.resolving_user = current_user.id
     @flag.state = {t('revs.flags.fixed')=>Flag.fixed, t('revs.flags.wont_fix')=>Flag.wont_fix}[params[t('revs.flags.resolve')]]
+    if @flag.resolved? && @flag.notify_me
+      @flag.notification_state='delivered'
+      RevsMailer.flag_resolved(@flag).deliver
+    end
     @flag.save
     @message={t('revs.flags.fixed')=>t('revs.flags.resolved_fix'), t('revs.flags.wont_fix')=>t('revs.flags.resolved_wont_fix')}[params[t('revs.flags.resolve')]]
     @all_flags=Flag.where(:druid=>flag_info[:druid])
     respond_to do |format|
-    format.html { flash[:success]=@message
-                  redirect_to previous_page}      
-    format.js { render }
-     
+      format.html { flash[:success]=@message
+                    redirect_to previous_page}      
+      format.js { render }
     end    
   end
 
   def destroy
-    @flag=Flag.find(params[:id])
     @message=t('revs.flags.removed')
     @druid=@flag.druid
     @flag.destroy
@@ -77,7 +77,4 @@ class FlagsController < ApplicationController
     end     
   end
   
-  
-
-    
 end

@@ -1,4 +1,6 @@
 class RevsMailer < ActionMailer::Base
+
+  helper :application
   default from: "no-reply@revslib.stanford.edu"
 
   def contact_message(opts={})
@@ -19,6 +21,11 @@ class RevsMailer < ActionMailer::Base
     @email=opts[:email]
     @subject=opts[:subject]
     mail(:to=>@email,:subject=>I18n.t('revs.contact.thanks'))
+  end
+  
+  def flag_resolved(flag)
+    @flag=flag
+    mail(:to=>flag.user.email,:subject=>I18n.t('revs.flags.resolved_message')) 
   end
   
   def mailing_list_signup(opts={})

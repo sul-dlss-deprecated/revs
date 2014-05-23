@@ -59,8 +59,8 @@
         <td><%= flag.state_display_name%></td>
        <% if Flag.display_resolved_columns(local_assigns[:selection])%>
         <td>
-          <% if flag.resolving_user != nil %>
-            <%= flag.resolving_username%>
+          <% if flag.resolved? && !flag.resolved_by.blank? %>
+            <%= flag.resolving_by.to_s%>
           <%end%>
         </td>
         <td><%= flag.resolution%></td>

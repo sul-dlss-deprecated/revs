@@ -11,6 +11,8 @@ describe("Flagging",:type=>:request,:integration=>true) do
     @default_flag_type='error'
     @wont_fix_button=I18n.t('revs.flags.wont_fix')
     @fix_button=I18n.t('revs.flags.fixed')
+    @ask_to_notify_checkbox=I18n.t('revs.flags.notify_me')
+    RevsMailer.stub_chain(:flag_resolved,:deliver).and_return('a mailer')
   end
   
   it "should show the flagging link to non-logged in users even if there are no flags" do
@@ -26,6 +28,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
     visit catalog_path(druid)
     page.should_not have_css('#flag-details-link.hidden')
     should_allow_flagging
+    page.should_not have_content(@ask_to_notify_checkbox) # non-logged in users cannot be notified when flag is resolved
     
     Flag.where(:druid=>druid).count.should == 1 # one existing flag (from fixtures)
     
@@ -88,23 +91,55 @@ describe("Flagging",:type=>:request,:integration=>true) do
 
   end
   
+  it "should allow a logged in user to request to be notified when their flag is resolved" do
+    druid='qb957rw1430'
+    user_comment='all wrong!'
+    curator_comment='righto old chap'
+    initial_flag_count=Flag.count
+    # login and visit an item as a regular user
+    login_as_user_and_goto_druid(user_login,druid)
+    fill_in @comment_field, :with=>user_comment
+    check 'flag_notify_me'
+    click_button @flag_button
+    # check the database
+    user=User.find_by_username(user_login)
+    Flag.count.should == initial_flag_count + 1
+    flag=Flag.last
+    flag.comment.should == user_comment
+    flag.flag_type.should == @default_flag_type
+    flag.user.should == user
+    flag.notify_me.should be_true
+    flag.notification_state.should == 'pending'
+    
+    flag_id = check_flag_was_created(user_login, druid, user_comment, initial_flag_count+1)  
+    
+    # notification should go out
+    RevsMailer.should_receive(:flag_resolved)
+          
+    #Login As a Curator and Mark It As Fixed
+    resolve_flag_fix(curator_login, druid, user_comment, curator_comment)
+    
+    #Ensure the Flag Was Resolved via a message on the page to the user and in the database
+    check_flag_was_marked_fix(user_comment, initial_flag_count+1, curator_comment, flag_id)
+        
+  end
+  
   it "should allow multiple logged in users to flag an item, show all flags, and then allow the user remove their own flag" do
 
       druid='qb957rw1430'
+      user_comment='all wrong!'
+
       initial_flag_count=Flag.count
             
       # login and visit an item as a regular user
-      login_as(user_login)
-      user_comment='all wrong!'
-      item_page=catalog_path(druid)
-
+      login_as_user_and_goto_druid(user_login,druid)      
       #flag the item
-      visit item_page
+      page.should have_content(@ask_to_notify_checkbox) # logged in users can ask to be notified when flag is resolved
       fill_in @comment_field, :with=>user_comment
       click_button @flag_button
       
       # check the page for the correct messages
-      current_path.should == item_page
+      current_path.should == catalog_path(druid)
       page.should have_content(I18n.t('revs.flags.created'))
       page.should have_content(user_comment)
       page.should have_button(@remove_button)
@@ -115,7 +150,9 @@ describe("Flagging",:type=>:request,:integration=>true) do
       flag=Flag.last
       flag.comment.should == user_comment
       flag.flag_type.should == @default_flag_type
-      flag.user=user
+      flag.user.should == user
+      flag.notify_me.should be_false
+      flag.notification_state.should be_nil
 
       # login and visit an item as a curator
       logout
@@ -123,12 +160,12 @@ describe("Flagging",:type=>:request,:integration=>true) do
       curator_comment='not so bad'
 
       #flag the item
-      visit item_page
+      visit catalog_path(druid)
       fill_in @comment_field, :with=>curator_comment
       click_button @flag_button
       
       # check the page for the correct messages
-      current_path.should == item_page
+      current_path.should == catalog_path(druid)
       page.should have_content(I18n.t('revs.flags.created'))
       page.should have_content(curator_comment)
       page.should have_content(user_comment)
@@ -140,7 +177,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
       flag=Flag.last
       flag.comment.should == curator_comment
       flag.flag_type.should == @default_flag_type
-      flag.user=curator
+      flag.user.should == curator
            
       # remove and confirm deletion of the curator's flag in the database
       #Since curators can remove any comment now, we need to target the removal of the comment that the curator just added
@@ -236,6 +273,9 @@ describe("Flagging",:type=>:request,:integration=>true) do
         #Ensure the Flag Was Created On The Page and Database
         flag_id = check_flag_was_created(user_login, druid, user_comment, initial_flag_count+1)  
       
+        # no notification
+        RevsMailer.should_not_receive(:flag_resolved)
+        
         #Login As a Curator and Mark It As Won't Fix
         resolve_flag_wont_fix(curator_login, druid, user_comment, curator_comment)
         
@@ -274,7 +314,10 @@ describe("Flagging",:type=>:request,:integration=>true) do
       
         #Ensure the Flag Was Created On The Page and Database
         flag_id = check_flag_was_created(user_login, druid, user_comment, initial_flag_count+1)  
-      
+
+        # no notification
+        RevsMailer.should_not_receive(:flag_resolved)
+              
         #Login As a Curator and Mark It As Fixed
         resolve_flag_fix(curator_login, druid, user_comment, curator_comment)
         

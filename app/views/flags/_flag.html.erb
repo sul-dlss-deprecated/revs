@@ -31,7 +31,7 @@
       <div class="resolution-history">
         <span>
           <label><%= t('revs.flags.resolver_username')%></label>
-          <%= flag.resolving_username %>
+          <%= flag.resolved_by.to_s %>
         </span>
           <% if !flag.resolution.empty? %>
             <span>

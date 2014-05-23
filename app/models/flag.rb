@@ -1,25 +1,29 @@
 class Flag < WithSolrDocument
 
   belongs_to :user
+  belongs_to :resolved_by, :class_name=>'User', :foreign_key=>:resolving_user
   belongs_to :item, :foreign_key=>:druid, :primary_key=>:druid
   
   FLAG_TYPES=%w{error inappropriate}
-  
+  NOTIFICATION_STATES=%w{pending delivered}
+    
   FLAG_STATES={ open: 'open', fixed: 'fixed', wont_fix: 'wont fix'}  #add a potential spam state here if desired 
   FLAG_STATE_DISPLAYS = {FLAG_STATES[:open]=> I18n.t('revs.flags.open_state_display_name'),FLAG_STATES[:fixed]=> I18n.t('revs.flags.fixed_state_diplay_name'),FLAG_STATES[:wont_fix]=> I18n.t('revs.flags.wont_fix_state_display_name'),FLAG_STATES[:wont_fix]+","+FLAG_STATES[:fixed]=>I18n.t('revs.flags.all_closed_name'),FLAG_STATES[:open]+","+FLAG_STATES[:wont_fix]+","+FLAG_STATES[:fixed]=>I18n.t('revs.flags.all_flags_name')}
   
-  attr_accessible :druid, :comment, :flag_type, :user_id, FLAG_TYPES
+  attr_accessible :druid, :comment, :flag_type, :user_id, :notification_state, FLAG_TYPES
   
   validates :druid, :is_druid=>true
   validate :check_user_id
   validate :check_flag_type
   validate :check_flag_state
+  validate :check_notification_state
 
   def self.create_new(flag_info,user)
     flag=Flag.new
     flag.flag_type=flag_info[:flag_type]
     flag.comment=flag_info[:comment]
     flag.druid=flag_info[:druid]
+    flag.notification_state="pending" if flag_info[:notify_me] == '1'
     flag.user_id=user.id unless user.blank?
     flag.state= Flag.open
     flag.save 
@@ -65,10 +69,14 @@ class Flag < WithSolrDocument
     counts.size
   end
   
-  def resolving_username
-    User.find(resolving_user).to_s
+  def notify_me
+    notification_state=="pending"
   end
-
+  
+  def notify_me=(value)
+    notification_state=(value == true ? "pending" : nil) 
+  end
+    
   def check_user_id
     errors.add(:user_id, :not_valid) unless (user_id.nil? || user_id.is_a?(Integer))
   end
@@ -77,6 +85,10 @@ class Flag < WithSolrDocument
     errors.add(:flag_type, :not_valid) unless FLAG_TYPES.include? flag_type.to_s
   end
 
+  def check_notification_state
+    errors.add(:notification_state, :not_valid) unless NOTIFICATION_STATES.include?(notification_state.to_s) || notification_state.blank?
+  end
+  
    def check_flag_state
     errors.add(:state, :not_valid) unless FLAG_STATES.values.include? state.to_s
   end 
@@ -89,7 +101,4 @@ class Flag < WithSolrDocument
     return FLAG_STATE_DISPLAYS[self.state]
   end
 
-  
- 
-  
 end

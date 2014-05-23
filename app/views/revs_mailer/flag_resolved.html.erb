@@ -1,0 +1,7 @@
+<p>
+You previously flagged a correction to an item in the Revs Digital Library 
+<% unless @flag.comment.blank? %> with the comment '<%=@flag.comment%>' <% end %> and the flag was resolved on <%=show_as_date(@flag.resolved_time)%> by <%=@flag.resolved_by.to_s%> with the status '<%=@flag.state_display_name%>'.
+<% unless @flag.resolution.blank? %> The curator also added a comment of '<%=@flag.resolution%>'.<% end %>
+</p>
+
+<p>To view the item, visit this page: <%=link_to item_url(@flag.druid),item_url(@flag.druid)%>.</p>
