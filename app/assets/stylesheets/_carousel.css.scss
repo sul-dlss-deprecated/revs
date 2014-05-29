@@ -53,6 +53,10 @@
   border: 1px solid #bbb;
 }
 
+#all_collections_carousel .carousel-inner {
+  max-height: 260px;
+}
+
 @media screen and (max-width: 979px) {
   .carousel {margin-bottom: 5px;}
 }
