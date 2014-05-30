@@ -20,7 +20,7 @@
   <% if galleries_count(@user) > Revs::Application.config.num_latest_user_activity %>
     <p class="more-link">
       <%= pluralize(galleries_count(@user) - Revs::Application.config.num_latest_user_activity, t('revs.user_galleries.singular').downcase) %> <%=t('revs.messages.not_shown')%>.
-      <%= link_to "#{t('revs.messages.view_all')} »", user_galleries_path(@user.username) %>
+      <%= link_to "#{t('revs.messages.view_all')} »", user_galleries_user_index_path_index_path(@user.username) %>
     </p>
   <% end %>
 

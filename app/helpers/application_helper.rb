@@ -42,7 +42,7 @@ module ApplicationHelper
  
    # pass in a user, if it's the currently logged in user, you will get the full name; otherwise you will get the appropriate name for public display; it will also created a link if the profile is public, if its you or if you are able to read any profile (e.g. admin)
   def link_user_name(user)
-     display_user_name(user,user.public || user == current_user || can?(:read,User) ? user_profile_name_path(user.username) : nil)
+     display_user_name(user,user.public || user == current_user || can?(:read,User) ? user_path(user.username) : nil)
   end
 
   def display_gallery_visibility(gallery)
@@ -149,7 +149,7 @@ module ApplicationHelper
   end
   
   def on_user_profile_page
-    ['show','show_by_name'].include?(action_name) && controller_name == 'user'
+    ['show'].include?(action_name) && controller_name == 'user'
   end
   
   def in_curator_edit_mode

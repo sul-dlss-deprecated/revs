@@ -22,7 +22,7 @@ class GalleriesController < ApplicationController
     if @gallery.save
       @message=t('revs.user_galleries.gallery_created')
       flash[:success]=@message
-      redirect_to user_galleries_path(current_user.username)
+      redirect_to user_galleries_user_index_path_index_path(current_user.username)
     else
       render :new
     end
@@ -37,7 +37,7 @@ class GalleriesController < ApplicationController
    if @gallery.valid?
      @message=t('revs.user_galleries.gallery_updated')
      flash[:success]=@message
-     redirect_to user_galleries_path(current_user.username)
+     ruser_galleries_user_index_pathleries_path(current_user.username)
    else
      render :edit
     end
@@ -52,7 +52,7 @@ class GalleriesController < ApplicationController
       
     respond_to do |format|
       format.html { flash[:success]=@message
-                    redirect_to user_galleries_path(current_user.username)}
+                    ruser_galleries_user_index_pathleries_user_index_path(current_user.username)}
       format.js { render }
     end
   end

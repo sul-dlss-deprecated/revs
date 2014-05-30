@@ -53,7 +53,7 @@
     <% elsif from_favorites? %>
       <div class="row results-nav">
         <div class="span2 back-to-results">
-           <%=link_to t('revs.nav.return_to_favorites',:user_name=>params[:favorite_user_name]).html_safe,user_favorites_path(params[:user],extract_paging_params(params)) %>
+           <%=link_to t('revs.nav.return_to_favorites',:user_name=>params[:favorite_user_name]).html_safe,user_favorites_user_index_path(params[:user],extract_paging_params(params)) %>
         </div>
       </div>
     <% elsif in_search_result?  %>

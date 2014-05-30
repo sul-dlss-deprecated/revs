@@ -18,7 +18,7 @@
   <% if favorites_count(@user) > Revs::Application.config.num_latest_user_activity %>
     <p class="more-link">
       <%= pluralize(favorites_count(@user) - Revs::Application.config.num_latest_user_activity, t('revs.favorites.singular').downcase) %> <%=t('revs.messages.not_shown')%>.
-      <%= link_to "#{t('revs.messages.view_all')} »", user_favorites_path(@user.username) %>
+      <%= link_to "#{t('revs.messages.view_all')} »", user_favorites_user_index_path(@user.username) %>
     </p>
   <% end %>
 <% elsif is_logged_in_user?(@user) %>

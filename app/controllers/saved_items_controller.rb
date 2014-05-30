@@ -84,7 +84,7 @@ class SavedItemsController < ApplicationController
     @link_text = t('revs.favorites.edit_item_note')
     respond_to do |format|
       format.html { flash[:success]=@message
-                    redirect_to user_favorites_path(current_user.username,:page=>params[:page],:order=>params[:order])}
+                    redirect_to user_favorites_user_index_path(current_user.username,:page=>params[:page],:order=>params[:order])}
       format.js { render }
     end
   end
@@ -104,7 +104,7 @@ class SavedItemsController < ApplicationController
     @message=""
     @link_text=""
     respond_to do |format|
-      format.html {redirect_to user_favorites_path(current_user.username,:page=>params[:page],:order=>params[:order])}
+      format.html {redirect_to user_favorites_user_index_path(current_user.username,:page=>params[:page],:order=>params[:order])}
       format.js { render 'update.js' }
     end
   end
@@ -114,7 +114,7 @@ class SavedItemsController < ApplicationController
     @saved_item = SavedItem.find(params[:id])
     @target = params[:id]
     respond_to do |format|
-      format.html { redirect_to user_favorites_path(current_user.username, :edit_id => params[:id],:page=>params[:page],:order=>params[:order])}
+      format.html { redirect_to user_favorites_user_index_path(current_user.username, :edit_id => params[:id],:page=>params[:page],:order=>params[:order])}
       format.js { render }
     end
   end

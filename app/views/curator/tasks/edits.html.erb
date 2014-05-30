@@ -59,7 +59,7 @@
         </tr>
         <% @edits_by_user.each do |result| %>
           <tr>
-            <td><%=display_user_name(result.user,user_edits_path(result.user.username))%></td>
+            <td><%=display_user_name(result.user,edits_user_index_path(result.user.username))%></td>
             <td class="right"><%= result.num_edits%></td>
           </tr>
         <% end %>

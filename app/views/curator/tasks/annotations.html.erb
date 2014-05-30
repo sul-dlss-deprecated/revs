@@ -67,7 +67,7 @@
           <tr>
             <td><%=item_link(annotation.solr_document,:truncate=>true)%></td>
             <td><%= annotation.text%></td>
-            <td><%= display_user_name(annotation.user,user_annotations_path(annotation.user.username))%></td>
+            <td><%= display_user_name(annotation.user,user_annotations_user_index_path(annotation.user.username))%></td>
             <td><%= show_as_datetime(annotation.created_at.in_time_zone)%></td>
           </tr>
         <% end %>
@@ -95,7 +95,7 @@
         </tr>
         <% @annotations_by_user.each do |result| %>
           <tr>
-            <td><%=display_user_name(result.user,user_annotations_path(result.user.username))%></td>
+            <td><%=display_user_name(result.user,user_annotations_user_index_path(result.user.username))%></td>
             <td class="right"><%= result.num_annotations%></td>
             <td><%= show_as_date(result.updated_at.in_time_zone)%></td>
           </tr>

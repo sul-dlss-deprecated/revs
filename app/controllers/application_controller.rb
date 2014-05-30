@@ -72,7 +72,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_update_path_for(resource) # after a user updates their account info or profile, take them back to their account info page
-    user_profile_name_path(current_user.username)
+    user_path(current_user.username)
   end
 
   def no_sunet_users

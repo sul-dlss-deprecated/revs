@@ -393,7 +393,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
       login_as(user_login)
       user_account = User.find_by_username(user_login)
       table_header = "#{user_account.full_name}'s #{I18n.t('revs.flags.plural')}"
-      visit user_flags_path(user_account.username)
+      visit user_flags_user_index_path(user_account.username)
       
       #Check the default of the user dashboard, by default we should see only the open comment 
       has_content_array([table_header, open_comment])

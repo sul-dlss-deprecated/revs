@@ -1,22 +1,17 @@
 class UserController < ApplicationController
     
   before_filter :load_user_profile, :except=>[:update_flag_table,:curator_update_flag_table] # we need to be sure the profile exists before doing anything
-  before_filter :confirm_public, :only=>[:show,:show_by_name,:favorites]
+  before_filter :confirm_public, :only=>[:show,:favorites]
   before_filter :confirm_active, :except=>[:update_flag_table,:curator_update_flag_table]
   before_filter :get_paging_params, :only=>[:annotations,:favorites,:galleries,:edits,:flags]
   
   # TODO we should be able to do the confirmation of confirm_public and confirm_active in the Ability class via cancan, but I could not get it to work
-  load_and_authorize_resource
+  authorize_resource
   
   # user profile pages
   
   # public user profile page by ID (e.g. /user/134)
   def show
-  end
-  
-  # public user profile page by name (e.g. /user/peter)
-  def show_by_name
-    render :show
   end
       
   # all of the user's annotations
@@ -62,7 +57,7 @@ class UserController < ApplicationController
     @curate_view = false 
     @username=params[:username]
     @selection = params[:selection].split(',')
-    @user = User.where(:username=>@username).first
+    @user = User.find(@username)
     @flags = flagListForStates(@selection, @user, params[:sort] || "druid")
     respond_to do |format|
        format.js { render }
@@ -95,9 +90,7 @@ class UserController < ApplicationController
   
   private  
   def load_user_profile
-    @id=params[:id]
-    @name=params[:name]
-    @user = (@id.blank? ? User.find_by_username(@name) : User.find(@id))
+    @user = User.find(params[:id])
     if @user
       @user.create_default_favorites_list # create the default favorites list if for some reason it does not exist
       @latest_annotations=@user.annotations(current_user).order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)

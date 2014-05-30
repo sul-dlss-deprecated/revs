@@ -1,19 +1,19 @@
 <% if user_signed_in? %>
   <div class="btn-group">
-    <%= link_to "#{current_user.full_name}", user_profile_name_path(current_user.username),
+    <%= link_to "#{current_user.full_name}", user_path(current_user.username),
         :class => "btn btn-link btn-mini" %>
     <button class="btn btn-link btn-mini dropdown-toggle" data-toggle="dropdown">
       <span class="caret"></span>
     </button>
 
     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-      <li><%= link_to t('revs.user.profile_page'), user_profile_name_path(current_user.username) %></li>
+      <li><%= link_to t('revs.user.profile_page'), user_path(current_user.username) %></li>
       <% unless current_user.sunet_user? %>
         <li><%= link_to t('revs.user.change_password'), edit_user_account_path%></li>
       <% end %>
 
       <li class="divider"></li>
-      <li><%= link_to t('revs.user.user_dashboard',:name=>t('revs.user.your')), user_profile_name_path(current_user.username) %></li>
+      <li><%= link_to t('revs.user.user_dashboard',:name=>t('revs.user.your')), user_path(current_user.username) %></li>
       <% if can? :curate, :all %>
         <li><%= link_to t('revs.user.curator_dashboard'), curator_tasks_path %></li>
       <% end %>

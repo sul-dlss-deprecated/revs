@@ -2,6 +2,9 @@ class User < ActiveRecord::Base
 
   include Blacklight::User
 
+  extend FriendlyId
+  friendly_id :username#, use: [:finders]
+  
   # class generated with CarrierWave
   mount_uploader :avatar, AvatarUploader
   validates_integrity_of  :avatar

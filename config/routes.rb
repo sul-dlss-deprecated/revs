@@ -36,13 +36,15 @@ Revs::Application.routes.draw do
   match 'collection/:id', :to=> 'catalog#show', :as =>'collection'
   
   # public user profile pages
-  match 'user/:name/favorites', :to=>'user#favorites', :as=>'user_favorites', :via=>:get, :constraints => {:name => /\D+.+/} 
-  match 'user/:name/galleries', :to=>'user#galleries', :as=>'user_galleries', :via=>:get, :constraints => {:name => /\D+.+/} 
-  match 'user/:name/annotations', :to=>'user#annotations', :as=>'user_annotations', :via=>:get, :constraints => {:name => /\D+.+/} 
-  match 'user/:name/flags', :to=>'user#flags', :as=>'user_flags', :via=>:get, :constraints => {:name => /\D+.+/} 
-  match 'user/:name/edits', :to=>'user#edits', :as=>'user_edits', :via=>:get, :constraints => {:name => /\D+.+/} 
-  match 'user/:id', :to=>'user#show', :as=>'user_profile_id', :via=>:get, :constraints => {:id => /\d+/} # all digits is assumed to be an ID
-  match 'user/:name', :to=>'user#show_by_name', :as=>'user_profile_name', :via=>:get, :constraints => {:name => /\D+.+/} # any non digit followed by any other characters is assumed to be a name
+  resources :user do
+    collection do
+      match ':id/favorites', :to=>'user#favorites', :as=>'user_favorites', :via=>:get, :constraints => {:id => /\D+.+/} 
+      match ':id/galleries', :to=>'user#galleries', :as=>'user_galleries', :via=>:get, :constraints => {:id => /\D+.+/} 
+      match ':id/annotations', :to=>'user#annotations', :as=>'user_annotations', :via=>:get, :constraints => {:id => /\D+.+/} 
+      match ':id/flags', :to=>'user#flags', :as=>'user_flags', :via=>:get, :constraints => {:id => /\D+.+/} 
+      match ':id/edits', :to=>'user#edits', :as=>'user_edits', :via=>:get, :constraints => {:id => /\D+.+/} 
+    end
+  end
   
   # Handles all About pages.
   match 'about', :to => 'about#show', :as => 'about_project', :defaults => {:id=>'project'} # no page specified, go to project page

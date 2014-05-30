@@ -13,7 +13,7 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     
     login_as(user_login)
     user_account=User.find_by_username(user_login)
-    visit user_profile_name_path(user_account.username)
+    visit user_path(user_account.username)
     page.should have_content(I18n.t("revs.user.user_dashboard",:name=>I18n.t('revs.user.your')))
     page.should have_content("#{user_account.full_name}")
     click_link 'Update your profile'
@@ -22,7 +22,7 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     fill_in 'user_last_name', :with=>new_last_name
     click_button 'submit'
     
-    current_path.should == user_profile_name_path(user_account.username)
+    current_path.should == user_path(user_account.username)
     page.should have_content(new_bio)
     page.should have_content(new_last_name)
     
@@ -39,7 +39,7 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     
     login_as(user_login)
     user_account=User.find_by_username(user_login)
-    visit user_profile_name_path(user_account.username)
+    visit user_path(user_account.username)
     page.should have_content(I18n.t("revs.user.user_dashboard",:name=>I18n.t('revs.user.your')))
     page.should have_content("#{user_account.full_name}")
     click_link 'Update your profile'
@@ -65,7 +65,7 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     user_account=User.find_by_username(user_login)
     user_account.login_count.should == 1
     
-    visit user_profile_name_path(user_account.username)
+    visit user_path(user_account.username)
     page.should have_content(I18n.t("revs.user.user_dashboard",:name=>I18n.t('revs.user.your')))
     page.should have_content("#{user_account.full_name}")
     click_link 'Change your password'
@@ -76,7 +76,7 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
 
     click_button 'submit'
     
-    current_path.should == user_profile_name_path(user_account.username)
+    current_path.should == user_path(user_account.username)
 
     # now try and login again with old password, this should fail
     logout
@@ -89,7 +89,7 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     fill_in "user_login", :with => user_login
     fill_in "user_password", :with => new_password
     click_button "submit"
-    visit user_profile_name_path(user_account.username)
+    visit user_path(user_account.username)
     page.should have_content(I18n.t("revs.user.user_dashboard",:name=>I18n.t('revs.user.your')))
     page.should have_content("#{user_account.full_name}")
     
@@ -106,7 +106,7 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     sunet_account=User.find_by_username(sunet_login)
     sunet_account.login_count.should == 1
     
-    visit user_profile_name_path(sunet_account.username) # user profile page
+    visit user_path(sunet_account.username) # user profile page
     page.should have_content sunet_account.full_name
     page.should_not have_content 'Change your password' # we shouldn't have the edit password link
     page.should_not have_content 'Change your email address' # we shouldn't have the edit email address link
@@ -117,7 +117,7 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     fill_in 'user_last_name', :with=>new_last_name
     click_button 'submit'
     
-    current_path.should == user_profile_name_path(sunet_account.username)
+    current_path.should == user_path(sunet_account.username)
     page.should have_content(new_bio)
     page.should have_content(new_last_name)
     
@@ -132,7 +132,7 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     page.should have_content 'You are not authorized to perform this action.'
     
     # sign out
-    visit user_profile_name_path(sunet_account.username) # user profile page
+    visit user_path(sunet_account.username) # user profile page
     logout
     current_path.should == root_path
     page.should_not have_content sunet_account.full_name
@@ -146,7 +146,7 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     visit webauth_login_path
     sunet_account=User.find_by_username(sunet_login)
     
-    visit user_profile_name_path(sunet_account.username) # user profile page    
+    visit user_path(sunet_account.username) # user profile page    
     click_link 'Update your profile'
 
     fill_in 'register-username', :with=>new_username

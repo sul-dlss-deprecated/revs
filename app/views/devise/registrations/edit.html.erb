@@ -92,7 +92,7 @@
           <%= t('revs.user.private') %>
           <span class="inline-help-block">
             <small>
-              <%= link_to "(#{t('revs.user.preview')})", user_profile_name_path(current_user.username) unless resource.public %>
+              <%= link_to "(#{t('revs.user.preview')})", user_path(current_user.username) unless resource.public %>
             </small>
           </span>
         </label>

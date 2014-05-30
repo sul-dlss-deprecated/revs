@@ -62,20 +62,20 @@ describe("Favorites",:type=>:request,:integration=>true) do
   it "should not show any favorites on a user's profile page if they don't have any favorites" do
     
     login_as(user_login)
-    visit user_profile_name_path(user_login)
+    visit user_path(user_login)
     page.should have_content I18n.t('revs.favorites.you_can_save_favorites')
-    visit user_favorites_path(user_login)
+    visit user_favorites_user_index_path(user_login)
     page.should have_content I18n.t('revs.favorites.none')
 
   end
 
   it "should show favorites on a user's profile page if they have favorites and full favorites page should show all of them, including hidden ones since this is a curator" do
     login_as(curator_login)
-    visit user_profile_name_path(curator_login)
+    visit user_path(curator_login)
     page.should_not have_content I18n.t('revs.favorites.you_can_save_favorites')
     page.should have_content "#{I18n.t('revs.favorites.head')} 4"
     page.should have_content "1 #{I18n.t('revs.favorites.singular')} not shown"
-    visit user_favorites_path(curator_login)
+    visit user_favorites_user_index_path(curator_login)
     page.should have_content "Bryar 250 Trans-American:10" # this one is hidden, but shows up for curators
     page.should have_content "A Somewhat Shorter Than Average Title"
     page.should have_content "Thompson Raceway, May 1 -- AND A long title can go here so let's see how it looks when it is really long"
@@ -83,10 +83,10 @@ describe("Favorites",:type=>:request,:integration=>true) do
   end
  
    it "should not show hidden favorites to a non-logged in user on a public user's profile page if they are hidden" do
-    visit user_profile_name_path(curator_login)
+    visit user_path(curator_login)
     page.should_not have_content I18n.t('revs.favorites.you_can_save_favorites')
     page.should have_content "#{I18n.t('revs.favorites.head')} 3"
-    visit user_favorites_path(curator_login)
+    visit user_favorites_user_index_path(curator_login)
     page.should_not have_content "Bryar 250 Trans-American:10" # this one is hidden, and does not show up for non logged in users
     page.should have_content "A Somewhat Shorter Than Average Title"
     page.should have_content "Thompson Raceway, May 1 -- AND A long title can go here so let's see how it looks when it is really long"
@@ -95,10 +95,10 @@ describe("Favorites",:type=>:request,:integration=>true) do
 
    it "should not show hidden favorites to a logged in user on their own profile page if they are not curators/admins" do
     login_as(user2_login)
-    visit user_profile_name_path(user2_login)
+    visit user_path(user2_login)
     page.should_not have_content I18n.t('revs.favorites.you_can_save_favorites')
     page.should have_content "#{I18n.t('revs.favorites.head')} 1"
-    visit user_favorites_path(user2_login)
+    visit user_favorites_user_index_path(user2_login)
     page.should have_content "Lime Rock Continental, September 1"
     page.should_not have_content "Bryar 250 Trans-American:10" # this one is hidden, and does not show up for non logged in users
   end
@@ -118,7 +118,7 @@ describe("Favorites",:type=>:request,:integration=>true) do
       click_button(@save_favorites_button) 
     end
     #Check Out Pagination 
-    visit user_favorites_path(user_login)
+    visit user_favorites_user_index_path(user_login)
     page.should have_content @Next
     page.should_not have_content @Previous
 
@@ -138,7 +138,7 @@ describe("Favorites",:type=>:request,:integration=>true) do
       login_as(user_login)
       visit catalog_path(@druid1)
       click_button(@save_favorites_button)
-      visit user_favorites_path(user_login)
+      visit user_favorites_user_index_path(user_login)
       page.should have_content get_title_from_druid(@druid1)
       page.should have_content @add_new_description
       page.should have_no_content new_description
@@ -155,7 +155,7 @@ describe("Favorites",:type=>:request,:integration=>true) do
       #Go back to the favorites page and ensure the new description is still there
       logout
       login_as(user_login)
-      visit user_favorites_path(user_login)
+      visit user_favorites_user_index_path(user_login)
       page.should have_content new_description
       page.should have_content get_title_from_druid(@druid1)
       
@@ -169,14 +169,14 @@ describe("Favorites",:type=>:request,:integration=>true) do
     click_button(@save_favorites_button)
     user = get_user(user_login)
     user.favorites.size.should == 1
-    visit user_favorites_path(user_login)
+    visit user_favorites_user_index_path(user_login)
     page.should have_content get_title_from_druid(@druid1)
     click_button(@remove_favorites_button)
     user = get_user(user_login)
     user.favorites.size.should == 0
     logout
     login_as(user_login)
-    visit user_favorites_path(user_login)
+    visit user_favorites_user_index_path(user_login)
     page.should have_no_content get_title_from_druid(@druid1)
     page.should have_content I18n.t('revs.favorites.none')
   end
