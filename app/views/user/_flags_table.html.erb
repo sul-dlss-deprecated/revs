@@ -60,7 +60,7 @@
        <% if Flag.display_resolved_columns(local_assigns[:selection])%>
         <td>
           <% if flag.resolved? && !flag.resolved_by.blank? %>
-            <%= flag.resolving_by.to_s%>
+            <%= flag.resolved_by.to_s%>
           <%end%>
         </td>
         <td><%= flag.resolution%></td>
