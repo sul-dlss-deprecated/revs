@@ -38,11 +38,12 @@ Revs::Application.routes.draw do
   # public user profile pages
   resources :user do
     collection do
-      match ':id/favorites', :to=>'user#favorites', :as=>'user_favorites', :via=>:get, :constraints => {:id => /\D+.+/} 
-      match ':id/galleries', :to=>'user#galleries', :as=>'user_galleries', :via=>:get, :constraints => {:id => /\D+.+/} 
-      match ':id/annotations', :to=>'user#annotations', :as=>'user_annotations', :via=>:get, :constraints => {:id => /\D+.+/} 
-      match ':id/flags', :to=>'user#flags', :as=>'user_flags', :via=>:get, :constraints => {:id => /\D+.+/} 
-      match ':id/edits', :to=>'user#edits', :as=>'user_edits', :via=>:get, :constraints => {:id => /\D+.+/} 
+      match ':id/favorites', :to=>'user#favorites', :as=>'user_favorites', :via=>:get, :constraints => {:id => /\w+.+/} 
+      match ':id/galleries', :to=>'user#galleries', :as=>'user_galleries', :via=>:get, :constraints => {:id => /\w+.+/} 
+      match ':id/annotations', :to=>'user#annotations', :as=>'user_annotations', :via=>:get, :constraints => {:id => /\w+.+/} 
+      match ':id/flags', :to=>'user#flags', :as=>'user_flags', :via=>:get, :constraints => {:id => /\w+.+/} 
+      match ':id/edits', :to=>'user#edits', :as=>'user_edits', :via=>:get, :constraints => {:id => /\w+.+/} 
+      match ':id', :to=>'user#show', :via=>:get, :constraints => {:id => /\w+.+/} 
     end
   end
   

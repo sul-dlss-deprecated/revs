@@ -45,7 +45,7 @@ describe("User registration system",:type=>:request,:integration=>true) do
     # admin user profile is not public
     visit user_path(admin_account)
     current_path.should == root_path
-    page.should have_content 'The user was not found or their profile is not public.'
+    page.should have_content 'You are not authorized to access this page.'
 
     # regular user profile is public and should be available via ID or full name
     visit user_path(user_account.id)
@@ -73,18 +73,36 @@ describe("User registration system",:type=>:request,:integration=>true) do
     current_path.should == user_path(user_login)    
   end
 
-  it "should not allow an inactive user to login, but should allow an admin to view their profile still" do
+  it "should not show the public profile of a user whose account is marked as inactive, unless they are an admin" do
     user_account=get_user(user_login)
+    user_account.public.should == true
     user_account.active = false
     user_account.save
-    login_as(user_login)
-    current_path.should == new_user_session_path
+
+    # regular user profile is public but inactive and should not be shown
+    visit user_path(user_account)
+    current_path.should_not == user_path(user_account)    
     visit user_path(user_login)
-    current_path.should_not == user_path(user_login) 
-    logout
+    current_path.should_not == user_path(user_login)    
+    
     login_as(admin_login) # now confirm the admin can still see it
     visit user_path(user_login)
-    current_path.should == user_path(user_login)   
+    current_path.should == user_path(user_login)    
+  end
+
+  it "should deny access when a user attempts to access a non-existent user profile (not giving them a clue that it doesn't exist)" do
+    visit user_path("bogus")
+    current_path.should == root_path
+    page.should have_content I18n.t('revs.authentication.user_not_found')
+  end
+
+  it "should allow access to a public user account by user id as well as username" do
+    user_account=get_user(user_login)
+    user_account.public.should be_true
+    visit user_path(user_account.id)
+    current_path.should == user_path(user_account.id)
+    visit user_path(user_account.username)
+    current_path.should == user_path(user_account.username)
   end
       
   it "should show a user's profile page when logged in as themselves, even if their profile is marked as private, and should always let admins view it" do
@@ -214,7 +232,7 @@ describe("User registration system",:type=>:request,:integration=>true) do
     page.should have_content "A Somewhat Shorter Than Ave"
     visit user_favorites_user_index_path(admin_account.username)  # we should NOT be able to see the favorites
     current_path.should_not ==  user_favorites_user_index_path(admin_account.username) 
-    page.should have_content I18n.t('revs.authentication.user_not_found')
+    page.should have_content "You are not authorized to access this page."
     
     # make admin account public and check that favorites now show up
     admin_account.public=true

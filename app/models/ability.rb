@@ -112,11 +112,11 @@ class Ability
   end
 
   def can_view_own_profile(user)
-    can :all, User, :user_id=>user.id
+    can :manage, User, :id=>user.id
   end
 
   def can_view_any_profile
-    can :read, User
+    can :manage, User
   end
     
   def can_view_any_gallery

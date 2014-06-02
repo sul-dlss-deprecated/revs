@@ -1,11 +1,10 @@
 class UserController < ApplicationController
     
   before_filter :load_user_profile, :except=>[:update_flag_table,:curator_update_flag_table] # we need to be sure the profile exists before doing anything
-  before_filter :confirm_public, :only=>[:show,:favorites]
   before_filter :confirm_active, :except=>[:update_flag_table,:curator_update_flag_table]
   before_filter :get_paging_params, :only=>[:annotations,:favorites,:galleries,:edits,:flags]
   
-  # TODO we should be able to do the confirmation of confirm_public and confirm_active in the Ability class via cancan, but I could not get it to work
+  # TODO we should be able to do the confirmation of confirm_active in the Ability class via cancan, but I could not get it to work
   authorize_resource
   
   # user profile pages
@@ -90,17 +89,17 @@ class UserController < ApplicationController
   
   private  
   def load_user_profile
-    @user = User.find(params[:id])
-    if @user
-      @user.create_default_favorites_list # create the default favorites list if for some reason it does not exist
-      @latest_annotations=@user.annotations(current_user).order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
-      @latest_flags=@user.flags(current_user).where(:state=>Flag.open).order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
-      @latest_edits=@user.metadata_updates(current_user).order('change_logs.created_at desc').limit(Revs::Application.config.num_latest_user_activity)
-      @latest_galleries=@user.galleries(current_user).order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
-      @latest_favorites=@user.favorites(current_user).order('saved_items.created_at desc').limit(Revs::Application.config.num_latest_user_activity)
-    else
-      profile_not_found
-    end
+    begin
+      @user = User.find(params[:id])
+    rescue
+      profile_not_found && return
+    end      
+    @user.create_default_favorites_list # create the default favorites list if for some reason it does not exist
+    @latest_annotations=@user.annotations(current_user).order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
+    @latest_flags=@user.flags(current_user).where(:state=>Flag.open).order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
+    @latest_edits=@user.metadata_updates(current_user).order('change_logs.created_at desc').limit(Revs::Application.config.num_latest_user_activity)
+    @latest_galleries=@user.galleries(current_user).order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
+    @latest_favorites=@user.favorites(current_user).order('saved_items.created_at desc').limit(Revs::Application.config.num_latest_user_activity)
   end
   
   def profile_not_found
@@ -111,11 +110,6 @@ class UserController < ApplicationController
   # we need to be sure the user is viewing an active profile (or is an administrator, who can do all)
   def confirm_active
     profile_not_found unless @user.active == true || can?(:administer, :all)
-  end
-
-  # we need to be sure the user is viewing a public profile (or is themselves or an administrator, who can do all)  
-  def confirm_public
-    profile_not_found unless @user == current_user || @user.public == true || can?(:administer, :all)
   end
   
 end
