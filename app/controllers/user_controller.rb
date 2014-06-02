@@ -60,8 +60,9 @@ class UserController < ApplicationController
   
   def update_flag_table
     @curate_view = false 
+    @username=params[:username]
     @selection = params[:selection].split(',')
-    @user = User.where(:username=>params[:username]).first
+    @user = User.where(:username=>@username).first
     @flags = flagListForStates(@selection, @user, params[:sort] || "druid")
     respond_to do |format|
        format.js { render }
