@@ -79,5 +79,12 @@
 
   <% end %>
 
- <%= paginate @flags, :param_name => :pagina, :params => {:order=>@order, :tab=>@tab} %>
+  <% if not local_assigns[:curate_view] %>   
+     <%= paginate @flags, :param_name => :pagina, :params => {:controller => 'user', :action => 'flags',:name=>user.username ,:order=>@order, :tab=>@tab} %>
+  <% end %>
+
+  <% if local_assigns[:curate_view] %>   
+     <%= paginate @flags, :param_name => :pagina, :params => {:controller => 'curator/tasks', :action => 'flags',:order=>@order, :tab=>@tab} %>
+  <% end %>
+  
 </div>
