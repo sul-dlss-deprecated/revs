@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   
    include Blacklight::Controller
    include DateHelper
+   extend DateHelper
    include SolrQueryHelper
 
    # include squash.io
