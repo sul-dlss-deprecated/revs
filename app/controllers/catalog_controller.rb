@@ -227,7 +227,6 @@ class CatalogController < ApplicationController
     config.add_facet_field 'photographer_ssi', :label => "Photographer"
     
     config.add_facet_field 'timestamp', :label => 'Added recently', :query => {
-       :latest => { :label => 'last 100 items', :fq => "*:*", :sort=>"timestamp desc" },
        :weeks_1 => { :label => 'within last week', :fq => "timestamp:[\"#{show_as_timestamp(1.week.ago)}\" TO *]" },
        :months_1 => { :label => 'within last month', :fq => "timestamp:[\"#{show_as_timestamp(1.month.ago)}\" TO *]" },
        :months_6 => { :label => 'within last six months', :fq => "timestamp:[\"#{show_as_timestamp(6.months.ago)}\" TO *]" },
