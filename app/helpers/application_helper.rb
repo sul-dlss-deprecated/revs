@@ -145,7 +145,7 @@ module ApplicationHelper
   end
 
   def on_edit_page
-    ["edit","update"].include? action_name
+    ["edit","edit_account","update"].include? action_name
   end
   
   def on_user_profile_page

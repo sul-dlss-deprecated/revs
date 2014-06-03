@@ -216,12 +216,15 @@ describe("User registration system",:type=>:request,:integration=>true) do
     page.should have_content "A Somewhat Shorter Than Ave"     
   end
 
-  it "show a non logged in users annotations/flags/edits with just their username, even if the profile is private, but should not show favorites" do
+  it "show a non logged in users annotations/flags/edits with just their username, even if the profile is private, and should only show favorites if those are set as public" do
     admin_account=get_user(admin_login)
     admin_account.public.should == false
-    visit user_annotations_user_index_path(admin_account.username)
+    visit user_favorites_user_index_path(admin_account.username)  
+    page.should have_content I18n.t('revs.user.view_all_favorites') # favorites link shows up since they are public
     page.should_not have_content admin_account.full_name
-    page.should_not have_content I18n.t('revs.user.view_all_favorites') # no favorites link since profile is private
+    page.should_not have_content I18n.t('revs.favorites.none') # favorites show up
+
+    visit user_annotations_user_index_path(admin_account.username)
     page.should have_content "#{admin_account.username}'s Annotations"
     page.should have_content "Guy in the background looking sideways"
     visit user_flags_user_index_path(admin_account.username)    
@@ -230,17 +233,34 @@ describe("User registration system",:type=>:request,:integration=>true) do
     visit user_edits_user_index_path(admin_account.username)    
     page.should have_content "#{admin_account.username}'s Item Edits"
     page.should have_content "A Somewhat Shorter Than Ave"
-    visit user_favorites_user_index_path(admin_account.username)  # we should NOT be able to see the favorites
+
+    # we should be able to see the favorites if they are public
+    admin_account.favorites_public.should be_true
+    visit user_favorites_user_index_path(admin_account.username)  
+    current_path.should ==  user_favorites_user_index_path(admin_account.username) 
+    page.should_not have_content "You are not authorized to access this page."
+    page.should have_content "Marlboro 12 Hour, August 12-14"
+
+    # make favorites private    
+    admin_account.favorites_public=false
+    admin_account.save
+    admin_account.favorites_public.should be_false
+
+    # we should NOT be able to see the favorites if they are private
+    visit user_annotations_user_index_path(admin_account.username)
+    page.should_not have_content I18n.t('revs.user.view_all_favorites') # no favorites link since profile is private
+    visit user_favorites_user_index_path(admin_account.username)  # we should not be able to see the favorites if they are private
     current_path.should_not ==  user_favorites_user_index_path(admin_account.username) 
     page.should have_content "You are not authorized to access this page."
-    
-    # make admin account public and check that favorites now show up
+
+    # make admin account public and check that favorites still do not show up (since we just made them private above)
     admin_account.public=true
     admin_account.save
-    visit user_annotations_user_index_path(admin_account.username)
-    page.should have_content I18n.t('revs.user.view_all_favorites') # favorites link shows up since profile is public
-    visit user_favorites_user_index_path(admin_account.username)  # we should be able to see the favorites
-    current_path.should ==  user_favorites_user_index_path(admin_account.username) 
+    visit user_path(admin_account.username)
+    page.should_not have_content I18n.t('revs.user.view_all_favorites') # favorites link should not show up since they are still private
+    page.should have_content I18n.t('revs.favorites.none')
+    visit user_favorites_user_index_path(admin_account.username)  # we still should not be able to see the favorites
+    current_path.should_not ==  user_favorites_user_index_path(admin_account.username) 
   end
 
   it "show a non logged in users annotations/flags with their full name if their profile is public" do

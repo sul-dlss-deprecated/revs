@@ -12,7 +12,7 @@ class UserController < ApplicationController
     @annotations=@user.annotations(current_user).order(@order).page(@current_page).per(@per_page)
   end
 
-  # all of the user's favorites, only show if the entire profile is public (enfornced with before_filter above)
+  # all of the user's favorites (visibility set on the favorites list)
   def favorites
     @reorder=params[:reorder]
     unsorted_favorites = @user.favorites(current_user)
