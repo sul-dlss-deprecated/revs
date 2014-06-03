@@ -25,10 +25,10 @@ class User < ActiveRecord::Base
   attr_accessible :username, :email, :sunet, :password, :password_confirmation, :remember_me,
                   :role, :bio, :first_name, :last_name, :public, :url, :twitter, :login,
                   :subscribe_to_mailing_list, :subscribe_to_revs_mailing_list, :active, 
-                  :avatar, :avatar_cache, :remove_avatar, :login_count
+                  :avatar, :avatar_cache, :remove_avatar, :login_count, :favorites_public
   attr_accessor :subscribe_to_mailing_list, :subscribe_to_revs_mailing_list # not persisted, just used on the signup form
   attr_accessor :login # virtual method that will refer to either email or username
-  
+
   # all "regular" has_many associations are done via custom methods below so we can add visibility filtering for items
   # the "all_CLASS" has_many associations are provided for convience, and to facilitate dependent destroying easily
   has_one :favorites_list, :conditions=>'gallery_type="favorites"', :dependent => :destroy, :class_name=>'Gallery'
@@ -131,7 +131,7 @@ class User < ActiveRecord::Base
   # create the default favoritest list unless it already exists (done at account create and login, just to be sure it exists)
   def create_default_favorites_list
     if favorites_list.blank?
-      new_favorites_list=Gallery.create(:user_id=>id,:gallery_type=>:favorites,:visibility=>:public,:title=>I18n.t('revs.favorites.head')) 
+      new_favorites_list=Gallery.create(:user_id=>id,:gallery_type=>:favorites,:visibility=>:private,:title=>I18n.t('revs.favorites.head')) 
       self.reload
     end
   end
@@ -155,6 +155,16 @@ class User < ActiveRecord::Base
     sunet_user? && !last_access.nil? ? ((Time.now-last_access) > Revs::Application.config.sunet_timeout_secs) : super
   end
   
+  # a helper getter method to get to the visibility status of the favorites list
+  def favorites_public
+    favorites_list.public
+  end
+
+  # a helper setter method to set to the visibility status of the favorites list
+  def favorites_public=(value)
+    favorites_list.update_column(:visibility,(value.to_s == "true" ? :public : :private))
+  end
+
   # Blacklight uses #to_s on your user class to get
   # a user-displayable login/identifier for the account.
   def to_s

@@ -486,13 +486,15 @@ en:
       preview: "Preview"
       joined_on: "Joined on"
       my_profile_page: "My profile page is"
+      my_favorites: "My favorites are"
+      favorites: "Favorites are"
       profile_page: "Profile page"
       profile_page_notice_html: |
         Your profile page includes your username, full name, bio, and website URL.
-        It does <strong>not</strong> include your email address.
+        It does <strong>not</strong> include your email address.  Annotations and flags are always public.
       profile_page_notice_admin_html: |
         The profile page includes username, full name, bio, and website URL.
-        It does <strong>not</strong> include email address.
+        It does <strong>not</strong> include email address. Annotations and flags are always public.
       waiting_confirmation: "Currently waiting confirmation for"
       username_public_display: "username for public display"
       view_profile: "View profile"
