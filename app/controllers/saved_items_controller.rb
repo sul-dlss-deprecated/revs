@@ -16,7 +16,7 @@ class SavedItemsController < ApplicationController
       druid=saved_item[:druid]
       
       if gallery_id.blank? # user is adding item to a new gallery, so create it
-        gallery=Gallery.create(:user_id=>user_id,:visibility=>:private,:gallery_type=>:user,:title=>"#{t('revs.user_galleries.singular').titlecase} #{t('revs.curator.created_on').downcase} #{show_as_date(Time.now)}")
+        gallery=Gallery.create(:user_id=>user_id,:visibility=>:private,:gallery_type=>:user,:title=>"#{t('revs.user_galleries.singular').titlecase} #{t('revs.curator.created_on').downcase} #{show_as_datetime(Time.now.in_time_zone)}")
         gallery_id=gallery.id
       end
       
@@ -48,7 +48,12 @@ class SavedItemsController < ApplicationController
     
     @document=SolrDocument.find(druid)
     respond_to do |format|
-      format.html { flash[:success]=@message
+      format.html { 
+                    if @item.valid?
+                      flash[:success]=@message
+                    else
+                      flash[:alert]=@message 
+                    end
                     redirect_to previous_page}
       format.js { render }
     end

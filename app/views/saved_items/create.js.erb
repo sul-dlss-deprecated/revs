@@ -4,4 +4,8 @@
 <% elsif @gallery_type.blank? || @gallery_type == 'favorites' %>
 	$('#favorites_link').html("<%= escape_javascript(render :partial => 'add_to_favorites') %>");
 <% end %>
-$('.flash_messages').append("<%= escape_javascript(render :partial => 'shared/flash_success_message') %>");
+<% if @item.valid? %>
+	$('.flash_messages').append("<%= escape_javascript(render :partial => 'shared/flash_success_message') %>");
+<% else %>
+	$('.flash_messages').append("<%= escape_javascript(render :partial => 'shared/flash_warning_message') %>");
+<% end %>
