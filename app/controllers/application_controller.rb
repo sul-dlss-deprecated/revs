@@ -101,7 +101,7 @@ class ApplicationController < ActionController::Base
       
   def ajax_only
     unless request.xhr?
-      render :nothing=>true
+      render :nothing=>true, :status => 405
       return
     end
   end
@@ -171,11 +171,7 @@ class ApplicationController < ActionController::Base
 
   def accept_terms
     cookies[:seen_terms] = { :value => true, :expires => 1.day.from_now } # they've seen it now, don't show it for another day
-    if params[:return_to].blank?
-      render :nothing=>true
-    else
-      redirect_to params[:return_to]
-    end
+    redirect_to (params[:return_to] || :root)
   end
  
   def list_type_interpolator(gallery_type)

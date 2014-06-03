@@ -1,17 +1,11 @@
 class UserController < ApplicationController
     
   before_filter :load_user_profile, :except=>[:update_flag_table,:curator_update_flag_table] # we need to be sure the profile exists before doing anything
-  before_filter :confirm_active, :except=>[:update_flag_table,:curator_update_flag_table]
   before_filter :get_paging_params, :only=>[:annotations,:favorites,:galleries,:edits,:flags]
   
-  # TODO we should be able to do the confirmation of confirm_active in the Ability class via cancan, but I could not get it to work
   authorize_resource
   
   # user profile pages
-  
-  # public user profile page by ID (e.g. /user/134)
-  def show
-  end
       
   # all of the user's annotations
   def annotations
@@ -105,11 +99,6 @@ class UserController < ApplicationController
   def profile_not_found
     flash[:error]=t('revs.authentication.user_not_found')
     redirect_to root_path 
-  end
-  
-  # we need to be sure the user is viewing an active profile (or is an administrator, who can do all)
-  def confirm_active
-    profile_not_found unless @user.active == true || can?(:administer, :all)
   end
   
 end
