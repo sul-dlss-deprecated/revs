@@ -63,12 +63,21 @@
 
 @media screen and (max-width: 768px) {
   .carousel {margin-bottom: 0;}
+  #all_collections_carousel .carousel-inner {
+    max-height: 249px;
+  }
 }
 
 @media screen and (min-width: 980px) and (max-width: 1199px) {
  .carousel-inner {max-width: 380px;}
+ #all_collections_carousel .carousel-inner {
+   max-height: 249px;
+ }
 }
 
 @media screen and (min-width: 769px) and (max-width: 979px) {
  .carousel-inner {max-width: 290px;}
+ #all_collections_carousel .carousel-inner {
+   max-height: 190px;
+ }
 }
