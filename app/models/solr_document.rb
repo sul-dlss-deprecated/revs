@@ -385,12 +385,19 @@ class SolrDocument
      highlighted=params[:highlighted] || false
      rows=params[:rows] || "10000"
      fq="#{self.config.collection_identifying_field}:\"#{self.config.collection_identifying_value}\""
-     fq+=" AND highlighted_ssi:\"true\"" if highlighted
+     if highlighted
+       default_sort="highlighted_dti desc"     
+       fq+=" AND highlighted_ssi:\"true\"" 
+     else
+       default_sort="title_tsi asc"
+     end
+     sort=params[:sort] || default_sort
+     
      Blacklight.solr.select(
        :params => {
          :fq => fq,
          :rows => rows,
-         :sort=> "highlighted_ssi desc",
+         :sort=> sort,
        }
      )["response"]["docs"].map do |document|
        SolrDocument.new(document)

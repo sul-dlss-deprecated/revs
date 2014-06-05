@@ -5,25 +5,13 @@ class Admin::CollectionHighlightsController < ApplicationController
   before_filter :set_no_cache
   
   def index
-    @collections=SolrDocument.all_collections
-  end
-  
-  def edit
-    @id=params[:id]
-    @collection=SolrDocument.find(params[:id])
-  end
-  
-  def update
-    @collection=SolrDocument.find(params[:id])
-    @collection.update_solr('highlighted_ssi','update',params[:highlighted])
-    flash[:success]=t('revs.messages.saved')
-    expire_fragment('home')
-    redirect_to admin_collection_highlights_path
+    @collections=SolrDocument.all_collections(:sort=>'highlighted_ssi desc, highlighted_dti desc')
   end
   
   def set_highlight
     @collection=SolrDocument.find(params[:id])
     @collection.update_solr('highlighted_ssi','update',params[:highlighted])
+    @collection.update_solr('highlighted_dti','update',show_as_timestamp(Time.now()))
     expire_fragment('home')
     render :nothing=>true
   end

@@ -198,7 +198,7 @@ en:
       update_users: "Update users"
       administer_highlights: 
         title: "Featured Collections"
-        description: "To feature a collection on the home page, check the box next its name."
+        description: "To feature a collection on the home page, check the box next to its name.  The collections are shown in the order they are checked (last checked shown first)."
       administer_galleries: 
         title: "Featured Galleries"
         description: "To feature a gallery on the galleries page, check the box next its name.  Drag and drop to change the ordering."        
