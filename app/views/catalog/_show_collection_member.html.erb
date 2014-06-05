@@ -15,6 +15,17 @@
                                          'availableSizes': [<%=raw available_sizes%>],
                                          'zoomOnClick': false,
                                          'disableKeyboardShortcuts': true,
+                                         'displayNote': '<%=@document.copyright %> <%= t("revs.contact.image_reuse_agreement",
+              :license_agreement_link => link_to(t("revs.contact.image_license_agreement"),
+              "http://revsinstitute.org/research-education/permission-to-use",:target=>"_new")).html_safe %>  <%= t("revs.contact.reuse_contact",
+              :reuse_contact_link => link_to(t("revs.contact.contact_linktext"),
+              contact_us_path(:subject=>"terms of use",
+                              :from=>request.path,
+                              :message=> t("revs.contact.reuse_contact_message",
+                                :reuse_contact_message_doc => @document.identifier,
+                                :reuse_contact_message_url => catalog_url(@document.id)
+              )))).html_safe %>.',
+                                         'showDisplayNoteOnlyOnFullScreen': true,
                                      'tooltipTexts': {
                                      '<%= I18n.locale %>': {
                                        'OpenInFullScreen': '<%= t('revs.show.open_in_full_screen') %>',
