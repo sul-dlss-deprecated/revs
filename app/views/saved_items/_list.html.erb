@@ -59,6 +59,12 @@ end%>
               <%= link_to(image_tag(saved_item.image), item_path(saved_item.solr_document,paging_params(item_link_params))) %>
             </div>
             <ul id="saved_items">
+              <% if can? :curate, :all %>
+                <li class="item-creation-date">
+                  <span><%=t('revs.show.label_identifier')%></span>: 
+                  <%=saved_item.solr_document.identifier%>
+                </li>
+              <% end %>
               <li class="item-creation-date">
                 <span><%=t('revs.messages.added') %>: </span>
                 <%= show_as_datetime(saved_item.created_at.in_time_zone) %>
