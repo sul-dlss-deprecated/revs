@@ -44,6 +44,7 @@ en:
       delete: 'Delete'
       remove: 'Remove'
       edit: 'Edit'
+      select: 'Select to manage'
       confirm_delete: 'Are you sure?  This action cannot be undone.'
     messages:
       date: 'Date'
@@ -314,7 +315,7 @@ en:
       item_note_updated: "Item note updated."  
       you_can_add_a_note_html: "You can %{href} to your %{item_type}."
       you_can_add_a_note_linktext: 'add a note'
-      sort_mode: 'Reorder items'
+      manage: 'Manage items'
     user_galleries:
       head: "Galleries"
       singular: "gallery"
@@ -331,6 +332,9 @@ en:
       edit: 'Edit gallery'
       delete: 'Delete gallery'
       title: 'Gallery title'
+      remove: 'Remove from gallery'
+      move_to_gallery: 'Move to gallery...'
+      copy_to_gallery: 'Copy to gallery...'
       create_new_gallery: 'Create a new gallery'
       description: 'Gallery description'
       saved: 'Item saved to gallery.'
@@ -344,6 +348,16 @@ en:
       item: 'item'
       you_can_add_a_description_html: "You can %{href} to your gallery."
       you_can_add_a_description_linktext: 'add a description'
+      items_deleted: 
+        one: "You have removed one item from this gallery."
+        other: "You have removed %{count} items from this gallery."
+      items_moved: 
+        one: "You have moved one item to '%{gallery_name}'."
+        other: "You have moved %{count} items to '%{gallery_name}'."
+      items_copied:
+        one: "You have copied one item to '%{gallery_name}'."
+        other: "You have copied %{count} items to '%{gallery_name}'."
+      items_duplicated: 'Some items were not updated since they already exist in the other gallery.'
       public: 'Public'
       private: 'Private'
       curator: 'Curators only'

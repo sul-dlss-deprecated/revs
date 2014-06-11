@@ -31,11 +31,22 @@ $(document).ready(function(){
   // Initialize Bootstrap tooltip
   $('.help').tooltip();
 
-  // admin users select all
-  $( '#admin-select-all-users' ).click( function () {
+  // // admin users select all
+  // $( '#admin-select-all-users' ).click( function () {
+  //    $( 'input[type="checkbox"]' ).prop('checked', this.checked);
+  //    }
+  // ); 
+
+  // saved_items select all
+  $( '#saved_items-select-all' ).click( function () {
      $( 'input[type="checkbox"]' ).prop('checked', this.checked);
      }
   ); 
+
+  $(".autosubmit select").change(function() {
+    ajax_loading_indicator($(this));
+    $(this).closest('form').submit();
+  });
 
    // Curator bulk update view controls and actions //
    // Put focus on new value input box on page load

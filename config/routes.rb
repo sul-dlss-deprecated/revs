@@ -71,6 +71,7 @@ Revs::Application.routes.draw do
     collection do
       get 'cancel/:id', :to => 'saved_items#cancel', :as=>'cancel'
       post 'sort', :to => 'saved_items#sort', :as=>'sort'
+      post 'manage', :to => 'saved_items#manage', :as=>'manage'
     end
   end
     
