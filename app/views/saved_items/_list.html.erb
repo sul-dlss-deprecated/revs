@@ -52,6 +52,11 @@ end%>
               </span>
             <% end %>
             <%= item_link(saved_item.solr_document,:params=>paging_params(item_link_params)) %>
+              <% if can?(:update,saved_item) && @manage%>
+                <br /><span class="saved-item-actions">
+                  <%=check_box_tag 'selected_items[]',saved_item.id,nil,:id=>"selected_items_#{saved_item.id}",:"data-saved-item-id"=>saved_item.id,:class=>'selected_items' %>
+                </span>
+              <% end %>
           </div>
 
           <div class="span5 item-details">
@@ -59,11 +64,6 @@ end%>
               <%= link_to(image_tag(saved_item.image), item_path(saved_item.solr_document,paging_params(item_link_params))) %>
             </div>
             <ul id="saved_items">
-              <% if can?(:update,saved_item) && @manage%>
-                <span class="saved-item-actions">
-                  <%=check_box_tag 'selected_items[]',saved_item.id,nil,:class=>'selected_items' %> <%=t('revs.actions.select') %>
-                </span>
-              <% end %>
               <% if can? :curate, :all %>
                 <li class="item-creation-date">
                   <span><%=t('revs.show.label_identifier')%></span>: 

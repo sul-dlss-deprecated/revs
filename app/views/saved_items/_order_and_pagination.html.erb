@@ -31,6 +31,10 @@
             
               <input type="checkbox" name="select-all" id="saved_items-select-all"> <%=t('revs.nav.select_all')%>
 
+                  <% if can?(:update, saved_items.first) && @available_galleries.size > 0%>
+                    <%= select_tag 'move_to_gallery', options_from_collection_for_select(@available_galleries,"id","title"), prompt:t('revs.user_galleries.move_to_gallery') %>
+                    <%= select_tag 'copy_to_gallery', options_from_collection_for_select(@available_galleries,"id","title"), prompt:t('revs.user_galleries.copy_to_gallery')%>
+                <% end %>
                   <% if can? :destroy, saved_items.first %>
                     <%= submit_tag t('revs.user_galleries.remove'), 
                       :id=>'delete-button', 
@@ -40,12 +44,7 @@
                       :name=>:delete,
                       :confirm=>t('revs.actions.confirm_delete')
                       %>
-                <% end %>
-                  <% if can?(:update, saved_items.first) && @available_galleries.size > 0%>
-                    <%= select_tag 'move_to_gallery', options_from_collection_for_select(@available_galleries,"id","title"), prompt:t('revs.user_galleries.move_to_gallery') %>
-                    <%= select_tag 'copy_to_gallery', options_from_collection_for_select(@available_galleries,"id","title"), prompt:t('revs.user_galleries.copy_to_gallery')%>
-                <% end %>
-         
+                <% end %>         
          </div>
 
     <% end %>

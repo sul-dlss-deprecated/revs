@@ -40,8 +40,14 @@ $(document).ready(function(){
   // saved_items select all
   $( '#saved_items-select-all' ).click( function () {
      $( 'input[type="checkbox"]' ).prop('checked', this.checked);
+     toggle_highlight(this,$('.saved-item-row'));
      }
   ); 
+
+    $( '.selected_items' ).change( function () {
+      toggle_highlight(this,$('#saved_item_' + $(this).data('saved-item-id')));
+    }
+  );
 
   $(".autosubmit select").change(function() {
     ajax_loading_indicator($(this));
@@ -74,12 +80,13 @@ $(document).ready(function(){
       $( '#bulk_edit_new_value' ).val('');
     } // if the radio button starts in the checked state, hide the new value box and clear its value
 
-   // Called when an individual checkbox is checked or unchecked.
+   // Called when an individual checkbox is checked or unchecked in bulk edit view.
    // Update row status message if user changes individual checkbox
    $('.result-item-checkbox > input[type="checkbox"]').change(function() {
      var field = $('#bulk_edit_attribute option:selected').text(); // current value of select menu
-     var context = $(this).closest('.result-item').data('item-id');
-     updateEditStatus(field,"div[data-item-id='" + context + "']"); // update status message
+     var row = $(this).closest('.result-item')
+     toggle_highlight(this,row);
+     updateEditStatus(field,"div[data-item-id='" + row.data('item-id') + "']"); // update status message
    });
    // Called when the 'Field to edit' select menu is changed.
    $('#bulk_edit_attribute').change(function() { // field changed in select menu
@@ -89,10 +96,6 @@ $(document).ready(function(){
    $('#bulk_edit_new_value').blur(function() { // input loses focus
      updateBulkEditStatus();
    });
-
-	 $('#bulk-update-button').click(function() {
-//			alert('dude');
-		});
 		
    // Enter/leave curator edit mode
    $('#edit_mode_link').click(function() { // click the curator edit mode action link
@@ -294,6 +297,10 @@ function ajax_loading_indicator(element) {
   			element.text(element.attr("disable_with"));  // change the text
   			}		
     }
+}
+
+function toggle_highlight(element,row) {
+  (element.checked) ? row.addClass('highlighted') : row.removeClass('highlighted');
 }
 
 function ajax_loading_done(element) {
