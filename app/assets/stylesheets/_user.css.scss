@@ -274,10 +274,7 @@
     }
   }
   .highlighted {
-    background: #eee;
-    border: 1px dotted #aaaaaa;
-    border-radius: 5px;
-    padding: 6px;
+    @include item-highlighting;
   }
 }
 
