@@ -2,13 +2,13 @@
 
   <div class="span4">
     <div class="reorder-controls">
-      <% if saved_items.count > 0 && !@manage && can?(:update, saved_items.first) # if we have the ability to edit items but we are not currently in sort mode, show the control%>
+      <% if saved_items.count > 0 && !@manage && can?(:update, saved_items.first) # if we have the ability to edit items but we are not currently in sort mode, show the control %>
         <ul class="nav nav-pills hidden showOnLoad">
           <li>
             <%= link_to t('revs.favorites.manage'), url_for(params.merge({:manage=>true,:page=>1,:per_page=>500000})) %>
           </li>
         </ul>
-      <%elsif @manage && can?(:update,saved_items.first) # we have the ability to sort and we ARE in sort mode%>
+      <% elsif @manage && can?(:update,saved_items.first) # we have the ability to sort and we ARE in sort mode %>
         <% @available_galleries=current_user.galleries(current_user).where('id != ?',saved_items.first.gallery_id) %>
         <ul class="nav nav-pills hidden showOnLoad">
           <li>
@@ -16,36 +16,35 @@
           </li>
         </ul>
       <% end %>
-      </div>
     </div>
-    <div class="span5 saved-item-pagination">
-      <span class="prev-next">
-        <%= page_entries_info saved_items, :entry_name => 'item' %>
-      </span>
-    </div>
+  </div>
+  <div class="span5 saved-item-pagination">
+    <span class="prev-next">
+      <%= page_entries_info saved_items, :entry_name => 'item' %>
+    </span>
+  </div>
 
-      <% if @manage && can?(:update,saved_items.first) %>
-      <div class="span9">
-
-            <%= form_tag(manage_saved_items_path, method: 'post', class:'form-inline autosubmit', id:'manage-item-form')  %>
-            
-              <input type="checkbox" name="select-all" id="saved_items-select-all"> <%=t('revs.nav.select_all')%>
-
-                  <% if can?(:update, saved_items.first) && @available_galleries.size > 0%>
-                    <%= select_tag 'move_to_gallery', options_from_collection_for_select(@available_galleries,"id","title"), prompt:t('revs.user_galleries.move_to_gallery') %>
-                    <%= select_tag 'copy_to_gallery', options_from_collection_for_select(@available_galleries,"id","title"), prompt:t('revs.user_galleries.copy_to_gallery')%>
-                <% end %>
-                  <% if can? :destroy, saved_items.first %>
-                    <%= submit_tag t('revs.user_galleries.remove'), 
-                      :id=>'delete-button', 
-                      :class => 'btn btn-small',
-                      :disable_with => t('revs.nav.please_wait'),
-                      :show_loading_indicator=>"true",
-                      :name=>:delete,
-                      :confirm=>t('revs.actions.confirm_delete')
-                      %>
-                <% end %>         
-         </div>
-
-    <% end %>
+  <% if @manage && can?(:update,saved_items.first) %>
+    <div class="span9 manage-list-items">
+      <%= form_tag(manage_saved_items_path, method: 'post', class:'form-inline autosubmit', id:'manage-item-form') %>
+        <label class="checkbox inline">
+          <input type="checkbox" name="select-all" id="saved_items-select-all">
+          <%=t('revs.nav.select_all')%>
+        </label>
+        <% if can?(:update, saved_items.first) && @available_galleries.size > 0 %>
+          <%= select_tag 'move_to_gallery', options_from_collection_for_select(@available_galleries,"id","title"), prompt:t('revs.user_galleries.move_to_gallery'), :class => "span2" %>
+          <%= select_tag 'copy_to_gallery', options_from_collection_for_select(@available_galleries,"id","title"), prompt:t('revs.user_galleries.copy_to_gallery'), :class => "span2"%>
+        <% end %>
+        <% if can? :destroy, saved_items.first %>
+          <%= submit_tag t('revs.user_galleries.remove'),
+            :id=>'delete-button',
+            :class => 'btn btn-small',
+            :disable_with => t('revs.nav.please_wait'),
+            :show_loading_indicator=>"true",
+            :name=>:delete,
+            :confirm=>t('revs.user_galleries.confirm_remove_items')
+          %>
+        <% end %>
+     </div>
+  <% end %>
 </div>

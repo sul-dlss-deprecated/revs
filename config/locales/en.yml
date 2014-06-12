@@ -332,7 +332,7 @@ en:
       edit: 'Edit gallery'
       delete: 'Delete gallery'
       title: 'Gallery title'
-      remove: 'Remove from gallery'
+      remove: 'Remove items'
       move_to_gallery: 'Move to gallery...'
       copy_to_gallery: 'Copy to gallery...'
       create_new_gallery: 'Create a new gallery'
@@ -358,6 +358,7 @@ en:
         one: "You have copied one item to '%{gallery_name}'."
         other: "You have copied %{count} items to '%{gallery_name}'."
       items_duplicated: 'Some items were not updated since they already exist in the other gallery.'
+      confirm_remove_items: 'Are you sure you want to remove these items from this list?  This action cannot be undone.'
       public: 'Public'
       private: 'Private'
       curator: 'Curators only'

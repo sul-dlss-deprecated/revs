@@ -13,3 +13,18 @@
 .saved-items img {
   max-width: 100px;
 }
+
+.manage-list-items {
+  border-top: 2px dotted #dedede;
+  margin-top: 6px;
+  padding-top: 9px;
+}
+#manage-item-form {
+  margin-bottom: 3px;
+  label {
+    margin-right: 24px;
+  }
+  label, select, .btn {
+    font-size: 13px;
+  }
+}
