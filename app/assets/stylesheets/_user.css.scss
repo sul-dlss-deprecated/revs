@@ -246,6 +246,13 @@
   .item-title {
     font-size: 1.1em;
     margin-bottom: 8px;
+    .saved-item-actions {
+      margin-right: 12px;
+      vertical-align: text-bottom;
+    }
+    .handle {
+      margin-right: 6px;
+    }
   }
   .thumbnail-preview {
     display: inline-block;
@@ -265,6 +272,12 @@
     > span {
       font-style: italic;
     }
+  }
+  .highlighted {
+    background: #eee;
+    border: 1px dotted #aaaaaa;
+    border-radius: 5px;
+    padding: 6px;
   }
 }
 

@@ -47,16 +47,16 @@ end%>
 
           <div class="item-title">
             <% if can?(:update,saved_item) && @manage%>
+              <span class="saved-item-actions">
+                <%=check_box_tag 'selected_items[]',saved_item.id,nil,:id=>"selected_items_#{saved_item.id}",:"data-saved-item-id"=>saved_item.id,:class=>'selected_items' %>
+              </span>
+            <% end %>
+            <% if can?(:update,saved_item) && @manage%>
               <span class="hidden handle">
                 <i title="<%=t('revs.messages.reorder')%>" class="icon-move"></i>
               </span>
             <% end %>
             <%= item_link(saved_item.solr_document,:params=>paging_params(item_link_params)) %>
-              <% if can?(:update,saved_item) && @manage%>
-                <br /><span class="saved-item-actions">
-                  <%=check_box_tag 'selected_items[]',saved_item.id,nil,:id=>"selected_items_#{saved_item.id}",:"data-saved-item-id"=>saved_item.id,:class=>'selected_items' %>
-                </span>
-              <% end %>
           </div>
 
           <div class="span5 item-details">
