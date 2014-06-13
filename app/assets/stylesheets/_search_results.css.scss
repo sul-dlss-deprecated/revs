@@ -88,7 +88,14 @@
 
 /* Curator View specific */
 .curator {
+  .result-item.row {
+    margin-left: 0;
+    &.highlighted {
+      @include item-highlighting;
+    }
+  }
   .result-item-checkbox {
+    margin-left: 0;
     padding-left: 4px;
   }
   .result-thumbnail {
