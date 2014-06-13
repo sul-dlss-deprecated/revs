@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140522203122) do
+ActiveRecord::Schema.define(:version => 20140612224341) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "user_id"
@@ -96,6 +96,16 @@ ActiveRecord::Schema.define(:version => 20140522203122) do
   end
 
   add_index "items", ["druid"], :name => "index_items_on_druid", :unique => true
+
+  create_table "ontologies", :force => true do |t|
+    t.string   "field"
+    t.string   "value"
+    t.integer  "position"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "ontologies", ["field"], :name => "index_ontologies_on_field"
 
   create_table "saved_items", :force => true do |t|
     t.string   "druid",       :null => false

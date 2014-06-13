@@ -22,6 +22,8 @@ Revs::Application.routes.draw do
   
   match 'search', :to=> 'catalog#index', :as=>'search'
   
+  match 'autocomplete', :to=>'catalog#autocomplete', :as=>'autocomplete', :via=>:get
+
   # all collections pages helper route
   match 'collection', :to => 'collection#index', :as => 'all_collections'
 

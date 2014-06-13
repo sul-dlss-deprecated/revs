@@ -126,6 +126,15 @@ class CatalogController < ApplicationController
     end
   end
   
+  # call from metadata edit form for fields that allow autocomplete
+  def autocomplete
+    result=Ontology.terms(params[:field],params[:term]).map {|term| term.value }
+     respond_to do |format|
+      format.html { routing_error }
+      format.json { render :json=>result.to_json }
+    end
+  end
+
   # an ajax call to get the next set of images to show in a carousel on the collection detail page
   def update_carousel
     druid=params[:druid]
