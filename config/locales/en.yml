@@ -126,6 +126,7 @@ en:
       update: 'Update'
       remove: 'Remove'
       save_changes: 'Save Changes'
+      create: 'Create'
       submit: 'Submit'
       send: 'Send'
       cancel: 'Cancel'
@@ -203,6 +204,14 @@ en:
       administer_galleries: 
         title: "Featured Galleries"
         description: "To feature a gallery on the galleries page, check the box next its name.  Drag and drop to change the ordering."        
+      administer_ontologies:
+        title: "Manage Auto Complete Terms"
+        description: "Manage the list of terms by field that is used for the auto-complete suggestions when curators are editing metadata.  Select a field and then enter all of the terms in the box shown, one term per line.  If you remove all terms, the autocomplete field will be deleted. Terms are shown to users in alphabetical order, regardless of order entered.  Note that if you enter a new field, it will not be available for autocomplete unless a coding change is also made."
+        none: "There are no fields to manage."
+      field: "Select field"
+      new_field: "Enter a new field"
+      terms_updated: "Added %{num} terms for field '%{field}'."
+      terms: "Terms (one per line)"
       dashboard: "Administrator Dashboard"
       your_account: "This is your account. To update your password, visit %{your_account_linktext}. You cannot update your own role."
       waiting_confirmation_from_user: "Currently waiting confirmation from user of their email address"
@@ -227,6 +236,7 @@ en:
         actions: 'Actions'
         help: "Help"
         administer_users: "Manage Users"
+        administer_ontologies: "Manage Autocomplete Terms"
         administer_highlights: "Featured Collections"
         administer_galleries: "Featured Galleries"
       registered_users: "registered users"

@@ -1,8 +1,6 @@
-class Admin::CollectionHighlightsController < ApplicationController
+class Admin::CollectionHighlightsController < AdminController
 
-  before_filter :check_for_admin_logged_in
   before_filter :ajax_only, :only=>[:set_highlight]
-  before_filter :set_no_cache
   
   def index
     @collections=SolrDocument.all_collections(:sort=>'highlighted_ssi desc, highlighted_dti desc')

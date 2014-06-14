@@ -93,6 +93,11 @@ Revs::Application.routes.draw do
         post 'bulk_update_role', :to => 'users#bulk_update_role'
       end
     end
+    resources :ontologies do
+      collection do
+        post 'update_terms/:field', :to =>'ontologies#update_terms', :as=>'update_terms'
+      end
+    end
     resources :collection_highlights do
       collection do
         post 'set_highlight/:id', :to => 'collection_highlights#set_highlight'

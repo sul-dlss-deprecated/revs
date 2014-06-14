@@ -9,7 +9,7 @@
     </span>
   </h3>
 
-  <%= form_tag admin_users_path, :method=>:get, :class => 'form-horizontal find-users' do %>
+  <%= form_tag request.path, :method=>:get, :class => 'form-horizontal find-users' do %>
     <fieldset>
       <legend><%= t('revs.admin.find_users')%></legend>
 
