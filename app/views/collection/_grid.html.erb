@@ -1,0 +1,21 @@
+<div id="documents" class="gallery">
+  <ul class="image-grid">
+    <% @collections.each do |collection| %>
+      <li class="image-item">
+        <div class="blacklight-collection document">
+          <%= link_to_document(collection,
+              :label => image_tag(collection.first_image,
+              :alt => collection.title.html_safe,:title=>collection.title.html_safe))  %>
+    
+          <h5 class="index_title">
+            <%= link_to_document collection, :label=>collection.title.html_safe %>
+            <span class="muted">
+              (<%= pluralize(number_with_delimiter(collection.collection_members(:include_hidden=>can?(:view_hidden, SolrDocument)).total_members),
+                  t('revs.collection_members.items_name')) %>)
+            </span>
+          </h5>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>

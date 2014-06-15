@@ -2,25 +2,21 @@
 
   <h2><%=t('revs.nav.collections')%></h2>
 
-  <div id="documents" class="gallery">
-    <ul class="image-grid">
-      <% @collections.each do |collection| %>
-        <li class="image-item">
-          <div class="blacklight-collection document">
-            <%= link_to_document(collection,
-                :label => image_tag(collection.first_image,
-                :alt => collection.title.html_safe,:title=>collection.title.html_safe))  %>
-      
-            <h5 class="index_title">
-              <%= link_to_document collection, :label=>collection.title.html_safe %>
-              <span class="muted">
-                (<%= pluralize(number_with_delimiter(collection.collection_members(:include_hidden=>can?(:view_hidden, SolrDocument)).total_members),
-                    t('revs.collection_members.items_name')) %>)
-              </span>
-            </h5>
-          </div>
-        </li>
-      <% end %>
-    </ul>
+  <div class="row results-controls">
+    <div class="span4 view-toggle">
+      <div class='gallery_toggle tabbable tabs-below'>
+        <ul class="nav nav-pills">
+          <li><%= link_to(t('revs.nav.grid_view'), all_collections_path(params.merge(:view => nil)), :class=>"#{'active' if params[:view] == 'grid' or params[:view].nil?}") %></li>
+          <li><%= link_to(t('revs.nav.detailed_view'), all_collections_path(params.merge(:view => 'detailed')), :class=>"#{'active'if params[:view] == 'detailed'}") %></li>
+        </ul>
+      </div>
+    </div>
   </div>
+
+  <% if params[:view] == 'grid' or params[:view].nil? %>
+    <%= render 'grid' %>
+  <% else %>
+    <%= render 'detailed' %>
+  <% end %>
+
 </div>
