@@ -1,6 +1,7 @@
 $(document).ready(function(){
 	
 	setup_links_that_disable();
+  enable_autocomplete();
 	  
 	// Modal behavior for collection member show page.
 	$("[data-modal-selector]").on('click', function(){
@@ -267,6 +268,55 @@ function updateEditStatus(field,context) {
     $(context).find('.edit-field-value > .current-value').hide();
     $(context).find('.edit-field-value > .new-value').hide();
   }
+}
+
+// enable autocomplete suggestions for bulk editing for curators for enabled fields
+function enable_autocomplete() {
+      $( ".autocomplete" ).bind( "keydown", function( event ) {
+          field=$(this).data('autocomplete-field');
+          if ( event.keyCode === $.ui.keyCode.TAB &&
+              $( this ).data( "ui-autocomplete" ).menu.active ) {
+            event.preventDefault();
+          }
+        });
+
+        $( ".autocomplete.mvf").autocomplete({
+          source: function( request, response ) {
+            $.getJSON( "/autocomplete.json", {
+              field: field,
+              term: extractLast( request.term )
+            }, response );
+          },
+          search: function() {
+            var term = extractLast( this.value );
+            if ( term.length < 2 || term.length > 10) {
+              return false;
+            }
+          },
+          focus: function() {return false;},
+          select: function( event, ui ) {
+            var terms = split( this.value );
+            terms.pop();
+            terms.push( ui.item.value );
+            terms.push( "" );
+            this.value = terms.join( " | " ); // multivalued delimiter also goes here
+            return false;
+          }
+        });
+
+     $( ".autocomplete.single").autocomplete({
+          source: function( request, response ) {
+            $.getJSON( "/autocomplete.json", {
+              field: field,
+              term: extractLast( request.term )
+            }, response );
+          },
+          minLength: 2,
+          max: 10});     
+  } 
+
+function extractLast( term ) {
+      return term.split( /\|\s*/ ).pop(); // multivalued delimiter goes here
 }
 
 // href links with the disable_after_click=true attribute will be automatically disabled after clicking to prevent double clicks
