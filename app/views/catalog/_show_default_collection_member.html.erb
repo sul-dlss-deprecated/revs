@@ -29,11 +29,11 @@
 							<dt><%=t('revs.show.label_address')%>:</dt>
 			 			 <dd><%= text_field_tag "document[city_section]",document.city_section,:size => 40 %></dd>						
    							<dt><%=t('revs.show.label_city')%>:</dt>
-  						 <dd><%= text_field_tag "document[city]",document.city,:size => 40 %></dd>
+  						 <dd><%= text_field_tag "document[city]",document.city,:size => 40, :class=>'autocomplete single', :'data-autocomplete-field'=>'city'  %></dd>
    							<dt><%=t('revs.show.label_state')%>:</dt>
   						 <dd><%= text_field_tag "document[state]",document.state,:size => 40, :class=>'autocomplete single', :'data-autocomplete-field'=>'state' %></dd>
    							<dt><%=t('revs.show.label_country')%>:</dt>
-  						 <dd><%= text_field_tag "document[country]",document.country,:size => 40 %></dd>
+  						 <dd><%= text_field_tag "document[country]",document.country,:size => 40, :class=>'autocomplete single', :'data-autocomplete-field'=>'country'  %></dd>
 						  <% else %>
 							<dt><%=t('revs.show.label_location')%>:</dt>
 							<dd><%= document.location %></dd>

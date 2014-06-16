@@ -18,7 +18,7 @@ class Admin::OntologiesController < AdminController
   	@terms=params[:terms].split("\n")
   	Ontology.where(:field=>@field).destroy_all # remove existing terms for this field
   	# add all terms submitted
-  	@terms.each {|term| Ontology.create(:field=>@field,:value=>term.strip) }
+  	@terms.each {|term| Ontology.create(:field=>@field,:value=>term.strip) unless term.strip.blank?}
   	flash[:success]=I18n.t('revs.admin.terms_updated',:field=>@field,:num=>@terms.size)
   	redirect_to admin_ontologies_path(:field=>@field)
   end
