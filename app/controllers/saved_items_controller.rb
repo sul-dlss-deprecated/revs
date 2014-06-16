@@ -1,6 +1,7 @@
 class SavedItemsController < ApplicationController
 
   before_filter :ajax_only, :only=>[:sort]
+  before_filter :get_paging_params, :only=>[]
 
   authorize_resource  # ensures only people who have access via cancan (defined in ability.rb) can do this
 
@@ -20,7 +21,7 @@ class SavedItemsController < ApplicationController
         gallery_id=gallery.id
       end
       
-      @item=SavedItem.save_to_gallery(:druid=>druid,:gallery_id=>gallery_id)
+      @item=SavedItem.save_to_gallery(:druid=>druid,:gallery_id=>gallery_id,:user_id=>user_id)
       if @item.valid?
         @message=t('revs.user_galleries.saved')
       elsif @item.errors.include?(:druid)
@@ -89,7 +90,7 @@ class SavedItemsController < ApplicationController
     @link_text = t('revs.favorites.edit_item_note')
     respond_to do |format|
       format.html { flash[:success]=@message
-                    redirect_to user_favorites_path(current_user.username,:page=>params[:page],:order=>params[:order])}
+                    redirect_to strip_params(previous_page,['edit_id'])}
       format.js { render }
     end
   end
@@ -103,23 +104,57 @@ class SavedItemsController < ApplicationController
     render :nothing => true
   end
 
+  def manage
+    @selected_items=params[:selected_items] || []
+    @move_to_gallery=params[:move_to_gallery]
+    @copy_to_gallery=params[:copy_to_gallery]
+    @delete=params[:delete]
+    user_id=current_user.id
+
+    success_count=0
+
+    @selected_items.each do |item_id|
+      saved_item=SavedItem.find(item_id)
+      if @move_to_gallery != "" 
+        saved_item.gallery_id=@move_to_gallery
+        saved_item.save
+        success_count+=1 if saved_item.valid?
+      elsif @copy_to_gallery != ""
+        result=SavedItem.save_to_gallery(:druid=>saved_item.druid,:gallery_id=>@copy_to_gallery,:description=>saved_item.description,:user_id=>user_id)
+        success_count+=1 if result.id
+      elsif @delete
+        saved_item.destroy
+      end
+    end
+
+    if @delete
+      flash[:success]=I18n.t('revs.user_galleries.items_deleted',:count=>@selected_items.size)
+    else
+      flash[:success]=I18n.t('revs.user_galleries.items_copied',:count=>success_count,:gallery_name=>Gallery.find(@copy_to_gallery).title) if @copy_to_gallery != ""       
+      flash[:success]=I18n.t('revs.user_galleries.items_moved',:count=>success_count,:gallery_name=>Gallery.find(@move_to_gallery).title) if @move_to_gallery != ""
+      flash[:success] += "  " + I18n.t('revs.user_galleries.items_duplicated') if success_count != @selected_items.size
+    end
+    redirect_to previous_page
+  
+  end
+
   def cancel
     @div = "#description#{params[:id]}"
     @saved_item =  SavedItem.find(params[:id]) 
     @message=""
     @link_text=""
     respond_to do |format|
-      format.html {redirect_to user_favorites_path(current_user.username,:page=>params[:page],:order=>params[:order])}
+      format.html {redirect_to strip_params(previous_page,['edit_id'])}
       format.js { render 'update.js' }
     end
   end
   
   def edit
-    @div = "#description#{params[:id]}"
-    @saved_item = SavedItem.find(params[:id])
     @target = params[:id]
+    @div = "#description#{@target}"
+    @saved_item = SavedItem.find(@target)
     respond_to do |format|
-      format.html { redirect_to user_favorites_path(current_user.username, :edit_id => params[:id],:page=>params[:page],:order=>params[:order])}
+      format.html { redirect_to previous_page({:edit_id => @target}) }
       format.js { render }
     end
   end

@@ -1,32 +1,39 @@
-<h3><%= t('revs.favorites.head') %>
-  <span class="activity-count"><%= favorites_count(@user).to_s.rjust(1, '0') %></span>
-</h3>
+<% if can?(:favorites,@user) %>
+  <h3><%= t('revs.favorites.head') %>
+    <span class="activity-count"><%= favorites_count(@user).to_s.rjust(1, '0') %></span>
+  </h3>
 
-<% if favorites_count(@user) > 0 %>
-  <ul>
-  <% @latest_favorites.each do |favorite| %>
-    <li class="activity-item">
-      <ul>
-        <li><%= link_to(image_tag(favorite.solr_document.images.first), item_path(favorite.solr_document)) %><li>
-        <li class="item-title"><%= item_link(favorite.solr_document,:truncate=>true, :length => 55) %></li>
-        <% unless favorite.description.blank? %><li class="annotation"><%= truncate(favorite.description) %></li><% end %>
-        <li><%= t('revs.messages.added')%> <%= show_as_date(favorite.created_at.in_time_zone) %></li>
-      </ul>
-    </li>
-  <% end %>
-  </ul>
-  <% if favorites_count(@user) > Revs::Application.config.num_latest_user_activity %>
-    <p class="more-link">
-      <%= pluralize(favorites_count(@user) - Revs::Application.config.num_latest_user_activity, t('revs.favorites.singular').downcase) %> <%=t('revs.messages.not_shown')%>.
-      <%= link_to "#{t('revs.messages.view_all')} »", user_favorites_path(@user.username) %>
+  <% if favorites_count(@user) > 0 %>
+    <ul>
+    <% @latest_favorites.each do |favorite| %>
+      <li class="activity-item">
+        <ul>
+          <li><%= link_to(image_tag(favorite.solr_document.images.first), item_path(favorite.solr_document)) %><li>
+          <li class="item-title"><%= item_link(favorite.solr_document,:truncate=>true, :length => 55) %></li>
+          <% unless favorite.description.blank? %><li class="annotation"><%= truncate(favorite.description) %></li><% end %>
+          <li><%= t('revs.messages.added')%> <%= show_as_date(favorite.created_at.in_time_zone) %></li>
+        </ul>
+      </li>
+    <% end %>
+    </ul>
+    <% if favorites_count(@user) > Revs::Application.config.num_latest_user_activity %>
+      <p class="more-link">
+        <%= pluralize(favorites_count(@user) - Revs::Application.config.num_latest_user_activity, t('revs.favorites.singular').downcase) %> <%=t('revs.messages.not_shown')%>.
+        <%= link_to "#{t('revs.messages.view_all')} »", user_favorites_user_index_path(@user.username) %>
+      </p>
+    <% end %>
+  <% elsif is_logged_in_user?(@user) %>
+    <p class="muted">
+  	  <em><%= t('revs.favorites.you_can_save_favorites') %></em>  
+    </p>
+  <% else %>
+    <p class="muted">
+  	  <em><%= t('revs.favorites.none') %></em>  
     </p>
   <% end %>
-<% elsif is_logged_in_user?(@user) %>
-  <p class="muted">
-	  <em><%= t('revs.favorites.you_can_save_favorites') %></em>  
-  </p>
 <% else %>
-  <p class="muted">
-	  <em><%= t('revs.favorites.none') %></em>  
-  </p>
+  <h3><%= t('revs.favorites.head') %><span class="activity-count">0</span></h3>
+    <p class="muted">
+      <em><%= t('revs.favorites.none') %></em>  
+    </p>
 <% end %>

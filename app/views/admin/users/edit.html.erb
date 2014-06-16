@@ -86,7 +86,7 @@
           <%= t('revs.user.private') %>
           <span class="inline-help-block">
             <small>
-              <%= link_to t('revs.user.preview').upcase, user_profile_name_path(@user.username) unless @user.public %>
+              <%= link_to t('revs.user.preview').upcase, user_path(@user.username) unless @user.public %>
             </small>
           </span>
         </label>

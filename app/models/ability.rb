@@ -107,16 +107,17 @@ class Ability
   end
 
   def can_view_public_profiles
-    can [:show,:show_by_name,:favorites,:saved_items], User, :public=>true, :active=>true # note that I could not get the confirmation of public and active profile checking to work here, so this is actually confirmed in the user controller via a before filter
-    can [:annotations,:edits,:galleries,:flags], User, :active=>true # all annotations, edits, galleries, and flags are visible when user is active (note that I could not get the confirmation of an active profile checking to work here, so this is actually confirmed in the user controller via a before filter)
+    can [:show,:saved_items], User, :public=>true, :active=>true 
+    can [:annotations,:edits,:galleries,:flags], User, :active=>true # all annotations, edits, galleries, and flags are visible when user is active 
+    can :favorites, User, :active=>true, :favorites_public=>true # all favorites are visible when user is active and public
   end
 
   def can_view_own_profile(user)
-    can :all, User, :user_id=>user.id
+    can :manage, User, :id=>user.id
   end
 
   def can_view_any_profile
-    can :read, User
+    can :manage, User
   end
     
   def can_view_any_gallery
@@ -131,7 +132,7 @@ class Ability
   def can_save_favorites_and_galleries(user)
     can :create, SavedItem # can create new saved items
     can :create, Gallery, :user_id=>user.id # can create new galleries for themselves
-    can [:read,:update,:destroy,:cancel,:sort], SavedItem, :user_id => user.id # can update and destroy their own Saved Items
+    can [:read,:update,:destroy,:cancel,:sort,:manage], SavedItem, :user_id => user.id # can update and destroy their own Saved Items
     can [:read,:update,:destroy,:sort], Gallery, :user_id => user.id # can update and destroy their own Galleries regardless of visibility
   end
   

@@ -31,7 +31,7 @@
    							<dt><%=t('revs.show.label_city')%>:</dt>
   						 <dd><%= text_field_tag "document[city]",document.city,:size => 40 %></dd>
    							<dt><%=t('revs.show.label_state')%>:</dt>
-  						 <dd><%= text_field_tag "document[state]",document.state,:size => 40 %></dd>
+  						 <dd><%= text_field_tag "document[state]",document.state,:size => 40, :class=>'autocomplete single', :'data-autocomplete-field'=>'state' %></dd>
    							<dt><%=t('revs.show.label_country')%>:</dt>
   						 <dd><%= text_field_tag "document[country]",document.country,:size => 40 %></dd>
 						  <% else %>
@@ -40,7 +40,7 @@
 						<% end%>
 					<% end %>
 					
-					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'people',:label=>t('revs.show.label_people'),:multivalued=>true,:editable=>true,:facet=>true,:separator=>'; ',:input_type=>'text_area'} %>
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'people',:label=>t('revs.show.label_people'),:multivalued=>true,:editable=>true,:facet=>true,:separator=>'; ',:autocomplete=>'people',:input_type=>'text_area'} %>
 
           <%= render "/catalog/item_edit_errors" %>
 					<%= submit_tag t('revs.nav.save_changes'), class: 'btn btn-small' if in_curator_edit_mode %>
@@ -64,9 +64,9 @@
 	
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'current_owner',:label=>t('revs.show.label_current_owner'),:editable=>true, :facet=>true} %>
 
-					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'marque',:label=>t('revs.show.label_marque'),:multivalued=>true,:editable=>true,:facet=>true, :input_type=>'text_area'} %>
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'marque',:label=>t('revs.show.label_marque'),:multivalued=>true,:editable=>true,:facet=>true, :input_type=>'text_area',:autocomplete=>'marque'} %>
 
-					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'vehicle_model',:label=>t('revs.show.label_model'),:multivalued=>true,:editable=>true,:facet=>true, :input_type=>'text_area'} %>
+					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'vehicle_model',:label=>t('revs.show.label_model'),:multivalued=>true,:editable=>true,:facet=>true, :input_type=>'text_area',:autocomplete=>'vehicle_model'} %>
 
 					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'model_year',:label=>t('revs.show.label_model_year'),:multivalued=>true,:editable=>true,:facet=>true, :input_type=>'text_area'} %>
 
@@ -95,9 +95,9 @@
       <div class="accordion-inner">
         <dl class="dl-horizontal  dl-invert">
 	
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'event',:label=>t('revs.show.label_event'),:editable=>true, :facet=>true} %>
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'event',:label=>t('revs.show.label_event'),:editable=>true, :facet=>true, :autocomplete=>'event'} %>
           
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'venue',:label=>t('revs.show.label_venue'),:editable=>true, :facet=>true} %>
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'venue',:label=>t('revs.show.label_venue'),:editable=>true, :facet=>true, :autocomplete=>'venue'} %>
           
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'track',:label=>t('revs.show.label_track'),:editable=>true, :facet=>true} %>
           

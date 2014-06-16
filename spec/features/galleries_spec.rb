@@ -36,7 +36,7 @@ describe("Galleries",:type=>:request,:integration=>true) do
   it "should show user galleries on their profile page and should show the page with all user galleries" do
     user=get_user(user_login)
     login_as(user_login)
-    visit user_profile_id_path(user.id)
+    visit user_path(user)
     page.should have_content @gallery1_title 
     page.should have_content @gallery2_title
     click_link I18n.t('revs.user.view_your_galleries')
@@ -47,7 +47,7 @@ describe("Galleries",:type=>:request,:integration=>true) do
 
   it "should show only the user's public galleries on their public profile page" do
     user=get_user(user_login)
-    visit user_profile_id_path(user.id)
+    visit user_path(user)
     page.should have_content @gallery1_title # public gallery
     page.should_not have_content @gallery2_title # private gallery
     click_link I18n.t('revs.user.view_all_galleries')
@@ -59,13 +59,13 @@ describe("Galleries",:type=>:request,:integration=>true) do
 
   it "should not show a curator only gallery to a non-curator and a non-logged in user" do
     curator=get_user(curator_login)
-    visit user_profile_id_path(curator.id)
+    visit user_path(curator)
     page.should_not have_content @curator_only_gallery_title # curator gallery
     page.should_not have_content  I18n.t('revs.user.view_all_galleries')
     should_deny_access_to_named_gallery(@curator_only_gallery_title) # can't get to the curator only gallery directly when not logged in
 
     login_as(user_login)
-    visit user_profile_id_path(curator.id)
+    visit user_path(curator)
     page.should_not have_content @curator_only_gallery_title # curator gallery
     page.should_not have_content  I18n.t('revs.user.view_all_galleries')
     should_deny_access_to_named_gallery(@curator_only_gallery_title) # can't get to the curator only gallery directly when logged in as a non-curator
@@ -74,13 +74,13 @@ describe("Galleries",:type=>:request,:integration=>true) do
    it "should allow the curator or administrator access to the curator only gallery" do
     curator=get_user(curator_login)   
     login_as(curator_login)
-    visit user_profile_id_path(curator.id)
+    visit user_path(curator)
     page.should have_content @curator_only_gallery_title # curator gallery
     page.should have_content  I18n.t('revs.user.view_your_galleries')
     should_allow_access_to_named_gallery(@curator_only_gallery_title) # can get to the curator only gallery directly when logged in as yourself
 
     login_as(admin_login)
-    visit user_profile_id_path(curator.id)
+    visit user_path(curator)
     page.should have_content @curator_only_gallery_title # curator gallery
     page.should have_content  I18n.t('revs.user.view_all_galleries')
     should_allow_access_to_named_gallery(@curator_only_gallery_title) # can get to the curator only gallery directly when logged in as an admin
@@ -88,7 +88,7 @@ describe("Galleries",:type=>:request,:integration=>true) do
 
   it "should not show any galleries when a user doesn't have any" do
     user=get_user(admin_login)
-    visit user_galleries_path(admin_login)
+    visit user_galleries_user_index_path(admin_login)
     page.should have_content "#{user.to_s}'s #{I18n.t('revs.user_galleries.head')}"
     page.should have_content I18n.t('revs.user_galleries.none')
   end
@@ -117,7 +117,7 @@ describe("Galleries",:type=>:request,:integration=>true) do
     fill_in 'gallery_title', :with=>new_gallery_title
     fill_in 'gallery_description', :with=>new_gallery_description
     click_button 'submit'
-    current_path.should == user_galleries_path(user_login)
+    current_path.should == user_galleries_user_index_path(user_login)
     page.should have_content(new_gallery_title)
     page.should have_content(new_gallery_description)
     user.galleries(user).count.should == 3 # now we have a new gallery
@@ -139,7 +139,7 @@ describe("Galleries",:type=>:request,:integration=>true) do
     fill_in 'gallery_description', :with=>new_gallery_description
     choose 'gallery_visibility_public'
     click_button 'submit'
-    current_path.should == user_galleries_path(user_login)
+    current_path.should == user_galleries_user_index_path(user_login)
     page.should have_content(new_gallery_title)
     page.should have_content(new_gallery_description)
     user.galleries(user).count.should == 3 # now we have a new gallery
@@ -154,7 +154,7 @@ describe("Galleries",:type=>:request,:integration=>true) do
     user=get_user(user_login)
     login_as(user_login)
     user.galleries(user).count.should == 2 # these are from the fixtures
-    visit user_galleries_path(user_login)
+    visit user_galleries_user_index_path(user_login)
     page.should have_content(@gallery1_title)
     gallery1=Gallery.where(:title=>@gallery1_title).first
     click_button "delete_#{gallery1.id}"
@@ -166,7 +166,7 @@ describe("Galleries",:type=>:request,:integration=>true) do
     new_gallery_title="It was even better now"
     user=get_user(user_login)
     login_as(user_login)
-    visit user_galleries_path(user_login)
+    visit user_galleries_user_index_path(user_login)
     page.should have_content(@gallery1_title)
     gallery1=Gallery.where(:title=>@gallery1_title).first
     click_link "edit_#{gallery1.id}"

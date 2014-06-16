@@ -19,7 +19,7 @@
       <tr>
         <th><%= t('revs.collection_members.items_name').titleize %></th>
         <th><%=t('revs.annotations.singular')%></th>
-        <th><%= link_to t('revs.messages.created'), user_annotations_path(:id=>@id,:order=>'created_at DESC') %></th>
+        <th><%= link_to t('revs.messages.created'), user_annotations_user_index_path(@user,:order=>'created_at DESC') %></th>
       </tr>
       <% @annotations.each do |annotation|%>
        <tr>

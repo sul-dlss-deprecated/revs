@@ -21,7 +21,7 @@
   <% if annotations_count(@user) > Revs::Application.config.num_latest_user_activity %>
     <p class="more-link">
       <%= pluralize(annotations_count(@user) - Revs::Application.config.num_latest_user_activity, t('revs.annotations.singular').downcase) %> <%=t('revs.messages.not_shown')%>.
-      <%= link_to "#{t('revs.messages.view_all')} »", user_annotations_path(@user.username) %>
+      <%= link_to "#{t('revs.messages.view_all')} »", user_annotations_user_index_path(@user.username) %>
     </p>
   <% end %>
 <% elsif is_logged_in_user?(@user) %>

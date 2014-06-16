@@ -1,8 +1,6 @@
-class Admin::GalleryHighlightsController < ApplicationController
+class Admin::GalleryHighlightsController < AdminController
 
-  before_filter :check_for_admin_logged_in
   before_filter :ajax_only, :only=>[:set_highlight,:sort]
-  before_filter :set_no_cache
   
   def index
     # get all public galleries

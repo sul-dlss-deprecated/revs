@@ -1,6 +1,4 @@
-class Admin::UsersController < ApplicationController 
-
-  before_filter :check_for_admin_logged_in
+class Admin::UsersController < AdminController 
 
   def index
     get_paging_params

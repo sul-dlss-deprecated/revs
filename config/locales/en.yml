@@ -44,6 +44,7 @@ en:
       delete: 'Delete'
       remove: 'Remove'
       edit: 'Edit'
+      select: 'Select to manage'
       confirm_delete: 'Are you sure?  This action cannot be undone.'
     messages:
       date: 'Date'
@@ -125,6 +126,7 @@ en:
       update: 'Update'
       remove: 'Remove'
       save_changes: 'Save Changes'
+      create: 'Create'
       submit: 'Submit'
       send: 'Send'
       cancel: 'Cancel'
@@ -198,10 +200,18 @@ en:
       update_users: "Update users"
       administer_highlights: 
         title: "Featured Collections"
-        description: "To feature a collection on the home page, check the box next its name."
+        description: "To feature a collection on the home page, check the box next to its name.  The collections are shown in the order they are checked (last checked shown first)."
       administer_galleries: 
         title: "Featured Galleries"
         description: "To feature a gallery on the galleries page, check the box next its name.  Drag and drop to change the ordering."        
+      administer_ontologies:
+        title: "Manage Auto Complete Terms"
+        description: "Manage the list of terms by field that is used for the auto-complete suggestions when curators are editing metadata.  Select a field and then enter all of the terms in the box shown, one term per line.  If you remove all terms, the autocomplete field will be deleted. Terms are shown to users in alphabetical order, regardless of order entered.  Note that if you enter a new field, it will not be available for autocomplete unless a coding change is also made."
+        none: "There are no fields to manage."
+      field: "Select field"
+      new_field: "Enter a new field"
+      terms_updated: "Added %{num} terms for field '%{field}'."
+      terms: "Terms (one per line)"
       dashboard: "Administrator Dashboard"
       your_account: "This is your account. To update your password, visit %{your_account_linktext}. You cannot update your own role."
       waiting_confirmation_from_user: "Currently waiting confirmation from user of their email address"
@@ -226,6 +236,7 @@ en:
         actions: 'Actions'
         help: "Help"
         administer_users: "Manage Users"
+        administer_ontologies: "Manage Autocomplete Terms"
         administer_highlights: "Featured Collections"
         administer_galleries: "Featured Galleries"
       registered_users: "registered users"
@@ -314,7 +325,7 @@ en:
       item_note_updated: "Item note updated."  
       you_can_add_a_note_html: "You can %{href} to your %{item_type}."
       you_can_add_a_note_linktext: 'add a note'
-      sort_mode: 'Reorder items'
+      manage: 'Manage items'
     user_galleries:
       head: "Galleries"
       singular: "gallery"
@@ -331,6 +342,9 @@ en:
       edit: 'Edit gallery'
       delete: 'Delete gallery'
       title: 'Gallery title'
+      remove: 'Remove items'
+      move_to_gallery: 'Move to gallery...'
+      copy_to_gallery: 'Copy to gallery...'
       create_new_gallery: 'Create a new gallery'
       description: 'Gallery description'
       saved: 'Item saved to gallery.'
@@ -344,6 +358,17 @@ en:
       item: 'item'
       you_can_add_a_description_html: "You can %{href} to your gallery."
       you_can_add_a_description_linktext: 'add a description'
+      items_deleted: 
+        one: "You have removed one item from this gallery."
+        other: "You have removed %{count} items from this gallery."
+      items_moved: 
+        one: "You have moved one item to '%{gallery_name}'."
+        other: "You have moved %{count} items to '%{gallery_name}'."
+      items_copied:
+        one: "You have copied one item to '%{gallery_name}'."
+        other: "You have copied %{count} items to '%{gallery_name}'."
+      items_duplicated: 'Some items were not updated since they already exist in the other gallery.'
+      confirm_remove_items: 'Are you sure you want to remove these items from this list?  This action cannot be undone.'
       public: 'Public'
       private: 'Private'
       curator: 'Curators only'
@@ -486,27 +511,29 @@ en:
       preview: "Preview"
       joined_on: "Joined on"
       my_profile_page: "My profile page is"
+      my_favorites: "My favorites are"
+      favorites: "Favorites are"
       profile_page: "Profile page"
       profile_page_notice_html: |
         Your profile page includes your username, full name, bio, and website URL.
-        It does <strong>not</strong> include your email address.
+        It does <strong>not</strong> include your email address.  Annotations and flags are always public.
       profile_page_notice_admin_html: |
         The profile page includes username, full name, bio, and website URL.
-        It does <strong>not</strong> include email address.
+        It does <strong>not</strong> include email address. Annotations and flags are always public.
       waiting_confirmation: "Currently waiting confirmation for"
       username_public_display: "username for public display"
       view_profile: "View profile"
-      view_all_annotations: "View all annotations"
-      close_all_annotations: "Close all Annotations"
+      view_all_annotations: "View annotations"
+      close_all_annotations: "Close Annotations"
       view_your_annotations: "View your annotations"
       view_your_flags: "View your flags"
       view_your_edits: "View your edits"
-      view_all_favorites: "View all favorites"
+      view_all_favorites: "View favorites"
       view_your_favorites: "View your favorites"
-      view_all_galleries: "View all galleries"
+      view_all_galleries: "View galleries"
       view_your_galleries: "View your galleries"
-      view_all_edits: "View all edits"
-      view_all_flags: "View all flags"
+      view_all_edits: "View edits"
+      view_all_flags: "View flags"
       view_profile_page: "View your profile page"
       edit_profile: "Edit Profile"
       your_profile_page: "your profile page"

@@ -11,7 +11,7 @@ class SavedItem < WithSolrDocument
   attr_accessible :druid, :gallery_id, :description
   validates :gallery_id, :numericality => { :only_integer => true }
   validates :druid, :is_druid=>true
-  validate :only_one_saved_item_per_druid_per_gallery, :on => :create
+  validate :only_one_saved_item_per_druid_per_gallery
     
   ##### class level methods
   def self.save_favorite(params={})
@@ -26,7 +26,17 @@ class SavedItem < WithSolrDocument
     druid=params[:druid]
     description=params[:description]
     gallery_id=params[:gallery_id]
-    return self.create(:druid=>druid,:gallery_id=>gallery_id,:description=>description)
+    user_id=params[:user_id]
+
+    if user_id && user_id != Gallery.find(gallery_id).user_id# if we are supplied with a user_id, confirm the gallery we are saving to is owned by the user
+      saved_item=self.new
+      saved_item.errors.add(:gallery_id)
+    else
+      saved_item=self.create(:druid=>druid,:gallery_id=>gallery_id,:description=>description)
+    end
+
+    saved_item
+
   end
     
   def self.remove_favorite(params={})
@@ -60,7 +70,9 @@ class SavedItem < WithSolrDocument
   end
   
   def only_one_saved_item_per_druid_per_gallery
-    errors.add(:druid, :cannot_be_more_than_one_saved_item_per_druid_per_gallery) if self.class.where(:druid=>self.druid,:gallery_id=>self.gallery_id).size != 0
+    scoped=self.class.where(:druid=>self.druid,:gallery_id=>self.gallery_id)
+    scoped=scoped.where('id != ?',self.id) if self.id
+    errors.add(:druid, :cannot_be_more_than_one_saved_item_per_druid_per_gallery) if scoped.size != 0
   end
   
 end

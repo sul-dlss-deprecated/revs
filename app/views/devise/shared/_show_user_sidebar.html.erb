@@ -14,7 +14,7 @@
       </li>
       <li class="account-profile">
        <% unless on_user_profile_page %>
-        <%= link_to_unless_current t('revs.user.view_profile_page'), user_profile_name_path(@user.username) %>
+        <%= link_to_unless_current t('revs.user.view_profile_page'), user_path(@user.username) %>
        <% end %>
         <% unless on_edit_page %>
           <%= link_to_unless_current t('revs.user.update_your_profile').humanize, edit_user_registration_path %>
@@ -43,19 +43,19 @@
     <ul class="nav nav-list">
       <li class="nav-header"><%= t('revs.authentication.sidebar.actions') if has_activity?(@user) %></li>
       <% if favorites_count(@user) > 0 %>
-        <li><%= link_to_unless_current t('revs.user.view_your_favorites'), user_favorites_path(@user.username) %></li>
+        <li><%= link_to_unless_current t('revs.user.view_your_favorites'), user_favorites_user_index_path(@user.username) %></li>
       <% end %>
       <% if galleries_count(@user) > 0 %>
-        <li><%= link_to_unless_current t('revs.user.view_your_galleries'), user_galleries_path(@user.username) %></li>
+        <li><%= link_to_unless_current t('revs.user.view_your_galleries'), user_galleries_user_index_path(@user.username) %></li>
       <% end %>
       <% if annotations_count(@user) > 0 %>
-        <li><%= link_to_unless_current t('revs.user.view_your_annotations'),user_annotations_path(@user.username) %></li>
+        <li><%= link_to_unless_current t('revs.user.view_your_annotations'),user_annotations_user_index_path(@user.username) %></li>
       <% end %>
       <% if flags_count(@user) > 0 %>
-        <li><%= link_to_unless_current t('revs.user.view_your_flags'), user_flags_path(@user.username) %></li>
+        <li><%= link_to_unless_current t('revs.user.view_your_flags'), user_flags_user_index_path(@user.username) %></li>
       <% end %>
       <% if edits_count(@user) > 0 %>
-        <li><%= link_to_unless_current t('revs.user.view_your_edits'), user_edits_path(@user.username) %></li>
+        <li><%= link_to_unless_current t('revs.user.view_your_edits'), user_edits_user_index_path(@user.username) %></li>
       <% end %>
       <li><%= link_to_unless_current(t("revs.user_galleries.create_new_gallery"), new_gallery_path) %></li>
     </ul>

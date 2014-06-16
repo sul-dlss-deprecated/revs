@@ -65,3 +65,10 @@
     }
   }
 }
+
+@mixin item-highlighting {
+  background: #eee;
+  border: 1px dotted #aaaaaa;
+  border-radius: 5px;
+  padding: 6px;
+}

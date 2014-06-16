@@ -20,7 +20,7 @@
   <% if flags_unresolved_count(@user) > Revs::Application.config.num_latest_user_activity %>
     <p class="more-link">
       <%= pluralize(flags_unresolved_count(@user) - Revs::Application.config.num_latest_user_activity, t('revs.flags.singular').downcase) %> <%=t('revs.messages.not_shown')%>.
-      <%= link_to "#{t('revs.messages.view_all')} »", user_flags_path(@user.username) %>
+      <%= link_to "#{t('revs.messages.view_all')} »", user_flags_user_index_path(@user.username) %>
     </p>
   <% end %>
 <% elsif is_logged_in_user?(@user) %>

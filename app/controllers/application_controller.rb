@@ -1,6 +1,7 @@
 # encoding: utf-8
 require 'squash/rails' 
-   
+require 'addressable/uri'
+
 class ApplicationController < ActionController::Base
   # Adds a few additional behaviors into the application controller 
   
@@ -38,12 +39,29 @@ class ApplicationController < ActionController::Base
     t('revs.tagline')
   end
   
-  def previous_page
-    request.referrer || root_path
+  def previous_page(params={})
+    url = Addressable::URI.parse(request.referrer || root_path)
+    query = url.query_values || {}
+    url.query_values = query.merge(params)
+    url.to_s
+  end
+
+  def strip_params(url,params=[])
+    url = Addressable::URI.parse(url)
+    query = url.query_values || {}
+    query.delete_if {|key,value| params.include? key }
+    url.query_values = query
+    url.to_s
+  end
+
+  def strip_all_params(url)
+    url = Addressable::URI.parse(url)
+    url.query_values=nil
+    url.to_s
   end
 
   def store_referred_page
-    if [new_user_session_url,new_user_session_path,new_user_registration_url,new_user_registration_path,new_user_password_path,new_user_password_url,new_user_confirmation_path,new_user_confirmation_url,new_user_unlock_path,new_user_unlock_url,edit_user_password_path,edit_user_password_url].include?(previous_page) # referral pages cannot be sign in or sign up page
+    if [new_user_session_url,new_user_session_path,new_user_registration_url,new_user_registration_path,new_user_password_path,new_user_password_url,new_user_confirmation_path,new_user_confirmation_url,new_user_unlock_path,new_user_unlock_url,edit_user_password_path,edit_user_password_url].include?(strip_all_params(previous_page)) # referral pages cannot be sign in or sign up page
       session[:login_redirect] = root_path 
     else
       session[:login_redirect] = previous_page 
@@ -72,7 +90,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_update_path_for(resource) # after a user updates their account info or profile, take them back to their account info page
-    user_profile_name_path(current_user.username)
+    user_path(current_user.username)
   end
 
   def no_sunet_users
@@ -101,7 +119,7 @@ class ApplicationController < ActionController::Base
       
   def ajax_only
     unless request.xhr?
-      render :nothing=>true
+      render :nothing=>true, :status => 405
       return
     end
   end
@@ -171,11 +189,7 @@ class ApplicationController < ActionController::Base
 
   def accept_terms
     cookies[:seen_terms] = { :value => true, :expires => 1.day.from_now } # they've seen it now, don't show it for another day
-    if params[:return_to].blank?
-      render :nothing=>true
-    else
-      redirect_to params[:return_to]
-    end
+    redirect_to (params[:return_to] || :root)
   end
  
   def list_type_interpolator(gallery_type)
@@ -204,6 +218,7 @@ class ApplicationController < ActionController::Base
    @current_page = params[:page] || 1
    @order=params[:order] || 'created_at DESC'
    @per_page=(params[:per_page] || Revs::Application.config.num_default_per_page).to_i
+   @from=params[:from]
   end
 
   # extract relevant paging params from params hash to add to some links

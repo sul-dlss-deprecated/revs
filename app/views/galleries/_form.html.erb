@@ -35,6 +35,6 @@
     <div class="control-group buttons">
       <div class="controls">  
       <%= f.submit t('revs.nav.save_changes'), :id=>'submit', :class => "btn" %>
-      <%= link_to t('revs.nav.cancel'),user_galleries_path(current_user.username)%>
+      <%= link_to t('revs.nav.cancel'),user_galleries_user_index_path(current_user.username)%>
       </div>
     </div>

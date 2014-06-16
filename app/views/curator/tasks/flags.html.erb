@@ -80,7 +80,7 @@
           </tr>
           <% @flags_by_user.each do |result| %>
             <tr>
-              <td><%=result.user.nil? ? t('revs.user.anonymous') : display_user_name(result.user,user_flags_path(result.user.username))%></td>
+              <td><%=result.user.nil? ? t('revs.user.anonymous') : display_user_name(result.user,user_flags_user_index_path(result.user.username))%></td>
               <td class="right"><%= result.num_flags%></td>
               <td><%= show_as_date(result.updated_at.in_time_zone) %></td>
             </tr>

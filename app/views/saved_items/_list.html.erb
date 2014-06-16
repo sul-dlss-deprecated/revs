@@ -7,7 +7,7 @@ end%>
 
  <%if saved_items.count > 0%>
 
-  <% if can?(:update,saved_items.first) && @reorder # sorting is only available if we are in reorder mode and you can update the items%>
+  <% if can?(:update,saved_items.first) && @manage # sorting is only available if we are in reorder mode and you can update the items%>
     <script type="text/javascript">
 
       $(document).ready(function(){
@@ -46,7 +46,12 @@ end%>
         <div id="saved_item_<%="#{saved_item.id}"%>" data-saved-item-id="<%="#{saved_item.id}"%>" class="row item saved-item-row">
 
           <div class="item-title">
-            <% if can?(:update,saved_item) && @reorder%>
+            <% if can?(:update,saved_item) && @manage%>
+              <span class="saved-item-actions">
+                <%=check_box_tag 'selected_items[]',saved_item.id,nil,:id=>"selected_items_#{saved_item.id}",:"data-saved-item-id"=>saved_item.id,:class=>'selected_items' %>
+              </span>
+            <% end %>
+            <% if can?(:update,saved_item) && @manage%>
               <span class="hidden handle">
                 <i title="<%=t('revs.messages.reorder')%>" class="icon-move"></i>
               </span>
@@ -70,12 +75,14 @@ end%>
                 <%= show_as_datetime(saved_item.created_at.in_time_zone) %>
               </li>
               <li class="saved-item-actions">
-                <% if can? :destroy, saved_item %>
-                  <%= button_to(t('revs.favorites.remove_from_favorites', :list_type=>list_type_interpolator(gallery_type)), saved_item_path(saved_item.solr_document.id, paging_params(item_link_params)), :method=> :delete, :confirm=>t('revs.actions.confirm_delete'), class: 'btn btn-link') %>
+              <noscript>
+               <% if can? :destroy, saved_item %>
+                  <%= button_to(t('revs.favorites.remove_from_favorites', :list_type=>list_type_interpolator(gallery_type)), saved_item_path(saved_item.solr_document.id, paging_params(item_link_params)), :method=> :delete, :confirm=>t('revs.actions.confirm_delete'), class: 'btn btn-link') %> |
                 <% end %>
-                <% if can? :update, saved_item and !saved_item.description.blank? %>
+                </noscript>
+                <% if can? :update, saved_item %>
                   <!-- this link should turn on edit mode for annotation field below -->
-                  | <%= link_to (t('revs.favorites.edit_item_note')), edit_saved_item_path(saved_item.id, paging_params), :remote => true, :id=>"item_note_link_#{saved_item.id}" %>
+                 <%= link_to (t('revs.favorites.edit_item_note')), edit_saved_item_path(saved_item.id, paging_params), :remote => true, :id=>"item_note_link_#{saved_item.id}" %>
                 <% end %>
               </li>
             </ul>
@@ -93,6 +100,10 @@ end%>
   </div>
 
   <%= paginate saved_items, :params => {:order=>@order} %>
+
+   <% if @manage && can?(:update,saved_items.first) %>
+     </form>
+   <% end %>
 
  <% else %>
    <p class="alert alert-info">
