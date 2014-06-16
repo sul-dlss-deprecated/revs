@@ -46,7 +46,7 @@
   }
 }
 
-/* Collection - Gallery View */
+/* Collections - Grid View */
 #documents.gallery .blacklight-collection {
   text-align: center;
   min-height: 230px;
@@ -54,6 +54,58 @@
     display: block;
     margin-top: 6px;
     font-weight: normal;
+  }
+}
+
+/* Collections - Detailed View */
+#documents.detailed {
+  .collection-details {
+    margin-bottom: 20px;
+  }
+  .collection-description {
+    font-size: 13px;
+    a {
+      color: #990000;
+      text-decoration: none;
+    }
+    a:hover {
+      color: #660000;
+      text-decoration: underline;
+    }
+  }
+  .image-filmstrip {
+    background-color: #f1f1f1;
+    border-color: #dedede;
+    .viewport {
+      padding-top: 5px;
+    }
+  }
+}
+
+#documents.detailed .blacklight-collection {
+  padding-bottom: 0;
+  .index_title {
+    font-size: 15px;
+    max-width: none;
+  }
+  span.muted {
+//    font-size: 13px;
+    font-weight: normal;
+  }
+  &.document {
+    border-top: 1px dotted #ccc;
+    margin-left: 0;
+    margin-top: 35px;
+    padding-bottom: 0;
+    padding-top: 6px;
+    &.first {
+      border-top: none;
+      margin-top: 0;
+      padding-top: 0;
+    }
+  }
+  .collection-title {
+    margin-left: 0;
   }
 }
 
@@ -339,6 +391,9 @@ span.constraints-label {margin-right: 0.5em;}
   }
   .curator-edit-options form .update-field-value input[type='submit'] {
     float: right;
+  }
+  #documents.detailed .image-filmstrip {
+    margin-top: 12px;
   }
 }
 @media (max-width: 480px) {

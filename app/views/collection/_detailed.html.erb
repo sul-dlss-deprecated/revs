@@ -1,3 +1,53 @@
 <div id="documents" class="detailed">
 
+  <% @collections.each_with_index do |collection, counter| %>
+    <div class="blacklight-collection document row<%= " first" if counter == 0 %>">
+      <div class="span12 collection-title">
+        <h5 class="index_title">
+          <%= link_to_document collection, :label=>collection.title.html_safe %>
+          <span class="muted">
+            (<%= pluralize(number_with_delimiter(collection.collection_members(:rows => 100, :include_hidden=>can?(:view_hidden, SolrDocument)).total_members),
+                t('revs.collection_members.items_name')) %>)
+          </span>
+        </h5>
+      </div>
+    </div>
+    <div class="row collection-details">
+      <div class="span4">
+        <span class="collection-description">
+          <%= truncate(collection.description, :length=>300) %>
+          <% if collection.description.size > 300 %>
+            <span class="more-link">
+              <%= link_to t('revs.nav.more'), collection_path(collection), :id => "collection-link" %>
+            </span>
+          <% end %>
+        </span>
+      </div>
+
+      <div class="span8 image-filmstrip" data-thumb-width="100" data=thumb-height="100">
+
+        <button class="btn btn-default btn-sm prev">
+          <i class="icon-chevron-left"></i>
+        </button>
+
+        <div class="viewport">
+          <ul class="container-images">
+            <% collection.collection_members.each do |item| %>
+              <li data-preview-in-filmstrip="true">
+                <a href="<%= catalog_path(item[:id]) %>">
+                  <img src="" title="<%= item.title %>" class="thumb-<%= item[:id] %>" data-url="<%= item.images.first %>">
+                </a>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+
+        <button class="btn btn-default btn-sm next">
+          <i class="icon-chevron-right"></i>
+        </button>
+
+      </div>
+    </div>
+  <% end %>
+
 </div>
