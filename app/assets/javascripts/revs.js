@@ -270,6 +270,14 @@ function updateEditStatus(field,context) {
   }
 }
 
+function split_mvf(val) {
+  return val.split( /\|\s*/ );
+}
+
+function extractLast( term ) {
+  return split_mvf(term).pop(); // multivalued delimiter goes here
+}
+
 // enable autocomplete suggestions for bulk editing for curators for enabled fields
 function enable_autocomplete() {
       $( ".autocomplete" ).bind( "keydown", function( event ) {
@@ -295,7 +303,7 @@ function enable_autocomplete() {
           },
           focus: function() {return false;},
           select: function( event, ui ) {
-            var terms = split( this.value );
+            var terms = split_mvf( this.value );
             terms.pop();
             terms.push( ui.item.value );
             terms.push( "" );
@@ -314,10 +322,6 @@ function enable_autocomplete() {
           minLength: 2,
           max: 10});     
   } 
-
-function extractLast( term ) {
-      return term.split( /\|\s*/ ).pop(); // multivalued delimiter goes here
-}
 
 // href links with the disable_after_click=true attribute will be automatically disabled after clicking to prevent double clicks
 function setup_links_that_disable() {
