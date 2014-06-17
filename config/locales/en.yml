@@ -213,7 +213,7 @@ en:
       field: "Select field"
       new_field: "Enter a new field"
       terms_updated: "Added %{num} terms for field '%{field}'."
-      terms: "Terms (one per line)"
+      terms: "Enter Terms and click Update (one per line, blank lines are ignored, leading and trailing spaces will be trimmed)"
       dashboard: "Administrator Dashboard"
       your_account: "This is your account. To update your password, visit %{your_account_linktext}. You cannot update your own role."
       waiting_confirmation_from_user: "Currently waiting confirmation from user of their email address"
