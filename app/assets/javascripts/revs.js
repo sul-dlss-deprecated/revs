@@ -230,7 +230,7 @@ function loadCollectionMembersGrid(id,page_type) {
 }
 
 function loadGalleryItemGrid(gallery_id) {
-  jQuery.ajax({type: "GET", dataType: "script", url: "/galleries/grid/" + gallery_id});
+  jQuery.ajax({type: "GET", dataType: "script", url: "/galleries/members_grid/" + gallery_id});
 }
 
 function setupItemDetailPanels() {

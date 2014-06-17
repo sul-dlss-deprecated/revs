@@ -283,7 +283,7 @@
 <div id="collection-members-grid">
 
    <% if from_gallery? # if we are in the context of a gallery, let's show the gallery items here immediately --- for other cases when we are not in search result we will load this area via ajax for performance reasons %>
-     <%= render :partial=>'galleries/grid' %>
+     <%= render :partial=>'galleries/members_grid' %>
    <% else %>
    
 <%# if javascript is disabled, we'll just show navigation to the relevant collection %>
