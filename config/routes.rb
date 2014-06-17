@@ -80,8 +80,8 @@ Revs::Application.routes.draw do
   resources :flags do
     collection do
       get 'for_image/:id', :to => 'flags#index_by_druid'
-      get 'update_flag_table/:selection', :to => 'user#update_flag_table'
-      get 'update_curator_flag_table/:selection', :to => 'user#curator_update_flag_table'
+      get 'update_flag_table', :to => 'user#update_flag_table'
+      get 'update_curator_flag_table', :to => 'user#curator_update_flag_table'
     end
   end
 
