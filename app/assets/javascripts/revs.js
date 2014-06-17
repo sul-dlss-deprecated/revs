@@ -288,6 +288,19 @@ function enable_autocomplete() {
           }
         });
 
+     $( "#bulk_edit_new_value").autocomplete({
+          source: function( request, response ) {
+            bulk_field=$('#bulk_edit_attribute :selected').data('autocomplete-field');
+            if (bulk_field) {
+              $.getJSON( "/autocomplete.json", {
+                field: bulk_field,
+                term: extractLast( request.term )
+              }, response );
+            }
+          },
+          minLength: 2,
+          max: 10});  
+
         $( ".autocomplete.mvf").autocomplete({
           source: function( request, response ) {
             $.getJSON( "/autocomplete.json", {
