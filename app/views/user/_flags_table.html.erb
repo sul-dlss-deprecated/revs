@@ -10,7 +10,7 @@
 
     <div class="span5 saved-item-pagination">
       <span >
-        <%= page_entries_info @flags, :entry_name=>'flag'%>
+        <%= page_entries_info flags, :entry_name=>'flag'%>
       </span>
     </div>
   </div>
@@ -80,11 +80,11 @@
   <% end %>
 
   <% if not local_assigns[:curate_view] %>   
-     <%= paginate @flags, :param_name => :pagina, :params => {:controller => 'user', :action => 'flags',:name=>user.username ,:order=>@order, :tab=>@tab} %>
+     <%= paginate flags, :param_name => :pagina, :params => {:controller => 'user', :action => 'flags',:id=>user.username } %>
   <% end %>
 
   <% if local_assigns[:curate_view] %>   
-     <%= paginate @flags, :param_name => :pagina, :params => {:controller => 'curator/tasks', :action => 'flags',:order=>@order, :tab=>@tab} %>
+     <%= paginate flags, :param_name => :pagina, :params => {:controller => 'curator/tasks', :action => 'flags'} %>
   <% end %>
   
 </div>

@@ -80,11 +80,14 @@ class CatalogController < ApplicationController
     
     super
 
-    routing_error && return if @response['response']['docs'].nil?
-        
+    if @response['response']['docs'].nil? # nothing
+      routing_error
+      return
+    else    
     # if we get this far, it may have been a search operation, so if we only have one search result, just go directly there
-    redirect_to item_path(@response['response']['docs'].first['id']) if (@response['response']['numFound'] == 1 && @response['response']['docs'].size > 0 && can?(:read,:item_pages))
-
+      redirect_to item_path(@response['response']['docs'].first['id']) if (@response['response']['numFound'] == 1 && @response['response']['docs'].size > 0 && can?(:read,:item_pages))
+    end
+    
   end
   
   def show
