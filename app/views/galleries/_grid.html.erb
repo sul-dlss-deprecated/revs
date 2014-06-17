@@ -1,0 +1,17 @@
+<div id="documents" class="gallery">
+  <ul class="image-grid">
+    <% @galleries.each do |gallery| %>
+      <li class="image-item">
+        <div class="blacklight-collection document">
+          <%= link_to(image_tag(gallery.image)) if gallery.image %>
+          <h5 class="index_title">
+            <%= link_to(gallery.title) %>
+            <span class="muted">
+              (<%= pluralize(gallery.saved_items.size, t('revs.user_galleries.item')) %>)
+            </span>
+          </h5>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>

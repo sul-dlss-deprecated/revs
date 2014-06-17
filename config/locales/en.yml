@@ -122,6 +122,7 @@ en:
     nav:
       home: 'Home'
       collections: 'Collections'
+      galleries: 'Galleries'
       select_all: 'Select all'
       update: 'Update'
       remove: 'Remove'

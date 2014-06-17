@@ -4,6 +4,10 @@ class GalleriesController < ApplicationController
 
   before_filter :ajax_only, :only=>[:grid]
 
+  def index
+    @galleries=Gallery.where("gallery_type != 'favorites'")
+  end
+
   def show
     get_paging_params
     @manage=params[:manage]
