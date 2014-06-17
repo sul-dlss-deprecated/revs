@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   # Please be sure to impelement current_user and user_session. Blacklight depends on 
   # these methods in order to perform user specific actions. 
 
-  helper_method :application_name,:tag_line,:current_role,:on_home_page,:on_collections_page,:on_about_pages,:on_detail_page,:show_terms_dialog?,:sunet_user_signed_in?,:in_search_result?,:list_type_interpolator,:item_type_interpolator
+  helper_method :application_name,:tag_line,:current_role,:on_home_page,:on_collections_page,:on_galleries_page,:on_about_pages,:on_detail_page,:show_terms_dialog?,:sunet_user_signed_in?,:in_search_result?,:list_type_interpolator,:item_type_interpolator
   helper_method :paging_params,:extract_paging_params,:from_gallery?,:from_favorites?,:is_logged_in_user?
   layout "revs"
 
@@ -174,7 +174,11 @@ class ApplicationController < ActionController::Base
   def on_collections_page
     controller_path=='collection'
   end
-  
+
+  def on_galleries_page
+    controller_path=='galleries'
+  end
+
   def on_about_pages
     controller_path == 'about'
   end
