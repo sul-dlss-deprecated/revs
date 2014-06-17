@@ -1,0 +1,55 @@
+<div id="documents" class="detailed">
+
+  <% @galleries.each_with_index do |gallery, counter| %>
+    <div class="blacklight-collection document row<%= " first" if counter == 0 %>">
+      <div class="span12 collection-title">
+        <h5 class="index_title">
+          <%= link_to(gallery.title) %>
+          <span class="muted">
+            <%# replace below with gallery.saved_items.size %>
+            (# items in gallery <%= t('revs.user_galleries.item') %>)
+          </span>
+        </h5>
+      </div>
+    </div>
+    <div class="row collection-details">
+      <div class="span4">
+        <span class="collection-description">
+          <% if gallery.description %>
+            <%= truncate(gallery.description, :length=>300) %>
+            <% if gallery.description.length > 300 %>
+              <span class="more-link">
+                <%= link_to t('revs.nav.more'), gallery_path(gallery), :id => "collection-link" %>
+              </span>
+            <% end %>
+          <% else %>
+            <span class="no-description">No gallery description</span>
+          <% end %>
+        </span>
+      </div>
+
+      <div class="span8 image-filmstrip" data-thumb-width="100" data=thumb-height="100">
+
+        <button class="btn btn-default btn-sm prev">
+          <i class="icon-chevron-left"></i>
+        </button>
+
+        <div class="viewport">
+          <ul class="container-images">
+            <%# gallery.collection_members.each do |item| %>
+              <li data-preview-in-filmstrip="true">
+                <%# see lines 37..39 in collection/_detailed.html.erb %>
+              </li>
+            <%# end %>
+          </ul>
+        </div>
+
+        <button class="btn btn-default btn-sm next">
+          <i class="icon-chevron-right"></i>
+        </button>
+
+      </div>
+    </div>
+  <% end %>
+
+</div>
