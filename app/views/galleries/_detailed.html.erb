@@ -4,10 +4,9 @@
     <div class="blacklight-collection document row<%= " first" if counter == 0 %>">
       <div class="span12 collection-title">
         <h5 class="index_title">
-          <%= link_to(gallery.title) %>
+          <%= link_to(gallery.title,gallery_path(gallery)) %>
           <span class="muted">
-            <%# replace below with gallery.saved_items.size %>
-            (# items in gallery <%= t('revs.user_galleries.item') %>)
+              (<%= pluralize(gallery.saved_items.size, t('revs.user_galleries.item')) %>)
           </span>
         </h5>
       </div>
@@ -15,7 +14,7 @@
     <div class="row collection-details">
       <div class="span4">
         <span class="collection-description">
-          <% if gallery.description %>
+          <% if !gallery.description.blank? %>
             <%= truncate(gallery.description, :length=>300) %>
             <% if gallery.description.length > 300 %>
               <span class="more-link">
@@ -23,7 +22,7 @@
               </span>
             <% end %>
           <% else %>
-            <span class="no-description">No gallery description</span>
+            <span class="no-description"><%=t('revs.user_galleries.no_description')%></span>
           <% end %>
         </span>
       </div>
@@ -36,11 +35,13 @@
 
         <div class="viewport">
           <ul class="container-images">
-            <%# gallery.collection_members.each do |item| %>
+            <% gallery.saved_items(current_user).each do |item| %>
               <li data-preview-in-filmstrip="true">
-                <%# see lines 37..39 in collection/_detailed.html.erb %>
+                <a href="<%= catalog_path(item.druid) %>">
+                  <img src="/assets/default-thumbnail.png" title="<%= item.title %>" class="thumb-<%= item.druid %>" data-url="<%= item.image %>">
+                </a>
               </li>
-            <%# end %>
+            <% end %>
           </ul>
         </div>
 

@@ -2,10 +2,17 @@ class GalleriesController < ApplicationController
 
   load_and_authorize_resource  # ensures only people who have access via cancan (defined in ability.rb) can do this
 
-  before_filter :ajax_only, :only=>[:grid]
-
   def index
-    @galleries=Gallery.where("gallery_type != 'favorites'")
+    @filter=params[:filter] || "featured"
+    @view=params[:view] || "grid"
+    case @filter
+      when 'featured'
+        @galleries=Gallery.featured
+      when 'curator'
+        @galleries=Gallery.curated
+      when 'user'
+        @galleries=Gallery.regular_users
+    end
   end
 
   def show

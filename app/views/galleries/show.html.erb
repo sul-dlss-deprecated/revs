@@ -7,11 +7,9 @@
   </h2>
 
   <div class="row gallery-details">
-    <% if @gallery.image(current_user) %>
-      <div class="span2 hidden-phone">
-        <%= link_to(image_tag(@gallery.image(current_user), class: "thumbnail-preview"), gallery_path(@gallery.id)) %>
-      </div>
-    <% end %>
+    <div class="span2 hidden-phone">
+      <%= link_to(image_tag(@gallery.image(:user=>current_user), class: "thumbnail-preview"), gallery_path(@gallery.id)) %>
+    </div>
 
     <div class="span7 gallery-metadata">
       <ul class="inline item-stats">

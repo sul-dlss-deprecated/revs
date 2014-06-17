@@ -3,6 +3,7 @@ class CollectionController < ApplicationController
   before_filter :authorize
   
   def index
+    @view=params[:view] || 'grid'
     @collections=SolrDocument.all_collections
   end
 

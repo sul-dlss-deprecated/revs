@@ -22,16 +22,26 @@ class Gallery < ActiveRecord::Base
   validate :only_one_favorites_list_per_user
 
   def self.featured
-    self.where(:featured=>true,:visibility=>'public').order('position ASC,created_at DESC')
+    self.where(:featured=>true,:gallery_type=>'user',:visibility=>'public').order('position ASC,created_at DESC')
   end
   
+  def self.curated
+    self.where(:gallery_type=>'user',:visibility=>'public').includes(:user).where("users.role in ('curator','admin')").order('position ASC,galleries.created_at DESC')      
+  end
+
+  def self.regular_users
+    self.where(:gallery_type=>'user',:visibility=>'public').includes(:user).where("users.role = 'user'").order('position ASC,galleries.created_at DESC')      
+  end
+    
   def public
     visibility.to_sym == :public
   end
 
-  def image(user=nil)
+  def image(params={})
+    user=params[:user] || nil
+    size=params[:size] || :default
     item=saved_items(user).limit(1)
-    item.size == 0 ? 'default-thumbnail.png' : item.first.solr_document.images.first
+    item.size == 0 ? (size == :large ? 'default-thumbnail.png' : 'default-thumbnail.png') : item.first.solr_document.images(size).first
   end
 
   # custom has_many association, so we can add visibility filtering -- get the galleries items, pass in a second user (like the logged in user) to decide if hidden items should be returned as well

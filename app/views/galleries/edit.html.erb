@@ -4,11 +4,9 @@
 
   <%= validation_errors(@gallery) %>
 	  
-    <% if @gallery.image(current_user) %>
-      <div class="thumbnail-column">
-        <%= image_tag(@gallery.image(current_user), class: "thumbnail-preview") %>
-      </div>
-    <% end %>
+    <div class="thumbnail-column">
+      <%= image_tag(@gallery.image(:user=>current_user), class: "thumbnail-preview") %>
+    </div>
 
   <div class="edit-content">
     <ul class="inline item-stats">

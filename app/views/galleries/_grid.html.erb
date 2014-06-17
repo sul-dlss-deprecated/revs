@@ -3,9 +3,9 @@
     <% @galleries.each do |gallery| %>
       <li class="image-item">
         <div class="blacklight-collection document">
-          <%= link_to(image_tag(gallery.image)) if gallery.image %>
+          <%= link_to(image_tag(gallery.image(:size=>:large)),gallery_path(gallery))  %>
           <h5 class="index_title">
-            <%= link_to(gallery.title) %>
+            <%= link_to(gallery.title,gallery_path(gallery)) %>
             <span class="muted">
               (<%= pluralize(gallery.saved_items.size, t('revs.user_galleries.item')) %>)
             </span>

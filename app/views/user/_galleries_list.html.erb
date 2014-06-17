@@ -26,7 +26,7 @@
 
         <div class="span5 item-details">
           <div class="thumbnail-preview">
-            <%= link_to(image_tag(gallery.image(current_user)), gallery_path(gallery)) if gallery.image(current_user) %>
+            <%= link_to(image_tag(gallery.image(:user=>current_user)), gallery_path(gallery))%>
           </div>
           <ul>
             <li class="item-creation-date">
@@ -73,7 +73,7 @@
               <%= t('revs.user_galleries.you_can_add_a_description_html', :href => link_to(t("revs.user_galleries.you_can_add_a_description_linktext"), edit_gallery_path(gallery,:page=>params[:page],:order=>params[:order]))) %>
             </span>
           <% else %>
-            <%= gallery.description %>
+            <%= truncate(gallery.description,length:300) %>
           <% end %>
         </div>
 
