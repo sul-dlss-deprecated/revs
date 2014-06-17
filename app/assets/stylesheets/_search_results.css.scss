@@ -255,6 +255,11 @@
   margin-bottom: 5px;
   margin-top: 16px;
 }
+
+.gallery-filters .gallery_toggle {
+  float: right;
+}
+
 .gallery_toggle {
   @include result-controls;
 }

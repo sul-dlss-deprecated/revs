@@ -142,6 +142,9 @@ en:
       return_to_search_results: '&laquo; search results'
       grid_view: 'Grid'
       detailed_view: 'Detailed'
+      user: 'User'
+      featured: 'Featured'
+      curator: 'Curator'
     contact:
       us: 'contact us'
       instructions_html: 'If you are asking about access or re-use of images, select "Request an image or terms of use question" as the subject or view %{reuse_link}.'

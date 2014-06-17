@@ -1,6 +1,13 @@
 <div id="content" class="span12">
 
-  <h2><%=t('revs.nav.galleries')%></h2>
+  <h2>
+    <%=t('revs.nav.galleries')%>
+    <%# pagination below is placeholder to represent ideal styling %>
+    <%# suggest we show 12 galleries per page %>
+    <span class="prev-next">
+      « Previous |  <strong>1</strong> - <strong>10</strong> of <strong>11</strong> |  <a href="/?f%5Bmarque_ssim%5D%5B%5D=Ford+automobile&amp;page=2" rel="next">Next »</a>
+    </span>
+  </h2>
 
   <div class="row results-controls">
     <div class="span4 view-toggle">
@@ -8,6 +15,15 @@
         <ul class="nav nav-pills">
           <li><%= link_to(t('revs.nav.grid_view'), galleries_path(params.merge(:view => nil)), :class=>"#{'active' if params[:view] == 'grid' or params[:view].nil?}") %></li>
           <li><%= link_to(t('revs.nav.detailed_view'), galleries_path(params.merge(:view => 'detailed')), :class=>"#{'active'if params[:view] == 'detailed'}") %></li>
+        </ul>
+      </div>
+    </div>
+    <div class="span8 gallery-filters">
+      <div class='gallery_toggle tabbable tabs-below'>
+        <ul class="nav nav-pills">
+          <li><%= link_to(t('revs.nav.featured'), galleries_path(params.merge(:filter => nil)), :class=>"#{'active' if params[:filter] == 'featured' or params[:filter].nil?}") %></li>
+          <li><%= link_to(t('revs.nav.curator'), galleries_path(params.merge(:filter => 'curator')), :class=>"#{'active'if params[:filter] == 'curator'}") %></li>
+          <li><%= link_to(t('revs.nav.user'), galleries_path(params.merge(:filter => 'user')), :class=>"#{'active'if params[:filter] == 'user'}") %></li>
         </ul>
       </div>
     </div>
