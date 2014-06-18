@@ -78,6 +78,20 @@
     border-color: #dedede;
     .viewport {
       padding-top: 5px;
+      .more-imgs {
+        border-color: #999;
+        color: #8A0F0F;
+        font-size: 13px;
+        line-height: 100px;
+        text-align: center;
+        background: #dedede;
+        a {
+          background: #f1f1f1;
+          border: 1px solid #bbb;
+          border-radius: 4px;
+          padding: 3px 6px;
+        }
+      }
     }
   }
   span.no-description {

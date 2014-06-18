@@ -77,7 +77,11 @@
           text-align: center;
           width: 80%;
         }
-
+        .more-imgs {
+          border: 1px dashed #ccc;
+          height: 100px;
+          width: 100px;
+        }
       }
 
       li:first-child {

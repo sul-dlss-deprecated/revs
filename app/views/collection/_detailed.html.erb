@@ -39,6 +39,15 @@
                 </a>
               </li>
             <% end %>
+            <%# The '100' below assumes we are loading up to 100 items in the filmstrip %>
+            <%#  with the :rows parameter above %>
+            <% if collection.collection_members.total_members > 100 %>
+              <li>
+                <div class="more-imgs">
+                  <%= link_to((collection.collection_members.total_members - 100).to_s + t('revs.user_galleries.more_items'), collection) %>
+                </div>
+              </li>
+            <% end %>
           </ul>
         </div>
 

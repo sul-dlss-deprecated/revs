@@ -379,6 +379,7 @@ en:
       private: 'Private'
       curator: 'Curators only'
       no_description: 'No gallery description'
+      more_items: ' more'
     collection:
       collection_detail: 'Collection Detail'
       member_detail: 'Item Detail'

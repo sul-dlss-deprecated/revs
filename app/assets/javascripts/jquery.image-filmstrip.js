@@ -24,7 +24,7 @@
 
         $viewport = $filmstrip.find('.viewport');
         $containerImgs = $viewport.find('.container-images');
-        imgs = $containerImgs.find('li a img');
+        imgs = $containerImgs.find('li a img, li div.more-imgs');
 
         imgs.width($filmstrip.data('thumb-width')).height($filmstrip.data('thumb-height'));
 
