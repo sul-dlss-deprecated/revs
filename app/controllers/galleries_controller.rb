@@ -1,25 +1,26 @@
 class GalleriesController < ApplicationController
 
   load_and_authorize_resource  # ensures only people who have access via cancan (defined in ability.rb) can do this
+  before_filter :get_paging_params, :only=>[:index,:show]
 
   def index
     @filter=params[:filter] || "featured"
     @view=params[:view] || "grid"
+    @per_page = 12 # override the default for galleries
     case @filter
       when 'featured'
-        @galleries=Gallery.featured
+        @galleries=Gallery.featured.page(@current_page).per(@per_page)  
       when 'curator'
-        @galleries=Gallery.curated
+        @galleries=Gallery.curated.page(@current_page).per(@per_page)  
       when 'user'
-        @galleries=Gallery.regular_users
+        @galleries=Gallery.regular_users.page(@current_page).per(@per_page)
     end
   end
 
   def show
-    get_paging_params
     @manage=params[:manage]
     Gallery.increment_counter(:views, @gallery.id) unless is_logged_in_user?(current_user) # your own views don't count
-    @saved_item=@gallery.saved_items(current_user).page(@current_page).per(@per_page)
+    @saved_items=@gallery.saved_items(current_user).page(@current_page).per(@per_page)
   end
   
   def new

@@ -2,10 +2,8 @@
 
   <h2>
     <%=t('revs.nav.galleries')%>
-    <%# pagination below is placeholder to represent ideal styling %>
-    <%# suggest we show 12 galleries per page %>
     <span class="prev-next">
-      « Previous |  <strong>1</strong> - <strong>10</strong> of <strong>11</strong> |  <a href="#" rel="next">Next »</a>
+        <%= page_entries_info @galleries, :entry_name => '' %>
     </span>
   </h2>
 
@@ -13,26 +11,28 @@
     <div class="span4 view-toggle">
       <div class='gallery_toggle tabbable tabs-below'>
         <ul class="nav nav-pills">
-          <li><%= link_to(t('revs.nav.grid_view'), galleries_path(params.merge(:view => nil)), :class=>"#{'active' if @view == 'grid'}") %></li>
-          <li><%= link_to(t('revs.nav.detailed_view'), galleries_path(params.merge(:view => 'detailed')), :class=>"#{'active'if @view == 'detailed'}") %></li>
+          <li><%= link_to(t('revs.nav.grid_view'), galleries_path(:view => nil,:filter=>@filter), :class=>"#{'active' if @view == 'grid'}") %></li>
+          <li><%= link_to(t('revs.nav.detailed_view'), galleries_path(:view => 'detailed',:filter=>@filter), :class=>"#{'active'if @view == 'detailed'}") %></li>
         </ul>
       </div>
     </div>
     <div class="span8 gallery-filters">
       <div class='gallery_toggle tabbable tabs-below'>
         <ul class="nav nav-pills">
-          <li><%= link_to(t('revs.nav.featured'), galleries_path(params.merge(:filter => nil)), :class=>"#{'active' if @filter == 'featured'}") %></li>
-          <li><%= link_to(t('revs.nav.curator'), galleries_path(params.merge(:filter => 'curator')), :class=>"#{'active'if @filter == 'curator'}") %></li>
-          <li><%= link_to(t('revs.nav.user'), galleries_path(params.merge(:filter => 'user')), :class=>"#{'active'if @filter == 'user'}") %></li>
+          <li><%= link_to(t('revs.nav.featured'), galleries_path(:filter => nil,:view=>@view), :class=>"#{'active' if @filter == 'featured'}") if Gallery.featured.size > 0%></li>
+          <li><%= link_to(t('revs.nav.curator'), galleries_path(:filter => 'curator',:view=>@view), :class=>"#{'active'if @filter == 'curator'}") if Gallery.curated.size > 0%></li>
+          <li><%= link_to(t('revs.nav.user'), galleries_path(:filter => 'user',:view=>@view), :class=>"#{'active'if @filter == 'user'}") if Gallery.regular_users.size > 0%></li>
         </ul>
       </div>
     </div>
   </div>
 
-  <% if params[:view] == 'grid' or params[:view].nil? %>
+  <% if @view == 'grid' %>
     <%= render 'grid' %>
   <% else %>
     <%= render 'detailed' %>
   <% end %>
 
 </div>
+
+        <%= paginate @galleries %>

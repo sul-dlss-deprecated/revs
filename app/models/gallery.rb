@@ -26,11 +26,11 @@ class Gallery < ActiveRecord::Base
   end
   
   def self.curated
-    self.where(:gallery_type=>'user',:visibility=>'public').includes(:user).where("users.role in ('curator','admin')").order('position ASC,galleries.created_at DESC')      
+    self.where(:gallery_type=>'user',:visibility=>'public').includes(:user).where("users.role in ('curator','admin')").order('position ASC,galleries.created_at DESC')
   end
 
   def self.regular_users
-    self.where(:gallery_type=>'user',:visibility=>'public').includes(:user).where("users.role = 'user'").order('position ASC,galleries.created_at DESC')      
+    self.where(:gallery_type=>'user',:visibility=>'public').includes(:user).where("users.role = 'user'").order('position ASC,galleries.created_at DESC')
   end
     
   def public
