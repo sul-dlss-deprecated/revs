@@ -62,8 +62,13 @@
 #documents.detailed {
   .collection-details {
     margin-bottom: 20px;
+    span.label {
+      margin-left: 0;
+      margin-bottom: 9px;
+    }
   }
   .collection-description {
+    display: block;
     font-size: 13px;
     a {
       color: #990000;

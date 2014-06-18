@@ -15,6 +15,15 @@
     </div>
     <div class="row collection-details">
       <div class="span4">
+        <% if gallery.user != current_user %>
+          <span class="label label-info creator">
+            <%= "#{t('revs.messages.created_by')} #{gallery.user.to_s}" %>
+          </span>
+        <% else %>
+          <span class="label creator label-success creator-self">
+            <%= "#{t('revs.messages.created_by')} #{t('revs.messages.you')}" %>
+          </span>
+        <% end %>
         <span class="collection-description">
           <% if !gallery.description.blank? %>
             <%= truncate(gallery.description, :length=>300) %>
