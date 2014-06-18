@@ -22,7 +22,6 @@
     margin-right: 10px;
     min-height: 169px;
     overflow: hidden;
-    //width: 195px;
     img {
       max-height: 125px;
     }
@@ -31,6 +30,7 @@
     font-size: 13px;
     line-height: 16px;
     position: absolute;
+    width: 100%;
   }
   .public-visibility-status.label {
     @include hidden-visibility-overlay-label;
@@ -49,10 +49,11 @@
 /* Collections - Grid View */
 #documents.gallery .blacklight-collection {
   text-align: center;
-  min-height: 230px;
+  min-height: 190px;
+  min-width: 188px;
   span.muted {
     display: block;
-    margin-top: 6px;
+    margin-top: 3px;
     font-weight: normal;
   }
 }

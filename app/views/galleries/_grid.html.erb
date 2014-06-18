@@ -3,7 +3,20 @@
     <% @galleries.each do |gallery| %>
       <li class="image-item">
         <div class="blacklight-collection document">
-          <%= link_to(image_tag(gallery.image(:size=>:large)),gallery_path(gallery))  %>
+          <div class="image-wrapper">
+            <a href="<%= gallery_path(gallery) %>">
+              <%= image_tag(gallery.image(:size=>:large)) %>
+            </a>
+            <% if gallery.user != current_user %>
+              <span class="label creator">
+                <%= "#{t('revs.messages.created_by')} #{gallery.user.to_s}" %>
+              </span>
+            <% else %>
+              <span class="label creator creator-self">
+                <%= "#{t('revs.messages.created_by')} #{t('revs.messages.you')}" %>
+              </span>
+            <% end %>
+          </div>
           <h5 class="index_title">
             <%= link_to(gallery.title,gallery_path(gallery)) %>
             <span class="muted">

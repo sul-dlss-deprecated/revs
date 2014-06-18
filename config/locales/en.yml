@@ -78,6 +78,7 @@ en:
       public_visibility_hidden: "Hidden"
       public_visibility_show: "Show this item to the public"
       public_visibility_hide: "Hide this item from public view"
+      you: 'you'
     flags:
       anonymous_not_shown: 'Flags added anonymously are not shown.'
       refresh_list: 'Refresh list'

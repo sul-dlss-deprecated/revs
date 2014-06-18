@@ -305,6 +305,29 @@
   }
 }
 
+// Galleries //
+#documents.gallery .blacklight-collection {
+  .image-wrapper {
+    min-width: 188px;
+    position: relative;
+    span.label {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      margin-left: 0;
+      opacity: 0.9;
+      &.creator {
+        background-color: $important;
+        border: 1px solid darken($important, 5%);
+      }
+      &.creator-self {
+        background-color: $success;
+        border: 1px solid darken($success, 5%);
+      }
+    }
+  }
+}
+
 // Responsive styles
 @media screen and (min-width: 1200px) {
   #new_user {
