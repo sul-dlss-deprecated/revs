@@ -5,9 +5,11 @@
       <div class="span12 collection-title">
         <h5 class="index_title">
           <%= link_to(gallery.title,gallery_path(gallery)) %>
-          <span class="muted">
+          <% if gallery.saved_items(current_user).size > 0 %>
+            <span class="muted">
               (<%= pluralize(gallery.saved_items.size, t('revs.user_galleries.item')) %>)
-          </span>
+            </span>
+          <% end %>
         </h5>
       </div>
     </div>
@@ -27,29 +29,38 @@
         </span>
       </div>
 
-      <div class="span8 image-filmstrip" data-thumb-width="100" data=thumb-height="100">
+      <% if gallery.saved_items(current_user).size > 0 %>
+        <div class="span8 image-filmstrip" data-thumb-width="100" data=thumb-height="100">
 
-        <button class="btn btn-default btn-sm prev">
-          <i class="icon-chevron-left"></i>
-        </button>
+          <button class="btn btn-default btn-sm prev">
+            <i class="icon-chevron-left"></i>
+          </button>
 
-        <div class="viewport">
-          <ul class="container-images">
-            <% gallery.saved_items(current_user).each do |item| %>
-              <li data-preview-in-filmstrip="true">
-                <a href="<%= catalog_path(item.druid) %>">
-                  <img src="/assets/default-thumbnail.png" title="<%= item.title %>" class="thumb-<%= item.druid %>" data-url="<%= item.image %>">
-                </a>
-              </li>
-            <% end %>
-          </ul>
+          <div class="viewport">
+            <ul class="container-images">
+              <% gallery.saved_items(current_user).each do |item| %>
+                <li data-preview-in-filmstrip="true">
+                  <a href="<%= catalog_path(item.druid) %>">
+                    <img src="<%= asset_url('default-thumbnail_square.jpg') %>" title="<%= item.title %>" class="thumb-<%= item.druid %>" data-url="<%= item.image %>">
+                  </a>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+
+          <button class="btn btn-default btn-sm next">
+            <i class="icon-chevron-right"></i>
+          </button>
+
         </div>
+      <% else %> <%# no items in gallery so show note instead of filmstrip %>
+        <div class="span8">
+          <span class="no-description">
+            There are no items in this gallery
+          </span>
+        </div>
+      <% end %>
 
-        <button class="btn btn-default btn-sm next">
-          <i class="icon-chevron-right"></i>
-        </button>
-
-      </div>
     </div>
   <% end %>
 
