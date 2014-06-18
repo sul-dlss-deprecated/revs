@@ -1,6 +1,6 @@
 class SavedItem < WithSolrDocument
   
-  belongs_to :gallery
+  belongs_to :gallery, :counter_cache => true
   belongs_to :item, :foreign_key=>:druid, :primary_key=>:druid
  
   include RankedModel

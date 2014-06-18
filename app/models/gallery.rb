@@ -11,6 +11,7 @@ class Gallery < ActiveRecord::Base
   VISIBILITY_TYPES=%w{public private curator}
 
   attr_accessible :user_id,:title,:description,:gallery_type,:views,:visibility
+  attr_readonly :saved_items_count
   
   has_many :all_saved_items, :class_name=>'SavedItem', :dependent=>:destroy
 
@@ -22,15 +23,15 @@ class Gallery < ActiveRecord::Base
   validate :only_one_favorites_list_per_user
 
   def self.featured
-    self.where(:featured=>true,:gallery_type=>'user',:visibility=>'public').order('position ASC,created_at DESC')
+    self.where(:featured=>true,:gallery_type=>'user',:visibility=>'public').where('saved_items_count > 0').order('position ASC,created_at DESC')
   end
   
   def self.curated
-    self.where(:gallery_type=>'user',:visibility=>'public').includes(:user).where("users.role in ('curator','admin')").order('position ASC,galleries.created_at DESC')
+    self.where(:gallery_type=>'user',:visibility=>'public').includes(:user).where('saved_items_count > 0').where("users.role in ('curator','admin')").order('position ASC,galleries.created_at DESC')
   end
 
   def self.regular_users
-    self.where(:gallery_type=>'user',:visibility=>'public').includes(:user).where("users.role = 'user'").order('position ASC,galleries.created_at DESC')
+    self.where(:gallery_type=>'user',:visibility=>'public').includes(:user).where('saved_items_count > 0').where("users.role = 'user'").order('position ASC,galleries.created_at DESC')
   end
     
   def public
