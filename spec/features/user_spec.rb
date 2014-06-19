@@ -333,15 +333,15 @@ describe("User registration system",:type=>:request,:integration=>true) do
     user_galleries_public=user.galleries.count
     user_galleries_including_private=user.galleries(user).count
     total_galleries=Gallery.count
-    user_galleries.should == 3
-    user_galleries_public.should == 1
-    user_galleries_including_private.should == 2
-    total_galleries.should == 7
+    user_galleries.should == 5
+    user_galleries_public.should == 3
+    user_galleries_including_private.should == 4
+    total_galleries.should == 9
 
     user_saved_items=user.all_saved_items.count
     total_saved_items=SavedItem.count
-    user_saved_items.should == 2
-    total_saved_items.should == 10
+    user_saved_items.should == 4
+    total_saved_items.should == 12
 
     # now kill the user
     user.destroy

@@ -10,9 +10,56 @@ describe("Galleries",:type=>:request,:integration=>true) do
     @gallery_drop_down='saved_item_gallery_id'
     @gallery1_title='My Awesome Gallery'
     @gallery2_title='Porsche Gallery'
+    @featured_gallery='A Featured Gallery'
     @curator_only_gallery_title='Stuff to work on'
+    @num_user_galleries=4 # from fixtures
   end
   
+  it "should show featured gallery on gallery landing page in both grid and detailed view" do
+    [galleries_path,galleries_path(:view=>'detailed')].each do |url|
+        visit url
+        page.should have_content @featured_gallery
+        page.should have_content "(2 items)"
+    end
+  end
+  
+  it "should not show any curated gallery tab if there are none" do
+    visit galleries_path
+    page.should_not have_content I18n.t('revs.nav.curator')
+  end
+
+  it "should show any curated galleries in both grid and detailed view" do
+
+    curator_gallery_title='Stuff to work on'
+
+    # initially we don't see the curator gallery, since it is set to curator only mode
+    [galleries_path(:filter=>'curator'),galleries_path(:filter=>'curator',:view=>'detailed')].each do |url|
+        visit url
+        page.should_not have_content curator_gallery_title 
+    end
+
+    # make the curator only gallery public
+    gallery=Gallery.where(:title=>curator_gallery_title).first
+    gallery.visibility = :public
+    gallery.save
+
+    # now it should show up
+    [galleries_path(:filter=>'curator'),galleries_path(:filter=>'curator',:view=>'detailed')].each do |url|
+        visit url
+        page.should have_content curator_gallery_title 
+    end
+  end
+
+  it "should show the correct galleries on the user tab in both grid and detailed view (ignoring a public gallery with no items)" do
+    [galleries_path(:filter=>'user'),galleries_path(:filter=>'user',:view=>'detailed')].each do |url|
+        visit url 
+        page.should_not have_content 'An empty public gallery'
+        page.should have_content @gallery1_title
+        page.should have_content @featured_gallery
+    end
+  end
+
+
   it "should not show the add to gallery button for non-logged in users" do
     visit catalog_path(@druid1)
     should_not_have_button(@add_to_gallery)
@@ -38,11 +85,13 @@ describe("Galleries",:type=>:request,:integration=>true) do
     login_as(user_login)
     visit user_path(user)
     page.should have_content @gallery1_title 
-    page.should have_content @gallery2_title
+    page.should have_content @featured_gallery
     click_link I18n.t('revs.user.view_your_galleries')
     page.should have_content "#{user.to_s}'s #{I18n.t('revs.user_galleries.head')}"
     page.should have_content @gallery1_title 
-    page.should have_content @gallery2_title
+    page.should have_content @featured_gallery
+    page.should have_content @gallery2_title 
+    page.should have_content "An empty public gallery"
   end
 
   it "should show only the user's public galleries on their public profile page" do
@@ -112,7 +161,7 @@ describe("Galleries",:type=>:request,:integration=>true) do
     new_gallery_description='It rulz'
     user=get_user(user_login)
     login_as(user_login)
-    user.galleries(user).count.should == 2 # these are from the fixtures
+    user.galleries(user).count.should == @num_user_galleries # these are from the fixtures
     visit new_gallery_path
     fill_in 'gallery_title', :with=>new_gallery_title
     fill_in 'gallery_description', :with=>new_gallery_description
@@ -120,7 +169,7 @@ describe("Galleries",:type=>:request,:integration=>true) do
     current_path.should == user_galleries_user_index_path(user_login)
     page.should have_content(new_gallery_title)
     page.should have_content(new_gallery_description)
-    user.galleries(user).count.should == 3 # now we have a new gallery
+    user.galleries(user).count.should == @num_user_galleries + 1 # now we have a new gallery
     new_gallery=Gallery.where(:user_id=>user.id).last
     new_gallery.public.should be_false 
     new_gallery.visibility.should == 'private'
@@ -133,7 +182,7 @@ describe("Galleries",:type=>:request,:integration=>true) do
     new_gallery_description='It rulz'
     user=get_user(user_login)
     login_as(user_login)
-    user.galleries(user).count.should == 2 # these are from the fixtures
+    user.galleries(user).count.should == @num_user_galleries # these are from the fixtures
     visit new_gallery_path
     fill_in 'gallery_title', :with=>new_gallery_title
     fill_in 'gallery_description', :with=>new_gallery_description
@@ -142,7 +191,7 @@ describe("Galleries",:type=>:request,:integration=>true) do
     current_path.should == user_galleries_user_index_path(user_login)
     page.should have_content(new_gallery_title)
     page.should have_content(new_gallery_description)
-    user.galleries(user).count.should == 3 # now we have a new gallery
+    user.galleries(user).count.should == @num_user_galleries + 1 # now we have a new gallery
     new_gallery=Gallery.where(:user_id=>user.id).last
     new_gallery.public.should be_true
     new_gallery.visibility.should == 'public'
@@ -153,13 +202,13 @@ describe("Galleries",:type=>:request,:integration=>true) do
   it "should allow a logged in user to delete their own gallery" do
     user=get_user(user_login)
     login_as(user_login)
-    user.galleries(user).count.should == 2 # these are from the fixtures
+    user.galleries(user).count.should == @num_user_galleries # these are from the fixtures
     visit user_galleries_user_index_path(user_login)
     page.should have_content(@gallery1_title)
     gallery1=Gallery.where(:title=>@gallery1_title).first
     click_button "delete_#{gallery1.id}"
     page.should_not have_content(@gallery1_title)
-    user.galleries(user).count.should == 1 # you just deleted it
+    user.galleries(user).count.should == @num_user_galleries - 1 # you just deleted it
   end 
 
   it "should allow a logged in user to edit their own gallery" do

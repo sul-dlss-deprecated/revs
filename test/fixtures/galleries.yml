@@ -28,7 +28,8 @@ curator_only_gallery:
   position: 2
   title: 'Stuff to work on'
   visibility: 'curator'
-
+  saved_items_count: 1
+  
 admin_favs:
   user: admin  # this is the named "admin" fixture object from the users table
   gallery_type: 'favorites'
@@ -42,6 +43,8 @@ user_gal1:
   title: 'My Awesome Gallery'
   description: 'It is super duper cool.'
   position: 1
+  featured: false
+  saved_items_count: 2
 
 user_gal2:
   user: user  # this is the named "user" fixture object from the users table
@@ -50,3 +53,25 @@ user_gal2:
   title: 'Porsche Gallery'
   description: 'this one is private'  
   position: 50  
+  featured: false
+  saved_items_count: 2
+
+user_gal3_featured:
+  user: user  # this is the named "user" fixture object from the users table
+  gallery_type: 'user'    
+  visibility: 'public'
+  title: 'A Featured Gallery'
+  description: 'This gallery is featured.'
+  position: 2
+  featured: true
+  saved_items_count: 2
+
+user_gal4_no_items:
+  user: user  # this is the named "user" fixture object from the users table
+  gallery_type: 'user'    
+  visibility: 'public'
+  title: 'An empty public gallery'
+  description: 'This gallery has no items.'
+  position: 3
+  featured: false
+  saved_items_count: 0  
