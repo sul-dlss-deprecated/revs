@@ -386,6 +386,7 @@ en:
       member_detail: 'Item Detail'
       featured_collection: 'Featured Collection'
       total_items: "Total Items"
+      name: 'collection'
     collection_members:
       items_name: 'item'
     collection_members_grid:
