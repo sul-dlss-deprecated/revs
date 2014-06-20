@@ -125,9 +125,11 @@ en:
       collections: 'Collections'
       galleries: 'Galleries'
       select_all: 'Select all'
-      update: 'Update'
-      remove: 'Remove'
+      update_completely: 'Update Completely'
+      remove: 'Remove Completely'
+      replace: 'Find and Replace'
       save_changes: 'Save Changes'
+      update: 'Update'
       create: 'Create'
       submit: 'Submit'
       send: 'Send'
@@ -268,6 +270,8 @@ en:
       leave_edit_mode: 'Leave metadata edit mode'
       set_posterframe: 'Use this image to represent the collection'
       active: "Active"
+      new_value: 'new value'
+      search_value: 'old value'
       item_title: "Item title"
       flagging_user: "Flagged by"
       flag_created: "Flagged on"

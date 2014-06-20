@@ -16,7 +16,11 @@
       <div class="update-field">
         <label class="radio update">
           <%=radio_button_tag 'bulk_edit[action]','update', @bulk_edit.nil? ? true : @bulk_edit[:action] == 'update'%>
-          <%=t('revs.nav.update')%>
+          <%=t('revs.nav.update_completely')%>
+        </label>
+         <label class="radio update">
+          <%=radio_button_tag 'bulk_edit[action]','replace', @bulk_edit.nil? ? false : @bulk_edit[:action] == 'replace'%>
+          <%=t('revs.nav.replace')%>
         </label>
         <label class="radio">
           <%=radio_button_tag 'bulk_edit[action]','remove', @bulk_edit.nil? ? false : @bulk_edit[:action] == 'remove'%>
@@ -27,7 +31,9 @@
       </div>
 
       <div class="update-field-value">
-			  <%= text_field_tag 'bulk_edit[new_value]' ,@bulk_edit.nil? ? '' : @bulk_edit[:new_value], class: 'span4', placeholder: 'new value'%>
+        <%= text_field_tag 'bulk_edit[search_value]' ,@bulk_edit.nil? ? '' : @bulk_edit[:search_value], class: 'span1', placeholder: t('revs.curator.search_value')%>
+			  <%= text_field_tag 'bulk_edit[new_value]' ,@bulk_edit.nil? ? '' : @bulk_edit[:new_value], class: 'span4', placeholder: t('revs.curator.new_value')%>
+
         <%= submit_tag t('revs.nav.update'), 
           :id=>'bulk-update-button', 
           :class => 'btn btn-small',

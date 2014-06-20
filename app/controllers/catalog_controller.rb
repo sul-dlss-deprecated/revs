@@ -61,7 +61,7 @@ class CatalogController < ApplicationController
       
       @bulk_edit=params[:bulk_edit]
             
-      if @bulk_edit[:attribute].blank? || @bulk_edit[:selected_druids].blank? || (@bulk_edit[:new_value].blank? && @bulk_edit[:action] == 'update')
+      if @bulk_edit[:attribute].blank? || @bulk_edit[:selected_druids].blank? || (@bulk_edit[:new_value].blank? && @bulk_edit[:action] == 'update') || (@bulk_edit[:new_value].blank? && @bulk_edit[:search_value].blank? && @bulk_edit[:action] == 'replace')
         flash.now[:error]=t('revs.messages.bulk_update_instructions')
       else
         success=SolrDocument.bulk_update(@bulk_edit,current_user)

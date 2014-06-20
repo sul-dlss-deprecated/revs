@@ -119,6 +119,10 @@ class SolrDocument
   def location
     [city_section,city,state,country].reject(&:blank?).join(', ')
   end
+
+  def update_attribute(attribute,value)
+     self.send("#{attribute}=",value) # this sets the given attribute
+  end
   
   # if the user updates one of the date fields, we'll run some computations to update the others as needed
   # this method is set as a callback when one of the date fields is updated
@@ -431,7 +435,9 @@ class SolrDocument
     
     selected_druids=params[:selected_druids]
     attribute=params[:attribute]
+    search_value=params[:search_value]
     new_value=params[:new_value]
+    action=params[:action]
   
     valid=false
     
@@ -440,7 +446,16 @@ class SolrDocument
     
       doc=self.find(druid) # load solr doc
       if !doc.blank?
-        doc.send("#{attribute}=",new_value) # this sets the attribute
+        case action 
+        when 'update' # completely replace the old value with the new value
+          doc.update_attribute(attribute,new_value) # this sets the attribute
+        when 'replace' # only replace the old value if it matches the search value exactly (and only one value needs to match in an MVF field)
+          if attribute.include? SolrDocument.multivalued_field_marker #  attribute being operated on is a multivalued field
+            current_values=doc.send("#{attribute}").split("|")
+          else # attribute being operated on is a single valued field
+            doc.update_attribute(attribute,new_value) if !doc.send("#{attribute}").blank? && doc.send("#{attribute}").strip == search_value.strip # replace with the new value if we exactly match the old
+          end
+        end
         valid = doc.save(:user=>user) # if true, we have successfully updated solr
       end
       break unless valid # stop if any solr doc is not valid
@@ -450,6 +465,7 @@ class SolrDocument
     return valid
     
   end
+
 
   private
   def self.config

@@ -114,7 +114,7 @@ describe SolrDocument, :integration => true do
         ChangeLog.where(:druid=>druid,:operation=>'metadata update',:user_id=>user.id).size.should == 0
       end
       
-      params_hash={:attribute=>field_to_edit, :new_value=>new_value,:selected_druids=>druids_to_edit}
+      params_hash={:attribute=>field_to_edit, :action=>'update', :new_value=>new_value,:selected_druids=>druids_to_edit}
       success=SolrDocument.bulk_update(params_hash,user)
       success.should be_true
       
