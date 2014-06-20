@@ -312,8 +312,8 @@
     position: relative;
     span.label {
       position: absolute;
-      right: 0;
-      bottom: 0;
+      right: 1px;
+      bottom: 10px;
       margin-left: 0;
       opacity: 0.9;
       &.creator {
