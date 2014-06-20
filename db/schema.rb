@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140612224341) do
+ActiveRecord::Schema.define(:version => 20140618212510) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "user_id"
@@ -69,17 +69,18 @@ ActiveRecord::Schema.define(:version => 20140612224341) do
   add_index "flags", ["user_id"], :name => "index_flags_on_user_id"
 
   create_table "galleries", :force => true do |t|
-    t.integer  "user_id",                         :null => false
+    t.integer  "user_id",                              :null => false
     t.string   "title"
     t.text     "description"
-    t.string   "gallery_type",                    :null => false
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
-    t.integer  "views",        :default => 0,     :null => false
+    t.string   "gallery_type",                         :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
+    t.integer  "views",             :default => 0,     :null => false
     t.string   "slug"
-    t.boolean  "featured",     :default => false, :null => false
+    t.boolean  "featured",          :default => false, :null => false
     t.integer  "position"
     t.string   "visibility"
+    t.integer  "saved_items_count", :default => 0,     :null => false
   end
 
   add_index "galleries", ["featured"], :name => "index_galleries_on_featured"
