@@ -3,7 +3,7 @@
   <h2>
     <%=t('revs.nav.galleries')%>
     <span class="prev-next">
-        <%= page_entries_info @galleries, :entry_name => '' %>
+        <%= page_entries_info @galleries, :entry_name => "#{@filter} #{t('revs.user_galleries.singular')}"  %>
     </span>
   </h2>
 
