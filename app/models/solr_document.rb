@@ -363,7 +363,7 @@ class SolrDocument
   end
 
   def add_changelog(user)
-    ChangeLog.create(:druid=>id,:user_id=>user.id,:operation=>'metadata update',:note=>unsaved_edits.to_s) if (valid? && user)  
+    ChangeLog.create(:druid=>id,:user_id=>user.id,:operation=>'metadata update',:note=>unsaved_edits.to_s) if (valid? && dirty? && user)  
   end
   
   # propogate unique information to database as well when saving solr document
@@ -447,15 +447,23 @@ class SolrDocument
       doc=self.find(druid) # load solr doc
       if !doc.blank?
         case action 
-        when 'update' # completely replace the old value with the new value
-          doc.update_attribute(attribute,new_value) # this sets the attribute
-        when 'replace' # only replace the old value if it matches the search value exactly (and only one value needs to match in an MVF field)
-          if attribute.include? SolrDocument.multivalued_field_marker #  attribute being operated on is a multivalued field
-            current_values=doc.send("#{attribute}").split("|")
-          else # attribute being operated on is a single valued field
-            doc.update_attribute(attribute,new_value) if !doc.send("#{attribute}").blank? && doc.send("#{attribute}").strip == search_value.strip # replace with the new value if we exactly match the old
+          when 'remove' # completely remove existing value
+            doc.update_attribute(attribute,'') # this sets the attribute to blank
+          when 'update' # completely replace the old value with the new value
+            doc.update_attribute(attribute,new_value) # this sets the attribute
+          when 'replace' # only replace the old value if it matches the search value exactly (and only one value needs to match in an MVF field)
+            if attribute.end_with? SolrDocument.multivalued_field_marker #  attribute being operated on is a multivalued field
+              current_values=doc.send("#{attribute}") # current values as a delimited string
+              attribute_name_without_mvf=attribute.chomp(SolrDocument.multivalued_field_marker)
+              current_values_array=doc.send("#{attribute_name_without_mvf}") # current values as an array
+              if !current_values_array.empty?
+                new_values_array = current_values_array.map {|value| value == search_value ? new_value : value }# iterate through existing values and replace with new value if it matches 
+                doc.update_attribute(attribute_name_without_mvf,new_values_array)
+              end
+            else # attribute being operated on is a single valued field, check to see if it exactly matches search value before updating
+              doc.update_attribute(attribute,new_value) if !doc.send("#{attribute}").blank? && doc.send("#{attribute}").strip == search_value.strip # replace with the new value if we exactly match the old
+            end
           end
-        end
         valid = doc.save(:user=>user) # if true, we have successfully updated solr
       end
       break unless valid # stop if any solr doc is not valid

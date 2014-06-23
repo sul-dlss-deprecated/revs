@@ -96,45 +96,122 @@ describe SolrDocument, :integration => true do
     
   describe "metadata_editing" do
     
-    it "should apply bulk updates to solr and editstore when update method is called directly" do
+    before :each do
 
-      user=User.last
-      
-      druids_to_edit=%w{nn572km4370 kn529wc4372}
-      new_value='newbie!'
-      field_to_edit='title'
-      old_values={}
+      @field_to_edit='title'
+      @solr_field=SolrDocument.field_mappings[@field_to_edit.to_sym][:field]
+      @druids_to_edit=%w{nn572km4370 kn529wc4372}
+      @old_values={}
+      @new_value='newbie!'
+      @user=User.last
+
+    end
+
+    it "should apply bulk replace updates to solr and editstore when update method is called directly for an update operation" do
       
       # confirm new field doesn't exist in solr and rows don't exist yet in editstore database
-      druids_to_edit.each do |druid|
+      @druids_to_edit.each do |druid|
         doc=SolrDocument.find(druid)
-        doc.title.should_not == new_value
-        old_values[druid] =  doc.title # store old values in hash so we can use it later in the test when checking the editstore database
-        Editstore::Change.where(:new_value=>new_value,:old_value=>doc.title,:druid=>druid).size.should == 0
-        ChangeLog.where(:druid=>druid,:operation=>'metadata update',:user_id=>user.id).size.should == 0
+        doc.title.should_not == @new_value
+        @old_values[druid] =  doc.title # store old values in hash so we can use it later in the test when checking the editstore database
+        Editstore::Change.where(:new_value=>@new_value,:old_value=>doc.title,:field=>@solr_field,:druid=>druid).size.should == 0
+        ChangeLog.where(:druid=>druid,:operation=>'metadata update',:user_id=>@user.id).size.should == 0
       end
       
-      params_hash={:attribute=>field_to_edit, :action=>'update', :new_value=>new_value,:selected_druids=>druids_to_edit}
-      success=SolrDocument.bulk_update(params_hash,user)
+      params_hash={:attribute=>@field_to_edit, :action=>'update', :new_value=>@new_value,:selected_druids=>@druids_to_edit}
+      success=SolrDocument.bulk_update(params_hash,@user)
       success.should be_true
       
       # confirm new field has been updated in solr and has correct rows in editstore database
-      druids_to_edit.each do |druid|
+      @druids_to_edit.each do |druid|
         doc=SolrDocument.find(druid)
-        doc.title.should == new_value
-        Editstore::Change.where(:new_value=>new_value,:old_value=>old_values[druid],:druid=>druid).size.should == 1
-        ChangeLog.where(:druid=>druid,:operation=>'metadata update',:user_id=>user.id).size.should == 1
+        doc.title.should == @new_value
+        Editstore::Change.where(:new_value=>@new_value,:old_value=>@old_values[druid],:field=>@solr_field,:druid=>druid).size.should == 1
+        ChangeLog.where(:druid=>druid,:operation=>'metadata update',:user_id=>@user.id).size.should == 1
       end
       
       # reindex solr docs we changed back to their original values
-      reindex_solr_docs(druids_to_edit)
+      reindex_solr_docs(@druids_to_edit)
       
     end
-    
+ 
+     it "should apply bulk updates to solr and editstore when update method is called directly for a search and replace operation for a single value field" do
+      
+      @druid_that_should_change='nn572km4370'
+      @druid_that_should_not_change='kn529wc4372'
+      @search_value='Thompson Raceway, May 1'
+
+      # confirm new field doesn't exist in solr and rows don't exist yet in editstore database
+      doc=SolrDocument.find(@druid_that_should_change) # this druid should change
+      doc.title.should_not == @new_value
+      doc.title.should == @search_value
+      @old_values[@druid_that_should_change] =  doc.title # store old values in hash so we can use it later in the test when checking the editstore database
+      Editstore::Change.where(:new_value=>@new_value,:old_value=>doc.title,:field=>@solr_field,:druid=>@druid_that_should_change).size.should == 0
+      ChangeLog.where(:druid=>@druid_that_should_change,:operation=>'metadata update',:user_id=>@user.id).size.should == 0
+
+      doc=SolrDocument.find(@druid_that_should_not_change) # this druid should change
+      doc.title.should_not == @new_value
+      doc.title.should_not == @search_value
+      @old_values[@druid_that_should_not_change] =  doc.title # store old values in hash so we can use it later in the test when checking the editstore database
+      Editstore::Change.where(:new_value=>@new_value,:old_value=>doc.title,:field=>@solr_field,:druid=>@druid_that_should_not_change).size.should == 0
+      ChangeLog.where(:druid=>@druid_that_should_not_change,:operation=>'metadata update',:user_id=>@user.id).size.should == 0
+
+      params_hash={:attribute=>@field_to_edit, :new_value=>@new_value, :search_value=>@search_value, :action=>'replace', :selected_druids=>@druids_to_edit}
+      success=SolrDocument.bulk_update(params_hash,@user)
+      success.should be_true
+      
+      # confirm new field has been updated in solr and has correct rows in editstore database for only the one record that matches
+      doc=SolrDocument.find(@druid_that_should_change) # this druid should change
+      doc.title.should == @new_value
+      Editstore::Change.where(:new_value=>@new_value,:operation=>:update,:field=>@solr_field,:druid=>@druid_that_should_change).size.should == 1
+      ChangeLog.where(:druid=>@druid_that_should_change,:operation=>'metadata update',:user_id=>@user.id).size.should == 1
+ 
+      # confirm new field has been updated in solr and has correct rows in editstore database for only the one record that matches
+      doc=SolrDocument.find(@druid_that_should_not_change) # this druid should change
+      doc.title.should_not == @new_value
+      doc.title.should == @old_values[@druid_that_should_not_change]
+      Editstore::Change.where(:new_value=>@new_value,:operation=>:update,:field=>@solr_field,:druid=>@druid_that_should_not_change).size.should == 0
+      
+      ChangeLog.where(:druid=>@druid_that_should_not_change,:operation=>'metadata update',:user_id=>@user.id).size.should == 0
+      # reindex solr docs we changed back to their original values
+      reindex_solr_docs([@druid_that_should_change])
+      
+    end   
+
+     it "should apply bulk updates to solr and editstore when update method is called directly for a remove operation" do
+      
+      # confirm new field doesn't exist in solr and rows don't exist yet in editstore database
+      @druids_to_edit.each do |druid|
+        doc=SolrDocument.find(druid)
+        doc.title.should_not == 'Untitled'
+        @old_values[druid] =  doc.title # store old values in hash so we can use it later in the test when checking the editstore database
+        Editstore::Change.where(:new_value=>'',:operation=>:delete,:field=>@solr_field,:druid=>druid).size.should == 0
+        ChangeLog.where(:druid=>druid,:operation=>'metadata update',:user_id=>@user.id).size.should == 0
+      end
+      
+      params_hash={:attribute=>@field_to_edit, :action=>'remove', :selected_druids=>@druids_to_edit}
+      success=SolrDocument.bulk_update(params_hash,@user)
+      success.should be_true
+      
+      # confirm new field has been updated in solr and has correct rows in editstore database
+      @druids_to_edit.each do |druid|
+        doc=SolrDocument.find(druid)
+        doc.title.should == 'Untitled'
+        Editstore::Change.where(:new_value=>'',:operation=>:delete,:field=>@solr_field,:druid=>druid).size.should == 1
+        ChangeLog.where(:druid=>druid,:operation=>'metadata update',:user_id=>@user.id).size.should == 1
+      end
+      
+      # reindex solr docs we changed back to their original values
+      reindex_solr_docs(@druids_to_edit)
+      
+    end   
+
     it "should use editstore" do
       SolrDocument.use_editstore.should be_true
     end
-    
+  
+  end
+
     describe "update_date_fields callback methods" do
       
       it "should automatically set the year field and single year solr field when a full date is set" do
@@ -242,9 +319,7 @@ describe SolrDocument, :integration => true do
       end
       
     end
-    
-  end
-  
+      
   describe "image priority for sorting images in a collection" do
     
     it "should indicate which is the highest priority number for a collection" do 
