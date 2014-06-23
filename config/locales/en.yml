@@ -212,13 +212,20 @@ en:
         title: "Feature Galleries"
         description: "To feature a gallery on the galleries page, check the box next its name.  Drag and drop to change the ordering."        
       administer_ontologies:
-        title: "Manage Auto Complete Terms"
-        description: "Manage the list of terms by field that is used for the auto-complete suggestions when curators are editing metadata.  Select a field and then enter all of the terms in the box shown, one term per line.  If you remove all terms, the autocomplete field will be deleted. Terms are shown to users in alphabetical order, regardless of order entered.  Note that if you enter a new field, it will not be available for autocomplete unless a coding change is also made."
-        none: "There are no fields to manage."
-      field: "Select field"
-      new_field: "Enter a new field"
+        title: "Manage Autocomplete Terms"
+        description: |
+          Manage the list of terms by field that is used for the auto-complete suggestions when curators are editing metadata.
+          Select a field and then enter all of the terms in the box shown, one term per line.
+          If you remove all terms, the autocomplete field will be deleted.
+          Terms are shown to users in alphabetical order, regardless of order entered.
+        none: "There are no fields to manage. You can add a new one below."
+        add_new_field:
+          title: "Create New Autocomplete Field"
+          description: "Note that a new field will not be available for autocomplete until a coding change is also made."
+      field: "Field to update"
+      new_field: "New field name"
       terms_updated: "Added %{num} terms for field '%{field}'."
-      terms: "Enter Terms and click Update (one per line, blank lines are ignored, leading and trailing spaces will be trimmed)"
+      terms: "Enter terms and click Update (one per line, blank lines are ignored, leading and trailing spaces will be trimmed)"
       dashboard: "Administrator Dashboard"
       your_account: "This is your account. To update your password, visit %{your_account_linktext}. You cannot update your own role."
       waiting_confirmation_from_user: "Currently waiting confirmation from user of their email address"

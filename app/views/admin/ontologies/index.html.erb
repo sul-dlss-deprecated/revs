@@ -4,36 +4,40 @@
 
   <h3><%=t('revs.admin.administer_ontologies.title')%></h3>
   
-  <p><%=t('revs.admin.administer_ontologies.description')%></p>
 
-     <div>
-     <%= form_tag admin_ontologies_path, :method=>:get, :class => 'form-horizontal autosubmit' do %>
-       <p><%=t('revs.admin.field')%>:
-       <%=select_tag "field", options_for_select(@all_fields,@field)%>
-       </p>
-     <% end %>
 
-    </div>
-     <% if @all_fields.size > 0 %>
-       <div>
+    <% if @all_fields.size > 0 %>
+      <p><%=t('revs.admin.administer_ontologies.description')%></p>
+
+      <div>
+        <%= form_tag admin_ontologies_path, :method=>:get, :class => 'form-horizontal autosubmit' do %>
+          <p><%=t('revs.admin.field')%>:
+            <%= select_tag "field", options_for_select(@all_fields,@field)%>
+          </p>
+        <% end %>
+
         <p><%=t('revs.admin.terms')%>:</p>
 
-           <%= form_tag update_terms_admin_ontologies_path(@field), :method=>:post, :class => 'form-horizontal' do %>
-           <p><%= submit_tag t('revs.nav.update'), :class => 'btn btn-medium' %></p>
+        <%= form_tag update_terms_admin_ontologies_path(@field), :method=>:post, :class => 'form-horizontal' do %>
+          <p><%= submit_tag t('revs.nav.update'), :class => 'btn btn-small' %></p>
+          <%= text_area_tag "terms", @terms, :rows=>30, :cols=>60,:style=>'width:500px;' %>
+        <% end %>
+      </div>
 
-            <%= text_area_tag "terms", @terms, :rows=>30, :cols=>60,:style=>'width:500px;' %>
-         <% end %>
-       </div>
-       <% else %>
-          <p><%= t('revs.admin.administer_ontologies.none')%></p>
-       <% end %>
+    <% else %>
+      <p><%= t('revs.admin.administer_ontologies.none')%></p>
+    <% end %>
 
-        <%= form_tag admin_ontologies_path, :method=>:post, :class => 'form-horizontal' do %>
-         <p><%=t('revs.admin.new_field')%>:
-         <%=text_field_tag :field %>
-     <%= submit_tag t('revs.nav.create'), :class => 'btn btn-medium' %>
-       </p>
-     <% end %>
+  <h3 class="new-ontology"><%= t('revs.admin.administer_ontologies.add_new_field.title') %></h3>
+  <p><%= t('revs.admin.administer_ontologies.add_new_field.description') %></p>
+
+  <%= form_tag admin_ontologies_path, :method=>:post, :class => 'form-horizontal' do %>
+    <p>
+      <%= t('revs.admin.new_field') %>:
+      <%= text_field_tag :field %>
+      <%= submit_tag t('revs.nav.create'), :class => 'btn btn-small' %>
+    </p>
+  <% end %>
 
 </div>
 
