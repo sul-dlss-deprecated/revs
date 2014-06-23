@@ -454,6 +454,16 @@ namespace :revs do
     end
   end
 
+  desc "Reset sort order for galleries"
+  task :reset_gallery_order => :environment do |t,args|
+    Gallery.all.each {|gallery| gallery.update_attribute(:position,1)}
+  end
+
+  desc "Reset sort order for all saved items"
+  task :reset_saved_item_order => :environment do |t,args|
+    SavedItem.all.each {|item| item.update_attribute(:position,1)}
+  end
+
   desc "Move annotations to flags for a user, run with rake revs:move_annotations_to_flags['Doug Nye']"
   task :move_annotations_to_flags, [:username] => :environment do |t, args|
       username=args[:username]  
