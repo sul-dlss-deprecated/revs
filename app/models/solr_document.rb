@@ -320,7 +320,13 @@ class SolrDocument
     return nil unless is_collection?
     first_item.images(:large).first
   end
-  
+
+  # gives you a random item from the given collection
+  def random_item
+    return nil unless is_collection?
+    self.get_members(:start=>(Random.new.rand(self.get_members.size))).first
+  end
+
   # gives you the current top priority number for item sorting for the given collection
   def current_top_priority
     return nil unless is_collection?
