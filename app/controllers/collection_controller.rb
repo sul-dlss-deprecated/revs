@@ -6,8 +6,8 @@ class CollectionController < ApplicationController
   	get_paging_params
     @per_page = Revs::Application.config.num_default_per_page_collections # override the default for collections
     @view=params[:view] || 'grid'
-    @collections=SolrDocument.all_collections
-	@collections=Kaminari.paginate_array(SolrDocument.all_collections).page(@current_page).per(@per_page)
+	  @collections=Kaminari.paginate_array(SolrDocument.all_collections).page(@current_page).per(@per_page)
+    @num_to_show_in_filmstrip=100
   end
 
   protected

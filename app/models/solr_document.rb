@@ -238,9 +238,7 @@ class SolrDocument
     random=params[:random] || false # if set to true, will give you a random selection from the collection ("start" will be ignored)
     include_hidden=params[:include_hidden] || false # if set to true, the query will also return hidden images
     
-    if random
-      start = self.total_siblings-rows < 0 ? 0 : rand(0...self.total_siblings-rows) # if we have less items than we want to show, just start at 0; else start at a random number between 0 and the total - # to show
-    end
+    sort = (random ? "random_#{Random.new.rand(10000)} asc" : "priority_isi desc")
         
     fq="#{blacklight_config.collection_member_identifying_field}:\"#{self[blacklight_config.collection_member_identifying_field].first}\""
     fq+=" AND #{SolrDocument.images_query(:visible)}" unless include_hidden
@@ -248,9 +246,9 @@ class SolrDocument
                                Blacklight.solr.select(
                                  :params => {
                                    :fq => fq,
-                                   :sort=> "priority_isi desc",
+                                   :sort=> sort,
                                    :rows => rows.to_s,
-                                  :start => start.to_s
+                                   :start => start.to_s
                                  }
                                )
                              )
@@ -276,14 +274,16 @@ class SolrDocument
     rows=params[:rows] || blacklight_config.collection_member_grid_items
     start=params[:start] || 0
     include_hidden=params[:include_hidden] || false # if set to true, the query will also return hidden images
-    
+    random=params[:random] || false
+
+    sort = (random ? "random_#{Random.new.rand(10000)} asc" : "priority_isi desc")
     fq="#{blacklight_config.collection_member_identifying_field}:\"#{self[SolrDocument.unique_key]}\""
     fq+=" AND #{SolrDocument.images_query(:visible)}" unless include_hidden
     return CollectionMembers.new(
                               Blacklight.solr.select(
                                 :params => {
                                   :fq => fq,
-                                  :sort=> "priority_isi desc",
+                                  :sort=> sort,
                                   :rows => rows.to_s,
                                   :start => start.to_s
                                 }
@@ -328,7 +328,7 @@ class SolrDocument
   # gives you a random item from the given collection
   def random_item
     return nil unless is_collection?
-    self.get_members(:start=>(Random.new.rand(self.get_members.size))).first
+    self.get_members(:rows=>1,:start=>(Random.new.rand(self.get_members.size-1))).first
   end
 
   # gives you the current top priority number for item sorting for the given collection
