@@ -281,7 +281,8 @@
 .gallery-details {
   img {
     margin-top: 4px;
-    max-width: 100px;
+    max-height: 160px;
+    max-width: 195px;
   }
 }
 .gallery-metadata {
@@ -337,6 +338,11 @@
       vertical-align: middle;
     }
   }
+  .gallery-details {
+    img {
+      max-width: 250px;
+    }
+  }
 }
 @media screen and (min-width: 980px) {
   #new_user {
@@ -359,6 +365,11 @@
   }
   .gallery-metadata {
     margin-left: 20px;
+  }
+  .gallery-details {
+    img {
+      max-width: 165px;
+    }
   }
 }
 @media screen and (max-width: 767px) {

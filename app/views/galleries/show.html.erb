@@ -7,11 +7,12 @@
   </h2>
 
   <div class="row gallery-details">
-    <div class="span2 hidden-phone">
-      <%= link_to(image_tag(@gallery.image(:user=>current_user), class: "thumbnail-preview"), gallery_path(@gallery.id)) %>
+    <div class="span3 hidden-phone">
+      <%= link_to(image_tag(@gallery.image(:user => current_user, :size => :large),
+        class: "thumbnail-preview"), gallery_path(@gallery.id)) %>
     </div>
 
-    <div class="span7 gallery-metadata">
+    <div class="span6 gallery-metadata">
       <ul class="inline item-stats">
         <li>
           <span class="item-stats-heading"><%=t('revs.user_galleries.total_items')%>:</span>
