@@ -110,13 +110,13 @@ describe("Galleries",:type=>:request,:integration=>true) do
     curator=get_user(curator_login)
     visit user_path(curator)
     page.should_not have_content @curator_only_gallery_title # curator gallery
-    page.should_not have_content  I18n.t('revs.user.view_all_galleries')
+    page.should_not have_content  I18n.t('revs.user.view_your_galleries')
     should_deny_access_to_named_gallery(@curator_only_gallery_title) # can't get to the curator only gallery directly when not logged in
 
     login_as(user_login)
     visit user_path(curator)
     page.should_not have_content @curator_only_gallery_title # curator gallery
-    page.should_not have_content  I18n.t('revs.user.view_all_galleries')
+    page.should_not have_link(I18n.t('revs.user.view_all_galleries'), href: user_galleries_user_index_path(curator_login))
     should_deny_access_to_named_gallery(@curator_only_gallery_title) # can't get to the curator only gallery directly when logged in as a non-curator
   end
 

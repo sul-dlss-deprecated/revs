@@ -257,7 +257,7 @@ describe("User registration system",:type=>:request,:integration=>true) do
     admin_account.public=true
     admin_account.save
     visit user_path(admin_account.username)
-    page.should_not have_content I18n.t('revs.user.view_all_favorites') # favorites link should not show up since they are still private
+    page.should_not have_link(I18n.t('revs.user.view_all_favorites'), href: user_favorites_user_index_path(admin_account.username)) # favorites link should not show up since they are still private
     page.should have_content I18n.t('revs.favorites.none')
     visit user_favorites_user_index_path(admin_account.username)  # we still should not be able to see the favorites
     current_path.should_not ==  user_favorites_user_index_path(admin_account.username) 

@@ -3,9 +3,9 @@
 
     <ul class="nav nav-list">
       <li class="nav-header">
-      <%=@user.to_s%></li>
+      <%= @user.to_s %><%= t('revs.user.public_activity') %></li>
       <% if @user.public || can?(:read, @user)%>
-				<li><%= link_to_unless_current t('revs.user.view_profile'), user_path(@user.username) %></li>
+				<li><%= link_to_unless_current t('revs.user.profile'), user_path(@user.username) %></li>
       <% end %>
       <% if can?(:favorites,@user) && favorites_count(@user) > 0 %>
           <li><%= link_to_unless_current t('revs.user.view_all_favorites'), user_favorites_user_index_path(@user.username) %></li>
