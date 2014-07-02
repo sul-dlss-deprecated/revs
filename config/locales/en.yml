@@ -125,8 +125,9 @@ en:
       collections: 'Collections'
       galleries: 'Galleries'
       select_all: 'Select all'
-      update_completely: 'Update Completely'
-      remove: 'Remove Completely'
+      toggle_all: 'All'
+      update_completely: 'Update'
+      remove: 'Remove'
       replace: 'Find and Replace'
       save_changes: 'Save Changes'
       update: 'Update'
@@ -307,6 +308,11 @@ en:
       metadata_edit_history_description: "This item was edited on"
       are_you_sure_apply_updates: "Are you sure you want to change each of the selected items?  This action cannot be undone."
       you_can_edit_items: "Items you edit will be listed here."
+      headings:
+        select: "Select"
+        action: "Action"
+        field_to_update: "Field to update"
+        field_value: "Field value"
     dashboards: 'Dashboards'
     citations:
         view: 'View full citation page'

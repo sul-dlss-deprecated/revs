@@ -209,6 +209,7 @@
   border-top: 2px solid #dedede;
   display: block;
   margin: 18px 0 0;
+  padding-bottom: 10px;
   position: relative;
   form {
     margin: 10px 5px;
@@ -241,10 +242,12 @@
       color: #333333;
       margin-left: 20px;
     }
-    .update-field {
+    .update-field-toggle-container {
+      margin-left: 0;
+    }
+    .update-field-action {
       display: inline-block;
       margin-left: 15px;
-      padding-top: 5px;
       label.radio.update {
         display: block;
       }
@@ -254,18 +257,33 @@
     }
     .update-field-value {
       display: inline-block;
-      position: absolute;
-      bottom: 8px;
-      right: 10px;
       .btn {
-        margin-left: 6px;
+      }
+    }
+    .update-field-heading {
+      color: #777;
+      margin-bottom: 10px;
+    }
+    #bulk-update-button {
+      &.extra-padding {
+        margin-top: 5px;
       }
     }
     #bulk_edit_attribute {
+      display: block;
       float: none;
       height: auto;
       padding-top: 0;
+      margin-bottom: 10px;
       margin-left: 3px;
+    }
+    #bulk_edit_search_value {
+      display: block;
+      margin-bottom: 6px;
+    }
+    #bulk_edit_new_value {
+      display: inline;
+      margin-right: 3px;
     }
     .controls > .checkbox {
       padding-top: 0;
@@ -375,13 +393,13 @@ span.constraints-label {margin-right: 0.5em;}
       .update-field-value {
         display: block;
         position: inherit;
-        input {
-          margin-top: 12px;
-        }
       }
       .update-field {
         display: block;
         margin-left: 0;
+      }
+      #bulk_edit_new_value {
+        margin-bottom: 10px;
       }
     }
   }
@@ -417,12 +435,22 @@ span.constraints-label {margin-right: 0.5em;}
       width: 100%;
     }
   }
-  .curator-edit-options form .update-field select {
-    margin-top: 10px;
+  .curator-edit-options form {
+    .update-field select {
+      margin-top: 10px;
+    }
+    .update-field-value input[type='submit'] {
+      float: right;
+    }
+    .update-field-action {
+      margin-left: 0;
+    }
+    .update-field-heading {
+      margin-bottom: 5px;
+      margin-top: 15px;
+    }
   }
-  .curator-edit-options form .update-field-value input[type='submit'] {
-    float: right;
-  }
+
   #documents.detailed .image-filmstrip {
     margin-top: 12px;
   }
@@ -443,14 +471,21 @@ span.constraints-label {margin-right: 0.5em;}
       max-width: 150px;
     }
   }
-  .curator-edit-options form {
-   #bulk_edit_new_value {
-     width: 400px;
-   }
+  .curator-edit-options form #bulk-update-button {
+    &.extra-padding {
+      margin-top: 25px;
+    }
   }
 }
 @media screen and (min-width: 1200px) {
-  .curator-edit-options form .update-field {
-    margin-left: 30px;
+  .curator-edit-options form {
+    .update-field {
+      margin-left: 30px;
+    }
+    #bulk-update-button {
+      &.extra-padding {
+        margin-top: 25px;
+      }
+    }
   }
 }

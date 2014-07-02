@@ -71,30 +71,36 @@ $(document).ready(function(){
      $( '.curator-edit-options #bulk_edit_action_update' ).click( function () {
        bulkEditShowUpdate();
        bulkEditHideReplace();
+       bulkEditShowUpdateHeading();
     });
      $( '.curator-edit-options #bulk_edit_action_replace' ).click( function () {
        bulkEditShowUpdate();
        bulkEditHideReplace();
        bulkEditShowReplace();
+       bulkEditShowUpdateHeading();
     });
      $( '.curator-edit-options #bulk_edit_action_remove' ).click( function () {
       bulkEditHideUpdate();
       bulkEditHideReplace();
+      bulkEditHideUpdateHeading();
     });
    if ($( '#bulk_edit_action_update' ).is(':checked')) {
       bulkEditHideUpdate();
       bulkEditHideReplace();
       bulkEditShowUpdate();
+      bulkEditShowUpdateHeading();
     }      
     if ($( '#bulk_edit_action_remove' ).is(':checked')) {
       bulkEditHideUpdate();
       bulkEditHideReplace();
+      bulkEditHideUpdateHeading();
     } 
    if ($( '#bulk_edit_action_replace' ).is(':checked')) {
       bulkEditHideUpdate();
       bulkEditHideReplace();
       bulkEditShowUpdate();
       bulkEditShowReplace();
+      bulkEditShowUpdateHeading();
     } 
 
     function bulkEditShowReplace() {
@@ -107,6 +113,11 @@ $(document).ready(function(){
        $('#bulk_edit_new_value').focus();
     }
 
+    function bulkEditShowUpdateHeading() {
+      $('.update-field-value .update-field-heading').show();
+      $('#bulk-update-button').removeClass('extra-padding');
+    }
+
     function bulkEditHideReplace() {
       $( '#bulk_edit_search_value' ).hide();
       $( '#bulk_edit_search_value' ).val('');
@@ -115,6 +126,11 @@ $(document).ready(function(){
     function bulkEditHideUpdate() {
       $( '#bulk_edit_new_value' ).hide();
       $( '#bulk_edit_new_value' ).val('');
+    }
+
+    function bulkEditHideUpdateHeading() {
+      $('.update-field-value .update-field-heading').hide();
+      $('#bulk-update-button').addClass('extra-padding');
     }
 
    // Called when an individual checkbox is checked or unchecked in bulk edit view.
