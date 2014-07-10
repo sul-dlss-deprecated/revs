@@ -329,6 +329,12 @@
     #flag_resolution {
       width: 90%;
     }
+    #new_flag_form {
+      input#flag_notify_me {
+        margin-bottom: 12px;
+        vertical-align: baseline;
+      }
+    }
     div#all-annotations, div#all_flags .flag-info {
       margin-top: 0;
       label {
