@@ -333,6 +333,7 @@ en:
         annotation_text: "Annotation text"
         annotator: "Annotator"
         are_you_sure: "Are you sure you want to remove this annotation?"
+        help: "Annotations are descriptions that apply to specific parts of the item image. Use the Annotations action to view any annotations made to the item image by other users or to add your own annotations."
     favorites:
       singular: "favorite"
       plural: "favorites"
