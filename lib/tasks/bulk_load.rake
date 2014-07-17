@@ -127,7 +127,56 @@ namespace :revs do
     end
       
   end
-  
+ 
+  desc "Convert entrant to multivalued field"
+  #Run Me: rake revs:convert_entrant
+  task :convert_entrant => :environment do |t, args|
+    #Have Editstore ignore updates by this rake task
+    Revs::Application.config.use_editstore = false
+    log = Logger.new("#{Rails.root}/log/#{Time.now.to_i}.convert_entrant#{@log_extension}")
+    log.info("Starting convert_entrant")
+    
+    #Get all collections
+    total_success_count = 0
+    total_error_count = 0 
+    SolrDocument.all_collections.each do |collection|
+      collection_success_count = 0 
+      collection_error_count = 0 
+     
+      #For each collection, touch every member
+      collection.get_members(:include_hidden=>true, :rows=> @max_expected_collection_size).each do |doc|
+        druid = doc.id
+        unless doc['entrant_ssi'].blank?
+          doc.entrant = doc['entrant_ssi'] 
+          doc.remove_field('entrant_ssi')
+          result = doc.save             
+          if result
+            collection_success_count += 1
+          else
+            collection_error_count += 1
+            log.error("Failed to save: #{druid}") 
+          end
+        end
+      end  
+      #Record Collection Stats
+      total_success_count += collection_success_count
+      total_error_count += collection_error_count
+      col_druid = collection[@id]
+      if collection_error_count == 0
+        log.info("#{@success} for collection #{col_druid}, converted #{collection_success_count} with no errors.")
+      else
+        log.info("#{@failure} for collection #{col_druid}, #{collection_error_count} errors and #{collection_success_count} converted successfully.  #{collection_error_count+collection_success_count} total touches attempted for collection.")
+      end
+      
+    end
+    
+    if total_error_count == 0
+      log.info("#{@success} Run complete with #{total_success_count} touched with no errors.")
+    else
+      log.info("#{@failure} run complete with #{total_error_count} errors and #{total_success_count} touched successfully.  #{total_error_count+total_success_count} total touches attempted on this run.")
+    end
+      
+  end 
   
   desc "When passed the location of .csv file(s) and a list of headers, this will generate csv with just those fields, plus fields to find the solr document"
   #Run me: rake revs:bulk_load["SHEETS_LOCATION", header1|header2|etc, output_name] RAILS_ENV=production

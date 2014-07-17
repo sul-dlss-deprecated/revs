@@ -13,7 +13,8 @@
   <field name="subjects_ssim">History</field>
   <field name="marque_ssim">Jaguar</field>
   <field name="model_ssim">XK40</field>
-  <field name="entrant_ssi">Gonzales, Speedy</field>
+  <field name="entrant_ssim">Gonzales, Speedy</field>
+  <field name="entrant_ssim">Waz, Up</field>
   <field name="venue_ssi">Indy 500 Speedway</field>
   <field name="cities_ssi">Indianapolis</field>
   <field name="countries_ssi">USA</field>

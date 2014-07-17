@@ -172,7 +172,7 @@ module ApplicationHelper
       ['Models','vehicle_model_mvf'],
       ['Model Years','model_year_mvf'],
       ['People','people_mvf'],
-      ['Entrant','entrant'],
+      ['Entrant','entrant_mvf'],
       ['Current Owner','current_owner'],
       ['Venue','venue'],
       ['Track','track'],

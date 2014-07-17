@@ -251,7 +251,7 @@ describe ActivesolrHelper, :integration => true do
       
       Editstore::Change.count.should == 0
     
-      @doc.entrant.should == "Fastguy, Some"
+      @doc.entrant.should == ["Fastguy, Some"]
       @doc.entrant=""
       @doc.save
 
@@ -260,7 +260,7 @@ describe ActivesolrHelper, :integration => true do
       reload_doc.entrant.should == ""
       
        # confirm we have a new change in the database
-      editstore_entry(Editstore::Change.last,:field=>'entrant_ssi',:new_value=>'',:old_value=>nil,:druid=>@druid,:operation=>'delete',:state=>:ready).should be_true
+      editstore_entry(Editstore::Change.last,:field=>'entrant_ssim',:new_value=>'',:old_value=>nil,:druid=>@druid,:operation=>'delete',:state=>:ready).should be_true
       Editstore::Change.count.should == 1
       
     end
