@@ -87,7 +87,7 @@ class SolrDocument
       :vehicle_model=>{:field=>'model_ssim', :multi_valued => true},
       :model_year=>{:field=>'model_year_ssim', :multi_valued => true},
       :current_owner=>{:field=>'current_owner_ssi'},
-      :entrant=>{:field=>'entrant_ssi'},
+      :entrant=>{:field=>'entrant_ssim', :multi_valued => true},
       :venue=>{:field=>'venue_ssi'},
       :track=>{:field=>'track_ssi'},
       :event=>{:field=>'event_ssi'},

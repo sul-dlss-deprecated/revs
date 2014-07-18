@@ -127,7 +127,43 @@ namespace :revs do
     end
       
   end
-  
+ 
+  desc "Convert entrant to multivalued field"
+  #Run Me: rake revs:convert_entrant
+  task :convert_entrant => :environment do |t, args|
+    #Have Editstore ignore updates by this rake task
+    Revs::Application.config.use_editstore = false
+    log = Logger.new("#{Rails.root}/log/#{Time.now.to_i}.convert_entrant#{@log_extension}")
+    log.info("Starting convert_entrant")
+    
+    #Get all collections
+    total_success_count = 0
+    total_error_count = 0 
+    results=Blacklight.solr.select(:params => {:q=>'entrant_ssi:[* TO *]',:rows=>'2000000'})
+
+    puts "Found #{results['response']['docs'].size} documents with value in entrant_ssi field"
+    results['response']['docs'].each do |result|
+      doc=SolrDocument.new(result)
+      druid = doc.id
+      puts "Updating #{druid}"
+      doc.entrant = doc['entrant_ssi'] 
+      doc.remove_field('entrant_ssi')
+      result = doc.save             
+      if result
+        total_success_count += 1
+      else
+        total_error_count += 1
+        log.error("Failed to save: #{druid}") 
+      end
+    end
+    
+    if total_error_count == 0
+      log.info("Run complete with #{total_success_count} touched with no errors.")
+    else
+      log.info("Run complete with #{total_error_count} errors and #{total_success_count} touched successfully.  #{total_error_count+total_success_count} total touches attempted on this run.")
+    end
+      
+  end 
   
   desc "When passed the location of .csv file(s) and a list of headers, this will generate csv with just those fields, plus fields to find the solr document"
   #Run me: rake revs:bulk_load["SHEETS_LOCATION", header1|header2|etc, output_name] RAILS_ENV=production

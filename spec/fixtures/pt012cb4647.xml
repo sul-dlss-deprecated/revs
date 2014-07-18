@@ -12,7 +12,7 @@
   <field name="subjects_ssim">History</field>
   <field name="marque_ssim">Ferrari</field>
   <field name="marque_ssim">Chevrolet</field>
-  <field name="entrant_ssi">Jackson, Samuel</field>
+  <field name="entrant_ssim">Jackson, Samuel</field>
   <field name="track_ssi">Laguna Seca</field>
   <field name="cities_ssi">Monterey</field>
   <field name="countries_ssi">USA</field>
