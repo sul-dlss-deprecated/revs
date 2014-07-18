@@ -139,41 +139,28 @@ namespace :revs do
     #Get all collections
     total_success_count = 0
     total_error_count = 0 
-    SolrDocument.all_collections.each do |collection|
-      collection_success_count = 0 
-      collection_error_count = 0 
-     
-      #For each collection, touch every member
-      collection.get_members(:include_hidden=>true, :rows=> @max_expected_collection_size).each do |doc|
-        druid = doc.id
-        unless doc['entrant_ssi'].blank?
-          doc.entrant = doc['entrant_ssi'] 
-          doc.remove_field('entrant_ssi')
-          result = doc.save             
-          if result
-            collection_success_count += 1
-          else
-            collection_error_count += 1
-            log.error("Failed to save: #{druid}") 
-          end
-        end
-      end  
-      #Record Collection Stats
-      total_success_count += collection_success_count
-      total_error_count += collection_error_count
-      col_druid = collection[@id]
-      if collection_error_count == 0
-        log.info("#{@success} for collection #{col_druid}, converted #{collection_success_count} with no errors.")
+    results=Blacklight.solr.select(:params => {:q=>'entrant_ssi:[* TO *]',:rows=>'2000000'})
+
+    puts "Found #{results['response']['docs'].size} documents with value in entrant_ssi field"
+    results['response']['docs'].each do |result|
+      doc=SolrDocument.new(result)
+      druid = doc.id
+      puts "Updating #{druid}"
+      doc.entrant = doc['entrant_ssi'] 
+      doc.remove_field('entrant_ssi')
+      result = doc.save             
+      if result
+        total_success_count += 1
       else
-        log.info("#{@failure} for collection #{col_druid}, #{collection_error_count} errors and #{collection_success_count} converted successfully.  #{collection_error_count+collection_success_count} total touches attempted for collection.")
+        total_error_count += 1
+        log.error("Failed to save: #{druid}") 
       end
-      
     end
     
     if total_error_count == 0
-      log.info("#{@success} Run complete with #{total_success_count} touched with no errors.")
+      log.info("Run complete with #{total_success_count} touched with no errors.")
     else
-      log.info("#{@failure} run complete with #{total_error_count} errors and #{total_success_count} touched successfully.  #{total_error_count+total_success_count} total touches attempted on this run.")
+      log.info("Run complete with #{total_error_count} errors and #{total_success_count} touched successfully.  #{total_error_count+total_success_count} total touches attempted on this run.")
     end
       
   end 
