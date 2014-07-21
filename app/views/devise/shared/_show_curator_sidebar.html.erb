@@ -18,7 +18,7 @@
 
       <% if can? :curate, :all  %>
         <ul class="nav nav-list">
-          <li class="nav-header"><%= t('revs.admin.sidebar.help') %></li>
+          <li class="nav-header"><%= t('revs.curator.sidebar.help') %></li>
           <li><%= link_to_unless_current t('revs.help.sidebar.metadata_editing_guidelines'), :controller=>'curator/help', :action=>'metadata_editing_guidelines' %></li>
           <li><%= link_to_unless_current t('revs.help.sidebar.bulk_edits'), :controller=>'curator/help', :action=>'bulk_edits' %></li>
         </ul>

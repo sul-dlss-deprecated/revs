@@ -251,7 +251,7 @@ en:
       num_logins: 'Number of logins'
       sidebar:
         actions: 'Actions'
-        help: "Help"
+        help: "Administrator Help"
         administer_users: "Manage Users"
         administer_ontologies: "Manage Autocomplete Terms"
         administer_highlights: "Feature Collections"
@@ -261,6 +261,7 @@ en:
       not_found: 'Item not found'
       sidebar:
         actions: 'Actions'
+        help: "Curator Help"
         view_annotations: 'View All Annotations'
         view_flagged_items: "View All Flags"
         view_edited_items: "View All Edits"
