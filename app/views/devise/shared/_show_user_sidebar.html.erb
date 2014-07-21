@@ -60,7 +60,10 @@
       <li><%= link_to_unless_current(t("revs.user_galleries.create_new_gallery"), new_gallery_path) %></li>
     </ul>
 
+    <%# List of links to FAQ and other help pages %>
+    <%= render "shared/help_links" %>
 
+    <%# List of links to dashboards appropriate to user role %>
     <%= render(:partial=>'/devise/shared/dashboards', :locals=>{:user=>@user}) if can?(:curate, :all) || can?(:administer, :all)%>
   
   </div>
