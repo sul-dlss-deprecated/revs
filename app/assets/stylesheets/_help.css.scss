@@ -56,4 +56,30 @@
   h2 .btn {
     float: right;
   }
+  .video-list .video a {
+    color: inherit;
+  }
+  .video {
+    display: inline-block;
+    margin: 15px 20px 20px;
+    max-width: 170px;
+    vertical-align: top;
+    img {
+      max-width: 165px;
+      padding: 5px;
+    }
+    h3 {
+      font-size: 14px;
+      text-align: center;
+    }
+    span.duration {
+      color: #777;
+      font-weight: 400;
+    }
+  }
+  @media screen and (max-width: 767px) {
+    .video-list {
+      text-align: center;
+    }
+  }
 }

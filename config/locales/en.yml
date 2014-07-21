@@ -569,9 +569,18 @@ en:
       create_new_gallery: "Create new gallery"
       public_activity: "'s Public Activity"
     help:
+      videos:
+        titles:
+          overview: "Overview of the Revs Digital Library"
+          account: "Create an account"
+          logging_in: "Log in"
+          favorites_flags: "Save favorites and flag metadata issues"
+          gallery: "Create a gallery"
+          annotation: "Create an annotation"
       sidebar:
         bulk_edits: "Edit records in bulk"
         metadata_editing_guidelines: "Metadata editing guidelines"
+        video_tutorials: "Video Tutorials"
       curator:
         page_title: "Curator Help"
         bulk_edits: "Edit multiple records in bulk (bulk editing)"

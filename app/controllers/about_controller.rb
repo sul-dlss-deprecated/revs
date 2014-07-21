@@ -87,6 +87,9 @@ class AboutController < ApplicationController
     boom!
   end
   
+  def tutorials
+  end
+
   protected
   def authorize
     not_authorized unless can? :read,:about_pages

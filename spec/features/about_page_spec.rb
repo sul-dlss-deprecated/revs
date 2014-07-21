@@ -8,6 +8,7 @@ describe("About Pages",:type=>:request,:integration=>true) do
     @acknowledgements=I18n.t("revs.about.acknowledgements_title")
     @contact_us=I18n.t("revs.about.contact_title")
     @terms_of_use=I18n.t("revs.about.terms_of_use_title")
+    @video_tutorials=I18n.t("revs.about.video_tutorials_title")
   end
   
   it "should show the about project page for various URLs" do
@@ -69,5 +70,12 @@ describe("About Pages",:type=>:request,:integration=>true) do
     visit '/about/team'
     page.should have_content(@project_team_title)
   end
-    
+
+  it "should show the video tutorials page" do
+    visit '/about/tutorials'
+    page.should have_content(@video_tutorials)
+    # update link URL when Overview video is updated/replaced
+    page.should have_link(I18n.t("revs.help.videos.titles.overview"), href: "https://www.youtube.com/watch?v=rVBI_VCfWYg")
+  end
+
 end
