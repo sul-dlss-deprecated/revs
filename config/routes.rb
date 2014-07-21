@@ -2,6 +2,8 @@ Revs::Application.routes.draw do
 
   root :to => "catalog#index"
 
+  match "bookmarks", :to => "catalog#routing_error" # we are not using blacklight bookmarks, so a request to get them should fail nicely
+
   Blacklight.add_routes(self)
 
   # override devise controllers as needed
@@ -132,6 +134,7 @@ Revs::Application.routes.draw do
       end
     end
   end
+    
     
   match "*gibberish", :to => "catalog#routing_error"
     

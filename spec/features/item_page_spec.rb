@@ -35,10 +35,11 @@ describe("Item Pages",:type=>:request,:integration=>true) do
     page.should have_xpath("//img[contains(@src, \"image/yh093pt9555/2012-027NADI-1966-b1_6.4_0011\")]")
   end
 
-  it "should show a nice error message and go to the home page when you visit an invalid ID" do 
+  it "should show a 404 error message when you visit an invalid ID" do 
     visit catalog_path('yh093pt9554')
     current_path.should == catalog_path('yh093pt9554')
-    page.should have_content("Sorry, you have requested a record that doesn't exist.")
+    page.should have_content(I18n.t('revs.errors.404_message'))
+    page.status_code.should == 404
   end
 
   it "should show an item detail page metadata section only if values exist for metadata in that section" do

@@ -147,10 +147,9 @@ class CatalogController < ApplicationController
     @carousel_members = @document.get_members(:rows=>@rows,:start=>@start,:include_hidden=>can?(:view_hidden, SolrDocument))
   end
 
-  # when a request for /catalog/BAD_SOLR_ID is made, this method is executed... overriding default blacklight behavior to get our home page to work
+  # when a request for /catalog/BAD_SOLR_ID is made, this method is executed... overriding default blacklight behavior 
   def invalid_solr_id_error
-    @force_render_home=true
-    super
+    routing_error
   end
       
   configure_blacklight do |config|
