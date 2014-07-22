@@ -4,7 +4,7 @@ class Admin::OntologiesController < AdminController
   	@all_fields=Ontology.uniq.pluck(:field) # distinct fields
   	if @all_fields.size > 0
 	  @field=params[:field] || @all_fields.first	  	
-	  @terms=Ontology.where(:field=>@field).order('position ASC,value ASC').map {|term| term.value}.join("\n")
+	  @terms=Ontology.where(:field=>@field).order('value ASC').map {|term| term.value}.join("\n")
   	end
   end
 

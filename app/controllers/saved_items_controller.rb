@@ -98,7 +98,7 @@ class SavedItemsController < ApplicationController
   def sort
     SavedItem.record_timestamps=false
     @saved_item=SavedItem.find(params[:id])
-    @saved_item.position=params[:position]
+    @saved_item.row_order_position=params[:position]
     @saved_item.save
     SavedItem.record_timestamps=true
     render :nothing => true

@@ -20,7 +20,7 @@ $(document).ready(function(){
     scroll: true,
     update: function(e,ui){
       item_id=ui.item.data('gallery-id');
-      position=ui.item.index();
+      position=ui.item.index() - 1;
       $.ajax({
         type: 'post',
         data: {id: item_id, position: position},
