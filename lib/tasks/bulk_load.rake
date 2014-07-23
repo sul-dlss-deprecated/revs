@@ -166,7 +166,7 @@ namespace :revs do
   end 
   
   desc "When passed the location of .csv file(s) and a list of headers, this will generate csv with just those fields, plus fields to find the solr document"
-  #Run me: rake revs:bulk_load["SHEETS_LOCATION", header1|header2|etc, output_name] RAILS_ENV=production
+  #Run me: rake revs:csv_for_fields["SHEETS_LOCATION", header1|header2|etc, output_name] RAILS_ENV=production
   task :csv_for_fields, [:csv_files, :fields, :fn] => :environment do |t, args|
     always_present = [@sourceid, @filename]
     additional_headers = args[:fields].split(@seperator) 
@@ -204,11 +204,15 @@ namespace :revs do
        end  
   end
 
-  
-  
-  desc "Load all changes to the metadata from CSV files located in TBD"
-  #Run me: rake revs:bulk_load["SHEETS_LOCATION"] RAILS_ENV=production
+  desc "Load all changes to the metadata from CSV files located in specified folder"
+  #Run me: rake revs:bulk_load["SHEETS_LOCATION"] RAILS_ENV=production column_name=marque
+  # Examples:
+  # rake revs:bulk_load["/users/tmp","true"] column_name=marque  # update only the marque column in local testing mode (single source ID updated only)
+  # rake revs:bulk_load["/users/tmp","true"]  # update all columns in local testing mode (single source ID updated only)
+  # rake revs:bulk_load["/users/tmp"] RAILS_ENV=production column_name=marque  # update only the marque column in production mode
+  # rake revs:bulk_load["/users/tmp"] RAILS_ENV=production  # update all columns in production mode
   task :bulk_load, [:change_files_loc, :local_testing] => :environment do |t, args|
+    column_name = ENV['column_name'] || '' # if passed, this is the only column to update
     local_testing = args[:local_testing] || false #Assume we are not testing locally unless told so
     debug_source_id = '2012-027NADI-1967-b1_1.0_0008'
     change_file_location = args[:change_files_loc]
@@ -254,7 +258,7 @@ namespace :revs do
     end
    
    #These should be the field name from /app/models/solr_document.rb
-   multi_values = ['vehicle_model', 'years', "formats", "model_year", "marque", "people"]
+   multi_values = ['vehicle_model', 'years', "formats", "model_year", "marque", "people", "entrant"]
   
    #All the CSV headers we know how to handle
    known_headers = csv_to_solr.keys + ignore_fields + solr_keys
@@ -394,14 +398,16 @@ namespace :revs do
                    end   
            
                    #Set up multivalue and send it the value 
-                   args = assigner 
-                   args = multi+assigner if multi_values.include?(proper_key_name) 
+                   update_column_name = proper_key_name.strip
+                   update_column_name += multi if multi_values.include?(proper_key_name) 
                
                    begin 
-                        doc.send(proper_key_name+args, row[key].strip)
-                        #puts "Sending: #{proper_key_name+args} #{row[key].strip}" 
+                      if column_name.blank? || column_name.downcase == update_column_name.downcase || column_name.downcase == proper_key_name.downcase
+                        doc.send(update_column_name+assigner, row[key].strip)
+                        #puts "Sending: #{update_column_name+assigner}'#{row[key].strip}'" 
+                      end
                    rescue
-                       log.error("In document #{file} on row #{row[sourceid]}, failed to send the key: #{proper_key_name+args} and value: #{row[key]}")
+                       log.error("In document #{file} on row #{row[sourceid]}, failed to send the key: #{update_column_name+assigner} and value: #{row[key]}")
                    end 
                end
              end
@@ -487,6 +493,24 @@ namespace :revs do
             end
         end
       end
+    end
+  end
+
+  desc "Reset sort order for galleries"
+  task :reset_gallery_order => :environment do |t,args|
+    n=0
+    Gallery.public_galleries.order('created_at').each do |gallery|
+       gallery.update_attribute(:row_order_position,n)
+      n+=1
+    end
+  end
+
+  desc "Reset sort order for all saved items"
+  task :reset_saved_item_order => :environment do |t,args|
+    n=0
+    SavedItem.order('created_at').each do |item| 
+      item.update_attribute(:row_order_position,n)
+      n+=1
     end
   end
 
