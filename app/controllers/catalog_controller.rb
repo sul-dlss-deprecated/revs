@@ -229,15 +229,15 @@ class CatalogController < ApplicationController
     #
     # :show may be set to false if you don't want the facet to be drawn in the 
     # facet bar
-    config.add_facet_field 'pub_year_isim', :label => 'Year', :sort => 'index'
+    config.add_facet_field 'pub_year_isim', :label => 'Year', :sort => 'index', :limit => 25
     config.add_facet_field 'format_ssim', :label => 'Format'
-    config.add_facet_field 'marque_ssim', :label => 'Marque'
-    config.add_facet_field 'model_year_ssim', :label => 'Model Year', :sort => 'index'
-    config.add_facet_field 'model_ssim', :label => 'Model'
+    config.add_facet_field 'marque_ssim', :label => 'Marque', :limit => 25
+    config.add_facet_field 'model_year_ssim', :label => 'Model Year', :sort => 'index', :limit => 25
+    config.add_facet_field 'model_ssim', :label => 'Model', :limit => 25
     config.add_facet_field 'collection_ssim', :label => "Collection"
     config.add_facet_field 'photographer_ssi', :label => "Photographer"
-    config.add_facet_field 'entrant_ssim', :label => "Entrant"
-    config.add_facet_field 'people_ssim', :label => "People"
+    config.add_facet_field 'entrant_ssim', :label => "Entrant", :limit => 25
+    config.add_facet_field 'people_ssim', :label => "People", :limit => 25
     
     config.add_facet_field 'timestamp', :label => 'Added recently', :query => {
        :weeks_1 => { :label => 'within last week', :fq => "timestamp:[\"#{show_as_timestamp(1.week.ago)}\" TO *]" },
