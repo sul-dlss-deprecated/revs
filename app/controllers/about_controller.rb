@@ -78,7 +78,6 @@ class AboutController < ApplicationController
     @page_name=params[:id] || action_name # see if the page to show is specified in the ID parameter (coming via a route) or custom method (via the action name)
     @page_name='project' unless lookup_context.exists?(@page_name, 'about', true) # default to project page if requested partial doesn't exist
     @page_title=t("revs.about.#{@page_name}_title") # set the page title
-    @no_nav=(@page_name=='terms_dialog' ? true : false)
     render :show
   end
 

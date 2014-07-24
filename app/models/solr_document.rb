@@ -178,6 +178,13 @@ class SolrDocument
 
   end
 
+  # use in the meta tag of the HTML, includes both title and description
+  def meta_tag_description
+    result=self.title 
+    result += " : #{self.description}" unless self.description.blank?
+    return result.gsub("\"","'")
+  end
+
   ######################
   # we need a custom getter for the description field because
   # for some reason, we have description as a multivalued solr field, but we really only need it to be a single valued field

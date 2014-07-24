@@ -24,10 +24,10 @@
     <!-- Two stylesheets below are for Stanford Identity footer -->
     <link href="https://www.stanford.edu/su-identity/css/su-identity.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700' rel='stylesheet' type='text/css'>
-    <% if @document && !@document.description.blank?%>
-      <meta name="description" content="<%=@document.description.gsub("\"","'")%>">
+    <% if @document %>
+      <meta name="description" content="<%=@document.meta_tag_description%>">
     <% elsif on_home_page %>
-      <meta name="description" content="The Digital Library is built on top of the Stanford Digital Repository to provide a web based platform for discovery of automotive research and images. The Stanford Digital Repository ensures each digital object is preserved, made available via a permanent persistent URL (web address), enforces content rights and restrictions and provides a common storage mechanism for other applications to build upon.">    
+      <meta name="description" content="The Stanford University Revs Digital Library provides a web based platform for discovery of automotive research and images, connecting the past, prevent and future of the automobile.">    
     <% end %>
     <%= raw(google_analytics) if Rails.env.production? %>
     <%= stylesheet_link_tag    "application", media: "all" %>
@@ -45,11 +45,6 @@
   </head>
   <% onload_text = "$('input#q').focus();" if put_cursor_in_searchbox? %>
   <body onload="<%= onload_text %>" class="<%= render_body_class %> <%= render_locale_class %>">
-
-    <%= render(:partial => 'shared/terms_dialog') if show_terms_dialog?%>
-    <noscript>
-      <% if show_terms_dialog? %><meta http-equiv="refresh" content="0; URL=/about/terms_dialog?return_to=<%=request.path%>"><% end %>
-    </noscript>
 
     <div id="su-wrap"> <!-- #su-wrap start -->
       <div id="su-content"> <!-- #su-content start -->
@@ -108,5 +103,8 @@
         </div> <!-- .container end --> 
       </div> <!-- global-footer end -->
       <!-- Global footer snippet end -->
+
+    <%= render(:partial => 'shared/terms_dialog') if show_terms_dialog?%>
+
     </body>
 </html>

@@ -215,8 +215,14 @@ namespace :revs do
     column_name = ENV['column_name'] || '' # if passed, this is the only column to update
     local_testing = args[:local_testing] || false #Assume we are not testing locally unless told so
     debug_source_id = '2012-027NADI-1967-b1_1.0_0008'
-    change_file_location = args[:change_files_loc]
+    change_file_location = args[:change_files_loc] 
     change_file_extension = @csv_extension_wild
+
+    puts "Looking in #{change_file_location} for #{change_file_extension} files"
+    puts "Only updating #{column_name}" unless column_name.blank?
+    puts "Local testing mode with #{debug_source_id}" if local_testing
+    puts "Running in #{Rails.env}"
+    
     sourceid = @sourceid
     location = "location"
     format = "format"
@@ -354,18 +360,18 @@ namespace :revs do
              #Check to see if we have a location and see if we need to parse it.
              row = RevsUtils.parse_location(row, location) if row[location] != nil
            
-             #Check to see if we need need to handle marques
-             if row[marque] != nil 
-               array_marque = row[marque].split(seperator)
-               count = 0 
-               array_marque.each do |m|
-                 result = RevsUtils.revs_lookup_marque(m)
-                 array_marque[count] = result['value'] if result
-                 count += 1
-               end
-               row[marque] = array_marque.join(seperator)
-               #puts row[marque]
-             end 
+             #Check to see if we need need to handle marques # we will no longer auto correct marques
+             # if row[marque] != nil 
+             #   array_marque = row[marque].split(seperator)
+             #   count = 0 
+             #   array_marque.each do |m|
+             #     result = RevsUtils.revs_lookup_marque(m)
+             #     array_marque[count] = result['value'] if result
+             #     count += 1
+             #   end
+             #   row[marque] = array_marque.join(seperator)
+             #   #puts row[marque]
+             #end 
            
              #We could have a full date, a year, or a span of years, handle that.
              if row[year] != nil
@@ -402,9 +408,10 @@ namespace :revs do
                    update_column_name += multi if multi_values.include?(proper_key_name) 
                
                    begin 
-                      if column_name.blank? || column_name.downcase == update_column_name.downcase || column_name.downcase == proper_key_name.downcase
+                      # we need to update this field if all columns are being updated, or only a specific column is being updated, the new value of that column is NOT blank and the current value in the document IS blank
+                      if column_name.blank? || ((column_name.downcase == update_column_name.downcase || column_name.downcase == proper_key_name.downcase) && doc.send(update_column_name).blank?)
                         doc.send(update_column_name+assigner, row[key].strip)
-                        #puts "Sending: #{update_column_name+assigner}'#{row[key].strip}'" 
+                      #  puts "Sending to #{doc.id}: #{update_column_name+assigner}'#{row[key].strip}'" 
                       end
                    rescue
                        log.error("In document #{file} on row #{row[sourceid]}, failed to send the key: #{update_column_name+assigner} and value: #{row[key]}")
@@ -423,8 +430,8 @@ namespace :revs do
         end
         master_log.info("#{@success}#{file} had no errors.") if error_count == 0
         master_log.error("#{@failure}#{file} had #{error_count} error(s).") if error_count != 0
-        puts file if local_testing
-        puts error_count if local_testing
+        puts "File: #{file}" if local_testing
+        puts "Errors: #{error_count}" if local_testing
       end
       
     
