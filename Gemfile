@@ -5,6 +5,8 @@ ruby "1.9.3"
 
 gem 'bundler', '>= 1.2.0'
 
+gem 'sitemap_generator'
+
 gem 'editstore', '>= 1.1.5'
 gem 'revs-utils', '>= 1.0.5'
 

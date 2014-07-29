@@ -252,6 +252,8 @@ GEM
       multi_json (~> 1.0)
       rubyzip (< 1.0.0)
       websocket (~> 1.0.4)
+    sitemap_generator (5.0.4)
+      builder
     sprockets (2.2.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -327,6 +329,7 @@ DEPENDENCIES
   rspec-rails
   rvm-capistrano
   sass-rails (~> 3.2.3)
+  sitemap_generator
   sqlite3
   squash_rails
   squash_ruby
