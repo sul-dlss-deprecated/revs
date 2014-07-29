@@ -23,6 +23,11 @@ describe("Item Pages",:type=>:request,:integration=>true) do
     page.should have_content("View all collection items")
   end
 
+  it "should show the item page with a request to /druid" do
+    visit "/yh093pt9555"
+    find('.show-document-title').should have_content('Marlboro 12 Hour, August 12-14')
+  end
+
   it "should show an item detail page that has a description" do 
     visit catalog_path('yh093pt9555')
     find('.show-document-title').should have_content('Marlboro 12 Hour, August 12-14')

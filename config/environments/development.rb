@@ -39,15 +39,18 @@ Revs::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  # Revs App Configuration
+  config.simulate_sunet_user = "sunetuser" # SET TO BLANK OR FALSE IN PRODUCTION (it should be ignored in production anyway) if this has a value, then this will simulate you being logged in as a sunet user
+  config.purl_plugin_server = "prod"
+  config.purl_plugin_location = "//image-viewer.stanford.edu/assets/purl_embed_jquery_plugin.js"
+  config.purl = "//purl.stanford.edu"
+  config.restricted_beta = false # if set to true, then only beta users (and sunet users) can view the site
+  config.use_editstore = false # if set to true, then all changes will be saved to editstore database (SHOULD BE TRUE IN PRODUCTION!)
+  config.show_galleries_in_nav = true # if set to true, then galleries is shown in top navigation
+
 end
 
 Squash::Ruby.configure :api_host => 'https://squash-dev.stanford.edu',
                        :api_key => '20f28544-89ff-42f8-b310-4d79a70a9b29',
                        :disabled => true
-                       
-Revs::Application.config.simulate_sunet_user = "sunetuser" # if set to anything but false, then this will simulate you being logged in as a sunet user of this name # DONT DO THIS IN PRODUCTION
-Revs::Application.config.purl_plugin_server = "prod"
-Revs::Application.config.purl_plugin_location = "//image-viewer.stanford.edu/assets/purl_embed_jquery_plugin.js"
-Revs::Application.config.purl = "//purl.stanford.edu"
-Revs::Application.config.restricted_beta = false # if set to true, then only beta users (and sunet users) can view the site
-Revs::Application.config.use_editstore = false # if set to true, then all changes will be saved to editstore database (SHOULD BE TRUE IN PRODUCTION!)

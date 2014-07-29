@@ -34,10 +34,11 @@ Revs::Application.routes.draw do
 
   # ajax call from item page to show collections grid at bottom of the page
   match 'show_collection_members_grid/:id', :to => 'catalog#show_collection_members_grid', :as => 'show_collection_members_grid'
-    
+  
   # helper routes to we can have a friendly URL for items and collections
-  match 'item/:id', :to=> 'catalog#show', :as =>'item'
-  match 'collection/:id', :to=> 'catalog#show', :as =>'collection'
+  match ':id', :to=>'catalog#show', :constraints => {:id => /[a-z]{2}\d{3}[a-z]{2}\d{4}/}  # so that /DRUID goes to the item page
+  match 'item/:id', :to=> 'catalog#show', :as =>'item', :constraints => {:id => /[a-z]{2}\d{3}[a-z]{2}\d{4}/}
+  match 'collection/:id', :to=> 'catalog#show', :as =>'collection', :constraints => {:id => /[a-z]{2}\d{3}[a-z]{2}\d{4}/}
   
   # public user profile pages
   resources :user do
