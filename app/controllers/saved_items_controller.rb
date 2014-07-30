@@ -106,8 +106,8 @@ class SavedItemsController < ApplicationController
 
   def manage
     @selected_items=params[:selected_items] || []
-    @move_to_gallery=params[:move_to_gallery]
-    @copy_to_gallery=params[:copy_to_gallery]
+    @move_to_gallery=params[:move_to_gallery] || ""
+    @copy_to_gallery=params[:copy_to_gallery] || ""
     @delete=params[:delete]
     user_id=current_user.id
 
