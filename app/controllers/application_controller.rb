@@ -192,7 +192,7 @@ class ApplicationController < ActionController::Base
   end
 
   def accept_terms
-    cookies[:seen_terms] = { :value => true, :expires => 1.day.from_now } # they've seen it now, don't show it for another day
+    cookies[:seen_terms] = { :value => true, :expires => 7.days.from_now } # they've seen it now, don't show it for another week
     redirect_to (params[:return_to] || :root)
   end
  
