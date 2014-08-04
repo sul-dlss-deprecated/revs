@@ -10,7 +10,7 @@ class Flag < WithSolrDocument
   FLAG_STATES={ open: 'open', fixed: 'fixed', wont_fix: 'wont fix'}  #add a potential spam state here if desired 
   FLAG_STATE_DISPLAYS = {FLAG_STATES[:open]=> I18n.t('revs.flags.open_state_display_name'),FLAG_STATES[:fixed]=> I18n.t('revs.flags.fixed_state_diplay_name'),FLAG_STATES[:wont_fix]=> I18n.t('revs.flags.wont_fix_state_display_name'),FLAG_STATES[:wont_fix]+","+FLAG_STATES[:fixed]=>I18n.t('revs.flags.all_closed_name'),FLAG_STATES[:open]+","+FLAG_STATES[:wont_fix]+","+FLAG_STATES[:fixed]=>I18n.t('revs.flags.all_flags_name')}
   
-  attr_accessible :druid, :comment, :flag_type, :user_id, :notification_state, FLAG_TYPES
+  attr_accessible :druid, :comment, :flag_type, :user_id, :notification_state, :private_comment, FLAG_TYPES
   
   validates :druid, :is_druid=>true
   validate :check_user_id
@@ -26,6 +26,7 @@ class Flag < WithSolrDocument
     flag.notification_state="pending" if flag_info[:notify_me] == '1'
     flag.user_id=user.id unless user.blank?
     flag.state= Flag.open
+    flag.private_comment=flag_info[:private_comment]
     flag.save 
     return flag 
   end

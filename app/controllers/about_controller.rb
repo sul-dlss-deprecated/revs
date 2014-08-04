@@ -30,22 +30,22 @@ class AboutController < ApplicationController
         @spammer = false
 
         if valid_submission? 
-
-          RevsMailer.contact_message(:params=>params,:request=>request).deliver unless @email.blank? && @subject=='metadata' # don't bother creating a jira ticket if user doesn't supply email and its a metadata update, since we will create an anonymous flag anyway
-          if (!@email.blank? && @auto_response == "true")
-            RevsMailer.auto_response(:email=>@email,:subject=>@subject).deliver 
-          end
           
-          if @subject=='metadata'
+          if @subject=='metadata'  # don't bother creating a jira ticket for a metadata update, since we will create an anonymous flag anyway and add the email address and name into a private comment
             flash[:notice]=t("revs.about.contact_message_sent_about_metadata")
             unless @from.blank? # create a flag for this if its feedback that is coming from a specific druid page
               druid=@from.match(/\D\D\d\d\d\D\D\d\d\d\d/)
-              Flag.create_new({:flag_type=>:error,:comment=>@message,:druid=>druid.to_s},current_user) unless druid.blank?
+              Flag.create_new({:flag_type=>:error,:comment=>@message,:druid=>druid.to_s,:private_comment=>"#{@fullname}\n#{@email}"},current_user) unless druid.blank?
             end
-          else
+          else # any other message gets a jira ticket
+            RevsMailer.contact_message(:params=>params,:request=>request).deliver 
             flash[:notice]=t("revs.about.contact_message_sent")          
           end
-          
+
+          if (!@email.blank? && @auto_response == "true")
+            RevsMailer.auto_response(:email=>@email,:subject=>@subject).deliver 
+          end
+
           @message=nil
           @fullname=nil
           @email=nil

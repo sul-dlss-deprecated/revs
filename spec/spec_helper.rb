@@ -151,14 +151,12 @@ end
 
 # Flags
 def should_allow_flagging
-  page.should have_button(I18n.t('revs.flags.flag'))
+  find('#flag-details-link').should have_content(I18n.t('revs.flags.flag'))
   page.should_not have_css('#flag-details-link.hidden')
-  page.should have_content(I18n.t('revs.flags.flag'))
 end
 
 def should_not_allow_flagging
-  page.should_not have_content(I18n.t('revs.flags.flag'))
-  page.should_not have_button(I18n.t('revs.flags.flag'))
+  find('#flag-details-link').should_not have_content(I18n.t('revs.flags.flag'))
 end
 
 def should_deny_access(path)
