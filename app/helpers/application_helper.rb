@@ -172,7 +172,7 @@ module ApplicationHelper
       ['Models','vehicle_model_mvf',{'data-autocomplete-field'=>'vehicle_model'}],
       ['Model Years','model_year_mvf'],
       ['People','people_mvf',{'data-autocomplete-field'=>'people'}],
-      ['Entrant','entrant_mvf'],
+      ['Entrant','entrant_mvf',{'data-autocomplete-field'=>'entrant'}],
       ['Current Owner','current_owner'],
       ['Venue','venue',{'data-autocomplete-field'=>'venue'}],
       ['Track','track'],
