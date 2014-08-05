@@ -198,7 +198,7 @@
   <copyField source = "model_ssim" dest="model_tim"/>
   <copyField source = "model_year_ssim" dest="model_year_tim"/>
   <copyField source = "entrant_ssim" dest="entrant_tim"/>
-  <copyField source = "current_owner_ssi" dest="current_owner_ti"/>
+  <copyField source = "current_owner_tsi" dest="current_owner_ti"/>
   <copyField source = "venue_ssi" dest="venue_ti"/>
   <copyField source = "track_ssi" dest="track_ti"/>
   <copyField source = "event_ssi" dest="event_ti"/>

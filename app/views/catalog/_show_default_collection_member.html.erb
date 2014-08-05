@@ -62,7 +62,7 @@
       <div class="accordion-inner">
         <dl class="dl-horizontal  dl-invert">
 	
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'current_owner',:label=>t('revs.show.label_current_owner'),:editable=>true, :facet=>true} %>
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'current_owner',:label=>t('revs.show.label_current_owner'),:editable=>true, :input_type=>'text_area', :facet=>true} %>
 
 					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'marque',:label=>t('revs.show.label_marque'),:multivalued=>true,:editable=>true,:facet=>true, :input_type=>'text_area',:autocomplete=>'marque'} %>
 
