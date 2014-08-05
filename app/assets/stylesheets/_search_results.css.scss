@@ -375,6 +375,20 @@ span.constraints-label {margin-right: 0.5em;}
 		}
   }
 }
+#sidebar .searchbox {
+  .help i {
+    color: #999;
+    font-size: 16px;
+    padding-left: 3px;
+    &:hover {
+      color: #990000;
+      text-decoration: none;
+    }
+  }
+  .tooltip {
+    font-weight: 500;
+  }
+}
 
 @media (min-width: 1200px) {
   #documents.detailed {
