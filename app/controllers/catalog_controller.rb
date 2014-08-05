@@ -43,6 +43,7 @@ class CatalogController < ApplicationController
 
         @highlight_collections=SolrDocument.highlighted_collections
         @random_collection_number=Random.new.rand(@highlight_collections.size) # pick a random one to start with for non-JS users
+        @highlighted_galleries=Gallery.featured.limit(4)
       
         # get some information about all the collections and images we have so we can report on total numbers
         @total_collections=SolrDocument.all_collections.size

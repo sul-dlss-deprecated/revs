@@ -64,24 +64,32 @@
 	</noscript>
 	<!-- end single image for non JavaScript users -->
 
+  <%# Featured Galleries row %>
 	<div class="row">
-		<div class="span9 about-dl">
-			<h3 class="section-heading"><%= t('revs.about.project_title') %></h3>
-				<%= link_to image_tag('revs-about-project-scanning.png', :width => '120'), about_project_path %>
-        <p>
-          <%= t('revs.about.homepage_about_counts_html',
-              :total_images => number_with_delimiter(@total_images),
-              :number_collections => link_to(number_with_delimiter(@total_collections) + t('revs.about.homepage_about_counts_linktext'), all_collections_path)) %>
-          <% if can? :view_hidden, SolrDocument%>
-              <%= t('revs.about.homepage_about_hidden_counts_html',:total_images=> number_with_delimiter(@total_hidden_images))%>
+		<div class="span9 highlight-list">
+			<h3 class="section-heading">
+        <%= t('revs.user_galleries.heading_featured') %>
+        <span class="more-link">
+          <%= link_to t('revs.nav.more_galleries'), galleries_path %>
+        </span>
+      </h3>
+        <ul class="image-grid">
+          <% @highlighted_galleries.each_with_index do |gallery, index| %>
+            <li class="image-item item-<%= index %>">
+              <div class="image-wrapper">
+                <a href="<%= gallery_path(gallery) %>">
+                  <%= image_tag(gallery.image(:size=>:large)) %>
+                </a>
+              </div>
+              <h4>
+                <%= link_to(gallery.title,gallery_path(gallery)) %>
+                <span class="muted">
+                  <%= pluralize(gallery.saved_items.size, t('revs.user_galleries.item')) %>
+                </span>
+              </h4>
+            </li>
           <% end %>
-        </p>
-        <p>
-          <%= t('revs.about.homepage_about_project_html') %>
-        </p>
-			<p>
-				<%= link_to t('revs.nav.more'), about_project_path %>
-			</p>
+        </ul>
 		</div>
 	</div>
 

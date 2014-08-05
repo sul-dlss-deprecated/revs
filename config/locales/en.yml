@@ -149,6 +149,8 @@ en:
       user: 'User'
       featured: 'Featured'
       curator: 'Curator'
+      more_to_explore: "More to Explore"
+      more_galleries: "More galleries"
     contact:
       us: 'contact us'
       instructions_html: 'If you are asking about access or re-use of images, select "Request an image or terms of use question" as the subject or view %{reuse_link}.  If you have corrections to metadata or content on the site, please use the "Flag correction to this item" link next to the image.'
@@ -354,6 +356,7 @@ en:
       manage: 'Manage items'
     user_galleries:
       head: "Galleries"
+      heading_featured: "Featured Galleries"
       singular: "gallery"
       plural: "galleries"
       you_can_create_galleries_html: "You can %{href} and add items to it from the Item Details page."

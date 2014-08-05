@@ -43,12 +43,54 @@ $collection-image-right-gutter: 30px;
   }
 }
 
-
 .about-dl {
   p {width: 95%;}
   img {
     float: left;
     margin-right: 20px;
+  }
+}
+
+.highlight-list {
+  $highlighted-item-width: 213px;
+  ul.image-grid {
+    list-style-type: none;
+    margin-left: -10px;
+  }
+  ul.image-grid li.image-item {
+    float: left;
+    margin-bottom: 30px;
+    margin-left: 10px;
+    margin-right: 11px;
+    min-height: 169px;
+    max-width: $highlighted-item-width;
+    overflow: hidden;
+    img {
+      border: 1px solid #bbb;
+      max-height: 130px;
+    }
+  }
+  h4 {
+    font-size: 13px;
+    line-height: 16px;
+    position: absolute;
+    width: 100%;
+    max-width: $highlighted-item-width - 13px;
+    text-align: center;
+    span {
+      display: block;
+      padding-top: 3px;
+    }
+    a {
+      color: #333333;
+    }
+  }
+  h3 {
+    span.more-link {
+      float: right;
+      font-size: 12px;
+      font-weight: 500;
+    }
   }
 }
 
@@ -80,6 +122,18 @@ $collection-image-right-gutter: 30px;
       margin-left: $collection-image-container +3px;
     }
   }
+  .highlight-list {
+    $highlighted-item-width: 228px;
+    ul.image-grid li.image-item {
+      margin-right: 10px;
+      img {
+        max-height: 141px;
+      }
+    }
+    h4 {
+      max-width: $highlighted-item-width - 13px;
+    }
+  }
 }
 
 @media screen and (max-width: 979px) {
@@ -102,10 +156,40 @@ $collection-image-right-gutter: 30px;
       max-height: 249px;
     }
   }
+  .highlight-list {
+    $highlighted-item-width: 173px;
+    ul.image-grid li.image-item {
+      margin-right: 10px;
+      .image-wrapper {
+        min-width: 160px;
+      }
+      img {
+        max-height: 104px;
+      }
+    }
+    h4 {
+      max-width: $highlighted-item-width - 13px;
+    }
+  }
 }
 
 @media screen and (max-width: 768px) {
   #all_collections_carousel.carousel {
     margin-bottom: 12px;
+  }
+}
+
+@media screen and (max-width: 608px) {
+  /* hide last two items in highlight row due to narrower screen size */
+  .highlight-list .image-item.item-2,
+  .highlight-list .image-item.item-3 {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1199px) {
+  /* hide last item in highlight row due to narrower screen size */
+  .highlight-list .image-item.item-3 {
+    display: none;
   }
 }
