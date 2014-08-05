@@ -57,6 +57,10 @@ GEM
       erubis (>= 2.6.6)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    blacklight_range_limit (2.1.0)
+      blacklight (~> 4.0)
+      jquery-rails
+      rails (>= 3.0, < 5.0)
     bootstrap-sass (2.3.2.2)
       sass (~> 3.2)
     builder (3.0.4)
@@ -294,6 +298,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   blacklight!
+  blacklight_range_limit
   bootstrap-sass
   bundler (>= 1.2.0)
   cancan
