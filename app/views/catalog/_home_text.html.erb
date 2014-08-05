@@ -1,38 +1,34 @@
 <% cache("home-#{current_role}", :expires_in=>6.hours)  do %>
 	<!-- begin collection carousel for JavaScript users -->
-	<div class="row slideshow showOnLoad" style="display:none;">
-	  <div class="span6">
-	    <div id="all_collections_carousel" class="carousel slide">
-	      <div class="carousel-inner">
+  <div class="row slideshow showOnLoad" style="display:none;">
+    <div class="span9">
+      <!-- collection image block -->
+      <div id="all_collections_carousel" class="carousel slide">
+        <div class="carousel-inner">
 	        <%- @highlight_collections.each_with_index do |collection, index| -%>
 	          <div class="item<%= " active" if index == 0 %>" data-collection-title="<%= clean_collection_name(collection.title) %>" data-collection-href="<%= collection_path(collection) %>" data-collection-description="<%= truncate(collection.description,:length=>250) %>">
 	            <a id="collection-image-link" href="<%=collection_path(collection)%>"><%=image_tag collection.first_image%></a>
 	          </div>
 	        <%- end -%>
-	      </div>
-	    </div>
-	  </div>
-	  <div id="featured-collection-nav" class="span3">
-			<div class="row">
-				<div class="span3">
-			    <div class="all_collections carousel-controls">
-			      <a class="carousel-control left" href="#all_collections_carousel" data-slide="prev">&lsaquo;</a>
-			      <a class="carousel-control right" href="#all_collections_carousel" data-slide="next">&rsaquo;</a>
-			    </div>
-				</div>
-			</div>
-			<div class="row">
-		    <div id="featured-description" class="span3">
-		      <span class="content-type collection"><%= t('revs.collection.featured_collection')%></span>
-		      <h3><%= link_to clean_collection_name(@highlight_collections.first.title), collection_path(@highlight_collections.first), :id => "collection-title-link" %></h3>
-		      <p>
-		        <span id="collection-description"><%= truncate(@highlight_collections.first.description,:length=>250) %></span>
-		        <%= link_to t('revs.nav.more'), collection_path(@highlight_collections.first), :id => "collection-link" %>
-		      </p>
+        </div>
+      </div>
+      <!-- carousel controls and teaser block -->
+      <div id="featured-collection-nav">
+		    <div class="all_collections carousel-controls">
+		      <a class="carousel-control left" href="#all_collections_carousel" data-slide="prev">&lsaquo;</a>
+		      <a class="carousel-control right" href="#all_collections_carousel" data-slide="next">&rsaquo;</a>
 		    </div>
-			</div>
-	  </div>
-	</div>
+        <div class="collection-teaser">
+          <span class="content-type collection"><%= t('revs.collection.featured_collection')%></span>
+          <h3><%= link_to clean_collection_name(@highlight_collections.first.title), collection_path(@highlight_collections.first), :id => "collection-title-link" %></h3>
+          <p>
+            <span id="collection-description"><%= truncate(@highlight_collections.first.description,:length=>310) %></span>
+            <%= link_to t('revs.nav.more'), collection_path(@highlight_collections.first), :id => "collection-link" %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 	<!-- end carousel for JavaScript users -->
 
 	<!-- begin single image for non JavaScript users -->
@@ -68,7 +64,6 @@
 	</noscript>
 	<!-- end single image for non JavaScript users -->
 
-
 	<div class="row">
 		<div class="span9 about-dl">
 			<h3 class="section-heading"><%= t('revs.about.project_title') %></h3>
@@ -89,4 +84,5 @@
 			</p>
 		</div>
 	</div>
+
 <% end %>

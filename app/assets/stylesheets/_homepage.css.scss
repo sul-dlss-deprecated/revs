@@ -1,10 +1,49 @@
+// Homepage carousel
+
+/* Default values are for screen sizes 1200px and larger */
+$collection-image-container: 402px;
+$collection-image-right-gutter: 30px;
 .slideshow {
-  #featured-description h3 {
-    margin-top: 0;
-    padding-top: 0;
-    > a {color: #000;}
+  position: relative;
+}
+#all_collections_carousel {
+  width: $collection-image-container;
+  float: left;
+  margin-right: $collection-image-right-gutter;
+  .carousel-inner {
+    background-color: $body_bg_color;
+    border-right: $collection-image-right-gutter solid $body_bg_color;
+    max-height: 265px;
   }
 }
+#featured-collection-nav {
+  border-top: 5px solid #990000;
+  width: auto;
+  .carousel-controls {
+    margin-top: 0;
+    a.left {
+      margin-left: $collection-image-container + 18px;
+      left: 0;
+    }
+    a.right {
+      right: 0;
+    }
+  }
+  .collection-teaser {
+    display: table-cell;
+    vertical-align: bottom;
+    height: 220px;
+  }
+  h3 {
+   margin-top: 0;
+   padding-top: 0;
+   > a {
+     color: #000;
+   }
+  }
+}
+
+
 .about-dl {
   p {width: 95%;}
   img {
@@ -13,31 +52,60 @@
   }
 }
 
-.slideshow {
-  position: relative;
+/* Adjustments for screen sizes below 1200px */
+
+/* Put nav buttons close together when tablet or smaller */
+@media screen and (max-width: 979px) {
+  #featured-collection-nav .carousel-controls a.right {
+    left: 75px;
+  }
 }
 
-/* Position Featured slideshow nav and description column
-   below slideshow for tablet, because slideshow image
-   doesn't scale down to allow room for description column
-   to remain to the right of it. */
-#featured-collection-nav {
-  @media screen and (min-width: 768px) and (max-width: 979px) {
-    clear: both;
-    width: 100%;
+@media screen and (min-width: 980px) and (max-width: 1199px) {
+  $collection-image-container: 385px;
+  $collection-image-right-gutter: 20px;
+  #all_collections_carousel {
+    width: $collection-image-container;
+    margin-right: $collection-image-right-gutter;
+    .carousel-inner {
+      border-right-width: $collection-image-right-gutter;
+      max-height: 250px;
+    }
+  }
+  #featured-collection-nav {
+    .collection-teaser {
+      height: 205px;
+    }
+    .carousel-controls a.left {
+      margin-left: $collection-image-container +3px;
+    }
   }
 }
-#featured-description {
-  float: left;
-  @media screen and (min-width: 768px) and (max-width: 979px) {
-    width: 90%;
+
+@media screen and (max-width: 979px) {
+  #featured-collection-nav {
+    clear: both;
+    width: 100%;
+    .collection-teaser {
+      height: inherit;
+    }
+    .carousel-controls a.left {
+      margin-left: 0;
+      text-align: left;
+    }
   }
-  /* For desktop, position slideshow nav and description
-     next to slideshow image, with controls vertically positioned
-     at the top, and the text vertically positioned at the bottom */
-  @media screen and (min-width: 980px) {
-    position: absolute;
-    right: 0;
-    bottom: 0;
+  #all_collections_carousel {
+    &.carousel {
+      margin-bottom: 0;
+    }
+    .carousel-inner {
+      max-height: 249px;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #all_collections_carousel.carousel {
+    margin-bottom: 12px;
   }
 }
