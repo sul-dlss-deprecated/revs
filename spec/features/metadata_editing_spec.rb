@@ -11,10 +11,11 @@ describe("Metadata Editing",:type=>:request,:integration=>true) do
     visit root_path
     click_link @facet_link_to_click
     page.should have_content('Results')
-    page.should have_content("1 - 10 of #{visible == true ? 15 : 14}")
+    num_results = (visible ? 15 : 14)
+    page.should have_content("1 - #{num_results} of #{num_results}")
     page.should have_link('Detailed')
     page.should have_link('Gallery')
-    visible == true ? page.should(have_link(I18n.t('revs.search.gallery_toggle.curator'))) : page.should_not(have_link(I18n.t('revs.search.gallery_toggle.curator')))
+    visible ? page.should(have_link(I18n.t('revs.search.gallery_toggle.curator'))) : page.should_not(have_link(I18n.t('revs.search.gallery_toggle.curator')))
   end
   
   it "should not show editing interface to non-logged in users or non-curator users, but show it for admin and curators" do
