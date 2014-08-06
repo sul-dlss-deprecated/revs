@@ -81,6 +81,14 @@
       }
     }
   }
+  .blacklight-collection .dl-horizontal {
+    dt {
+      width: 75px;
+    }
+    dd {
+      margin-left: 10px;
+    }
+  }
   #feedback_link {
     background-color: #fff;
     border: 1px solid #ccc;
