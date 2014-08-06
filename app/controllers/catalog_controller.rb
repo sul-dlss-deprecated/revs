@@ -159,7 +159,7 @@ class CatalogController < ApplicationController
     config.default_solr_params = { 
       :qt => 'standard',
       :facet => 'true',
-      :rows => 10,
+      :rows => 20,
       :fl => "*",
       :"facet.mincount" => 1,
       :echoParams => "all"
