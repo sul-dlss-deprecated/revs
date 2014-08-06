@@ -70,7 +70,7 @@ Revs::Application.configure do
   config.purl = "//purl.stanford.edu"
   config.restricted_beta = false # if set to true, then only beta users (and sunet users) can view the site
   config.use_editstore = true # if set to true, then all changes will be saved to editstore database (SHOULD BE TRUE IN PRODUCTION!)
-  config.show_galleries_in_nav = false # if set to true, then galleries is shown in top navigation
+  config.show_galleries_in_nav = true # if set to true, then galleries is shown in top navigation
 
 end
 
