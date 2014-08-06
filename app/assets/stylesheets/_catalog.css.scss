@@ -3,9 +3,6 @@
     padding-top: 5px;
     &.section-heading {border-top: 3px solid #dddddd;}
   }
-  #featured-collection-nav {
-    @include red-top_border;
-  }
   .documentHeader {
 	  .index_title {
 		  float: left;
@@ -392,9 +389,6 @@
       margin-top: 20px;
     }
   }
-  .blacklight-catalog-index #featured-collection-nav {
-    border-top: none;
-  }
   .unresolved-label {
     display: none;
   }
@@ -422,10 +416,6 @@
 
 @media screen and (max-width: 767px) {
   .slideshow img {margin-bottom: 20px;}
-  .blacklight-catalog-index #featured-collection-nav {
-    border-top: none;
-    padding-top: 0;
-  }
   .blacklight-catalog-show {
     .back-to-results {
       display: inline;

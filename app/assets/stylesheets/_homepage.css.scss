@@ -17,7 +17,7 @@ $collection-image-right-gutter: 30px;
   }
 }
 #featured-collection-nav {
-  border-top: 5px solid #990000;
+  @include red-top_border;
   width: auto;
   .carousel-controls {
     margin-top: 0;
@@ -154,10 +154,21 @@ $collection-image-right-gutter: 30px;
 
 @media screen and (max-width: 979px) {
   #featured-collection-nav {
+    padding-top: 20px;
     clear: both;
     width: 100%;
+    border-top: none;
+    .slideshow {
+      margin-bottom: 10px;
+    }
     .collection-teaser {
       height: inherit;
+    }
+    .carousel-controls {
+      height: 25px;
+      .carousel-control {
+        font-size: 60px;
+      }
     }
     .carousel-controls a.left {
       margin-left: 0;
@@ -192,6 +203,9 @@ $collection-image-right-gutter: 30px;
 @media screen and (max-width: 768px) {
   #all_collections_carousel.carousel {
     margin-bottom: 12px;
+  }
+  #featured-collection-nav {
+    padding-top: 5px;
   }
 }
 
