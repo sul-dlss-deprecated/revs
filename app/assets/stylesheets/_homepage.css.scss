@@ -61,13 +61,13 @@ $collection-image-right-gutter: 30px;
     float: left;
     margin-bottom: 30px;
     margin-left: 10px;
-    margin-right: 11px;
+    margin-right: 10px;
     min-height: 169px;
     max-width: $highlighted-item-width;
     overflow: hidden;
     img {
       border: 1px solid #bbb;
-      max-height: 130px;
+      width: 198px;
     }
   }
   h4 {
@@ -75,10 +75,11 @@ $collection-image-right-gutter: 30px;
     line-height: 16px;
     position: absolute;
     width: 100%;
-    max-width: $highlighted-item-width - 13px;
+    max-width: $highlighted-item-width - 18px;
     text-align: center;
     span {
       display: block;
+      font-weight: 500;
       padding-top: 3px;
     }
     a {
@@ -89,6 +90,22 @@ $collection-image-right-gutter: 30px;
     span.more-link {
       float: right;
       font-size: 12px;
+      font-weight: 500;
+    }
+  }
+  &.explore {
+    h3 {
+      margin-top: 20px;
+    }
+    h4 {
+      font-size: 14px;
+      a.more-link, a.more_facets_link {
+        white-space: nowrap;
+      }
+    }
+    .item-links a {
+      color: #990000;
+      font-size: 13px;
       font-weight: 500;
     }
   }
@@ -125,13 +142,12 @@ $collection-image-right-gutter: 30px;
   .highlight-list {
     $highlighted-item-width: 228px;
     ul.image-grid li.image-item {
-      margin-right: 10px;
       img {
-        max-height: 141px;
+        width: 213px;
       }
     }
     h4 {
-      max-width: $highlighted-item-width - 13px;
+      max-width: $highlighted-item-width - 15px;
     }
   }
 }
@@ -159,16 +175,16 @@ $collection-image-right-gutter: 30px;
   .highlight-list {
     $highlighted-item-width: 173px;
     ul.image-grid li.image-item {
-      margin-right: 10px;
+      margin-bottom: 0;
       .image-wrapper {
         min-width: 160px;
       }
       img {
-        max-height: 104px;
+        width: 160px;
       }
     }
     h4 {
-      max-width: $highlighted-item-width - 13px;
+      max-width: $highlighted-item-width - 15px;
     }
   }
 }
@@ -180,7 +196,7 @@ $collection-image-right-gutter: 30px;
 }
 
 @media screen and (max-width: 608px) {
-  /* hide last two items in highlight row due to narrower screen size */
+  /* hide two items in highlight rows due to narrower screen size */
   .highlight-list .image-item.item-2,
   .highlight-list .image-item.item-3 {
     display: none;
@@ -188,8 +204,14 @@ $collection-image-right-gutter: 30px;
 }
 
 @media screen and (max-width: 1199px) {
-  /* hide last item in highlight row due to narrower screen size */
+  /* hide one item in highlight rows due to narrower screen size */
   .highlight-list .image-item.item-3 {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .highlight-list.explore {
     display: none;
   }
 }

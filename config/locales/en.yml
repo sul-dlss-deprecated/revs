@@ -151,6 +151,17 @@ en:
       curator: 'Curator'
       more_to_explore: "More to Explore"
       more_galleries: "More galleries"
+      video_tutorials: "Video tutorials"
+      video_titles:
+        overview: "Revs overview"
+        account: "Create an account"
+        gallery: "Create a gallery"
+      models: "Models"
+      people: "People"
+      events: "Events"
+      marques: "Marques"
+      venues: "Venues"
+      tracks: "Tracks"
     contact:
       us: 'contact us'
       instructions_html: 'If you are asking about access or re-use of images, select "Request an image or terms of use question" as the subject or view %{reuse_link}.  If you have corrections to metadata or content on the site, please use the "Flag correction to this item" link next to the image.'
