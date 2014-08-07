@@ -9,6 +9,7 @@ class Admin::GalleryHighlightsController < AdminController
   # an ajax call to set which galleries are highlighted
   def set_highlight
     Gallery.find(params[:id]).update_column(:featured,params[:highlighted] == 'true')
+    expire_fragment('home')
     render :nothing=>true
   end
   
@@ -18,6 +19,7 @@ class Admin::GalleryHighlightsController < AdminController
     @gallery.row_order_position=params[:position]
     @gallery.save
     Gallery.record_timestamps=true
+    expire_fragment('home')
     render :nothing => true
   end
     
