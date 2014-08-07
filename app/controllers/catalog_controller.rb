@@ -39,21 +39,12 @@ class CatalogController < ApplicationController
         
       not_authorized unless can? :read,:home_page
       
-      unless fragment_exist?("home-#{current_role}") # fragment cache for performance
+      unless fragment_exist?("home") # fragment cache for performance
 
         @highlight_collections=SolrDocument.highlighted_collections
         @random_collection_number=Random.new.rand(@highlight_collections.size) # pick a random one to start with for non-JS users
         @highlighted_galleries=Gallery.featured.limit(4)
       
-        # get some information about all the collections and images we have so we can report on total numbers
-        @total_collections=SolrDocument.all_collections.size
-        if can?(:view_hidden, SolrDocument)
-          @total_images=SolrDocument.total_images(:all)
-          @total_hidden_images=SolrDocument.total_images(:hidden)
-        else
-          @total_images=SolrDocument.total_images
-        end
-        
       end
     
     elsif can?(:bulk_update_metadata,:all) && params[:bulk_edit] && request.post? # user submitted a bulk update operation and has the rights to do it

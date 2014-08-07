@@ -78,6 +78,17 @@ class AboutController < ApplicationController
     @page_name=params[:id] || action_name # see if the page to show is specified in the ID parameter (coming via a route) or custom method (via the action name)
     @page_name='project' unless lookup_context.exists?(@page_name, 'about', true) # default to project page if requested partial doesn't exist
     @page_title=t("revs.about.#{@page_name}_title") # set the page title
+
+    if @page_name=='project'
+      # get some information about all the collections and images we have so we can report on total numbers
+      @total_collections=SolrDocument.all_collections.size
+      if can?(:view_hidden, SolrDocument)
+        @total_images=SolrDocument.total_images(:all)
+        @total_hidden_images=SolrDocument.total_images(:hidden)
+      else
+        @total_images=SolrDocument.total_images
+      end
+    end
     render :show
   end
 
