@@ -164,7 +164,7 @@ class ApplicationController < ActionController::Base
   end
     
   def on_home_page
-    request.path==root_path && params[:f].blank? && params[:q].blank?
+    request.path==root_path && params[:f].blank? && params[:q].blank? && params[:range].blank?
   end
 
   def on_detail_page
