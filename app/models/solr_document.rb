@@ -86,7 +86,7 @@ class SolrDocument
       :marque=>{:field=>'marque_ssim', :multi_valued => true},
       :vehicle_model=>{:field=>'model_ssim', :multi_valued => true},
       :model_year=>{:field=>'model_year_ssim', :multi_valued => true},
-      :current_owner=>{:field=>'current_owner_ssi'},
+      :current_owner=>{:field=>'current_owner_tsi'},
       :entrant=>{:field=>'entrant_ssim', :multi_valued => true},
       :venue=>{:field=>'venue_ssi'},
       :track=>{:field=>'track_ssi'},
@@ -118,6 +118,10 @@ class SolrDocument
   # a helper that makes it easy to show the document location as a single string
   def location
     [city_section,city,state,country].reject(&:blank?).join(', ')
+  end
+
+  def update_attribute(attribute,value)
+     self.send("#{attribute}=",value) # this sets the given attribute
   end
   
   # if the user updates one of the date fields, we'll run some computations to update the others as needed
@@ -172,6 +176,13 @@ class SolrDocument
     
     return @errors.size == 0
 
+  end
+
+  # use in the meta tag of the HTML, includes both title and description
+  def meta_tag_description
+    result=self.title 
+    result += " : #{self.description}" unless self.description.blank?
+    return result.gsub("\"","'")
   end
 
   ######################
@@ -234,9 +245,7 @@ class SolrDocument
     random=params[:random] || false # if set to true, will give you a random selection from the collection ("start" will be ignored)
     include_hidden=params[:include_hidden] || false # if set to true, the query will also return hidden images
     
-    if random
-      start = self.total_siblings-rows < 0 ? 0 : rand(0...self.total_siblings-rows) # if we have less items than we want to show, just start at 0; else start at a random number between 0 and the total - # to show
-    end
+    sort = (random ? "random_#{Random.new.rand(10000)} asc" : "priority_isi desc")
         
     fq="#{blacklight_config.collection_member_identifying_field}:\"#{self[blacklight_config.collection_member_identifying_field].first}\""
     fq+=" AND #{SolrDocument.images_query(:visible)}" unless include_hidden
@@ -244,9 +253,9 @@ class SolrDocument
                                Blacklight.solr.select(
                                  :params => {
                                    :fq => fq,
-                                   :sort=> "priority_isi desc",
+                                   :sort=> sort,
                                    :rows => rows.to_s,
-                                  :start => start.to_s
+                                   :start => start.to_s
                                  }
                                )
                              )
@@ -272,14 +281,16 @@ class SolrDocument
     rows=params[:rows] || blacklight_config.collection_member_grid_items
     start=params[:start] || 0
     include_hidden=params[:include_hidden] || false # if set to true, the query will also return hidden images
-    
+    random=params[:random] || false
+
+    sort = (random ? "random_#{Random.new.rand(10000)} asc" : "priority_isi desc")
     fq="#{blacklight_config.collection_member_identifying_field}:\"#{self[SolrDocument.unique_key]}\""
     fq+=" AND #{SolrDocument.images_query(:visible)}" unless include_hidden
     return CollectionMembers.new(
                               Blacklight.solr.select(
                                 :params => {
                                   :fq => fq,
-                                  :sort=> "priority_isi desc",
+                                  :sort=> sort,
                                   :rows => rows.to_s,
                                   :start => start.to_s
                                 }
@@ -320,7 +331,13 @@ class SolrDocument
     return nil unless is_collection?
     first_item.images(:large).first
   end
-  
+
+  # gives you a random item from the given collection
+  def random_item
+    return nil unless is_collection?
+    self.get_members(:rows=>1,:start=>(Random.new.rand(self.get_members.size-1))).first
+  end
+
   # gives you the current top priority number for item sorting for the given collection
   def current_top_priority
     return nil unless is_collection?
@@ -353,7 +370,7 @@ class SolrDocument
   end
 
   def add_changelog(user)
-    ChangeLog.create(:druid=>id,:user_id=>user.id,:operation=>'metadata update',:note=>unsaved_edits.to_s) if (valid? && user)  
+    ChangeLog.create(:druid=>id,:user_id=>user.id,:operation=>'metadata update',:note=>unsaved_edits.to_s) if (valid? && dirty? && user)  
   end
   
   # propogate unique information to database as well when saving solr document
@@ -425,7 +442,9 @@ class SolrDocument
     
     selected_druids=params[:selected_druids]
     attribute=params[:attribute]
+    search_value=params[:search_value]
     new_value=params[:new_value]
+    action=params[:action]
   
     valid=false
     
@@ -434,7 +453,24 @@ class SolrDocument
     
       doc=self.find(druid) # load solr doc
       if !doc.blank?
-        doc.send("#{attribute}=",new_value) # this sets the attribute
+        case action 
+          when 'remove' # completely remove existing value
+            doc.update_attribute(attribute,'') # this sets the attribute to blank
+          when 'update' # completely replace the old value with the new value
+            doc.update_attribute(attribute,new_value) # this sets the attribute
+          when 'replace' # only replace the old value if it matches the search value exactly (and only one value needs to match in an MVF field)
+            if attribute.end_with? SolrDocument.multivalued_field_marker #  attribute being operated on is a multivalued field
+              current_values=doc.send("#{attribute}") # current values as a delimited string
+              attribute_name_without_mvf=attribute.chomp(SolrDocument.multivalued_field_marker)
+              current_values_array=doc.send("#{attribute_name_without_mvf}") # current values as an array
+              if !current_values_array.empty?
+                new_values_array = current_values_array.map {|value| value == search_value ? new_value : value }# iterate through existing values and replace with new value if it matches 
+                doc.update_attribute(attribute_name_without_mvf,new_values_array)
+              end
+            else # attribute being operated on is a single valued field, check to see if it exactly matches search value before updating
+              doc.update_attribute(attribute,new_value) if !doc.send("#{attribute}").blank? && doc.send("#{attribute}").strip == search_value.strip # replace with the new value if we exactly match the old
+            end
+          end
         valid = doc.save(:user=>user) # if true, we have successfully updated solr
       end
       break unless valid # stop if any solr doc is not valid
@@ -444,6 +480,7 @@ class SolrDocument
     return valid
     
   end
+
 
   private
   def self.config

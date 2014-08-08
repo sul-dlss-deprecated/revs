@@ -11,7 +11,7 @@ class RevsEditstore < ActiveRecord::Migration
       Editstore::Field.create(:name=>'subjects_ssim',:project_id=>project.id)
       Editstore::Field.create(:name=>'marque_ssim',:project_id=>project.id)
       Editstore::Field.create(:name=>'entrant_ssi',:project_id=>project.id)
-      Editstore::Field.create(:name=>'current_owner_ssi',:project_id=>project.id)
+      Editstore::Field.create(:name=>'current_owner_tsi',:project_id=>project.id)
       Editstore::Field.create(:name=>'venue_ssi',:project_id=>project.id)
       Editstore::Field.create(:name=>'track_ssi',:project_id=>project.id)
       Editstore::Field.create(:name=>'event_ssi',:project_id=>project.id)

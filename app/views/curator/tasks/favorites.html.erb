@@ -20,7 +20,7 @@
         <div class="row results-controls">
           <div class="span5 offset4 saved-item-pagination">
             <span>
-              <%= page_entries_info @saved_items_by_item, :entry_name=>'item' %>
+              <%= page_entries_info @saved_items_by_item, :entry_name=>t('revs.user_galleries.item') %>
             </span>
           </div>
         </div>
@@ -57,14 +57,14 @@
           <tr>
             <th><%=link_to t('revs.curator.username'),favorites_table_curator_tasks_path(:order_user=>'user_id ASC',:tab=>@tab_list_user) %></th>
             <th class="right"><%=link_to t('revs.curator.lists_made'), favorites_table_curator_tasks_path(:order_user=>'num_galleries DESC', :tab=>@tab_list_user) %></th>
-            <th class="right"><%=t('revs.curator.favorites_made') %></th>
+            <th class="right"><%=link_to t('revs.curator.favorites_made'), favorites_table_curator_tasks_path(:order_user=>'galleries.saved_items_count DESC', :tab=>@tab_list_user) %></th>
             <th><%=link_to t('revs.curator.last_save'), favorites_table_curator_tasks_path(:order_user=>'updated_at DESC', :tab=>@tab_list_user) %></th>
           </tr>
           <% @saved_items_by_user.each do |result| %>
             <tr>
               <td><%=link_user_name(result.user)%></td>
               <td class="right"><%= result.num_galleries%></td>
-              <td class="right"><%= result.user.all_saved_items.count %></td>
+              <td class="right"><%= result.saved_items_count %></td>
               <td><%= show_as_date(result.updated_at.in_time_zone) %></td>
             </tr>
           <% end %>

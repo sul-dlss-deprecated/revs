@@ -36,48 +36,18 @@
     &.right {margin-right:-12px;}
   }
 }
-.blacklight-catalog-index {
-  .carousel-controls {
-    margin-top: 0;
-    a.left {left: 0;}
-    a.right {right: 0;}
-  }
-  .carousel-control {
-    /* Put nav buttons close together when tablet or smaller */
-    @media screen and (max-width: 979px) {
-      left: 75px;
-    }
-  }
-}
 .carousel-inner > .item > img, .carousel-inner > .item > a > img{
-  border: 1px solid #bbb;
+  border: 2px solid #bbb;
+}
+@media screen and (min-width: 980px) and (max-width: 1199px) {
+ .carousel-inner {max-width: 380px;}
 }
 
-#all_collections_carousel .carousel-inner {
-  max-height: 260px;
-}
-
+/* Responsive overrides specific to Collection page carousel */
 @media screen and (max-width: 979px) {
-  .carousel {margin-bottom: 5px;}
+  #collection_carousel.carousel {margin-bottom: 5px;}
 }
 
 @media screen and (max-width: 768px) {
-  .carousel {margin-bottom: 0;}
-  #all_collections_carousel .carousel-inner {
-    max-height: 249px;
-  }
-}
-
-@media screen and (min-width: 980px) and (max-width: 1199px) {
- .carousel-inner {max-width: 380px;}
- #all_collections_carousel .carousel-inner {
-   max-height: 249px;
- }
-}
-
-@media screen and (min-width: 769px) and (max-width: 979px) {
- .carousel-inner {max-width: 290px;}
- #all_collections_carousel .carousel-inner {
-   max-height: 190px;
- }
+  #collection_carousel.carousel {margin-bottom: 0;}
 }

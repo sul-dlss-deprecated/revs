@@ -9,7 +9,12 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- */
+ 
+ *
+ * Used by blacklight_range_limit
+ *= require  'blacklight_range_limit'
+ *         
+*/
 
 @import "bootstrap";
 @import "bootstrap-responsive";
@@ -21,6 +26,7 @@
 @import "blacklight/bookmark";
 @import "blacklight/dropdown";
 @import "blacklight/catalog";
+@import "blacklight_range_limit";
 
 @import "improved-modal/bootstrap-modal";
 
@@ -43,6 +49,7 @@
 
 @import "collection_members_grid";
 @import "carousel";
+@import "filmstrip";
 
 @import "search_results";
 @import "help";
@@ -53,5 +60,10 @@
 @import "stanford_footer";
 @import "jquery-ui-1.10.4.custom.min";
 
-/* load print last */
+/* load print last 
+ *
+ * Used by blacklight_range_limit
+ *= require  'blacklight_range_limit'
+ *         
+*/
 @import "print";

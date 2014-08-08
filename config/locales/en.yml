@@ -20,7 +20,7 @@ en:
   helpers:
     page_entries_info:
       more_pages:
-        display_entries: "<b>%{first}&nbsp;-&nbsp;%{last}</b> of <b>%{total}</b>"
+        display_entries: "<b>%{first}&nbsp;-&nbsp;%{last}</b> of <b>%{total}</b> %{entry_name}"
   revs:
     digital_library: 'Revs Digital Library'
     tagline: 'Connecting the past, present and future of the automobile'
@@ -78,6 +78,7 @@ en:
       public_visibility_hidden: "Hidden"
       public_visibility_show: "Show this item to the public"
       public_visibility_hide: "Hide this item from public view"
+      you: 'you'
     flags:
       anonymous_not_shown: 'Flags added anonymously are not shown.'
       refresh_list: 'Refresh list'
@@ -122,10 +123,14 @@ en:
     nav:
       home: 'Home'
       collections: 'Collections'
+      galleries: 'Galleries'
       select_all: 'Select all'
-      update: 'Update'
+      toggle_all: 'All'
+      update_completely: 'Update'
       remove: 'Remove'
+      replace: 'Find and Replace'
       save_changes: 'Save Changes'
+      update: 'Update'
       create: 'Create'
       submit: 'Submit'
       send: 'Send'
@@ -139,15 +144,33 @@ en:
       return_to_gallery: '&laquo; return to gallery'
       return_to_favorites: "&laquo; return to %{user_name}'s favorites"
       return_to_search_results: '&laquo; search results'
+      grid_view: 'Grid'
+      detailed_view: 'Detailed'
+      user: 'User'
+      featured: 'Featured'
+      curator: 'Curator'
+      more_to_explore: "More to Explore"
+      more_galleries: "More galleries"
+      video_tutorials: "Video tutorials"
+      video_titles:
+        overview: "Revs overview"
+        account: "Create an account"
+        gallery: "Create a gallery"
+      models: "Models"
+      people: "People"
+      events: "Events"
+      marques: "Marques"
+      venues: "Venues"
+      tracks: "Tracks"
     contact:
       us: 'contact us'
-      instructions_html: 'If you are asking about access or re-use of images, select "Request an image or terms of use question" as the subject or view %{reuse_link}.'
+      instructions_html: 'If you are asking about access or re-use of images, select "Request an image or terms of use question" as the subject or view %{reuse_link}.  If you have corrections to metadata or content on the site, please use the "Flag correction to this item" link next to the image.'
       permission_information: 'permission information and contact the Revs Institute'  
       select_topic: 'Select a topic...'
       problem: 'Problem with the website'
       other_questions: 'Other questions'
       terms_of_use: 'Request an image or terms of use question'
-      metadata_issue: 'Corrections to content or metadata'
+      metadata_issue: 'Corrections to content'
       name: 'Your name'
       email: 'Your email'
       email_address: 'Email address'
@@ -199,19 +222,26 @@ en:
       find_users: "Find users"
       update_users: "Update users"
       administer_highlights: 
-        title: "Featured Collections"
+        title: "Feature Collections"
         description: "To feature a collection on the home page, check the box next to its name.  The collections are shown in the order they are checked (last checked shown first)."
       administer_galleries: 
-        title: "Featured Galleries"
+        title: "Feature Galleries"
         description: "To feature a gallery on the galleries page, check the box next its name.  Drag and drop to change the ordering."        
       administer_ontologies:
-        title: "Manage Auto Complete Terms"
-        description: "Manage the list of terms by field that is used for the auto-complete suggestions when curators are editing metadata.  Select a field and then enter all of the terms in the box shown, one term per line.  If you remove all terms, the autocomplete field will be deleted. Terms are shown to users in alphabetical order, regardless of order entered.  Note that if you enter a new field, it will not be available for autocomplete unless a coding change is also made."
-        none: "There are no fields to manage."
-      field: "Select field"
-      new_field: "Enter a new field"
+        title: "Manage Autocomplete Terms"
+        description: |
+          Manage the list of terms by field that is used for the auto-complete suggestions when curators are editing metadata.
+          Select a field and then enter all of the terms in the box shown, one term per line.
+          If you remove all terms, the autocomplete field will be deleted.
+          Terms are shown to users in alphabetical order, regardless of order entered.
+        none: "There are no fields to manage. You can add a new one below."
+        add_new_field:
+          title: "Create New Autocomplete Field"
+          description: "Note that a new field will not be available for autocomplete until a coding change is also made."
+      field: "Field to update"
+      new_field: "New field name"
       terms_updated: "Added %{num} terms for field '%{field}'."
-      terms: "Terms (one per line)"
+      terms: "Enter terms and click Update (one per line, blank lines are ignored, leading and trailing spaces will be trimmed)"
       dashboard: "Administrator Dashboard"
       your_account: "This is your account. To update your password, visit %{your_account_linktext}. You cannot update your own role."
       waiting_confirmation_from_user: "Currently waiting confirmation from user of their email address"
@@ -234,16 +264,17 @@ en:
       num_logins: 'Number of logins'
       sidebar:
         actions: 'Actions'
-        help: "Help"
+        help: "Administrator Help"
         administer_users: "Manage Users"
         administer_ontologies: "Manage Autocomplete Terms"
-        administer_highlights: "Featured Collections"
-        administer_galleries: "Featured Galleries"
+        administer_highlights: "Feature Collections"
+        administer_galleries: "Feature Galleries"
       registered_users: "registered users"
     curator:
       not_found: 'Item not found'
       sidebar:
         actions: 'Actions'
+        help: "Curator Help"
         view_annotations: 'View All Annotations'
         view_flagged_items: "View All Flags"
         view_edited_items: "View All Edits"
@@ -254,6 +285,8 @@ en:
       leave_edit_mode: 'Leave metadata edit mode'
       set_posterframe: 'Use this image to represent the collection'
       active: "Active"
+      new_value: 'new value'
+      search_value: 'old value'
       item_title: "Item title"
       flagging_user: "Flagged by"
       flag_created: "Flagged on"
@@ -289,6 +322,11 @@ en:
       metadata_edit_history_description: "This item was edited on"
       are_you_sure_apply_updates: "Are you sure you want to change each of the selected items?  This action cannot be undone."
       you_can_edit_items: "Items you edit will be listed here."
+      headings:
+        select: "Select"
+        action: "Action"
+        field_to_update: "Field to update"
+        field_value: "Field value"
     dashboards: 'Dashboards'
     citations:
         view: 'View full citation page'
@@ -309,6 +347,7 @@ en:
         annotation_text: "Annotation text"
         annotator: "Annotator"
         are_you_sure: "Are you sure you want to remove this annotation?"
+        help: "Annotations are descriptions that apply to specific parts of the item image. Use the Annotations action to view any annotations made to the item image by other users or to add your own annotations."
     favorites:
       singular: "favorite"
       plural: "favorites"
@@ -328,6 +367,7 @@ en:
       manage: 'Manage items'
     user_galleries:
       head: "Galleries"
+      heading_featured: "Featured Galleries"
       singular: "gallery"
       plural: "galleries"
       you_can_create_galleries_html: "You can %{href} and add items to it from the Item Details page."
@@ -372,11 +412,14 @@ en:
       public: 'Public'
       private: 'Private'
       curator: 'Curators only'
+      no_description: 'No gallery description'
+      more_items: ' more'
     collection:
       collection_detail: 'Collection Detail'
       member_detail: 'Item Detail'
       featured_collection: 'Featured Collection'
       total_items: "Total Items"
+      name: 'collection'
     collection_members:
       items_name: 'item'
     collection_members_grid:
@@ -385,6 +428,7 @@ en:
       collection_text: 'Other Collection Items'
       sibling_text: "Other items in %{collection}"
     search:
+      help: 'Enter terms to search for records with any of those terms. Use quotes around your terms for phrases.  Use AND and OR to further restrict searching.  Text searches can be used to refine specific fields searched below.'
       search_results: 'Results'
       gallery_toggle:
         gallery: 'Gallery'
@@ -523,25 +567,36 @@ en:
       waiting_confirmation: "Currently waiting confirmation for"
       username_public_display: "username for public display"
       view_profile: "View profile"
-      view_all_annotations: "View annotations"
+      profile: "Profile"
+      view_all_annotations: "Annotations"
       close_all_annotations: "Close Annotations"
       view_your_annotations: "View your annotations"
       view_your_flags: "View your flags"
       view_your_edits: "View your edits"
-      view_all_favorites: "View favorites"
+      view_all_favorites: "Favorites"
       view_your_favorites: "View your favorites"
-      view_all_galleries: "View galleries"
+      view_all_galleries: "Galleries"
       view_your_galleries: "View your galleries"
-      view_all_edits: "View edits"
-      view_all_flags: "View flags"
+      view_all_edits: "Edits"
+      view_all_flags: "Flags"
       view_profile_page: "View your profile page"
       edit_profile: "Edit Profile"
       your_profile_page: "your profile page"
       create_new_gallery: "Create new gallery"
+      public_activity: "'s Public Activity"
     help:
+      videos:
+        titles:
+          overview: "Overview of the Revs Digital Library"
+          account: "Create an account"
+          logging_in: "Log in"
+          favorites_flags: "Save favorites and flag metadata issues"
+          gallery: "Create a gallery"
+          annotation: "Create an annotation"
       sidebar:
         bulk_edits: "Edit records in bulk"
         metadata_editing_guidelines: "Metadata editing guidelines"
+        video_tutorials: "Video Tutorials"
       curator:
         page_title: "Curator Help"
         bulk_edits: "Edit multiple records in bulk (bulk editing)"

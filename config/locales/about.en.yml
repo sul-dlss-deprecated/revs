@@ -25,17 +25,20 @@ en:
       faq_title_nav: 'Frequently Asked Questions'
       faq_title: 'Frequently Asked Questions (FAQ)'
       faq_text_html: |
-        <p>
-          <strong>How do I let you know about corrections or problems with a title or other piece of information about an image?</strong>
-          <br /><br />The best way to let us know is to %{sign_up_link} for an account and use the "flag a correction" feature on any page.  If don't have an account and don't want to create one, you can also %{corrections_link}, but we may not be able to respond individually.
+        <p class="faq-question">
+          How do I let you know about corrections or problems with a title or other piece of information about an image?
         </p>
-        <p>
-          <strong>I would like to reuse images on my own website, in a publication, for research or for commercial purposes. Can I do this?</strong>
-          <br /><br />All of the content is currently under a full copyright from the Revs Institute and you should review their %{reuse_link}.  You can also review Stanford's %{terms_of_use_link}.
+        <p class="faq-answer">The best way to let us know is to %{sign_up_link} for an account and use the "flag a correction" action on any item page.  If you don't have an account and don't want to create one, you can also let us know via the %{corrections_link} form, but we may not be able to respond individually.
         </p>
-        <p>
-          <strong>When I try and download a full size image, it asks me to login with a SUNET ID.  What is that and I can I get one?</strong>
-          <br /><br />High resolution images are only available to members of the Stanford community through a prior agreement.  SUNET IDs are only available to authorized Stanford users and we cannot create one for you.  If you wish 
+        <p class="faq-question">
+          I would like to reuse images on my own website, in a publication, for research or for commercial purposes. Can I do this?
+        </p>
+        <p class="faq-answer">All of the content is currently under a full copyright from the Revs Institute and you should review their %{reuse_link}.  You can also review Stanford's %{terms_of_use_link}.
+        </p>
+        <p class="faq-question">
+          When I try and download a full size image, it asks me to login with a SUNET ID.  What is that and I can I get one?
+        </p>
+        <p class="faq-answer">High resolution images are only available to members of the Stanford community through a prior agreement.  SUNET IDs are only available to authorized Stanford users and we cannot create one for you.  If you wish 
           to obtain a high resolution image for any reason, please review %{reuse_link}.
         </p>
       terms_of_use_text_html: |
@@ -47,9 +50,9 @@ en:
         <ul>
           <li><a href="http://library.stanford.edu/people/rns">Robert Schwarzwalder</a> - Associate University Librarian for Science & Engineering Director, Library Technologies</li>
           <li><a href="http://library.stanford.edu/people/tcramer">Tom Cramer</a> - Chief Technology Strategist & Associate Director, Digital Library Systems & Services</li>
-          <li><a href="http://library.stanford.edu/people/snydman">Stuart Snydman</a> - Manager, Digital Production & Web Application Development</li>
+          <li><a href="http://library.stanford.edu/people/snydman">Stuart Snydman</a> - Associate Director for Digital Strategy, Digital Library Systems & Services</li>
           <li><a href="http://library.stanford.edu/people/petucket">Peter Mangiafico</a> - Product Manager, Revs Project</li>
-          <li>Gary Geisler - Digital Library Web Developer</li>
+          <li>Gary Geisler - User Experience Designer/Digital Library Web Developer</li>
           <li>Carrick Rogers - Digital Library Software Engineer</li>
           <li><a href="http://library.stanford.edu/people/jkeck">Jessie Keck</a> - Digital Library Software Engineer</li>
         </ul>
@@ -87,3 +90,4 @@ en:
           automotive research and images.
           The Stanford Digital Repository ensures each digital object is preserved, made available via a permanent persistent URL
           (web address), enforces content rights and restrictions and provides a common storage mechanism for other applications to build upon.
+      video_tutorials_title: "Video Tutorials"

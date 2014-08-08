@@ -76,7 +76,16 @@ module ApplicationHelper
 
   def show_linked_value(val,opts={})
     value = (opts[:simple_format].blank? ? val : simple_format(val))
-    opts[:facet].blank? ? value : link_to(value,catalog_index_path(:"f[#{SolrDocument.field_mappings[opts[:facet].to_sym][:field]}][]"=>"#{val}"))
+    if opts[:facet].blank?
+      value
+    else
+      if SolrDocument.field_mappings[opts[:facet].to_sym][:field] == 'pub_year_isim' # if its the year, formulate the correct date range query
+        link = catalog_index_path(:"range[pub_year_isim][begin]" => "#{val}", :"range[pub_year_isim][end]" => "#{val}")      
+      else
+        link = catalog_index_path(:"f[#{SolrDocument.field_mappings[opts[:facet].to_sym][:field]}][]"=>"#{val}")
+      end
+      link_to(value,link)
+    end
   end
   
   def show_formatted_list(mvf,opts={})
@@ -164,23 +173,23 @@ module ApplicationHelper
   def bulk_update_fields
     [
       ['Title','title'],
-      ['Formats','formats'],
+      ['Formats','formats',{'data-autocomplete-field'=>'format'}],
       ['Years','years_mvf'],
       ['Date','full_date'],
       ['Description','description'],
-      ['Marque','marque_mvf'],
-      ['Models','vehicle_model_mvf'],
+      ['Marque','marque_mvf',{'data-autocomplete-field'=>'marque'}],
+      ['Models','vehicle_model_mvf',{'data-autocomplete-field'=>'vehicle_model'}],
       ['Model Years','model_year_mvf'],
-      ['People','people_mvf'],
-      ['Entrant','entrant_mvf'],
+      ['People','people_mvf',{'data-autocomplete-field'=>'people'}],
+      ['Entrant','entrant_mvf',{'data-autocomplete-field'=>'entrant'}],
       ['Current Owner','current_owner'],
-      ['Venue','venue'],
+      ['Venue','venue',{'data-autocomplete-field'=>'venue'}],
       ['Track','track'],
-      ['Event','event'],
+      ['Event','event',{'data-autocomplete-field'=>'event'}],
       ['Street','city_section'],
-      ['City','city'],
-      ['State','state'],
-      ['Country','country'],
+      ['City','city',{'data-autocomplete-field'=>'city'}],
+      ['State','state',{'data-autocomplete-field'=>'state'}],
+      ['Country','country',{'data-autocomplete-field'=>'country'}],
       ['Group/Class','group_class'],
       ['Race Data','race_data'],
       ['Photographer','photographer']

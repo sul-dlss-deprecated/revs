@@ -3,7 +3,7 @@
 
       <%= image_tag((flag.user.nil? ? asset_url('default-avatar_32x32.png') : flag.user.avatar.url(:tiny)), :class => "user-image user-image-tiny") %>
       <% if flag.user.nil? %>
-        <%= t('revs.user.anonymous') %>
+        <%= (flag.private_comment.blank? || !can?(:curate, :all)) ? t('revs.user.anonymous') : flag.private_comment.strip %>
       <% else %>
         <%= flag.user == current_user ? t('revs.flags.you') : flag.user.to_s%>
       <% end %>

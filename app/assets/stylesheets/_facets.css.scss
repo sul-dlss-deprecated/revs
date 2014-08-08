@@ -9,6 +9,21 @@
     text-decoration: none;
   }
   a:hover {text-decoration: underline;}
+  .missing {
+    a {
+      text-decoration: underline;
+    }
+    span.count {
+      float: right;
+    }
+  }
+  .current {
+    margin-bottom: 15px;
+    text-align: center;
+    .selected {
+      font-weight: 700;
+    }
+  }
   span.selected {
     color: #333333;
   }
@@ -46,9 +61,48 @@
   }
 }
 
+/* Override date range slider styling */
+.limit_content.range_limit {
+  margin: 15px auto 0;
+  width: 213px;
+  a.ui-slider-handle.ui-state-default.ui-corner-all {
+    background: #bbb;
+  }
+  a.ui-slider-handle.ui-state-default.ui-corner-all {
+    border-color: #aaa;
+  }
+}
+
 @media screen and (max-width: 767px) {
   #facets-revs .btn-navbar {
     display: block;
     margin: 5px;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1199px) {
+  .limit_content.range_limit {
+    form {
+      padding-left: 15px;
+    }
+    .range_begin, .range_end {
+      width: 3em;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 979px) {
+  .limit_content.range_limit {
+    input[type="submit"] {
+      display: block;
+      margin-top: 5px;
+    }
+    .profile, .selected {
+      display: none;
+    }
+  }
+  #facets .limit_content.range_limit .current {
+    text-align: left;
+    margin-left: 18px;
   }
 }

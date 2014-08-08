@@ -7,8 +7,16 @@
   	color: #666666;
   	margin: 0 0 20px 0;
   	width: 90%;
+    &.faq-question {
+      font-weight: 600;
+      margin-bottom: 6px;
+      margin-top: 6px;
+    }
+    &.faq-answer {
+      margin-bottom: 30px;
+    }
   }
-  #content img {
+  #about-section img {
     float: left;
     padding: 5px 20px 5px 0;
   }
@@ -17,7 +25,7 @@
     width: 10px;
     height: 10px;
     text-indent: -9999px;
-    background: #000000;
+    background: #999;
   }
 
   // Make textarea wide as reasonable given viewport size

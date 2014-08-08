@@ -139,14 +139,18 @@ span.content-type {
 
 .search_form .btn {float: right;}
 
-#terms-dialog .modal-header {
+.modal-header {
   background-color: #990000;
   border-bottom: 1px solid #dddddd;
   h3 {
-    color: #fff;
+    color: #eee;
     font-size: 1.25em;
     padding-top: 0;
     text-align: center;
+  }
+  button.close {
+    color: #eee;
+    opacity: 0.9;
   }
 }
 
@@ -155,6 +159,9 @@ span.content-type {
   padding: 4px;
 }
 
+.nav-header {
+  line-height: 1.4;
+}
 .lowercase {
   text-transform: lowercase;
 }

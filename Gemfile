@@ -5,10 +5,12 @@ ruby "1.9.3"
 
 gem 'bundler', '>= 1.2.0'
 
+gem 'sitemap_generator'
+
 gem 'editstore', '>= 1.1.5'
 gem 'revs-utils', '>= 1.0.5'
 
-gem 'rails', '~> 3.2.17'
+gem 'rails', '~> 3.2.19'
 
 # user authentication and roles
 gem 'devise', '~> 2.2.5'
@@ -34,6 +36,7 @@ gem 'kaminari'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem "blacklight", :git => 'https://github.com/projectblacklight/blacklight.git'
+gem "blacklight_range_limit", '~> 2.1.0' # 2.1.0 is the last version known to work with blacklight 4 including all necessary bug fixes
 gem 'druid-tools', '>= 0.2.0'
 
 # Gems used only for assets and not required

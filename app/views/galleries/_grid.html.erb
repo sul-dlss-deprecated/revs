@@ -1,17 +1,31 @@
-<div class="row">
-  <div class="span12 collection-members">
-    <div class="row">
-        <div class="span10">
-          <h5>Other items in "<%=@gallery.title%>" <span class="muted">(<%=@saved_items.size%> of <%=@gallery.saved_items(current_user).size%>)</span></h5>
+<div id="documents" class="gallery">
+  <ul class="image-grid">
+    <% @galleries.each do |gallery| %>
+      <li class="image-item">
+        <div class="blacklight-collection document">
+          <div class="image-wrapper">
+            <a href="<%= gallery_path(gallery) %>">
+              <%= image_tag(gallery.image(:size=>:large)) %>
+            </a>
+            <% if gallery.user != current_user %>
+              <span class="label creator">
+                <%= "#{t('revs.messages.created_by')} #{gallery.user.to_s}" %>
+              </span>
+            <% else %>
+              <span class="label creator creator-self">
+                <%= "#{t('revs.messages.created_by')} #{t('revs.messages.you')}" %>
+              </span>
+            <% end %>
+          </div>
+          <h5 class="index_title">
+            <%= link_to(gallery.title,gallery_path(gallery)) %>
+            <span class="muted">
+              (<%= pluralize(gallery.saved_items.size, t('revs.user_galleries.item')) %>)
+            </span>
+          </h5>
         </div>
-            <div class="span2 controls">
-             <%=link_to t('revs.user_galleries.view'), gallery_path(params[:gallery_id],extract_paging_params(params))%>
-        </div>
-    </div>
-    <%- @saved_items.each do |saved_item| -%>
-      <div class="item">
-        <%= link_to(image_tag(saved_item.image), item_path(saved_item.solr_document,extract_paging_params(params).merge({:gallery_id=>params[:gallery_id]}))) %>
-      </div>
-    <%- end -%>
-  </div>
+      </li>
+    <% end %>
+  </ul>
+  <%= paginate @galleries %>
 </div>

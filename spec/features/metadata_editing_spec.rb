@@ -3,17 +3,19 @@ require 'spec_helper'
 describe("Metadata Editing",:type=>:request,:integration=>true) do
   
   before :each do
+  	@facet_link_to_click='black-and-white negatives' # a facet link
     logout
   end
     
   def bulk_edit_interface_shown_should_be_shown(visible)
     visit root_path
-    click_link '1966' # a facet link
+    click_link @facet_link_to_click
     page.should have_content('Results')
-    page.should have_content('1 - 6 of 6')
+    num_results = (visible ? 15 : 14)
+    page.should have_content("1 - #{num_results} of #{num_results}")
     page.should have_link('Detailed')
     page.should have_link('Gallery')
-    visible == true ? page.should(have_link('Curator')) : page.should_not(have_link('Curator'))
+    visible ? page.should(have_link(I18n.t('revs.search.gallery_toggle.curator'))) : page.should_not(have_link(I18n.t('revs.search.gallery_toggle.curator')))
   end
   
   it "should not show editing interface to non-logged in users or non-curator users, but show it for admin and curators" do
@@ -36,7 +38,7 @@ describe("Metadata Editing",:type=>:request,:integration=>true) do
 
   it "should show error messages when the curator doesn't enter in all required information to perform a bulk edit" do
 
-      druids_to_edit=%w{nn572km4370 kn529wc4372}
+      druids_to_edit=%w{sc411ff4198 bg152pb0116}
       new_value='newbie!'
       field_to_edit='Title'
       old_values={}
@@ -53,8 +55,8 @@ describe("Metadata Editing",:type=>:request,:integration=>true) do
       login_as(curator_login)
 
       visit root_path
-      click_link '1966' # a facet link
-      click_link 'Curator' # enter bulk editing inteface
+      click_link @facet_link_to_click
+      click_link I18n.t('revs.search.gallery_toggle.curator') # enter bulk editing inteface
       page.should_not have_content new_value # the new title should not be on the page yet
 
       fill_in 'bulk_edit_new_value', :with=>new_value

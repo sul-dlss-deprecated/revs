@@ -1,10 +1,48 @@
+// Homepage carousel
+
+/* Default values are for screen sizes 1200px and larger */
+$collection-image-container: 402px;
+$collection-image-right-gutter: 30px;
 .slideshow {
-  #featured-description h3 {
-    margin-top: 0;
-    padding-top: 0;
-    > a {color: #000;}
+  position: relative;
+}
+#all_collections_carousel {
+  width: $collection-image-container;
+  float: left;
+  margin-right: $collection-image-right-gutter;
+  .carousel-inner {
+    background-color: $body_bg_color;
+    border-right: $collection-image-right-gutter solid $body_bg_color;
+    max-height: 265px;
   }
 }
+#featured-collection-nav {
+  @include red-top_border;
+  width: auto;
+  .carousel-controls {
+    margin-top: 0;
+    a.left {
+      margin-left: $collection-image-container + 18px;
+      left: 0;
+    }
+    a.right {
+      right: 0;
+    }
+  }
+  .collection-teaser {
+    display: table-cell;
+    vertical-align: bottom;
+    height: 220px;
+  }
+  h3 {
+   margin-top: 0;
+   padding-top: 0;
+   > a {
+     color: #000;
+   }
+  }
+}
+
 .about-dl {
   p {width: 95%;}
   img {
@@ -13,31 +51,181 @@
   }
 }
 
-.slideshow {
-  position: relative;
+.highlight-list {
+  $highlighted-item-width: 213px;
+  ul.image-grid {
+    list-style-type: none;
+    margin-left: -10px;
+  }
+  ul.image-grid li.image-item {
+    float: left;
+    margin-bottom: 30px;
+    margin-left: 10px;
+    margin-right: 10px;
+    min-height: 169px;
+    max-width: $highlighted-item-width;
+    overflow: hidden;
+    img {
+      border: 1px solid #bbb;
+      width: 198px;
+    }
+  }
+  h4 {
+    font-size: 13px;
+    line-height: 16px;
+    position: absolute;
+    width: 100%;
+    max-width: $highlighted-item-width - 18px;
+    text-align: center;
+    span {
+      display: block;
+      font-weight: 500;
+      padding-top: 3px;
+    }
+    a {
+      color: #333333;
+    }
+  }
+  h3 {
+    span.more-link {
+      float: right;
+      font-size: 12px;
+      font-weight: 500;
+    }
+  }
+  &.explore {
+    h3 {
+      margin-top: 20px;
+    }
+    h4 {
+      font-size: 14px;
+      a.more-link, a.more_facets_link {
+        white-space: nowrap;
+      }
+    }
+    .item-links a {
+      color: #990000;
+      font-size: 13px;
+      font-weight: 500;
+    }
+  }
 }
 
-/* Position Featured slideshow nav and description column
-   below slideshow for tablet, because slideshow image
-   doesn't scale down to allow room for description column
-   to remain to the right of it. */
-#featured-collection-nav {
-  @media screen and (min-width: 768px) and (max-width: 979px) {
-    clear: both;
-    width: 100%;
+/* Adjustments for screen sizes below 1200px */
+
+/* Put nav buttons close together when tablet or smaller */
+@media screen and (max-width: 979px) {
+  #featured-collection-nav .carousel-controls a.right {
+    left: 75px;
   }
 }
-#featured-description {
-  float: left;
-  @media screen and (min-width: 768px) and (max-width: 979px) {
-    width: 90%;
+
+@media screen and (min-width: 980px) and (max-width: 1199px) {
+  $collection-image-container: 385px;
+  $collection-image-right-gutter: 20px;
+  #all_collections_carousel {
+    width: $collection-image-container;
+    margin-right: $collection-image-right-gutter;
+    .carousel-inner {
+      border-right-width: $collection-image-right-gutter;
+      max-height: 250px;
+    }
   }
-  /* For desktop, position slideshow nav and description
-     next to slideshow image, with controls vertically positioned
-     at the top, and the text vertically positioned at the bottom */
-  @media screen and (min-width: 980px) {
-    position: absolute;
-    right: 0;
-    bottom: 0;
+  #featured-collection-nav {
+    .collection-teaser {
+      height: 205px;
+    }
+    .carousel-controls a.left {
+      margin-left: $collection-image-container +3px;
+    }
+  }
+  .highlight-list {
+    $highlighted-item-width: 228px;
+    ul.image-grid li.image-item {
+      img {
+        width: 213px;
+      }
+    }
+    h4 {
+      max-width: $highlighted-item-width - 15px;
+    }
+  }
+}
+
+@media screen and (max-width: 979px) {
+  #featured-collection-nav {
+    padding-top: 20px;
+    clear: both;
+    width: 100%;
+    border-top: none;
+    .slideshow {
+      margin-bottom: 10px;
+    }
+    .collection-teaser {
+      height: inherit;
+    }
+    .carousel-controls {
+      height: 25px;
+      .carousel-control {
+        font-size: 60px;
+      }
+    }
+    .carousel-controls a.left {
+      margin-left: 0;
+      text-align: left;
+    }
+  }
+  #all_collections_carousel {
+    &.carousel {
+      margin-bottom: 0;
+    }
+    .carousel-inner {
+      max-height: 249px;
+    }
+  }
+  .highlight-list {
+    $highlighted-item-width: 173px;
+    ul.image-grid li.image-item {
+      margin-bottom: 0;
+      .image-wrapper {
+        min-width: 160px;
+      }
+      img {
+        width: 160px;
+      }
+    }
+    h4 {
+      max-width: $highlighted-item-width - 15px;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #all_collections_carousel.carousel {
+    margin-bottom: 12px;
+  }
+  #featured-collection-nav {
+    padding-top: 5px;
+  }
+}
+
+@media screen and (max-width: 608px) {
+  /* hide two items in highlight rows due to narrower screen size */
+  .highlight-list .image-item.item-2,
+  .highlight-list .image-item.item-3 {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1199px) {
+  /* hide one item in highlight rows due to narrower screen size */
+  .highlight-list .image-item.item-3 {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .highlight-list.explore {
+    display: none;
   }
 }

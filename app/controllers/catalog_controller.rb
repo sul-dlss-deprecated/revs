@@ -39,20 +39,12 @@ class CatalogController < ApplicationController
         
       not_authorized unless can? :read,:home_page
       
-      unless fragment_exist?("home-#{current_role}") # fragment cache for performance
+      unless fragment_exist?("home") # fragment cache for performance
 
         @highlight_collections=SolrDocument.highlighted_collections
         @random_collection_number=Random.new.rand(@highlight_collections.size) # pick a random one to start with for non-JS users
+        @highlighted_galleries=Gallery.featured.limit(4)
       
-        # get some information about all the collections and images we have so we can report on total numbers
-        @total_collections=SolrDocument.all_collections.size
-        if can?(:view_hidden, SolrDocument)
-          @total_images=SolrDocument.total_images(:all)
-          @total_hidden_images=SolrDocument.total_images(:hidden)
-        else
-          @total_images=SolrDocument.total_images
-        end
-        
       end
     
     elsif can?(:bulk_update_metadata,:all) && params[:bulk_edit] && request.post? # user submitted a bulk update operation and has the rights to do it
@@ -61,7 +53,7 @@ class CatalogController < ApplicationController
       
       @bulk_edit=params[:bulk_edit]
             
-      if @bulk_edit[:attribute].blank? || @bulk_edit[:selected_druids].blank? || (@bulk_edit[:new_value].blank? && @bulk_edit[:action] == 'update')
+      if @bulk_edit[:attribute].blank? || @bulk_edit[:selected_druids].blank? || (@bulk_edit[:new_value].blank? && @bulk_edit[:action] == 'update') || (@bulk_edit[:new_value].blank? && @bulk_edit[:search_value].blank? && @bulk_edit[:action] == 'replace')
         flash.now[:error]=t('revs.messages.bulk_update_instructions')
       else
         success=SolrDocument.bulk_update(@bulk_edit,current_user)
@@ -147,10 +139,9 @@ class CatalogController < ApplicationController
     @carousel_members = @document.get_members(:rows=>@rows,:start=>@start,:include_hidden=>can?(:view_hidden, SolrDocument))
   end
 
-  # when a request for /catalog/BAD_SOLR_ID is made, this method is executed... overriding default blacklight behavior to get our home page to work
+  # when a request for /catalog/BAD_SOLR_ID is made, this method is executed... overriding default blacklight behavior 
   def invalid_solr_id_error
-    @force_render_home=true
-    super
+    routing_error
   end
       
   configure_blacklight do |config|
@@ -159,7 +150,7 @@ class CatalogController < ApplicationController
     config.default_solr_params = { 
       :qt => 'standard',
       :facet => 'true',
-      :rows => 10,
+      :rows => 20,
       :fl => "*",
       :"facet.mincount" => 1,
       :echoParams => "all"
@@ -230,13 +221,18 @@ class CatalogController < ApplicationController
     #
     # :show may be set to false if you don't want the facet to be drawn in the 
     # facet bar
-    config.add_facet_field 'pub_year_isim', :label => 'Year', :sort => 'index'
+    config.add_facet_field 'pub_year_isim', :label => 'Year', :sort => 'index', :limit => 25, :range => true
     config.add_facet_field 'format_ssim', :label => 'Format'
-    config.add_facet_field 'marque_ssim', :label => 'Marque'
-    config.add_facet_field 'model_year_ssim', :label => 'Model Year', :sort => 'index'
-    config.add_facet_field 'model_ssim', :label => 'Model'
+    config.add_facet_field 'marque_ssim', :label => 'Marque', :limit => 25
+    config.add_facet_field 'model_year_ssim', :label => 'Model Year', :sort => 'index', :limit => 25
+    config.add_facet_field 'model_ssim', :label => 'Model', :limit => 25
     config.add_facet_field 'collection_ssim', :label => "Collection"
-    config.add_facet_field 'photographer_ssi', :label => "Photographer"
+    config.add_facet_field 'photographer_ssi', :label => "Photographer", :limit => 25
+    config.add_facet_field 'entrant_ssim', :label => "Entrant", :limit => 25
+    config.add_facet_field 'people_ssim', :label => "People", :limit => 25
+    config.add_facet_field 'venue_ssi', :label => "Venue", :limit => 25
+    config.add_facet_field 'track_ssi', :label => "Track", :limit => 25
+    config.add_facet_field 'event_ssi', :label => "Event", :limit => 25
     
     config.add_facet_field 'timestamp', :label => 'Added recently', :query => {
        :weeks_1 => { :label => 'within last week', :fq => "timestamp:[\"#{show_as_timestamp(1.week.ago)}\" TO *]" },

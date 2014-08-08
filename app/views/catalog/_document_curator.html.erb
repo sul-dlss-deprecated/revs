@@ -3,41 +3,62 @@
 
 <div class="row curator-edit-options">
 	<%= form_tag(request.url, method: 'post', class:'form-inline', id:'bulk-update-form') do %>
-	
+
     <%= hidden_field_tag 'bulk_edit[operation]','bulk'%>
 
-    <div class="controls controls-row">
-
-      <label class="checkbox">
-        <input type="checkbox" name="select-all" id="select-all">
-        <%=t('revs.nav.select_all')%>
-      </label>
-
-      <div class="update-field">
-        <label class="radio update">
-          <%=radio_button_tag 'bulk_edit[action]','update', @bulk_edit.nil? ? true : @bulk_edit[:action] == 'update'%>
-          <%=t('revs.nav.update')%>
-        </label>
-        <label class="radio">
-          <%=radio_button_tag 'bulk_edit[action]','remove', @bulk_edit.nil? ? false : @bulk_edit[:action] == 'remove'%>
-          <%=t('revs.nav.remove')%>
-        </label>
-
-        <%= select_tag 'bulk_edit[attribute]', options_for_select(bulk_update_fields, @bulk_edit.nil? ? '' : @bulk_edit[:attribute]), class:"span2" %>
+    <div class="update-field-toggle-container span1">
+      <div class="update-field-heading">
+        <%= t('revs.curator.headings.select')%>
       </div>
-
-      <div class="update-field-value">
-			  <%= text_field_tag 'bulk_edit[new_value]' ,@bulk_edit.nil? ? '' : @bulk_edit[:new_value], class: 'span4', placeholder: 'new value'%>
-        <%= submit_tag t('revs.nav.update'), 
-          :id=>'bulk-update-button', 
-          :class => 'btn btn-small',
-          :disable_with => t('revs.nav.please_wait'),
-				  :show_loading_indicator=>"true",
-				  :confirm=>t('revs.curator.are_you_sure_apply_updates')
-				  %>
+      <div class="update-field-toggle">
+        <label class="checkbox">
+          <input type="checkbox" name="select-all" id="select-all">
+          <%= t('revs.nav.toggle_all')%>
+        </label>
       </div>
-
     </div>
+
+    <div class="update-field-action span2">
+      <div class="update-field-heading">
+         <%= t('revs.curator.headings.action')%>
+      </div>
+      <label class="radio update">
+        <%=radio_button_tag 'bulk_edit[action]','replace', @bulk_edit.nil? ? false : @bulk_edit[:action] == 'replace'%>
+        <%=t('revs.nav.replace')%>
+      </label>
+      <label class="radio update">
+        <%=radio_button_tag 'bulk_edit[action]','update', @bulk_edit.nil? ? true : @bulk_edit[:action] == 'update'%>
+        <%=t('revs.nav.update_completely')%>
+      </label>
+      <label class="radio">
+        <%=radio_button_tag 'bulk_edit[action]','remove', @bulk_edit.nil? ? false : @bulk_edit[:action] == 'remove'%>
+        <%=t('revs.nav.remove')%>
+      </label>
+    </div>
+
+    <div class="span2 update-field">
+      <div class="update-field-heading">
+         <%= t('revs.curator.headings.field_to_select')%>
+      </div>
+      <%= select_tag 'bulk_edit[attribute]', options_for_select(bulk_update_fields, @bulk_edit.nil? ? '' : @bulk_edit[:attribute]), class:"span2" %>
+    </div>
+
+    <div class="update-field-value span4">
+      <div class="update-field-heading">
+         <%= t('revs.curator.headings.field_value')%>
+      </div>
+      <%= text_field_tag 'bulk_edit[search_value]' ,@bulk_edit.nil? ? '' : @bulk_edit[:search_value], class: 'span3', placeholder: t('revs.curator.search_value')%>
+		  <%= text_field_tag 'bulk_edit[new_value]' ,@bulk_edit.nil? ? '' : @bulk_edit[:new_value], class: 'span3', placeholder: t('revs.curator.new_value')%>
+
+      <%= submit_tag t('revs.nav.update'),
+        :id=>'bulk-update-button',
+        :class => 'btn btn-small',
+        :disable_with => t('revs.nav.please_wait'),
+			  :show_loading_indicator=>"true",
+			  :confirm=>t('revs.curator.are_you_sure_apply_updates')
+      %>
+    </div>
+
 </div>
 
 <div id="documents" class="curator">

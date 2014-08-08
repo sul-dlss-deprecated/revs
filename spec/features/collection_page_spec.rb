@@ -7,10 +7,12 @@ describe("Collection Pages",:type=>:request,:integration=>true) do
     @collection2="John Dugdale Collection"
   end
     
-  it "should show the first two collections on the collections page" do
-    visit all_collections_path
-    page.should have_content(@collection1)
-    page.should have_content(@collection2)  
+  it "should show the first two collections on the collections page in both grid and detailed view" do
+    [all_collections_path,all_collections_path(:view=>'detailed')].each do |url| 
+      visit url
+      page.should have_content(@collection1)
+      page.should have_content(@collection2)  
+    end
   end
 
   it "should show details of the first collection with an image, which is the highest priority image for that collection" do

@@ -2,17 +2,18 @@
   h3 {
     color: #555;
     font-size: 16px;
-    margin-bottom: 25px;
     margin-top: 10px;
     padding-top: 6px;
+    &.new-ontology {
+      margin-top: 30px;
+    }
   }
-
   td.centered, th.centered {
     text-align: center;
   }
 
   .form-search {
-    margin-bottom: 16px;
+    margin-top: 20px;
     input#email {
       margin-bottom: 10px;
     }
@@ -33,6 +34,7 @@
   }
   .nav-tabs {
     margin-bottom: 10px;
+    margin-top: 20px;
   }
   form, #refresh_flags, #curator_flag_selection {
     margin-top: 6px;
@@ -53,6 +55,7 @@
     margin-bottom: 12px;
   }
   form.find-users, form.update-users {
+    margin-top: 20px;
     .control-group {
       margin-bottom: 10px;
     }

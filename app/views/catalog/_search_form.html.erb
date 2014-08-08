@@ -1,5 +1,10 @@
 <div class="searchbox">
-  <h4><%= t('revs.search.search_label') %></h4>
+  <h4>
+    <%= t('revs.search.search_label') %>
+    <a href="#" class="help showOnLoad" data-placement="right" data-title="<%=t('revs.search.help')%>" data-toggle="tooltip" data-original-title="" title="">
+      <i class="icon-question-sign"></i>
+    </a>
+  </h4>
   <%= form_tag search_action_url, :method => :get, :class => 'search_form' do %>
     <%= search_as_hidden_fields(:omit_keys => [:q, :search_field, :qt, :page]).html_safe %>
     <label for="q" class="hide-text"><%= t('blacklight.search.form.q') %></label>

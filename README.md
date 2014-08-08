@@ -96,11 +96,22 @@ Before deploying to production, tag the release with a version.  We use date bas
 
 ### Deploying
 
+Typically before deploying, you will merge the latest code from develop to master, then bump the version in a new commit on master, create a tag, push, and then deploy:
+
+    git co master
+    git merge develop
+    # bump VERSION file
+    git ci -m 'bump version'
+    git push
+
+    git tag TAG_NAME # standard is month-yearincrement, eg. June-2014a
+    git push --tags
+
     cap production deploy   # for production  (revslib.stanford.edu)
     cap staging deploy      # for staging     (revs-stage.stanford.edu)
     cap development deploy  # for development (revs-dev.stanford.edu)
 
-You must specify a branch or tag to deploy.  You can deploy the latest by specifying "master"
+You must specify a branch or tag to deploy.  You can deploy the latest by specifying "master".
 
 ## Testing
 

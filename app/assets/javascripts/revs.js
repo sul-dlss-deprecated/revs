@@ -56,8 +56,6 @@ $(document).ready(function(){
   });
 
    // Curator bulk update view controls and actions //
-   // Put focus on new value input box on page load
-   $('#bulk_edit_new_value').focus();
    // Called when 'Select all' checkbox is checked or unchecked.
    // Select all rows for edit when 'select all' checkbox is selected.
    $( '.curator-edit-options #select-all' ).click( function () {
@@ -70,18 +68,70 @@ $(document).ready(function(){
 
    });
 
-   // radio button for curator to bulk update values should ensure text box to enter new values is shown
      $( '.curator-edit-options #bulk_edit_action_update' ).click( function () {
-      $( '#bulk_edit_new_value' ).show();
+       bulkEditShowUpdate();
+       bulkEditHideReplace();
+       bulkEditShowUpdateHeading();
     });
-   // radio button for curator to bulk remove values should ensure text box to enter new values is hidden
+     $( '.curator-edit-options #bulk_edit_action_replace' ).click( function () {
+       bulkEditShowUpdate();
+       bulkEditHideReplace();
+       bulkEditShowReplace();
+       bulkEditShowUpdateHeading();
+    });
      $( '.curator-edit-options #bulk_edit_action_remove' ).click( function () {
-      $( '#bulk_edit_new_value' ).hide();
+      bulkEditHideUpdate();
+      bulkEditHideReplace();
+      bulkEditHideUpdateHeading();
     });
+   if ($( '#bulk_edit_action_update' ).is(':checked')) {
+      bulkEditHideUpdate();
+      bulkEditHideReplace();
+      bulkEditShowUpdate();
+      bulkEditShowUpdateHeading();
+    }      
     if ($( '#bulk_edit_action_remove' ).is(':checked')) {
+      bulkEditHideUpdate();
+      bulkEditHideReplace();
+      bulkEditHideUpdateHeading();
+    } 
+   if ($( '#bulk_edit_action_replace' ).is(':checked')) {
+      bulkEditHideUpdate();
+      bulkEditHideReplace();
+      bulkEditShowUpdate();
+      bulkEditShowReplace();
+      bulkEditShowUpdateHeading();
+    } 
+
+    function bulkEditShowReplace() {
+      $('#bulk_edit_search_value' ).show();
+      $('#bulk_edit_search_value').focus();
+    }
+
+    function bulkEditShowUpdate() {
+      $( '#bulk_edit_new_value' ).show();
+       $('#bulk_edit_new_value').focus();
+    }
+
+    function bulkEditShowUpdateHeading() {
+      $('.update-field-value .update-field-heading').show();
+      $('#bulk-update-button').removeClass('extra-padding');
+    }
+
+    function bulkEditHideReplace() {
+      $( '#bulk_edit_search_value' ).hide();
+      $( '#bulk_edit_search_value' ).val('');
+    }
+
+    function bulkEditHideUpdate() {
       $( '#bulk_edit_new_value' ).hide();
       $( '#bulk_edit_new_value' ).val('');
-    } // if the radio button starts in the checked state, hide the new value box and clear its value
+    }
+
+    function bulkEditHideUpdateHeading() {
+      $('.update-field-value .update-field-heading').hide();
+      $('#bulk-update-button').addClass('extra-padding');
+    }
 
    // Called when an individual checkbox is checked or unchecked in bulk edit view.
    // Update row status message if user changes individual checkbox
@@ -230,7 +280,7 @@ function loadCollectionMembersGrid(id,page_type) {
 }
 
 function loadGalleryItemGrid(gallery_id) {
-  jQuery.ajax({type: "GET", dataType: "script", url: "/galleries/grid/" + gallery_id});
+  jQuery.ajax({type: "GET", dataType: "script", url: "/galleries/members_grid/" + gallery_id});
 }
 
 function setupItemDetailPanels() {
@@ -287,6 +337,19 @@ function enable_autocomplete() {
             event.preventDefault();
           }
         });
+
+     $( "#bulk_edit_new_value").autocomplete({
+          source: function( request, response ) {
+            bulk_field=$('#bulk_edit_attribute :selected').data('autocomplete-field');
+            if (bulk_field) {
+              $.getJSON( "/autocomplete.json", {
+                field: bulk_field,
+                term: extractLast( request.term )
+              }, response );
+            }
+          },
+          minLength: 2,
+          max: 10});  
 
         $( ".autocomplete.mvf").autocomplete({
           source: function( request, response ) {

@@ -1,3 +1,12 @@
 <%=t('revs.about.project_text_html',:revs_institute=>link_to(t('revs.revs_institute'),'http://revsinstitute.org'),:revs_about_scanning_image=>image_tag('revs-about-project-scanning.png', :width => '250'))%>
 
+        <p>
+          <%= t('revs.about.homepage_about_counts_html',
+              :total_images => number_with_delimiter(@total_images),
+              :number_collections => link_to(number_with_delimiter(@total_collections) + t('revs.about.homepage_about_counts_linktext'), all_collections_path)) %>
+          <% if can? :view_hidden, SolrDocument%>
+              <%= t('revs.about.homepage_about_hidden_counts_html',:total_images=> number_with_delimiter(@total_hidden_images))%>
+          <% end %>
+        </p>
+        
 <%= render :partial=>'end_page_slug'%>

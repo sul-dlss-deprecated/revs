@@ -34,5 +34,8 @@ jetty/solr/test/conf/solrconfig.xml
 /public/uploads/
 /public/assets/
 
+/public/*.gz
+/public/sitemap.xml
+
 nohup.out
 REVISION

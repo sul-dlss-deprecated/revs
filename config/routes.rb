@@ -2,6 +2,8 @@ Revs::Application.routes.draw do
 
   root :to => "catalog#index"
 
+  match "bookmarks", :to => "catalog#routing_error" # we are not using blacklight bookmarks, so a request to get them should fail nicely
+
   Blacklight.add_routes(self)
 
   # override devise controllers as needed
@@ -32,10 +34,11 @@ Revs::Application.routes.draw do
 
   # ajax call from item page to show collections grid at bottom of the page
   match 'show_collection_members_grid/:id', :to => 'catalog#show_collection_members_grid', :as => 'show_collection_members_grid'
-    
+  
   # helper routes to we can have a friendly URL for items and collections
-  match 'item/:id', :to=> 'catalog#show', :as =>'item'
-  match 'collection/:id', :to=> 'catalog#show', :as =>'collection'
+  match ':id', :to=>'catalog#show', :constraints => {:id => /[a-z]{2}\d{3}[a-z]{2}\d{4}/}  # so that /DRUID goes to the item page
+  match 'item/:id', :to=> 'catalog#show', :as =>'item', :constraints => {:id => /[a-z]{2}\d{3}[a-z]{2}\d{4}/}
+  match 'collection/:id', :to=> 'catalog#show', :as =>'collection', :constraints => {:id => /[a-z]{2}\d{3}[a-z]{2}\d{4}/}
   
   # public user profile pages
   resources :user do
@@ -53,6 +56,7 @@ Revs::Application.routes.draw do
   match 'about', :to => 'about#show', :as => 'about_project', :defaults => {:id=>'project'} # no page specified, go to project page
   match 'contact', :to=> 'about#contact', :as=>'contact_us'
   match 'about/contact', :to=> 'about#contact' # specific contact us about page
+  match 'about/tutorials', :to=> 'about#tutorials', :as => 'tutorials' # specific tutorials list page
   match 'about/boom', :to => 'about#boom' # test exception
   match 'about/:id', :to => 'about#show', :as=>'about_pages' # catch anything else and direct to show page with ID parameter of partial to show
   
@@ -132,6 +136,7 @@ Revs::Application.routes.draw do
       end
     end
   end
+    
     
   match "*gibberish", :to => "catalog#routing_error"
     

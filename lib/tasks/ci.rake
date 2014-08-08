@@ -69,6 +69,11 @@ namespace :revs do
     RestClient.post "#{Blacklight.solr.options[:url]}/update?commit=true", "<update><add>#{add_docs.join(" ")}</add></update>", :content_type => "text/xml"
   end
   
+  desc "Clean up saved items - remove any saved items which reference items/solr documents that do not exist"
+  task :cleanup_saved_items => :environment do |t, args|
+    SavedItem.all.each { |saved_item| saved_item.destroy if saved_item.solr_document.nil? }
+  end
+
   desc "Delete all records in solr"
   task :delete_records_in_solr do
    unless Rails.env.production? || Blacklight.solr.uri.port == 8080

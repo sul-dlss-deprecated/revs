@@ -1,10 +1,7 @@
 .blacklight-catalog-index {
   h3 {
-    padding-top: 10px;
+    padding-top: 5px;
     &.section-heading {border-top: 3px solid #dddddd;}
-  }
-  #featured-collection-nav {
-    @include red-top_border;
   }
   .documentHeader {
 	  .index_title {
@@ -79,6 +76,14 @@
       p {
         margin-top: 0;
       }
+    }
+  }
+  .blacklight-collection .dl-horizontal {
+    dt {
+      width: 75px;
+    }
+    dd {
+      margin-left: 10px;
     }
   }
   #feedback_link {
@@ -329,6 +334,12 @@
     #flag_resolution {
       width: 90%;
     }
+    #new_flag_form {
+      input#flag_notify_me {
+        margin-bottom: 12px;
+        vertical-align: baseline;
+      }
+    }
     div#all-annotations, div#all_flags .flag-info {
       margin-top: 0;
       label {
@@ -378,9 +389,6 @@
       margin-top: 20px;
     }
   }
-  .blacklight-catalog-index #featured-collection-nav {
-    border-top: none;
-  }
   .unresolved-label {
     display: none;
   }
@@ -408,10 +416,6 @@
 
 @media screen and (max-width: 767px) {
   .slideshow img {margin-bottom: 20px;}
-  .blacklight-catalog-index #featured-collection-nav {
-    border-top: none;
-    padding-top: 0;
-  }
   .blacklight-catalog-show {
     .back-to-results {
       display: inline;

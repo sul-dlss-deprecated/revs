@@ -13,6 +13,7 @@ class Gallery < ActiveRecord::Base
   VISIBILITY_TYPES=%w{public private curator}
 
   attr_accessible :user_id,:title,:description,:gallery_type,:views,:visibility
+  attr_readonly :saved_items_count
   
   has_many :all_saved_items, :class_name=>'SavedItem', :dependent=>:destroy
 
@@ -39,9 +40,11 @@ class Gallery < ActiveRecord::Base
     visibility.to_sym == :public
   end
 
-  def image(user=nil)
+  def image(params={})
+    user=params[:user] || nil
+    size=params[:size] || :default
     item=saved_items(user).limit(1)
-    item.size == 0 ? 'default-thumbnail.png' : item.first.solr_document.images.first
+    item.size == 0 ? (size == :large ? 'default-thumbnail_thumb.jpg' : 'default-thumbnail_square.jpg') : item.first.solr_document.images(size).first
   end
 
   # custom has_many association, so we can add visibility filtering -- get the galleries items, pass in a second user (like the logged in user) to decide if hidden items should be returned as well

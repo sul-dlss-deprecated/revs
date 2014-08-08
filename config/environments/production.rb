@@ -62,18 +62,19 @@ Revs::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
-  
-  
+
+  # Revs App Configuration  
+  config.simulate_sunet_user = false # SET TO BLANK OR FALSE IN PRODUCTION (it should be ignored in production anyway) if this has a value, then this will simulate you being logged in as a sunet user
+  config.purl_plugin_server = "prod"
+  config.purl_plugin_location = "//image-viewer.stanford.edu/assets/purl_embed_jquery_plugin.js"
+  config.purl = "//purl.stanford.edu"
+  config.restricted_beta = false # if set to true, then only beta users (and sunet users) can view the site
+  config.use_editstore = true # if set to true, then all changes will be saved to editstore database (SHOULD BE TRUE IN PRODUCTION!)
+  config.show_galleries_in_nav = true # if set to true, then galleries is shown in top navigation
+
 end
 
 Squash::Ruby.configure :api_host => 'https://sul-squash-prod.stanford.edu',
                        :api_key => 'a22b8edb-fc4a-446b-9ae6-54186b53c0d0',
                        :disabled => false,
                        :revision_file => 'REVISION'
-
-Revs::Application.config.simulate_sunet_user = false # SET TO BLANK OR FALSE IN PRODUCTION (it should be ignored in production anyway) if this has a value, then this will simulate you being logged in as a sunet userRevs::Application.config.purl_plugin_server = "prod"
-Revs::Application.config.purl = "//purl.stanford.edu"
-Revs::Application.config.purl_plugin_server = "prod"
-Revs::Application.config.purl_plugin_location = "//image-viewer.stanford.edu/assets/purl_embed_jquery_plugin.js"
-Revs::Application.config.restricted_beta = false # if set to true, then only beta users (and sunet users) can view the site
-Revs::Application.config.use_editstore = true # if set to true, then all changes will be saved to editstore database (SHOULD BE TRUE IN PRODUCTION!)

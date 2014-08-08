@@ -30,22 +30,22 @@ class AboutController < ApplicationController
         @spammer = false
 
         if valid_submission? 
-
-          RevsMailer.contact_message(:params=>params,:request=>request).deliver unless @email.blank? && @subject=='metadata' # don't bother creating a jira ticket if user doesn't supply email and its a metadata update, since we will create an anonymous flag anyway
-          if (!@email.blank? && @auto_response == "true")
-            RevsMailer.auto_response(:email=>@email,:subject=>@subject).deliver 
-          end
           
-          if @subject=='metadata'
+          if @subject=='metadata'  # don't bother creating a jira ticket for a metadata update, since we will create an anonymous flag anyway and add the email address and name into a private comment
             flash[:notice]=t("revs.about.contact_message_sent_about_metadata")
             unless @from.blank? # create a flag for this if its feedback that is coming from a specific druid page
               druid=@from.match(/\D\D\d\d\d\D\D\d\d\d\d/)
-              Flag.create_new({:flag_type=>:error,:comment=>@message,:druid=>druid.to_s},current_user) unless druid.blank?
+              Flag.create_new({:flag_type=>:error,:comment=>@message,:druid=>druid.to_s,:private_comment=>"#{@fullname}\n#{@email}"},current_user) unless druid.blank?
             end
-          else
+          else # any other message gets a jira ticket
+            RevsMailer.contact_message(:params=>params,:request=>request).deliver 
             flash[:notice]=t("revs.about.contact_message_sent")          
           end
-          
+
+          if (!@email.blank? && @auto_response == "true")
+            RevsMailer.auto_response(:email=>@email,:subject=>@subject).deliver 
+          end
+
           @message=nil
           @fullname=nil
           @email=nil
@@ -78,7 +78,17 @@ class AboutController < ApplicationController
     @page_name=params[:id] || action_name # see if the page to show is specified in the ID parameter (coming via a route) or custom method (via the action name)
     @page_name='project' unless lookup_context.exists?(@page_name, 'about', true) # default to project page if requested partial doesn't exist
     @page_title=t("revs.about.#{@page_name}_title") # set the page title
-    @no_nav=(@page_name=='terms_dialog' ? true : false)
+
+    if @page_name=='project'
+      # get some information about all the collections and images we have so we can report on total numbers
+      @total_collections=SolrDocument.all_collections.size
+      if can?(:view_hidden, SolrDocument)
+        @total_images=SolrDocument.total_images(:all)
+        @total_hidden_images=SolrDocument.total_images(:hidden)
+      else
+        @total_images=SolrDocument.total_images
+      end
+    end
     render :show
   end
 
@@ -87,6 +97,9 @@ class AboutController < ApplicationController
     boom!
   end
   
+  def tutorials
+  end
+
   protected
   def authorize
     not_authorized unless can? :read,:about_pages

@@ -5,8 +5,10 @@
 			<li><%= link_to t('revs.about.project_title'), about_pages_path(:id=>'project') %></li>
 			<li><%= link_to t('revs.about.project_team'), about_pages_path(:id=>'team') %></li>
 			<li><%= link_to t('revs.about.acknowledgements'), about_pages_path(:id=>'acknowledgements')%></li>
-			<li><%= link_to t('revs.about.faq_title_nav'), about_pages_path(:id=>'faq')%></li>
 	  </ul>
+
+    <%# List of links to FAQ and other help pages %>
+    <%= render "shared/help_links" %>
 
 	  <ul class="nav nav-list">
 	    <li class="nav-header"><%=t('revs.about.contact')%></li>

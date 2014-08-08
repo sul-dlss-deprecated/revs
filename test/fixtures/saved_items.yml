@@ -53,5 +53,13 @@ user_gal2:
   gallery: user_gal1
   druid: 'qb957rw1430'
   position: 15
-  
-  
+
+user_gal3_featured1:
+  gallery: user_gal3_featured
+  druid: 'yh093pt9555'
+  position: 5
+
+user_gal3_featured2:
+  gallery: user_gal3_featured
+  druid: 'qb957rw1430'
+  position: 15

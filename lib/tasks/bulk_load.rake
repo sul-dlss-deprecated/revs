@@ -136,7 +136,7 @@ namespace :revs do
     log = Logger.new("#{Rails.root}/log/#{Time.now.to_i}.convert_entrant#{@log_extension}")
     log.info("Starting convert_entrant")
     
-    #Get all collections
+    #Get all docs with a non-blank entrant
     total_success_count = 0
     total_error_count = 0 
     results=Blacklight.solr.select(:params => {:q=>'entrant_ssi:[* TO *]',:rows=>'2000000'})
@@ -158,13 +158,49 @@ namespace :revs do
     end
     
     if total_error_count == 0
-      log.info("Run complete with #{total_success_count} touched with no errors.")
+      log.info("Run complete with #{total_success_count} converted with no errors.")
     else
-      log.info("Run complete with #{total_error_count} errors and #{total_success_count} touched successfully.  #{total_error_count+total_success_count} total touches attempted on this run.")
+      log.info("Run complete with #{total_error_count} errors and #{total_success_count} converted successfully.  #{total_error_count+total_success_count} total touches attempted on this run.")
     end
       
   end 
-  
+
+  desc "Convert current_owner to text field"
+  #Run Me: rake revs:convert_current_owner
+  task :convert_current_owner => :environment do |t, args|
+    #Have Editstore ignore updates by this rake task
+    Revs::Application.config.use_editstore = false
+    log = Logger.new("#{Rails.root}/log/#{Time.now.to_i}.convert_entrant#{@log_extension}")
+    log.info("Starting convert_current_owner")
+    
+    #Get all docs with a non-blank current_owner
+    total_success_count = 0
+    total_error_count = 0 
+    results=Blacklight.solr.select(:params => {:q=>'current_owner_ssi:[* TO *]',:rows=>'2000000'})
+
+    puts "Found #{results['response']['docs'].size} documents with value in current_owner_ssi field"
+    results['response']['docs'].each do |result|
+      doc=SolrDocument.new(result)
+      druid = doc.id
+      puts "Updating #{druid}"
+      doc.current_owner = doc['current_owner_ssi'] 
+      doc.remove_field('current_owner_ssi')
+      result = doc.save             
+      if result
+        total_success_count += 1
+      else
+        total_error_count += 1
+        log.error("Failed to save: #{druid}") 
+      end
+    end
+    
+    if total_error_count == 0
+      log.info("Run complete with #{total_success_count} converted with no errors.")
+    else
+      log.info("Run complete with #{total_error_count} errors and #{total_success_count} converted successfully.  #{total_error_count+total_success_count} total touches attempted on this run.")
+    end
+      
+  end   
   desc "When passed the location of .csv file(s) and a list of headers, this will generate csv with just those fields, plus fields to find the solr document"
   #Run me: rake revs:csv_for_fields["SHEETS_LOCATION", header1|header2|etc, output_name] RAILS_ENV=production
   task :csv_for_fields, [:csv_files, :fields, :fn] => :environment do |t, args|
@@ -215,8 +251,14 @@ namespace :revs do
     column_name = ENV['column_name'] || '' # if passed, this is the only column to update
     local_testing = args[:local_testing] || false #Assume we are not testing locally unless told so
     debug_source_id = '2012-027NADI-1967-b1_1.0_0008'
-    change_file_location = args[:change_files_loc]
+    change_file_location = args[:change_files_loc] 
     change_file_extension = @csv_extension_wild
+
+    puts "Looking in #{change_file_location} for #{change_file_extension} files"
+    puts "Only updating #{column_name}" unless column_name.blank?
+    puts "Local testing mode with #{debug_source_id}" if local_testing
+    puts "Running in #{Rails.env}"
+    
     sourceid = @sourceid
     location = "location"
     format = "format"
@@ -424,8 +466,8 @@ namespace :revs do
         end
         master_log.info("#{@success}#{file} had no errors.") if error_count == 0
         master_log.error("#{@failure}#{file} had #{error_count} error(s).") if error_count != 0
-        puts file if local_testing
-        puts error_count if local_testing
+        puts "File: #{file}" if local_testing
+        puts "Errors: #{error_count}" if local_testing
       end
       
     
