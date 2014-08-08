@@ -15,6 +15,7 @@ class GalleriesController < ApplicationController
       when 'user'
         @galleries=Gallery.regular_users.page(@current_page).per(@per_page)
     end
+    @num_to_show_in_filmstrip=100
   end
 
   def show

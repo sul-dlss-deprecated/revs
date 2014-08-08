@@ -1,6 +1,9 @@
 <div id="documents" class="detailed">
 
-  <% @galleries.each_with_index do |gallery, counter| %>
+  <% @galleries.each_with_index do |gallery, counter| 
+
+      num_items_in_gallery=gallery.saved_items(current_user).size%>
+
     <div class="blacklight-collection document row<%= " first" if counter == 0 %>">
       <div class="span12 collection-title">
         <h5 class="index_title">
@@ -38,7 +41,7 @@
         </span>
       </div>
 
-      <% if gallery.saved_items(current_user).size > 0 %>
+      <% if num_items_in_gallery > 0 %>
         <div class="span8 image-filmstrip" data-thumb-width="100" data=thumb-height="100">
 
           <button class="btn btn-default btn-sm prev">
@@ -47,13 +50,20 @@
 
           <div class="viewport">
             <ul class="container-images">
-              <% gallery.saved_items(current_user).each do |item| %>
+              <% gallery.saved_items(current_user).limit(@num_to_show_in_filmstrip).each do |item| %>
                 <li data-preview-in-filmstrip="true">
                   <a href="<%= catalog_path(item.druid) %>">
                     <img src="<%= asset_url('default-thumbnail_square.jpg') %>" title="<%= item.title %>" class="thumb-<%= item.druid %>" data-url="<%= item.image %>">
                   </a>
                 </li>
               <% end %>
+              <% if num_items_in_gallery > @num_to_show_in_filmstrip %>
+              <li>
+                <div class="more-imgs">
+                  <%= link_to((num_items_in_gallery - @num_to_show_in_filmstrip).to_s + t('revs.user_galleries.more_items'), gallery_path(gallery)) %>
+                </div>
+              </li>
+            <% end %>
             </ul>
           </div>
 
@@ -65,7 +75,7 @@
       <% else %> <%# no items in gallery so show note instead of filmstrip %>
         <div class="span8">
           <span class="no-description">
-            There are no items in this gallery
+            <%=t('revs.user_galleries.no_items')%>
           </span>
         </div>
       <% end %>
