@@ -70,7 +70,7 @@ en:
       not_authorized: 'You are not authorized to perform this action.'
       in_beta_not_authorized_html: "The Revs Digital Library is currently in limited beta release.  If you have an account, <a href='/users/sign_in'>please sign in</a> (Stanford users should <a href='/users/webauth_login'>sign in via webauth</a>). If you do not have an account and would like to be notified when the site is public, please <a href='/users/sign_up'>sign up</a> and request to be added to the mailing lists."
       validation_error: "The values you entered were not valid for the field you selected."
-      bulk_update_instructions: "To apply a bulk update, select the field to update, enter a new value and select some items."
+      bulk_update_instructions: "To apply a bulk update, select the action to perform, the field to perform it on, enter new and search vaules (if necessary), select some items with the checkboxes and then click update.  Search and new values must be at least 3 characters."
       set_top_priority: "This image is now set to represent its collection."
       hide_image_success: "This image has been hidden."
       show_image_success: "This image has been made visible."

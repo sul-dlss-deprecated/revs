@@ -25,7 +25,7 @@ class RevsMailer < ActionMailer::Base
   
   def flag_resolved(flag)
     @flag=flag
-    mail(:to=>flag.user.email,:subject=>I18n.t('revs.flags.resolved_message')) 
+    mail(:to=>flag.user.email,:subject=>I18n.t('revs.flags.resolved_message')) if flag.user && flag.user.email
   end
   
   def mailing_list_signup(opts={})

@@ -53,7 +53,7 @@ class CatalogController < ApplicationController
       
       @bulk_edit=params[:bulk_edit]
             
-      if @bulk_edit[:attribute].blank? || @bulk_edit[:selected_druids].blank? || (@bulk_edit[:new_value].blank? && @bulk_edit[:action] == 'update') || (@bulk_edit[:new_value].blank? && @bulk_edit[:search_value].blank? && @bulk_edit[:action] == 'replace')
+      if @bulk_edit[:attribute].blank? || @bulk_edit[:selected_druids].blank? || (invalid_entry?(@bulk_edit[:new_value]) && @bulk_edit[:action] == 'update') || ((invalid_entry?(@bulk_edit[:new_value]) || invalid_entry?(@bulk_edit[:search_value])) && @bulk_edit[:action] == 'replace')
         flash.now[:error]=t('revs.messages.bulk_update_instructions')
       else
         success=SolrDocument.bulk_update(@bulk_edit,current_user)
@@ -370,6 +370,11 @@ class CatalogController < ApplicationController
         format.html
       end
     end
+  end
+
+  private
+  def invalid_entry?(str)
+    str.blank? || str.length < 3
   end
 
 end 

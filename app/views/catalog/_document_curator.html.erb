@@ -47,8 +47,8 @@
       <div class="update-field-heading">
          <%= t('revs.curator.headings.field_value')%>
       </div>
-      <%= text_field_tag 'bulk_edit[search_value]' ,@bulk_edit.nil? ? '' : @bulk_edit[:search_value], class: 'span3', placeholder: t('revs.curator.search_value')%>
-		  <%= text_field_tag 'bulk_edit[new_value]' ,@bulk_edit.nil? ? '' : @bulk_edit[:new_value], class: 'span3', placeholder: t('revs.curator.new_value')%>
+      <%= text_field_tag 'bulk_edit[search_value]' ,@bulk_edit.nil? ? '' : @bulk_edit[:search_value], class: 'span3', placeholder: ((@bulk_edit.nil? || @bulk_edit[:search_value].blank?) ? t('revs.curator.search_value') : @bulk_edit[:search_value])%>
+		  <%= text_field_tag 'bulk_edit[new_value]' ,@bulk_edit.nil? ? '' : @bulk_edit[:new_value], class: 'span3', placeholder: ((@bulk_edit.nil? || @bulk_edit[:new_value].blank?) ? t('revs.curator.new_value') : @bulk_edit[:new_value])%>
 
       <%= submit_tag t('revs.nav.update'),
         :id=>'bulk-update-button',

@@ -62,7 +62,7 @@ describe("Metadata Editing",:type=>:request,:integration=>true) do
       fill_in 'bulk_edit_new_value', :with=>new_value
       select field_to_edit, :from=>'bulk_edit_attribute' # be sure title field is selected
       click_button 'Update' # try and perform an update without entering a new value
-      page.should have_content 'To apply a bulk update, select the field to update, enter a new value and select some items.' # oops, didn't work since we didn't select anything
+      page.should have_content "To apply a bulk update" # oops, didn't work since we didn't select anything
 
       # TODO, we should then be able to check all of the druids and resubmit the form to confirm the changes went through, but I am unable to get capybara to correctly submit the checkbox selection
 

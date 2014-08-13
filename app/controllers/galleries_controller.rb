@@ -48,6 +48,7 @@ class GalleriesController < ApplicationController
   def update
    @gallery.update_attributes(params[:gallery])  
    if @gallery.valid?
+     expire_fragment('home') if @gallery.featured # if this is a featured gallery, then clear the home page cache in case the user renamed the gallery...
      @message=t('revs.user_galleries.gallery_updated')
      flash[:success]=@message
      redirect_to user_galleries_user_index_path(current_user.username)
@@ -62,7 +63,9 @@ class GalleriesController < ApplicationController
     
     Gallery.where(:id=>@id,:user_id=>user_id).limit(1).first.destroy
     @message=t('revs.user_galleries.gallery_removed')
-      
+    
+    expire_fragment('home') # in case the user deleted a featured gallery that used to be on the home page
+
     respond_to do |format|
       format.html { flash[:success]=@message
                     redirect_to user_galleries_user_index_path(current_user.username)
