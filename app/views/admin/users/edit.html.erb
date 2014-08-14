@@ -36,7 +36,7 @@
       <%= f.label :email, t('revs.authentication.email'), :class => 'control-label' %>
       <div class="controls">
 			  <% if @user.sunet_user? %>
-					<%= @user.email %> (<%= t('revs.authentication.stanford_user') %>)
+					<%= @user.email %> <br />(<%= t('revs.authentication.stanford_user') %>, sunetID = <%=@user.sunet%>)
 				<% else %>
         	<%= f.email_field :email, :size=>"80", :autofocus => true %>
 				<% end %>

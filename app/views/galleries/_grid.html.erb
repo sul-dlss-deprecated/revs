@@ -18,7 +18,7 @@
             <% end %>
           </div>
           <h5 class="index_title">
-            <%= link_to(gallery.title,gallery_path(gallery)) %>
+            <%= link_to(truncate(gallery.title, :length => 50),gallery_path(gallery)) %>
             <span class="muted">
               (<%= pluralize(gallery.saved_items.size, t('revs.user_galleries.item')) %>)
             </span>

@@ -44,6 +44,7 @@ class UserController < ApplicationController
     s = params[:selection] || Flag.open
     @selection = s.split(',')    
     @flags=flagListForStates(@selection, @user, @order)      
+    @all_flag_count=@user.flags.count
   end
   
   def update_flag_table

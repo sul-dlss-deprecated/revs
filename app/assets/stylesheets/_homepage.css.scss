@@ -52,22 +52,27 @@ $collection-image-right-gutter: 30px;
 }
 
 .highlight-list {
-  $highlighted-item-width: 213px;
+  $highlighted-item-width: 200px;
   ul.image-grid {
     list-style-type: none;
     margin-left: -10px;
   }
-  ul.image-grid li.image-item {
+  .image-wrapper {
     float: left;
-    margin-bottom: 30px;
+    width: $highlighted-item-width;
+    height: 135px;
+    overflow: hidden;
+    margin-bottom: 60px;
     margin-left: 10px;
     margin-right: 10px;
-    min-height: 169px;
-    max-width: $highlighted-item-width;
-    overflow: hidden;
+    text-align: center;
+    line-height: 135px;
+    display: inline-block;
     img {
       border: 1px solid #bbb;
-      width: 198px;
+      max-width: 100%;
+      max-height: 100%;
+      vertical-align: middle;
     }
   }
   h4 {
@@ -75,7 +80,9 @@ $collection-image-right-gutter: 30px;
     line-height: 16px;
     position: absolute;
     width: 100%;
-    max-width: $highlighted-item-width - 18px;
+    max-width: $highlighted-item-width - 4px;
+    padding-left: 2px;
+    padding-right: 2px;
     text-align: center;
     span {
       display: block;
@@ -140,14 +147,12 @@ $collection-image-right-gutter: 30px;
     }
   }
   .highlight-list {
-    $highlighted-item-width: 228px;
-    ul.image-grid li.image-item {
-      img {
-        width: 213px;
-      }
+    $highlighted-item-width: 216px;
+    .image-wrapper {
+      width: $highlighted-item-width;
     }
     h4 {
-      max-width: $highlighted-item-width - 15px;
+      max-width: $highlighted-item-width - 4px;
     }
   }
 }
@@ -184,18 +189,17 @@ $collection-image-right-gutter: 30px;
     }
   }
   .highlight-list {
-    $highlighted-item-width: 173px;
+    $highlighted-item-width: 162px;
     ul.image-grid li.image-item {
       margin-bottom: 0;
-      .image-wrapper {
-        min-width: 160px;
-      }
-      img {
-        width: 160px;
-      }
+    }
+    .image-wrapper {
+      width: $highlighted-item-width;
+      height: 122px;
+      line-height: 122px;
     }
     h4 {
-      max-width: $highlighted-item-width - 15px;
+      max-width: $highlighted-item-width - 4px;
     }
   }
 }

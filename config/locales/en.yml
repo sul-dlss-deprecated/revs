@@ -70,7 +70,7 @@ en:
       not_authorized: 'You are not authorized to perform this action.'
       in_beta_not_authorized_html: "The Revs Digital Library is currently in limited beta release.  If you have an account, <a href='/users/sign_in'>please sign in</a> (Stanford users should <a href='/users/webauth_login'>sign in via webauth</a>). If you do not have an account and would like to be notified when the site is public, please <a href='/users/sign_up'>sign up</a> and request to be added to the mailing lists."
       validation_error: "The values you entered were not valid for the field you selected."
-      bulk_update_instructions: "To apply a bulk update, select the field to update, enter a new value and select some items."
+      bulk_update_instructions: "To apply a bulk update, select the action to perform, the field to perform it on, enter new and search vaules (if necessary), select some items with the checkboxes and then click update.  Search and new values must be at least 3 characters."
       set_top_priority: "This image is now set to represent its collection."
       hide_image_success: "This image has been hidden."
       show_image_success: "This image has been made visible."
@@ -251,10 +251,12 @@ en:
       role: "Role"
       per_page: "Per page"
       login_count: "Logins"
-      filter: "By role"
+      filter_role: "By role"
+      filter_type: "By type"
+      filter_visibility: "By visibility"      
       registered_on: "Registered"
       confirmed: "Confirmed?"
-      no_users_found: "No users were found with an email address of '%{with_email_address}'"
+      no_users_found: "No users were found with your search criteria."
       none_found: "None found"
       feature_on_home_page: "Feature"
       user_roles_updated: "Successfully updated %{num} users to the role '%{role}'"
@@ -486,6 +488,7 @@ en:
       label_more_metadata: "Has more metadata"
     user:
       stanford_warning_html: '<strong>Important:</strong> Stanford users should not create a new account or enter their SUNET ID or passwords on this website.  %{webauth_link}'
+      stanford_email_sunet_warning_html: ' <p class="text-info"><strong>Important</strong>.  You have not changed your default username, which is your Stanford email address.  Since your username may appear on the website, you may want to <a href="/users/edit">change this</a> to avoid other users discovering your email address.</p>'
       webauth_link_text: 'Login to webauth first'
       stanford_users_login_webauth_html: |
         <strong>Important:</strong> Stanford users should
@@ -538,8 +541,9 @@ en:
       account_locked_linktext: "Unlock my account"
       update_your_profile: "Update Your Profile"
       username_taken: "Username is taken - please select a new one"
-      username_public: "Your username is publicly visible on the Revs site"
-      username_public_warning: "If you make your profile page public, your first and last name (instead of your username) is used to identify you on the site"
+      username_stanford_note: 'When making profiles public, Stanford users may wish to change the default username to not expose their Stanford email address.'
+      username_public: "Your username is publicly visible on the Revs site and is used to identify your profile"
+      username_public_warning: "If you make your profile page public, your first and last name is also used to identify you on the site"
       twitter_account: "Twitter account"
       website_url: "Website URL"
       biography: "Biography"

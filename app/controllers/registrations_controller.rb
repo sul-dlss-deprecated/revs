@@ -36,13 +36,12 @@ class RegistrationsController < Devise::RegistrationsController
     
     # check to be sure they aren't changing their username to something that includes @stanford.edu
     
-    if params[:user][:username].include?('@stanford.edu') && params[:user][:username] != @user.username
-      if @user.sunet_user?
+    if params[:user][:username].include?('@stanford.edu') && @user.sunet_user? && params[:user][:username] != "#{@user.sunet}@stanford.edu"
         @user.errors.add(:base,t('revs.authentication.stanford_email_warning1'))
-      else
+        successfully_updated = false
+    elsif params[:user][:username].include?('@stanford.edu') && !@user.sunet_user?
         @user.errors.add(:base,t('revs.authentication.stanford_email_warning2'))
-      end
-      successfully_updated = false
+        successfully_updated = false      
     else
       successfully_updated = @user.update_without_password(params[:user])      
     end
