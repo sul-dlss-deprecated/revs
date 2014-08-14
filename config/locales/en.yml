@@ -541,7 +541,7 @@ en:
       account_locked_linktext: "Unlock my account"
       update_your_profile: "Update Your Profile"
       username_taken: "Username is taken - please select a new one"
-      username_stanford_note: 'When making profiles public, Stanford users may wish to change the default username to not expose their Stanford email address.'
+      username_stanford_note: 'Stanford users may wish to change the default username to not include the sunet ID or Stanford email address.'
       username_public: "Your username is publicly visible on the Revs site and is used to identify your profile"
       username_public_warning: "If you make your profile page public, your first and last name is also used to identify you on the site"
       twitter_account: "Twitter account"
