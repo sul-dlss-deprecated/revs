@@ -5,7 +5,9 @@ class Admin::UsersController < AdminController
     @search=params[:search]
     @role = params[:role] || 'curator'
     @filter = params[:filter] || 'all'
-    
+    @filter_role = params[:filter_role] || 'all'
+    @filter_visibility = params[:filter_visibility] || 'all'
+
     @users = User.scoped
     
     if !@search.blank?
@@ -16,6 +18,16 @@ class Admin::UsersController < AdminController
       @users=@users.where("sunet != '' AND sunet is not null")    
     elsif @filter == 'non-stanford'
       @users=@users.where("sunet = '' OR sunet is null")
+    end
+
+    if @filter_role != 'all'
+      @users=@users.where(['role = ?',@filter_role])
+    end
+
+    if @filter_visibility == 'public'
+      @users=@users.where(:public => true)
+    elsif @filter_visibility == 'private'
+      @users=@users.where(:public => false)
     end
 
     @users=@users.order(@order).page(@current_page).per(@per_page)
