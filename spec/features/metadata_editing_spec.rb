@@ -10,11 +10,11 @@ describe("Metadata Editing",:type=>:request,:integration=>true) do
   def bulk_edit_interface_shown_should_be_shown(visible)
     visit root_path
     click_link @facet_link_to_click
-    page.should have_content('Results')
+    page.should have_content(I18n.t('revs.search.search_results'))
     num_results = (visible ? 15 : 14)
     page.should have_content("1 - #{num_results} of #{num_results}")
-    page.should have_link('Detailed')
-    page.should have_link('Gallery')
+    page.should have_link(I18n.t('revs.search.gallery_toggle.detailed'))
+    page.should have_link(I18n.t('revs.search.gallery_toggle.gallery'))
     visible ? page.should(have_link(I18n.t('revs.search.gallery_toggle.curator'))) : page.should_not(have_link(I18n.t('revs.search.gallery_toggle.curator')))
   end
   

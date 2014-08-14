@@ -433,7 +433,7 @@ en:
       help: 'Enter terms to search for records with any of those terms. Use quotes around your terms for phrases.  Use AND and OR to further restrict searching.  Text searches can be used to refine specific fields searched below.'
       search_results: 'Results'
       gallery_toggle:
-        gallery: 'Gallery'
+        gallery: 'Grid'
         list: 'Brief'
         detailed: 'Detailed'
         curator: 'Curator'
