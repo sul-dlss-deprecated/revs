@@ -416,6 +416,7 @@ en:
       curator: 'Curators only'
       no_description: 'No gallery description'
       more_items: ' more'
+      tooltip: 'Featured galleries are selected by the Revs curators from galleries created by Revs users. You can create your own galleries by registering for a free Revs account and then signing in to your account.'
     collection:
       collection_detail: 'Collection Detail'
       member_detail: 'Item Detail'

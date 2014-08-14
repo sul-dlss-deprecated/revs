@@ -72,6 +72,9 @@
         <span class="more-link">
           <%= link_to t('revs.nav.more_galleries'), galleries_path %>
         </span>
+        <a href="#" class="help showOnLoad" data-placement="right" data-title="<%=t('revs.user_galleries.tooltip')%>" data-toggle="tooltip" data-original-title="" title="">
+          <i class="icon-question-sign"></i>
+        </a>
       </h3>
         <ul class="image-grid">
           <% @highlighted_galleries.each_with_index do |gallery, index| %>
