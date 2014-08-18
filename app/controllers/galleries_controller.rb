@@ -1,7 +1,7 @@
 class GalleriesController < ApplicationController
 
-  load_and_authorize_resource  # ensures only people who have access via cancan (defined in ability.rb) can do this
   before_filter :get_paging_params, :only=>[:index,:show]
+  authorize_resource
 
   def index
     @filter=params[:filter] || "featured"
@@ -19,19 +19,30 @@ class GalleriesController < ApplicationController
   end
 
   def show
+    begin
+      @gallery=Gallery.find(params[:id])
+    rescue
+      routing_error
+      return
+    end
+    authorize! :show, @gallery
     @manage=params[:manage]
     Gallery.increment_counter(:views, @gallery.id) unless is_logged_in_user?(current_user) # your own views don't count
     @saved_items=@gallery.saved_items(current_user).page(@current_page).per(@per_page)
   end
   
   def new
+    @gallery=Gallery.new
     @gallery.visibility='private'
+    @gallery.user_id=current_user.id
+    authorize! :new, @gallery
   end
   
   def create
     @gallery=Gallery.create(params[:gallery])
     @gallery.user_id=current_user.id
     @gallery.gallery_type=:user
+    authorize! :create, @gallery
     if @gallery.save
       @message=t('revs.user_galleries.gallery_created')
       flash[:success]=@message
@@ -42,10 +53,13 @@ class GalleriesController < ApplicationController
   end
   
   def edit
-    
+    @gallery=Gallery.find(params[:id])
+    authorize! :edit, @gallery
   end
 
   def update
+   @gallery=Gallery.find(params[:id])
+   authorize! :update, @gallery
    @gallery.update_attributes(params[:gallery])  
    if @gallery.valid?
      expire_fragment('home') if @gallery.featured # if this is a featured gallery, then clear the home page cache in case the user renamed the gallery...
@@ -61,7 +75,10 @@ class GalleriesController < ApplicationController
     @id=params[:id]
     user_id = current_user.id
     
-    Gallery.where(:id=>@id,:user_id=>user_id).limit(1).first.destroy
+    @gallery=Gallery.where(:id=>@id,:user_id=>user_id).limit(1).first
+    authorize! :destroy, @gallery
+    @gallery.destroy
+
     @message=t('revs.user_galleries.gallery_removed')
     
     expire_fragment('home') # in case the user deleted a featured gallery that used to be on the home page

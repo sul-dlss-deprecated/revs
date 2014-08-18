@@ -26,11 +26,6 @@ class CatalogController < ApplicationController
     end
   end
   
-  def routing_error
-    # flash.now[:error]=t('revs.routing_error')
-    render "application/404", :formats=>[:html], :status => :not_found
-  end
-  
   def index
     
     not_authorized if params[:view]=='curator' && cannot?(:bulk_update_metadata,:all)

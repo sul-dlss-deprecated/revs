@@ -47,6 +47,7 @@
         <% if can? :destroy, @gallery%>
           <%= button_to(t('revs.user_galleries.delete'), gallery_path(@gallery.id), :confirm=>t('revs.actions.confirm_delete'), :method=> :delete, class: 'btn btn-link') %>
         <% end %>
+        <%= render :partial => 'saved_items/manage_items_toggle', :locals => {:saved_list_type => 'gallery'} %>
       </div>
     </div>
   </div>

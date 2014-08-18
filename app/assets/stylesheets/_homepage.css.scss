@@ -99,6 +99,7 @@ $collection-image-right-gutter: 30px;
       font-size: 12px;
       font-weight: 500;
     }
+    @include tooltip-styling;
   }
   &.explore {
     h3 {

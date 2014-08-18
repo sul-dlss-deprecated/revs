@@ -2,7 +2,7 @@ Revs::Application.routes.draw do
 
   root :to => "catalog#index"
 
-  match "bookmarks", :to => "catalog#routing_error" # we are not using blacklight bookmarks, so a request to get them should fail nicely
+  match "bookmarks", :to => "application#routing_error" # we are not using blacklight bookmarks, so a request to get them should fail nicely
 
   Blacklight.add_routes(self)
 
@@ -138,7 +138,7 @@ Revs::Application.routes.draw do
   end
     
     
-  match "*gibberish", :to => "catalog#routing_error"
+  match "*gibberish", :to => "application#routing_error"
     
   # The priority is based upon order of creation:
   # first created -> highest priority.

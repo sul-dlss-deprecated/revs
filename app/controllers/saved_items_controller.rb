@@ -69,7 +69,9 @@ class SavedItemsController < ApplicationController
     @document=SolrDocument.find(druid)
     @gallery=gallery_id ? Gallery.find(gallery_id) : current_user.favorites_list
     if @gallery    
-      SavedItem.where(:gallery_id=>@gallery.id,:druid=>druid).first.destroy
+      @saved_item=SavedItem.where(:gallery_id=>@gallery.id,:druid=>druid).first
+      authorize! :destroy, @saved_item
+      @saved_item.destroy
       @message=t('revs.favorites.removed',:list_type=>list_type_interpolator(@gallery.gallery_type))
     end
 
