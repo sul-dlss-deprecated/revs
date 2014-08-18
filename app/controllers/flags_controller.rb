@@ -4,9 +4,8 @@ class FlagsController < ApplicationController
   skip_load_resource :only => :create
   
   def index # all flags
-    respond_to do |format|
-      format.js { render }
-    end
+    #noop
+    render :nothing=>true
   end
 
   def index_by_druid # flags for a specific image

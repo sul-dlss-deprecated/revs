@@ -4,10 +4,9 @@ class AnnotationsController < ApplicationController
 
   authorize_resource # ensures only people who have access via cancan (defined in ability.rb) can do this
 
-  def index # all annotations
+  def index # all annotations, basically used as an API call
     @annotations=Annotation.all
     respond_to do |format|
-      format.js { render }
       format.xml  { render :xml => @annotations.to_xml }
       format.json { render :json=> @annotations.to_json }      
       format.html { render :partial => "all", :locals=>{:annotations=>@annotations}}
@@ -18,7 +17,6 @@ class AnnotationsController < ApplicationController
     druid=params[:id]
     @annotations=Annotation.for_image_with_user(druid,current_user)    
     respond_to do |format|
-      format.js   { render }
       format.xml  { render :xml => @annotations.to_xml }
       format.json { render :json=> @annotations.to_json }
       format.html { render :partial => "all", :locals=>{:annotations=>@annotations}}
@@ -29,7 +27,6 @@ class AnnotationsController < ApplicationController
     
     @annotation=Annotation.find(params[:id])
     respond_to do |format|
-      format.js   { render }
       format.xml  { render :xml => @annotation.to_xml }
       format.json { render :json=> @annotation.to_json }
       format.html { render :partial => "all", :locals=>{:annotations=>[@annotation]}}
@@ -47,7 +44,6 @@ class AnnotationsController < ApplicationController
     
     # in the json response, we add in the number of annotations into the json so we can update the badge on the badge with the success handler
     respond_to do |format|
-      format.js   { render }
       format.xml  { render :xml => @annotation.to_xml }
       format.json { render :json=> @annotation.as_json.merge({'num_annotations'=>num_annotations}) }
       format.html { render :partial => "all", :locals=>{:annotations=>[@annotation]}}
@@ -68,7 +64,6 @@ class AnnotationsController < ApplicationController
       @annotation.save
 
       respond_to do |format|
-        format.js   { render }
         format.xml  { render :xml => @annotation.to_xml }
         format.json { render :json=> @annotation.to_json }
         format.html { render :partial => "all", :locals=>{:annotations=>[@annotation]}}      
