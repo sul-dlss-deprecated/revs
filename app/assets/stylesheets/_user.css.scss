@@ -254,7 +254,7 @@
    vertical-align: top;
   }
   .item-details {
-    margin-right: 15px;
+    margin-right: 20px;
     width: 50%;
     position: relative;
   }
@@ -303,6 +303,34 @@
     }
     .thumbnail-preview {
       opacity: 0.9;
+    }
+  }
+  &.grid-view {
+    .item-creation-date, .saved-item-actions a,
+    .item-description {
+      display: none;
+    }
+    ul#saved_items {
+      float: left;
+      width: 100%;
+    }
+    .item-details {
+      width: 110px;
+    }
+    .item-title {
+      font-size: 13px;
+      margin-top: 6px;
+      line-height: 16px;
+    }
+    .saved-item-row {
+      display: inline-block;
+      margin-bottom: 12px;
+      vertical-align: top;
+    }
+    .highlighted {
+      background: inherit;
+      border: none;
+      padding: 0;
     }
   }
 }
