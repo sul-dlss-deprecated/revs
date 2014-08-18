@@ -249,34 +249,44 @@
 }
 
 .saved-items {
+  .item-details, .item-description, .item-annotation {
+   display: inline-block;
+   vertical-align: top;
+  }
+  .item-details {
+    margin-right: 15px;
+    width: 50%;
+  }
+  .item-description {
+    font-size: 13px;
+    width: 45%;
+    textarea {
+      font-size: inherit;
+      width: 100%;
+    }
+  }
+  .item-annotation {
+    > span {
+      font-style: italic;
+    }
+  }
   .item-title {
     font-size: 1.1em;
     margin-bottom: 8px;
-    .saved-item-actions {
-      margin-right: 12px;
-      vertical-align: text-bottom;
-    }
+    line-height: 18px;
+
     .handle {
       margin-right: 6px;
     }
   }
   .thumbnail-preview {
-    display: inline-block;
+    float: left;
     margin-right: 15px;
-    vertical-align: top;
   }
   ul {
-    display: inline-block;
     vertical-align: bottom;
     span {
       color: #888;
-    }
-  }
-  .item-description, .item-annotation {
-    display: inline-block;
-    font-size: 13px;
-    > span {
-      font-style: italic;
     }
   }
   .highlighted {
@@ -369,12 +379,6 @@
   .profile-visibility {
     display: none;
   }
-  .saved-items {
-    .item-details, .item-description {
-      float: left;
-      width: 100%;
-    }
-  }
   .gallery-metadata {
     margin-left: 20px;
   }
@@ -414,11 +418,17 @@
   .thumbnail-column {
     display: none;
   }
-  .saved-items .item-description {
-    margin-top: 8px;
-  }
   .favorites-index .row.item .item-annotation {
     margin-top: 0;
+  }
+  .saved-items {
+    .item-details, .item-description {
+      float: left;
+      width: 100%;
+    }
+    .item-description {
+      margin-top: 12px;
+    }
   }
 }
 @media screen and (max-width: 479px) {
