@@ -256,6 +256,7 @@
   .item-details {
     margin-right: 15px;
     width: 50%;
+    position: relative;
   }
   .item-description {
     font-size: 13px;
@@ -274,10 +275,6 @@
     font-size: 1.1em;
     margin-bottom: 8px;
     line-height: 18px;
-
-    .handle {
-      margin-right: 6px;
-    }
   }
   .thumbnail-preview {
     float: left;
@@ -291,6 +288,22 @@
   }
   .highlighted {
     @include item-highlighting;
+  }
+  &.manage-mode {
+    .saved-item-actions {
+      input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin-top: 0;
+      }
+      .handle {
+        margin-right: 6px;
+      }
+    }
+    .thumbnail-preview {
+      opacity: 0.9;
+    }
   }
 }
 

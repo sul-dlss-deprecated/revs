@@ -40,7 +40,7 @@ end%>
 
   <%= render :partial => 'saved_items/order_and_pagination', :locals => {:saved_items => saved_items} %>
 
-  <div class="saved-items" id="saved_items_list">
+  <div class="saved-items <%= @manage? 'manage-mode' : '' %>" id="saved_items_list">
     <% saved_items.each do |saved_item| %>
       <% if saved_item.solr_document.visibility == :visible || (saved_item.solr_document.visibility == :hidden && can?(:view_hidden, saved_item.solr_document))%>
         <div id="saved_item_<%="#{saved_item.id}"%>" data-saved-item-id="<%="#{saved_item.id}"%>" class="row item saved-item-row">
@@ -55,13 +55,11 @@ end%>
                   <span class="saved-item-actions">
                     <%=check_box_tag 'selected_items[]',saved_item.id,nil,:id=>"selected_items_#{saved_item.id}",:"data-saved-item-id"=>saved_item.id,:class=>'selected_items' %>
                   </span>
-                <% end %>
-                <% if can?(:update,saved_item) && @manage%>
                   <span class="hidden handle">
                     <i title="<%=t('revs.messages.reorder')%>" class="icon-move"></i>
                   </span>
                 <% end %>
-                <%= item_link(saved_item.solr_document,:params=>paging_params(item_link_params)) %>
+                <%= item_link(saved_item.solr_document, :params => paging_params(item_link_params)) %>
               </li>
 
               <% if can? :curate, :all %>
