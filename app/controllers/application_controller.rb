@@ -129,7 +129,13 @@ class ApplicationController < ActionController::Base
     response.headers["Pragma"] = "no-cache"
     response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
   end
-  
+ 
+  def routing_error
+    # flash.now[:error]=t('revs.routing_error')
+    render "application/404", :formats=>[:html], :status => :not_found
+    return false
+  end
+
   def not_authorized(params={})
     
     additional_message=params[:additional_message]
