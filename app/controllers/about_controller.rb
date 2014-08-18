@@ -89,7 +89,12 @@ class AboutController < ApplicationController
         @total_images=SolrDocument.total_images
       end
     end
-    render :show
+    respond_to do |format|
+        format.xml  { render :nothing=>true }
+        format.json { render :nothing=>true  }
+        format.js { render :nothing=>true  }
+        format.html { render :show}      
+    end
   end
 
   def boom
