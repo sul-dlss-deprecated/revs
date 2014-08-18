@@ -23,8 +23,7 @@ describe("User Registration",:type=>:request,:integration=>true) do
     fill_in 'user_password_confirmation', :with=> @password
     click_button 'Sign up'
     
-    current_path.should == root_path
-    page.should have_content 'A message with a confirmation link has been sent to your email address. Please open the link to activate your account.'
+    should_register_ok
     
     # check the database
     user=User.last
@@ -46,18 +45,13 @@ describe("User Registration",:type=>:request,:integration=>true) do
         
       @username='testing2'
       @email="#{@username}@test.com" 
-      # regsiter a new user
-      visit new_user_registration_path
-      fill_in 'register-email', :with=> @email
-      fill_in 'register-username', :with=> @username
-      fill_in 'user_password', :with=> @password
-      fill_in 'user_password_confirmation', :with=> @password    
+      # register a new user
+      register_new_user(@username,@password,@email)    
       check 'user_subscribe_to_mailing_list'
       click_button 'Sign up'
 
-      current_path.should == root_path
-      page.should have_content 'A message with a confirmation link has been sent to your email address. Please open the link to activate your account.'
-
+      should_register_ok
+    
       # check the database
       user=User.last
       user.role.should == 'user'
@@ -73,18 +67,13 @@ describe("User Registration",:type=>:request,:integration=>true) do
 
         @username='testing3'
         @email="#{@username}@test.com" 
-        # regsiter a new user
-        visit new_user_registration_path
-        fill_in 'register-email', :with=> @email
-        fill_in 'register-username', :with=> @username
-        fill_in 'user_password', :with=> @password
-        fill_in 'user_password_confirmation', :with=> @password    
+        # register a new user
+        register_new_user(@username,@password,@email) 
         check 'user_subscribe_to_revs_mailing_list'
         click_button 'Sign up'
 
-        current_path.should == root_path
-        page.should have_content 'A message with a confirmation link has been sent to your email address. Please open the link to activate your account.'
-
+        should_register_ok
+       
         # check the database
         user=User.last
         user.role.should == 'user'
@@ -92,7 +81,40 @@ describe("User Registration",:type=>:request,:integration=>true) do
         user.email.should == @email
 
       end
+ 
+     it "should create a username as the sunetID when a new Stanford user signs in via webauth" do
     
+      @username="somesunet"
+
+      User.where(:username=>@username).size.should == 0 # doesn't exist yet
+
+      # try and create a new stanford user with this sunetid, which does not exist in database
+      new_user=User.create_new_sunet_user(@username)
+      new_user.sunet.should == @username
+      new_user.username.should == @username
+      new_user.sunet_user?.should be_true
+      new_user.email.should == "#{@username}@stanford.edu"
+
+    end
+
+    it "should create a unique username based on the new Stanford users sunetID if a regular user already happens to be registered with that sunet ID as a username" do
+    
+      @username="somesunet"
+      @email="#{@username}@test.com" 
+      register_new_user(@username,@password,@email) 
+      click_button 'Sign up' 
+
+      should_register_ok
+
+      # now try and create a new stanford user with this same sunetid as an already registered users and see if it uniquifies it
+      new_user=User.create_new_sunet_user(@username)
+      new_user.sunet.should == @username
+      new_user.username.should == "#{@username}_1"
+      new_user.sunet_user?.should be_true
+      new_user.email.should == "#{@username}@stanford.edu"
+
+    end
+
     it "should NOT register a new user via the web page if they have a Stanford email address or try a username with a Stanford email address" do
 
         RevsMailer.should_not_receive(:mailing_list_signup)
@@ -100,12 +122,9 @@ describe("User Registration",:type=>:request,:integration=>true) do
 
         @username='testguy'
         @email="#{@username}@stanford.edu" 
-        # try to register a new stanford user
-        visit new_user_registration_path
-        fill_in 'register-email', :with=> @email
-        fill_in 'register-username', :with=> @username
-        fill_in 'user_password', :with=> @password
-        fill_in 'user_password_confirmation', :with=> @password    
+
+        # try to register a new user with a stanford email address
+        register_new_user(@username,@password,@email) 
         click_button 'Sign up'
 
         current_path.should == root_path
@@ -116,12 +135,9 @@ describe("User Registration",:type=>:request,:integration=>true) do
         user.username.should_not == @username
         user.email.should_not == @email
 
-        # try to register a new stanford user
+        # try to register a new stanford user with a stanford email address as the username
         visit new_user_registration_path
-        fill_in 'register-email', :with=> "#{@username}@example.com"
-        fill_in 'register-username', :with=> @email
-        fill_in 'user_password', :with=> @password
-        fill_in 'user_password_confirmation', :with=> @password    
+        register_new_user(@email,@password,"#{@username}@example.com") 
         click_button 'Sign up'
 
         current_path.should == root_path

@@ -7,7 +7,7 @@
 
     <% if resource.sunet_user? %>
       <div class="control-group">
-      <%= render :partial=>'shared/stanford_default_username_warning',:locals=>{:warn_user=>resource} %>
+      <%= render :partial=>'shared/stanford_default_username_warning',:locals=>{:warn_user=>resource, :on_view_profile=>false} %>
         <%= f.label :sunet, 'SUNET',:class => 'control-label' %>
         <div class="controls">
           <%= resource.sunet %>
@@ -123,7 +123,7 @@
           <small>
             <%= t('revs.user.profile_page_notice_html') %>
           </small>
-           <% if resource.sunet_user? %>
+           <% if resource.sunet_user? && resource.username.include?(resource.sunet)%>
               <small><strong><%= t('revs.user.username_stanford_note') %></strong></small>
             <% end %>
         </span>

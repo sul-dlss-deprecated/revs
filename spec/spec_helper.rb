@@ -92,6 +92,19 @@ def disable_user(login)
   user.save  
 end
 
+def register_new_user(username,password,email)
+  visit new_user_registration_path
+  fill_in 'register-email', :with=> email
+  fill_in 'register-username', :with=> username
+  fill_in 'user_password', :with=> password
+  fill_in 'user_password_confirmation', :with=> password  
+end
+
+def should_register_ok
+   current_path.should == root_path
+   page.should have_content I18n.t('devise.registrations.signed_up_but_unconfirmed')
+end
+
 def login_as(login, password = nil)
   password ||= login_pw
   logout

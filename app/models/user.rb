@@ -55,7 +55,8 @@ class User < ActiveRecord::Base
   #### class level methods
   def self.create_new_sunet_user(sunet)
     password=self.create_sunet_user_password
-    user = User.new(:email=>"#{sunet}@stanford.edu",:sunet=>sunet,:username=>"#{sunet}@stanford.edu",:password => password, :password_confirmation => password, :role=>DEFAULT_ROLE)
+    username=self.create_sunet_username(sunet)
+    user = User.new(:email=>"#{sunet}@stanford.edu",:sunet=>sunet,:username=>username,:password => password, :password_confirmation => password, :role=>DEFAULT_ROLE)
     user.skip_confirmation!
     user.save!
     user
@@ -65,6 +66,19 @@ class User < ActiveRecord::Base
   # we override the sign_in method from devise (in controllers/sessions_controller) to prevent SUNET users from logging in using this password anyway
   def self.create_sunet_user_password
     SecureRandom.hex(16)
+  end
+
+  # sunet users need usernames, but we shouldn't make it their email address to avoid exposing it -- but they still need to be unique
+  def self.create_sunet_username(sunet)
+    suggested_username=sunet # start with sunet as a default, but confirm it will be unique, if not just keep incrementing with integers
+    i=0
+    loop do
+       i+=1
+       user_count=User.where(:username=>suggested_username).size
+       break if user_count == 0
+       suggested_username="#{sunet}_#{i}"
+    end
+    return suggested_username
   end
 
   def self.roles

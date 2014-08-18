@@ -1,7 +1,7 @@
 <div id="content" class="span9">
 
   <h2><%=t('revs.user.user_dashboard',:name=>(is_logged_in_user?(@user) ? t('revs.user.your') : "#{@user.to_s}'s"))%> </h2>
-        <%= render :partial=>'shared/stanford_default_username_warning',:locals=>{:warn_user=>@user} %>
+        <%= render :partial=>'shared/stanford_default_username_warning',:locals=>{:warn_user=>@user, :on_view_profile=>true} if is_logged_in_user?(@user)%>
 
   <div class="row profile-vitals">
 
