@@ -11,8 +11,8 @@
     <div class="span4 view-toggle">
       <div class='gallery_toggle tabbable tabs-below'>
         <ul class="nav nav-pills">
-          <li><%= link_to(t('revs.nav.grid_view'), galleries_path(:view => nil,:filter=>@filter), :class=>"#{'active' if @view == 'grid'}") %></li>
-          <li><%= link_to(t('revs.nav.detailed_view'), galleries_path(:view => 'detailed',:filter=>@filter), :class=>"#{'active'if @view == 'detailed'}") %></li>
+          <li><%= link_to(t('revs.nav.grid'), galleries_path(:view => nil,:filter=>@filter), :class=>"#{'active' if @view == 'grid'}") %></li>
+          <li><%= link_to(t('revs.nav.detailed'), galleries_path(:view => 'detailed',:filter=>@filter), :class=>"#{'active'if @view == 'detailed'}") %></li>
         </ul>
       </div>
     </div>

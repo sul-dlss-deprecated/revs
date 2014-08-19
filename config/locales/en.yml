@@ -144,8 +144,8 @@ en:
       return_to_gallery: '&laquo; return to gallery'
       return_to_favorites: "&laquo; return to %{user_name}'s favorites"
       return_to_search_results: '&laquo; search results'
-      grid_view: 'Grid'
-      detailed_view: 'Detailed'
+      grid: 'Grid'
+      detailed: 'Detailed'
       user: 'User'
       featured: 'Featured'
       curator: 'Curator'
