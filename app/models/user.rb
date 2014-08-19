@@ -70,7 +70,7 @@ class User < ActiveRecord::Base
 
   # sunet users need usernames, but we shouldn't make it their email address to avoid exposing it -- but they still need to be unique
   def self.create_sunet_username(sunet)
-    suggested_username=sunet # start with sunet as a default, but confirm it will be unique, if not just keep incrementing with integers
+    suggested_username=sunet.ljust(5,'1234') # start with sunet as a default, padding with '1234' to get to minimum of 5 character username, but confirm it will be unique, if not just keep incrementing with integers
     i=0
     loop do
        i+=1
