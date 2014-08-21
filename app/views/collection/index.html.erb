@@ -8,7 +8,7 @@
 
   <div class="row results-controls">
     <div class="span4 view-toggle">
-      <div class='gallery_toggle tabbable tabs-below'>
+      <div class='gallery_toggle hidden showOnLoad tabbable tabs-below'>
         <ul class="nav nav-pills">
           <li><%= link_to(t('revs.nav.grid'), all_collections_path(params.merge(:view => nil)), :class=>"#{'active' if @view == 'grid'}") %></li>
           <li><%= link_to(t('revs.nav.detailed'), all_collections_path(params.merge(:view => 'detailed')), :class=>"#{'active'if @view == 'detailed'}") %></li>
