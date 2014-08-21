@@ -114,8 +114,4 @@ class AboutController < ApplicationController
     !@message.blank?
   end
 
-  def is_spammer?
-    !@spammer.blank? || ((Time.now - @loadtime.to_time) < 5) # user filled in a hidden form field or submitted the form in less than 7 seconds
-  end
-
 end

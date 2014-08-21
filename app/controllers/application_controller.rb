@@ -38,7 +38,11 @@ class ApplicationController < ActionController::Base
   def tag_line
     t('revs.tagline')
   end
-  
+ 
+  def is_spammer?(load_time=5)
+    !@spammer.blank? || ((Time.now - @loadtime.to_time) < load_time) # user filled in a hidden form field or submitted the form in less than specified load_time (default=5) seconds
+  end
+
   def previous_page(params={})
     url = Addressable::URI.parse(request.referrer || root_path)
     query = url.query_values || {}

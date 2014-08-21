@@ -2,8 +2,10 @@
  <%= form_for(Flag.new, :remote=>true) do |f| %>
    <%= f.hidden_field :druid, :value=>druid %>
    <%= f.hidden_field :flag_type, :value=>'error' %>
+   <%= hidden_field_tag :loadtime,Time.now%>
    <%= f.label :comment, t('revs.flags.comment_optional')%>
    <%= f.text_area :comment, :rows => '2', :class => "input-xlarge" %>
+	<div class="hidden"><%=t('revs.contact.spambot_label')%> <%=text_field_tag :description, "", :placeholder => t('revs.contact.spambot') %> </div>
    <% if user_signed_in? %>
      <br /><%= f.check_box :notify_me %> <%= t('revs.flags.notify_me')%>
    <% end %>

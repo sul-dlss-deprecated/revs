@@ -18,9 +18,16 @@ class FlagsController < ApplicationController
   
   def create
     flag_info=params[:flag]
-    @flag=Flag.create_new(flag_info,current_user)
-    @all_flags=Flag.where(:druid=>flag_info[:druid])
-    @document=SolrDocument.find(flag_info[:druid])
+
+    @spammer=params[:description] # if this hidden field is filled in, its a spam bot
+    @loadtime=params[:loadtime] # this is the time the page was rendered, if it is submitted too fast, its a spammer
+    @druid=flag_info[:druid]
+
+    @flag=Flag.create_new(flag_info,current_user) unless is_spammer?(0.5) # any click faster than 0.5 seconds is a spambot
+      
+    @all_flags=Flag.where(:druid=>@druid)
+    @document=SolrDocument.find(@druid)
+
     @message=t('revs.flags.created')
     respond_to do |format|
       format.html { flash[:success]=@message

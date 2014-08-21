@@ -281,6 +281,7 @@ end
 
 def create_flag(content)
   fill_in @comment_field, :with=>content
+  sleep(1) # to prevent triggering spam bot preventor
   click_button @flag_button
 end
 
