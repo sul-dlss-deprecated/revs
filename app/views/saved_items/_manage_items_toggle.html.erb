@@ -1,10 +1,10 @@
 <div class="manage-items hidden showOnLoad">
  <% if @saved_items.count > 0 && !@manage && can?(:update, @saved_items.first) # if we have the ability to edit items but we are not currently in sort mode, show the control %>
     <%= "<span> | </span>".html_safe if saved_list_type == 'gallery' %>
-    <%= link_to t('revs.favorites.manage'), url_for(params.merge({:manage=>true,:page=>1,:per_page=>500000})) %>
+    <%= link_to t('revs.favorites.manage'), url_for(params.merge({:manage=>true,:page=>1,:per_page=>500000, :view => @view})) %>
  <% elsif @manage && can?(:update,@saved_items.first) # we have the ability to sort and we ARE in sort mode %>
    <% @available_galleries=current_user.galleries(current_user).where('id != ?',@saved_items.first.gallery_id) %>
     <%= "<span> | </span>".html_safe if saved_list_type == 'gallery' %>
-    <%= link_to t('revs.favorites.manage'), request.path,:class=>'active', title: "Click to leave manage item mode" %>
+    <%= link_to t('revs.favorites.manage'), url_for(params.except(:manage).merge({:view => @view})),:class=>'active', title: "Click to leave manage item mode" %>
  <% end %>
 </div>

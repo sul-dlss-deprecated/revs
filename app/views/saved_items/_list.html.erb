@@ -40,7 +40,7 @@ end%>
 
   <%= render :partial => 'saved_items/order_and_pagination', :locals => {:saved_items => saved_items} %>
 
-  <div class="saved-items <%= @manage? 'manage-mode' : '' %>" id="saved_items_list">
+  <div class="saved-items <%= @view %> <%= @manage? 'manage-mode' : '' %>" id="saved_items_list">
     <% saved_items.each do |saved_item| %>
       <% if saved_item.solr_document.visibility == :visible || (saved_item.solr_document.visibility == :hidden && can?(:view_hidden, saved_item.solr_document))%>
         <div id="saved_item_<%="#{saved_item.id}"%>" data-saved-item-id="<%="#{saved_item.id}"%>" class="row item saved-item-row">
@@ -97,7 +97,7 @@ end%>
     <% end %>
   </div>
 
-  <%= paginate saved_items, :params => {:order=>@order} %>
+  <%= paginate saved_items, :params => {:order=>@order, :view => @view} %>
 
    <% if @manage && can?(:update,saved_items.first) %>
      </form>

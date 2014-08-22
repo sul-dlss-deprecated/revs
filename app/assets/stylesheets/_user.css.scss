@@ -142,6 +142,10 @@
 }
 
 .favorites-index {
+  // Hide the 'remove from' link in grid view when in no-JS mode
+  .grid .row.item .saved-item-actions noscript {
+    display: none;
+  }
   .manage-items {
     font-size: 12px;
     a.active {
@@ -151,6 +155,12 @@
   .saved-items {
     border-top: 2px dotted #dedede;
     padding-top: 12px;
+  }
+  .row.results-controls {
+    margin-top: 20px;
+    .gallery_toggle .nav-pills li:first-child a {
+      margin-left: 0;
+    }
   }
   .row.item {
     margin-left: 0;
@@ -249,7 +259,7 @@
 }
 
 .saved-items {
-  .item-details, .item-description, .item-annotation {
+ .item-details, .item-description, .item-annotation {
    display: inline-block;
    vertical-align: top;
   }
@@ -278,7 +288,11 @@
   }
   .thumbnail-preview {
     float: left;
-    margin-right: 15px;
+    margin-right: 20px;
+    img {
+      border: none;
+      margin: 0;
+    }
   }
   ul {
     vertical-align: bottom;
@@ -288,6 +302,38 @@
   }
   .highlighted {
     @include item-highlighting;
+  }
+  &.grid {
+    .item-creation-date, .saved-item-actions a,
+    .item-description {
+      display: none;
+    }
+    ul#saved_items {
+      float: left;
+      width: 100%;
+    }
+    .item-details {
+      width: 100px;
+    }
+    .item-title {
+      font-size: 13px;
+      margin-top: 6px;
+      line-height: 16px;
+      text-align: center;
+      span.handle {
+        display: none !important;
+      }
+    }
+    .saved-item-row {
+      display: inline-block;
+      margin-bottom: 12px;
+      vertical-align: top;
+    }
+    .highlighted {
+      background: inherit;
+      border: none;
+      padding: 0;
+    }
   }
   &.manage-mode {
     .saved-item-actions {
@@ -303,34 +349,6 @@
     }
     .thumbnail-preview {
       opacity: 0.9;
-    }
-  }
-  &.grid-view {
-    .item-creation-date, .saved-item-actions a,
-    .item-description {
-      display: none;
-    }
-    ul#saved_items {
-      float: left;
-      width: 100%;
-    }
-    .item-details {
-      width: 110px;
-    }
-    .item-title {
-      font-size: 13px;
-      margin-top: 6px;
-      line-height: 16px;
-    }
-    .saved-item-row {
-      display: inline-block;
-      margin-bottom: 12px;
-      vertical-align: top;
-    }
-    .highlighted {
-      background: inherit;
-      border: none;
-      padding: 0;
     }
   }
 }
@@ -416,6 +434,11 @@
     }
   }
 }
+@media screen and (min-width: 980px) and (max-width: 1199px) {
+  .saved-items .item-details {
+    margin-right: 25px;
+  }
+}
 @media screen and (min-width: 768px) and (max-width: 979px) {
   .profile-visibility {
     display: none;
@@ -451,7 +474,8 @@
     margin-top: 12px;
     padding-top: 12px;
   }
-  .galleries-landing .gallery_toggle {
+  .galleries-landing .gallery_toggle,
+  .saved-items-list .gallery_toggle {
     float: left;
   }
 }

@@ -26,6 +26,7 @@ class GalleriesController < ApplicationController
       return
     end
     authorize! :show, @gallery
+    @view=params[:view] || "grid"
     @manage=params[:manage]
     Gallery.increment_counter(:views, @gallery.id) unless is_logged_in_user?(current_user) # your own views don't count
     @saved_items=@gallery.saved_items(current_user).page(@current_page).per(@per_page)

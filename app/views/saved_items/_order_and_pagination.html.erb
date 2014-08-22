@@ -1,7 +1,14 @@
-<div class="row results-controls">
+<div class="row results-controls saved-items-list">
 
   <div class="span4">
+    <div class='gallery_toggle tabbable tabs-below'>
+      <ul class="nav nav-pills">
+        <li><%= link_to(t('revs.nav.grid'), url_for({:view=>'grid',:manage=>@manage}), :class=>"#{'active' if @view == 'grid'}") %></li>
+        <li><%= link_to(t('revs.nav.detailed'), url_for({:view=>'detailed',:manage=>@manage}), :class=>"#{'active' if @view == 'detailed'}") %></li>
+      </ul>
+    </div>
   </div>
+
   <div class="span5 saved-item-pagination">
     <span class="prev-next">
       <%= page_entries_info saved_items, :entry_name => t('revs.user_galleries.item') %>
