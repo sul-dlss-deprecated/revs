@@ -28,6 +28,8 @@ en:
     revs_institute: 'Revs Institute'
     stanford_library: 'Stanford University Libraries'
     routing_error: "Sorry, the page you were looking for was not found."
+    repository_counts_html: |
+      %{number_collections} collections, %{total_images} items
     errors:
       not_saved: 'An error occurred and the item was not saved.'
       sorry: "We're sorry, but there was a problem finding the page you requested."

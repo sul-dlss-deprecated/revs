@@ -31,7 +31,14 @@
         </div> -->
         <div class="site-header-content">
           <h1><%= link_to application_name, root_path %></h1>
-          <h2><%=tag_line%></h2>
+          <h2>
+            <%=tag_line%>
+            <span>
+              <%= t('revs.repository_counts_html',
+                  :total_images => number_with_delimiter(@total_images),
+                  :number_collections => number_with_delimiter(@total_collections)) %>
+            </span>
+          </h2>
         </div>
       <!-- </div> -->
     </div>

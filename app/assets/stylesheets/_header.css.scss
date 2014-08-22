@@ -101,6 +101,12 @@
     margin-top: 0;
     padding-top: 0;
     text-transform: none;
+    > span {
+      float: right;
+      font-size: 13px;
+      font-style: normal;
+      color: #999;
+    }
   }
   .navbar-inner {
     background-color: white;
@@ -208,9 +214,15 @@
   #header-navbar-static-top {
     h1 {
       font-size: 2em;
+      margin-left: 60px; // Compensate for collapsed menu icon width
     }
     h2 {
       font-size: 1em;
+      > span {
+        display: block;
+        margin-top: 10px;
+        width: 100%;
+      }
     }
     .logo img {
       float: left;
@@ -264,6 +276,8 @@
   #header-navbar-static-top.navbar {
     h1 {
       font-size: 1.8em;
+      float: left;
+      margin-left: 0;
     }
     h2 {
       display: none;

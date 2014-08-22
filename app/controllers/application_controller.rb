@@ -27,6 +27,8 @@ class ApplicationController < ActionController::Base
   prepend_before_filter :simulate_sunet, :if=>lambda{Rails.env !='production' && !session["WEBAUTH_USER"].blank?} # to simulate sunet login in development, set a parameter in config/environments/ENVIRONMENT.rb
   before_filter :signin_sunet_user, :if=>lambda{sunet_user_signed_in? && !user_signed_in?} # signin a sunet user if they are webauthed but not yet logged into the site
 
+  before_filter :repository_counts
+
   rescue_from CanCan::AccessDenied do |exception|
     not_authorized(:additional_message=>exception.message)
   end
@@ -39,6 +41,11 @@ class ApplicationController < ActionController::Base
     t('revs.tagline')
   end
  
+  def repository_counts
+    @total_collections=SolrDocument.all_collections.size
+    @total_images=SolrDocument.total_images
+  end
+
   def is_spammer?(load_time=5)
     !@spammer.blank? || ((Time.now - @loadtime.to_time) < load_time) # user filled in a hidden form field or submitted the form in less than specified load_time (default=5) seconds
   end
