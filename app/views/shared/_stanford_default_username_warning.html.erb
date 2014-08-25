@@ -1,5 +1,5 @@
 <% if warn_user.username.downcase == "#{warn_user.sunet}@stanford.edu".downcase || warn_user.username.downcase == warn_user.sunet.downcase%>
-  <div id="stanford-user-warning" class=" notice">
-	  <%=t('revs.user.stanford_email_sunet_warning_html') %> <%=t('revs.user.stanford_email_sunet_warning2_html') if on_view_profile%>
-  </div>
+  		<div class="alert-info alert">
+	  		<%=t('revs.user.stanford_email_sunet_warning_html') %> <%=t('revs.user.stanford_email_sunet_warning2_html') if on_view_profile%>
+		  </div>
 <% end %>
