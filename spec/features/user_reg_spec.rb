@@ -97,6 +97,21 @@ describe("User Registration",:type=>:request,:integration=>true) do
 
     end
 
+     it "should create a username as the sunetID when a new Stanford user signs in via webauth, making it longer to have it be at least 5 characters" do
+    
+      @username="pet"
+
+      User.where(:username=>@username).size.should == 0 # doesn't exist yet
+
+      # try and create a new stanford user with this sunetid, which does not exist in database
+      new_user=User.create_new_sunet_user(@username)
+      new_user.sunet.should == @username
+      new_user.username.should == "#{@username}12"
+      new_user.sunet_user?.should be_true
+      new_user.email.should == "#{@username}@stanford.edu"
+
+    end
+
     it "should create a unique username based on the new Stanford users sunetID if a regular user already happens to be registered with that sunet ID as a username" do
     
       @username="somesunet"

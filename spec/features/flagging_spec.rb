@@ -98,9 +98,8 @@ describe("Flagging",:type=>:request,:integration=>true) do
     initial_flag_count=Flag.count
     # login and visit an item as a regular user
     login_as_user_and_goto_druid(user_login,druid)
-    fill_in @comment_field, :with=>user_comment
     check 'flag_notify_me'
-    click_button @flag_button
+    create_flag(user_comment)
     # check the database
     user=User.find_by_username(user_login)
     Flag.count.should == initial_flag_count + 1
@@ -135,8 +134,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
       login_as_user_and_goto_druid(user_login,druid)      
       #flag the item
       page.should have_content(@ask_to_notify_checkbox) # logged in users can ask to be notified when flag is resolved
-      fill_in @comment_field, :with=>user_comment
-      click_button @flag_button
+      create_flag(user_comment)
       
       # check the page for the correct messages
       current_path.should == catalog_path(druid)
@@ -161,8 +159,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
 
       #flag the item
       visit catalog_path(druid)
-      fill_in @comment_field, :with=>curator_comment
-      click_button @flag_button
+      create_flag(curator_comment)
       
       # check the page for the correct messages
       current_path.should == catalog_path(druid)

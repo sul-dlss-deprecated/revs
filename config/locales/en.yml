@@ -28,6 +28,8 @@ en:
     revs_institute: 'Revs Institute'
     stanford_library: 'Stanford University Libraries'
     routing_error: "Sorry, the page you were looking for was not found."
+    repository_counts_html: |
+      %{number_collections} collections, %{total_images} items
     errors:
       not_saved: 'An error occurred and the item was not saved.'
       sorry: "We're sorry, but there was a problem finding the page you requested."
@@ -144,8 +146,8 @@ en:
       return_to_gallery: '&laquo; return to gallery'
       return_to_favorites: "&laquo; return to %{user_name}'s favorites"
       return_to_search_results: '&laquo; search results'
-      grid_view: 'Grid'
-      detailed_view: 'Detailed'
+      grid: 'Grid'
+      detailed: 'Detailed'
       user: 'User'
       featured: 'Featured'
       curator: 'Curator'
@@ -489,7 +491,7 @@ en:
       label_more_metadata: "Has more metadata"
     user:
       stanford_warning_html: '<strong>Important:</strong> Stanford users should not create a new account or enter their SUNET ID or passwords on this website.  %{webauth_link}'
-      stanford_email_sunet_warning_html: ' <p class="text-info"><strong>Take Note</strong>.  You have not changed your default username, which is your Stanford SUNET ID.'
+      stanford_email_sunet_warning_html: ' <p class="text-info"><strong>Note</strong>.  You have not changed your default username, which is your Stanford SUNET ID.'
       stanford_email_sunet_warning2_html: 'Since your username may appear on the website, you may want to <a href="/users/edit">change this</a> to avoid other users guessing your email address easily.</p>'
       webauth_link_text: 'Login to webauth first'
       stanford_users_login_webauth_html: |

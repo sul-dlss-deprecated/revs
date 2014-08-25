@@ -15,6 +15,7 @@ class UserController < ApplicationController
   # all of the user's favorites (visibility set on the favorites list)
   def favorites
     @manage=params[:manage]
+    @view=params[:view] || "grid"
     unsorted_favorites = @user.favorites(current_user)
     
     #If the user has just been deleted favorites, @current_page might exceed the number of favorites
