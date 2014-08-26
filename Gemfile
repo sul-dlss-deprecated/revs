@@ -35,8 +35,9 @@ gem 'kaminari'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem "blacklight", :git => 'https://github.com/projectblacklight/blacklight.git'
-gem "blacklight_range_limit", '~> 2.1.0' # 2.1.0 is the last version known to work with blacklight 4 including all necessary bug fixes
+#gem "blacklight", :git => 'https://github.com/projectblacklight/blacklight.git'
+gem 'blacklight', ">= 5.3.0"
+gem "blacklight_range_limit", github: 'projectblacklight/blacklight_range_limit'
 gem 'druid-tools', '>= 0.2.0'
 
 # Gems used only for assets and not required

@@ -1,22 +1,18 @@
 GIT
+  remote: git://github.com/projectblacklight/blacklight_range_limit.git
+  revision: 39a56153ded6df920d77c6bd912a394af6e6ab3e
+  specs:
+    blacklight_range_limit (5.0.2)
+      blacklight (>= 5.0.0.pre4, < 6)
+      jquery-rails
+      rails (>= 3.0, < 5.0)
+
+GIT
   remote: https://github.com/cbeer/gssapi.git
   revision: 59bbd6dd916cf2b96cf6b1984f5db8e7891c8bcd
   specs:
     gssapi (1.1.2)
       ffi (>= 1.0.1)
-
-GIT
-  remote: https://github.com/projectblacklight/blacklight.git
-  revision: e1210d1ae4fe95701b30a797f92bf7fa18bdf4f1
-  specs:
-    blacklight (4.4.2)
-      bootstrap-sass (>= 2.2.0, < 2.4)
-      kaminari (~> 0.13)
-      marc (>= 0.4.3, < 1.1)
-      nokogiri (~> 1.6)
-      rails (>= 3.2.6, < 5)
-      rsolr (~> 1.0.6)
-      sass-rails
 
 GEM
   remote: https://rubygems.org/
@@ -57,11 +53,14 @@ GEM
       erubis (>= 2.6.6)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    blacklight_range_limit (2.1.0)
-      blacklight (~> 4.0)
-      jquery-rails
-      rails (>= 3.0, < 5.0)
-    bootstrap-sass (2.3.2.2)
+    blacklight (5.6.0)
+      bootstrap-sass (~> 3.2)
+      deprecation
+      kaminari (~> 0.13)
+      nokogiri (~> 1.6)
+      rails (>= 3.2.6, < 5)
+      rsolr (~> 1.0.6)
+    bootstrap-sass (3.2.0.1)
       sass (~> 3.2)
     builder (3.0.4)
     callsite (0.0.11)
@@ -101,6 +100,8 @@ GEM
     currencies (0.4.2)
     daemons (1.1.9)
     debug_inspector (0.0.2)
+    deprecation (0.1.0)
+      activesupport
     devise (2.2.7)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -141,7 +142,7 @@ GEM
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.8.1)
-    kaminari (0.14.1)
+    kaminari (0.16.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     launchy (2.3.0)
@@ -164,7 +165,6 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    marc (0.7.1)
     mediashelf-loggable (0.4.9)
     meta_request (0.2.8)
       callsite
@@ -173,7 +173,7 @@ GEM
     mime-types (1.25.1)
     mini_magick (3.6.0)
       subexec (~> 0.2.1)
-    mini_portile (0.5.1)
+    mini_portile (0.6.0)
     multi_json (1.10.1)
     mysql2 (0.3.14)
     net-scp (1.1.2)
@@ -186,8 +186,8 @@ GEM
     net-ssh-krb (0.3.0)
       gssapi (~> 1.1.2)
       net-ssh (>= 2.0)
-    nokogiri (1.6.0)
-      mini_portile (~> 0.5.0)
+    nokogiri (1.6.3.1)
+      mini_portile (= 0.6.0)
     omniauth (1.1.4)
       hashie (>= 1.2, < 3)
       rack
@@ -234,7 +234,7 @@ GEM
       actionpack (~> 3)
       countries (= 0.9.2)
       rdf
-    rsolr (1.0.9)
+    rsolr (1.0.10)
       builder (>= 2.1.2)
     rspec-core (2.14.5)
     rspec-expectations (2.14.3)
@@ -250,7 +250,7 @@ GEM
     rubyzip (0.9.9)
     rvm-capistrano (1.5.1)
       capistrano (~> 2.15.4)
-    sass (3.2.12)
+    sass (3.4.1)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
@@ -285,7 +285,7 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.40)
+    tzinfo (0.3.41)
     uglifier (2.2.1)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
@@ -305,8 +305,8 @@ DEPENDENCIES
   addressable
   better_errors
   binding_of_caller
-  blacklight!
-  blacklight_range_limit (~> 2.1.0)
+  blacklight (>= 5.3.0)
+  blacklight_range_limit!
   bootstrap-sass
   bundler (>= 1.2.0)
   cancan
