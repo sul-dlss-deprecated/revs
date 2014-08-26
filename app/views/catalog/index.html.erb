@@ -13,7 +13,8 @@
 
       <% @page_title = t('revs.search.search_label') %>
 
-      <% extra_head_content << render_opensearch_response_metadata.html_safe %>
+      <%# extra_head_content << render_opensearch_response_metadata.html_safe %>
+      <% content_for(:head) << render_opensearch_response_metadata.html_safe %>
 
 			<h2 class="search-results"><%= t('revs.search.search_results') %>
 			  <span class="prev-next">

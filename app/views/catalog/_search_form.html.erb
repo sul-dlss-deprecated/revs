@@ -6,7 +6,7 @@
     </a>
   </h4>
   <%= form_tag search_action_url, :method => :get, :class => 'search_form' do %>
-    <%= search_as_hidden_fields(:omit_keys => [:q, :search_field, :qt, :page]).html_safe %>
+    <%= render_hash_as_hidden_fields(:omit_keys => [:q, :search_field, :qt, :page]).html_safe %>
     <label for="q" class="hide-text"><%= t('blacklight.search.form.q') %></label>
     <%= text_field_tag :q, params[:q], :placeholder => t('blacklight.search.form.q'), :class => "search_q q", :id => "q" %>
     <%= submit_tag(t('blacklight.search.form.q'), :class=>'hide') %>

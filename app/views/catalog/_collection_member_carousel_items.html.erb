@@ -1,9 +1,9 @@
 <%- @carousel_members.each_with_index do |member, index| 
 	image_number=index+start.to_i+1-%>
  <div image-number="<%=image_number%>" class="item<%= " active" if image_number == 1 %>">
-   <%= link_to(image_tag(member.images(:large).first, :alt => member[blacklight_config.show.heading]),item_path(member)) %>
-   <%- if member.has_key?(blacklight_config.show.heading) -%>
-     <div class="carousel-caption"><p><%= member[blacklight_config.show.heading]%></p></div>
+   <%= link_to(image_tag(member.images(:large).first, :alt => member[blacklight_config.show.title_field]),item_path(member)) %>
+   <%- if member.has_key?(blacklight_config.show.title_field) -%>
+     <div class="carousel-caption"><p><%= member[blacklight_config.show.title_field]%></p></div>
    <%- end -%>
  </div>
 <%- end -%>

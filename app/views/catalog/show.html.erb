@@ -8,7 +8,8 @@
 <% end %>
 
   <% @page_title = "#{document_show_html_title}"%>
-  <% extra_head_content << render_link_rel_alternates %>
+  <% #extra_head_content << render_link_rel_alternates %>
+  <% content_for(:head) << render_link_rel_alternates %>
 
   <%# TODO this should be in a partial -%>
   <div id="document" class="<%= render_document_class %>">
