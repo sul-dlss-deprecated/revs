@@ -188,13 +188,13 @@ class CatalogController < ApplicationController
     config.document_index_view_types = ["gallery","detailed","curator"]
 
     # solr field configuration for search results/index views
-    config.index.show_link = 'title_tsi'
-    config.index.record_display_type = 'format_ssim'
+    config.index.title_field = 'title_tsi'
+    config.index.display_type_field = 'format_ssim'
 
     # solr field configuration for document/show views
-    config.show.html_title = 'title_tsi'
-    config.show.heading = 'title_tsi'
-    config.show.display_type = 'format_ssim'
+    config.show.title_field  = 'title_tsi'
+    #config.show.title_field = 'title_tsi'
+    config.show.display_type_field = 'format_ssim'
     
 
     # solr fields that will be treated as facets by the blacklight application

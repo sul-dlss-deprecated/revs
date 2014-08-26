@@ -1,13 +1,4 @@
 GIT
-  remote: git://github.com/projectblacklight/blacklight_range_limit.git
-  revision: 39a56153ded6df920d77c6bd912a394af6e6ab3e
-  specs:
-    blacklight_range_limit (5.0.2)
-      blacklight (>= 5.0.0.pre4, < 6)
-      jquery-rails
-      rails (>= 3.0, < 5.0)
-
-GIT
   remote: https://github.com/cbeer/gssapi.git
   revision: 59bbd6dd916cf2b96cf6b1984f5db8e7891c8bcd
   specs:
@@ -60,6 +51,14 @@ GEM
       nokogiri (~> 1.6)
       rails (>= 3.2.6, < 5)
       rsolr (~> 1.0.6)
+    blacklight-marc (5.4.0)
+      blacklight (>= 5.4.0.rc1, < 6.0)
+      marc (>= 0.4.3, < 1.1)
+      rails
+    blacklight_range_limit (5.0.2)
+      blacklight (>= 5.0.0.pre4, < 6)
+      jquery-rails
+      rails (>= 3.0, < 5.0)
     bootstrap-sass (3.2.0.1)
       sass (~> 3.2)
     builder (3.0.4)
@@ -112,6 +111,7 @@ GEM
     editstore (1.1.5)
       druid-tools (>= 0.2.0)
       rails (~> 3.2.13)
+    ensure_valid_encoding (0.5.3)
     erubis (2.7.0)
     eventmachine (1.0.3)
     execjs (2.0.2)
@@ -165,6 +165,9 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    marc (0.8.1)
+      ensure_valid_encoding
+      unf
     mediashelf-loggable (0.4.9)
     meta_request (0.2.8)
       callsite
@@ -289,6 +292,9 @@ GEM
     uglifier (2.2.1)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.6)
     warden (1.2.3)
       rack (>= 1.0)
     websocket (1.0.7)
@@ -306,7 +312,8 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   blacklight (>= 5.3.0)
-  blacklight_range_limit!
+  blacklight-marc
+  blacklight_range_limit (>= 5.0.2)
   bootstrap-sass
   bundler (>= 1.2.0)
   cancan

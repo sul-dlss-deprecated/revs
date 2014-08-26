@@ -37,7 +37,8 @@ gem 'kaminari'
 
 #gem "blacklight", :git => 'https://github.com/projectblacklight/blacklight.git'
 gem 'blacklight', ">= 5.3.0"
-gem "blacklight_range_limit", github: 'projectblacklight/blacklight_range_limit'
+gem "blacklight_range_limit", ">=5.0.2"
+gem 'blacklight-marc'
 gem 'druid-tools', '>= 0.2.0'
 
 # Gems used only for assets and not required
