@@ -50,12 +50,12 @@ describe("Item Visibility",:type=>:request,:integration=>true) do
   
   it "should not show the visibility facet to non-curators" do
     visit root_path
-    page.should_not have_content("Visibility Hidden 1")
+    page.should_not have_css(".facet-label", :text=>"Hidden")
     login_as(user_login)
     visit root_path
-    page.should_not have_content("Visibility Hidden 1")
+    page.should_not have_css(".facet-label", :text=>"Hidden")
     login_as(curator_login)
-    page.should have_content("Visibility Hidden 1")
+    page.should have_css(".facet-label", :text=>"Hidden")
   end
   
   it "should not show hidden items to non-logged in or regular users" do
