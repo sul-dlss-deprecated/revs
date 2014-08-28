@@ -45,13 +45,16 @@ body {
 }
 
 #error_explanation {
-  @extend .alert;
-  @extend .alert-error;
-  @extend .alert-block; /* optional */
+  //BLACKLIGHT-UPGRADE-REMOVAL
+  //http://getbootstrap.com/components/#alerts
+  //@extend .alert;
+  //@extend .alert-error;
+  //@extend .alert-block; /* optional */
 }
 
 .field_with_errors {
-  @extend .control-group.error
+  //BLACKLIGHT-UPGRADE-REMOVAL
+  //@extend .control-group.error
 }
 
 #loading-message 

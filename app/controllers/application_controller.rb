@@ -2,6 +2,8 @@
 require 'squash/rails' 
 require 'addressable/uri'
 
+
+
 class ApplicationController < ActionController::Base
   # Adds a few additional behaviors into the application controller 
   
@@ -9,6 +11,9 @@ class ApplicationController < ActionController::Base
    include DateHelper
    extend DateHelper
    include SolrQueryHelper
+   
+   require 'blacklight/catalog/search_context'
+   include Blacklight::Catalog::SearchContext
 
    # include squash.io
    include Squash::Ruby::ControllerMethods

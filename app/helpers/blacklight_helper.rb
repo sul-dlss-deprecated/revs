@@ -1,6 +1,8 @@
 module BlacklightHelper
   include Blacklight::BlacklightHelperBehavior
-  def document_partial_name(document)
+  
+  ###TODO:We make no longer need this override now that we are in blacklight 5+
+  def document_partial_name(document, base_name=nil)
     case
       when document.is_collection?
         "collection"

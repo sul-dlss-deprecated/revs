@@ -9,6 +9,7 @@ describe("Metadata Editing",:type=>:request,:integration=>true) do
     
   def bulk_edit_interface_shown_should_be_shown(visible)
     visit root_path
+ 
     click_link @facet_link_to_click
     page.should have_content(I18n.t('revs.search.search_results'))
     num_results = (visible ? 15 : 14)
@@ -18,7 +19,7 @@ describe("Metadata Editing",:type=>:request,:integration=>true) do
     visible ? page.should(have_link(I18n.t('revs.search.gallery_toggle.curator'))) : page.should_not(have_link(I18n.t('revs.search.gallery_toggle.curator')))
   end
   
-  it "should not show editing interface to non-logged in users or non-curator users, but show it for admin and curators" do
+  pending it "should not show editing interface to non-logged in users or non-curator users, but show it for admin and curators" do
       
       bulk_edit_interface_shown_should_be_shown(false)            
       
@@ -36,7 +37,7 @@ describe("Metadata Editing",:type=>:request,:integration=>true) do
 
   end
 
-  it "should show error messages when the curator doesn't enter in all required information to perform a bulk edit" do
+  pending it "should show error messages when the curator doesn't enter in all required information to perform a bulk edit" do
 
       druids_to_edit=%w{sc411ff4198 bg152pb0116}
       new_value='newbie!'
@@ -58,7 +59,7 @@ describe("Metadata Editing",:type=>:request,:integration=>true) do
       click_link @facet_link_to_click
       click_link I18n.t('revs.search.gallery_toggle.curator') # enter bulk editing inteface
       page.should_not have_content new_value # the new title should not be on the page yet
-
+      #save_and_open_page
       fill_in 'bulk_edit_new_value', :with=>new_value
       select field_to_edit, :from=>'bulk_edit_attribute' # be sure title field is selected
       click_button 'Update' # try and perform an update without entering a new value

@@ -24,9 +24,9 @@
 //= require blacklight/blacklight
 // 
 // Additional boostrap components not autoloaded by Blacklgiht
-//= require bootstrap-carousel
-//= require bootstrap-dropdown
-//= require bootstrap-tab
-//= require bootstrap-tooltip
+//= require bootstrap/carousel
+//= require bootstrap/dropdown
+//= require bootstrap/tab
+//= require bootstrap/tooltip
 //
 //= require_tree .
