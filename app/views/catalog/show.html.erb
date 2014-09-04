@@ -2,9 +2,9 @@
 <span class="hidden" id="data-vars" data-druid="<%=@document[:id]%>" data-visibility="<%=@document.visibility%>" data-curator-edit-mode="<%=in_curator_edit_mode%>"></span>
 
 <% if @document.is_collection? %>
-	<div id="content" class="span9 show-document">
+	<div id="content" class="col-md-9 show-document">
 <% else %>
-	<div id="content" class="span12 show-document">
+	<div id="content" class="col-md-12 show-document">
 <% end %>
 
   <% @page_title = "#{document_show_html_title}"%>
@@ -37,7 +37,7 @@
   </div>
 
   <% if @document.is_collection? %>
-    <div id="sidebar" class="span3">
+    <div id="sidebar" class="col-md-3">
       <%= render_document_sidebar_partial  %>
     </div><!--/span -->
   <% end %>

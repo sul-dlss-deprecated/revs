@@ -1,5 +1,5 @@
-<div id="content" class="span9 admin">
-	
+<div id="content" class="col-md-9 admin">
+
   <h2><%=t('revs.user.curator_dashboard')%></h2>
 
   <h3>
@@ -18,7 +18,7 @@
 <%# -- Tab: Flag Status -- %>
     <div  id="<%=@tab_list_flag%>" class="tab-pane <%="active" if @tab == @tab_list_flag %>">
 
-    <% if @tab == @tab_list_flag %>
+      <% if @tab == @tab_list_flag %>
 
        <%= form_tag request.path, :method=>:get, :class => 'form-horizontal find-users' do %>
           <fieldset>
@@ -52,72 +52,70 @@
         <% end %>
 
         <%= render :partial => 'user/flags_table', :locals=>{:selection=>@selection, :flags=>@flags, :user=>current_user,:curate_view=>true,:search=>@search }%>
-    <% end %>
+      <% end %>
   </div>
 
 <%# -- Tab: Flag Grouped By Item -- %>
-    <div  id="<%=@tab_list_item%>" class="tab-pane <%="active" if @tab == @tab_list_item %>">
+  <div id="<%=@tab_list_item%>" class="tab-pane <%="active" if @tab == @tab_list_item %>">
 
     <% if @tab == @tab_list_item %>
 
-        <%= form_tag request.path, :method=>:get, :class => 'form-horizontal find-users' do %>
-          <%= hidden_field_tag :tab, @tab_list_item%>
-          <fieldset>
+      <%= form_tag request.path, :method=>:get, :class => 'form-horizontal find-users' do %>
+        <%= hidden_field_tag :tab, @tab_list_item%>
+        <fieldset>
 
-            <div class="control-group">
-              <label for="search" class="control-label">
-                <%=t('revs.curator.search_title')%>
-              </label>
-              <div class="controls">
-                <%= text_field_tag :search, @search, :class => 'input-large' %>
-              </div>
-            </div>
-
-            <%= render :partial=>'shared/per_page_dropdown' %>
-
-            <div class="control-group">
-              <div class="controls">
-                <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-medium' %>
-              </div>
-            </div>
-          </fieldset>
-        <% end %>
-
-
-          <div class="row results-controls">
-            <div class="span5 offset4 saved-item-pagination">
-              <span>
-                <%= page_entries_info @flags, :entry_name => t('revs.user_galleries.item') %>
-              </span>
+          <div class="control-group">
+            <label for="search" class="control-label">
+              <%=t('revs.curator.search_title')%>
+            </label>
+            <div class="controls">
+              <%= text_field_tag :search, @search, :class => 'input-large' %>
             </div>
           </div>
 
-        <table class="admin table table-bordered table-condensed table-hover table-striped">
-          <tr>
-            <th><%= link_to t('revs.curator.item_title'),flags_table_curator_tasks_path(:order=>'items.title ASC',:tab=>@tab_list_item,:search=>@search)  %></th>
-  		      <th class="right"><%= link_to t('revs.flags.all_flags_name'), flags_table_curator_tasks_path(:order=>'num_flags desc',:tab=>@tab_list_item,:search=>@search) %></th>
-  		      <th class="right"><%= t('revs.flags.open_state_display_name')%></th>
-            <th class="right"><%= t('revs.flags.fixed_state_diplay_name')%></th>
-            <th class="right"><%= t('revs.flags.wont_fix_state_display_name')%></th>
-            <th><%=link_to t('revs.curator.last_updated'), flags_table_curator_tasks_path(:order=>'updated_at DESC', :tab=>@tab_list_item,:search=>@search) %></th>
-          </tr>
+          <%= render :partial=>'shared/per_page_dropdown' %>
 
-        <% @flags.each do |flag|%>
-          <tr>
-            <td><%= item_link(flag.item,:truncate=>true) %></td>
-  			    <td class="right"><%= flag.num_flags %></td>
-            <td class="right"><%= Flag.queryFlagGroup(@flag_states, flag.druid, Flag.open) %></td>
-            <td class="right"><%= Flag.queryFlagGroup(@flag_states, flag.druid, Flag.fixed) %></td>
-            <td class="right"><%= Flag.queryFlagGroup(@flag_states, flag.druid, Flag.wont_fix) %></td>
-            <td><%= show_as_date(flag.updated_at.in_time_zone) %></td>
-          </tr>
-        <% end %>
-     
-        </table>
-
-  	    <%= paginate @flags, :params => {:order=>@order, :tab=>@tab_list_item,:search=>@search} %>
+          <div class="control-group">
+            <div class="controls">
+              <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-medium' %>
+            </div>
+          </div>
+        </fieldset>
       <% end %>
-    </div>
+
+      <div class="row results-controls">
+        <div class="col-md-5 col-md-offset-4 saved-item-pagination">
+          <span>
+            <%= page_entries_info @flags_grouped, :entry_name => t('revs.user_galleries.item') %>
+          </span>
+        </div>
+
+      <table class="admin table table-bordered table-condensed table-hover table-striped">
+        <tr>
+          <th><%= link_to t('revs.curator.item_title'),flags_table_curator_tasks_path(:order=>'items.title ASC',:tab=>@tab_list_item,:search=>@search)  %></th>
+		      <th class="right"><%= link_to t('revs.flags.all_flags_name'), flags_table_curator_tasks_path(:order=>'num_flags desc',:tab=>@tab_list_item,:search=>@search) %></th>
+		      <th class="right"><%= t('revs.flags.open_state_display_name')%></th>
+          <th class="right"><%= t('revs.flags.fixed_state_diplay_name')%></th>
+          <th class="right"><%= t('revs.flags.wont_fix_state_display_name')%></th>
+          <th><%=link_to t('revs.curator.last_updated'), flags_table_curator_tasks_path(:order=>'updated_at DESC', :tab=>@tab_list_item,:search=>@search) %></th>
+        </tr>
+
+      <% @flags.each do |flag|%>
+        <tr>
+          <td><%= item_link(flag.item,:truncate=>true) %></td>
+			    <td class="right"><%= flag.num_flags %></td>
+          <td class="right"><%= Flag.queryFlagGroup(@flag_states, flag.druid, Flag.open) %></td>
+          <td class="right"><%= Flag.queryFlagGroup(@flag_states, flag.druid, Flag.fixed) %></td>
+          <td class="right"><%= Flag.queryFlagGroup(@flag_states, flag.druid, Flag.wont_fix) %></td>
+          <td><%= show_as_date(flag.updated_at.in_time_zone) %></td>
+        </tr>
+      <% end %>
+
+      </table>
+
+	    <%= paginate @flags, :params => {:order=>@order, :tab=>@tab_list_item,:search=>@search} %>
+    <% end %>
+  </div>
 
 <%# -- Tab: Flag By User -- %>
       <div id="<%=@tab_list_user%>" class="tab-pane <%="active" if @tab == @tab_list_user%>">
@@ -125,7 +123,7 @@
     <% if @tab == @tab_list_user %>
 
         <div class="row results-controls">
-          <div class="span5 offset4 saved-item-pagination">
+          <div class="col-md-5 col-md-offset-4 saved-item-pagination">
             <span>
               <%# why do I need to reference @flags before page_entries_info will work? %>
               <%= page_entries_info @flags, :entry_name => 'user' %>

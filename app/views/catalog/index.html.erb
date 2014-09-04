@@ -1,10 +1,10 @@
-<div id="sidebar" class="span3">
+<div id="sidebar" class="col-md-3">
   <%= render "search_form" %>
   <%= render :partial => 'constraints' if query_has_constraints? %>
   <%= render :partial=>'facets' %>
 </div>
 
-<div id="content" class="span9">   
+<div id="content" class="col-md-9">   
 
     <% if on_home_page %>
 	    <%# if there are no input/search related params, display the "home" partial -%>

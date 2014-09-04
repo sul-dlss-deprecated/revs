@@ -1,4 +1,4 @@
-<div id="content" class="span9 admin">
+<div id="content" class="col-md-9 admin">
 	
   <h2><%=t('revs.user.curator_dashboard')%></h2>
 
@@ -8,15 +8,15 @@
   </h3>
 
   <%= form_tag galleries_table_curator_tasks_path, :method=>:get, :class => 'form-search' do %>
-    <%= select_tag 'filter',options_for_select(@visibility_options,@filter),class:"span2"%>
+    <%= select_tag 'filter',options_for_select(@visibility_options,@filter),class:"col-md-2"%>
     <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-small' %>
   <% end %>
 
   <div class="row results-controls">
-    <div class="span4">
+    <div class="col-md-4">
     </div>
 
-    <div class="span5 saved-item-pagination">
+    <div class="col-md-5 saved-item-pagination">
       <span class="prev-next">
         <%= page_entries_info @galleries, :params => {:filter => @filter} %>
       </span>

@@ -6,7 +6,7 @@
 
     <%= hidden_field_tag 'bulk_edit[operation]','bulk'%>
 
-    <div class="update-field-toggle-container span1">
+    <div class="update-field-toggle-container col-md-1">
       <div class="update-field-heading">
         <%= t('revs.curator.headings.select')%>
       </div>
@@ -18,7 +18,7 @@
       </div>
     </div>
 
-    <div class="update-field-action span2">
+    <div class="update-field-action col-md-2">
       <div class="update-field-heading">
          <%= t('revs.curator.headings.action')%>
       </div>
@@ -36,19 +36,19 @@
       </label>
     </div>
 
-    <div class="span2 update-field">
+    <div class="col-md-2 update-field">
       <div class="update-field-heading">
          <%= t('revs.curator.headings.field_to_select')%>
       </div>
-      <%= select_tag 'bulk_edit[attribute]', options_for_select(bulk_update_fields, @bulk_edit.nil? ? '' : @bulk_edit[:attribute]), class:"span2" %>
+      <%= select_tag 'bulk_edit[attribute]', options_for_select(bulk_update_fields, @bulk_edit.nil? ? '' : @bulk_edit[:attribute]), class:"col-md-2" %>
     </div>
 
-    <div class="update-field-value span4">
+    <div class="update-field-value col-md-4">
       <div class="update-field-heading">
          <%= t('revs.curator.headings.field_value')%>
       </div>
-      <%= text_field_tag 'bulk_edit[search_value]' ,@bulk_edit.nil? ? '' : @bulk_edit[:search_value], class: 'span3', placeholder: ((@bulk_edit.nil? || @bulk_edit[:search_value].blank?) ? t('revs.curator.search_value') : @bulk_edit[:search_value])%>
-		  <%= text_field_tag 'bulk_edit[new_value]' ,@bulk_edit.nil? ? '' : @bulk_edit[:new_value], class: 'span3', placeholder: ((@bulk_edit.nil? || @bulk_edit[:new_value].blank?) ? t('revs.curator.new_value') : @bulk_edit[:new_value])%>
+      <%= text_field_tag 'bulk_edit[search_value]' ,@bulk_edit.nil? ? '' : @bulk_edit[:search_value], class: 'col-md-3', placeholder: ((@bulk_edit.nil? || @bulk_edit[:search_value].blank?) ? t('revs.curator.search_value') : @bulk_edit[:search_value])%>
+		  <%= text_field_tag 'bulk_edit[new_value]' ,@bulk_edit.nil? ? '' : @bulk_edit[:new_value], class: 'col-md-3', placeholder: ((@bulk_edit.nil? || @bulk_edit[:new_value].blank?) ? t('revs.curator.new_value') : @bulk_edit[:new_value])%>
 
       <%= submit_tag t('revs.nav.update'),
         :id=>'bulk-update-button',

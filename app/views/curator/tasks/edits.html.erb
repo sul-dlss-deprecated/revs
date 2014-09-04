@@ -1,12 +1,12 @@
-<div id="content" class="span9 admin">
-	
+<div id="content" class="col-md-9 admin">
+
   <h2><%=t('revs.user.curator_dashboard')%></h2>
 
   <h3>
     <%= t('revs.curator.edits') %>
     <span class="object-count muted">(<%= ChangeLog.count %> <%=t('revs.messages.total')%>)</span>
   </h3>
-  
+
   <ul class="nav nav-tabs">
       <li class="<%="active" if @tab == @tab_list_item%>"><a href="<%=request.path%>?tab=<%=@tab_list_item%>"><%=t('revs.curator.by_item') %></a></li>
       <li class="<%="active" if @tab == @tab_list_user%>"><a href="<%=request.path%>?tab=<%=@tab_list_user%>"><%= t('revs.curator.by_user') %></a></li>
@@ -19,12 +19,11 @@
 
       <% if @tab == @tab_list_item %>
 
-          <div class="row results-controls">
-            <div class="span5 offset4 saved-item-pagination">
-              <span>
-                <%= page_entries_info @edits, :entry_name => t('revs.user_galleries.item') %>
-              </span>
-            </div>
+        <div class="row results-controls">
+          <div class="col-md-5 col-md-offset-4 saved-item-pagination">
+            <span>
+              <%= page_entries_info @edits_by_item, :entry_name => t('revs.user_galleries.item') %>
+            </span>
           </div>
 
         <table class="table table-bordered table-condensed table-hover table-striped">
@@ -46,14 +45,14 @@
 
 <%# -- Tab: Edits Grouped By User -- %>
     <div id='<%=@tab_list_user%>' class="tab-pane <%="active" if @tab == @tab_list_user%>">
-      
+
       <% if @tab == @tab_list_user %>
-          <div class="row results-controls">
-            <div class="span5 offset4 saved-item-pagination">
-              <span>
-                <%= page_entries_info @edits, :entry_name => 'user' %>
-              </span>
-            </div>
+
+        <div class="row results-controls">
+          <div class="col-md-5 col-md-offset-4 saved-item-pagination">
+            <span>
+              <%= page_entries_info @edits_by_user, :entry_name => 'user' %>
+            </span>
           </div>
 
         <table class="table table-bordered table-condensed table-hover table-striped">
@@ -74,7 +73,7 @@
     </div>
 
   </div>
-   
+
 
 </div>
 

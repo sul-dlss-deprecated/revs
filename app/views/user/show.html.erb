@@ -1,14 +1,14 @@
-<div id="content" class="span9">
+<div id="content" class="col-md-9">
 
   <h2><%=@page_title%> </h2>
         <%= render :partial=>'shared/stanford_default_username_warning',:locals=>{:warn_user=>@user, :on_view_profile=>true} if is_logged_in_user?(@user)%>
 
   <div class="row profile-vitals">
 
-    <div class="span2">
+    <div class="col-md-2">
       <%= image_tag(@user.avatar.url(:thumb), :class => "user-image") %>
     </div>
-    <div class="span6 offset1 user-bio">
+    <div class="col-md-6 col-md-offset-1 user-bio">
       <% unless @user.bio.blank? %>
         <div>
           <%= @user.bio %>
@@ -18,11 +18,11 @@
   </div>
 
   <div class="row profile-links">
-    <div class="span3 user-name">
+    <div class="col-md-3 user-name">
       <%= display_user_name(@user) %>
     </div>
 
-    <div class="span6 <%= 'user-links' if @user.url? or @user.twitter? %> ">
+    <div class="col-md-6 <%= 'user-links' if @user.url? or @user.twitter? %> ">
       <%= link_to "<i class='icon-external-link'></i> http://#{@user.url}".html_safe, "http://#{@user.url}", :target=>'_new', :class => "user-link website" unless @user.url.blank? %>
       <%= '<span class="divider">|</span>'.html_safe if @user.url? and @user.twitter? %>
       <%= link_to "<i class='icon-twitter'></i> @#{@user.twitter}".html_safe, "https://twitter.com/intent/user?screen_name=@#{@user.twitter}", :target=>'_new', :class => "user-link twitter" unless @user.twitter.blank? %>
@@ -30,29 +30,29 @@
   </div>
 
   <div class="row profile-activity">
-    <div class="span4">
+    <div class="col-md-4">
       <%= render :partial => 'show_favorites' %>
     </div>
     
-    <div class="span4 offset1">
+    <div class="col-md-4 col-md-offset-1">
       <%= render :partial => 'show_galleries' %>
     </div>
     
   </div>
 
   <div class="row profile-activity">
-    <div class="span4">
+    <div class="col-md-4">
       <%= render :partial => 'show_annotations' %>
     </div>
 
-    <div class="span4 offset1">
+    <div class="col-md-4 col-md-offset-1">
       <%= render :partial => 'show_flags' %>
     </div>
 
   </div>
   
   <div class="row profile-activity">
-    <div class="span4">
+    <div class="col-md-4">
       <% if @user.can? :curate, :all %>
         <%= render :partial => 'show_edits' %>
       <% end %>

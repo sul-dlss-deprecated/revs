@@ -1,10 +1,10 @@
 <div class="row doc">
-  <div class="<%= render_document_class document %> document span9">
+  <div class="<%= render_document_class document %> document col-md-9">
     <div class="row result-item" data-item-id="item-<%= document.id %>">
-      <div class="span1 result-item-checkbox">
+      <div class="col-md-1 result-item-checkbox">
 			  <%= check_box_tag 'bulk_edit[selected_druids][]', document.id, (@bulk_edit.nil? || @bulk_edit[:selected_druids].nil?) ? false : @bulk_edit[:selected_druids].include?(document.id), :id=>"bulk_edit_selected_druids_#{document.id}"  %>
       </div>
-      <div class="span2 result-thumbnail">
+      <div class="col-md-2 result-thumbnail">
         <%= link_to_document document,
               :label => image_tag(document.images(:large).first,
               :alt => document.title.html_safe,
@@ -13,7 +13,7 @@
               :counter => (document_counter + 1 + @response.params[:start].to_i) %>
       </div>
 
-      <div class="span4 result-metadata">
+      <div class="col-md-4 result-metadata">
         <h5 class="index_title">
           <%= link_to_document document,
               :label => document.title.html_safe,
@@ -43,7 +43,7 @@
         </div>
       </div>
 
-      <div class="span2 edit-field-value">
+      <div class="col-md-2 edit-field-value">
         <span class="current-value"></span>
         <span class="field-label"></span>
         <span class="new-value"></span>

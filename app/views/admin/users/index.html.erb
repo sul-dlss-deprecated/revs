@@ -1,4 +1,4 @@
-<div id="content" class="span9 admin">
+<div id="content" class="col-md-9 admin">
 
   <h2><%= t('revs.user.admin_dashboard') %></h2>
 
@@ -27,7 +27,7 @@
           <%= t('revs.admin.filter_type') %>
         </label>
         <div class="controls">
-          <%= select_tag 'filter', options_for_select({'All users'=>'all','Stanford users'=>'stanford','Non-Stanford users'=>'non-stanford'} , @filter), class:"span2" %>
+          <%= select_tag 'filter', options_for_select({'All users'=>'all','Stanford users'=>'stanford','Non-Stanford users'=>'non-stanford'} , @filter), class:"col-md-2" %>
         </div>
       </div>
 
@@ -36,7 +36,7 @@
           <%= t('revs.admin.filter_role') %>
         </label>
         <div class="controls">
-          <%= select_tag 'filter_role', options_for_select(['all'] + User.roles , @filter_role), class:"span2" %>
+          <%= select_tag 'filter_role', options_for_select(['all'] + User.roles , @filter_role), class:"col-md-2" %>
         </div>
       </div>
 
@@ -45,7 +45,7 @@
           <%= t('revs.admin.filter_visibility') %>
         </label>
         <div class="controls">
-          <%= select_tag 'filter_visibility', options_for_select({'all'=>'all','Public only'=>'public','Private only'=>'private'}, @filter_visibility), class:"span2" %>
+          <%= select_tag 'filter_visibility', options_for_select({'all'=>'all','Public only'=>'public','Private only'=>'private'}, @filter_visibility), class:"col-md-2" %>
         </div>
       </div>
 
@@ -69,7 +69,7 @@
             <%=t('revs.admin.set_checked_users')%>
           </label>
           <div class="controls">
-            <%= select_tag 'role', options_for_select(User.roles,@role), class:"span2" %>
+            <%= select_tag 'role', options_for_select(User.roles,@role), class:"col-md-2" %>
             <!--<input type="checkbox" name="select-all" id="admin-select-all-users"> --> <%#=t('revs.nav.select_all')%>
           </div>
         </div>
@@ -80,7 +80,7 @@
         </div>
 
       <div class="row results-controls">
-        <div class="span5 offset4 saved-item-pagination">
+        <div class="col-md-5 col-md-offset-4 saved-item-pagination">
           <span>
             <%= page_entries_info @users %>
           </span>

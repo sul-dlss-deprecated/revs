@@ -1,7 +1,7 @@
 <% cache("home", :expires_in=>6.hours)  do %>
 	<!-- begin collection carousel for JavaScript users -->
   <div class="row slideshow showOnLoad" style="display:none;">
-    <div class="span9">
+    <div class="col-md-9">
       <!-- collection image block -->
       <div id="all_collections_carousel" class="carousel slide">
         <div class="carousel-inner">
@@ -34,7 +34,7 @@
 	<!-- begin single image for non JavaScript users -->
 	<noscript>
 		<div class="row slideshow">
-		  <div class="span6">
+		  <div class="col-md-6">
 		    <div id="all_collections_carousel" class="carousel slide">
 		      <div class="carousel-inner">
 		        <%- collection = @highlight_collections[@random_collection_number] -%>
@@ -44,13 +44,13 @@
 		      </div>
 		    </div>
 		  </div>
-		  <div id="featured-collection-nav" class="span3">
+		  <div id="featured-collection-nav" class="col-md-3">
 				<div class="row">
-					<div class="span3">
+					<div class="col-md-3">
 					</div>
 				</div>
 				<div class="row">
-			    <div id="featured-description" class="span3">
+			    <div id="featured-description" class="col-md-3">
 			      <span class="content-type collection"><%= t('revs.collection.featured_collection')%></span>
 			      <h3><%= link_to clean_collection_name(collection.title), collection_path(collection), :id => "collection-title-link" %></h3>
 			      <p>
@@ -66,7 +66,7 @@
 
   <%# Featured Galleries row %>
 	<div class="row">
-		<div class="span9 highlight-list">
+		<div class="col-md-9 highlight-list">
 			<h3 class="section-heading">
         <%= t('revs.user_galleries.heading_featured') %>
         <span class="more-link">
@@ -98,7 +98,7 @@
 
   <%# More to Explore row %>
 	<div class="row">
-		<div class="span9 highlight-list explore">
+		<div class="col-md-9 highlight-list explore">
 			<h3 class="section-heading">
         <%= t('revs.nav.more_to_explore') %>
       </h3>

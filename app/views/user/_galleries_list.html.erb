@@ -1,10 +1,10 @@
 <% if @galleries.count > 0 %>
 
   <div class="row results-controls">
-    <div class="span4">
+    <div class="col-md-4">
     </div>
 
-    <div class="span5 saved-item-pagination">
+    <div class="col-md-5 saved-item-pagination">
       <span class="prev-next">
         <%= page_entries_info @galleries %>
       </span>
@@ -24,7 +24,7 @@
           <% end %>
         </div>
 
-        <div class="span5 item-details">
+        <div class="col-md-5 item-details">
           <div class="thumbnail-preview">
             <%= link_to(image_tag(gallery.image(:user=>current_user)), gallery_path(gallery))%>
           </div>
@@ -67,7 +67,7 @@
           </ul>
         </div>
 
-        <div class="span4 pull-right item-description">
+        <div class="col-md-4 pull-right item-description">
           <% if gallery.description.blank? && can?(:update, gallery)%>
             <span class="muted">
               <%= t('revs.user_galleries.you_can_add_a_description_html', :href => link_to(t("revs.user_galleries.you_can_add_a_description_linktext"), edit_gallery_path(gallery,:page=>params[:page],:order=>params[:order]))) %>

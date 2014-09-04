@@ -1,14 +1,14 @@
-<div id="content" class="span9">
+<div id="content" class="col-md-9">
 
   <h2><%= display_user_name(@user) %><span class="lowercase">'s</span> <%=t('revs.annotations.plural')%></h2>
 
  <% if @annotations.size > 0 %>
 
   <div class="row results-controls">
-    <div class="span4">
+    <div class="col-md-4">
     </div>
 
-    <div class="span5 saved-item-pagination">
+    <div class="col-md-5 saved-item-pagination">
       <span >
         <%= page_entries_info @annotations%>
       </span>

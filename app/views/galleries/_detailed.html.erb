@@ -5,7 +5,7 @@
       num_items_in_gallery=gallery.saved_items(current_user).size%>
 
     <div class="blacklight-collection document row<%= " first" if counter == 0 %>">
-      <div class="span12 collection-title">
+      <div class="col-md-12 collection-title">
         <h5 class="index_title">
           <%= link_to(gallery.title,gallery_path(gallery)) %>
           <% if gallery.saved_items(current_user).size > 0 %>
@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="row collection-details">
-      <div class="span4">
+      <div class="col-md-4">
         <% if gallery.user != current_user %>
           <span class="label label-info creator">
             <%= "#{t('revs.messages.created_by')} #{gallery.user.to_s}" %>
@@ -42,7 +42,7 @@
       </div>
 
       <% if num_items_in_gallery > 0 %>
-        <div class="span8 image-filmstrip" data-thumb-width="100" data=thumb-height="100">
+        <div class="col-md-8 image-filmstrip" data-thumb-width="100" data=thumb-height="100">
 
           <button class="btn btn-default btn-sm prev">
             <i class="icon-chevron-left"></i>
@@ -73,7 +73,7 @@
 
         </div>
       <% else %> <%# no items in gallery so show note instead of filmstrip %>
-        <div class="span8">
+        <div class="col-md-8">
           <span class="no-description">
             <%=t('revs.user_galleries.no_items')%>
           </span>

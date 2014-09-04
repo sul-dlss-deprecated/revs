@@ -1,4 +1,4 @@
-<div id="content" class="span9 admin">
+<div id="content" class="col-md-9 admin">
 
   <h2><%= t('revs.user.edit_profile') %>: <%=@user.email%></h2>
 
@@ -119,7 +119,7 @@
       <div class="control-group">
         <%= f.label :role, :class => 'control-label' %>
         <div class="controls">
-          <%= f.select :role, User.roles, {}, :class => "span2" %>
+          <%= f.select :role, User.roles, {}, :class => "col-md-2" %>
         </div>
       </div>
 			

@@ -1,10 +1,10 @@
 <% document_counter = 0 if !defined?(document_counter) || document_counter.nil? %>
 
 <div class="row doc">
-  <div class="<%= render_document_class document %> document span9">
+  <div class="<%= render_document_class document %> document col-md-9">
     <div class="row result-item">
 
-      <div class="span3 result-thumbnail">
+      <div class="col-md-3 result-thumbnail">
         <% raise "Object missing image for #{document.id}" if document.images.nil? %>
         <%= link_to_document document,
               :label => image_tag(document.images(:large).first,
@@ -14,7 +14,7 @@
               :counter => (document_counter + 1 + @response.params[:start].to_i) %>
       </div>
 
-      <div class="span6 result-metadata">
+      <div class="col-md-6 result-metadata">
         <h5 class="index_title">
           <%= link_to_document document,
               :label => document.title.html_safe,

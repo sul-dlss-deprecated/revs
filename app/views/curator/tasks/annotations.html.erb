@@ -1,12 +1,12 @@
-<div id="content" class="span9 admin">
-	
+<div id="content" class="col-md-9 admin">
+
   <h2><%=t('revs.user.curator_dashboard')%></h2>
 
   <h3>
     <%= t('revs.curator.annotations') %>
     <span class="object-count muted">(<%= Annotation.count %> <%=t('revs.messages.total')%>)</span>
   </h3>
-  
+
   <ul class="nav nav-tabs">
       <li class="<%="active" if @tab == @tab_list_item%>"><a href="<%=request.path%>?tab=<%=@tab_list_item%>"><%=t('revs.curator.by_item') %></a></li>
       <li class="<%="active" if @tab == @tab_list_all%>"><a href="<%=request.path%>?tab=<%=@tab_list_all%>"><%= t('revs.curator.by_annotation') %></a></li>
@@ -40,13 +40,12 @@
             </div>
           </fieldset>
         <% end %>
-      
-          <div class="row results-controls">
-            <div class="span5 offset4 saved-item-pagination">
-              <span>
-                <%= page_entries_info @annotations, :entry_name=>t('revs.user_galleries.item') %>
-              </span>
-            </div>
+
+        <div class="row results-controls">
+          <div class="col-md-5 col-md-offset-4 saved-item-pagination">
+            <span>
+              <%= page_entries_info @annotations_by_item, :entry_name=>t('revs.user_galleries.item') %>
+            </span>
           </div>
 
 
@@ -72,8 +71,9 @@
 
 <%# -- Tab: Annotations Shown By Annotation -- %>
     <div id='annotations-list' class="tab-pane <%="active" if @tab == @tab_list_all%>">
+
       <% if @tab == @tab_list_all %>
-      
+
         <%= form_tag request.path, :method=>:get, :class => 'form-horizontal find-users' do %>
           <%= hidden_field_tag :tab, @tab_list_all%>
           <fieldset>
@@ -96,12 +96,12 @@
             </div>
           </fieldset>
         <% end %>
-          <div class="row results-controls">
-            <div class="span5 offset4 saved-item-pagination">
-              <span>
-                <%= page_entries_info @annotations, :entry_name=>'annotations' %>
-              </span>
-            </div>
+
+        <div class="row results-controls">
+          <div class="col-md-5 col-md-offset-4 saved-item-pagination">
+            <span>
+              <%= page_entries_info @annotations_list, :entry_name=>'annotations' %>
+            </span>
           </div>
 
         <table class="table table-bordered table-condensed table-hover table-striped">
@@ -130,12 +130,11 @@
 
       <% if @tab == @tab_list_user %>
 
-          <div class="row results-controls">
-            <div class="span5 offset4 saved-item-pagination">
-              <span>
-                <%= page_entries_info @annotations, :entry_name=>'user' %>
-              </span>
-            </div>
+        <div class="row results-controls">
+          <div class="col-md-5 col-md-offset-4 saved-item-pagination">
+            <span>
+              <%= page_entries_info @annotations_by_user, :entry_name=>'user' %>
+            </span>
           </div>
 
         <table class="table table-bordered table-condensed table-hover table-striped">
@@ -159,7 +158,7 @@
      </div>
 
   </div>
-   
+
 
 </div>
 

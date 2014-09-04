@@ -1,6 +1,6 @@
 <div class="row results-controls">
 
-  <div class="span4 view-toggle">
+  <div class="col-md-4 view-toggle">
     <div class='gallery_toggle tabbable tabs-below'>
       <ul class="nav nav-pills">
         <li><%= link_to(t('revs.search.gallery_toggle.gallery'), catalog_index_path(params.merge(:view => nil)), :class=>"#{'active' if params[:view] == 'gallery' or params[:view].nil?}") %></li>
@@ -14,7 +14,7 @@
     </div>
   </div>
 
-  <div class="span5 page-pulldown">
+  <div class="col-md-5 page-pulldown">
     <%= render 'sort_and_per_page' %>
   </div>
 
