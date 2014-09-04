@@ -18,14 +18,14 @@ describe("Galleries",:type=>:request,:integration=>true) do
   it "should show featured gallery on gallery landing page in both grid and detailed view" do
     [galleries_path,galleries_path(:view=>'detailed')].each do |url|
         visit url
-        page.should have_content @featured_gallery
-        page.should have_content "(2 items)"
+        expect(page).to have_content @featured_gallery
+        expect(page).to have_content "(2 items)"
     end
   end
   
   it "should not show any curated gallery tab if there are none" do
     visit galleries_path
-    page.should_not have_content I18n.t('revs.nav.curator')
+    expect(page).not_to have_content I18n.t('revs.nav.curator')
   end
 
   it "should show any curated galleries in both grid and detailed view" do
@@ -35,7 +35,7 @@ describe("Galleries",:type=>:request,:integration=>true) do
     # initially we don't see the curator gallery, since it is set to curator only mode
     [galleries_path(:filter=>'curator'),galleries_path(:filter=>'curator',:view=>'detailed')].each do |url|
         visit url
-        page.should_not have_content curator_gallery_title 
+        expect(page).not_to have_content curator_gallery_title 
     end
 
     # make the curator only gallery public
@@ -46,16 +46,16 @@ describe("Galleries",:type=>:request,:integration=>true) do
     # now it should show up
     [galleries_path(:filter=>'curator'),galleries_path(:filter=>'curator',:view=>'detailed')].each do |url|
         visit url
-        page.should have_content curator_gallery_title 
+        expect(page).to have_content curator_gallery_title 
     end
   end
 
   it "should show the correct galleries on the user tab in both grid and detailed view (ignoring a public gallery with no items)" do
     [galleries_path(:filter=>'user'),galleries_path(:filter=>'user',:view=>'detailed')].each do |url|
         visit url 
-        page.should_not have_content 'An empty public gallery'
-        page.should have_content @gallery1_title
-        page.should have_content @featured_gallery
+        expect(page).not_to have_content 'An empty public gallery'
+        expect(page).to have_content @gallery1_title
+        expect(page).to have_content @featured_gallery
     end
   end
 
@@ -84,39 +84,39 @@ describe("Galleries",:type=>:request,:integration=>true) do
     user=get_user(user_login)
     login_as(user_login)
     visit user_path(user)
-    page.should have_content @gallery1_title 
-    page.should have_content @featured_gallery
+    expect(page).to have_content @gallery1_title 
+    expect(page).to have_content @featured_gallery
     click_link I18n.t('revs.user.view_your_galleries')
-    page.should have_content "#{user.to_s}'s #{I18n.t('revs.user_galleries.head')}"
-    page.should have_content @gallery1_title 
-    page.should have_content @featured_gallery
-    page.should have_content @gallery2_title 
-    page.should have_content "An empty public gallery"
+    expect(page).to have_content "#{user.to_s}'s #{I18n.t('revs.user_galleries.head')}"
+    expect(page).to have_content @gallery1_title 
+    expect(page).to have_content @featured_gallery
+    expect(page).to have_content @gallery2_title 
+    expect(page).to have_content "An empty public gallery"
   end
 
   it "should show only the user's public galleries on their public profile page" do
     user=get_user(user_login)
     visit user_path(user)
-    page.should have_content @gallery1_title # public gallery
-    page.should_not have_content @gallery2_title # private gallery
+    expect(page).to have_content @gallery1_title # public gallery
+    expect(page).not_to have_content @gallery2_title # private gallery
     click_link I18n.t('revs.user.view_all_galleries')
-    page.should have_content "#{user.to_s}'s #{I18n.t('revs.user_galleries.head')}"
-    page.should have_content @gallery1_title  # public
-    page.should_not have_content @gallery2_title # private
+    expect(page).to have_content "#{user.to_s}'s #{I18n.t('revs.user_galleries.head')}"
+    expect(page).to have_content @gallery1_title  # public
+    expect(page).not_to have_content @gallery2_title # private
     should_deny_access_to_named_gallery(@gallery2_title) # can't get to the private gallery directly
   end
 
   it "should not show a curator only gallery to a non-curator and a non-logged in user" do
     curator=get_user(curator_login)
     visit user_path(curator)
-    page.should_not have_content @curator_only_gallery_title # curator gallery
-    page.should_not have_content  I18n.t('revs.user.view_your_galleries')
+    expect(page).not_to have_content @curator_only_gallery_title # curator gallery
+    expect(page).not_to have_content  I18n.t('revs.user.view_your_galleries')
     should_deny_access_to_named_gallery(@curator_only_gallery_title) # can't get to the curator only gallery directly when not logged in
 
     login_as(user_login)
     visit user_path(curator)
-    page.should_not have_content @curator_only_gallery_title # curator gallery
-    page.should_not have_link(I18n.t('revs.user.view_all_galleries'), href: user_galleries_user_index_path(curator_login))
+    expect(page).not_to have_content @curator_only_gallery_title # curator gallery
+    expect(page).not_to have_link(I18n.t('revs.user.view_all_galleries'), href: user_galleries_user_index_path(curator_login))
     should_deny_access_to_named_gallery(@curator_only_gallery_title) # can't get to the curator only gallery directly when logged in as a non-curator
   end
 
@@ -124,22 +124,22 @@ describe("Galleries",:type=>:request,:integration=>true) do
     curator=get_user(curator_login)   
     login_as(curator_login)
     visit user_path(curator)
-    page.should have_content @curator_only_gallery_title # curator gallery
-    page.should have_content  I18n.t('revs.user.view_your_galleries')
+    expect(page).to have_content @curator_only_gallery_title # curator gallery
+    expect(page).to have_content  I18n.t('revs.user.view_your_galleries')
     should_allow_access_to_named_gallery(@curator_only_gallery_title) # can get to the curator only gallery directly when logged in as yourself
 
     login_as(admin_login)
     visit user_path(curator)
-    page.should have_content @curator_only_gallery_title # curator gallery
-    page.should have_content  I18n.t('revs.user.view_all_galleries')
+    expect(page).to have_content @curator_only_gallery_title # curator gallery
+    expect(page).to have_content  I18n.t('revs.user.view_all_galleries')
     should_allow_access_to_named_gallery(@curator_only_gallery_title) # can get to the curator only gallery directly when logged in as an admin
   end
 
   it "should not show any galleries when a user doesn't have any" do
     user=get_user(admin_login)
     visit user_galleries_user_index_path(admin_login)
-    page.should have_content "#{user.to_s}'s #{I18n.t('revs.user_galleries.head')}"
-    page.should have_content I18n.t('revs.user_galleries.none')
+    expect(page).to have_content "#{user.to_s}'s #{I18n.t('revs.user_galleries.head')}"
+    expect(page).to have_content I18n.t('revs.user_galleries.none')
   end
 
   it "should allow a user to view a public gallery but not a private gallery" do
@@ -147,8 +147,8 @@ describe("Galleries",:type=>:request,:integration=>true) do
     gallery1=Gallery.where(:title=>@gallery1_title).first
     gallery2=Gallery.where(:title=>@gallery2_title).first
     visit gallery_path(gallery1)
-    page.should have_content "#{I18n.t('revs.messages.created_by')} #{user.full_name}"
-    page.should have_content @gallery1_title
+    expect(page).to have_content "#{I18n.t('revs.messages.created_by')} #{user.full_name}"
+    expect(page).to have_content @gallery1_title
     should_deny_access(gallery_path(gallery2)) # private, get booted out to home page
   end
 
@@ -161,20 +161,20 @@ describe("Galleries",:type=>:request,:integration=>true) do
     new_gallery_description='It rulz'
     user=get_user(user_login)
     login_as(user_login)
-    user.galleries(user).count.should == @num_user_galleries # these are from the fixtures
+    expect(user.galleries(user).count).to eq(@num_user_galleries) # these are from the fixtures
     visit new_gallery_path
     fill_in 'gallery_title', :with=>new_gallery_title
     fill_in 'gallery_description', :with=>new_gallery_description
     click_button 'submit'
-    current_path.should == user_galleries_user_index_path(user_login)
-    page.should have_content(new_gallery_title)
-    page.should have_content(new_gallery_description)
-    user.galleries(user).count.should == @num_user_galleries + 1 # now we have a new gallery
+    expect(current_path).to eq(user_galleries_user_index_path(user_login))
+    expect(page).to have_content(new_gallery_title)
+    expect(page).to have_content(new_gallery_description)
+    expect(user.galleries(user).count).to eq(@num_user_galleries + 1) # now we have a new gallery
     new_gallery=Gallery.where(:user_id=>user.id).last
-    new_gallery.public.should be_false 
-    new_gallery.visibility.should == 'private'
-    new_gallery.title.should == new_gallery_title
-    new_gallery.description.should == new_gallery_description
+    expect(new_gallery.public).to be_false 
+    expect(new_gallery.visibility).to eq('private')
+    expect(new_gallery.title).to eq(new_gallery_title)
+    expect(new_gallery.description).to eq(new_gallery_description)
   end
 
   it "should allow a logged in user to create a gallery set as public" do
@@ -182,33 +182,33 @@ describe("Galleries",:type=>:request,:integration=>true) do
     new_gallery_description='It rulz'
     user=get_user(user_login)
     login_as(user_login)
-    user.galleries(user).count.should == @num_user_galleries # these are from the fixtures
+    expect(user.galleries(user).count).to eq(@num_user_galleries) # these are from the fixtures
     visit new_gallery_path
     fill_in 'gallery_title', :with=>new_gallery_title
     fill_in 'gallery_description', :with=>new_gallery_description
     choose 'gallery_visibility_public'
     click_button 'submit'
-    current_path.should == user_galleries_user_index_path(user_login)
-    page.should have_content(new_gallery_title)
-    page.should have_content(new_gallery_description)
-    user.galleries(user).count.should == @num_user_galleries + 1 # now we have a new gallery
+    expect(current_path).to eq(user_galleries_user_index_path(user_login))
+    expect(page).to have_content(new_gallery_title)
+    expect(page).to have_content(new_gallery_description)
+    expect(user.galleries(user).count).to eq(@num_user_galleries + 1) # now we have a new gallery
     new_gallery=Gallery.where(:user_id=>user.id).last
-    new_gallery.public.should be_true
-    new_gallery.visibility.should == 'public'
-    new_gallery.title.should == new_gallery_title
-    new_gallery.description.should == new_gallery_description
+    expect(new_gallery.public).to be_true
+    expect(new_gallery.visibility).to eq('public')
+    expect(new_gallery.title).to eq(new_gallery_title)
+    expect(new_gallery.description).to eq(new_gallery_description)
   end
 
   it "should allow a logged in user to delete their own gallery" do
     user=get_user(user_login)
     login_as(user_login)
-    user.galleries(user).count.should == @num_user_galleries # these are from the fixtures
+    expect(user.galleries(user).count).to eq(@num_user_galleries) # these are from the fixtures
     visit user_galleries_user_index_path(user_login)
-    page.should have_content(@gallery1_title)
+    expect(page).to have_content(@gallery1_title)
     gallery1=Gallery.where(:title=>@gallery1_title).first
     click_button "delete_#{gallery1.id}"
-    page.should_not have_content(@gallery1_title)
-    user.galleries(user).count.should == @num_user_galleries - 1 # you just deleted it
+    expect(page).not_to have_content(@gallery1_title)
+    expect(user.galleries(user).count).to eq(@num_user_galleries - 1) # you just deleted it
   end 
 
   it "should allow a logged in user to edit their own gallery" do
@@ -216,13 +216,13 @@ describe("Galleries",:type=>:request,:integration=>true) do
     user=get_user(user_login)
     login_as(user_login)
     visit user_galleries_user_index_path(user_login)
-    page.should have_content(@gallery1_title)
+    expect(page).to have_content(@gallery1_title)
     gallery1=Gallery.where(:title=>@gallery1_title).first
     click_link "edit_#{gallery1.id}"
     fill_in 'gallery_title', :with=>new_gallery_title
     click_button 'submit'    
-    page.should_not have_content(@gallery1_title)
-    page.should have_content(new_gallery_title)
+    expect(page).not_to have_content(@gallery1_title)
+    expect(page).to have_content(new_gallery_title)
   end 
 
   it "should not allow a logged in user or anonynous user to edit someone else's gallery" do
@@ -246,12 +246,12 @@ describe("Galleries",:type=>:request,:integration=>true) do
     gallery1=Gallery.where(:title=>@gallery1_title).first
     visit gallery_path(gallery1)
     click_link item_name
-    page.should have_content(item_name)
-    page.should have_content(@gallery1_title)
-    page.should_not have_content(hidden_item_name)
-    page.should have_content return_link_name
+    expect(page).to have_content(item_name)
+    expect(page).to have_content(@gallery1_title)
+    expect(page).not_to have_content(hidden_item_name)
+    expect(page).to have_content return_link_name
     click_link return_link_name
-    current_path.should == gallery_path(gallery1)
+    expect(current_path).to eq(gallery_path(gallery1))
   end
    
 end

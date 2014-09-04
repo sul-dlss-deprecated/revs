@@ -13,49 +13,49 @@ describe("Item Visibility",:type=>:request,:integration=>true) do
   
   it "should update image visibility" do
     item1=Item.where(:druid=>@hidden_druid)
-    item1.size.should == 1
+    expect(item1.size).to eq(1)
     doc1=SolrDocument.find(@hidden_druid)
-    doc1.visibility_value.should == 0
-    doc1.visibility.should == :hidden
+    expect(doc1.visibility_value).to eq(0)
+    expect(doc1.visibility).to eq(:hidden)
     doc1.visibility=:visible
     doc1.save
     doc1=SolrDocument.find(@hidden_druid)
-    doc1.visibility_value.should == 1
-    doc1.visibility.should == :visible
+    expect(doc1.visibility_value).to eq(1)
+    expect(doc1.visibility).to eq(:visible)
     item1=Item.where(:druid=>@hidden_druid)
-    item1.size.should == 1
-    item1.first.visibility.should == :visible
+    expect(item1.size).to eq(1)
+    expect(item1.first.visibility).to eq(:visible)
     doc1=SolrDocument.find(@hidden_druid)
     doc1.visibility=:hidden
     doc1.save
     item1=Item.where(:druid=>@hidden_druid)
-    item1.size.should == 1
-    item1.first.visibility.should == :hidden
+    expect(item1.size).to eq(1)
+    expect(item1.first.visibility).to eq(:hidden)
     
     doc2=SolrDocument.find(@visible_druid)
-    doc2.visibility_value.should == ""
-    doc2.visibility.should == :visible
+    expect(doc2.visibility_value).to eq("")
+    expect(doc2.visibility).to eq(:visible)
     doc2.visibility=:hidden
     doc2.save
     doc2=SolrDocument.find(@visible_druid)
-    doc2.visibility_value.should == 0
-    doc2.visibility.should == :hidden
+    expect(doc2.visibility_value).to eq(0)
+    expect(doc2.visibility).to eq(:hidden)
 
     doc3=SolrDocument.find(@default_visible_druid)
-    doc3.visibility_value.should == 1
-    doc3.visibility.should == :visible
+    expect(doc3.visibility_value).to eq(1)
+    expect(doc3.visibility).to eq(:visible)
 
     reindex_solr_docs([@hidden_druid,@visible_druid])    
   end
   
   it "should not show the visibility facet to non-curators" do
     visit root_path
-    page.should_not have_css(".facet-label", :text=>"Hidden")
+    expect(page).not_to have_css(".facet-label", :text=>"Hidden")
     login_as(user_login)
     visit root_path
-    page.should_not have_css(".facet-label", :text=>"Hidden")
+    expect(page).not_to have_css(".facet-label", :text=>"Hidden")
     login_as(curator_login)
-    page.should have_css(".facet-label", :text=>"Hidden")
+    expect(page).to have_css(".facet-label", :text=>"Hidden")
   end
   
   it "should not show hidden items to non-logged in or regular users" do
@@ -63,9 +63,9 @@ describe("Item Visibility",:type=>:request,:integration=>true) do
     login_as(user_login)
     should_deny_access(@hidden_druid_path)
     visit all_collections_path
-    page.should have_content("The David Nadig Collection of the Revs Institute (14 items)")
+    expect(page).to have_content("The David Nadig Collection of the Revs Institute (14 items)")
     visit @nadig_collection_path
-    page.should have_content("14 items")
+    expect(page).to have_content("14 items")
   end
 
   it "should show hidden items to curators and admins" do
@@ -73,12 +73,12 @@ describe("Item Visibility",:type=>:request,:integration=>true) do
     logins.each do |user|
       login_as(user)
       visit @hidden_druid_path
-      page.should have_content("Bryar 250 Trans-American:10")
-      page.should have_content("Hidden")
+      expect(page).to have_content("Bryar 250 Trans-American:10")
+      expect(page).to have_content("Hidden")
       visit all_collections_path
-      page.should have_content("The David Nadig Collection of the Revs Institute (15 items)")
+      expect(page).to have_content("The David Nadig Collection of the Revs Institute (15 items)")
       visit @nadig_collection_path
-      page.should have_content("15 items")
+      expect(page).to have_content("15 items")
       logout
     end
   end  

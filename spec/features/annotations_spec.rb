@@ -9,27 +9,27 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
 
   it "should not show the annotations for a disabled user" do
     visit @starting_page
-    find(".num-annotations-badge").should have_content("2")   # there is a user and an admin annotations
+    expect(find(".num-annotations-badge")).to have_content("2")   # there is a user and an admin annotations
     disable_user(user_login)
 
     visit @starting_page
-    find(".num-annotations-badge").should have_content("1")   # the user annotation is not visible
-    page.should have_content('Guy in the background looking sideways') #admin annotation, still there
-    page.should_not have_content('air intake?') # user annotation, now hidden
+    expect(find(".num-annotations-badge")).to have_content("1")   # the user annotation is not visible
+    expect(page).to have_content('Guy in the background looking sideways') #admin annotation, still there
+    expect(page).not_to have_content('air intake?') # user annotation, now hidden
   end
   
   it "should show the number of annotations in an image and allow logged in users to add a new one" do
     login_as(user_login)
     visit @starting_page
     should_allow_annotations    
-    find(".num-annotations-badge").should have_content("2")     
-    page.should have_content('Guy in the background looking sideways')
-    page.should have_content('air intake?')
+    expect(find(".num-annotations-badge")).to have_content("2")     
+    expect(page).to have_content('Guy in the background looking sideways')
+    expect(page).to have_content('air intake?')
   end
 
   it "should not show annotations link to a non-logged in user when there are no annotations" do
     visit catalog_path('xf058ys1313')
-    page.should_not have_css('#view_annotations_link')
+    expect(page).not_to have_css('#view_annotations_link')
   end
   
   it "should add/update the annotations to the right field in solr when adding/updating annotations" do
@@ -37,7 +37,7 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
     
     # find the solr doc and confirm there is no annotation listed
     item=SolrDocument.find(druid)
-    item['annotations_tsim'].should be_nil
+    expect(item['annotations_tsim']).to be_nil
   
     # create an annotation
     comment1='some comment'
@@ -46,7 +46,7 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
 
     # confirm that solr has been updated
     item=SolrDocument.find(druid)
-    item['annotations_tsim'].should == [comment1]
+    expect(item['annotations_tsim']).to eq([comment1])
     
     comment2='second comment'
     # create the second annotation
@@ -54,7 +54,7 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
 
     # confirm that solr has been updated
     item=SolrDocument.find(druid)
-    item['annotations_tsim'].should == [comment1,comment2]
+    expect(item['annotations_tsim']).to eq([comment1,comment2])
     
     updated_comment1='changed my mind'
     # update the first annotation
@@ -63,7 +63,7 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
 
     # confirm that solr has been updated
     item=SolrDocument.find(druid)
-    item['annotations_tsim'].should == [updated_comment1,comment2]
+    expect(item['annotations_tsim']).to eq([updated_comment1,comment2])
     
   end
 
@@ -74,7 +74,7 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
      
      # find the solr doc and confirm there is no annotation listed
      item=SolrDocument.find(druid)
-     item['annotations_tsim'].should == [original_annotation_from_fixture]
+     expect(item['annotations_tsim']).to eq([original_annotation_from_fixture])
 
      # create an annotation
      comment='some comment'
@@ -83,14 +83,14 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
 
      # confirm that solr has been updated
      item=SolrDocument.find(druid)
-     item['annotations_tsim'].should == [original_annotation_from_fixture,comment]
+     expect(item['annotations_tsim']).to eq([original_annotation_from_fixture,comment])
 
      # delete the annotation
      annotation.destroy
 
      # confirm that solr has been updated
      item=SolrDocument.find(druid)
-     item['annotations_tsim'].should == [original_annotation_from_fixture]
+     expect(item['annotations_tsim']).to eq([original_annotation_from_fixture])
 
    end
 
@@ -102,7 +102,7 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
 
     #ensure we only have the expected orginial
     item=SolrDocument.find(druid)
-    item['annotations_tsim'].should == [original_annotation_from_fixture]
+    expect(item['annotations_tsim']).to eq([original_annotation_from_fixture])
 
 
     # create an annotation
@@ -112,7 +112,7 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
 
      # confirm that solr has been updated
      item=SolrDocument.find(druid)
-     item['annotations_tsim'].should == [original_annotation_from_fixture,comment]
+     expect(item['annotations_tsim']).to eq([original_annotation_from_fixture,comment])
 
      #go the page as an admin
      logout
@@ -138,7 +138,7 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
      
      #end the comment has been removed
      item=SolrDocument.find(druid)
-     item['annotations_tsim'].should == [original_annotation_from_fixture]
+     expect(item['annotations_tsim']).to eq([original_annotation_from_fixture])
        
    
    end 

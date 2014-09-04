@@ -101,8 +101,8 @@ def register_new_user(username,password,email)
 end
 
 def should_register_ok
-   current_path.should == root_path
-   page.should have_content I18n.t('devise.registrations.signed_up_but_unconfirmed')
+   expect(current_path).to eq(root_path)
+   expect(page).to have_content I18n.t('devise.registrations.signed_up_but_unconfirmed')
 end
 
 def login_as(login, password = nil)
@@ -115,11 +115,11 @@ def login_as(login, password = nil)
 end
 
 def should_have_button(name)
-  page.should have_selector("input[type=submit][value='#{name}']")  
+  expect(page).to have_selector("input[type=submit][value='#{name}']")  
 end
 
 def should_not_have_button(name)
-  page.should_not have_selector("input[type=submit][value='#{name}']")  
+  expect(page).not_to have_selector("input[type=submit][value='#{name}']")  
 end
 
 def logout
@@ -131,51 +131,51 @@ end
 
 # Flagging history
 def show_show_your_flagging_history(user_comment,curator_comment)
-  page.should_not have_content I18n.t('revs.flags.all_closed_flags')
-  page.should have_content I18n.t('revs.flags.your_closed_flags')
-  page.should have_content user_comment
-  page.should have_content curator_comment 
+  expect(page).not_to have_content I18n.t('revs.flags.all_closed_flags')
+  expect(page).to have_content I18n.t('revs.flags.your_closed_flags')
+  expect(page).to have_content user_comment
+  expect(page).to have_content curator_comment 
 end
 
 # Flagging history
 def show_not_show_flagging_history(user_comment,curator_comment)
-  page.should_not have_content I18n.t('revs.flags.all_closed_flags')
-  page.should_not have_content I18n.t('revs.flags.your_closed_flags')
-  page.should_not have_content user_comment
-  page.should_not have_content curator_comment 
+  expect(page).not_to have_content I18n.t('revs.flags.all_closed_flags')
+  expect(page).not_to have_content I18n.t('revs.flags.your_closed_flags')
+  expect(page).not_to have_content user_comment
+  expect(page).not_to have_content curator_comment 
 end
 
 # Flagging history
 def show_show_all_flagging_history(user_comment,curator_comment)
-  page.should have_content I18n.t('revs.flags.all_closed_flags')
-  page.should_not have_content I18n.t('revs.flags.your_closed_flags')
-  page.should have_content user_comment
-  page.should have_content curator_comment 
+  expect(page).to have_content I18n.t('revs.flags.all_closed_flags')
+  expect(page).not_to have_content I18n.t('revs.flags.your_closed_flags')
+  expect(page).to have_content user_comment
+  expect(page).to have_content curator_comment 
 end
 
 # Annotations
 def should_allow_annotations  
-  page.should have_content(I18n.t('revs.annotations.add'))
+  expect(page).to have_content(I18n.t('revs.annotations.add'))
 end
 
 def should_not_allow_annotations  
-  page.should_not have_content(I18n.t('revs.annotations.add'))
+  expect(page).not_to have_content(I18n.t('revs.annotations.add'))
 end
 
 # Flags
 def should_allow_flagging
-  find('#flag-details-link').should have_content(I18n.t('revs.flags.flag'))
-  page.should_not have_css('#flag-details-link.hidden')
+  expect(find('#flag-details-link')).to have_content(I18n.t('revs.flags.flag'))
+  expect(page).not_to have_css('#flag-details-link.hidden')
 end
 
 def should_not_allow_flagging
-  find('#flag-details-link').should_not have_content(I18n.t('revs.flags.flag'))
+  expect(find('#flag-details-link')).not_to have_content(I18n.t('revs.flags.flag'))
 end
 
 def should_deny_access(path)
   visit path
-  current_path.should == root_path
-  page.should have_content(I18n.t('revs.messages.not_authorized'))
+  expect(current_path).to eq(root_path)
+  expect(page).to have_content(I18n.t('revs.messages.not_authorized'))
 end
 
 def should_deny_access_to_named_gallery(title)
@@ -186,25 +186,25 @@ end
 def should_allow_access_to_named_gallery(title)
   gallery=Gallery.where(:title=>title).first
   visit gallery_path(gallery)
-  current_path.should == gallery_path(gallery)
-  page.should have_content title
+  expect(current_path).to eq(gallery_path(gallery))
+  expect(page).to have_content title
 end
 
 def should_deny_access_for_beta(path)
   visit path
-  current_path.should == root_path
-  page.should have_content('The Revs Digital Library is currently in limited beta release.')
+  expect(current_path).to eq(root_path)
+  expect(page).to have_content('The Revs Digital Library is currently in limited beta release.')
 end
 
 def should_allow_admin_section
   visit admin_dashboard_path
-  page.should have_content(I18n.t('revs.user.admin_dashboard'))
-  current_path.should == admin_dashboard_path
+  expect(page).to have_content(I18n.t('revs.user.admin_dashboard'))
+  expect(current_path).to eq(admin_dashboard_path)
 end
 
 def should_allow_curator_section
   visit curator_tasks_path
-  page.should have_content('Flagged Items')
+  expect(page).to have_content('Flagged Items')
 end
 
 def unchanged(doc)
@@ -301,26 +301,26 @@ end
 
 def check_page_for_flag(user, druid, content)
   item_page=catalog_path(druid)
-  current_path.should == item_page
-  page.should have_content(I18n.t('revs.flags.created'))
-  page.should have_content(content)
-  page.should have_button(@remove_button)
+  expect(current_path).to eq(item_page)
+  expect(page).to have_content(I18n.t('revs.flags.created'))
+  expect(page).to have_content(content)
+  expect(page).to have_button(@remove_button)
 end
 
 def check_database_for_flag(user, expected_total_flags, content)
   user=User.find_by_username(user)
-  Flag.count.should == expected_total_flags
+  expect(Flag.count).to eq(expected_total_flags)
   flag=Flag.last
-  flag.comment.should == content
-  flag.flag_type.should == @default_flag_type
+  expect(flag.comment).to eq(content)
+  expect(flag.flag_type).to eq(@default_flag_type)
   flag.user=user
   return flag.id
 end
 
 def check_flag_was_deleted(user, druid, expected_total_flags)
-  page.should have_content(I18n.t('revs.flags.removed'))
-  Flag.count.should == expected_total_flags
-  Flag.where(:user_id=>User.find_by_username(user).id,:druid=>druid).size.should == 0 
+  expect(page).to have_content(I18n.t('revs.flags.removed'))
+  expect(Flag.count).to eq(expected_total_flags)
+  expect(Flag.where(:user_id=>User.find_by_username(user).id,:druid=>druid).size).to eq(0) 
 end
 
 def check_flag_was_marked_wont_fix(content, expected_total_flags, resolution, flag_id)
@@ -334,18 +334,18 @@ def check_flag_was_marked_fix(content, expected_total_flags, resolution, flag_id
 end
 
 def check_flag_resolution_on_page(content, message, expected_total_flags)
-  page.should have_content(message)
-  Flag.count.should == expected_total_flags
+  expect(page).to have_content(message)
+  expect(Flag.count).to eq(expected_total_flags)
   
   #Make sure this flag isn't displaying since it has been resolved
-  get_a_flag_by_content(content).should == nil
+  expect(get_a_flag_by_content(content)).to eq(nil)
 end
 
 def check_flag_resolution_in_db(content, resolution, state, id)
    flags = Flag.all
    for f in flags
      if(f.id == id)
-       f.state.should == state
+       expect(f.state).to eq(state)
        f.resolution == resolution
      end
    end
@@ -359,13 +359,13 @@ end
 
 def has_content_array(all_content)
   all_content.each do |a|
-    page.should have_content(a)
+    expect(page).to have_content(a)
   end
 end
 
 def has_no_content_array(all_content)
   all_content.each do |a|
-    page.should have_no_content(a)
+    expect(page).to have_no_content(a)
   end
 end
 
@@ -401,8 +401,8 @@ end
 
 def search_no_result(search)
   visit search_path(:q=>search)
-  page.should have_content(I18n.t('revs.search.search_results'))
-  page.should have_content('No entries found')  #TODO:  Figure out why not in /lib/locales/en.yml
+  expect(page).to have_content(I18n.t('revs.search.search_results'))
+  expect(page).to have_content('No entries found')  #TODO:  Figure out why not in /lib/locales/en.yml
 end
 
 def searches_no_result(search, complex)
@@ -420,17 +420,17 @@ end
 
 def search_direct_route(search, druid)
   visit search_path(:q=>search)
-  current_path.should == item_path(druid)
+  expect(current_path).to eq(item_path(druid))
 end
 
 def search_multiple_results(search, expected) 
   pag_limit = 25 #Default for Kaminari
   visit search_path(:q=>'photo')
-  page.should have_content('Results')
-  page.should have_content("1 - #{expected} of #{expected}") if expected <= 25
-  page.should have_content("1 - #{expected} of #{25}") if expected > 25
-  page.should have_content('The David Nadig Collection of the Revs Institute')
-  page.should have_content('The John Dugdale Collection of the Revs Institute')
+  expect(page).to have_content('Results')
+  expect(page).to have_content("1 - #{expected} of #{expected}") if expected <= 25
+  expect(page).to have_content("1 - #{expected} of #{25}") if expected > 25
+  expect(page).to have_content('The David Nadig Collection of the Revs Institute')
+  expect(page).to have_content('The John Dugdale Collection of the Revs Institute')
 end
 
 def searches_multiple_results(search, expected, complex)

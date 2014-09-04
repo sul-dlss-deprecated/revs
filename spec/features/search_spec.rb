@@ -6,39 +6,39 @@ describe("Search Pages",:type=>:request,:integration=>true) do
     visit root_path
     fill_in 'q', :with=>'Marlboro'
     click_button 'Search'
-    page.should have_content('Results')
-    page.should have_content('1 - 4 of 4')
-    page.should have_content('Marlboro Governor\'s Cup, April 2-3')
-    page.should have_xpath("//img[contains(@src, \"image/bg152pb0116/2012-027NADI-1966-b1_1.0_0013_thumb\")]")
-    page.should have_content('black-and-white negatives')
+    expect(page).to have_content('Results')
+    expect(page).to have_content('1 - 4 of 4')
+    expect(page).to have_content('Marlboro Governor\'s Cup, April 2-3')
+    expect(page).to have_xpath("//img[contains(@src, \"image/bg152pb0116/2012-027NADI-1966-b1_1.0_0013_thumb\")]")
+    expect(page).to have_content('black-and-white negatives')
   end
 
   it "should not show a search result after searching for a non existent string" do
     visit search_path(:q=>'bogus')
-    page.should have_content('Results')
-    page.should have_content('No entries found')
+    expect(page).to have_content('Results')
+    expect(page).to have_content('No entries found')
   end
   
   it "should immediately go to the item page if the search produces a single result" do
     visit search_path(:q=>'A Somewhat Shorter Than Average Title')
-    current_path.should == item_path('qb957rw1430')
+    expect(current_path).to eq(item_path('qb957rw1430'))
   end
 
   it "should show a search result after searching for a description" do
     visit search_path(:q=>'photo')
-    page.should have_content('Results')
-    page.should have_content('1 - 2 of 2')
-    page.should have_content('The David Nadig Collection of the Revs Institute')
-    page.should have_content('The John Dugdale Collection of the Revs Institute')
+    expect(page).to have_content('Results')
+    expect(page).to have_content('1 - 2 of 2')
+    expect(page).to have_content('The David Nadig Collection of the Revs Institute')
+    expect(page).to have_content('The John Dugdale Collection of the Revs Institute')
   end
   
   it "should show a facet search result for 1955" do
     visit search_path(:"f[pub_year_isim][]"=>'1955')
-    page.should have_content('Results')
-    page.should have_content('1 - 5 of 5')
-    page.should have_content('Lime Rock Continental, September 1')
-    page.should have_xpath("//img[contains(@src, \"image/dd482qk0417/2012-027NADI-1969-b4_12.2_0021_thumb\")]")
-    page.should have_content('black-and-white negatives')
+    expect(page).to have_content('Results')
+    expect(page).to have_content('1 - 5 of 5')
+    expect(page).to have_content('Lime Rock Continental, September 1')
+    expect(page).to have_xpath("//img[contains(@src, \"image/dd482qk0417/2012-027NADI-1969-b4_12.2_0021_thumb\")]")
+    expect(page).to have_content('black-and-white negatives')
   end
   
   it "should allow case insensitive searches within text fields" do
@@ -55,7 +55,7 @@ describe("Search Pages",:type=>:request,:integration=>true) do
     #Set up a unique string to use for all the above
     #Also ensure that they map to a Solr Field
     copy_fields_to_check.each do |field|
-      SolrDocument.field_mappings[field].should_not be_nil #If sometime was typed wrong in copy_fields_to_check this will catch it
+      expect(SolrDocument.field_mappings[field]).not_to be_nil #If sometime was typed wrong in copy_fields_to_check this will catch it
       #Set up the key we'll be using for this
       fields[field] = strings[counter] + " " + strings[counter+1]
       counter += 2 

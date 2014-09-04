@@ -14,22 +14,22 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     login_as(user_login)
     user_account=User.find_by_username(user_login)
     visit user_path(user_account.username)
-    page.should have_content(I18n.t("revs.user.user_dashboard",:name=>I18n.t('revs.user.your')))
-    page.should have_content("#{user_account.full_name}")
+    expect(page).to have_content(I18n.t("revs.user.user_dashboard",:name=>I18n.t('revs.user.your')))
+    expect(page).to have_content("#{user_account.full_name}")
     click_link 'Update your profile'
 
     fill_in 'user_bio', :with=>new_bio
     fill_in 'user_last_name', :with=>new_last_name
     click_button 'submit'
     
-    current_path.should == user_path(user_account.username)
-    page.should have_content(new_bio)
-    page.should have_content(new_last_name)
+    expect(current_path).to eq(user_path(user_account.username))
+    expect(page).to have_content(new_bio)
+    expect(page).to have_content(new_last_name)
     
     # check database
     user_account=User.find_by_username(user_login)
-    user_account.bio.should == new_bio
-    user_account.last_name.should == new_last_name
+    expect(user_account.bio).to eq(new_bio)
+    expect(user_account.last_name).to eq(new_last_name)
     
   end
 
@@ -40,18 +40,18 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     login_as(user_login)
     user_account=User.find_by_username(user_login)
     visit user_path(user_account.username)
-    page.should have_content(I18n.t("revs.user.user_dashboard",:name=>I18n.t('revs.user.your')))
-    page.should have_content("#{user_account.full_name}")
+    expect(page).to have_content(I18n.t("revs.user.user_dashboard",:name=>I18n.t('revs.user.your')))
+    expect(page).to have_content("#{user_account.full_name}")
     click_link 'Update your profile'
 
     fill_in 'register-username', :with=>new_username
     click_button 'submit'
     
-    page.should have_content("Your username cannot be a Stanford email address.")
+    expect(page).to have_content("Your username cannot be a Stanford email address.")
     
     # check database
     user_account=User.find_by_username(user_login)
-    user_account.username.should_not == new_username
+    expect(user_account.username).not_to eq(new_username)
     
   end
   
@@ -59,15 +59,15 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
    
     new_password='new_password'
     user_account=User.find_by_username(user_login)
-    user_account.login_count.should == 0
+    expect(user_account.login_count).to eq(0)
     
     login_as(user_login)
     user_account=User.find_by_username(user_login)
-    user_account.login_count.should == 1
+    expect(user_account.login_count).to eq(1)
     
     visit user_path(user_account.username)
-    page.should have_content(I18n.t("revs.user.user_dashboard",:name=>I18n.t('revs.user.your')))
-    page.should have_content("#{user_account.full_name}")
+    expect(page).to have_content(I18n.t("revs.user.user_dashboard",:name=>I18n.t('revs.user.your')))
+    expect(page).to have_content("#{user_account.full_name}")
     click_link 'Change your password'
 
     fill_in 'user_password', :with=>new_password
@@ -76,13 +76,13 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
 
     click_button 'submit'
     
-    current_path.should == user_path(user_account.username)
+    expect(current_path).to eq(user_path(user_account.username))
 
     # now try and login again with old password, this should fail
     logout
     login_as(user_login)
-    current_path.should == new_user_session_path
-    page.should have_content('Your account was not found or your password was incorrect.')
+    expect(current_path).to eq(new_user_session_path)
+    expect(page).to have_content('Your account was not found or your password was incorrect.')
     
     # login with new password, this should succeed
     visit new_user_session_path
@@ -90,8 +90,8 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     fill_in "user_password", :with => new_password
     click_button "submit"
     visit user_path(user_account.username)
-    page.should have_content(I18n.t("revs.user.user_dashboard",:name=>I18n.t('revs.user.your')))
-    page.should have_content("#{user_account.full_name}")
+    expect(page).to have_content(I18n.t("revs.user.user_dashboard",:name=>I18n.t('revs.user.your')))
+    expect(page).to have_content("#{user_account.full_name}")
     
   end
 
@@ -100,16 +100,16 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     new_bio='I work at Stanford. That makes me smart.'
     new_last_name='Professor'
     sunet_account=User.find_by_username(sunet_login)
-    sunet_account.login_count.should == 0
+    expect(sunet_account.login_count).to eq(0)
     
     visit webauth_login_path
     sunet_account=User.find_by_username(sunet_login)
-    sunet_account.login_count.should == 1
+    expect(sunet_account.login_count).to eq(1)
     
     visit user_path(sunet_account.username) # user profile page
-    page.should have_content sunet_account.full_name
-    page.should_not have_content 'Change your password' # we shouldn't have the edit password link
-    page.should_not have_content 'Change your email address' # we shouldn't have the edit email address link
+    expect(page).to have_content sunet_account.full_name
+    expect(page).not_to have_content 'Change your password' # we shouldn't have the edit password link
+    expect(page).not_to have_content 'Change your email address' # we shouldn't have the edit email address link
     
     click_link 'Update your profile'
 
@@ -117,25 +117,25 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     fill_in 'user_last_name', :with=>new_last_name
     click_button 'submit'
     
-    current_path.should == user_path(sunet_account.username)
-    page.should have_content(new_bio)
-    page.should have_content(new_last_name)
+    expect(current_path).to eq(user_path(sunet_account.username))
+    expect(page).to have_content(new_bio)
+    expect(page).to have_content(new_last_name)
     
     # check database
     user_account=User.find_by_username(sunet_login)
-    user_account.bio.should == new_bio
-    user_account.last_name.should == new_last_name   
+    expect(user_account.bio).to eq(new_bio)
+    expect(user_account.last_name).to eq(new_last_name)   
      
     # confirm we can't get to the edit password/email page via the URL either
     visit edit_user_account_path
-    current_path.should == root_path
-    page.should have_content 'You are not authorized to perform this action.'
+    expect(current_path).to eq(root_path)
+    expect(page).to have_content 'You are not authorized to perform this action.'
     
     # sign out
     visit user_path(sunet_account.username) # user profile page
     logout
-    current_path.should == root_path
-    page.should_not have_content sunet_account.full_name
+    expect(current_path).to eq(root_path)
+    expect(page).not_to have_content sunet_account.full_name
     
   end
 
@@ -152,11 +152,11 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     fill_in 'register-username', :with=>new_username
     click_button 'submit'
         
-    page.should have_content("Your username cannot be a Stanford email address other than your own.")
+    expect(page).to have_content("Your username cannot be a Stanford email address other than your own.")
     
     # check database
     sunet_account=User.find_by_username(sunet_login)
-    sunet_account.username.should_not == new_username
+    expect(sunet_account.username).not_to eq(new_username)
     
   end
   

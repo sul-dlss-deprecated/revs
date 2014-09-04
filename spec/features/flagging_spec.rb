@@ -26,11 +26,11 @@ describe("Flagging",:type=>:request,:integration=>true) do
     
     druid='sc411ff4198'
     visit catalog_path(druid)
-    page.should_not have_css('#flag-details-link.hidden')
+    expect(page).not_to have_css('#flag-details-link.hidden')
     should_allow_flagging
-    page.should_not have_content(@ask_to_notify_checkbox) # non-logged in users cannot be notified when flag is resolved
+    expect(page).not_to have_content(@ask_to_notify_checkbox) # non-logged in users cannot be notified when flag is resolved
     
-    Flag.where(:druid=>druid).count.should == 1 # one existing flag (from fixtures)
+    expect(Flag.where(:druid=>druid).count).to eq(1) # one existing flag (from fixtures)
     
     #Add comments up to the limit
     flags = 0
@@ -38,25 +38,25 @@ describe("Flagging",:type=>:request,:integration=>true) do
       flag_text="comment #{flags}"
       create_flag(flag_text)
       flags += 1
-      page.should_not have_content(flag_text)
+      expect(page).not_to have_content(flag_text)
     end
     
     total_flags=Revs::Application.config.num_flags_per_item_per_user+1
-    Flag.where(:druid=>druid).where('user_id is null').count.should == Revs::Application.config.num_flags_per_item_per_user # we now have the maximum number of anonymous flags
-    Flag.where(:druid=>druid).count.should == total_flags # the existing one, plus all the onew ones
+    expect(Flag.where(:druid=>druid).where('user_id is null').count).to eq(Revs::Application.config.num_flags_per_item_per_user) # we now have the maximum number of anonymous flags
+    expect(Flag.where(:druid=>druid).count).to eq(total_flags) # the existing one, plus all the onew ones
     should_not_allow_flagging
-    find(".num-flags-badge").should have_content(total_flags)
-    page.should have_content('user comment') # the non-anonymous flag text
+    expect(find(".num-flags-badge")).to have_content(total_flags)
+    expect(page).to have_content('user comment') # the non-anonymous flag text
     
   end
   
   it "should allow non-logged in users to view flags for items that have them" do
 
     visit catalog_path('sc411ff4198')
-    page.should_not have_css('#flag-details-link.hidden')
+    expect(page).not_to have_css('#flag-details-link.hidden')
     should_allow_flagging
-    page.should have_content("user comment") # the text of the flag
-    find(".num-flags-badge").should have_content("1")
+    expect(page).to have_content("user comment") # the text of the flag
+    expect(find(".num-flags-badge")).to have_content("1")
     
   end
 
@@ -67,8 +67,8 @@ describe("Flagging",:type=>:request,:integration=>true) do
     
     visit catalog_path('sc411ff4198')
     should_allow_flagging
-    page.should_not have_content("user comment") # the text of the flag is not there
-    find(".num-flags-badge").should have_content("0")
+    expect(page).not_to have_content("user comment") # the text of the flag is not there
+    expect(find(".num-flags-badge")).to have_content("0")
     
   end
   
@@ -78,16 +78,16 @@ describe("Flagging",:type=>:request,:integration=>true) do
     visit catalog_path(druid)
     anon_comment="anonymous comment"
     create_flag(anon_comment)
-    page.should_not have_content(anon_comment) # the text of the anonymous flag is not visible yet
+    expect(page).not_to have_content(anon_comment) # the text of the anonymous flag is not visible yet
 
     login_as_user_and_goto_druid(user_login,druid)
 
-    find('.flag-details').should be_visible
+    expect(find('.flag-details')).to be_visible
     should_allow_flagging
-    page.should have_content("user comment") # the text of the existing fixture user flag
-    page.should have_content(anon_comment) # the text of the anonymous flag
+    expect(page).to have_content("user comment") # the text of the existing fixture user flag
+    expect(page).to have_content(anon_comment) # the text of the anonymous flag
 
-    find(".num-flags-badge").should have_content("2")
+    expect(find(".num-flags-badge")).to have_content("2")
 
   end
   
@@ -102,18 +102,18 @@ describe("Flagging",:type=>:request,:integration=>true) do
     create_flag(user_comment)
     # check the database
     user=User.find_by_username(user_login)
-    Flag.count.should == initial_flag_count + 1
+    expect(Flag.count).to eq(initial_flag_count + 1)
     flag=Flag.last
-    flag.comment.should == user_comment
-    flag.flag_type.should == @default_flag_type
-    flag.user.should == user
-    flag.notify_me.should be_true
-    flag.notification_state.should == 'pending'
+    expect(flag.comment).to eq(user_comment)
+    expect(flag.flag_type).to eq(@default_flag_type)
+    expect(flag.user).to eq(user)
+    expect(flag.notify_me).to be_true
+    expect(flag.notification_state).to eq('pending')
     
     flag_id = check_flag_was_created(user_login, druid, user_comment, initial_flag_count+1)  
     
     # notification should go out
-    RevsMailer.should_receive(:flag_resolved)
+    expect(RevsMailer).to receive(:flag_resolved)
           
     #Login As a Curator and Mark It As Fixed
     resolve_flag_fix(curator_login, druid, user_comment, curator_comment)
@@ -133,24 +133,24 @@ describe("Flagging",:type=>:request,:integration=>true) do
       # login and visit an item as a regular user
       login_as_user_and_goto_druid(user_login,druid)      
       #flag the item
-      page.should have_content(@ask_to_notify_checkbox) # logged in users can ask to be notified when flag is resolved
+      expect(page).to have_content(@ask_to_notify_checkbox) # logged in users can ask to be notified when flag is resolved
       create_flag(user_comment)
       
       # check the page for the correct messages
-      current_path.should == catalog_path(druid)
-      page.should have_content(I18n.t('revs.flags.created'))
-      page.should have_content(user_comment)
-      page.should have_button(@remove_button)
+      expect(current_path).to eq(catalog_path(druid))
+      expect(page).to have_content(I18n.t('revs.flags.created'))
+      expect(page).to have_content(user_comment)
+      expect(page).to have_button(@remove_button)
       
       # check the database
       user=User.find_by_username(user_login)
-      Flag.count.should == initial_flag_count + 1
+      expect(Flag.count).to eq(initial_flag_count + 1)
       flag=Flag.last
-      flag.comment.should == user_comment
-      flag.flag_type.should == @default_flag_type
-      flag.user.should == user
-      flag.notify_me.should be_false
-      flag.notification_state.should be_nil
+      expect(flag.comment).to eq(user_comment)
+      expect(flag.flag_type).to eq(@default_flag_type)
+      expect(flag.user).to eq(user)
+      expect(flag.notify_me).to be_false
+      expect(flag.notification_state).to be_nil
 
       # login and visit an item as a curator
       logout
@@ -162,27 +162,27 @@ describe("Flagging",:type=>:request,:integration=>true) do
       create_flag(curator_comment)
       
       # check the page for the correct messages
-      current_path.should == catalog_path(druid)
-      page.should have_content(I18n.t('revs.flags.created'))
-      page.should have_content(curator_comment)
-      page.should have_content(user_comment)
-      page.should have_button(@remove_button)
+      expect(current_path).to eq(catalog_path(druid))
+      expect(page).to have_content(I18n.t('revs.flags.created'))
+      expect(page).to have_content(curator_comment)
+      expect(page).to have_content(user_comment)
+      expect(page).to have_button(@remove_button)
       
       # check the database
       curator=User.find_by_username(curator_login)
-      Flag.count.should == initial_flag_count + 2
+      expect(Flag.count).to eq(initial_flag_count + 2)
       flag=Flag.last
-      flag.comment.should == curator_comment
-      flag.flag_type.should == @default_flag_type
-      flag.user.should == curator
+      expect(flag.comment).to eq(curator_comment)
+      expect(flag.flag_type).to eq(@default_flag_type)
+      expect(flag.user).to eq(curator)
            
       # remove and confirm deletion of the curator's flag in the database
       #Since curators can remove any comment now, we need to target the removal of the comment that the curator just added
       remove_flag(curator_login, druid, curator_comment)
       
-      page.should have_content(I18n.t('revs.flags.removed'))
-      Flag.count.should == initial_flag_count + 1
-      Flag.last.user.should == user     
+      expect(page).to have_content(I18n.t('revs.flags.removed'))
+      expect(Flag.count).to eq(initial_flag_count + 1)
+      expect(Flag.last.user).to eq(user)     
     end
     
     it "should allow curators to delete flags set by any other user in the system and increase that user's spam count" do
@@ -206,7 +206,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
       check_flag_was_deleted(user_login, druid, initial_flag_count)
 
       #Ensure the User Was Penalized for Spam
-      get_user_spam_count(user_login).should == starting_spam_count+1
+      expect(get_user_spam_count(user_login)).to eq(starting_spam_count+1)
 
     end
     
@@ -231,7 +231,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
       check_flag_was_deleted(user_login, druid, initial_flag_count)
 
       #Ensure the User Was Penalized for Spam
-      get_user_spam_count(user_login).should == starting_spam_count+1
+      expect(get_user_spam_count(user_login)).to eq(starting_spam_count+1)
 
     end
     
@@ -254,7 +254,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
       check_flag_was_deleted(user_login, druid, initial_flag_count)
 
       #Ensure the User Was NOT Penalized for Spam
-      get_user_spam_count(user_login).should == starting_spam_count 
+      expect(get_user_spam_count(user_login)).to eq(starting_spam_count) 
     end
     
     it "should allow a curator to resolve a flag as won't fix" do
@@ -271,7 +271,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
         flag_id = check_flag_was_created(user_login, druid, user_comment, initial_flag_count+1)  
       
         # no notification
-        RevsMailer.should_not_receive(:flag_resolved)
+        expect(RevsMailer).not_to receive(:flag_resolved)
         
         #Login As a Curator and Mark It As Won't Fix
         resolve_flag_wont_fix(curator_login, druid, user_comment, curator_comment)
@@ -313,7 +313,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
         flag_id = check_flag_was_created(user_login, druid, user_comment, initial_flag_count+1)  
 
         # no notification
-        RevsMailer.should_not_receive(:flag_resolved)
+        expect(RevsMailer).not_to receive(:flag_resolved)
               
         #Login As a Curator and Mark It As Fixed
         resolve_flag_fix(curator_login, druid, user_comment, curator_comment)
@@ -336,7 +336,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
        create_flag(anon_comment)
        
        #The item should have no open flags on it by this user
-       Flag.where(:druid=>druid, :state=>Flag.open, :user_id=>User.where(:username=>user_login)[0].id).count.should == 0
+       expect(Flag.where(:druid=>druid, :state=>Flag.open, :user_id=>User.where(:username=>user_login)[0].id).count).to eq(0)
        
        #Add an initial comment we can easily find and resolve
        login_and_add_a_flag(user_login, druid, first_user_comment)

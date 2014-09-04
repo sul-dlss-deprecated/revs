@@ -8,14 +8,14 @@ describe CollectionMembers do
                 }
   end
   it "should get the numFound from the solr response " do
-    CollectionMembers.new(@response).total_members.should == @response["response"]["numFound"]
+    expect(CollectionMembers.new(@response).total_members).to eq(@response["response"]["numFound"])
   end
   it "shuold turn the docs array from the solr response into an array of SolrDocuments" do
     members = CollectionMembers.new(@response)
     members.documents.each do |document|
-      document.should be_a SolrDocument
+      expect(document).to be_a SolrDocument
     end
-    members.documents.length.should == @response["response"]["docs"].length
+    expect(members.documents.length).to eq(@response["response"]["docs"].length)
   end
   
   describe "enumerable emthods" do
@@ -24,11 +24,11 @@ describe CollectionMembers do
       CollectionMembers.new(@response).each do |m|
         members << m
       end
-      members.length.should == @response["response"]["docs"].length
+      expect(members.length).to eq(@response["response"]["docs"].length)
     end
     it "should respond to other enumerable methods" do
-      CollectionMembers.new(@response).map{|m| m }.length.should == @response["response"]["docs"].length
-      CollectionMembers.new(@response).find {|m| m[:id] !=  @response["response"]["docs"].first[:id] }.should be_a SolrDocument
+      expect(CollectionMembers.new(@response).map{|m| m }.length).to eq(@response["response"]["docs"].length)
+      expect(CollectionMembers.new(@response).find {|m| m[:id] !=  @response["response"]["docs"].first[:id] }).to be_a SolrDocument
     end
   end
 

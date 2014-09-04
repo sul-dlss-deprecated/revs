@@ -23,14 +23,14 @@ describe("Beta Users Only",:type=>:request,:integration=>true) do
   it "should let us visit an item detail page if we are logged and part of the beta" do 
     login_as beta_login
     visit catalog_path('jg267fg4283')
-    find('.show-document-title').should have_content('Untitled')  
+    expect(find('.show-document-title')).to have_content('Untitled')  
     logout  
   end  
 
   it "should let us visit an item detail page if we are logged in as a sunet user" do 
     visit webauth_login_path
     visit catalog_path('jg267fg4283')
-    find('.show-document-title').should have_content('Untitled')    
+    expect(find('.show-document-title')).to have_content('Untitled')    
     logout
   end  
   

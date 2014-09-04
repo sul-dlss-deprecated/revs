@@ -10,8 +10,8 @@ describe("User Registration",:type=>:request,:integration=>true) do
   
   it "should register a new user with the default role and defaulting to public profile as hidden" do
 
-    RevsMailer.should_not_receive(:mailing_list_signup)
-    RevsMailer.should_not_receive(:revs_institute_mailing_list_signup)
+    expect(RevsMailer).not_to receive(:mailing_list_signup)
+    expect(RevsMailer).not_to receive(:revs_institute_mailing_list_signup)
 
     @username='testing'
     @email="#{@username}@test.com"
@@ -27,21 +27,21 @@ describe("User Registration",:type=>:request,:integration=>true) do
     
     # check the database
     user=User.last
-    user.role.should == 'user'
-    user.username.should == @username
-    user.email.should == @email
-    user.public.should == false
+    expect(user.role).to eq('user')
+    expect(user.username).to eq(@username)
+    expect(user.email).to eq(@email)
+    expect(user.public).to eq(false)
     
     favorites=Gallery.last
-    favorites.gallery_type.should == 'favorites'
-    favorites.user_id.should == user.id
+    expect(favorites.gallery_type).to eq('favorites')
+    expect(favorites.user_id).to eq(user.id)
 
   end
 
   it "should register a new user and send an email to join the Revs Program list if selected" do
 
-      RevsMailer.should_receive(:mailing_list_signup)
-      RevsMailer.should_not_receive(:revs_institute_mailing_list_signup)
+      expect(RevsMailer).to receive(:mailing_list_signup)
+      expect(RevsMailer).not_to receive(:revs_institute_mailing_list_signup)
         
       @username='testing2'
       @email="#{@username}@test.com" 
@@ -54,16 +54,16 @@ describe("User Registration",:type=>:request,:integration=>true) do
     
       # check the database
       user=User.last
-      user.role.should == 'user'
-      user.username.should == @username
-      user.email.should == @email
+      expect(user.role).to eq('user')
+      expect(user.username).to eq(@username)
+      expect(user.email).to eq(@email)
 
     end
 
     it "should register a new user and send an email to join the Revs Institute Mailing list if selected" do
 
-        RevsMailer.should_receive(:revs_institute_mailing_list_signup)
-        RevsMailer.should_not_receive(:mailing_list_signup)
+        expect(RevsMailer).to receive(:revs_institute_mailing_list_signup)
+        expect(RevsMailer).not_to receive(:mailing_list_signup)
 
         @username='testing3'
         @email="#{@username}@test.com" 
@@ -76,9 +76,9 @@ describe("User Registration",:type=>:request,:integration=>true) do
        
         # check the database
         user=User.last
-        user.role.should == 'user'
-        user.username.should == @username
-        user.email.should == @email
+        expect(user.role).to eq('user')
+        expect(user.username).to eq(@username)
+        expect(user.email).to eq(@email)
 
       end
  
@@ -86,14 +86,14 @@ describe("User Registration",:type=>:request,:integration=>true) do
     
       @username="somesunet"
 
-      User.where(:username=>@username).size.should == 0 # doesn't exist yet
+      expect(User.where(:username=>@username).size).to eq(0) # doesn't exist yet
 
       # try and create a new stanford user with this sunetid, which does not exist in database
       new_user=User.create_new_sunet_user(@username)
-      new_user.sunet.should == @username
-      new_user.username.should == @username
-      new_user.sunet_user?.should be_true
-      new_user.email.should == "#{@username}@stanford.edu"
+      expect(new_user.sunet).to eq(@username)
+      expect(new_user.username).to eq(@username)
+      expect(new_user.sunet_user?).to be_true
+      expect(new_user.email).to eq("#{@username}@stanford.edu")
 
     end
 
@@ -101,14 +101,14 @@ describe("User Registration",:type=>:request,:integration=>true) do
     
       @username="pet"
 
-      User.where(:username=>@username).size.should == 0 # doesn't exist yet
+      expect(User.where(:username=>@username).size).to eq(0) # doesn't exist yet
 
       # try and create a new stanford user with this sunetid, which does not exist in database
       new_user=User.create_new_sunet_user(@username)
-      new_user.sunet.should == @username
-      new_user.username.should == "#{@username}12"
-      new_user.sunet_user?.should be_true
-      new_user.email.should == "#{@username}@stanford.edu"
+      expect(new_user.sunet).to eq(@username)
+      expect(new_user.username).to eq("#{@username}12")
+      expect(new_user.sunet_user?).to be_true
+      expect(new_user.email).to eq("#{@username}@stanford.edu")
 
     end
 
@@ -123,17 +123,17 @@ describe("User Registration",:type=>:request,:integration=>true) do
 
       # now try and create a new stanford user with this same sunetid as an already registered users and see if it uniquifies it
       new_user=User.create_new_sunet_user(@username)
-      new_user.sunet.should == @username
-      new_user.username.should == "#{@username}_1"
-      new_user.sunet_user?.should be_true
-      new_user.email.should == "#{@username}@stanford.edu"
+      expect(new_user.sunet).to eq(@username)
+      expect(new_user.username).to eq("#{@username}_1")
+      expect(new_user.sunet_user?).to be_true
+      expect(new_user.email).to eq("#{@username}@stanford.edu")
 
     end
 
     it "should NOT register a new user via the web page if they have a Stanford email address or try a username with a Stanford email address" do
 
-        RevsMailer.should_not_receive(:mailing_list_signup)
-        RevsMailer.should_not_receive(:revs_institute_mailing_list_signup)
+        expect(RevsMailer).not_to receive(:mailing_list_signup)
+        expect(RevsMailer).not_to receive(:revs_institute_mailing_list_signup)
 
         @username='testguy'
         @email="#{@username}@stanford.edu" 
@@ -142,26 +142,26 @@ describe("User Registration",:type=>:request,:integration=>true) do
         register_new_user(@username,@password,@email) 
         click_button 'Sign up'
 
-        current_path.should == root_path
-        page.should have_content 'Stanford users should not create a new account.'
+        expect(current_path).to eq(root_path)
+        expect(page).to have_content 'Stanford users should not create a new account.'
 
         # check the database
         user=User.last
-        user.username.should_not == @username
-        user.email.should_not == @email
+        expect(user.username).not_to eq(@username)
+        expect(user.email).not_to eq(@email)
 
         # try to register a new stanford user with a stanford email address as the username
         visit new_user_registration_path
         register_new_user(@email,@password,"#{@username}@example.com") 
         click_button 'Sign up'
 
-        current_path.should == root_path
-        page.should have_content 'Stanford users should not create a new account.'
+        expect(current_path).to eq(root_path)
+        expect(page).to have_content 'Stanford users should not create a new account.'
 
         # check the database
         user=User.last
-        user.username.should_not == @email
-        user.email.should_not == "#{@username}@example.com"
+        expect(user.username).not_to eq(@email)
+        expect(user.email).not_to eq("#{@username}@example.com")
         
       end
 
@@ -172,8 +172,8 @@ describe("User Registration",:type=>:request,:integration=>true) do
           fill_in 'user_login', :with=> sunet_login
           click_button 'submit'
 
-          current_path.should == root_path
-          page.should have_content 'Stanford users need to login via webauth with their SunetID to access their account. You cannot reset your SunetID password here.'
+          expect(current_path).to eq(root_path)
+          expect(page).to have_content 'Stanford users need to login via webauth with their SunetID to access their account. You cannot reset your SunetID password here.'
 
         end      
   

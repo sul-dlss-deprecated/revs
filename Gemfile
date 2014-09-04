@@ -70,6 +70,7 @@ end
 group :development, :staging, :test do
   gem 'jettywrapper'
   gem 'sqlite3'
+  #gem 'rspec-core', "2.99"
 end
 
 group :staging, :production do
