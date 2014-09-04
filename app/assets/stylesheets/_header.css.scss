@@ -2,6 +2,9 @@
 
 #brandbar {
   min-height: 35px;
+  .container {
+    padding: 0;
+  }
   #report-problem {
     float: right;
     font-size: 0.85em;
@@ -68,17 +71,11 @@
   }
 }
 
-#header-navbar-static-top {
+.header-navbar-static-top {
+  background: white;
   border-bottom: 1px solid #dddddd;
-  &.navbar {
-    .logo {
-      text-align: center;
-      img {
-        display: block;
-        margin: auto;
-      }
-    }
-  }
+  padding-bottom: 10px;
+  padding-top: 5px;
   h1 {
     border-bottom: none;
     font-size: 2.4em;
@@ -107,14 +104,6 @@
       font-style: normal;
       color: #999;
     }
-  }
-  .navbar-inner {
-    background-color: white;
-    background-image: none;
-    border: none;
-    box-shadow: none;
-    padding-bottom: 10px;
-    padding-top: 5px;
   }
 }
 
@@ -209,12 +198,20 @@
   }
 }
 
+@media screen and (min-width: 1200px) {
+  #brandbar .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
 /* Phones: reduce logo size and center site title and nav elements */
 @media screen and (max-width: 767px) {
-  #header-navbar-static-top {
+  .header-navbar-static-top {
+    .site-header-content {text-align: center;}
     h1 {
       font-size: 2em;
-      margin-left: 60px; // Compensate for collapsed menu icon width
+      float: none;
     }
     h2 {
       font-size: 1em;
@@ -223,14 +220,6 @@
         margin-top: 10px;
         width: 100%;
       }
-    }
-    .logo img {
-      float: left;
-      max-width: 80px;
-    }
-    &.navbar {
-      .site-header-content {text-align: center;}
-      h1 {float: none;}
     }
   }
   .navbar .nav-searchbox {
@@ -248,12 +237,6 @@
 /* Tablets: reduce logo size and add some extra space between logo
    and site title and nav elements */
 @media screen and (min-width: 768px) and (max-width: 979px) {
-  #header-navbar-static-top {
-    .logo img {
-      float: right;
-      max-width: 100px;
-    }
-  }
   .navbar {
     .container {
       width: 724px;
@@ -273,11 +256,9 @@
 
 /* Phones: reduce logo size and center site title and nav elements */
 @media screen and (max-width:480px) {
-  #header-navbar-static-top.navbar {
+  .header-navbar-static-top {
     h1 {
       font-size: 1.8em;
-      float: left;
-      margin-left: 0;
     }
     h2 {
       display: none;

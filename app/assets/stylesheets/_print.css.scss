@@ -11,7 +11,7 @@
   body {
     line-height: 1.3;
   }
-  #header-navbar-static-top h1 {
+  .header-navbar-static-top h1 {
     font-size: 16pt;
     margin-bottom: 6px;
   }
@@ -31,7 +31,7 @@
   }
   #brandbar, #report-problem-form, #menu-bar,
   .site-header-content h2,
-  #header-navbar-static-top .btn-navbar,
+  .header-navbar-static-top,
   #global-footer, #sidebar,
   #print-page
    {
@@ -40,7 +40,7 @@
   @page {
     margin-top: 1cm;
   }
-  #header-navbar-static-top .navbar-inner {
+  .header-navbar-static-top {
     padding-bottom: 0;
   }
   .site-header-content h1 {
