@@ -369,7 +369,7 @@ class CatalogController < ApplicationController
 
   private
   def invalid_entry?(str)
-    str.blank? || str.length < 3
+    str.blank? || str.length < 2
   end
 
 end 

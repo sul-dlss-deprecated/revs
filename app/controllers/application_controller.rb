@@ -210,7 +210,8 @@ class ApplicationController < ActionController::Base
   end
   
   def show_terms_dialog?
-    %w{production staging}.include?(Rails.env) && !seen_terms_dialog?   # we are using the terms dialog to show a warning to users who are viewing the site on production or staging
+   false # do not show terms dialog as per email with Trina Purcell on August 28, 2014
+   # %w{production staging}.include?(Rails.env) && !seen_terms_dialog?   # we are using the terms dialog to show a warning to users who are viewing the site on production or staging
   end
 
   def accept_terms
