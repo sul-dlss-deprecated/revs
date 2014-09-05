@@ -107,44 +107,10 @@
   }
 }
 
-#menu-bar {
+.menu-bar {
   background-color: #fff;
   border-bottom: 1px solid #dddddd;
   padding-left: 40px;
-}
-.navbar {
-  margin-bottom: 0;
-  .nav {
-    clear: left;
-    display: inline;
-    margin-left: -20px;
-    > .active > a, > .active > a:hover {
-      background-color: #f7f7f7;
-      box-shadow: none;
-      -webkit-box-shadow: none;
-    }
-    > li {
-      float: left;
-      &.active > a {
-        border-left: 1px solid #ddd;
-        border-right: 1px solid #ddd;
-        color: #990000;
-      }
-      > a {
-        box-shadow: none;
-        color: #000000;
-        font-family: "news-gothic-std","Helvetica","Arial",sans-serif;
-      	font-weight: 700;
-      	text-transform: uppercase;
-      	font-size: 0.965em;
-      	-webkit-font-smoothing: antialiased;
-        padding: 10px 24px 8px 24px;
-        &:hover, &:focus {color: #990000;}
-      }
-    }
-    > li:last-child > a {
-    }
-  }
   .nav-searchbox {
     float: right;
     margin-top: 6px;
@@ -179,6 +145,40 @@
     }
   }
 }
+.menu-bar > .container {
+  margin-bottom: 0;
+}
+.menu-bar .nav {
+  clear: left;
+  margin-left: -20px;
+  > .active > a, > .active > a:hover {
+    background-color: #f7f7f7;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+  }
+  > li {
+    float: left;
+    &.active > a {
+      border-left: 1px solid #ddd;
+      border-right: 1px solid #ddd;
+      color: #990000;
+    }
+    > a {
+      box-shadow: none;
+      color: #000000;
+      font-family: "news-gothic-std","Helvetica","Arial",sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.965em;
+    	-webkit-font-smoothing: antialiased;
+      padding: 11px 24px;
+      &:hover, &:focus {
+        background-color: white;
+        color: #990000;
+      }
+    }
+  }
+}
 
 @mixin main-menu-mobile-styling {
   .nav-collapse .btn {
@@ -186,18 +186,16 @@
     margin-bottom: 6px;
     padding: 2px 10px 2px;
   }
-  .navbar .nav > li.active > a {
+  .menu-bar .nav > li.active > a {
     background-color: inherit;
     border: none;
     &:hover {
       background-color: inherit;
     }
   }
-  .nav-collapse .nav > li > a:hover {
-    background-color: inherit;
-  }
 }
 
+/* Responsive styles */
 @media screen and (min-width: 1200px) {
   #brandbar .container {
     padding-left: 15px;
@@ -222,49 +220,53 @@
       }
     }
   }
-  .navbar .nav-searchbox {
-    float: none;
-    margin-top: 30px;
-    text-align: center;
-    .search-query {
-      min-height: 26px;
-      width: 150px;
+//  .navbar .nav-searchbox {
+//    float: none;
+//    margin-top: 30px;
+//    text-align: center;
+//    .search-query {
+//      min-height: 26px;
+//      width: 150px;
+//    }
+//  }
+//  @include main-menu-mobile-styling;
+  .menu-bar .nav > li.active > a {
+    background-color: inherit;
+    border: none;
+    &:hover {
+      background-color: inherit;
     }
   }
-  @include main-menu-mobile-styling;
 }
 
 /* Tablets: reduce logo size and add some extra space between logo
    and site title and nav elements */
 @media screen and (min-width: 768px) and (max-width: 979px) {
-  .navbar {
-    .container {
-      width: 724px;
-      margin: 0 auto;
-    }
-    .nav-searchbox {
-      float: none;
-      margin-top: 30px;
-      text-align: center;
-      .search-query {
-        width: 150px;
-      }
-    }
-  }
-  @include main-menu-mobile-styling;
+//  .navbar {
+//    .container {
+//      width: 724px;
+//      margin: 0 auto;
+//    }
+//    .nav-searchbox {
+//      float: none;
+//      margin-top: 30px;
+//      text-align: center;
+//      .search-query {
+//        width: 150px;
+//      }
+//    }
+//  }
+//  @include main-menu-mobile-styling;
 }
 
 /* Phones: reduce logo size and center site title and nav elements */
-@media screen and (max-width:480px) {
+@media screen and (max-width:525px) {
   .header-navbar-static-top {
     h1 {
       font-size: 1.8em;
     }
-    h2 {
-      display: none;
-    }
   }
-  .navbar .nav > li > a {
-    padding: 10px 12px;
+  .menu-bar .nav > li > a {
+    padding: 10px;
   }
 }
