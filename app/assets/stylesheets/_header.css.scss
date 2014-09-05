@@ -195,16 +195,18 @@
   }
 }
 
-/* Responsive styles */
+/* Wide desktop viewport */
 @media screen and (min-width: 1200px) {
+  // Make brandbar elements line up with site content borders
   #brandbar .container {
     padding-left: 15px;
     padding-right: 15px;
   }
 }
 
-/* Phones: reduce logo size and center site title and nav elements */
+/* All smaller mobile devices */
 @media screen and (max-width: 767px) {
+  // Center and reduce text size of site heading for mobile devices
   .header-navbar-static-top {
     .site-header-content {text-align: center;}
     h1 {
@@ -220,6 +222,26 @@
       }
     }
   }
+  // Center main menu for mobile devices
+  .menu-bar .nav {
+    text-align: center;
+    margin-left: -40px;
+    > li {
+      display: inline;
+      float: none;
+      > a {
+        display: inline-block;
+      }
+    }
+  }
+  // Remove highlight styling for mobile devices
+  .menu-bar .nav > li.active > a {
+    background-color: inherit;
+    border: none;
+    &:hover {
+      background-color: inherit;
+    }
+  }
 //  .navbar .nav-searchbox {
 //    float: none;
 //    margin-top: 30px;
@@ -230,23 +252,18 @@
 //    }
 //  }
 //  @include main-menu-mobile-styling;
-  .menu-bar .nav > li.active > a {
-    background-color: inherit;
-    border: none;
-    &:hover {
-      background-color: inherit;
-    }
-  }
+
 }
 
-/* Tablets: reduce logo size and add some extra space between logo
-   and site title and nav elements */
+/* Tablets */
 @media screen and (min-width: 768px) and (max-width: 979px) {
-//  .navbar {
-//    .container {
-//      width: 724px;
-//      margin: 0 auto;
-//    }
+  // Make sure there is some side margin on site layout
+  .navbar {
+    .container {
+      width: 724px;
+      margin: 0 auto;
+    }
+  }
 //    .nav-searchbox {
 //      float: none;
 //      margin-top: 30px;
@@ -259,13 +276,15 @@
 //  @include main-menu-mobile-styling;
 }
 
-/* Phones: reduce logo size and center site title and nav elements */
+/* Phones */
 @media screen and (max-width:525px) {
+  // Reduce font size of site header
   .header-navbar-static-top {
     h1 {
       font-size: 1.8em;
     }
   }
+  // Tighten main menu item spacing to fit on single row
   .menu-bar .nav > li > a {
     padding: 10px;
   }
