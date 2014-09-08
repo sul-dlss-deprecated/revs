@@ -113,35 +113,23 @@
   padding-left: 40px;
   .nav-searchbox {
     float: right;
+    margin-bottom: 6px;
     margin-top: 6px;
   }
   .search-form-nav {
     margin-bottom: 0;
     margin-right: 20px;
-    .input-append {
-      margin-bottom: 4px;
+    .btn.btn-default {
+      color: #333333;
+      background-color: #FFFFFF;
+      background-image: linear-gradient(to bottom, #FFFFFF, #E0E0E0);
+      border-color: #CCCCCC #CCCCCC #CCCCCC;
     }
-    input {
-      -moz-border-radius-topleft: 4px;
-      -webkit-border-top-left-radius: 4px;
-       border-top-left-radius: 4px;
-      -moz-border-radius-bottomleft: 4px;
-      -webkit-border-bottom-left-radius: 4px;
-      border-bottom-left-radius: 4px;
-      -moz-border-radius-topright: 0px;
-      -webkit-border-top-right-radius: 0px;
-       border-top-right-radius: 0px;
-      -moz-border-radius-bottomright: 0px;
-      -webkit-border-bottom-right-radius: 0px;
-      border-bottom-right-radius: 0px;
-      padding: 2px 10px;
-      &:focus {
-        border: 1px solid #fafafa;
-        -webkit-box-shadow: 0 0 6px #007eff;
-        -moz-box-shadow: 0 0 5px #007eff;
-        box-shadow: 0 0 5px #007eff;
-        outline: none;
-      }
+    .btn.btn-default:hover {
+      color: #333333;
+      background-color: #E0E0E0;
+      background-image: linear-gradient(to bottom, #E0E0E0, #E0E0E0);
+      border-color: #CCCCCC #CCCCCC #CCCCCC;
     }
   }
 }
@@ -150,6 +138,7 @@
 }
 .menu-bar .nav {
   clear: left;
+  float: left;
   margin-left: -20px;
   > .active > a, > .active > a:hover {
     background-color: #f7f7f7;
@@ -171,7 +160,7 @@
       text-transform: uppercase;
       font-size: 0.965em;
     	-webkit-font-smoothing: antialiased;
-      padding: 11px 24px;
+      padding: 12px 24px;
       &:hover, &:focus {
         background-color: white;
         color: #990000;
@@ -186,6 +175,20 @@
     margin-bottom: 6px;
     padding: 2px 10px 2px;
   }
+}
+
+/* If wide desktop viewport */
+@media screen and (min-width: 1200px) {
+  // Make brandbar elements line up with site content borders
+  #brandbar .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+/* Narrower than desktop viewport */
+@media screen and (max-width: 991px) {
+  // Remove highlight styling on main menu
   .menu-bar .nav > li.active > a {
     background-color: inherit;
     border: none;
@@ -193,14 +196,9 @@
       background-color: inherit;
     }
   }
-}
-
-/* Wide desktop viewport */
-@media screen and (min-width: 1200px) {
-  // Make brandbar elements line up with site content borders
-  #brandbar .container {
-    padding-left: 15px;
-    padding-right: 15px;
+  .menu-bar .nav-searchbox {
+    float: none;
+    text-align: center;
   }
 }
 
@@ -224,6 +222,7 @@
   }
   // Center main menu for mobile devices
   .menu-bar .nav {
+    float: none;
     text-align: center;
     margin-left: -40px;
     > li {
@@ -234,28 +233,9 @@
       }
     }
   }
-  // Remove highlight styling for mobile devices
-  .menu-bar .nav > li.active > a {
-    background-color: inherit;
-    border: none;
-    &:hover {
-      background-color: inherit;
-    }
-  }
-//  .navbar .nav-searchbox {
-//    float: none;
-//    margin-top: 30px;
-//    text-align: center;
-//    .search-query {
-//      min-height: 26px;
-//      width: 150px;
-//    }
-//  }
-//  @include main-menu-mobile-styling;
-
 }
 
-/* Tablets */
+/* Just 'tablets' */
 @media screen and (min-width: 768px) and (max-width: 979px) {
   // Make sure there is some side margin on site layout
   .navbar {
@@ -264,19 +244,9 @@
       margin: 0 auto;
     }
   }
-//    .nav-searchbox {
-//      float: none;
-//      margin-top: 30px;
-//      text-align: center;
-//      .search-query {
-//        width: 150px;
-//      }
-//    }
-//  }
-//  @include main-menu-mobile-styling;
 }
 
-/* Phones */
+/* Just phones */
 @media screen and (max-width:525px) {
   // Reduce font size of site header
   .header-navbar-static-top {

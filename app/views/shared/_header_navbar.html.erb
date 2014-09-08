@@ -37,23 +37,29 @@
 
 <div class="menu-bar">
   <div class="container">
-    <ul class="nav">
-      <li class="<%="active" if on_home_page %>">
-        <%= link_to t('revs.nav.home').upcase, root_path %>
-      </li>
-      <li class="<%="active" if on_collections_page %>">
-        <%= link_to t('revs.nav.collections').upcase, all_collections_path%>
-      </li>
-      <% if Revs::Application.config.show_galleries_in_nav %>
-        <li class="<%="active" if on_galleries_page %>">
-          <%= link_to t('revs.nav.galleries').upcase, galleries_path %>
-        </li>
-      <% end %>
-      <li class="<%="active" if on_about_pages %>"><%= link_to t('revs.about.word').upcase, about_project_path %></li>
-      <li class="hidden-xs"><%= link_to t('revs.revs_program').upcase, 'http://revs.stanford.edu', :target=>'_new' %></li>
-    </ul>
+    <div class="row">
+      <div class="col-md-9">
+        <ul class="nav">
+          <li class="<%="active" if on_home_page %>">
+            <%= link_to t('revs.nav.home').upcase, root_path %>
+          </li>
+          <li class="<%="active" if on_collections_page %>">
+            <%= link_to t('revs.nav.collections').upcase, all_collections_path%>
+          </li>
+          <% if Revs::Application.config.show_galleries_in_nav %>
+            <li class="<%="active" if on_galleries_page %>">
+              <%= link_to t('revs.nav.galleries').upcase, galleries_path %>
+            </li>
+          <% end %>
+          <li class="<%="active" if on_about_pages %>"><%= link_to t('revs.about.word').upcase, about_project_path %></li>
+          <li class="hidden-xs"><%= link_to t('revs.revs_program').upcase, 'http://revs.stanford.edu', :target=>'_new' %></li>
+        </ul>
+      </div>
 
-    <%= render :partial => "/shared/main_menu_searchbox" unless display_sidebar_searchbox %>
+      <div class="col-md-3 col-md-offset-0 col-xs-6 col-xs-offset-3">
+        <%= render :partial => "/shared/main_menu_searchbox" unless display_sidebar_searchbox %>
+      </div>
 
+    </div>
   </div>
 </div>

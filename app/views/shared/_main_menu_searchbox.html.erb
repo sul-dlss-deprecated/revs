@@ -1,11 +1,13 @@
 <div class="nav-searchbox">
-  <%= form_tag search_action_url, :method => :get, :class => 'search-form-nav' do %>
+  <%= form_tag search_action_url, :method => :get, :class => 'search-form-nav form-inline' do %>
     <%= render_hash_as_hidden_fields(:omit_keys => [:q, :search_field, :qt, :page]).html_safe %>
-    <div class="input-append">
-      <%= text_field_tag :q, params[:q], :class => "search_q q col-md-2 search-query", :id => "q" %>
-      <button type="submit" class="btn btn-small">
-        <%= t('revs.search.search_label') %>
-      </button>
-    </div>
+     <div class="input-group">
+        <%= text_field_tag :q, params[:q], :class => "search_q q form-control input-sm search-query", :id => "q" %>
+        <span class="input-group-btn">
+          <button type="submit" class="btn btn-default btn-sm">
+            <%= t('revs.search.search_label') %>
+          </button>
+        </span>
+      </div>
   <% end %>
 </div>
