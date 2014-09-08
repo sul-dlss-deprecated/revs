@@ -119,18 +119,7 @@
   .search-form-nav {
     margin-bottom: 0;
     margin-right: 20px;
-    .btn.btn-default {
-      color: #333333;
-      background-color: #FFFFFF;
-      background-image: linear-gradient(to bottom, #FFFFFF, #E0E0E0);
-      border-color: #CCCCCC #CCCCCC #CCCCCC;
-    }
-    .btn.btn-default:hover {
-      color: #333333;
-      background-color: #E0E0E0;
-      background-image: linear-gradient(to bottom, #E0E0E0, #E0E0E0);
-      border-color: #CCCCCC #CCCCCC #CCCCCC;
-    }
+    @include default-button;
   }
 }
 .menu-bar > .container {

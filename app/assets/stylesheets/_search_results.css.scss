@@ -362,20 +362,20 @@ span.constraints-label {margin-right: 0.5em;}
 }
 
 /* Search Form */
-#sidebar .search_form {
+.searchbox {
 	margin-bottom: 50px;
 	input.hide {
 		position:absolute;
 		left: -1000px;
 	}
-  input[type='text'] {
-	  width: 93%;
-		@media(max-width: 767px){
-		  width: 98%;
-		}
+  .input-group {
+    margin-bottom: 6px;
+    width: 100%;
   }
-}
-#sidebar .searchbox {
+  .btn {
+    border-radius: 4px;
+  }
+  @include default-button;
   @include tooltip-styling;
 }
 
