@@ -1,6 +1,6 @@
 <%=t('revs.about.faq_text_html',
 :terms_of_use_link=>link_to(t('revs.about.use_policy'),about_pages_path(:id=>'terms_of_use')),
-:reuse_link=>link_to(t('revs.contact.permission_information'),Revs::Application.config.revs_reuse_link),
+:reuse_link=>link_to(t('revs.contact.permission_information_html'),Revs::Application.config.revs_reuse_link),
 :corrections_link=>link_to(t('revs.about.contact_us'),contact_us_path(:subject=>'metadata')),
 :sign_up_link=>link_to(t('revs.authentication.sign_up'),new_user_registration_path),
 )%>

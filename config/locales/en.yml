@@ -25,7 +25,7 @@ en:
     digital_library: 'Revs Digital Library'
     tagline: 'Connecting the past, present and future of the automobile'
     revs_program: 'Revs Program at Stanford'
-    revs_institute: 'Revs Institute'
+    revs_institute: 'The Revs Institute'
     stanford_library: 'Stanford University Libraries'
     routing_error: "Sorry, the page you were looking for was not found."
     repository_counts_html: |
@@ -167,7 +167,7 @@ en:
     contact:
       us: 'contact us'
       instructions_html: 'If you are asking about access or re-use of images, select "Request an image or terms of use question" as the subject or view %{reuse_link}.  If you have corrections to metadata or content on the site, please use the "Flag correction to this item" link next to the image.'
-      permission_information: 'permission information and contact the Revs Institute'  
+      permission_information_html: 'permission information and contact The Revs Institute for Automotive Research, Inc.'  
       select_topic: 'Select a topic...'
       problem: 'Problem with the website'
       other_questions: 'Other questions'
@@ -184,7 +184,7 @@ en:
       image_license_agreement: "permission to use requirements"
       image_reuse_agreement: "To request access or to re-use this image, please review the %{license_agreement_link}"
       reuse_contact: "and %{reuse_contact_link}"
-      contact_linktext: "contact the Revs Institute"
+      contact_linktext_html: "contact The Revs Institute for Automotive Research, Inc."
       reuse_contact_message: "Request for image ID %{reuse_contact_message_doc} at %{reuse_contact_message_url}"
       thanks: 'Thanks for contacting the Revs Digital Library'
     authentication:

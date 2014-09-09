@@ -1,5 +1,5 @@
 <p>
-	<%=t('revs.about.terms_of_use_text_html',:reuse_link=>link_to(t('revs.contact.permission_information'),Revs::Application.config.revs_reuse_link),:terms_of_use_link=>link_to(t('revs.about.terms_of_use_policy'),'http://www.stanford.edu/site/terms.html'),:contact_us_link=>link_to(t('revs.contact.us'),contact_us_path),:copyright_infringement_link=>link_to(t('revs.about.copyright_infringement'),'http://www.stanford.edu/group/security/dmca.html'))%>
+	<%=t('revs.about.terms_of_use_text_html',:reuse_link=>link_to(t('revs.contact.permission_information_html'),Revs::Application.config.revs_reuse_link),:terms_of_use_link=>link_to(t('revs.about.terms_of_use_policy'),'http://www.stanford.edu/site/terms.html'),:contact_us_link=>link_to(t('revs.contact.us'),contact_us_path),:copyright_infringement_link=>link_to(t('revs.about.copyright_infringement'),'http://www.stanford.edu/group/security/dmca.html'))%>
 </p>
 
 <%= render :partial=>'end_page_slug'%>
