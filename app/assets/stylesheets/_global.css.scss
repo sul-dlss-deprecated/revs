@@ -19,7 +19,6 @@ body {
   background: yellow;
 }
 
-#sidebar {@include red-top_border;}
 #sidebar-nav > .nav-list {
   margin-bottom: 20px;
   padding-left: 5px;
@@ -173,6 +172,7 @@ span.content-type {
   display: inline;
 }
 #sidebar-nav {
+  @include red-top_border;
   .nav-header .label {
     margin-left: 12px;
   }

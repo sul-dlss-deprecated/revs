@@ -361,7 +361,7 @@ span.constraints-label {margin-right: 0.5em;}
   }
 }
 
-/* Search Form */
+/* Search form in sidebar */
 .searchbox {
 	margin-bottom: 50px;
 	input.hide {
@@ -377,6 +377,7 @@ span.constraints-label {margin-right: 0.5em;}
   }
   @include default-button;
   @include tooltip-styling;
+  @include red-top_border;
 }
 
 @media (min-width: 1200px) {
@@ -405,6 +406,10 @@ span.constraints-label {margin-right: 0.5em;}
         margin-bottom: 10px;
       }
     }
+  }
+  .searchbox {
+    border-top: none;
+    padding-top: 0;
   }
 }
 @media screen and (max-width: 767px) {
