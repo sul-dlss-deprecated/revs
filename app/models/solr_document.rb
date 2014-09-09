@@ -98,7 +98,7 @@ class SolrDocument
       :collection_names=>{:field=>'collection_ssim', :multi_valued => true,:editstore=>false},
       :highlighted=>{:field=>'highlighted_ssi',:editstore=>false},
       :visibility_value=>{:field=>'visibility_isi',:editstore=>false},
-      :copyright=>{:field=>'copyright_ss',:editstore=>false,:default=>"Courtesy of the Revs Institute for Automotive Research. All rights reserved unless otherwise indicated."},
+      :copyright=>{:field=>'copyright_ss',:editstore=>false,:default=>"Courtesy of The Revs Institute for Automotive Research, Inc. All rights reserved unless otherwise indicated."},
       :use_and_reproduction=>{:field=>'use_and_reproduction_ss',:editstore=>false,:default=>"Users must contact the The Revs Institute for Automotive Research for re-use and reproduction information."},
       }  
   end
