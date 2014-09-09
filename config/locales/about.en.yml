@@ -36,10 +36,10 @@ en:
         <p class="faq-answer">All of the content is currently under a full copyright from the Revs Institute and you should review their %{reuse_link}.  You can also review Stanford's %{terms_of_use_link}.
         </p>
         <p class="faq-question">
-          When I try and download a full size image, it asks me to login with a SUNET ID.  What is that and I can I get one?
+          When I try and download a full size image, it asks me to login with a SUNET ID and says I need be part of Stanford University.  What is that and can I get one?
         </p>
-        <p class="faq-answer">High resolution images are only available to members of the Stanford community through a prior agreement.  SUNET IDs are only available to authorized Stanford users and we cannot create one for you.  If you wish 
-          to obtain a high resolution image for any reason, please review %{reuse_link}.
+        <p class="faq-answer">High resolution images are only available to members of the Stanford community through a prior agreement.  SUNET IDs are only available to authorized Stanford users and we are not able to create one for you.  If you wish 
+          to obtain a high resolution image for any reason, please review %{reuse_link}.  Note that anyone can view high resolution versions of the images in the website by selecting "zoom" in the drop-down menu under any of the images.  You can then zoom in and out to view detail, but you will not be able to download the images to your computer.
         </p>
       terms_of_use_text_html: |
         Any of the content displayed on this site may be under copyright, and it is up to the user to comply with the content's specific copyright provisions. 
