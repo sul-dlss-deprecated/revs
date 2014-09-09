@@ -6,8 +6,8 @@ describe SolrDocument, :integration => true do
   
     it "should retrieve the default rights and copyright statements if not found in solr document" do
       doc=SolrDocument.find('bb004bn8654') # fixture with none specified
-      expect(doc.use_and_reproduction).to eq("Users must contact The The Revs Institute for Automotive Research, Inc. for re-use and reproduction information.")
-      expect(doc.copyright).to eq("Courtesy of the Revs Institute for Automotive Research, Inc. All rights reserved unless otherwise indicated.")
+      expect(doc.use_and_reproduction).to eq("Users must contact The Revs Institute for Automotive Research, Inc. for re-use and reproduction information.")
+      expect(doc.copyright).to eq("Courtesy of The Revs Institute for Automotive Research, Inc. All rights reserved unless otherwise indicated.")
     end
 
     it "should retrieve the rights and copyright statements if found in solr document" do
