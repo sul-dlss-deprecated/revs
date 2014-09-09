@@ -123,7 +123,7 @@ class SolrDocument
   def use_and_reproduction
     value=self['use_and_reproduction_ss']
     value="" if value == 'Users must contact the The Revs Institute for Automotive Research for re-use and reproduction information.' # blank it out if its the bad value, so it gets replaced with the correct value on display
-    value = "Users must contact the The Revs Institute for Automotive Research, Inc. for re-use and reproduction information." if value.blank? # default value
+    value = "Users must contact The Revs Institute for Automotive Research, Inc. for re-use and reproduction information." if value.blank? # default value
     return value
   end
   
