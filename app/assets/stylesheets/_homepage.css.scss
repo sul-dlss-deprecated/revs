@@ -55,6 +55,7 @@ $collection-image-right-gutter: 30px;
   $highlighted-item-width: 200px;
   ul.image-grid {
     list-style-type: none;
+    padding-left: 0;
     margin-left: -10px;
   }
   .image-wrapper {
@@ -63,8 +64,8 @@ $collection-image-right-gutter: 30px;
     height: 135px;
     overflow: hidden;
     margin-bottom: 60px;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 7px;
+    margin-right: 7px;
     text-align: center;
     line-height: 135px;
     display: inline-block;

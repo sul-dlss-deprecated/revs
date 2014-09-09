@@ -1,7 +1,7 @@
 <% cache("home", :expires_in=>6.hours)  do %>
 	<!-- begin collection carousel for JavaScript users -->
   <div class="row slideshow showOnLoad" style="display:none;">
-    <div class="col-md-9">
+    <div class="col-md-12">
       <!-- collection image block -->
       <div id="all_collections_carousel" class="carousel slide">
         <div class="carousel-inner">
@@ -66,7 +66,7 @@
 
   <%# Featured Galleries row %>
 	<div class="row">
-		<div class="col-md-9 highlight-list">
+		<div class="col-md-12 highlight-list">
 			<h3 class="section-heading">
         <%= t('revs.user_galleries.heading_featured') %>
         <span class="more-link">
@@ -98,7 +98,7 @@
 
   <%# More to Explore row %>
 	<div class="row">
-		<div class="col-md-9 highlight-list explore">
+		<div class="col-md-12 highlight-list explore">
 			<h3 class="section-heading">
         <%= t('revs.nav.more_to_explore') %>
       </h3>
