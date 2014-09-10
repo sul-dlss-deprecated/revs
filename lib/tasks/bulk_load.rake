@@ -81,7 +81,6 @@ namespace :revs do
     SolrDocument.all_collections.each do |collection|
       collection_success_count = 0 
       collection_error_count = 0 
-      clean_title = RevsUtils.clean_collection_name(collection.title)
       #changes = [[:production_notes, args[:uuid], true]]
       changes = [[:production_notes, args[:uuid],true]]  #Append a new UUID to ensure there is a save
      
