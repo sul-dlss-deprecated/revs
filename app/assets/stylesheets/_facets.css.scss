@@ -1,43 +1,54 @@
 #facets {
-  h5 {
-    background-color: #fff;
+  padding-bottom: 2px;
+  padding-top: 2px;
+  background-color: #fff;
+  border: 1px solid #d4d4d4;
+  border-radius: 6px;
+  .panel {
+    border: none;
     border-bottom: 1px solid #ddd;
+    border-radius: 0;
+    margin-bottom: 0;
   }
-  a {
-    color: #990000;
+  .panel-default > .panel-heading {
+    background-color: #fff;
+    border-bottom: none;
+    padding-right: 8px;
+  }
+  .panel-title {
     font-size: 14px;
-    text-decoration: none;
+    font-weight: 700;
+    &:after {color: #999;}
+    a {color: #333;}
+    a:hover {color: inherit;}
   }
-  a:hover {text-decoration: underline;}
-  .missing {
-    a {
-      text-decoration: underline;
-    }
-    span.count {
-      float: right;
-    }
+  .panel-body {
+    background-color: #f7f7f7;
+    border-top: 1px solid #ddd;
+    padding-right: 12px;
   }
-  .current {
-    margin-bottom: 15px;
-    text-align: center;
-    .selected {
-      font-weight: 700;
+  ul.facet-values {
+    margin-bottom: 0;
+    li .selected {
+      color: inherit;
     }
   }
-  span.selected {
-    color: #333333;
+  .facets-collapse > .panel-default:last-child {
+    border-bottom: 0;
   }
-  ul {
-    padding-bottom: 0;
+  li.more_facets_link {
+    float: right;
+    margin-right: -15px;
   }
 }
+
 
 /* "#facets-revs" serves as "#facets" does in Blacklight for CSS below.
    An extra wrapper div with the id of "facets-revs" is used to
    move the Browse heading outside of the facet box (for Revs theme)
    and keep the responsive controls working as intended.
 */
-#facets-revs {margin-top: 15px;}
+//#facets-revs {margin-top: 15px;}
 #facets-revs .btn-navbar {
 // Navbar button for toggling navbar items in responsive layouts
 // These definitions need to come after '.navbar .btn'
@@ -67,35 +78,43 @@
 
 /* Override date range slider styling */
 .limit_content.range_limit {
-  margin: 15px auto 0;
-  width: 213px;
   a.ui-slider-handle.ui-state-default.ui-corner-all {
     background: #bbb;
   }
   a.ui-slider-handle.ui-state-default.ui-corner-all {
     border-color: #aaa;
   }
+  .slider-handle {
+    background-color: #990000;
+    background-image: linear-gradient(to bottom, #990000, darken(#990000, 10%));
+  }
+  .missing {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  @include default-button;
 }
 
 @media screen and (max-width: 767px) {
-  #facets-revs .btn-navbar {
-    display: block;
-    margin: 5px;
-  }
+//  #facets-revs .btn-navbar {
+//    display: block;
+//    margin: 5px;
+//  }
 }
 
 @media screen and (min-width: 768px) and (max-width: 1199px) {
   .limit_content.range_limit {
-    form {
-      padding-left: 15px;
-    }
     .range_begin, .range_end {
-      width: 3em;
+      width: 4em;
+    }
+    input.submit.btn-default {
+      padding-left: 10px;
+      padding-right: 10px;
     }
   }
 }
 
-@media screen and (min-width: 768px) and (max-width: 979px) {
+@media screen and (min-width: 768px) and (max-width: 991px) {
   .limit_content.range_limit {
     input[type="submit"] {
       display: block;

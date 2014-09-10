@@ -1,10 +1,10 @@
-<div id="sidebar" class="col-md-3">
+<div id="sidebar" class="col-sm-3">
   <%= render "search_form" %>
   <%= render :partial => 'constraints' if query_has_constraints? %>
   <%= render :partial=>'facets' %>
 </div>
 
-<div id="content" class="col-md-9">   
+<div id="content" class="col-sm-9">
 
     <% if on_home_page %>
 	    <%# if there are no input/search related params, display the "home" partial -%>
@@ -19,12 +19,12 @@
 			<h2 class="search-results"><%= t('revs.search.search_results') %>
 			  <span class="prev-next">
           <%# if paginate_params(@response).num_pages > 1 %>
-         
+
             <%#= paginate_rsolr_response @response, :theme => :blacklight_compact %>
             <%= paginate @response, :page_entries_info => page_entries_info(@response), :theme => :blacklight_compact %>
         </span>
 			</h2>
-			
+
 			<div id="search-results-metadata">
 				<%#= render 'sort_and_per_page' %>
 		    <%= render :partial => 'did_you_mean' %>
