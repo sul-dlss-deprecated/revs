@@ -1,4 +1,4 @@
-<div id="content" class="col-md-9">
+<div id="content" class="col-sm-9">
 
   <h2><%= t('revs.authentication.sign_in') %></h2>
   
@@ -8,14 +8,14 @@
   </p>
 
   <%= form_tag({:controller=>'sessions', :action=>'create'}, :method=>'post',
-      :id => 'new_user', :class => 'form-horizontal') do %>
+      :id => 'new_user', :class => 'form-horizontal', :role => "form") do %>
 
-    <div class="control-group">
-      <label class="control-label" for="user_login">
+    <div class="form-group">
+      <label class="control-label col-xs-12 col-sm-4 col-md-3" for="user_login">
         <%= t('revs.authentication.login') %>
       </label>
-      <div class="controls">
-        <%= text_field_tag 'user[login]', @login, :autofocus => true, :class=>'user-login-email',
+      <div class="col-xs-8 col-sm-6 col-md-5">
+        <%= text_field_tag 'user[login]', @login, :autofocus => true, :class=>'user-login-email form-control',
             :placeholder => "your email address or username" %>
         <div id="stanford-user-warning" class="hidden notice">
           <%= render :partial=>'/shared/stanford_webauth_reminder' %>
@@ -23,13 +23,13 @@
       </div>
     </div>
 
-    <div class="control-group compact">
-      <label class="control-label" for="user_password">
+    <div class="form-group">
+      <label class="control-label col-xs-12 col-sm-4 col-md-3" for="user_password">
         <%= t('revs.authentication.password') %>
       </label>
-      <div class="controls">
+      <div class="col-xs-8 col-sm-6 col-md-5">
         <%= password_field_tag 'user[password]', @password,
-            :placeholder => t('revs.user.your_password') %>
+            :placeholder => t('revs.user.your_password'), :class => "form-control" %>
         <%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
           <div class="forgot-password">
             <%= link_to t('revs.user.forgot_password'), new_password_path(resource_name) %>
@@ -39,19 +39,21 @@
     </div>
 
     <% if devise_mapping.rememberable? -%>
-      <div class="control-group compact">
-        <div class="controls">
-          <label class="checkbox">
-            <%= check_box_tag 'user[remember_me]', @remember_me %>
-            <%= t('revs.authentication.remember_me') %>
-          </label>
+      <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-4 col-md-offset-3">
+          <div class="checkbox">
+            <label class="checkbox">
+              <%= check_box_tag 'user[remember_me]', @remember_me %>
+              <%= t('revs.authentication.remember_me') %>
+            </label>
+          </div>
         </div>
       </div>
     <% end -%>
 
-    <div class="control-group">
-      <div class="controls">
-        <%= submit_tag "#{t('revs.authentication.sign_in')}", :id=>'submit', :class => 'btn signin' %>
+    <div class="form-group">
+      <div class="col-sm-offset-4 col-sm-6 col-md-offset-3">
+        <%= submit_tag "#{t('revs.authentication.sign_in')}", :id=>'submit', :class => 'btn btn-default signin' %>
         <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
           <%= link_to t('revs.authentication.new_user'), new_registration_path(resource_name) %>
         <% end -%>
