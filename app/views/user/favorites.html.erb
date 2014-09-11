@@ -1,5 +1,5 @@
 <div id="content" class="col-md-9 favorites-index">
-  <h2><%= display_user_name(@user) %><span class="lowercase">'s</span> <%=t('revs.favorites.head')%></h2>
+  <h2><%= display_user_name(@user) %><span class="text-lowercase">'s</span> <%=t('revs.favorites.head')%></h2>
 
   <%= render :partial => 'saved_items/manage_items_toggle', :locals => {:saved_list_type => 'favorites'} %>
 
