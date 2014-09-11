@@ -1,7 +1,7 @@
 <div id="sidebar" class="col-sm-3">
   <div id="sidebar-nav">
-    <ul class="nav nav-list">
-      <li class="nav-header"><%= t('revs.authentication.sidebar.actions') %></li>
+    <ul class="list-unstyled">
+      <li class="nav-header text-uppercase"><%= t('revs.authentication.sidebar.actions') %></li>
 
       <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
         <li><%= link_to t('revs.user.resend_confirmation'), new_confirmation_path(resource_name) %></li>
