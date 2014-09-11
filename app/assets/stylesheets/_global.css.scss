@@ -19,11 +19,10 @@ body {
   background: yellow;
 }
 
-#sidebar-nav > .nav-list {
+#sidebar-nav > ul {
   margin-bottom: 20px;
-  padding-left: 5px;
   li > a, li .button_to input[type="submit"] {
-    padding: 1px 15px;
+    padding: 1px 0;
   }
   li {
     form.button_to {
@@ -164,9 +163,6 @@ span.content-type {
 .nav-header {
   line-height: 1.4;
 }
-.lowercase {
-  text-transform: lowercase;
-}
 
 .nav > li > a.inline-link {
   display: inline;
@@ -179,7 +175,6 @@ span.content-type {
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 #sidebar-nav li {
-  line-height: 20px;
   padding: 1px 0;
 }
 #sidebar-nav {
@@ -187,7 +182,7 @@ span.content-type {
   .nav-header .label {
     margin-left: 12px;
   }
-  .nav-list.account {
+  ul.account {
     li.nav-header {
       margin-bottom: 0;
     }
@@ -198,7 +193,7 @@ span.content-type {
       padding-bottom: 3px;
     }
     li.account-profile > a {
-        display: inline-block;
+      display: inline-block;
     }
   }
 }
