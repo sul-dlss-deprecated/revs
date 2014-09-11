@@ -23,7 +23,7 @@ $(document).ready(function(){
     </div>
   </div>
   <div class="span4">
-    <h4 class="show-document-title"><%= document.title.html_safe %></h4>
+    <h4 class="show-document-title"><%= fix_revs_institute_name(document.title.html_safe) %></h4>
     <%= render :partial => "show_default_collection", :locals => {:document => @document} %>
   </div>
 </div>

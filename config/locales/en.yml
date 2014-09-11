@@ -200,6 +200,7 @@ en:
       new_account: 'Sign up for a user account'
       subscribe: 'Subscribe to the'
       mailing_list: 'mailing list'
+      sign_up_message_html: 'Welcome!  Signing up for a free account will allow you to create your own profile page, galleries, save favorites, annotate items and more.  Note that it will <strong>not</strong> let you download full resolution images, although you can always see detail in images using the zoom view.  For more information, read the <a href="/about/faq">FAQ</a>.'
       stanford_webauth: 'Stanford users must use webauth via SunetID to access their accounts.'
       stanford_webauth_logout: "You have successfully logged out of WebAuth."
       stanford_warning: 'Stanford users need to login via webauth with their SunetID to access their account.  You cannot reset your SunetID password here.'

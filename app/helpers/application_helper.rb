@@ -74,6 +74,10 @@ module ApplicationHelper
     return result
   end
 
+  def fix_revs_institute_name(title)
+    title.gsub('of the Revs Institute','of The Revs Institute')
+  end
+  
   def show_linked_value(val,opts={})
     value = (opts[:simple_format].blank? ? val : simple_format(val))
     if opts[:facet].blank?
