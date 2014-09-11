@@ -98,18 +98,3 @@
     font-weight: 500;
   }
 }
-
-@mixin default-button {
-  .btn.btn-default {
-    color: #333333;
-    background-color: #FFFFFF;
-    background-image: linear-gradient(to bottom, #FFFFFF, #E0E0E0);
-    border-color: #CCCCCC #CCCCCC #CCCCCC;
-  }
-  .btn.btn-default:hover {
-    color: #333333;
-    background-color: #E0E0E0;
-    background-image: linear-gradient(to bottom, #E0E0E0, #E0E0E0);
-    border-color: #CCCCCC #CCCCCC #CCCCCC;
-  }
-}
