@@ -1,4 +1,4 @@
-<div id="content" class="col-md-9">
+<div id="content" class="col-sm-9">
 
   <h2><%= t('revs.user.change_email_or_password') %></h2>
 
@@ -6,9 +6,9 @@
     <%= devise_error_messages! %>
 
     <div class="form-group">
-      <%= f.label :email, t('revs.user.email_address'), :class => 'control-label' %>
-      <div class="controls">
-        <%= f.email_field :email, :size=>"80", :class=>'user-login-email', :id=>'register-email' %>
+      <%= f.label :email, t('revs.user.email_address'), :class => 'control-label col-xs-12 col-sm-4 col-md-3' %>
+      <div class="col-xs-8 col-sm-6 col-md-5">
+        <%= f.email_field :email, :size=>"80", :class=>'user-login-email form-control', :id=>'register-email' %>
         <p id="duplicate-email-warning" class="hidden text-info">
           <%= t('revs.user.email_address_already_registered') %>.
         </p>
@@ -21,9 +21,9 @@
     <% end %>
 
     <div class="form-group">
-      <%= f.label :new_password, :class => 'control-label' %>
-      <div class="controls">
-        <%= f.password_field :password, :autocomplete => "off" %>
+      <%= f.label :new_password, :class => 'control-label col-xs-12 col-sm-4 col-md-3' %>
+      <div class="col-xs-8 col-sm-6 col-md-5">
+        <%= f.password_field :password, :autocomplete => "off", :class => "form-control" %>
         <span class="help-block first">
           <small>
             <%= t('revs.user.leave_blank') %>.
@@ -33,16 +33,16 @@
     </div>
 
     <div class="form-group">
-      <%= f.label :confirm_new_password, :class => 'control-label' %>
-      <div class="controls">
-        <%= f.password_field :password_confirmation %>
+      <%= f.label :confirm_new_password, :class => 'control-label col-xs-12 col-sm-4 col-md-3' %>
+      <div class="col-xs-8 col-sm-6 col-md-5">
+        <%= f.password_field :password_confirmation, :class => "form-control" %>
       </div>
     </div>
 
     <div class="form-group">
-      <%= f.label :current_password, :class => 'control-label' %>
-        <div class="controls">
-          <%= f.password_field :current_password %>
+      <%= f.label :current_password, :class => 'control-label col-xs-12 col-sm-4 col-md-3' %>
+        <div class="col-xs-8 col-sm-6 col-md-5">
+          <%= f.password_field :current_password, :class => "form-control" %>
           <span class="help-block first">
             <small>
               <%= t('revs.user.need_password') %>.
@@ -52,7 +52,7 @@
     </div>
 
     <div class="form-group">
-      <div class="controls">
+      <div class="col-sm-offset-4 col-sm-6 col-md-offset-3">
         <%= f.submit t('revs.nav.update'),  :id=>'submit', :class => "btn btn-default" %>
       </div>
     </div>
