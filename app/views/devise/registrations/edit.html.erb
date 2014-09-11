@@ -6,7 +6,7 @@
     <%= devise_error_messages! %>
 
     <% if resource.sunet_user? %>
-      <div class="control-group">
+      <div class="form-group">
       <%= render :partial=>'shared/stanford_default_username_warning',:locals=>{:warn_user=>resource, :on_view_profile=>false} %>
         <%= f.label :sunet, 'SUNET',:class => 'control-label' %>
         <div class="controls">
@@ -15,7 +15,7 @@
        </div>
       <% end %>
 
-    <div class="control-group">
+    <div class="form-group">
       <%= f.label :username, :class => 'control-label' %>
       <div class="controls">
         <%= f.text_field :username, :size=>"80",:id=>'register-username' %>
@@ -33,21 +33,21 @@
       </div>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
       <%= f.label :first_name, :class => 'control-label' %>
       <div class="controls">
         <%= f.text_field :first_name, :size=>"80" %>
       </div>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
       <%= f.label :last_name, :class => 'control-label' %>
       <div class="controls">
         <%= f.text_field :last_name, :size=>"80" %>
       </div>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
       <%= f.label :twitter, t('revs.user.twitter_account'), :class => 'control-label' %>
       <div class="controls">
         <div class="input-prepend">
@@ -57,7 +57,7 @@
       </div>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
       <%= f.label :url, t('revs.user.website_url'), :class => 'control-label' %>
       <div class="controls">
         <div class="input-prepend">
@@ -67,19 +67,19 @@
       </div>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
       <%= f.label :bio, t('revs.user.biography'), :class => 'control-label' %>
       <div class="controls">
         <%= f.text_area :bio, :rows => "5", :class => "input-xlarge" %>
       </div>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
       <%= f.label :avatar, t('revs.user.avatar'), :class => 'control-label' %>
       <div class="controls avatar">
         <% if current_user.avatar.url != current_user.avatar.default_url %>
           <%= image_tag(current_user.avatar.url(:thumb)) %>
-          <%= f.label :remove_avatar, :class=> "checkbox inline" do %>
+          <%= f.label :remove_avatar, :class=> "checkbox-inline" do %>
             <%= f.check_box :remove_avatar %> <%= t('revs.user.remove_avatar') %>
           <% end %>
         <% else %>
@@ -90,7 +90,7 @@
       </div>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
       <%= f.label :favorites_public, t('revs.user.my_favorites'), :class => 'control-label' %>
       <div class="controls">
         <label class="radio">
@@ -103,7 +103,7 @@
       </div>
     </div>
     
-    <div class="control-group">
+    <div class="form-group">
       <%= f.label :public, t('revs.user.my_profile_page'), :class => 'control-label' %>
       <div class="controls">
         <label class="radio">
@@ -134,9 +134,9 @@
       <div><%= t('revs.user.waiting_confirmation') %>: <%= resource.unconfirmed_email %></div>
     <% end %>
 
-    <div class="control-group">
+    <div class="form-group">
       <div class="controls">
-        <%= f.submit t('revs.nav.update'), :id=>'submit', :class => "btn" %>
+        <%= f.submit t('revs.nav.update'), :id=>'submit', :class => "btn btn-default" %>
       </div>
     </div>
 

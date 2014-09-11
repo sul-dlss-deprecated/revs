@@ -12,7 +12,7 @@
       :id => 'new_user', :class => 'form-horizontal') do %>
     <%= devise_error_messages! %>
 
-    <div class="control-group">
+    <div class="form-group">
       <label class="control-label" for="user_email"><%= t('revs.authentication.email') %></label>
       <div class="controls">
         <%= email_field_tag 'user[email]', @email, :autofocus => true, :tabindex => "1",
@@ -29,7 +29,7 @@
       </div>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
       <label class="control-label" for="user_username"><%= t('revs.authentication.username') %></label>
       <div class="controls">
         <%= text_field_tag 'user[username]', @username, :tabindex => "2",
@@ -43,7 +43,7 @@
       </div>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
       <label class="control-label" for="user_password"><%= t('revs.authentication.password') %></label>
       <div class="controls">
         <%= password_field_tag 'user[password]', @password, :tabindex => "3",
@@ -51,7 +51,7 @@
       </div>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
       <label class="control-label" for="user_password_confirmation"><%= t('revs.authentication.password_confirmation') %></label>
       <div class="controls">
         <%= password_field_tag 'user[password_confirmation]', @password_confirmation, :tabindex => "4",
@@ -59,9 +59,9 @@
       </div>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
       <div class="controls ">
-        <%= submit_tag "#{t('revs.authentication.sign_up')}", :tabindex => "5", :class => 'btn signup' %>
+        <%= submit_tag "#{t('revs.authentication.sign_up')}", :tabindex => "5", :class => 'btn btn-default signup' %>
         <div class="subscribe">
           <label class="checkbox" tabindex="6">
             <%= check_box 'user', 'subscribe_to_mailing_list' %>

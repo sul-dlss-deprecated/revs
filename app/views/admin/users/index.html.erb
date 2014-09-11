@@ -13,7 +13,7 @@
     <fieldset>
       <legend><%= t('revs.admin.find_users')%></legend>
 
-      <div class="control-group">
+      <div class="form-group">
         <label for="search" class="control-label">
           <%=t('revs.admin.search_by_email')%>
         </label>
@@ -22,7 +22,7 @@
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <label for="filter" class="control-label">
           <%= t('revs.admin.filter_type') %>
         </label>
@@ -31,7 +31,7 @@
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <label for="filter_role" class="control-label">
           <%= t('revs.admin.filter_role') %>
         </label>
@@ -40,7 +40,7 @@
         </div>
       </div>
 
-      <div class="control-group">
+      <div class="form-group">
         <label for="filter_visibility" class="control-label">
           <%= t('revs.admin.filter_visibility') %>
         </label>
@@ -51,9 +51,9 @@
 
       <%= render :partial=>'shared/per_page_dropdown' %>
 
-      <div class="control-group">
+      <div class="form-group">
         <div class="controls">
-          <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-medium' %>
+          <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-default btn-medium' %>
         </div>
       </div>
     </fieldset>
@@ -64,7 +64,7 @@
     <fieldset>
       <legend><%= t('revs.admin.update_users')%></legend>
 
-        <div class="control-group">
+        <div class="form-group">
           <label for="role" class="control-label">
             <%=t('revs.admin.set_checked_users')%>
           </label>
@@ -73,9 +73,9 @@
             <!--<input type="checkbox" name="select-all" id="admin-select-all-users"> --> <%#=t('revs.nav.select_all')%>
           </div>
         </div>
-        <div class="control-group">
+        <div class="form-group">
           <div class="controls">
-            <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-medium' %>
+            <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-default btn-medium' %>
           </div>
         </div>
 

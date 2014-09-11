@@ -9,6 +9,6 @@
    <% if user_signed_in? %>
      <br /><%= f.check_box :notify_me %> <%= t('revs.flags.notify_me')%>
    <% end %>
-   <%= f.submit t('revs.flags.flag'), :class => "flag-button btn btn-small" %>
+   <%= f.submit t('revs.flags.flag'), :class => "flag-button btn btn-default btn-small" %>
  <% end %>
 <% end %>

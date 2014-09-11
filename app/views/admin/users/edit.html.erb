@@ -24,7 +24,7 @@
 
     <%= validation_errors(@user) %>
 
-    <div class="control-group">
+    <div class="form-group">
       <div class="controls">
         <strong><%=t('revs.admin.last_sign_in')%>:</strong> <%=@user.last_sign_in_at.blank? ? t('revs.messages.never') : show_as_datetime(@user.last_sign_in_at.in_time_zone)%> |
         <strong><%=t('revs.admin.num_logins')%>:</strong> <%=@user.login_count %>
@@ -32,7 +32,7 @@
       </div>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
       <%= f.label :email, t('revs.authentication.email'), :class => 'control-label' %>
       <div class="controls">
 			  <% if @user.sunet_user? %>
@@ -43,7 +43,7 @@
       </div>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
       <%= f.label :username, :class => 'control-label' %>
       <div class="controls">
         <%= f.text_field :username, :size=>"80" %>
@@ -60,21 +60,21 @@
       </div>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
       <%= f.label :first_name, :class => 'control-label' %>
       <div class="controls">
         <%= f.text_field :first_name, :size=>"80" %>
       </div>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
       <%= f.label :last_name, :class => 'control-label' %>
       <div class="controls">
         <%= f.text_field :last_name, :size=>"80" %>
       </div>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
       <%= f.label :public, t('revs.authentication.profile_page_is'), :class => 'control-label' %>
       <div class="controls">
         <label class="radio">
@@ -98,7 +98,7 @@
       </div>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
       <%= f.label :url, t('revs.user.website_url'), :class => 'control-label' %>
       <div class="controls">
         <div class="input-prepend">
@@ -108,7 +108,7 @@
       </div>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
       <%= f.label :bio, t('revs.user.biography'), :class => 'control-label' %>
       <div class="controls">
         <%= f.text_area :bio, :rows => "5", :class => "input-xxlarge" %>
@@ -116,7 +116,7 @@
     </div>
 
     <% unless current_user==@user%>
-      <div class="control-group">
+      <div class="form-group">
         <%= f.label :role, :class => 'control-label' %>
         <div class="controls">
           <%= f.select :role, User.roles, {}, :class => "col-md-2" %>
@@ -124,7 +124,7 @@
       </div>
 			
 			<% unless @user.sunet_user? %>
-	      <div class="control-group">
+	      <div class="form-group">
 	        <%= f.label :password, :class => 'control-label' %>
 	        <div class="controls">
 	          <%= f.password_field :password, :autocomplete => "off" %>
@@ -136,17 +136,17 @@
 	        </div>
 	      </div>
 
-	      <div class="control-group">
+	      <div class="form-group">
 	        <%= f.label :password_confirmation, :class => 'control-label' %>
 	        <div class="controls">
 	          <%= f.password_field :password_confirmation %>
 	        </div>
 	      </div>
 
-	      <div class="control-group">
+	      <div class="form-group">
 	        <div class="controls">
 	          <%= check_box_tag :lock, true, !@user.locked_at.blank? %>
-	          <%= f.label :lock, t('revs.authentication.lock_account'), :class => "checkbox inline" %>
+	          <%= f.label :lock, t('revs.authentication.lock_account'), :class => "checkbox-inline" %>
 	          <span class="help-block first">
 	            <small>
 	              <%= t('revs.authentication.account_locked') %>
@@ -158,7 +158,7 @@
     <% end %>
 
     <% unless current_user==@user%>
-      <div class="control-group">
+      <div class="form-group">
          <%= f.label :public, t('revs.user.account_is'), :class => 'control-label' %>
          <div class="controls">
            <label class="radio">
@@ -178,9 +178,9 @@
        </div>
     <% end %>
     
-    <div class="control-group">
+    <div class="form-group">
       <div class="controls">
-        <%= f.submit t('revs.nav.update'), :class => "btn" %>
+        <%= f.submit t('revs.nav.update'), :class => "btn btn-default" %>
       </div>
     </div>
 

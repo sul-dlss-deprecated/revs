@@ -6,7 +6,7 @@
       :html => { :method => :post, :class => 'form-horizontal' }) do |f| %>
     <%= devise_error_messages! %>
 
-    <div class="control-group">
+    <div class="form-group">
       <label class="control-label" for="user_login"><%= t('revs.authentication.login') %></label>
       <div class="controls">
         <%= f.text_field :login, :autofocus => true, :class=>'user-login-email',
@@ -17,9 +17,9 @@
       </div>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
       <div class="controls">
-        <%= f.submit t('revs.user.resend_confirmation'), :id=>'submit', :class => "btn" %>
+        <%= f.submit t('revs.user.resend_confirmation'), :id=>'submit', :class => "btn btn-default" %>
      </div>
     </div>
 

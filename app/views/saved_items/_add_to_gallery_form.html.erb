@@ -3,7 +3,7 @@
     <%= f.hidden_field :druid, :value=>@document.id %>
     <%= f.hidden_field :gallery_type, :value=>'user' %>
     <%= f.select :gallery_id,options_from_collection_for_select(current_user.galleries(current_user).order(:title), :id, :title,session[:default_gallery_id]), :include_blank => t('revs.user_galleries.new_gallery') %>
-    <%= f.submit t('revs.user_galleries.add'), :class => "gallery-button btn btn-small" %>
+    <%= f.submit t('revs.user_galleries.add'), :class => "gallery-button btn btn-default btn-small" %>
   <% end %>
 
   <% if @document.in_galleries(current_user).size > 0 %>

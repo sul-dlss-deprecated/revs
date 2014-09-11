@@ -5,7 +5,7 @@
   <%= form_for(resource, :as => resource_name, :url => update_user_account_path, :html => { :method => :put, :class => "form-horizontal" }) do |f| %>
     <%= devise_error_messages! %>
 
-    <div class="control-group">
+    <div class="form-group">
       <%= f.label :email, t('revs.user.email_address'), :class => 'control-label' %>
       <div class="controls">
         <%= f.email_field :email, :size=>"80", :class=>'user-login-email', :id=>'register-email' %>
@@ -20,7 +20,7 @@
       <div><%= t('revs.user.waiting_confirmation') %>: <%= resource.unconfirmed_email %></div>
     <% end %>
 
-    <div class="control-group">
+    <div class="form-group">
       <%= f.label :new_password, :class => 'control-label' %>
       <div class="controls">
         <%= f.password_field :password, :autocomplete => "off" %>
@@ -32,14 +32,14 @@
       </div>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
       <%= f.label :confirm_new_password, :class => 'control-label' %>
       <div class="controls">
         <%= f.password_field :password_confirmation %>
       </div>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
       <%= f.label :current_password, :class => 'control-label' %>
         <div class="controls">
           <%= f.password_field :current_password %>
@@ -51,9 +51,9 @@
         </div>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
       <div class="controls">
-        <%= f.submit t('revs.nav.update'),  :id=>'submit', :class => "btn" %>
+        <%= f.submit t('revs.nav.update'),  :id=>'submit', :class => "btn btn-default" %>
       </div>
     </div>
 

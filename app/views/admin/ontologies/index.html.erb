@@ -19,7 +19,7 @@
         <p><%=t('revs.admin.terms')%>:</p>
 
         <%= form_tag update_terms_admin_ontologies_path(@field), :method=>:post, :class => 'form-horizontal' do %>
-          <p><%= submit_tag t('revs.nav.update'), :class => 'btn btn-small' %></p>
+          <p><%= submit_tag t('revs.nav.update'), :class => 'btn btn-default btn-small' %></p>
           <%= text_area_tag "terms", @terms, :rows=>30, :cols=>60,:style=>'width:500px;' %>
         <% end %>
       </div>
@@ -35,7 +35,7 @@
     <p>
       <%= t('revs.admin.new_field') %>:
       <%= text_field_tag :field %>
-      <%= submit_tag t('revs.nav.create'), :class => 'btn btn-small' %>
+      <%= submit_tag t('revs.nav.create'), :class => 'btn btn-default btn-small' %>
     </p>
   <% end %>
 

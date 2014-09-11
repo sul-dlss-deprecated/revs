@@ -18,7 +18,7 @@
   <% if @manage && can?(:update,saved_items.first) %>
     <div class="col-md-9 manage-list-items">
       <%= form_tag(manage_saved_items_path, method: 'post', class:'form-inline autosubmit', id:'manage-item-form') %>
-        <label class="checkbox inline">
+        <label class="checkbox-inline">
           <input type="checkbox" name="select-all" id="saved_items-select-all">
           <%=t('revs.nav.select_all')%>
         </label>
@@ -29,7 +29,7 @@
         <% if can? :destroy, saved_items.first %>
           <%= submit_tag t('revs.user_galleries.remove'),
             :id=>'delete-button',
-            :class => 'btn btn-small',
+            :class => 'btn btn-default btn-small',
             :disable_with => t('revs.nav.please_wait'),
             :show_loading_indicator=>"true",
             :name=>:delete,

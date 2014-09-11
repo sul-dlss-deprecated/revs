@@ -5,7 +5,7 @@
       <%= annotation.user == current_user ? t('en.flags.you') : annotation.user.to_s %> <%=t('en.flags.on')%> <%= show_as_date(annotation.updated_at) %>
       <blockquote><%= annotation.text%></blockquote>
 		  <% if can? :destroy, annotation%>
-		    <%= button_to 'Remove',annotation_path(annotation.id), :method=>:delete,:remote=>true, :confirm=>t('revs.annotations.are_you_sure'), :class => "btn btn-mini btn-danger" %>
+		    <%= button_to 'Remove',annotation_path(annotation.id), :method=>:delete,:remote=>true, :confirm=>t('revs.annotations.are_you_sure'), :class => "btn btn-default btn-mini btn-danger" %>
 		  <% end %>			
     </div>
 	<% end %>

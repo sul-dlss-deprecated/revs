@@ -7,9 +7,9 @@
     <span class="object-count muted">(<%= Gallery.where(:gallery_type=>'user').count %> <%=t('revs.messages.total')%>, <%=Gallery.where(:gallery_type=>'user',:visibility=>'private').count%> <%=t('revs.user_galleries.private').downcase%>)</span>
   </h3>
 
-  <%= form_tag galleries_table_curator_tasks_path, :method=>:get, :class => 'form-search' do %>
+  <%= form_tag galleries_table_curator_tasks_path, :method=>:get, :class => 'form-inline' do %>
     <%= select_tag 'filter',options_for_select(@visibility_options,@filter),class:"col-md-2"%>
-    <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-small' %>
+    <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-default btn-small' %>
   <% end %>
 
   <div class="row results-controls">
