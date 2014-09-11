@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140804185645) do
+ActiveRecord::Schema.define(:version => 20140827225903) do
 
   create_table "annotations", :force => true do |t|
     t.integer  "user_id"
@@ -26,13 +26,16 @@ ActiveRecord::Schema.define(:version => 20140804185645) do
   add_index "annotations", ["user_id"], :name => "index_annotations_on_user_id"
 
   create_table "bookmarks", :force => true do |t|
-    t.integer  "user_id",     :null => false
+    t.integer  "user_id",       :null => false
     t.string   "document_id"
     t.string   "title"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.string   "user_type"
+    t.string   "document_type"
   end
+
+  add_index "bookmarks", ["user_id"], :name => "index_bookmarks_on_user_id"
 
   create_table "change_logs", :force => true do |t|
     t.integer  "user_id",    :null => false

@@ -28,8 +28,8 @@ describe("Search Pages",:type=>:request,:integration=>true) do
     visit search_path(:q=>'photo')
     page.should have_content('Results')
     page.should have_content('1 - 2 of 2')
-    page.should have_content('The David Nadig Collection of the Revs Institute')
-    page.should have_content('The John Dugdale Collection of the Revs Institute')
+    page.should have_content('The David Nadig Collection of The Revs Institute')
+    page.should have_content('The John Dugdale Collection of The Revs Institute')
   end
   
   it "should show a facet search result for 1955" do

@@ -19,8 +19,9 @@ Revs::Application.routes.draw do
     match "users/webauth_logout" => "sessions#webauth_logout", :as => "webauth_logout", :via=>:delete
   end
     
-  # version page
+  # version and faq pages
   match 'version', :to=>'about#show', :defaults => {:id=>'version'}, :as => 'version'
+  match 'faq', :to=>'about#show', :defaults => {:id=>'faq'}, :as => 'faq'
   
   match 'search', :to=> 'catalog#index', :as=>'search'
   
