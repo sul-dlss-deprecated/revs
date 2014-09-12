@@ -1,4 +1,4 @@
-<div id="content" class="col-md-9">
+<div id="content" class="col-sm-9">
 
   <h2><%= t('revs.authentication.new_account') %></h2>
 
@@ -13,10 +13,10 @@
     <%= devise_error_messages! %>
 
     <div class="form-group">
-      <label class="control-label" for="user_email"><%= t('revs.authentication.email') %></label>
-      <div class="controls">
-        <%= email_field_tag 'user[email]', @email, :autofocus => true, :tabindex => "1",
-            :class=>'user-login-email', :id=>'register-email',
+      <label class="control-label col-xs-12 col-sm-4 col-md-3" for="user_email"><%= t('revs.authentication.email') %></label>
+      <div class="col-xs-8 col-sm-6 col-md-5">
+        <%= email_field_tag 'user[email]', @email, :autofocus => true,
+            :class=>'user-login-email form-control', :id=>'register-email',
             :"data-trigger"=>"manual", :placeholder => t('revs.user.your_email') %>
         <p id="duplicate-email-warning" class="hidden text-info">
           <%= t('revs.user.email_address_already_registered') %>.
@@ -30,10 +30,10 @@
     </div>
 
     <div class="form-group">
-      <label class="control-label" for="user_username"><%= t('revs.authentication.username') %></label>
-      <div class="controls">
-        <%= text_field_tag 'user[username]', @username, :tabindex => "2",
-            :class=>'user-login-email', :id=>'register-username',
+      <label class="control-label col-xs-12 col-sm-4 col-md-3" for="user_username"><%= t('revs.authentication.username') %></label>
+      <div class="col-xs-8 col-sm-6 col-md-5">
+        <%= text_field_tag 'user[username]', @username,
+            :class=>'user-login-email form-control', :id=>'register-username',
             :"data-trigger"=>"manual", :placeholder => t('revs.user.username_public_display') %>
         <p id="duplicate-username-warning" class="hidden text-info">
           <%= t('revs.user.username_taken') %>.
@@ -44,32 +44,34 @@
     </div>
 
     <div class="form-group">
-      <label class="control-label" for="user_password"><%= t('revs.authentication.password') %></label>
-      <div class="controls">
-        <%= password_field_tag 'user[password]', @password, :tabindex => "3",
-            :placeholder => t('revs.user.set_password') %>
+      <label class="control-label col-xs-12 col-sm-4 col-md-3" for="user_password"><%= t('revs.authentication.password') %></label>
+      <div class="col-xs-8 col-sm-6 col-md-5">
+        <%= password_field_tag 'user[password]', @password,
+            :placeholder => t('revs.user.set_password'), :class => "form-control" %>
       </div>
     </div>
 
     <div class="form-group">
-      <label class="control-label" for="user_password_confirmation"><%= t('revs.authentication.password_confirmation') %></label>
-      <div class="controls">
-        <%= password_field_tag 'user[password_confirmation]', @password_confirmation, :tabindex => "4",
-            :placeholder => t('revs.user.confirm_password') %>
+      <label class="control-label col-xs-12 col-sm-4 col-md-3" for="user_password_confirmation"><%= t('revs.authentication.password_confirmation') %></label>
+      <div class="col-xs-8 col-sm-6 col-md-5">
+        <%= password_field_tag 'user[password_confirmation]', @password_confirmation,
+            :placeholder => t('revs.user.confirm_password'), :class => "form-control" %>
       </div>
     </div>
 
     <div class="form-group">
-      <div class="controls ">
-        <%= submit_tag "#{t('revs.authentication.sign_up')}", :tabindex => "5", :class => 'btn btn-default signup' %>
-        <div class="subscribe">
-          <label class="checkbox" tabindex="6">
+      <div class="col-sm-offset-4 col-sm-9 col-md-offset-3">
+        <%= submit_tag "#{t('revs.authentication.sign_up')}", :class => 'btn btn-default signup' %>
+        <div class="checkbox subscribe">
+          <label class="checkbox">
             <%= check_box 'user', 'subscribe_to_mailing_list' %>
               <%= t('revs.authentication.subscribe') %>
               <%= link_to( t('revs.revs_program'), 'http://revs.stanford.edu/') %>
               <%= t('revs.authentication.mailing_list') %>
           </label>
-          <label class="checkbox" tabindex="7">
+        </div>
+        <div class="checkbox">
+          <label class="checkbox">
             <%= check_box 'user', 'subscribe_to_revs_mailing_list' %>
               <%= t('revs.authentication.subscribe') %>
               <%= link_to( t('revs.revs_institute'), 'http://www.revsinstitute.org/') %>

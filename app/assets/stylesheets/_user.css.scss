@@ -25,6 +25,9 @@
     display: block;
     margin-top: 12px;
   }
+  .checkbox + .checkbox {
+      padding-top: 0;
+  }
 }
 
 .blacklight-user {
