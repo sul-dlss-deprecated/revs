@@ -1,4 +1,4 @@
-<div id="content" class="col-md-9">
+<div id="content" class="col-sm-9">
 
   <h2><%= t('revs.user.update_your_profile') %></h2>
 
@@ -8,17 +8,19 @@
     <% if resource.sunet_user? %>
       <div class="form-group">
       <%= render :partial=>'shared/stanford_default_username_warning',:locals=>{:warn_user=>resource, :on_view_profile=>false} %>
-        <%= f.label :sunet, 'SUNET',:class => 'control-label' %>
-        <div class="controls">
+        <%= f.label :sunet, 'SUNET', :class => 'control-label col-xs-12 col-sm-4 col-md-3' %>
+        <div class="col-xs-8 col-sm-6 col-md-5">
           <%= resource.sunet %>
         </div>
        </div>
       <% end %>
 
     <div class="form-group">
-      <%= f.label :username, :class => 'control-label' %>
-      <div class="controls">
-        <%= f.text_field :username, :size=>"80",:id=>'register-username' %>
+      <%= f.label :username, :class => 'control-label col-xs-12 col-sm-4 col-md-3' %>
+      <div class="col-xs-8 col-sm-6 col-md-5">
+        <%= f.text_field :username, :size => "80",:id => 'register-username', :class => "form-control" %>
+      </div>
+      <div class="col-xs-8 col-sm-offset-4 col-sm-7 col-md-offset-3 col-md-8">
         <p id="duplicate-username-warning" class="hidden text-info"><%= t('revs.user.username_taken') %>.</p>
         <span class="help-block first">
           <small>
@@ -34,49 +36,49 @@
     </div>
 
     <div class="form-group">
-      <%= f.label :first_name, :class => 'control-label' %>
-      <div class="controls">
-        <%= f.text_field :first_name, :size=>"80" %>
+      <%= f.label :first_name, :class => 'control-label col-xs-12 col-sm-4 col-md-3' %>
+      <div class="col-xs-8 col-sm-6 col-md-5">
+        <%= f.text_field :first_name, :size=>"80", :class => "form-control" %>
       </div>
     </div>
 
     <div class="form-group">
-      <%= f.label :last_name, :class => 'control-label' %>
-      <div class="controls">
-        <%= f.text_field :last_name, :size=>"80" %>
+      <%= f.label :last_name, :class => 'control-label col-xs-12 col-sm-4 col-md-3' %>
+      <div class="col-xs-8 col-sm-6 col-md-5">
+        <%= f.text_field :last_name, :size=>"80", :class => "form-control" %>
       </div>
     </div>
 
     <div class="form-group">
-      <%= f.label :twitter, t('revs.user.twitter_account'), :class => 'control-label' %>
-      <div class="controls">
-        <div class="input-prepend">
-          <span class="add-on">@</span>
-          <%= f.text_field :twitter, :class => "input-large" %>
+      <%= f.label :twitter, t('revs.user.twitter_account'), :class => 'control-label col-xs-12 col-sm-4 col-md-3' %>
+      <div class="col-xs-8 col-sm-8 col-md-6">
+        <div class="input-group">
+          <span class="input-group-addon">@</span>
+          <%= f.text_field :twitter, :class => "input-large form-control" %>
         </div>
       </div>
     </div>
 
     <div class="form-group">
-      <%= f.label :url, t('revs.user.website_url'), :class => 'control-label' %>
-      <div class="controls">
-        <div class="input-prepend">
-          <span class="add-on">http://</span>
-          <%= f.text_field :url, :class => "input-xlarge" %>
+      <%= f.label :url, t('revs.user.website_url'), :class => 'control-label col-xs-12 col-sm-4 col-md-3' %>
+      <div class="col-xs-8 col-sm-8 col-md-8">
+        <div class="input-group">
+          <span class="input-group-addon">http://</span>
+          <%= f.text_field :url, :class => "input-xlarge form-control" %>
         </div>
       </div>
     </div>
 
     <div class="form-group">
-      <%= f.label :bio, t('revs.user.biography'), :class => 'control-label' %>
-      <div class="controls">
-        <%= f.text_area :bio, :rows => "5", :class => "input-xlarge" %>
+      <%= f.label :bio, t('revs.user.biography'), :class => 'control-label col-xs-12 col-sm-4 col-md-3' %>
+      <div class="col-xs-8 col-sm-8 col-md-9">
+        <%= f.text_area :bio, :rows => "5", :class => "input-xlarge form-control" %>
       </div>
     </div>
 
     <div class="form-group">
-      <%= f.label :avatar, t('revs.user.avatar'), :class => 'control-label' %>
-      <div class="controls avatar">
+      <%= f.label :avatar, t('revs.user.avatar'), :class => 'control-label col-xs-12 col-sm-4 col-md-3' %>
+      <div class="col-xs-8 col-sm-6 col-md-5 avatar">
         <% if current_user.avatar.url != current_user.avatar.default_url %>
           <%= image_tag(current_user.avatar.url(:thumb)) %>
           <%= f.label :remove_avatar, :class=> "checkbox-inline" do %>
@@ -91,42 +93,51 @@
     </div>
 
     <div class="form-group">
-      <%= f.label :favorites_public, t('revs.user.my_favorites'), :class => 'control-label' %>
-      <div class="controls">
-        <label class="radio">
-          <%= f.radio_button :favorites_public, true, :class => "radio" %>
-          <%= t('revs.user.public') %>
-        </label>
-        <label class="radio">
-          <%= f.radio_button :favorites_public, false, :class => "radio" %>
-          <%= t('revs.user.private') %>
+      <%= f.label :favorites_public, t('revs.user.my_favorites'), :class => 'control-label col-xs-12 col-sm-4 col-md-3' %>
+      <div class="col-xs-8 col-sm-6 col-md-5">
+        <div class="radio">
+          <label>
+            <%= f.radio_button :favorites_public, true %>
+            <%= t('revs.user.public') %>
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <%= f.radio_button :favorites_public, false %>
+            <%= t('revs.user.private') %>
+          </label>
+        </div>
       </div>
     </div>
     
     <div class="form-group">
-      <%= f.label :public, t('revs.user.my_profile_page'), :class => 'control-label' %>
-      <div class="controls">
-        <label class="radio">
-          <%= f.radio_button :public, true, :class => "radio" %>
-          <%= t('revs.user.public') %>
-        </label>
-        <label class="radio">
-          <%= f.radio_button :public, false, :class => "radio" %>
-          <%= t('revs.user.private') %>
-          <span class="inline-help-block">
+      <%= f.label :public, t('revs.user.my_profile_page'), :class => 'control-label col-xs-12 col-sm-4 col-md-3' %>
+      <div class="col-xs-8 col-sm-6 col-md-5">
+        <div class="radio">
+          <label>
+            <%= f.radio_button :public, true %>
+            <%= t('revs.user.public') %>
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <%= f.radio_button :public, false %>
+            <%= t('revs.user.private') %>
+            <span class="inline-help-block">
+              <small>
+                <%= link_to "(#{t('revs.user.preview')})", user_path(current_user.username) unless resource.public %>
+              </small>
+            </span>
+          </label>
+          <span class="help-block first">
             <small>
-              <%= link_to "(#{t('revs.user.preview')})", user_path(current_user.username) unless resource.public %>
+              <%= t('revs.user.profile_page_notice_html') %>
             </small>
+             <% if resource.sunet_user? && resource.username.include?(resource.sunet)%>
+                <small><strong><%= t('revs.user.username_stanford_note') %></strong></small>
+              <% end %>
           </span>
-        </label>
-        <span class="help-block first">
-          <small>
-            <%= t('revs.user.profile_page_notice_html') %>
-          </small>
-           <% if resource.sunet_user? && resource.username.include?(resource.sunet)%>
-              <small><strong><%= t('revs.user.username_stanford_note') %></strong></small>
-            <% end %>
-        </span>
+        </div>
       </div>
     </div>
 
@@ -135,7 +146,7 @@
     <% end %>
 
     <div class="form-group">
-      <div class="controls">
+      <div class="col-sm-offset-4 col-sm-6 col-md-offset-3">
         <%= f.submit t('revs.nav.update'), :id=>'submit', :class => "btn btn-default" %>
       </div>
     </div>
