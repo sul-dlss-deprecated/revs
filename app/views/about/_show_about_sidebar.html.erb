@@ -1,7 +1,7 @@
 <div id="sidebar" class="col-sm-3">
 	<div id="sidebar-nav">
-	  <ul class="nav nav-list">
-	    <li class="nav-header"><%=t('revs.about.word')%></li>
+	  <ul class="nav unstyled-list">
+	    <li class="nav-header text-uppercase"><%=t('revs.about.word')%></li>
 			<li><%= link_to t('revs.about.project_title'), about_pages_path(:id=>'project') %></li>
 			<li><%= link_to t('revs.about.project_team'), about_pages_path(:id=>'team') %></li>
 			<li><%= link_to t('revs.about.acknowledgements'), about_pages_path(:id=>'acknowledgements')%></li>
@@ -11,14 +11,14 @@
     <%# List of links to FAQ and other help pages %>
     <%= render "shared/help_links" %>
 
-	  <ul class="nav nav-list">
-	    <li class="nav-header"><%=t('revs.about.contact')%></li>
+	  <ul class="nav unstyled-list">
+	    <li class="nav-header text-uppercase"><%=t('revs.about.contact')%></li>
 			<li><%= link_to t('revs.about.contact_us'), contact_us_path %></li>
 			<li><%= link_to t('revs.about.use_policy'), about_pages_path(:id=>'terms_of_use') %></li>
 	  </ul>
 
-	  <ul class="nav nav-list">
-	    <li class="nav-header"><%=t('revs.about.related_sites')%></li>
+	  <ul class="nav unstyled-list">
+	    <li class="nav-header text-uppercase"><%=t('revs.about.related_sites')%></li>
 			<li><%= link_to t('revs.revs_institute'), 'http://www.revsinstitute.org' %></li>
 			<li><%= link_to t('revs.revs_program'), 'http://revs.stanford.edu/' %></li>
 	  </ul>
