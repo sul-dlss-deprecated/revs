@@ -294,6 +294,14 @@ select:focus {
   border-color: #CCCCCC #CCCCCC #CCCCCC;
 }
 
+form.report-problem {
+  margin-bottom: 30px;
+  p {
+    margin-top: 6px;
+    margin-bottom: 24px;
+    max-width: 85%;
+  }
+}
 // Error page styling
 .error-page {
   margin-left: 50px;
