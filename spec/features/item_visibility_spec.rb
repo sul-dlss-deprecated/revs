@@ -63,7 +63,7 @@ describe("Item Visibility",:type=>:request,:integration=>true) do
     login_as(user_login)
     should_deny_access(@hidden_druid_path)
     visit all_collections_path
-    page.should have_content("The David Nadig Collection of the Revs Institute (14 items)")
+    page.should have_content("The David Nadig Collection of The Revs Institute (14 items)")
     visit @nadig_collection_path
     page.should have_content("14 items")
   end
@@ -76,7 +76,7 @@ describe("Item Visibility",:type=>:request,:integration=>true) do
       page.should have_content("Bryar 250 Trans-American:10")
       page.should have_content("Hidden")
       visit all_collections_path
-      page.should have_content("The David Nadig Collection of the Revs Institute (15 items)")
+      page.should have_content("The David Nadig Collection of The Revs Institute (15 items)")
       visit @nadig_collection_path
       page.should have_content("15 items")
       logout

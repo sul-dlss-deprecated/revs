@@ -29,11 +29,11 @@ class RevsMailer < ActionMailer::Base
   end
   
   def mailing_list_signup(opts={})
-    mail(:to=>"revs-program-join@lists.stanford.edu",:from=>opts[:from],:subject=>"Request to be added to Revs Mailing List",:body=>"Subscribe")
+    mail(:to=>"revs-program-join@lists.stanford.edu",:from=>opts[:from],:subject=>"Request to be added to the Revs Program Mailing List",:body=>"Subscribe")
   end
 
   def revs_institute_mailing_list_signup(opts={})
-    mail(:to=>"news@revsinstitute.org",:from=>opts[:from],:subject=>"Request to be added to Revs Institute Mailing List from Revs Digital Library",:body=>"User at #{opts[:from]} wishes to subscribe to the Revs Institute Mailing List")
+    mail(:to=>"news@revsinstitute.org",:from=>opts[:from],:subject=>"Request to be added to The Revs Institute Mailing List from Revs Digital Library",:body=>"User at #{opts[:from]} wishes to subscribe to The Revs Institute Mailing List")
   end
   
 end

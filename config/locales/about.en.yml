@@ -33,13 +33,13 @@ en:
         <p class="faq-question">
           I would like to reuse images on my own website, in a publication, for research or for commercial purposes. Can I do this?
         </p>
-        <p class="faq-answer">All of the content is currently under a full copyright from the Revs Institute and you should review their %{reuse_link}.  You can also review Stanford's %{terms_of_use_link}.
+        <p class="faq-answer">All of the content is currently under a full copyright from The Revs Institute for Automotive Research, Inc. and you should review their %{reuse_link}.  You can also review Stanford's %{terms_of_use_link}.
         </p>
         <p class="faq-question">
-          When I try and download a full size image, it asks me to login with a SUNET ID.  What is that and I can I get one?
+          When I try and download a full size image, it asks me to login with a SUNET ID and says I need be part of Stanford University.  What is that and can I get one?
         </p>
-        <p class="faq-answer">High resolution images are only available to members of the Stanford community through a prior agreement.  SUNET IDs are only available to authorized Stanford users and we cannot create one for you.  If you wish 
-          to obtain a high resolution image for any reason, please review %{reuse_link}.
+        <p class="faq-answer">High resolution images are only available to members of the Stanford community through a prior agreement.  SUNET IDs are only available to authorized Stanford users and we are not able to create one for you.  If you wish 
+          to obtain a high resolution image for any reason, please review %{reuse_link}.  Note that anyone can view high resolution versions of the images in the website by selecting "zoom" in the drop-down menu under any of the images.  You can then zoom in and out to view detail, but you will not be able to download the images to your computer.
         </p>
       terms_of_use_text_html: |
         Any of the content displayed on this site may be under copyright, and it is up to the user to comply with the content's specific copyright provisions. 
@@ -65,7 +65,7 @@ en:
         </p>
         <p>
         	%{revs_about_scanning_image}
-        	Working with <a href="http://pixelacuity.com/">Pixel Acuity</a>, the Revs Institute is digitizing their collection of images using specialized digital cameras.  Each slide, negative or print is cleaned and imaged at a high resolution.
+        	Working with <a href="http://pixelacuity.com/">Pixel Acuity</a>, The Revs Institute for Automotive Research, Inc. is digitizing their collection of images using specialized digital cameras.  Each slide, negative or print is cleaned and imaged at a high resolution.
           The images and associated metadata are collected and transferred to Stanford, where they are being accessioned into the 
           <a href="http://library.stanford.edu/projects/stanford-digital-repository">Stanford Digital Repository</a> (SDR).
         </p>
