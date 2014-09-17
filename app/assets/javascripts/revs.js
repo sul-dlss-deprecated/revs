@@ -360,7 +360,7 @@ function enable_autocomplete() {
           },
           search: function() {
             var term = extractLast( this.value );
-            if ( term.length < 2 || term.length > 10) {
+            if ( term.length < 2 || term.length > 30) {
               return false;
             }
           },
