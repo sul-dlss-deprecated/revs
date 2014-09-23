@@ -225,7 +225,7 @@ class SolrDocument
   ######################
   # provides the equivalent of an ActiveRecord has_many relationship with flags, annotations, edits, images and siblings, and helper methods to determine if its a user favorite and which specific user galleries it is in
   def flags
-    @flags ||= Flag.includes(:user).where(:druid=>id).where("users.active='t' OR users.active='1' OR flags.user_id IS null").order('flags.created_at desc')
+    @flags ||= Flag.joins(:user).where(:druid=>id).where("users.active='t' OR users.active='1' OR flags.user_id IS null").order('flags.created_at desc')
   end
 
   def saved_items
@@ -245,7 +245,7 @@ class SolrDocument
   end
 
   def edits
-    @edits ||= ChangeLog.includes(:user).where(:druid=>id,:operation=>'metadata update').where(:'users.active'=>true).order('change_logs.created_at desc')
+    @edits ||= ChangeLog.joins(:user).where(:druid=>id,:operation=>'metadata update').where(:'users.active'=>true).order('change_logs.created_at desc')
   end
   
   # Return a CollectionMembers object of all of the siblings of a collection member (including self)
@@ -382,7 +382,15 @@ class SolrDocument
   end
 
   def add_changelog(user)
-    ChangeLog.create(:druid=>id,:user_id=>user.id,:operation=>'metadata update',:note=>unsaved_edits.to_s) if (valid? && dirty? && user)  
+    if (valid? && dirty? && user)  
+      changelog=ChangeLog.new
+      changelog.druid=id
+      changelog.user_id=user.id
+      changelog.operation='metadata update'
+      changelog.note=unsaved_edits.to_s
+      changelog.save
+      changelog
+    end
   end
   
   # propogate unique information to database as well when saving solr document
@@ -390,6 +398,7 @@ class SolrDocument
     @item=Item.find(id)
     @item.visibility_value=visibility_value
     @item.save
+    @item
   end
   
    ##################################################################

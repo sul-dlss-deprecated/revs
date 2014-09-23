@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "rails_helper"
 
 describe("Beta Users Only",:type=>:request,:integration=>true) do
 

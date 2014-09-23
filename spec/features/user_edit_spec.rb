@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "rails_helper"
 
 describe("Editing of logged in users",:type=>:request,:integration=>true) do
 

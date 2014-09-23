@@ -1,4 +1,4 @@
-require "spec_helper"
+require "rails_helper"
 
 describe SolrDocument, :integration => true do
 
@@ -25,71 +25,71 @@ describe SolrDocument, :integration => true do
     end
     
     it "should catch invalid dates" do
-      expect(@doc.valid?).to be_true
+      expect(@doc.valid?).to be_truthy
       @doc.full_date = 'crap' # bad value
-      expect(@doc.dirty?).to be_true
-      expect(@doc.valid?).to be_false
-      expect(@doc.save).to be_false      
+      expect(@doc.dirty?).to be_truthy
+      expect(@doc.valid?).to be_falsey
+      expect(@doc.save).to be_falsey      
       @doc.full_date = '5/1/2001' # this is ok
-      expect(@doc.valid?).to be_true
+      expect(@doc.valid?).to be_truthy
       @doc.full_date = '' # blanks is ok
-      expect(@doc.valid?).to be_true      
+      expect(@doc.valid?).to be_truthy      
    end
 
    it "should catch invalid model years" do
-     expect(@doc.valid?).to be_true
+     expect(@doc.valid?).to be_truthy
      @doc.model_year = ['crap','1961'] # bad value
-     expect(@doc.dirty?).to be_true
-     expect(@doc.valid?).to be_false
-     expect(@doc.save).to be_false      
+     expect(@doc.dirty?).to be_truthy
+     expect(@doc.valid?).to be_falsey
+     expect(@doc.save).to be_falsey      
      @doc.model_year = '1810' # this is bad (before 1850)
-     expect(@doc.valid?).to be_false   
+     expect(@doc.valid?).to be_falsey   
      @doc.model_year = Date.today.year+1 # this is bad (future)
-     expect(@doc.valid?).to be_false  
+     expect(@doc.valid?).to be_falsey  
      @doc.model_year = 'crap' # this is bad
-     expect(@doc.valid?).to be_false
+     expect(@doc.valid?).to be_falsey
      @doc.model_year = '1999' # this is ok
-     expect(@doc.valid?).to be_true
+     expect(@doc.valid?).to be_truthy
      @doc.model_year = ['1959','1961'] # ok
-     expect(@doc.valid?).to be_true      
+     expect(@doc.valid?).to be_truthy      
      @doc.model_year_mvf = '1959|1961' # mvf ok
-     expect(@doc.valid?).to be_true
+     expect(@doc.valid?).to be_truthy
      @doc.model_year_mvf = 'abc|1961' # bad
-     expect(@doc.valid?).to be_false
+     expect(@doc.valid?).to be_falsey
      @doc.model_year_mvf = '1961' # ok
-     expect(@doc.valid?).to be_true
+     expect(@doc.valid?).to be_truthy
      @doc.model_year = '' # blanks is ok
-     expect(@doc.valid?).to be_true   
+     expect(@doc.valid?).to be_truthy   
      @doc.model_year_mvf = '' # blanks is ok
-     expect(@doc.valid?).to be_true        
+     expect(@doc.valid?).to be_truthy        
    end
    
     it "should catch invalid years" do
-      expect(@doc.valid?).to be_true
+      expect(@doc.valid?).to be_truthy
       @doc.years = ['crap','1961'] # bad value
-      expect(@doc.dirty?).to be_true
-      expect(@doc.valid?).to be_false
-      expect(@doc.save).to be_false   
+      expect(@doc.dirty?).to be_truthy
+      expect(@doc.valid?).to be_falsey
+      expect(@doc.save).to be_falsey   
       @doc.years = '1750' # this is bad (before 1800)
-      expect(@doc.valid?).to be_false   
+      expect(@doc.valid?).to be_falsey   
       @doc.years = Date.today.year+1 # this is bad (future)
-      expect(@doc.valid?).to be_false         
+      expect(@doc.valid?).to be_falsey         
       @doc.years = 'crap' # this is bad
-      expect(@doc.valid?).to be_false
+      expect(@doc.valid?).to be_falsey
       @doc.years = '1999' # this is ok
-      expect(@doc.valid?).to be_true
+      expect(@doc.valid?).to be_truthy
       @doc.years = ['1959','1961'] # ok
-      expect(@doc.valid?).to be_true      
+      expect(@doc.valid?).to be_truthy      
       @doc.years_mvf = '1959|1961' # mvf ok
-      expect(@doc.valid?).to be_true
+      expect(@doc.valid?).to be_truthy
       @doc.years_mvf = 'abc|1961' # bad
-      expect(@doc.valid?).to be_false
+      expect(@doc.valid?).to be_falsey
       @doc.years_mvf = '1961' # ok
-      expect(@doc.valid?).to be_true
+      expect(@doc.valid?).to be_truthy
       @doc.years = '' # blanks is ok
-      expect(@doc.valid?).to be_true   
+      expect(@doc.valid?).to be_truthy   
       @doc.years_mvf = '' # blanks is ok
-      expect(@doc.valid?).to be_true         
+      expect(@doc.valid?).to be_truthy         
    end
       
   end
@@ -120,7 +120,7 @@ describe SolrDocument, :integration => true do
       
       params_hash={:attribute=>@field_to_edit, :action=>'update', :new_value=>@new_value,:selected_druids=>@druids_to_edit}
       success=SolrDocument.bulk_update(params_hash,@user)
-      expect(success).to be_true
+      expect(success).to be_truthy
       
       # confirm new field has been updated in solr and has correct rows in editstore database
       @druids_to_edit.each do |druid|
@@ -158,7 +158,7 @@ describe SolrDocument, :integration => true do
 
       params_hash={:attribute=>@field_to_edit, :new_value=>@new_value, :search_value=>@search_value, :action=>'replace', :selected_druids=>@druids_to_edit}
       success=SolrDocument.bulk_update(params_hash,@user)
-      expect(success).to be_true
+      expect(success).to be_truthy
       
       # confirm new field has been updated in solr and has correct rows in editstore database for only the one record that matches
       doc=SolrDocument.find(@druid_that_should_change) # this druid should change
@@ -191,7 +191,7 @@ describe SolrDocument, :integration => true do
       
       params_hash={:attribute=>@field_to_edit, :action=>'remove', :selected_druids=>@druids_to_edit}
       success=SolrDocument.bulk_update(params_hash,@user)
-      expect(success).to be_true
+      expect(success).to be_truthy
       
       # confirm new field has been updated in solr and has correct rows in editstore database
       @druids_to_edit.each do |druid|
@@ -207,7 +207,7 @@ describe SolrDocument, :integration => true do
     end   
 
     it "should use editstore" do
-      expect(SolrDocument.use_editstore).to be_true
+      expect(SolrDocument.use_editstore).to be_truthy
     end
   
   end
@@ -361,24 +361,24 @@ describe SolrDocument, :integration => true do
         doc = SolrDocument.new({:id => "yt907db4998", :is_member_of_ssim => ["wn860zc7322"]})
         expect(doc.collection).not_to be_blank
         expect(doc.collection).to be_a SolrDocument
-        expect(doc.collection.is_collection?).to be_true
+        expect(doc.collection.is_collection?).to be_truthy
         expect(doc.collection[:id]).to eq("wn860zc7322")
       end
       
       it "should return an item's collection" do
         item=SolrDocument.find('yt907db4998')
-        expect(item.is_item?).to be_true
-        expect(item.is_collection?).to be_false
+        expect(item.is_item?).to be_truthy
+        expect(item.is_collection?).to be_falsey
         collection=item.collection
-        expect(collection.is_collection?).to be_true
-        expect(collection.is_item?).to be_false        
+        expect(collection.is_collection?).to be_truthy
+        expect(collection.is_item?).to be_falsey        
         expect(collection.id).to eq('wn860zc7322')  
       end
 
       it "should return a collection's items" do
         collection=SolrDocument.find('wn860zc7322')
         expect(collection.collection_members.size).to eq(2)
-        collection.collection_members.each {|item| expect(item.is_item?).to be_true}
+        collection.collection_members.each {|item| expect(item.is_item?).to be_truthy}
       end
       
     end
@@ -422,7 +422,7 @@ describe SolrDocument, :integration => true do
       it "shold return an array of collection SolrDocuments" do
         expect(SolrDocument.all_collections.length).to eq(2)
         SolrDocument.all_collections.each do |doc|
-          expect(doc.is_collection?).to be_true
+          expect(doc.is_collection?).to be_truthy
           expect(doc).to be_a SolrDocument
         end
       end

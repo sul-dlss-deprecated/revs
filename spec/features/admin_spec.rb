@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "rails_helper"
 
 describe("Admin Section",:type=>:request,:integration=>true) do
   

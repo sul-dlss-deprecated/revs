@@ -43,7 +43,7 @@ class RegistrationsController < Devise::RegistrationsController
         @user.errors.add(:base,t('revs.authentication.stanford_email_warning2'))
         successfully_updated = false      
     else
-      successfully_updated = @user.update_without_password(params[:user])      
+      successfully_updated = @user.update_without_password(user_params)      
     end
 
     if successfully_updated
@@ -67,7 +67,7 @@ class RegistrationsController < Devise::RegistrationsController
 
     @user = User.find(current_user.id)
 
-    successfully_updated = @user.update_with_password(params[:user])
+    successfully_updated = @user.update_with_password(user_params)
 
     if successfully_updated
       set_flash_message :notice, :updated
@@ -91,5 +91,13 @@ class RegistrationsController < Devise::RegistrationsController
     @user=User.where('email=?',params[:email])    
     @user=[] if user_signed_in? && @user && @user.first==current_user  # this means they are editing their email address and its themselves, that is ok
   end
-      
+
+  private
+  def user_params
+    params.require(:user).permit(:username, :email, :sunet, :password, :password_confirmation, :current_password, :remember_me,
+                  :role, :bio, :first_name, :last_name, :public, :url, :twitter, :login,
+                  :subscribe_to_mailing_list, :subscribe_to_revs_mailing_list, :active, 
+                  :avatar, :avatar_cache, :remove_avatar, :login_count, :favorites_public)
+  end
+        
 end

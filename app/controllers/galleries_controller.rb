@@ -40,7 +40,7 @@ class GalleriesController < ApplicationController
   end
   
   def create
-    @gallery=Gallery.create(params[:gallery])
+    @gallery=Gallery.create(gallery_params)
     @gallery.user_id=current_user.id
     @gallery.gallery_type=:user
     authorize! :create, @gallery
@@ -61,7 +61,7 @@ class GalleriesController < ApplicationController
   def update
    @gallery=Gallery.find(params[:id])
    authorize! :update, @gallery
-   @gallery.update_attributes(params[:gallery])  
+   @gallery.update_attributes(gallery_params)  
    if @gallery.valid?
      expire_fragment('home') if @gallery.featured # if this is a featured gallery, then clear the home page cache in case the user renamed the gallery...
      @message=t('revs.user_galleries.gallery_updated')
@@ -90,6 +90,12 @@ class GalleriesController < ApplicationController
                   }
       format.js { render }
     end
+  end
+  
+  private
+
+  def gallery_params
+    params.require(:gallery).permit(:user_id,:title,:description,:gallery_type,:views,:visibility)
   end
   
 end

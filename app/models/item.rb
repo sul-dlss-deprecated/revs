@@ -1,6 +1,6 @@
 class Item < WithSolrDocument
 
- attr_accessible :druid,:visibility_value,:solr_document
+ attr_accessor :solr_document
     
  has_many :annotations, :foreign_key=>:druid, :primary_key=>:druid
  has_many :flags, :foreign_key=>:druid, :primary_key=>:druid
@@ -20,7 +20,15 @@ class Item < WithSolrDocument
   # find by druid or create the row if it does not exist yet
   def self.find(druid)
     item=self.where(:druid=>druid).first
-    return (item ? item : Item.create(:druid=>druid,:visibility_value=> SolrDocument.visibility_mappings[:visible]))
+    return (item ? item : Item.create_new(:druid=>druid,:visibility_value=>SolrDocument.visibility_mappings[:visible]))
+  end
+  
+  def self.create_new(params)
+    item=Item.new
+    item.druid=params[:druid]
+    item.visibility_value=params[:visibility_value]
+    item.save
+    item
   end
    
 end

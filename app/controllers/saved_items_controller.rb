@@ -17,7 +17,12 @@ class SavedItemsController < ApplicationController
       druid=saved_item[:druid]
       
       if gallery_id.blank? # user is adding item to a new gallery, so create it
-        gallery=Gallery.create(:user_id=>user_id,:visibility=>:private,:gallery_type=>:user,:title=>"#{t('revs.user_galleries.singular').titlecase} #{t('revs.curator.created_on').downcase} #{show_as_datetime(Time.now.in_time_zone)}")
+        gallery=Gallery.new
+        gallery.user_id=user_id
+        gallery.visibility=:private
+        gallery.gallery_type=:user
+        gallery.title="#{t('revs.user_galleries.singular').titlecase} #{t('revs.curator.created_on').downcase} #{show_as_datetime(Time.now.in_time_zone)}"
+        gallery.save
         gallery_id=gallery.id
       end
       

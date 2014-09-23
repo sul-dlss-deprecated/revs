@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "rails_helper"
 
 describe("Metadata Editing",:type=>:request,:integration=>true) do
   

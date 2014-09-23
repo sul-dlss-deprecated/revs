@@ -1,6 +1,4 @@
 class ChangeLog < WithSolrDocument
-
-  attr_accessible :druid, :user_id, :operation, :note
   
   belongs_to :user
   belongs_to :item, :foreign_key=>:druid, :primary_key=>:druid

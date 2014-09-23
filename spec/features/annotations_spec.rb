@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "rails_helper"
 
 describe("Annotation of images",:type=>:request,:integration=>true) do
 
@@ -42,7 +42,7 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
     # create an annotation
     comment1='some comment'
     user_account=User.find_by_username(user_login)
-    annotation1=Annotation.create(:druid=>druid,:text=>comment1,:json=>'{a bunch of json would go here}',:user_id=>user_account.id)
+    annotation1=Annotation.create_new(:druid=>druid,:text=>comment1,:json=>'{a bunch of json would go here}',:user_id=>user_account.id)
 
     # confirm that solr has been updated
     item=SolrDocument.find(druid)
@@ -50,7 +50,7 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
     
     comment2='second comment'
     # create the second annotation
-    annotation2=Annotation.create(:druid=>druid,:text=>comment2,:json=>'{a bunch of json would go here}',:user_id=>user_account.id)
+    annotation2=Annotation.create_new(:druid=>druid,:text=>comment2,:json=>'{a bunch of json would go here}',:user_id=>user_account.id)
 
     # confirm that solr has been updated
     item=SolrDocument.find(druid)
@@ -79,7 +79,7 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
      # create an annotation
      comment='some comment'
      user_account=User.find_by_username(user_login)
-     annotation=Annotation.create(:druid=>druid,:text=>comment,:json=>'{a bunch of json would go here}',:user_id=>user_account.id)
+     annotation=Annotation.create_new(:druid=>druid,:text=>comment,:json=>'{a bunch of json would go here}',:user_id=>user_account.id)
 
      # confirm that solr has been updated
      item=SolrDocument.find(druid)
@@ -108,7 +108,7 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
     # create an annotation
      comment='The rain in spain falls mostly on the plain.'
      user_account=User.find_by_username(curator_login)
-     annotation=Annotation.create(:druid=>druid,:text=>comment,:json=>'{"src":"https://stacks.stanford.edu/image/yt907db4998/2011-023DUG-3.0_0017_thumb","shapes":[{"type":"rect","geometry":{"x":0.5223880597014925,"width":0.19651741293532343,"y":0.4075471698113208,"height":0.1132075471698113}}],"context":"http://127.0.0.1:3000/catalog/yt907db4998","editable":true,"username":"me","updated_at":"September 10, 2013","id":1045387672}',:user_id=>user_account.id) 
+     annotation=Annotation.create_new(:druid=>druid,:text=>comment,:json=>'{"src":"https://stacks.stanford.edu/image/yt907db4998/2011-023DUG-3.0_0017_thumb","shapes":[{"type":"rect","geometry":{"x":0.5223880597014925,"width":0.19651741293532343,"y":0.4075471698113208,"height":0.1132075471698113}}],"context":"http://127.0.0.1:3000/catalog/yt907db4998","editable":true,"username":"me","updated_at":"September 10, 2013","id":1045387672}',:user_id=>user_account.id) 
 
      # confirm that solr has been updated
      item=SolrDocument.find(druid)

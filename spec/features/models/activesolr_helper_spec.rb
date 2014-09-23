@@ -1,4 +1,4 @@
-require "spec_helper"
+require "rails_helper"
 
 describe ActivesolrHelper, :integration => true do
   
@@ -8,7 +8,7 @@ describe ActivesolrHelper, :integration => true do
       doc = SolrDocument.find('yt907db4998')
       expect(doc).to be_a SolrDocument
       expect(doc.title).to eq('Record 1')
-      expect(doc.is_item?).to be_true
+      expect(doc.is_item?).to be_truthy
     end
   
     it "should have the correct mvf field marker" do
@@ -16,29 +16,29 @@ describe ActivesolrHelper, :integration => true do
     end
   
     it "should indicate when values are equivalent, whether arrays of regardless of type or extra leading/trailing spaces" do
-      expect(SolrDocument.is_equal?(1,"1")).to be_true
-      expect(SolrDocument.is_equal?("1","1")).to be_true
-      expect(SolrDocument.is_equal?(["1"],"1")).to be_true
-      expect(SolrDocument.is_equal?(["1"],1)).to be_true
-      expect(SolrDocument.is_equal?(["abc"],"abc")).to be_true
-      expect(SolrDocument.is_equal?("abc",["abc"])).to be_true
-      expect(SolrDocument.is_equal?("abc",["abc","123"])).to be_false
-      expect(SolrDocument.is_equal?([123,"abc"],["abc","123"])).to be_true
-      expect(SolrDocument.is_equal?([123,"  abc"],["abc","123 "])).to be_true
+      expect(SolrDocument.is_equal?(1,"1")).to be_truthy
+      expect(SolrDocument.is_equal?("1","1")).to be_truthy
+      expect(SolrDocument.is_equal?(["1"],"1")).to be_truthy
+      expect(SolrDocument.is_equal?(["1"],1)).to be_truthy
+      expect(SolrDocument.is_equal?(["abc"],"abc")).to be_truthy
+      expect(SolrDocument.is_equal?("abc",["abc"])).to be_truthy
+      expect(SolrDocument.is_equal?("abc",["abc","123"])).to be_falsey
+      expect(SolrDocument.is_equal?([123,"abc"],["abc","123"])).to be_truthy
+      expect(SolrDocument.is_equal?([123,"  abc"],["abc","123 "])).to be_truthy
     end
 
     it "should indicate when multivalued field values are equivalent to the solr field array equivalents" do
-       expect(SolrDocument.is_equal?("1",1,true)).to be_true
-       expect(SolrDocument.is_equal?("1","1",true)).to be_true
-       expect(SolrDocument.is_equal?(1,"1",true)).to be_true
-       expect(SolrDocument.is_equal?([1],"1",true)).to be_true
-       expect(SolrDocument.is_equal?([1,2],"1 | 2",true)).to be_true
-       expect(SolrDocument.is_equal?(['1','2'],"1 | 2",true)).to be_true
-       expect(SolrDocument.is_equal?(['peter','paul','mary']," peter |  paul| mary",true)).to be_true
-       expect(SolrDocument.is_equal?(['peter','paul','mary'],"peter|paul|mary",true)).to be_true
-       expect(SolrDocument.is_equal?(['peter','paul','mary'],"peter|paul|mary",false)).to be_false # if we don't ask for a multivalued field comparison, this should fail
+       expect(SolrDocument.is_equal?("1",1,true)).to be_truthy
+       expect(SolrDocument.is_equal?("1","1",true)).to be_truthy
+       expect(SolrDocument.is_equal?(1,"1",true)).to be_truthy
+       expect(SolrDocument.is_equal?([1],"1",true)).to be_truthy
+       expect(SolrDocument.is_equal?([1,2],"1 | 2",true)).to be_truthy
+       expect(SolrDocument.is_equal?(['1','2'],"1 | 2",true)).to be_truthy
+       expect(SolrDocument.is_equal?(['peter','paul','mary']," peter |  paul| mary",true)).to be_truthy
+       expect(SolrDocument.is_equal?(['peter','paul','mary'],"peter|paul|mary",true)).to be_truthy
+       expect(SolrDocument.is_equal?(['peter','paul','mary'],"peter|paul|mary",false)).to be_falsey # if we don't ask for a multivalued field comparison, this should fail
 
-       expect(SolrDocument.is_equal?(['1','2'],["1 | 2"],true)).to be_false # an incoming array is not what you'd expect coming from a multivalued field
+       expect(SolrDocument.is_equal?(['1','2'],["1 | 2"],true)).to be_falsey # an incoming array is not what you'd expect coming from a multivalued field
 
      end
     
@@ -53,14 +53,14 @@ describe ActivesolrHelper, :integration => true do
     end
   
     it "should return if a value is blank, either an array of blank entries or a single blank value" do
-      expect(SolrDocument.blank_value?(nil)).to be_true
-      expect(SolrDocument.blank_value?([nil])).to be_true
-      expect(SolrDocument.blank_value?([''])).to be_true
-      expect(SolrDocument.blank_value?(['',''])).to be_true
-      expect(SolrDocument.blank_value?('a')).to be_false
-      expect(SolrDocument.blank_value?(['a'])).to be_false    
-      expect(SolrDocument.blank_value?(['a',''])).to be_false    
-      expect(SolrDocument.blank_value?(['a',nil])).to be_false    
+      expect(SolrDocument.blank_value?(nil)).to be_truthy
+      expect(SolrDocument.blank_value?([nil])).to be_truthy
+      expect(SolrDocument.blank_value?([''])).to be_truthy
+      expect(SolrDocument.blank_value?(['',''])).to be_truthy
+      expect(SolrDocument.blank_value?('a')).to be_falsey
+      expect(SolrDocument.blank_value?(['a'])).to be_falsey    
+      expect(SolrDocument.blank_value?(['a',''])).to be_falsey    
+      expect(SolrDocument.blank_value?(['a',nil])).to be_falsey    
     end
   
   end
@@ -182,7 +182,7 @@ describe ActivesolrHelper, :integration => true do
       
        # confirm we have a new change in the database
       last_edit=Editstore::Change.last
-      expect(editstore_entry(Editstore::Change.last,:field=>'title_tsi',:new_value=>new_value,:old_value=>old_value,:druid=>@druid,:operation=>'update',:state=>:ready)).to be_true
+      expect(editstore_entry(Editstore::Change.last,:field=>'title_tsi',:new_value=>new_value,:old_value=>old_value,:druid=>@druid,:operation=>'update',:state=>:ready)).to be_truthy
       expect(Editstore::Change.count).to eq(1)
       
     end
@@ -223,7 +223,7 @@ describe ActivesolrHelper, :integration => true do
       expect(reload_doc.title).to eq(new_value.strip)
       
        # confirm we have a new change in the database
-      expect(editstore_entry(Editstore::Change.last,:field=>'title_tsi',:new_value=>new_value.strip,:old_value=>old_value,:druid=>@druid,:operation=>'update',:state=>:ready)).to be_true
+      expect(editstore_entry(Editstore::Change.last,:field=>'title_tsi',:new_value=>new_value.strip,:old_value=>old_value,:druid=>@druid,:operation=>'update',:state=>:ready)).to be_truthy
       expect(Editstore::Change.count).to eq(1)
 
     end
@@ -242,7 +242,7 @@ describe ActivesolrHelper, :integration => true do
       expect(reload_doc.photographer).to eq(new_value)
       
        # confirm we have a new change in the database
-      expect(editstore_entry(Editstore::Change.last,:field=>'photographer_ssi',:new_value=>new_value,:old_value=>nil,:druid=>@druid,:operation=>'create',:state=>:ready)).to be_true
+      expect(editstore_entry(Editstore::Change.last,:field=>'photographer_ssi',:new_value=>new_value,:old_value=>nil,:druid=>@druid,:operation=>'create',:state=>:ready)).to be_truthy
       expect(Editstore::Change.count).to eq(1)
       
     end
@@ -260,7 +260,7 @@ describe ActivesolrHelper, :integration => true do
       expect(reload_doc.entrant).to eq("")
       
        # confirm we have a new change in the database
-      expect(editstore_entry(Editstore::Change.last,:field=>'entrant_ssim',:new_value=>'',:old_value=>nil,:druid=>@druid,:operation=>'delete',:state=>:ready)).to be_true
+      expect(editstore_entry(Editstore::Change.last,:field=>'entrant_ssim',:new_value=>'',:old_value=>nil,:druid=>@druid,:operation=>'delete',:state=>:ready)).to be_truthy
       expect(Editstore::Change.count).to eq(1)
       
     end
@@ -281,7 +281,7 @@ describe ActivesolrHelper, :integration => true do
       expect(reload_doc.vehicle_model).to eq("")
       
        # confirm we have a new change in the database
-      expect(editstore_entry(Editstore::Change.last,:field=>'model_ssim',:new_value=>'',:old_value=>nil,:druid=>@druid,:operation=>'delete',:state=>:ready)).to be_true
+      expect(editstore_entry(Editstore::Change.last,:field=>'model_ssim',:new_value=>'',:old_value=>nil,:druid=>@druid,:operation=>'delete',:state=>:ready)).to be_truthy
       expect(Editstore::Change.count).to eq(1)
       
     end
@@ -306,8 +306,8 @@ describe ActivesolrHelper, :integration => true do
       
        # confirm we have new changes in the database
       last_edits=Editstore::Change.all
-      expect(editstore_entry(last_edits[0],:field=>'marque_ssim',:new_value=>new_values_as_array[0],:old_value=>nil,:druid=>@druid,:operation=>'create',:state=>:ready)).to be_true
-      expect(editstore_entry(last_edits[1],:field=>'marque_ssim',:new_value=>new_values_as_array[1],:old_value=>nil,:druid=>@druid,:operation=>'create',:state=>:ready)).to be_true 
+      expect(editstore_entry(last_edits[0],:field=>'marque_ssim',:new_value=>new_values_as_array[0],:old_value=>nil,:druid=>@druid,:operation=>'create',:state=>:ready)).to be_truthy
+      expect(editstore_entry(last_edits[1],:field=>'marque_ssim',:new_value=>new_values_as_array[1],:old_value=>nil,:druid=>@druid,:operation=>'create',:state=>:ready)).to be_truthy 
       expect(Editstore::Change.count).to eq(2)
       
     end
@@ -316,7 +316,7 @@ describe ActivesolrHelper, :integration => true do
       
       expect(Editstore::Change.count).to eq(0)
       saved=@doc.save
-      expect(saved).to be_true
+      expect(saved).to be_truthy
       expect(Editstore::Change.count).to eq(0)
       
     end
@@ -327,7 +327,7 @@ describe ActivesolrHelper, :integration => true do
       @doc.title = @doc[:title_tsi]
       @doc.years_mvf = @doc[:pub_year_isim].join(" | ")
       saved=@doc.save
-      expect(saved).to be_true
+      expect(saved).to be_truthy
       expect(Editstore::Change.count).to eq(0)
       
     end
@@ -337,9 +337,9 @@ describe ActivesolrHelper, :integration => true do
       expect(Editstore::Change.count).to eq(0)
       expect(@doc.full_date).to eq('')
       @doc.full_date='bogusness'
-      expect(@doc.valid?).to be_false
+      expect(@doc.valid?).to be_falsey
       saved=@doc.save
-      expect(saved).to be_false
+      expect(saved).to be_falsey
       reload_doc=SolrDocument.find(@druid)
       expect(reload_doc.full_date).to eq('')
       expect(Editstore::Change.count).to eq(0)
@@ -366,9 +366,9 @@ describe ActivesolrHelper, :integration => true do
       
        # confirm we have new changes in the database, which includes a delete and two adds
       last_edits=Editstore::Change.all
-      expect(editstore_entry(last_edits[0],:field=>'model_ssim',:new_value=>'',:old_value=>nil,:druid=>@druid,:operation=>'delete',:state=>:ready)).to be_true
-      expect(editstore_entry(last_edits[1],:field=>'model_ssim',:new_value=>new_values_as_array[0],:old_value=>nil,:druid=>@druid,:operation=>'create',:state=>:ready)).to be_true
-      expect(editstore_entry(last_edits[2],:field=>'model_ssim',:new_value=>new_values_as_array[1],:old_value=>nil,:druid=>@druid,:operation=>'create',:state=>:ready)).to be_true
+      expect(editstore_entry(last_edits[0],:field=>'model_ssim',:new_value=>'',:old_value=>nil,:druid=>@druid,:operation=>'delete',:state=>:ready)).to be_truthy
+      expect(editstore_entry(last_edits[1],:field=>'model_ssim',:new_value=>new_values_as_array[0],:old_value=>nil,:druid=>@druid,:operation=>'create',:state=>:ready)).to be_truthy
+      expect(editstore_entry(last_edits[2],:field=>'model_ssim',:new_value=>new_values_as_array[1],:old_value=>nil,:druid=>@druid,:operation=>'create',:state=>:ready)).to be_truthy
       expect(Editstore::Change.count).to eq(3)
       
     end
@@ -382,16 +382,16 @@ describe ActivesolrHelper, :integration => true do
     end
     
     it "should not have any unsaved edits when initialized" do
-      expect(unchanged(@doc)).to be_true
+      expect(unchanged(@doc)).to be_truthy
     end
 
     it "should indicate when a change has occurred to a field, but not saved" do
       expect(Editstore::Change.count).to eq(0)
       new_value="new title!"
       old_value=@doc.title
-      expect(unchanged(@doc)).to be_true
+      expect(unchanged(@doc)).to be_truthy
       @doc.title=new_value
-      expect(changed(@doc,{:title_tsi=>new_value})).to be_true
+      expect(changed(@doc,{:title_tsi=>new_value})).to be_truthy
       expect(@doc.title).to eq(new_value) # change is in memory
       reload_doc = SolrDocument.find('yt907db4998') # change is not saved to solr or editstore though
       expect(reload_doc.title).to eq(old_value) 
@@ -401,20 +401,20 @@ describe ActivesolrHelper, :integration => true do
     it "should not cache an edit when a single valued field is set but hasn't actually changed" do
       expect(Editstore::Change.count).to eq(0)
       old_value=@doc.title
-      expect(unchanged(@doc)).to be_true
+      expect(unchanged(@doc)).to be_truthy
       @doc.title=old_value
-      expect(unchanged(@doc)).to be_true      
+      expect(unchanged(@doc)).to be_truthy      
       expect(Editstore::Change.count).to eq(0)
     end
 
     it "should not cache an edit when a mutivalued field with one value is set but hasn't actually changed" do
       expect(Editstore::Change.count).to eq(0)
       expect(@doc.years).to eq([1960]) # its an array with an integer value
-      expect(unchanged(@doc)).to be_true
+      expect(unchanged(@doc)).to be_truthy
       @doc.years="1960" # set to a single valued string, but it should be equivalent and not marked as a change
-      expect(unchanged(@doc)).to be_true
+      expect(unchanged(@doc)).to be_truthy
       @doc.years_mvf="1960" # now set the equivalent _mvf field, but it should be equivalent and not marked as a change
-      expect(unchanged(@doc)).to be_true    
+      expect(unchanged(@doc)).to be_truthy    
       expect(Editstore::Change.count).to eq(0)
     end
 
@@ -422,13 +422,13 @@ describe ActivesolrHelper, :integration => true do
       doc2=SolrDocument.find('yh093pt9555')
       expect(Editstore::Change.count).to eq(0)
       expect(doc2.years).to eq([1955,1956]) # its an array with integer value2
-      expect(unchanged(doc2)).to be_true
+      expect(unchanged(doc2)).to be_truthy
       doc2.years=[1955,1956] # set to an equivalent array
-      expect(unchanged(doc2)).to be_true
+      expect(unchanged(doc2)).to be_truthy
       doc2.years=["1955","1956"] # set to an equivalent array but of string
-      expect(unchanged(doc2)).to be_true
+      expect(unchanged(doc2)).to be_truthy
       doc2.years_mvf="1955 | 1956" # now set the equivalent _mvf field like it would be coming from the form
-      expect(unchanged(doc2)).to be_true
+      expect(unchanged(doc2)).to be_truthy
       expect(Editstore::Change.count).to eq(0)
     end
     
@@ -436,9 +436,9 @@ describe ActivesolrHelper, :integration => true do
       expect(Editstore::Change.count).to eq(0)
       old_value=[1960]
       expect(@doc.years).to eq(old_value) # its an array with an integer value
-      expect(unchanged(@doc)).to be_true
+      expect(unchanged(@doc)).to be_truthy
       @doc.years="1961"
-      expect(changed(@doc,{:pub_year_isim=>'1961'})).to be_true
+      expect(changed(@doc,{:pub_year_isim=>'1961'})).to be_truthy
       reload_doc = SolrDocument.find('yt907db4998') # change is not saved to solr or editstore though
       expect(reload_doc.years).to eq(old_value)    
       expect(Editstore::Change.count).to eq(0)  # no changes to Editstore yet
@@ -448,10 +448,10 @@ describe ActivesolrHelper, :integration => true do
       expect(Editstore::Change.count).to eq(0)
       old_value=[1960]
       expect(@doc.years).to eq(old_value) # its an array with an integer value
-      expect(unchanged(@doc)).to be_true
+      expect(unchanged(@doc)).to be_truthy
       @doc.years_mvf="1961|1962"
       @doc.years=['1961','1962'] # should return as an array
-      expect(changed(@doc,{:pub_year_isim=>['1961','1962']})).to be_true
+      expect(changed(@doc,{:pub_year_isim=>['1961','1962']})).to be_truthy
       reload_doc = SolrDocument.find('yt907db4998') # change is not saved to solr or editstore though
       expect(reload_doc.years).to eq(old_value)    
       expect(Editstore::Change.count).to eq(0)  # no changes to Editstore yet

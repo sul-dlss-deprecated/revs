@@ -39,7 +39,7 @@ class AnnotationsController < ApplicationController
     annotation_json=params[:annotation]
     annotation_hash=JSON.parse(annotation_json)
 
-    @annotation=Annotation.create(:json=>annotation_json,:text=>annotation_hash['text'],:druid=>params[:druid],:user_id=>current_user.id)
+    @annotation=Annotation.create_new(:json=>annotation_json,:text=>annotation_hash['text'],:druid=>params[:druid],:user_id=>current_user.id)
     num_annotations=Annotation.where(:druid=>params[:druid]).count
     
     # in the json response, we add in the number of annotations into the json so we can update the badge on the badge with the success handler

@@ -8,7 +8,7 @@ class Admin::UsersController < AdminController
     @filter_role = params[:filter_role] || 'all'
     @filter_visibility = params[:filter_visibility] || 'all'
 
-    @users = User.scoped
+    @users = User.where(nil)
     
     if !@search.blank?
       @users=@users.where(['email like ? OR username like ? OR first_name like ? OR last_name like ?',"%#{@search}%","%#{@search}%","%#{@search}%","%#{@search}%"])
@@ -48,7 +48,7 @@ class Admin::UsersController < AdminController
       params[:user].delete(:password_confirmation)
     end
     @user=User.find(params[:id])
-    if @user.update_attributes(params[:user]) 
+    if @user.update_attributes(user_params) 
      @user.update_lock_status(params[:lock])
      flash[:success]=t('revs.messages.saved')
      redirect_to admin_users_path
@@ -62,7 +62,11 @@ class Admin::UsersController < AdminController
     @role=params[:role]
     @selected_users=params[:selected_users]
     if @selected_users
-      @selected_users.each {|user_id| User.find(user_id).update_attributes(:role=>@role)}
+      @selected_users.each do |user_id|
+          user=User.find(user_id)
+          user.role=@role
+          user.save
+       end
       flash[:success]=t('revs.admin.user_roles_updated',:num=>@selected_users.size,:role=>@role)
     else
       flash[:error]=t('revs.admin.no_user_roles_updated')
@@ -74,4 +78,11 @@ class Admin::UsersController < AdminController
     @user=User.find(params[:id]).destroy
   end
 
+  private
+  def user_params
+    params.require(:user).permit(:username, :email, :sunet, :password, :password_confirmation, :remember_me,
+                  :role, :bio, :first_name, :last_name, :public, :url, :twitter, :login,
+                  :subscribe_to_mailing_list, :subscribe_to_revs_mailing_list, :active, 
+                  :avatar, :avatar_cache, :remove_avatar, :login_count, :favorites_public)
+  end
 end

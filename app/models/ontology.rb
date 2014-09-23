@@ -1,7 +1,5 @@
 class Ontology < ActiveRecord::Base
   
-  attr_accessible :field, :value
-
   include RankedModel
   ranks :row_order,:column => :position, :with_same => :field
 

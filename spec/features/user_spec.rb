@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "rails_helper"
 
 describe("User registration system",:type=>:request,:integration=>true) do
 
@@ -98,7 +98,7 @@ describe("User registration system",:type=>:request,:integration=>true) do
 
   it "should allow access to a public user account by user id as well as username" do
     user_account=get_user(user_login)
-    expect(user_account.public).to be_true
+    expect(user_account.public).to be_truthy
     visit user_path(user_account.id)
     expect(current_path).to eq(user_path(user_account.id))
     visit user_path(user_account.username)
@@ -235,7 +235,7 @@ describe("User registration system",:type=>:request,:integration=>true) do
     expect(page).to have_content "A Somewhat Shorter Than Ave"
 
     # we should be able to see the favorites if they are public
-    expect(admin_account.favorites_public).to be_true
+    expect(admin_account.favorites_public).to be_truthy
     visit user_favorites_user_index_path(admin_account.username)  
     expect(current_path).to eq(user_favorites_user_index_path(admin_account.username)) 
     expect(page).not_to have_content "You are not authorized to access this page."
@@ -244,7 +244,7 @@ describe("User registration system",:type=>:request,:integration=>true) do
     # make favorites private    
     admin_account.favorites_public=false
     admin_account.save
-    expect(admin_account.favorites_public).to be_false
+    expect(admin_account.favorites_public).to be_falsey
 
     # we should NOT be able to see the favorites if they are private
     visit user_annotations_user_index_path(admin_account.username)

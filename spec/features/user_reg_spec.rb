@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "rails_helper"
 
 describe("User Registration",:type=>:request,:integration=>true) do
   
@@ -92,7 +92,7 @@ describe("User Registration",:type=>:request,:integration=>true) do
       new_user=User.create_new_sunet_user(@username)
       expect(new_user.sunet).to eq(@username)
       expect(new_user.username).to eq(@username)
-      expect(new_user.sunet_user?).to be_true
+      expect(new_user.sunet_user?).to be_truthy
       expect(new_user.email).to eq("#{@username}@stanford.edu")
 
     end
@@ -107,7 +107,7 @@ describe("User Registration",:type=>:request,:integration=>true) do
       new_user=User.create_new_sunet_user(@username)
       expect(new_user.sunet).to eq(@username)
       expect(new_user.username).to eq("#{@username}12")
-      expect(new_user.sunet_user?).to be_true
+      expect(new_user.sunet_user?).to be_truthy
       expect(new_user.email).to eq("#{@username}@stanford.edu")
 
     end
@@ -125,7 +125,7 @@ describe("User Registration",:type=>:request,:integration=>true) do
       new_user=User.create_new_sunet_user(@username)
       expect(new_user.sunet).to eq(@username)
       expect(new_user.username).to eq("#{@username}_1")
-      expect(new_user.sunet_user?).to be_true
+      expect(new_user.sunet_user?).to be_truthy
       expect(new_user.email).to eq("#{@username}@stanford.edu")
 
     end

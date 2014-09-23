@@ -8,8 +8,13 @@ class CreateEditstoreFields < ActiveRecord::Migration
         t.string  :name,:null=>false
         t.timestamps
       end
-      Editstore::Field.create(:id=>1,:name=>'title',:project_id=>'1')
-      Editstore::Field.create(:id=>1,:name=>'description',:project_id=>'1')    
+      fields=%w{title description}
+      fields.each do |field_name|
+        field=Editstore::Field.new
+        field.name=field_name
+        field.project_id=1
+        field.save
+      end
     end
   end
 end

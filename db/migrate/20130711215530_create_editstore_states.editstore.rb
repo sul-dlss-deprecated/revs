@@ -7,12 +7,15 @@ class CreateEditstoreStates < ActiveRecord::Migration
         t.string  :name, :null=>false
         t.timestamps
       end
-      Editstore::State.create(:id=>1,:name=>'wait')
-      Editstore::State.create(:id=>2,:name=>'ready')
-      Editstore::State.create(:id=>3,:name=>'in process')
-      Editstore::State.create(:id=>4,:name=>'error')
-      Editstore::State.create(:id=>5,:name=>'applied')
-      Editstore::State.create(:id=>6,:name=>'complete')    
+      states=['wait','ready','in process','error','applied','complete']
+      n=1
+      states.each do |state_name|
+        state=Editstore::State.new
+        state.id=n
+        state.name=state_name
+        state.save
+        n+=1        
+      end
     end
   end
 end

@@ -7,7 +7,7 @@ class AddPositionValueToExistingItems < ActiveRecord::Migration
         saved_items=SavedItem.where(:gallery_id=>gallery.id).where('position = 0 OR position is null').order('created_at desc') # find all gallery items with no specified position in order of date created
         n=1
         saved_items.each do |saved_item|
-            saved_item.update_attribute(:position,n*10) # add increasing position values
+            saved_item.update_column(:position,n*10) # add increasing position values
         end
     end
   end

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "rails_helper"
 
 describe("Galleries",:type=>:request,:integration=>true) do
 
@@ -171,7 +171,7 @@ describe("Galleries",:type=>:request,:integration=>true) do
     expect(page).to have_content(new_gallery_description)
     expect(user.galleries(user).count).to eq(@num_user_galleries + 1) # now we have a new gallery
     new_gallery=Gallery.where(:user_id=>user.id).last
-    expect(new_gallery.public).to be_false 
+    expect(new_gallery.public).to be_falsey 
     expect(new_gallery.visibility).to eq('private')
     expect(new_gallery.title).to eq(new_gallery_title)
     expect(new_gallery.description).to eq(new_gallery_description)
@@ -193,7 +193,7 @@ describe("Galleries",:type=>:request,:integration=>true) do
     expect(page).to have_content(new_gallery_description)
     expect(user.galleries(user).count).to eq(@num_user_galleries + 1) # now we have a new gallery
     new_gallery=Gallery.where(:user_id=>user.id).last
-    expect(new_gallery.public).to be_true
+    expect(new_gallery.public).to be_truthy
     expect(new_gallery.visibility).to eq('public')
     expect(new_gallery.title).to eq(new_gallery_title)
     expect(new_gallery.description).to eq(new_gallery_description)

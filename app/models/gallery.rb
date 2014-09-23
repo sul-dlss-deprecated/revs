@@ -2,9 +2,9 @@ class Gallery < ActiveRecord::Base
   
   belongs_to :user
   extend FriendlyId
-  friendly_id :title, :use => [:slugged]
+  friendly_id :title, :use => [:slugged, :finders]
 
-  scope :public_galleries, where(:visibility=>'public',:gallery_type=>'user')
+  scope :public_galleries, -> {where(:visibility=>'public',:gallery_type=>'user')}
 
   include RankedModel
   ranks :row_order,:column => :position, :scope=>:public_galleries
@@ -12,7 +12,6 @@ class Gallery < ActiveRecord::Base
   GALLERY_TYPES=%w{favorites user}
   VISIBILITY_TYPES=%w{public private curator}
 
-  attr_accessible :user_id,:title,:description,:gallery_type,:views,:visibility
   attr_readonly :saved_items_count
   
   has_many :all_saved_items, :class_name=>'SavedItem', :dependent=>:destroy
@@ -29,11 +28,11 @@ class Gallery < ActiveRecord::Base
   end
   
   def self.curated
-    self.public_galleries.where('saved_items_count > 0').includes(:user).where("users.role in ('curator','admin')").rank(:row_order)
+    self.public_galleries.joins(:user).where('saved_items_count > 0').where("users.role in ('curator','admin')").rank(:row_order)
   end
 
   def self.regular_users
-    self.public_galleries.where('saved_items_count > 0').includes(:user).where("users.role = 'user'").rank(:row_order)
+    self.public_galleries.joins(:user).where('saved_items_count > 0').where("users.role = 'user'").rank(:row_order)
   end
     
   def public

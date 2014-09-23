@@ -1,27 +1,18 @@
 class RevsEditstore < ActiveRecord::Migration
   def up
     if Editstore.run_migrations?
-      @connection=Editstore::Connection.connection
-      project=Editstore::Project.create(:name=>'revs',:template=>'revs')
-      Editstore::Field.create(:name=>'title_tsi',:project_id=>project.id)
-      Editstore::Field.create(:name=>'pub_year_isim',:project_id=>project.id)
-      Editstore::Field.create(:name=>'format_ssim',:project_id=>project.id)
-      Editstore::Field.create(:name=>'description_tsim',:project_id=>project.id)
-      Editstore::Field.create(:name=>'people_ssim',:project_id=>project.id)
-      Editstore::Field.create(:name=>'subjects_ssim',:project_id=>project.id)
-      Editstore::Field.create(:name=>'marque_ssim',:project_id=>project.id)
-      Editstore::Field.create(:name=>'entrant_ssi',:project_id=>project.id)
-      Editstore::Field.create(:name=>'current_owner_tsi',:project_id=>project.id)
-      Editstore::Field.create(:name=>'venue_ssi',:project_id=>project.id)
-      Editstore::Field.create(:name=>'track_ssi',:project_id=>project.id)
-      Editstore::Field.create(:name=>'event_ssi',:project_id=>project.id)
-      Editstore::Field.create(:name=>'location_ssi',:project_id=>project.id)
-      Editstore::Field.create(:name=>'group_class_tsi',:project_id=>project.id)
-      Editstore::Field.create(:name=>'race_data_tsi',:project_id=>project.id)
-      Editstore::Field.create(:name=>'vehicle_markings_tsi',:project_id=>project.id)
-      Editstore::Field.create(:name=>'photographer_ssi',:project_id=>project.id)
-      Editstore::Field.create(:name=>'model_year_ssim',:project_id=>project.id)
-      Editstore::Field.create(:name=>'model_ssim',:project_id=>project.id)
+      @connection=Editstore::Connection.connection        
+      project=Editstore::Project.new
+      project.name='revs'
+      project.template='revs'
+      project.save
+      fields=%w{title_tsi pub_year_isim format_ssim description_tsim people_ssim subjects_ssim marque_ssim entrant_ssi current_owner_tsi venue_ssi track_ssi event_ssi location_ssi group_class_tsi race_data_tsi vehicle_markings_tsi photographer_ssi model_year_ssim model_ssim}
+      fields.each do |field_name|
+        field=Editstore::Field.new
+        field.name=field_name
+        field.project_id=project.id
+        field.save
+      end
     end
   end
 end

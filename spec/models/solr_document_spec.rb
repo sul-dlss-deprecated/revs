@@ -1,4 +1,4 @@
-require "spec_helper"
+require "rails_helper"
 
 describe SolrDocument do
   it "should behave like a SolrDocument" do
@@ -10,8 +10,8 @@ describe SolrDocument do
   
   describe "collections" do
     it "should define themselves as such when they have the correct fields" do
-      expect(SolrDocument.new({:id=>"12345"}).is_collection?).to be_false
-      expect(SolrDocument.new({:id=>"12345", :format_ssim => "collection"}).is_collection?).to be_true
+      expect(SolrDocument.new({:id=>"12345"}).is_collection?).to be_falsey
+      expect(SolrDocument.new({:id=>"12345", :format_ssim => "collection"}).is_collection?).to be_truthy
     end
     describe "collection siblings" do
       it "should memoize the solr request to get the siblings of a collection member" do
@@ -27,8 +27,8 @@ describe SolrDocument do
     end
     describe "collection members" do
       it "should define themselves as such when they have the correct fields" do
-        expect(SolrDocument.new({:id => "12345"}).is_item?).to be_false
-        expect(SolrDocument.new({:"is_member_of_ssim" => "collection-1"}).is_item?).to be_true
+        expect(SolrDocument.new({:id => "12345"}).is_item?).to be_falsey
+        expect(SolrDocument.new({:"is_member_of_ssim" => "collection-1"}).is_item?).to be_truthy
       end
       it "should memoize the solr request to get collection members" do
         response = {"response" => {"numFound" => 3, "docs" => [{:id=>"1234"}, {:id =>"4321"}]}}

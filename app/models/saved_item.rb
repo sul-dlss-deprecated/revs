@@ -8,18 +8,25 @@ class SavedItem < WithSolrDocument
   
   after_save :update_gallery_last_updated
 
-  attr_accessible :druid, :gallery_id, :description
   validates :gallery_id, :numericality => { :only_integer => true }
   validates :druid, :is_druid=>true
   validate :only_one_saved_item_per_druid_per_gallery
     
+  def self.create_new(params)
+    saved_item=SavedItem.new
+    saved_item.druid=params[:druid]
+    saved_item.gallery_id=params[:gallery_id]
+    saved_item.description=params[:description]
+    saved_item.save
+    saved_item
+  end  
   ##### class level methods
   def self.save_favorite(params={})
     user_id=params[:user_id]
     druid=params[:druid]
     description=params[:description]
     gallery=User.find(user_id).favorites_list
-    return self.create(:druid=>druid,:gallery_id=>gallery.id,:description=>description)
+    return self.create_new(params.merge(:gallery_id=>gallery.id))
   end
 
   def self.save_to_gallery(params={})
@@ -32,7 +39,7 @@ class SavedItem < WithSolrDocument
       saved_item=self.new
       saved_item.errors.add(:gallery_id)
     else
-      saved_item=self.create(:druid=>druid,:gallery_id=>gallery_id,:description=>description)
+      saved_item=self.create_new(params)
     end
 
     saved_item

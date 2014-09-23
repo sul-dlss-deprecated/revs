@@ -1,4 +1,7 @@
 Revs::Application.configure do
+
+  config.eager_load = true
+
   # Settings specified here will take precedence over those in config/application.rb
   config.exception_error_page = true # show a friendly 500 error page if true
   config.action_mailer.default_url_options = { :host => 'revs-stage.stanford.edu' }

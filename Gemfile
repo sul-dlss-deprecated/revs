@@ -1,25 +1,30 @@
 source 'https://rubygems.org'
 source 'http://sul-gems.stanford.edu'
 
-ruby "1.9.3"
+ruby "2.1.2"
 
 gem 'bundler', '>= 1.2.0'
 
+# add these gems to help with the transition:
+# gem 'rails-observers'
+# gem 'actionpack-page_caching'
+# gem 'actionpack-action_caching'
+
 gem 'sitemap_generator'
 
-gem 'editstore', '>= 1.1.5'
-gem 'revs-utils', '>= 1.0.8'
+gem 'editstore', '>= 2.0.0'
+gem 'revs-utils', '>= 2.0.0'
 
-gem 'rails', '~> 3.2.19'
+gem 'rails', '~> 4.1.1'
 
 # user authentication and roles
-gem 'devise', '~> 2.2.5'
+gem 'devise'
 gem 'omniauth'
 gem 'cancan'
 
 gem 'ranked-model'
 
-gem 'friendly_id', '~> 4.0.10'
+gem 'friendly_id', '>= 5.0.0'
 
 # image (user avatar) uploading
 gem 'carrierwave'
@@ -43,19 +48,17 @@ gem 'druid-tools', '>= 0.2.0'
 
 # Gems used only for assets and not required
 # in production environments by default.
-group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+gem 'sass-rails', '~> 5.0.0.beta1'
+gem 'coffee-rails', '~> 4.0'
 
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  gem 'therubyracer', :platforms => :ruby
+# See https://github.com/sstephenson/execjs#readme for more supported runtimes
+#gem 'therubyracer', :platforms => :ruby
 
-  gem 'uglifier', '>= 1.0.3'
-end
+gem 'uglifier', '>= 1.0.3'
 
 group :test do
   gem 'rspec-rails'
-  gem 'capybara', '~> 1.0'
+  gem 'capybara'
 end
 
 group :development do
@@ -70,7 +73,7 @@ end
 group :development, :staging, :test do
   gem 'jettywrapper'
   gem 'sqlite3'
-  #gem 'rspec-core', "2.99"
+  gem 'database_cleaner'
 end
 
 group :staging, :production do

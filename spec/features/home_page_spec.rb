@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "rails_helper"
 
 describe("Home Page",:type=>:request,:integration=>true) do
 

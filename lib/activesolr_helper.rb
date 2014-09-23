@@ -171,15 +171,39 @@ module ActivesolrHelper
   end
   
   def send_update_to_editstore(new_value,old_value,solr_field_name,note='')
-    Editstore::Change.create(:new_value=>new_value.to_s.strip,:old_value=>old_value,:operation=>:update,:state_id=>Editstore::State.ready.id,:field=>solr_field_name,:druid=>self.id,:client_note=>note)
+    change=Editstore::Change.new
+    change.new_value=new_value.to_s.strip
+    change.old_value=old_value
+    change.operation=:update
+    change.state_id=Editstore::State.ready.id
+    change.field=solr_field_name
+    change.druid=self.id
+    change.client_note=note
+    change.save
   end
   
   def send_delete_to_editstore(solr_field_name,note='')
-    Editstore::Change.create(:operation=>:delete,:new_value=>'',:state_id=>Editstore::State.ready.id,:field=>solr_field_name,:druid=>self.id,:client_note=>note)
+    change=Editstore::Change.new
+    change.new_value=''
+    change.operation=:delete
+    change.state_id=Editstore::State.ready.id
+    change.field=solr_field_name
+    change.druid=self.id
+    change.client_note=note
+    change.save
   end
   
   def send_creates_to_editstore(new_values,solr_field_name,note='')
-    new_values.each {|new_value| Editstore::Change.create(:new_value=>new_value.to_s.strip,:operation=>:create,:state_id=>Editstore::State.ready.id,:field=>solr_field_name,:druid=>self.id,:client_note=>note)}
+    new_values.each do |new_value|
+      change=Editstore::Change.new
+      change.new_value=new_value.to_s.strip
+      change.operation=:create
+      change.state_id=Editstore::State.ready.id
+      change.field=solr_field_name
+      change.druid=self.id
+      change.client_note=note
+      change.save      
+    end 
   end
   
   # remove this field from solr

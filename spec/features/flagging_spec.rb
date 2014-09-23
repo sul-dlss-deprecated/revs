@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "rails_helper"
 
 describe("Flagging",:type=>:request,:integration=>true) do
 
@@ -107,7 +107,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
     expect(flag.comment).to eq(user_comment)
     expect(flag.flag_type).to eq(@default_flag_type)
     expect(flag.user).to eq(user)
-    expect(flag.notify_me).to be_true
+    expect(flag.notify_me).to be_truthy
     expect(flag.notification_state).to eq('pending')
     
     flag_id = check_flag_was_created(user_login, druid, user_comment, initial_flag_count+1)  
@@ -149,7 +149,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
       expect(flag.comment).to eq(user_comment)
       expect(flag.flag_type).to eq(@default_flag_type)
       expect(flag.user).to eq(user)
-      expect(flag.notify_me).to be_false
+      expect(flag.notify_me).to be_falsey
       expect(flag.notification_state).to be_nil
 
       # login and visit an item as a curator

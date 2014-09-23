@@ -542,7 +542,7 @@ namespace :revs do
   task :reset_gallery_order => :environment do |t,args|
     n=0
     Gallery.public_galleries.order('created_at').each do |gallery|
-       gallery.update_attribute(:row_order_position,n)
+       gallery.update_column(:row_order_position,n)
       n+=1
     end
   end
@@ -551,7 +551,7 @@ namespace :revs do
   task :reset_saved_item_order => :environment do |t,args|
     n=0
     SavedItem.order('created_at').each do |item| 
-      item.update_attribute(:row_order_position,n)
+      item.update_column(:row_order_position,n)
       n+=1
     end
   end

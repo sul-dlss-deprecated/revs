@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   include Blacklight::User
 
   extend FriendlyId
-  friendly_id :username#, use: [:finders]
+  friendly_id :username, use: [:finders]
   
   # class generated with CarrierWave
   mount_uploader :avatar, AvatarUploader
@@ -22,16 +22,12 @@ class User < ActiveRecord::Base
          :lockable, :timeoutable, :omniauthable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :username, :email, :sunet, :password, :password_confirmation, :remember_me,
-                  :role, :bio, :first_name, :last_name, :public, :url, :twitter, :login,
-                  :subscribe_to_mailing_list, :subscribe_to_revs_mailing_list, :active, 
-                  :avatar, :avatar_cache, :remove_avatar, :login_count, :favorites_public
   attr_accessor :subscribe_to_mailing_list, :subscribe_to_revs_mailing_list # not persisted, just used on the signup form
   attr_accessor :login # virtual method that will refer to either email or username
 
   # all "regular" has_many associations are done via custom methods below so we can add visibility filtering for items
   # the "all_CLASS" has_many associations are provided for convience, and to facilitate dependent destroying easily
-  has_one :favorites_list, :conditions=>'gallery_type="favorites"', :dependent => :destroy, :class_name=>'Gallery'
+  has_one :favorites_list, -> {where gallery_type:"favorites"}, :dependent => :destroy, :class_name=>'Gallery'
   has_many :all_galleries, :class_name=>'Gallery', :dependent=>:destroy
   has_many :all_annotations, :class_name=>'Annotation', :dependent=>:destroy
   has_many :all_change_logs, :class_name=>'ChangeLog', :dependent=>:destroy
@@ -145,7 +141,12 @@ class User < ActiveRecord::Base
   # create the default favoritest list unless it already exists (done at account create and login, just to be sure it exists)
   def create_default_favorites_list
     if favorites_list.blank?
-      new_favorites_list=Gallery.create(:user_id=>id,:gallery_type=>:favorites,:visibility=>:private,:title=>I18n.t('revs.favorites.head')) 
+      new_favorites_list=Gallery.new
+      new_favorites_list.user_id=id
+      new_favorites_list.gallery_type=:favorites
+      new_favorites_list.visibility=:private
+      new_favorites_list.title=I18n.t('revs.favorites.head')
+      new_favorites_list.save
       self.reload
     end
   end

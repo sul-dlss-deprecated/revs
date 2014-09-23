@@ -9,7 +9,11 @@ class CreateEditstoreProjects < ActiveRecord::Migration
         t.string :template, :null=>false
         t.timestamps
       end
-      Editstore::Project.create(:id=>1,:name=>'generic',:template=>'generic')
+      project=Editstore::Project.new
+      project.id=1
+      project.name='generic'
+      project.template='generic'
+      project.save
     end
   end
   

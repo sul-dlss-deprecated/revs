@@ -4,9 +4,7 @@ class Annotation < WithSolrDocument
   
   belongs_to :user  
   belongs_to :item, :foreign_key=>:druid, :primary_key=>:druid
-  
-  attr_accessible :text, :json, :user_id, :druid
-  
+    
   after_create :add_annotation_to_solr
   after_update :update_annotation_in_solr
   after_destroy :update_annotation_in_solr
@@ -18,9 +16,19 @@ class Annotation < WithSolrDocument
    ANNOTATION_ALL = 'all'
    ANNOTATION_NONE = 'none'
 
+  def self.create_new(params)
+    annotation=Annotation.new
+    annotation.druid=params[:druid]
+    annotation.text=params[:text]
+    annotation.json=params[:json]
+    annotation.user_id=params[:user_id]
+    annotation.save
+    annotation
+   end
+   
   # pass in a druid and a user and get the annotations for that image, with the appropriate json additions required for display annotations on the image
   def self.for_image_with_user(druid,user)
-    annotations=Annotation.includes(:user).where(:druid=>druid,'users.active'=>true).order('annotations.created_at desc')
+    annotations=Annotation.joins(:user).where(:druid=>druid,'users.active'=>true).order('annotations.created_at desc')
     annotations.each do |annotation| # loop through all annotations
       annotation_hash=JSON.parse(annotation.json) # parse the annotation json into a ruby object
       annotation_hash[:editable]=user ? user.can?(:update, annotation) : false 

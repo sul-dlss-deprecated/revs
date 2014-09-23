@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "rails_helper"
 
 describe("Curator Section",:type=>:request,:integration=>true) do
   
@@ -42,7 +42,7 @@ describe("Curator Section",:type=>:request,:integration=>true) do
       starting_page=search_path(:"f[pub_year_isim][]"=>"1955",:view=>"curator")
       visit starting_page
       expect(current_path).to eq(search_path)
-      expect(current_url.include?('view=curator')).to be_true
+      expect(current_url.include?('view=curator')).to be_truthy
     end
 
     it "should not allow a non-logged in or non curator user to view the bulk edit view" do
