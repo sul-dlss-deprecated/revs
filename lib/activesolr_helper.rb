@@ -170,7 +170,8 @@ module ActivesolrHelper
     self[field_name]=nil
   end
   
-  def send_update_to_editstore(new_value,old_value,solr_field_name,note='')
+  def send_update_to_editstore(new_value,old_value,solr_field_name,note='')    
+    old_value = (old_value.class == Array ? old_value.join(',') : old_value)
     change=Editstore::Change.new
     change.new_value=new_value.to_s.strip
     change.old_value=old_value

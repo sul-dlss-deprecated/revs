@@ -104,9 +104,14 @@ describe SolrDocument, :integration => true do
       @old_values={}
       @new_value='newbie!'
       @user=User.last
+      puts "Before: #{Editstore::Change.count}"
       
     end
 
+    after :each do
+      puts "After: #{Editstore::Change.count}"
+    end
+    
     it "should apply bulk replace updates to solr and editstore when update method is called directly for an update operation" do
       
       # confirm new field doesn't exist in solr and rows don't exist yet in editstore database
