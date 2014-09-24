@@ -104,7 +104,7 @@ describe SolrDocument, :integration => true do
       @old_values={}
       @new_value='newbie!'
       @user=User.last
-
+      
     end
 
     it "should apply bulk replace updates to solr and editstore when update method is called directly for an update operation" do

@@ -98,6 +98,7 @@ GEM
       currencies (>= 0.4.0)
     currencies (0.4.2)
     daemons (1.1.9)
+    database_cleaner (1.3.0)
     debug_inspector (0.0.2)
     deprecation (0.1.0)
       activesupport
@@ -320,6 +321,7 @@ DEPENDENCIES
   carrierwave
   coffee-rails (~> 4.0)
   countries
+  database_cleaner
   devise
   druid-tools (>= 0.2.0)
   editstore (>= 2.0.0)

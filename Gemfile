@@ -73,6 +73,7 @@ end
 group :development, :staging, :test do
   gem 'jettywrapper'
   gem 'sqlite3'
+  gem 'database_cleaner'
 end
 
 group :staging, :production do
