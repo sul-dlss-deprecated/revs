@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 source 'http://sul-gems.stanford.edu'
 
-ruby "1.9.3"
+ruby "2.1.2"
 
 gem 'bundler', '>= 1.2.0'
 
@@ -12,7 +12,7 @@ gem 'bundler', '>= 1.2.0'
 
 gem 'sitemap_generator'
 
-gem 'editstore', '>= 2.0.0', :source => 'https://rubygems.org/' # it is also still at sul-gems, but this is the preferred source
+gem 'editstore', '>= 2.0.0'
 gem 'revs-utils', '>= 2.0.0'
 
 gem 'rails', '~> 4.1.1'
@@ -62,7 +62,7 @@ group :test do
 end
 
 group :development do
-	gem 'better_errors', '~>1' # v2 requires Ruby 2
+	gem 'better_errors'
 	gem 'binding_of_caller'
 	gem 'meta_request'
 	gem 'launchy'
@@ -73,7 +73,6 @@ end
 group :development, :staging, :test do
   gem 'jettywrapper'
   gem 'sqlite3'
-  gem 'database_cleaner'
 end
 
 group :staging, :production do
