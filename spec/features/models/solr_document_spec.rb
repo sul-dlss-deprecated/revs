@@ -97,19 +97,16 @@ describe SolrDocument, :integration => true do
   describe "metadata_editing" do
     
     before :each do
-
       @field_to_edit='title'
       @solr_field=SolrDocument.field_mappings[@field_to_edit.to_sym][:field]
       @druids_to_edit=%w{nn572km4370 kn529wc4372}
       @old_values={}
       @new_value='newbie!'
-      @user=User.last
-      puts "Before: #{Editstore::Change.count}"
-      
+      @user=User.last      
     end
 
     after :each do
-      puts "After: #{Editstore::Change.count}"
+      cleanup_editstore_changes # transactions don't seem to work with the second database
     end
     
     it "should apply bulk replace updates to solr and editstore when update method is called directly for an update operation" do

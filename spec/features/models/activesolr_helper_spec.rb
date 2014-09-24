@@ -66,7 +66,7 @@ describe ActivesolrHelper, :integration => true do
   end
 
   describe "getter methods" do
-    
+      
     it "should fail with a non-configured getter" do
       doc = SolrDocument.find('jg267fg4283')
       expect { value=doc.bogus_field }.to raise_error
@@ -156,7 +156,7 @@ describe ActivesolrHelper, :integration => true do
   end
   
   describe "saving" do
-
+   
     before :each do
       @druid='yt907db4998'
       @doc = SolrDocument.find(@druid)
@@ -164,6 +164,7 @@ describe ActivesolrHelper, :integration => true do
     
     after :each do
       reindex_solr_docs(@druid)
+      cleanup_editstore_changes # transactions don't seem to work with the second database
     end    
     
     it "should save an update to a single value field, and propogage to solr and editstore databases" do

@@ -416,6 +416,10 @@ end
 def get_solrdoc_from_druid(druid)
   return Blacklight.solr.select(:params =>{:q=>"id:#{druid}"})["response"]["docs"][0]
 end
+
+def cleanup_editstore_changes
+  Editstore::Change.destroy_all
+end
   
   
   
