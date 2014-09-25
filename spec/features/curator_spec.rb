@@ -97,7 +97,9 @@ describe("Curator Section",:type=>:request,:integration=>true) do
         login_as(curator_login)
         visit curator_tasks_path
         ["Record 1","Sebring 12 Hour, Green Park Straight, January 4"].each {|title| expect(page).to have_content(title)}
-        click_link 'Record 1'
+        within ('#flags_table table') do
+          click_link 'Record 1'
+        end
         expect(current_path).to eq(item_path('yt907db4998'))
       end
       

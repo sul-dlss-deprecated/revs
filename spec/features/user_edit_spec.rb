@@ -68,8 +68,9 @@ describe("Editing of logged in users",:type=>:request,:integration=>true) do
     visit user_path(user_account.username)
     expect(page).to have_content(I18n.t("revs.user.user_dashboard",:name=>I18n.t('revs.user.your')))
     expect(page).to have_content("#{user_account.full_name}")
-    click_link 'Change your password'
-
+    within '#sidebar' do
+      click_link I18n.t('revs.user.change_password')
+    end
     fill_in 'user_password', :with=>new_password
     fill_in 'user_password_confirmation', :with=>new_password
     fill_in 'user_current_password', :with=>login_pw

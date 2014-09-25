@@ -9,11 +9,11 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
 
   it "should not show the annotations for a disabled user" do
     visit @starting_page
-    expect(find(".num-annotations-badge")).to have_content("2")   # there is a user and an admin annotations
+    expect(first(".num-annotations-badge")).to have_content("2")   # there is a user and an admin annotations
     disable_user(user_login)
 
     visit @starting_page
-    expect(find(".num-annotations-badge")).to have_content("1")   # the user annotation is not visible
+    expect(first(".num-annotations-badge")).to have_content("1")   # the user annotation is not visible
     expect(page).to have_content('Guy in the background looking sideways') #admin annotation, still there
     expect(page).not_to have_content('air intake?') # user annotation, now hidden
   end
@@ -22,7 +22,7 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
     login_as(user_login)
     visit @starting_page
     should_allow_annotations    
-    expect(find(".num-annotations-badge")).to have_content("2")     
+    expect(first(".num-annotations-badge")).to have_content("2")     
     expect(page).to have_content('Guy in the background looking sideways')
     expect(page).to have_content('air intake?')
   end

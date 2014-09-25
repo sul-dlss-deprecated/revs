@@ -23,8 +23,10 @@ describe("About Pages",:type=>:request,:integration=>true) do
   it "should detect a spammer as someone who submits the form too quickly" do
     visit contact_us_path
     expect(page).to have_content(@contact_us)
-    fill_in 'message', :with=>'My annoying spam message'
-    click_button 'Send'
+    within('#about-section') do
+      fill_in 'message', :with=>'My annoying spam message'
+      click_button 'Send'
+    end
     RevsMailer.stub_chain(:contact_message,:deliver).and_return('a mailer')
     expect(RevsMailer).not_to receive(:contact_message)
     expect(page).to have_content(I18n.t("revs.about.contact_message_spambot"))
@@ -35,9 +37,11 @@ describe("About Pages",:type=>:request,:integration=>true) do
     visit contact_us_path
     expect(page).to have_content(@contact_us)
     sleep 6.seconds
-    fill_in 'message', :with=>'My annoying spam message'
-    fill_in 'email_confirm', :with=>'hidden field'
-    click_button 'Send'
+    within('#about-section') do
+      fill_in 'message', :with=>'My annoying spam message'
+      fill_in 'email_confirm', :with=>'hidden field'
+      click_button 'Send'
+    end
     RevsMailer.stub_chain(:contact_message,:deliver).and_return('a mailer')
     expect(RevsMailer).not_to receive(:contact_message)
     expect(page).to have_content(I18n.t("revs.about.contact_message_spambot"))
@@ -48,11 +52,13 @@ describe("About Pages",:type=>:request,:integration=>true) do
     visit contact_us_path
     expect(page).to have_content(@contact_us)
     sleep 6.seconds
-    fill_in 'fullname', :with=>'Spongebob Squarepants'
-    fill_in 'message', :with=>'I live in a pineapple under the sea.'
+    within('#about-section') do
+      fill_in 'fullname', :with=>'Spongebob Squarepants'
+      fill_in 'message', :with=>'I live in a pineapple under the sea.'
+      click_button 'Send'
+    end
     RevsMailer.stub_chain(:contact_message,:deliver).and_return('a mailer')
     expect(RevsMailer).to receive(:contact_message)
-    click_button 'Send'
     expect(page).to have_content(I18n.t("revs.about.contact_message_sent"))
   end
 

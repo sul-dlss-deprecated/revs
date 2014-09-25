@@ -214,20 +214,22 @@ def find_flag_by_content_and_click_button(content, button)
    get_a_flag_by_content(content).click_button(button)
 end
 
-def resolve_flag_wont_fix(user, druid, content, resolve_message)
+def resolve_flag_wont_fix(user, druid, content, resolve_message,flag_id)
   login_as_user_and_goto_druid(user, druid)
-  resolve_flag(content, resolve_message, @wont_fix_button)
+  resolve_flag(content, resolve_message, @wont_fix_button,flag_id)
 end
 
-def resolve_flag_fix(user, druid, content, resolve_message)
+def resolve_flag_fix(user, druid, content, resolve_message,flag_id)
   login_as_user_and_goto_druid(user, druid)
-  resolve_flag(content, resolve_message, @fix_button)
+  resolve_flag(content, resolve_message, @fix_button,flag_id)
 end
 
-def resolve_flag(content, resolve_message, button)
+def resolve_flag(content, resolve_message, button, flag_id)
   f = get_a_flag_by_content(content)
-  fill_in @resolution_field, :with=>resolve_message
-  click_button button
+  within "\#edit_flag_#{flag_id}" do
+    fill_in @resolution_field, :with=>resolve_message
+    click_button button
+  end
 end
 
 def get_a_flag_by_content(content)

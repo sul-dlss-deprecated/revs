@@ -116,7 +116,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
     expect(RevsMailer).to receive(:flag_resolved)
           
     #Login As a Curator and Mark It As Fixed
-    resolve_flag_fix(curator_login, druid, user_comment, curator_comment)
+    resolve_flag_fix(curator_login, druid, user_comment, curator_comment, flag_id)
     
     #Ensure the Flag Was Resolved via a message on the page to the user and in the database
     check_flag_was_marked_fix(user_comment, initial_flag_count+1, curator_comment, flag_id)
@@ -274,7 +274,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
         expect(RevsMailer).not_to receive(:flag_resolved)
         
         #Login As a Curator and Mark It As Won't Fix
-        resolve_flag_wont_fix(curator_login, druid, user_comment, curator_comment)
+        resolve_flag_wont_fix(curator_login, druid, user_comment, curator_comment,flag_id)
         
         #Ensure the Flag Was Resolved via a message on the page to the user and in the database
         check_flag_was_marked_wont_fix(user_comment, initial_flag_count+1, curator_comment, flag_id)
@@ -316,7 +316,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
         expect(RevsMailer).not_to receive(:flag_resolved)
               
         #Login As a Curator and Mark It As Fixed
-        resolve_flag_fix(curator_login, druid, user_comment, curator_comment)
+        resolve_flag_fix(curator_login, druid, user_comment, curator_comment,flag_id)
         
         #Ensure the Flag Was Resolved via a message on the page to the user and in the database
         check_flag_was_marked_fix(user_comment, initial_flag_count+1, curator_comment, flag_id)
@@ -353,7 +353,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
        should_not_allow_flagging
        
        #resolve the first flag
-       resolve_flag_fix(curator_login, druid, first_user_comment, resolution)
+       resolve_flag_fix(curator_login, druid, first_user_comment, resolution, Flag.last.id)
        
        #Ensure the User Could Comment Again
        login_as_user_and_goto_druid(user_login, druid)
@@ -376,14 +376,14 @@ describe("Flagging",:type=>:request,:integration=>true) do
             
       #Add the comments in by the user
       comments.each do |comment|
-        create_flag(open_comment)
+        create_flag(comment)
       end
       
       #Mark the fix comment as fixed
-      resolve_flag_fix(curator_login, druid, fixed_comment, curator_fix_comment)
+      resolve_flag_fix(curator_login, druid, fixed_comment, curator_fix_comment,Flag.where(:comment=>fixed_comment).first.id)
       
       #Mark the wont fix comment as fixed
-      resolve_flag_wont_fix(curator_login, druid, wont_fix_comment, curator_wont_fix_comment)
+      resolve_flag_wont_fix(curator_login, druid, wont_fix_comment, curator_wont_fix_comment,Flag.where(:comment=>wont_fix_comment).first.id)
       
       #Login as the user and go to their dashboard to see all flags
       logout
