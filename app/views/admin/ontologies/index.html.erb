@@ -1,43 +1,60 @@
-<div id="content" class="col-md-9 admin">
-	
-  <h2><%= t('revs.user.admin_dashboard') %></h2>
+<div id="content" class="col-sm-9 admin">
+	<div class="row">
+	  <div class="col-sm-12">
+      <h2><%= t('revs.user.admin_dashboard') %></h2>
 
-  <h3><%=t('revs.admin.administer_ontologies.title')%></h3>
-  
+      <h3><%=t('revs.admin.administer_ontologies.title')%></h3>
 
+      <% if @all_fields.size > 0 %>
+        <p><%=t('revs.admin.administer_ontologies.description')%></p>
 
-    <% if @all_fields.size > 0 %>
-      <p><%=t('revs.admin.administer_ontologies.description')%></p>
-
-      <div>
-        <%= form_tag admin_ontologies_path, :method=>:get, :class => 'form-horizontal autosubmit' do %>
-          <p><%=t('revs.admin.field')%>:
-            <%= select_tag "field", options_for_select(@all_fields,@field)%>
-          </p>
+        <%= form_tag admin_ontologies_path, :method=>:get, :class => 'form-inline autosubmit' do %>
+          <div class="form-group">
+            <label>
+              <%=t('revs.admin.field')%>:
+            </label>
+            <%= select_tag "field", options_for_select(@all_fields,@field), :class => "form-control input-sm" %>
+          </div>
         <% end %>
 
-        <p><%=t('revs.admin.terms')%>:</p>
+          <p><%=t('revs.admin.terms')%>:</p>
 
-        <%= form_tag update_terms_admin_ontologies_path(@field), :method=>:post, :class => 'form-horizontal' do %>
-          <p><%= submit_tag t('revs.nav.update'), :class => 'btn btn-default btn-small' %></p>
-          <%= text_area_tag "terms", @terms, :rows=>30, :cols=>60,:style=>'width:500px;' %>
-        <% end %>
-      </div>
+          <%= form_tag update_terms_admin_ontologies_path(@field), :method=>:post, :class => 'form-horizontal update-field-terms' do %>
+            <div class="form-group">
+              <div class="col-xs-12">
+                <%= submit_tag t('revs.nav.update'), :class => 'btn btn-default btn-sm' %>
+              </div>
+              <div class="col-xs-10 col-md-8">
+                <%= text_area_tag "terms", @terms, :rows=>30, :cols=>60, :class => "form-control" %>
+              </div>
+            </div>
+          <% end %>
 
-    <% else %>
-      <p><%= t('revs.admin.administer_ontologies.none')%></p>
-    <% end %>
+      <% else %>
+        <p><%= t('revs.admin.administer_ontologies.none')%></p>
+      <% end %>
+	  </div>
+	</div>
 
-  <h3 class="new-ontology"><%= t('revs.admin.administer_ontologies.add_new_field.title') %></h3>
-  <p><%= t('revs.admin.administer_ontologies.add_new_field.description') %></p>
+	<div class="row">
+	  <div class="col-sm-12">
+      <h3 class="new-ontology">
+        <%= t('revs.admin.administer_ontologies.add_new_field.title') %>
+      </h3>
 
-  <%= form_tag admin_ontologies_path, :method=>:post, :class => 'form-horizontal' do %>
-    <p>
-      <%= t('revs.admin.new_field') %>:
-      <%= text_field_tag :field %>
-      <%= submit_tag t('revs.nav.create'), :class => 'btn btn-default btn-small' %>
-    </p>
-  <% end %>
+      <p><%= t('revs.admin.administer_ontologies.add_new_field.description') %></p>
+
+      <%= form_tag admin_ontologies_path, :method=>:post, :class => 'form-inline' do %>
+        <div class="form-group">
+          <label>
+            <%= t('revs.admin.new_field') %>:
+          </label>
+          <%= text_field_tag :field, nil, :class => "form-control" %>
+          <%= submit_tag t('revs.nav.create'), :class => 'btn btn-default btn-sm' %>
+        </div>
+      <% end %>
+	  </div>
+	</div>
 
 </div>
 
