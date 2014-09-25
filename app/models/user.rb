@@ -187,12 +187,12 @@ class User < ActiveRecord::Base
   end
   
   # override devise behavior for signs so that it allows the user to signin with either username or email
-  def self.find_first_by_auth_conditions(warden_conditions)
-    conditions = warden_conditions.dup
-    if login = conditions.delete(:login)
-      where(conditions).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
+  def self.find_first_by_auth_conditions(tainted_conditions, opts={})
+    conditions = tainted_conditions.dup
+    if login = conditions.delete(:login) # if we are on the login page, allow either username or login to work
+      self.where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
     else
-      where(conditions).first
+      to_adapter.find_first(devise_parameter_filter.filter(conditions).merge(opts))
     end
   end
   

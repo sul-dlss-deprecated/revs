@@ -164,7 +164,7 @@ describe ActivesolrHelper, :integration => true do
     
     after :each do
       reindex_solr_docs(@druid)
-      cleanup_editstore_changes # transactions don't seem to work with the second database
+      cleanup_editstore_changes # transactions don't seem to work with the second editstore database, so cleanup
     end    
     
     it "should save an update to a single value field, and propogage to solr and editstore databases" do
@@ -380,6 +380,10 @@ describe ActivesolrHelper, :integration => true do
   
     before :each do
       @doc = SolrDocument.find('yt907db4998')
+    end
+    
+    after :each do
+        cleanup_editstore_changes
     end
     
     it "should not have any unsaved edits when initialized" do

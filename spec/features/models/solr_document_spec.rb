@@ -102,7 +102,7 @@ describe SolrDocument, :integration => true do
       @druids_to_edit=%w{nn572km4370 kn529wc4372}
       @old_values={}
       @new_value='newbie!'
-      @user=User.last      
+      @user=User.last     
     end
 
     after :each do

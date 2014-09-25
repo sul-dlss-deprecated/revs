@@ -65,10 +65,11 @@ end
 def login_as(login, password = nil)
   password ||= login_pw
   logout
-  visit new_user_session_path
+  sign_in_link=I18n.t('revs.user.sign_in')
+  has_link?(sign_in_link) ? click_link(sign_in_link) : visit(new_user_session_path)
   fill_in "user_login", :with => login
   fill_in "user_password", :with => password
-  click_button "submit"
+  click_button 'submit'
 end
 
 def should_have_button(name)
@@ -80,8 +81,12 @@ def should_not_have_button(name)
 end
 
 def logout
-  sign_out_button="Sign out"
-  click_button(sign_out_button) if has_button?(sign_out_button)
+  sign_out_button=I18n.t('revs.user.sign_out')
+  if has_button?(sign_out_button)
+    within('li.signout') do
+      click_button(sign_out_button) 
+    end
+  end
 end
 
 # some helper methods to do some quick checks
@@ -418,7 +423,8 @@ def get_solrdoc_from_druid(druid)
 end
 
 def cleanup_editstore_changes
-  Editstore::Change.destroy_all
+#  Editstore::Change.destroy_all
+  Editstore::Change.connection.execute('delete from editstore_changes;vacuum;') # equivalent of truncate in mysql
 end
   
   
