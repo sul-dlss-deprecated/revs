@@ -98,3 +98,22 @@
     font-weight: 500;
   }
 }
+@mixin item-stats {
+  ul.item-stats {
+    margin-bottom: 20px;
+    > li {
+      font-size: 13px;
+      padding-left: 0;
+      padding-right: 0;
+      &:after {
+        content: " \00b7";
+      }
+      &:last-child:after {
+        content: none;
+      }
+      .item-stats-heading {
+        font-weight: 600;
+      }
+    }
+  }
+}

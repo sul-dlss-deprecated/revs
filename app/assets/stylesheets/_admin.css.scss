@@ -49,6 +49,9 @@
   .btn-sm {
     margin-left: 6px;
   }
+  .lock-account label {
+    vertical-align: top;
+  }
   th.edit-count, th.admin-actions {
     min-width: 80px;
   }
@@ -69,6 +72,7 @@
       margin-top: 10px;
     }
   }
+  @include item-stats;
 }
 
 .admin.table {
@@ -131,6 +135,9 @@
     .feature-collection.gallery .description-teaser {
       display: none;
     }
+  }
+  ul.item-stats {
+    margin-left: 2px;
   }
 }
 @media screen and (max-width: 767px) {
