@@ -1,92 +1,91 @@
-<div id="content" class="col-md-9 admin">
+<div id="content" class="col-sm-9 admin">
+	<div class="row">
+	  <div class="col-sm-12">
+      <h2><%= t('revs.user.admin_dashboard') %></h2>
+	  </div>
+	</div>
 
-  <h2><%= t('revs.user.admin_dashboard') %></h2>
-
-  <h3>
-    <%= t('revs.admin.administer_users') %>
-    <span class="object-count muted">
-      (<%= User.count %> <%=t('revs.admin.registered_users')%>)
-    </span>
-  </h3>
+	<div class="row">
+	  <div class="col-sm-12">
+      <h3>
+        <%= t('revs.admin.administer_users') %>
+        <span class="object-count muted">
+          (<%= User.count %> <%=t('revs.admin.registered_users')%>)
+        </span>
+      </h3>
 
   <%= form_tag request.path, :method=>:get, :class => 'form-horizontal find-users' do %>
     <fieldset>
       <legend><%= t('revs.admin.find_users')%></legend>
 
       <div class="form-group">
-        <label for="search" class="control-label">
+        <label for="search" class="control-label col-xs-12 col-sm-4 col-md-3">
           <%=t('revs.admin.search_by_email')%>
         </label>
-        <div class="controls">
-          <%= text_field_tag :search, @search, :class => 'input-large' %>
+        <div class="col-xs-8 col-sm-6 col-md-5">
+          <%= text_field_tag :search, @search, :class => 'form-control' %>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="filter" class="control-label">
+        <label for="filter" class="control-label col-xs-12 col-sm-4 col-md-3">
           <%= t('revs.admin.filter_type') %>
         </label>
-        <div class="controls">
-          <%= select_tag 'filter', options_for_select({'All users'=>'all','Stanford users'=>'stanford','Non-Stanford users'=>'non-stanford'} , @filter), class:"col-md-2" %>
+        <div class="col-xs-4 col-md-3">
+          <%= select_tag 'filter', options_for_select({'All users'=>'all','Stanford users'=>'stanford','Non-Stanford users'=>'non-stanford'} , @filter), class:"form-control" %>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="filter_role" class="control-label">
+        <label for="filter_role" class="control-label col-xs-12 col-sm-4 col-md-3">
           <%= t('revs.admin.filter_role') %>
         </label>
-        <div class="controls">
-          <%= select_tag 'filter_role', options_for_select(['all'] + User.roles , @filter_role), class:"col-md-2" %>
+        <div class="col-xs-4 col-md-2">
+          <%= select_tag 'filter_role', options_for_select(['all'] + User.roles , @filter_role), class:"form-control" %>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="filter_visibility" class="control-label">
+        <label for="filter_visibility" class="control-label col-xs-12 col-sm-4 col-md-3">
           <%= t('revs.admin.filter_visibility') %>
         </label>
-        <div class="controls">
-          <%= select_tag 'filter_visibility', options_for_select({'all'=>'all','Public only'=>'public','Private only'=>'private'}, @filter_visibility), class:"col-md-2" %>
+        <div class="col-xs-4 col-md-2">
+          <%= select_tag 'filter_visibility', options_for_select({'all'=>'all','Public only'=>'public','Private only'=>'private'}, @filter_visibility), class:"form-control" %>
         </div>
       </div>
 
       <%= render :partial=>'shared/per_page_dropdown' %>
 
       <div class="form-group">
-        <div class="controls">
-          <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-default btn-medium' %>
+        <div class="col-sm-offset-4 col-sm-6 col-md-offset-3">
+          <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-default' %>
         </div>
       </div>
     </fieldset>
   <% end %>
 
   <% if @users.size > 0 %>
-    <%= form_tag(bulk_update_role_admin_users_path, method: 'post', class:'form-horizontal update-users') do %>
+    <%= form_tag(bulk_update_role_admin_users_path, method: 'post', class:'form-inline update-users') do %>
     <fieldset>
       <legend><%= t('revs.admin.update_users')%></legend>
 
         <div class="form-group">
-          <label for="role" class="control-label">
+          <label for="role" class="">
             <%=t('revs.admin.set_checked_users')%>
-          </label>
-          <div class="controls">
-            <%= select_tag 'role', options_for_select(User.roles,@role), class:"col-md-2" %>
+            <%= select_tag 'role', options_for_select(User.roles,@role), class:"form-control input-sm" %>
             <!--<input type="checkbox" name="select-all" id="admin-select-all-users"> --> <%#=t('revs.nav.select_all')%>
-          </div>
+          </label>
         </div>
-        <div class="form-group">
-          <div class="controls">
-            <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-default btn-medium' %>
-          </div>
-        </div>
+        <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-default btn-sm' %>
 
-      <div class="row results-controls">
-        <div class="col-md-5 col-md-offset-4 saved-item-pagination">
-          <span>
-            <%= page_entries_info @users %>
-          </span>
+        <div class="row results-controls">
+          <div class="saved-item-pagination">
+            <span>
+              <%= page_entries_info @users %>
+            </span>
+          </div>
         </div>
-      </div>
-    </fieldset>
+      </fieldset>
 
     <table id="admin-users" class="admin table table-bordered table-condensed table-hover table-striped">
       <tr>
@@ -152,6 +151,9 @@
   <% else %>
     <%= t('revs.admin.no_users_found') %>
   <% end %>
+
+		</div>
+	</div>
 
 </div>
 

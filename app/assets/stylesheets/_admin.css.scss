@@ -30,7 +30,7 @@
     }
   }
   .row.results-controls {
-    margin-top: 6px;
+    margin-top: 0;
   }
   .nav-tabs {
     margin-bottom: 10px;
@@ -40,7 +40,13 @@
     margin-top: 6px;
     margin-bottom: 0;
   }
-  .btn-small {
+  .update-users input[type="submit"] {
+    vertical-align: top;
+  }
+  .update-users select {
+    margin-left: 6px;
+  }
+  .btn-sm {
     margin-left: 6px;
   }
   th.edit-count, th.admin-actions {

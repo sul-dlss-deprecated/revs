@@ -1,8 +1,8 @@
 <div class="form-group">
-  <label for="per_page" class="control-label">
+  <label for="per_page" class="control-label col-xs-12 col-sm-4 col-md-3">
     <%= t('revs.admin.per_page') %>
   </label>
-  <div class="controls">
-    <%= select_tag 'per_page', options_for_select({'10'=>'10','25'=>'25','50'=>'50','100'=>'100','500'=>'500'}, @per_page), class: "col-md-2" %>
+  <div class="col-xs-4 col-md-2">
+    <%= select_tag 'per_page', options_for_select({'10'=>'10','25'=>'25','50'=>'50','100'=>'100','500'=>'500'}, @per_page), class: "form-control" %>
   </div>
 </div>
