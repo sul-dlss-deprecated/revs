@@ -8,6 +8,9 @@
       margin-top: 30px;
     }
   }
+  p {
+    max-width: 550px;
+  }
   td.centered, th.centered {
     text-align: center;
   }
@@ -71,6 +74,9 @@
     legend + .control-group {
       margin-top: 10px;
     }
+  }
+  form.update-field-terms input[type="submit"] {
+    margin-bottom: 12px;
   }
   @include item-stats;
 }
