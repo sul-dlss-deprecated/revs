@@ -70,12 +70,10 @@
 
       <% if @tab == @tab_list_user %>
 
-        <div class="row results-controls">
-          <div class="col-md-5 col-md-offset-4 saved-item-pagination">
-            <span>
-              <%= page_entries_info @saved_items_by_user, :entry_name=>'user' %>
-            </span>
-          </div>
+        <div class="saved-item-pagination">
+          <span>
+            <%= page_entries_info @saved_items_by_user, :entry_name=>'user' %>
+          </span>
         </div>
 
 	        <table class="table table-bordered table-condensed table-hover table-striped">
