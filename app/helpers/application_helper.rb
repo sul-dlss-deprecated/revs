@@ -233,7 +233,7 @@ module ApplicationHelper
   def print_page_link
     html = <<-HTML
     <a href="#" onClick="javascript:window.print(); return false;">
-      <button id="print-page" class="btn btn-mini hidden showOnLoad" type="button">Print this page</button>
+      <button id="print-page" class="btn btn-default btn-xs hidden showOnLoad" type="button">Print this page</button>
     </a>
     HTML
 
