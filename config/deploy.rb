@@ -1,45 +1,30 @@
-require 'net/ssh/kerberos'
-require 'bundler/setup'
-require 'bundler/capistrano'
-require 'dlss/capistrano'
-require 'pathname'
-require 'squash/rails/capistrano2'
+# config valid only for Capistrano 3.1
+lock '3.2.1'
+
+require 'squash/rails/capistrano3'
 require 'whenever/capistrano'
 
+set :application, "revs-lib"
+set :repo_url, "https://github.com/sul-dlss/revs"
+set :deploy_to, "/home/lyberadmin/revs-lib"
+
 set :stages, %W(staging development production)
-set :bundle_flags, "--quiet"
-set :repository, "https://github.com/sul-dlss/revs"
-set :whenever_command, "bundle exec whenever"
+
 set :deploy_via, :remote_cache
 set :whenever_command, "bundle exec whenever"
 set :whenever_environment, defer { stage }
 
-require 'capistrano/ext/multistage'
+# Default value for :linked_files is []
+set :linked_files, %w{config/database.yml config/solr.yml}
 
-set :shared_children, %w(
-  log 
-  config/database.yml
-  config/solr.yml
-  public/uploads
-)
-
-set :user, "lyberadmin" 
-set :runner, "lyberadmin"
-set :ssh_options, {
-  :auth_methods  => %w(gssapi-with-mic publickey hostbased),
-  :forward_agent => true
-}
-
-set :destination, "/home/lyberadmin"
-set :application, "revs-lib"
+# Default value for linked_dirs is []
+set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/uploads}
 
 set :scm, :git
 set :copy_cache, true
 set :copy_exclude, [".git"]
 set :use_sudo, false
 set :keep_releases, 3
-
-set :deploy_to, "#{destination}/#{application}"
 
 set :branch do
   last_tag = `git describe --abbrev=0 --tags`.strip
@@ -97,19 +82,18 @@ namespace :deploy do
   task :dev_options_set do
     run "cd #{deploy_to}/current && rake revs:dev_options_set RAILS_ENV=#{rails_env}"
   end
-  task :symlink_uploads do
-    run "rm -fr #{release_path}/public/uploads && ln -s #{shared_path}/uploads #{release_path}/public/uploads"
-  end
   task :start do ; end
   task :stop do ; end
-  task :restart, :roles => :app, :except => { :no_release => true } do
-    run "touch #{File.join(current_path,'tmp','restart.txt')}"
-  end
+  desc 'Restart application'
+  task :restart do
+    on roles(:app), in: :sequence, wait: 5 do
+      # Your restart mechanism here, for example:
+      execute :touch, release_path.join('tmp/restart.txt')
+    end
+  after :publishing, :restart
+
 end
 
-before 'deploy:assets:precompile', 'squash:write_revision'
-after "deploy:create_symlink", "deploy:migrate"
-after "deploy:update", "deploy:cleanup" 
+before 'deploy:compile_assets', 'squash:write_revision'
 after "deploy:update", "deploy:dev_options_set"
 after "deploy:finalize_update", "deploy:symlink_editstore"
-after "deploy:finalize_update", "deploy:symlink_uploads"

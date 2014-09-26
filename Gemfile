@@ -81,15 +81,10 @@ end
 
 # gems necessary for capistrano deployment
 group :development,:deployment do
-  gem 'capistrano', '~>2'
-  gem 'capistrano-ext'
-  gem 'rvm-capistrano'
-  gem 'lyberteam-devel', '>=1.0.0'
-  gem 'lyberteam-gems-devel', '>=1.0.0'
-	gem 'lyberteam-capistrano-devel', '>= 1.1.0'
-  gem 'net-ssh-krb'
+  gem 'capistrano', '~> 3.0'
+  gem 'capistrano-rails'
+  gem 'lyberteam-capistrano-devel'
 end
-gem 'gssapi', :git => 'https://github.com/cbeer/gssapi.git'
 
 gem 'jquery-rails'
 gem 'rest-client'

@@ -1,11 +1,7 @@
-set :rails_env, "development"
-set :deployment_host, "revs-dev.stanford.edu"
+server "revs-dev.stanford.edu", user: 'lyberadmin', roles: %w{web db app}
+#Capistrano::OneTimeKey.generate_one_time_key!
 set :bundle_without, [:deployment]
-
-role :web, deployment_host, :primary => true
-role :app, deployment_host
-role :db,  deployment_host, :primary => true
-
+set :rails_env, "development"
 
 namespace :deploy do
   namespace :assets do
