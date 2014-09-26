@@ -1,26 +1,25 @@
-<div id="content" class="col-md-9 admin">
-	
+<div id="content" class="col-sm-9 admin">
+
   <h2><%=t('revs.user.curator_dashboard')%></h2>
 
   <h3>
     <%= t('revs.user_galleries.galleries') %>
-    <span class="object-count muted">(<%= Gallery.where(:gallery_type=>'user').count %> <%=t('revs.messages.total')%>, <%=Gallery.where(:gallery_type=>'user',:visibility=>'private').count%> <%=t('revs.user_galleries.private').downcase%>)</span>
+    <span class="object-count muted">(<%= Gallery.where(:gallery_type=>'user').count %>
+      <%=t('revs.messages.total')%>,
+      <%=Gallery.where(:gallery_type=>'user',:visibility=>'private').count%>
+      <%=t('revs.user_galleries.private').downcase%>)
+    </span>
   </h3>
 
   <%= form_tag galleries_table_curator_tasks_path, :method=>:get, :class => 'form-inline' do %>
-    <%= select_tag 'filter',options_for_select(@visibility_options,@filter),class:"col-md-2"%>
-    <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-default btn-small' %>
+    <%= select_tag 'filter', options_for_select(@visibility_options,@filter), class:"form-control input-sm" %>
+    <%= submit_tag t('revs.flags.refresh_list'), :class => 'btn btn-default btn-sm' %>
   <% end %>
 
-  <div class="row results-controls">
-    <div class="col-md-4">
-    </div>
-
-    <div class="col-md-5 saved-item-pagination">
-      <span class="prev-next">
-        <%= page_entries_info @galleries, :params => {:filter => @filter} %>
-      </span>
-    </div>
+  <div class="saved-item-pagination">
+    <span class="prev-next">
+      <%= page_entries_info @galleries, :params => {:filter => @filter} %>
+    </span>
   </div>
 
   <table class="table table-bordered table-condensed table-hover table-striped">
