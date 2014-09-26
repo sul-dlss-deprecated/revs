@@ -20,11 +20,9 @@ set :linked_files, %w{config/database.yml config/solr.yml}
 # Default value for linked_dirs is []
 set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/uploads}
 
-set :scm, :git
 set :copy_cache, true
 set :copy_exclude, [".git"]
 set :use_sudo, false
-set :keep_releases, 3
 
 set :branch do
   last_tag = `git describe --abbrev=0 --tags`.strip

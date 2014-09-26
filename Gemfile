@@ -80,7 +80,7 @@ group :staging, :production do
 end
 
 # gems necessary for capistrano deployment
-group :development,:deployment do
+group :deployment do
   gem 'capistrano', '~> 3.0'
   gem 'capistrano-rails'
   gem 'lyberteam-capistrano-devel'
