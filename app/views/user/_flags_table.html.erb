@@ -1,20 +1,15 @@
 <div id="flags_table">
 
   <% if flags.size == 0 %>
-    <%=t('revs.flags.no_results')%>
+    <p><%=t('revs.flags.no_results')%></p>
   <% else %>
 
-  <div class="row results-controls">
-    <div class="col-md-4">
-    </div>
-
-    <div class="col-md-5 saved-item-pagination">
-      <span >
+    <div class="saved-item-pagination">
+      <span>
         <%= page_entries_info flags, :entry_name=>'flag'%>
       </span>
     </div>
-  </div>
-  
+
     <table class="table table-bordered table-condensed table-hover table-striped">
       <tr>
         <% if local_assigns[:curate_view] %>

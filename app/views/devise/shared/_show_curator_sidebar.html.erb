@@ -1,11 +1,11 @@
-<div id="sidebar" class="col-md-3">
+<div id="sidebar" class="col-sm-3">
   <div id="sidebar-nav">
 
     <% if user_signed_in? %>
 
       <% if can? :curate, :all  %>
-        <ul class="nav nav-list">
-          <li class="nav-header"><%= t('revs.admin.sidebar.actions') %></li>
+        <ul class="nav unstyled-list">
+          <li class="nav-header text-uppercase"><%= t('revs.admin.sidebar.actions') %></li>
           <li><%= link_to_unless_current t('revs.curator.sidebar.view_flagged_items'), flags_table_curator_tasks_path %></li>
           <li><%= link_to_unless_current t('revs.curator.sidebar.view_favorited_items'), favorites_table_curator_tasks_path %></li>
           <li><%= link_to_unless_current t('revs.curator.sidebar.view_edited_items'), edits_table_curator_tasks_path %></li>
@@ -17,8 +17,8 @@
       <%= render :partial=>'/devise/shared/dashboards', :locals=>{:user=>current_user} %>
 
       <% if can? :curate, :all  %>
-        <ul class="nav nav-list">
-          <li class="nav-header"><%= t('revs.curator.sidebar.help') %></li>
+        <ul class="nav unstyled-list">
+          <li class="nav-header text-uppercase"><%= t('revs.curator.sidebar.help') %></li>
           <li><%= link_to_unless_current t('revs.help.sidebar.metadata_editing_guidelines'), :controller=>'curator/help', :action=>'metadata_editing_guidelines' %></li>
           <li><%= link_to_unless_current t('revs.help.sidebar.bulk_edits'), :controller=>'curator/help', :action=>'bulk_edits' %></li>
         </ul>
