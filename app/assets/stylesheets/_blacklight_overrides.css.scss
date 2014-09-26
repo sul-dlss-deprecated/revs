@@ -1,6 +1,7 @@
 // Override Blacklight theme pagination styling
 .pagination {
   border-top: 1px solid #dddddd;
+  display: block;
   margin-top: 0;
   padding-top: 20px;
   clear: left;
@@ -34,5 +35,8 @@
       font-weight: bold;
       &:hover {color: #999999;};
     }
+  }
+  span.page a, span.page.current {
+    padding: 0.2em 0.5em;
   }
 }
