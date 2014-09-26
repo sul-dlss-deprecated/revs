@@ -4,7 +4,12 @@ describe("Metadata Editing",:type=>:request,:integration=>true) do
   
   before :each do
   	@facet_link_to_click='black-and-white negatives' # a facet link
+    cleanup_editstore_changes
     logout
+  end
+  
+  after :each do
+    cleanup_editstore_changes
   end
     
   def bulk_edit_interface_shown_should_be_shown(visible)

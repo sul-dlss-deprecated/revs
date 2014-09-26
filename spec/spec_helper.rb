@@ -425,8 +425,7 @@ def get_solrdoc_from_druid(druid)
 end
 
 def cleanup_editstore_changes
-#  Editstore::Change.destroy_all
-  Editstore::Change.connection.execute('delete from editstore_changes;vacuum;') # equivalent of truncate in mysql
+  Editstore::Change.destroy_all
 end
   
   

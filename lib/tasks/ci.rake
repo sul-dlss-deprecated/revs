@@ -3,17 +3,10 @@ require 'rest_client'
 
 desc "Run continuous integration suite"
 task :ci do
-  unless Rails.env.test?  
-    system("rake ci RAILS_ENV=test")
-  else
-    system("rake db:migrate RAILS_ENV=test")  
-    Jettywrapper.wrap(Jettywrapper.load_config) do
-      Rake::Task["revs:refresh_fixtures"].invoke
-      Rake::Task["db:migrate"].invoke
-      Rake::Task["db:fixtures:load"].invoke
-      Rake::Task["db:seed"].invoke      
-      Rake::Task["rspec"].invoke
-    end
+  Rails.env='test'
+  ENV['RAILS_ENV']='test'
+  Jettywrapper.wrap(Jettywrapper.load_config) do
+    Rake::Task["local_ci"].invoke
   end
 end
 

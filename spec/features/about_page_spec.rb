@@ -9,6 +9,7 @@ describe("About Pages",:type=>:request,:integration=>true) do
     @contact_us=I18n.t("revs.about.contact_title")
     @terms_of_use=I18n.t("revs.about.terms_of_use_title")
     @video_tutorials=I18n.t("revs.about.video_tutorials_title")
+    RevsMailer.stub_chain(:contact_message,:deliver).and_return('a mailer')
   end
   
   it "should show the about project page for various URLs" do
@@ -27,8 +28,7 @@ describe("About Pages",:type=>:request,:integration=>true) do
       fill_in 'message', :with=>'My annoying spam message'
       click_button 'Send'
     end
-    RevsMailer.stub_chain(:contact_message,:deliver).and_return('a mailer')
-    expect(RevsMailer).not_to receive(:contact_message)
+    expect(RevsMailer).not_to have_received(:contact_message)
     expect(page).to have_content(I18n.t("revs.about.contact_message_spambot"))
     expect(current_path).to eq(root_path)
   end
@@ -42,8 +42,7 @@ describe("About Pages",:type=>:request,:integration=>true) do
       fill_in 'email_confirm', :with=>'hidden field'
       click_button 'Send'
     end
-    RevsMailer.stub_chain(:contact_message,:deliver).and_return('a mailer')
-    expect(RevsMailer).not_to receive(:contact_message)
+    expect(RevsMailer).not_to have_received(:contact_message)
     expect(page).to have_content(I18n.t("revs.about.contact_message_spambot"))
     expect(current_path).to eq(root_path)
   end
@@ -57,8 +56,7 @@ describe("About Pages",:type=>:request,:integration=>true) do
       fill_in 'message', :with=>'I live in a pineapple under the sea.'
       click_button 'Send'
     end
-    RevsMailer.stub_chain(:contact_message,:deliver).and_return('a mailer')
-    expect(RevsMailer).to receive(:contact_message)
+    expect(RevsMailer).to have_received(:contact_message)
     expect(page).to have_content(I18n.t("revs.about.contact_message_sent"))
   end
 

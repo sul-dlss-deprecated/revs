@@ -160,6 +160,7 @@ describe ActivesolrHelper, :integration => true do
     before :each do
       @druid='yt907db4998'
       @doc = SolrDocument.find(@druid)
+      cleanup_editstore_changes
     end
     
     after :each do
@@ -380,10 +381,11 @@ describe ActivesolrHelper, :integration => true do
   
     before :each do
       @doc = SolrDocument.find('yt907db4998')
+      cleanup_editstore_changes
     end
     
     after :each do
-        cleanup_editstore_changes
+      cleanup_editstore_changes
     end
     
     it "should not have any unsaved edits when initialized" do

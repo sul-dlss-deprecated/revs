@@ -55,7 +55,7 @@ Revs::Application.routes.draw do
   
   # Handles all About pages.
   get 'about', :to => 'about#show', :as => 'about_project', :defaults => {:id=>'project'} # no page specified, go to project page
-  get 'contact', :to=> 'about#contact', :as=>'contact_us'
+  match 'contact', :to=> 'about#contact', :as=>'contact_us', :via=>[:get,:post]
   get 'about/contact', :to=> 'about#contact' # specific contact us about page
   get 'about/tutorials', :to=> 'about#tutorials', :as => 'tutorials' # specific tutorials list page
   get 'about/boom', :to => 'about#boom' # test exception
