@@ -9,7 +9,7 @@
   <h5 class="index_title">
     <%= link_to_document document, :label=>document.title.html_safe,
         :counter => (document_counter + 1 + @response.params[:start].to_i) %>
-    <span class="muted">
+    <span class="text-muted">
       (<%= pluralize(number_with_delimiter(document.collection_members.total_members),
           t('revs.collection_members.items_name')) %>)
     </span>

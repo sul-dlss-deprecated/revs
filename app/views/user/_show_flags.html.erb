@@ -24,11 +24,11 @@
     </p>
   <% end %>
 <% elsif is_logged_in_user?(@user) %>
-  <p class="muted">
+  <p class="text-muted">
     <em><%=t('revs.flags.you_can_flag_problems')%></em>
   </p>
 <% else %>
-    <p class="muted">
+    <p class="text-muted">
   	  <em><%= t('revs.flags.none') %></em>  
     </p>  
 <% end %>

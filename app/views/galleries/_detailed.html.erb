@@ -9,7 +9,7 @@
         <h5 class="index_title">
           <%= link_to(gallery.title,gallery_path(gallery)) %>
           <% if gallery.saved_items(current_user).size > 0 %>
-            <span class="muted">
+            <span class="text-muted">
               (<%= pluralize(gallery.saved_items.size, t('revs.user_galleries.item')) %>)
             </span>
           <% end %>

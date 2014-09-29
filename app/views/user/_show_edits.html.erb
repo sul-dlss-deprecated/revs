@@ -24,11 +24,11 @@
     </p>
   <% end %>
 <% elsif is_logged_in_user?(@user) %>
-  <p class="muted">
+  <p class="text-muted">
     <em><%=t('revs.curator.you_can_edit_items')%></em>
   </p>
 <% else %>
-    <p class="muted">
+    <p class="text-muted">
   	  <em><%= t('revs.edits.none') %></em>  
     </p>  
 <% end %>

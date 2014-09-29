@@ -1,6 +1,6 @@
  <% if saved_item.id.to_s != edit_id or not can? :update, saved_item%>
     <% if can?(:update, saved_item) && saved_item.description.blank? %>
-      <div class="item-annotation muted">
+      <div class="item-annotation text-muted">
         <span><%= t('revs.favorites.you_can_add_a_note_html', :item_type=>item_type_interpolator(saved_item.gallery.gallery_type) ,:href => link_to(t("revs.favorites.you_can_add_a_note_linktext"), edit_saved_item_path(saved_item.id,paging_params), :remote=>true)) %></span>  
       </div>
     <% else %>

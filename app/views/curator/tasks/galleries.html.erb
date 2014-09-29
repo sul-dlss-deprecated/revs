@@ -4,7 +4,7 @@
 
   <h3>
     <%= t('revs.user_galleries.galleries') %>
-    <span class="object-count muted">(<%= Gallery.where(:gallery_type=>'user').count %>
+    <span class="object-count text-muted">(<%= Gallery.where(:gallery_type=>'user').count %>
       <%=t('revs.messages.total')%>,
       <%=Gallery.where(:gallery_type=>'user',:visibility=>'private').count%>
       <%=t('revs.user_galleries.private').downcase%>)
