@@ -1,7 +1,8 @@
 #documents {
   border-top: 2px dotted darken($container_bg_color, 10%);
   margin-top: 0;
-  padding-top: 15px;
+  padding-top: 3px;
+  .index_title {font-weight: 700;}
   a {color: #333;}
   .document {
     border-bottom: none;
@@ -17,7 +18,7 @@
   }
   ul.image-grid li.image-item {
     float: left;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     margin-left: 10px;
     margin-right: 10px;
     min-height: 169px;
@@ -49,9 +50,9 @@
 /* Collections - Grid View */
 #documents.gallery .blacklight-collection {
   text-align: center;
-  min-height: 190px;
+  min-height: 205px;
   min-width: 188px;
-  span.muted {
+  span.text-muted {
     display: block;
     margin-top: 3px;
     font-weight: normal;
