@@ -112,7 +112,7 @@
 }
 
 // Responsive styles
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1199px) {
   .admin.table {
     .feature-collection.gallery {
       width: 45%;
@@ -131,12 +131,12 @@
 //    }
 //  }
 }
-@media screen and (min-width: 768px) and (max-width: 979px) {
+@media screen and (min-width: 768px) and (max-width: 991px) {
   #sidebar-nav .nav-header .label {
     margin-left: 6px;
   }
 }
-@media screen and (max-width: 979px) {
+@media screen and (max-width: 991px) {
   .admin.table {
     .feature-collection.gallery .description-teaser {
       display: none;

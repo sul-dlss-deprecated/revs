@@ -411,12 +411,12 @@
     }
   }
 }
-@media screen and (min-width: 980px) and (max-width: 1199px) {
+@media screen and (min-width: 992px) and (max-width: 1199px) {
   .saved-items .item-details {
     margin-right: 25px;
   }
 }
-@media screen and (min-width: 768px) and (max-width: 979px) {
+@media screen and (min-width: 768px) and (max-width: 991px) {
   .profile-visibility {
     display: none;
   }
@@ -456,7 +456,7 @@
     float: left;
   }
 }
-@media screen and (max-width: 979px) {
+@media screen and (max-width: 991px) {
   .thumbnail-column {
     display: none;
   }

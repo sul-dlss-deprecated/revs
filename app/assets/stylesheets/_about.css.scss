@@ -44,10 +44,10 @@
   }
 
   // Make textarea wide as reasonable given viewport size
-  @media screen and (min-width: 980px) {
+  @media screen and (min-width: 992px) {
     textarea#message {width: 500px;}
   }
-  @media screen and (min-width: 768px) and (max-width: 979px) {
+  @media screen and (min-width: 768px) and (max-width: 991px) {
     textarea#message {width: 320px;}
   }
   @media screen and (max-width: 767px) {

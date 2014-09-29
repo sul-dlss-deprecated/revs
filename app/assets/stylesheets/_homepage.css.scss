@@ -122,13 +122,13 @@ $collection-image-right-gutter: 30px;
 /* Adjustments for screen sizes below 1200px */
 
 /* Put nav buttons close together when tablet or smaller */
-@media screen and (max-width: 979px) {
+@media screen and (max-width: 991px) {
   #featured-collection-nav .carousel-controls a.right {
     left: 75px;
   }
 }
 
-@media screen and (min-width: 980px) and (max-width: 1199px) {
+@media screen and (min-width: 992px) and (max-width: 1199px) {
   $collection-image-container: 365px;
   $collection-image-right-gutter: 20px;
   #all_collections_carousel {
@@ -156,7 +156,7 @@ $collection-image-right-gutter: 30px;
   }
 }
 
-@media screen and (max-width: 979px) {
+@media screen and (max-width: 991px) {
   #featured-collection-nav {
     padding-top: 6px;
     clear: both;

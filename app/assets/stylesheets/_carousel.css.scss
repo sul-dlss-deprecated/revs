@@ -39,12 +39,12 @@
 .carousel-inner > .item > img, .carousel-inner > .item > a > img{
   border: 2px solid #bbb;
 }
-@media screen and (min-width: 980px) and (max-width: 1199px) {
+@media screen and (min-width: 992px) and (max-width: 1199px) {
  .carousel-inner {max-width: 380px;}
 }
 
 /* Responsive overrides specific to Collection page carousel */
-@media screen and (max-width: 979px) {
+@media screen and (max-width: 991px) {
   #collection_carousel.carousel {margin-bottom: 5px;}
 }
 
