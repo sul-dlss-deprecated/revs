@@ -1,15 +1,15 @@
-/* Not sure why we hvae to do some of these overrides.
- * The carousel seems to have a 70 px right margin caused
- * by the the dsiplay: block on the carousel.  
-**/
 .carousel {
 	display: inline-block;
 	.carousel-caption {
-	  background: rgba(0, 0, 0, 0.6);
-	  padding: 0 0 10px 15px;
+	  background: rgba(0, 0, 0, 0.4);
+	  padding: 0 0 10px 0;
+    bottom: 0;
+    left: 2px;
+    right: 2px;
 	  p {
 	    color: #ddd;
 	    font-size: 14px;
+      margin-bottom: 0;
 	  }
 	}
 }
@@ -18,7 +18,7 @@
 	margin-top: 20px;
 	height: 45px;
 	.number-of-items {
-		@extend .muted;
+		@extend .text-muted;
 		position: absolute;
 		left: 36%;
 		top: 25%;
@@ -29,6 +29,7 @@
     border: none;
     color: #333;
     font-size: 90px;
+    font-weight: 200;
     height: 30px;
     width: 40px;
     line-height: 22px;

@@ -29,11 +29,6 @@
     color: #999;
     font-size: 0.95em;
     padding-left: 1px;
-    .nav-header {
-      border-bottom: 1px solid #e5e5e5;
-      margin: 0 -15px 6px 0;
-      padding: 0;
-    }
     > li >, > li > div {
       div, a, a:visited, input.btn-link {
         color: #333;
@@ -398,6 +393,10 @@
   .unresolved-label {
     display: none;
   }
+  .blacklight-catalog-show #sidebar-nav {
+    border-top: 1px solid #ddd;
+    margin-top: 20px;
+  }
 }
 
 @media screen and (max-width: 991px) and (min-width: 768px) {
@@ -423,6 +422,10 @@
 @media screen and (max-width: 767px) {
   .slideshow img {margin-bottom: 20px;}
   .blacklight-catalog-show {
+    .carousel-container {
+      margin-top: 10px;
+      text-align: center;
+    }
     .back-to-results {
       display: inline;
     }

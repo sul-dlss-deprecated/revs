@@ -1,7 +1,7 @@
 <div id="sidebar-nav">
   <%= render :partial => 'collection_navigation' %>
 	<%#= render :partial => 'bookmarks_history' %>
-  <ul class="nav list-unstyledked">
+  <ul class="nav list-unstyled">
     <%#= render :partial => 'show_tools' %>
   </ul>
 </div>
@@ -9,7 +9,7 @@
 <% unless @document.more_like_this.empty? %>
 <div id="sidebar-mlt">
   <ul class="nav list-unstyled">
-  <li class="nav-header"><%= t('revs.sidebar.more_like_this') %></li>
+  <li class="nav-header text-uppercase"><%= t('revs.sidebar.more_like_this') %></li>
     <%= render :collection => @document.more_like_this, :partial => 'show_more_like_this', :as => :document %>
   </ul>
 </div>

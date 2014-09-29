@@ -10,23 +10,23 @@ $(document).ready(function(){
 </script>
 
 <div class="row">
-  <div class="col-md-9">
+  <div class="col-sm-12">
     <h2><%= t('revs.collection.collection_detail') %></h2>
   </div>
 </div>
 
 <div class="row">
-  <div class="col-md-5">
+  <div class="col-sm-7 col-lg-6 carousel-container">
     <div id="collection_carousel" class="carousel slide">
 		  <% @carousel_members = @document.get_members(:rows=>blacklight_config.collection_member_carousel_items,:start=>0,:include_hidden=>can?(:view_hidden, SolrDocument))%>
 			<%= render :partial=> "collection_member_carousel", :locals => {:rows=>blacklight_config.collection_member_carousel_items,:start=>0}%>
     </div>
   </div>
-  <div class="col-md-4">
+  <div class="col-sm-5 col-lg-6">
     <h4 class="show-document-title"><%= document.title.html_safe %></h4>
     <%= render :partial => "show_default_collection", :locals => {:document => @document} %>
   </div>
 </div>
 
-<div id="collection-members-grid">
+<div id="collection-members-grid" class="row">
 </div>

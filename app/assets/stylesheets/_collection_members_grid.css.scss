@@ -1,21 +1,21 @@
-.collection-members {
+.collection-members-grid-header {
 	@include member-section-header;
-	margin-top: 20px;
-	h5 {
-		@media(max-width: 767px){
-			text-align: center;
-		}
-		margin:0;
-	}
+	margin: 20px 15px 0;
 	.controls {
 	  font-size: 12px;
 	  margin-bottom: 10px;
+    padding-right: 0;
 	  text-transform: none;
-		@media(max-width: 767px){
-			text-align: center;
-		}
 		text-align: right;
 	}
+	h5 {
+    font-weight: 700;
+		margin: 0;
+    margin-left: -15px;
+    .text-muted {font-size: 12px;}
+	}
+}
+.collection-members {
 	.item {
 		float: left;
 		margin: 5px 7px;
@@ -27,4 +27,13 @@
 	  margin-left: 3px;
 	  vertical-align: top;
 	}
+}
+@media screen and (max-width: 767px) {
+  .collection-members-grid-header {
+    h5 {text-align: center;}
+    .controls {
+      padding-top: 3px;
+      text-align: center;
+    }
+  }
 }

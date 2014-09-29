@@ -18,7 +18,7 @@
 <%= render :partial => '/shared/report_problem' %>
 
 <% cache("navbar", :expires_in=>6.hours) do %>
-  <div class="header-navbar-static-top">
+  <div id="revs-masthead">
     <div class="container">
       <div class="site-header-content">
         <h1><%= link_to application_name, root_path %></h1>
