@@ -1,8 +1,8 @@
 <div id="sidebar" class="col-md-3">
   <div id="sidebar-nav">
 
-    <ul class="nav nav-list">
-      <li class="nav-header">
+    <ul class="nav list-unstyled">
+      <li class="nav-header text-uppercase">
       <%= @user.to_s %><%= t('revs.user.public_activity') %></li>
       <% if @user.public || can?(:read, @user)%>
 				<li><%= link_to_unless_current t('revs.user.profile'), user_path(@user.username) %></li>

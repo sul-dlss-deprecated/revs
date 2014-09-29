@@ -9,7 +9,7 @@
 
   <div class="row results-controls">
     <div class="col-md-4 view-toggle">
-      <div class='gallery_toggle hidden showOnLoad tabbable tabs-below'>
+      <div class='gallery_toggle hidden showOnLoad tabbable'>
         <ul class="nav nav-pills">
           <li><%= link_to(t('revs.nav.grid'), galleries_path(:view => nil,:filter=>@filter), :class=>"#{'active' if @view == 'grid'}") %></li>
           <li><%= link_to(t('revs.nav.detailed'), galleries_path(:view => 'detailed',:filter=>@filter), :class=>"#{'active'if @view == 'detailed'}") %></li>
@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="col-md-8 gallery-filters">
-      <div class='gallery_toggle tabbable tabs-below'>
+      <div class='gallery_toggle tabbable'>
         <ul class="nav nav-pills">
           <li><%= link_to(t('revs.nav.featured'), galleries_path(:filter => nil,:view=>@view), :class=>"#{'active' if @filter == 'featured'}") if Gallery.featured.size > 0%></li>
           <li><%= link_to(t('revs.nav.curator'), galleries_path(:filter => 'curator',:view=>@view), :class=>"#{'active'if @filter == 'curator'}") if Gallery.curated.size > 0%></li>

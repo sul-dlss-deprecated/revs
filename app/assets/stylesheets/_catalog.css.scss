@@ -25,7 +25,7 @@
   h2 {
     @include page-header;
   }
-  ul.nav-list {
+  ul.nav {
     color: #999;
     font-size: 0.95em;
     padding-left: 1px;
@@ -186,7 +186,7 @@
     #flags_link {
       padding: 2px 15px 2px 0;
     }
-    &.nav-list > li > a {
+    &.nav > li > a {
       padding: 2px 15px;
     }
     a:hover i, div:hover i {

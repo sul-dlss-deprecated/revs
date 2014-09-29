@@ -61,7 +61,7 @@
                  | <%= link_to t('revs.actions.edit'), edit_gallery_path(gallery,:page=>params[:page],:order=>params[:order]), :id=>"edit_#{gallery.id}" %> |
               <% end%>
               <% if can? :destroy, gallery%>
-                <%=button_to(t('revs.actions.delete'), gallery_path(gallery.id,:page=>params[:page],:order=>params[:order]), :id=>"delete_#{gallery.id}", :confirm=>t('revs.actions.confirm_delete'), :method=> :delete, :remote=>true, class: 'btn btn-link') %>
+                <%=button_to(t('revs.actions.delete'), gallery_path(gallery.id,:page=>params[:page],:order=>params[:order]), :id=>"delete_#{gallery.id}", :confirm=>t('revs.actions.confirm_delete'), :method=> :delete, :remote=>true, class: 'btn btn-default btn-link') %>
               <% end %>
             </li>
           </ul>

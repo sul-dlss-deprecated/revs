@@ -1,7 +1,7 @@
 <div class="row results-controls saved-items-list">
 
   <div class="col-md-4">
-    <div class='gallery_toggle tabbable tabs-below'>
+    <div class='gallery_toggle tabbable'>
       <ul class="nav nav-pills">
         <li><%= link_to(t('revs.nav.grid'), url_for({:view=>'grid',:manage=>@manage}), :class=>"#{'active' if @view == 'grid'}") %></li>
         <li><%= link_to(t('revs.nav.detailed'), url_for({:view=>'detailed',:manage=>@manage}), :class=>"#{'active' if @view == 'detailed'}") %></li>

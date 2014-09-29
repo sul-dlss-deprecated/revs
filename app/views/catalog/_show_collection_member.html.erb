@@ -84,7 +84,7 @@
           <%= render :partial => "show_default_collection_member", :locals => {:document => @document} %>
 			  </div>
 
-        <ul class="nav nav-list item-actions">
+        <ul class="nav list-unstyled item-actions">
           <li class="nav-header"><%=t('revs.admin.sidebar.actions')%></li>
 
 					<% if can?(:create, SavedItem) && (@document.visibility != :hidden || @document.is_favorite?(current_user))%>
@@ -196,7 +196,7 @@
 				</ul>
 
         <% if can? :curate, :all %>
-          <ul class="nav nav-list item-actions curator-actions showOnLoad hidden-offscreen">
+          <ul class="nav list-unstyled item-actions curator-actions showOnLoad hidden-offscreen">
             <li class="nav-header"><%=t('revs.curator.curator_actions')%></li>
             <% if can? :update_metadata, :all
                 edit_mode_link_text = in_curator_edit_mode ? t('revs.curator.leave_edit_mode') : t('revs.curator.enter_edit_mode')
