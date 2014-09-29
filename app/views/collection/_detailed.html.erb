@@ -5,7 +5,7 @@
       collection_members = collection.collection_members(:rows => @num_to_show_in_filmstrip, :random=>true, :include_hidden=>can?(:view_hidden, SolrDocument))
      %>
     <div class="blacklight-collection document row<%= " first" if counter == 0 %>">
-      <div class="col-md-12 collection-title">
+      <div class="col-xs-12 collection-title">
         <h5 class="index_title">
           <%= link_to_document collection, :label=>collection.title.html_safe %>
           <span class="text-muted">
