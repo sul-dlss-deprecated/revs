@@ -7,7 +7,7 @@
   </h2>
 
   <div class="row gallery-details">
-    <div class="col-md-3 hidden-phone">
+    <div class="col-md-3 hidden-sm">
       <%= link_to(image_tag(@gallery.image(:user => current_user, :size => :large),
         class: "thumbnail-preview"), gallery_path(@gallery.id)) %>
     </div>
