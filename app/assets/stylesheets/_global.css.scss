@@ -192,8 +192,10 @@ span.content-type {
       font-style: italic;
       padding-bottom: 3px;
     }
-    li.account-profile > a {
-      display: inline-block;
+    li.account-profile a {
+      display: block;
+      &.view-profile-link {display: inline-block;}
+      &.edit-profile-link {display: inline-block;}
     }
   }
 }

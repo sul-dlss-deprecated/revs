@@ -16,26 +16,36 @@
   </div>
 
   <% if @manage && can?(:update,saved_items.first) %>
-    <div class="col-md-9 manage-list-items">
-      <%= form_tag(manage_saved_items_path, method: 'post', class:'form-inline autosubmit', id:'manage-item-form') %>
-        <label class="checkbox-inline">
-          <input type="checkbox" name="select-all" id="saved_items-select-all">
-          <%=t('revs.nav.select_all')%>
-        </label>
-        <% if can?(:update, saved_items.first) && @available_galleries.size > 0 %>
-          <%= select_tag 'move_to_gallery', options_from_collection_for_select(@available_galleries,"id","title"), prompt:t('revs.user_galleries.move_to_gallery'), :class => "col-md-2" %>
-          <%= select_tag 'copy_to_gallery', options_from_collection_for_select(@available_galleries,"id","title"), prompt:t('revs.user_galleries.copy_to_gallery'), :class => "col-md-2"%>
-        <% end %>
-        <% if can? :destroy, saved_items.first %>
-          <%= submit_tag t('revs.user_galleries.remove'),
-            :id=>'delete-button',
-            :class => 'btn btn-default btn-small',
-            :disable_with => t('revs.nav.please_wait'),
-            :show_loading_indicator=>"true",
-            :name=>:delete,
-            :confirm=>t('revs.user_galleries.confirm_remove_items')
-          %>
-        <% end %>
-     </div>
+    <div class="col-xs-12 manage-list-items">
+      <div class="manage-list-items-controls">
+        <%= form_tag(manage_saved_items_path, method: 'post', class:'form-inline autosubmit', id:'manage-item-form') %>
+          <div class="form-group">
+            <label class="checkbox-inline">
+              <input type="checkbox" name="select-all" id="saved_items-select-all">
+              <%=t('revs.nav.select_all')%>
+            </label>
+          </div>
+
+          <% if can?(:update, saved_items.first) && @available_galleries.size > 0 %>
+            <div class="form-group">
+              <%= select_tag 'move_to_gallery', options_from_collection_for_select(@available_galleries,"id","title"), prompt:t('revs.user_galleries.move_to_gallery'), :class => "form-control input-sm" %>
+              <%= select_tag 'copy_to_gallery', options_from_collection_for_select(@available_galleries,"id","title"), prompt:t('revs.user_galleries.copy_to_gallery'), :class => "form-control input-sm" %>
+            </div>
+          <% end %>
+
+          <% if can? :destroy, saved_items.first %>
+            <%= submit_tag t('revs.user_galleries.remove'),
+              :id=>'delete-button',
+              :class => 'btn btn-default btn-xs',
+              :disable_with => t('revs.nav.please_wait'),
+              :show_loading_indicator=>"true",
+              :name=>:delete,
+              :confirm=>t('revs.user_galleries.confirm_remove_items')
+            %>
+          <% end %>
+
+      </div>
+    </div>
   <% end %>
+
 </div>

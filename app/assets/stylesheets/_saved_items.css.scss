@@ -15,7 +15,7 @@
   max-width: 100px;
 }
 
-.manage-list-items {
+.manage-list-items-controls {
   border-top: 2px dotted #dedede;
   margin-top: 6px;
   padding-top: 9px;
@@ -28,4 +28,9 @@
   label, select, .btn {
     font-size: 13px;
   }
+  select {width: 140px;}
+}
+
+@media screen and (max-width: 767px) {
+  #manage-item-form select#move_to_gallery {margin-bottom: 6px;}
 }
