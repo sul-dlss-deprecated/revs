@@ -1,4 +1,4 @@
-<div id="content" class="col-md-9">
+<div id="content" class="col-sm-9">
 
   <h2><%=t('revs.user_galleries.new_gallery')%></h2>
   
@@ -12,4 +12,6 @@
     
 </div>
 
-<%= render :partial => 'user/side_nav', :locals=>{:user=>current_user} %>
+<div class="col-sm-3">
+  <%= render :partial => 'user/side_nav', :locals=>{:user=>current_user} %>
+</div>
