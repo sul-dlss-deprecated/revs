@@ -15,7 +15,7 @@
       <%= hidden_field_tag :order,params[:order] %>
       <%= f.text_area :description, :rows => '4', :class => "input-xlarge", :value=>saved_item.description %>
       <p>
-        <%= f.submit t('revs.nav.update'), :class => "flag-button btn btn-default btn-small" %>
+        <%= f.submit t('revs.nav.update'), :class => "flag-button btn btn-default btn-sm" %>
         <%=link_to t('revs.nav.cancel'),cancel_saved_items_path(saved_item.id,paging_params),:remote=>true%>
       </p>
     <% end %>

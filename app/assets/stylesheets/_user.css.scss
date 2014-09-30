@@ -265,7 +265,6 @@
   }
   .thumbnail-preview {
     float: left;
-//    margin-right: 20px;
     img {
       border: none;
       margin: 0;
@@ -279,6 +278,11 @@
   }
   .highlighted {
     @include item-highlighting;
+  }
+  &.detailed {
+    .thumbnail-preview {
+      margin-right: 20px;
+    }
   }
   &.grid {
     .item-creation-date, .saved-item-actions a,
