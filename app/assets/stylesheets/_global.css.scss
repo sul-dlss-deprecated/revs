@@ -358,11 +358,11 @@ form.report-problem {
       top: 110%;
     }
   }
+  #sidebar-nav {border-top: 1px solid #ddd;}
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
   .pagination {clear: both;}
-  #sidebar-nav {border-top: 1px solid #ddd;}
   #sidebar {
     border-top: none;
     padding-top: 0;
@@ -373,10 +373,15 @@ form.report-problem {
   .error-500:before {
     left: 10%;
   }
+  .blacklight-about #sidebar-nav {border-top: 1px solid #ddd;}
 }
 
 @media screen and (max-width: 479px) {
   .error-500:before {
     display: none;
   }
+}
+
+@media screen and (min-width: 768px) {
+  .blacklight-about #sidebar-nav {border-top: 5px solid #990000;}
 }
