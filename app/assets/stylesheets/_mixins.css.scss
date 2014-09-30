@@ -101,6 +101,7 @@
 @mixin item-stats {
   ul.item-stats {
     margin-bottom: 20px;
+    margin-left: 0;
     > li {
       font-size: 13px;
       padding-left: 0;
