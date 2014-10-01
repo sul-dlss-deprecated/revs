@@ -48,18 +48,17 @@
   }
   .profile-links {
     border-bottom: 2px solid #ddd;
-    margin-bottom: 30px;
-    margin-left: 0;
-    margin-top: 10px;
+    margin: 10px 0 30px;
     padding-bottom: 8px;
     .user-name {
       font-size: 1.1em;
       font-weight: bold;
       line-height: 1.3em;
-      margin-left: 0;
+      padding-left: 3px;
     }
     .user-links {
       border-top: 1px dotted #bbb;
+      padding-left: 0;
       margin-top: -6px;
       padding-top: 6px;
       a.user-link {
@@ -89,7 +88,6 @@
     }
   }
   .profile-activity {
-    margin-top: 18px;
     ul {
       list-style-type: none;
       margin: 0;

@@ -5,10 +5,10 @@
 
   <div class="row profile-vitals">
 
-    <div class="col-md-2">
+    <div class="col-xs-3">
       <%= image_tag(@user.avatar.url(:thumb), :class => "user-image") %>
     </div>
-    <div class="col-md-6 col-md-offset-1 user-bio">
+    <div class="col-xs-9 user-bio">
       <% unless @user.bio.blank? %>
         <div>
           <%= @user.bio %>
@@ -18,11 +18,11 @@
   </div>
 
   <div class="row profile-links">
-    <div class="col-md-3 user-name">
+    <div class="col-sm-3 user-name">
       <%= display_user_name(@user) %>
     </div>
 
-    <div class="col-md-6 <%= 'user-links' if @user.url? or @user.twitter? %> ">
+    <div class="col-sm-9 <%= 'user-links' if @user.url? or @user.twitter? %> ">
       <%= link_to "<i class='icon-external-link'></i> http://#{@user.url}".html_safe, "http://#{@user.url}", :target=>'_new', :class => "user-link website" unless @user.url.blank? %>
       <%= '<span class="divider">|</span>'.html_safe if @user.url? and @user.twitter? %>
       <%= link_to "<i class='icon-twitter'></i> @#{@user.twitter}".html_safe, "https://twitter.com/intent/user?screen_name=@#{@user.twitter}", :target=>'_new', :class => "user-link twitter" unless @user.twitter.blank? %>
@@ -30,29 +30,29 @@
   </div>
 
   <div class="row profile-activity">
-    <div class="col-md-4">
+    <div class="col-sm-5">
       <%= render :partial => 'show_favorites' %>
     </div>
     
-    <div class="col-md-4 col-md-offset-1">
+    <div class="col-sm-5 col-sm-offset-2">
       <%= render :partial => 'show_galleries' %>
     </div>
     
   </div>
 
   <div class="row profile-activity">
-    <div class="col-md-4">
+    <div class="col-sm-5">
       <%= render :partial => 'show_annotations' %>
     </div>
 
-    <div class="col-md-4 col-md-offset-1">
+    <div class="col-sm-5 col-sm-offset-2">
       <%= render :partial => 'show_flags' %>
     </div>
 
   </div>
   
   <div class="row profile-activity">
-    <div class="col-md-4">
+    <div class="col-sm-5">
       <% if @user.can? :curate, :all %>
         <%= render :partial => 'show_edits' %>
       <% end %>
