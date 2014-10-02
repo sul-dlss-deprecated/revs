@@ -19,7 +19,7 @@ body {
   background: yellow;
 }
 
-#sidebar-nav > ul {
+#sidebar-nav ul {
   margin-bottom: 20px;
   li > a, li .button_to input[type="submit"] {
     padding: 1px 0;
@@ -360,7 +360,10 @@ form.report-problem {
       top: 110%;
     }
   }
-  #sidebar-nav {border-top: 1px solid #ddd;}
+  #sidebar-nav {
+    border-top: 5px solid #ddd;
+  }
+  .user-dashboard-sidebar #sidebar-nav {margin-top: 20px;}
 }
 
 @media screen and (max-width: 767px) {
@@ -375,7 +378,7 @@ form.report-problem {
   .error-500:before {
     left: 10%;
   }
-  .blacklight-about #sidebar-nav {border-top: 1px solid #ddd;}
+  .blacklight-about #sidebar-nav {border-top: 5px solid #ddd;}
 }
 
 @media screen and (max-width: 479px) {

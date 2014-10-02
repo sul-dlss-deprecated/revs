@@ -1,77 +1,85 @@
 <div id="sidebar" class="user-dashboard-sidebar">
   <div id="sidebar-nav">
 
-    <ul class="nav list-unstyled account">
-      <li class="nav-header text-uppercase">
-        <%= t('revs.authentication.sidebar.account') %>
-        <% unless @user.role == 'user' %>
-          <span class="label label-revs text-lowercase"><%= @user.role.capitalize %></span>
-        <% end %>
-      </li>
-      <li class="account-date">
-        <%= t('revs.user.joined_on') %>
-        <%= show_as_date(@user.created_at) %>
-      </li>
-      <li class="account-profile">
-       <% unless on_user_profile_page %>
-        <%= link_to_unless_current t('revs.user.view_profile_page'), user_path(@user.username), :class => "view-profile-link" %>
-        <span class="label profile-visibility <%= @user.public ? 'label-success' : '' %>">
-          <%= @user.public ? t('revs.user.public').downcase : t('revs.user.private').downcase %>
-        </span>
-       <% end %>
-        <% unless on_edit_page %>
-          <%= link_to_unless_current t('revs.user.update_your_profile').humanize, edit_user_registration_path, :class => ("edit-profile-link" if on_user_profile_page) %>
-          <% if on_user_profile_page %>
+    <div class="row">
+      <div class="col-sm-5 col-md-12">
+        <ul class="nav list-unstyled account">
+          <li class="nav-header text-uppercase">
+            <%= t('revs.authentication.sidebar.account') %>
+            <% unless @user.role == 'user' %>
+              <span class="label label-revs text-lowercase"><%= @user.role.capitalize %></span>
+            <% end %>
+          </li>
+          <li class="account-date">
+            <%= t('revs.user.joined_on') %>
+            <%= show_as_date(@user.created_at) %>
+          </li>
+          <li class="account-profile">
+           <% unless on_user_profile_page %>
+            <%= link_to_unless_current t('revs.user.view_profile_page'), user_path(@user.username), :class => "view-profile-link" %>
             <span class="label profile-visibility <%= @user.public ? 'label-success' : '' %>">
               <%= @user.public ? t('revs.user.public').downcase : t('revs.user.private').downcase %>
             </span>
+           <% end %>
+            <% unless on_edit_page %>
+              <%= link_to_unless_current t('revs.user.update_your_profile').humanize, edit_user_registration_path, :class => ("edit-profile-link" if on_user_profile_page) %>
+              <% if on_user_profile_page %>
+                <span class="label profile-visibility <%= @user.public ? 'label-success' : '' %>">
+                  <%= @user.public ? t('revs.user.public').downcase : t('revs.user.private').downcase %>
+                </span>
+              <% end %>
+            <% end %>
+          </li>
+          <% unless current_user.sunet_user? %>
+            <li><%= link_to_unless_current t('revs.user.change_password'), edit_user_account_path%></li>
+            <li><%= link_to_unless_current t('revs.user.change_email'), edit_user_account_path%></li>
           <% end %>
-        <% end %>
-      </li>
-      <% unless current_user.sunet_user? %>
-        <li><%= link_to_unless_current t('revs.user.change_password'), edit_user_account_path%></li>
-        <li><%= link_to_unless_current t('revs.user.change_email'), edit_user_account_path%></li>
-      <% end %>
-      <% if current_user.sunet_user? %>
-        <li>
-          <%= button_to t('revs.user.sign_out'), webauth_logout_path, :method=>:delete,
-                :class => "btn-link" %>
-        </li>
-      <% else %>
-        <li>
-          <%= button_to t('revs.user.sign_out'), destroy_user_session_path, :method=>:delete,
-                :class => "btn-link" %>
-        </li>
-      <% end %>
-    </ul>
+          <% if current_user.sunet_user? %>
+            <li>
+              <%= button_to t('revs.user.sign_out'), webauth_logout_path, :method=>:delete,
+                    :class => "btn-link" %>
+            </li>
+          <% else %>
+            <li>
+              <%= button_to t('revs.user.sign_out'), destroy_user_session_path, :method=>:delete,
+                    :class => "btn-link" %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
 
-    <ul class="nav list-unstyled">
-      <li class="nav-header text-uppercase">
-        <%= t('revs.authentication.sidebar.actions') if has_activity?(@user) %>
-      </li>
-      <% if favorites_count(@user) > 0 %>
-        <li><%= link_to_unless_current t('revs.user.view_your_favorites'), user_favorites_user_index_path(@user.username) %></li>
-      <% end %>
-      <% if galleries_count(@user) > 0 %>
-        <li><%= link_to_unless_current t('revs.user.view_your_galleries'), user_galleries_user_index_path(@user.username) %></li>
-      <% end %>
-      <% if annotations_count(@user) > 0 %>
-        <li><%= link_to_unless_current t('revs.user.view_your_annotations'),user_annotations_user_index_path(@user.username) %></li>
-      <% end %>
-      <% if flags_count(@user) > 0 %>
-        <li><%= link_to_unless_current t('revs.user.view_your_flags'), user_flags_user_index_path(@user.username) %></li>
-      <% end %>
-      <% if edits_count(@user) > 0 %>
-        <li><%= link_to_unless_current t('revs.user.view_your_edits'), user_edits_user_index_path(@user.username) %></li>
-      <% end %>
-      <li><%= link_to_unless_current(t("revs.user_galleries.create_new_gallery"), new_gallery_path) %></li>
-    </ul>
+      <div class="col-sm-4 col-md-12">
+        <ul class="nav list-unstyled">
+          <li class="nav-header text-uppercase">
+            <%= t('revs.authentication.sidebar.actions') if has_activity?(@user) %>
+          </li>
+          <% if favorites_count(@user) > 0 %>
+            <li><%= link_to_unless_current t('revs.user.view_your_favorites'), user_favorites_user_index_path(@user.username) %></li>
+          <% end %>
+          <% if galleries_count(@user) > 0 %>
+            <li><%= link_to_unless_current t('revs.user.view_your_galleries'), user_galleries_user_index_path(@user.username) %></li>
+          <% end %>
+          <% if annotations_count(@user) > 0 %>
+            <li><%= link_to_unless_current t('revs.user.view_your_annotations'),user_annotations_user_index_path(@user.username) %></li>
+          <% end %>
+          <% if flags_count(@user) > 0 %>
+            <li><%= link_to_unless_current t('revs.user.view_your_flags'), user_flags_user_index_path(@user.username) %></li>
+          <% end %>
+          <% if edits_count(@user) > 0 %>
+            <li><%= link_to_unless_current t('revs.user.view_your_edits'), user_edits_user_index_path(@user.username) %></li>
+          <% end %>
+          <li><%= link_to_unless_current(t("revs.user_galleries.create_new_gallery"), new_gallery_path) %></li>
+        </ul>
+      </div>
 
-    <%# List of links to FAQ and other help pages %>
-    <%= render "shared/help_links" %>
+      <div class="col-sm-3 col-md-12">
+        <%# List of links to FAQ and other help pages %>
+        <%= render "shared/help_links" %>
+      </div>
+    </div>
 
     <%# List of links to dashboards appropriate to user role %>
     <%= render(:partial=>'/devise/shared/dashboards', :locals=>{:user=>@user}) if can?(:curate, :all) || can?(:administer, :all)%>
-  
+
   </div>
 </div>
