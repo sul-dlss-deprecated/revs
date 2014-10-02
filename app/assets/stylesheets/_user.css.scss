@@ -139,6 +139,10 @@
       font-style: italic;
     }
   }
+  .saved-items .thumbnail-preview {
+    margin-right: 20px;
+  }
+  .item-details {padding-left: 0;}
 }
 
 .favorites-index {
@@ -468,6 +472,7 @@
   .gallery-metadata ul.item-stats {
     margin-left: 2px;
   }
+  .blacklight-user .saved-items .item-description {padding-left: 0;}
 }
 @media screen and (max-width: 479px) {
   #new_user {
