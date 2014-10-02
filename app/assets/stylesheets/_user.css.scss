@@ -432,17 +432,14 @@
   .blacklight-user {
     .profile-vitals {
       .user-image {
-        margin-bottom: 12px;
         width: 120px;
       }
       .user-bio {
         margin-bottom: 0;
       }
     }
-    .profile-links {
-      .user-name {
-        margin-bottom: 12px;
-      }
+    .profile-links .user-links {
+      margin-top: 12px;
     }
   }
 //  #sidebar.user-dashboard-sidebar {

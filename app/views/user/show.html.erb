@@ -30,29 +30,29 @@
   </div>
 
   <div class="row profile-activity">
-    <div class="col-sm-5">
+    <div class="col-sm-6">
       <%= render :partial => 'show_favorites' %>
     </div>
     
-    <div class="col-sm-5 col-sm-offset-2">
+    <div class="col-sm-6">
       <%= render :partial => 'show_galleries' %>
     </div>
     
   </div>
 
   <div class="row profile-activity">
-    <div class="col-sm-5">
+    <div class="col-sm-6">
       <%= render :partial => 'show_annotations' %>
     </div>
 
-    <div class="col-sm-5 col-sm-offset-2">
+    <div class="col-sm-6">
       <%= render :partial => 'show_flags' %>
     </div>
 
   </div>
   
   <div class="row profile-activity">
-    <div class="col-sm-5">
+    <div class="col-sm-6">
       <% if @user.can? :curate, :all %>
         <%= render :partial => 'show_edits' %>
       <% end %>
