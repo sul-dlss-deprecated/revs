@@ -43,6 +43,21 @@
   .item-nav {
     float: right;
   }
+  .nav-header {
+    border-bottom: 1px solid #e5e5e5;
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 6px;
+    padding: 6px 0 0;
+    text-transform: uppercase;
+    a {
+      color: #999;
+      text-decoration: none;
+    }
+    i {
+      font-weight: 200;
+    }
+  }
   .member-image img {margin-bottom: 20px;}
   .show-document-title {
     margin-top: 0;
@@ -95,11 +110,11 @@
     margin: 0 0 12px 0;
     font-size: 12px;
     div {
-      margin: 0;
+      padding: 0;
     }
     .previousNextDocument {
       float: right;
-      margin-right: -20px;
+//      margin-right: -20px;
       padding-bottom: 2px;
     }
   }
@@ -110,17 +125,7 @@
       border: none;
       margin-bottom: 3px;
     }
-    .nav-header {
-      border-bottom: 1px solid #e5e5e5;
-      padding: 6px 0 0;
-      a {
-        color: #999;
-        text-decoration: none;
-      }
-      i {
-        font-weight: 200;
-      }
-    }
+    // removed .nav-header styles from here
     .accordion-toggle {
       padding: 0;
       .accordion-icon {
@@ -154,9 +159,14 @@
   .item-actions {
     li:hover {
       background: #eee;
+      &.nav-header {background: inherit;}
+    }
+    li {
+      line-height: 20px;
+      height: 24px;
     }
     #favorites_link {
-      height: 24px;
+//      height: 24px;
       i.icon-heart {
         color: #990000;
       }
@@ -172,21 +182,23 @@
     }
     .help {
       float: right;
-      margin-right: -35px;
+      z-index: 999;
       i {
         color: #999;
         font-size: 16px;
       }
     }
     #flags_link {
-      padding: 2px 15px 2px 0;
+      padding: 2px 0 2px 0;
     }
     &.nav > li > a {
       padding: 2px 15px;
+      &.help, &.purl {padding: 0;}
     }
     a:hover i, div:hover i {
       color: #990000;
     }
+    #annotate_link {padding: 0;}
     a#hide_annotations_link {
       background-color: #eee;
       i {
@@ -201,13 +213,15 @@
       margin-bottom: 10px;
       form {
         margin-bottom: 6px;
-        margin-top: 8px;
+        margin-top: 6px;
+        padding-bottom: 6px;
       }
     }
     select#saved_item_gallery_id {
       vertical-align: inherit;
       font-size: 13px;
       margin-left: 23px;
+      max-width: 300px;
     }
     #current_in_galleries {
       margin-left: 24px;
@@ -228,6 +242,7 @@
       margin-top: 24px;
       .curator-action-link {
         display: inline-block;
+        padding-left: 0;
         &.disabled {
           background-color: $body_bg_color;
           i {
@@ -390,7 +405,7 @@
     display: none;
   }
   .blacklight-catalog-show #sidebar-nav {
-    border-top: 1px solid #ddd;
+    border-top: 5px solid #ddd;
     margin-top: 20px;
   }
 }

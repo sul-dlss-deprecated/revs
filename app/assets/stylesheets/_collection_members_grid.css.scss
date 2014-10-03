@@ -1,6 +1,5 @@
-.collection-members-grid-header {
-	@include member-section-header;
-	margin: 20px 15px 0;
+#collection-members-grid {
+  @include member-section-header;
 	.controls {
 	  font-size: 12px;
 	  margin-bottom: 10px;

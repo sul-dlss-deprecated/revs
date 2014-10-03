@@ -20,7 +20,7 @@
 @mixin member-section-header {
   @include gray-top_border;
   color: #990000;
-  margin-top: 0;
+  margin-top: 20px;
   padding-top: 10px;
   text-transform: uppercase;
 }
