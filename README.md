@@ -60,6 +60,15 @@ This is a Blacklight Application for the Revs Digital Library at Stanford Univer
 
 1. Go to <http://localhost:3000>
 
+## Non-Stanford Users
+
+Running the app outside the Stanford network takes some modifications to remove Stanford only gem dependencies.  To do this, open 
+the Gemfile and comment out the following lines:
+
+source 'http://sul-gems.stanford.edu'
+gem 'lyberteam-capistrano-devel'
+
+You should then be able to continue with the app setup as noted above.
 
 ## Default Users
 
@@ -82,6 +91,7 @@ The `show_terms_dialog?` method defines when and if the terms dialog needs to be
 The `accept_terms` method defines what happens when the user accepts the terms dialog.
 It can set a cookie with a specific expiration if you don't
 want the user to see the terms dialog box again for a specific period of time (which could be very long if you essentially don't want it to display again).
+
 
 ## Deployment
 
