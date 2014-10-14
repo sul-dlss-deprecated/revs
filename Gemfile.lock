@@ -339,7 +339,7 @@ DEPENDENCIES
   rails (~> 3.2.19)
   ranked-model
   rest-client
-  revs-utils (>= 1.0.5)
+  revs-utils (~> 1.0.5)
   rspec-rails
   rvm-capistrano
   sass-rails (~> 3.2.3)

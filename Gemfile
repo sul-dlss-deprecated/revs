@@ -8,7 +8,7 @@ gem 'bundler', '>= 1.2.0'
 gem 'sitemap_generator'
 
 gem 'editstore', '>= 1.1.5'
-gem 'revs-utils', '>= 1.0.5'
+gem 'revs-utils', '~> 1.0.5'
 
 gem 'rails', '~> 3.2.19'
 
