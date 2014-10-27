@@ -59,7 +59,7 @@ namespace :revs do
     end
   end
   
-  desc "Index all fixutres into solr"
+  desc "Index all fixtures into solr"
   task :index_fixtures do
     add_docs = []
     Dir.glob("#{Rails.root}/spec/fixtures/*.xml") do |file|
