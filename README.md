@@ -19,7 +19,8 @@ This is a Blacklight Application for the Revs Digital Library at Stanford Univer
         cp .rvmrc.example .rvmrc
         cd .. && cd revs
 
-1. Install dependencies via bundler for both the main and deploy directories:
+1. Install dependencies via bundler for both the main and deploy directories.  If you are outside the Stanford network
+and are trying to run the code, see the special section below before continuing with the bundle install:
 
         bundle install
 
@@ -63,7 +64,7 @@ This is a Blacklight Application for the Revs Digital Library at Stanford Univer
 ## Non-Stanford Users
 
 Running the app outside the Stanford network takes some modifications to remove Stanford only gem dependencies.  To do this, open 
-the Gemfile and comment out the following lines:
+the Gemfile and comment out the following lines.  The first is at the top of the Gemfile, and the second is in the ":deployment" group.
 
 source 'http://sul-gems.stanford.edu'
 gem 'lyberteam-capistrano-devel'
