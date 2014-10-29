@@ -164,6 +164,7 @@ describe ActivesolrHelper, :integration => true do
     
     after :each do
       reindex_solr_docs(@druid)
+      cleanup_editstore_changes # transactions don't seem to work with the second database
     end    
     
     it "should save an update to a single value field, and propogage to solr and editstore databases" do

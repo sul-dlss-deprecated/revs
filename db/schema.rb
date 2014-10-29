@@ -18,32 +18,29 @@ ActiveRecord::Schema.define(:version => 20141027203015) do
     t.text     "json"
     t.text     "text"
     t.string   "druid"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "annotations", ["druid"], :name => "index_annotations_on_druid"
   add_index "annotations", ["user_id"], :name => "index_annotations_on_user_id"
 
   create_table "bookmarks", :force => true do |t|
-    t.integer  "user_id",       :null => false
+    t.integer  "user_id",     :null => false
     t.string   "document_id"
     t.string   "title"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.string   "user_type"
-    t.string   "document_type"
   end
-
-  add_index "bookmarks", ["user_id"], :name => "index_bookmarks_on_user_id"
 
   create_table "change_logs", :force => true do |t|
     t.integer  "user_id",    :null => false
     t.string   "druid",      :null => false
     t.string   "operation",  :null => false
     t.text     "note"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "change_logs", ["druid"], :name => "index_change_logs_on_druid"
@@ -55,8 +52,8 @@ ActiveRecord::Schema.define(:version => 20141027203015) do
     t.string   "druid",                                   :null => false
     t.string   "flag_type",          :default => "error", :null => false
     t.text     "comment"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
     t.string   "resolution"
     t.integer  "resolving_user"
     t.datetime "resolved_time"
@@ -77,8 +74,8 @@ ActiveRecord::Schema.define(:version => 20141027203015) do
     t.string   "title"
     t.text     "description"
     t.string   "gallery_type",                         :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.integer  "views",             :default => 0,     :null => false
     t.string   "slug"
     t.boolean  "featured",          :default => false, :null => false
@@ -96,8 +93,8 @@ ActiveRecord::Schema.define(:version => 20141027203015) do
   create_table "items", :force => true do |t|
     t.string   "druid"
     t.integer  "visibility_value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   add_index "items", ["druid"], :name => "index_items_on_druid", :unique => true
@@ -106,8 +103,8 @@ ActiveRecord::Schema.define(:version => 20141027203015) do
     t.string   "field"
     t.string   "value"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "ontologies", ["field"], :name => "index_ontologies_on_field"
@@ -116,8 +113,8 @@ ActiveRecord::Schema.define(:version => 20141027203015) do
     t.string   "druid",       :null => false
     t.integer  "gallery_id",  :null => false
     t.text     "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.integer  "position"
   end
 
@@ -128,16 +125,16 @@ ActiveRecord::Schema.define(:version => 20141027203015) do
   create_table "searches", :force => true do |t|
     t.text     "query_params"
     t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.string   "user_type"
   end
 
   add_index "searches", ["user_id"], :name => "index_searches_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
     t.string   "sunet",                  :default => "",    :null => false
     t.string   "email",                  :default => "",    :null => false
     t.string   "encrypted_password",     :default => "",    :null => false

@@ -107,6 +107,10 @@ describe SolrDocument, :integration => true do
 
     end
 
+     after :each do
+      cleanup_editstore_changes # transactions don't seem to work with the second database
+     end
+     
     it "should apply bulk replace updates to solr and editstore when update method is called directly for an update operation" do
       
       # confirm new field doesn't exist in solr and rows don't exist yet in editstore database
