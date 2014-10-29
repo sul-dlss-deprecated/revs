@@ -76,8 +76,11 @@ gem 'lyberteam-gems-devel', '>=1.0.0'
 gem 'lyberteam-capistrano-devel', '>= 1.1.0'
 gem 'net-ssh-krb'
 
-2. Continue with the bundle install as described above.
+2. Find the line that references the 'editstore' gem and add rubygems as a source to the end of it (leave the versioning info along if it exists), e.g.
 
+gem 'editstore', :source => 'https://rubygems.org'
+
+3. Continue with the bundle install as described above.
 
 ## Default Users
 
