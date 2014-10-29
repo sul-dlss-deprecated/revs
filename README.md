@@ -64,12 +64,18 @@ and are trying to run the code, see the special section below before continuing 
 ## Non-Stanford Users
 
 Running the app outside the Stanford network takes some modifications to remove Stanford only gem dependencies.  To do this, open 
-the Gemfile and comment out the following lines.  The first is at the top of the Gemfile, and the second is in the ":deployment" group.
+the Gemfile and 
+
+1. Comment out the following lines.  The first is at the top of the Gemfile, and the second is in the ":deployment" group.
 
 source 'http://sul-gems.stanford.edu'
 gem 'lyberteam-capistrano-devel'
 
-You should then be able to continue with the app setup as noted above.
+1. Find the line that references the 'editstore' gem and add rubygems as a source to the end of it (leave the versioning info along if it exists), e.g.
+
+gem 'editstore', :source => 'https://rubygems.org'
+
+1. Continue with the bundle install as described above.
 
 ## Default Users
 
