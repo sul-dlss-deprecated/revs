@@ -63,12 +63,14 @@ and are trying to run the code, see the special section below before continuing 
 
 ## Non-Stanford Users
 
-Running the app outside the Stanford network takes some modifications to remove Stanford only gem dependencies.  To do this, open 
-the Gemfile and 
+The code has not been tested outside of Stanford University and while it should work, there may be some internal dependencies.
+We believe that making the small modifications listed below will enable the Revs Digital Library code to work outside of Stanford:
 
-1. Comment out the following lines.  The first is at the top of the Gemfile, and the second is in the ":deployment" group.
+1. Open the Gemfile at the root of the project and comment out the following lines.  The first is at the top, and second line is in
+the ":deployment" group.
 
 source 'http://sul-gems.stanford.edu'
+
 gem 'lyberteam-capistrano-devel'
 
 1. Find the line that references the 'editstore' gem and add rubygems as a source to the end of it (leave the versioning info along if it exists), e.g.
@@ -76,6 +78,10 @@ gem 'lyberteam-capistrano-devel'
 gem 'editstore', :source => 'https://rubygems.org'
 
 1. Continue with the bundle install as described above.
+
+1. Prior to step 5 - creating and migrating the databases - you will need to remove all migrations involving edit-store from revs/db/migrate/ otherwise rake db:migrate will error and list the migration that fails. You can do this by hand or in revs/db/migrate/ run ls *edit-store* to see the files that match that filter and delete them with rm -i *edit-store*.
+
+1. The rest should work - let us know if you find any other errors :)
 
 ## Default Users
 
