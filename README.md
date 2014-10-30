@@ -28,10 +28,13 @@ installing outside of the Stanford network, see the special section below before
 
         rake revs:config
 
-1. Create and migrate the databases:
+1. Create and migrate the databases.     
 
         rake db:create:all
         rake db:migrate
+        
+        
+      
 
 1. Seed the databases:
 
@@ -66,21 +69,26 @@ installing outside of the Stanford network, see the special section below before
 The code has not been tested outside of Stanford University and while it should work, there may be some internal dependencies.
 We believe that making the small modifications listed below will enable the Revs Digital Library code to work outside of Stanford:
 
-1. Open the Gemfile at the root of the project and comment out the following lines.  The first is at the top, and second set of
-lines are in the ":deployment" group.
+1. Open the Gemfile at the root of the project and comment out the following lines.  The first set is at the top, and second set of lines are in the ":deployment" group. 
 
-source 'http://sul-gems.stanford.edu' 
+`#source 'http://sul-gems.stanford.edu'
 
-gem 'lyberteam-devel', '>=1.0.0'
-gem 'lyberteam-gems-devel', '>=1.0.0'
-gem 'lyberteam-capistrano-devel', '>= 1.1.0'
-gem 'net-ssh-krb'
+`#gem 'edit-store', '>=1.1.5'`
 
-2. Find the line that references the 'editstore' gem and add rubygems as a source to the end of it (leave the versioning info along if it exists), e.g.
+`#gem 'lyberteam-devel', '>=1.0.0'`
+`#gem 'lyberteam-gems-devel', '>=1.0.0'`
+`#gem 'lyberteam-capistrano-devel', '>= 1.1.0'`
+`#gem 'net-ssh-krb'`
 
-gem 'editstore', :source => 'https://rubygems.org'
+1. Change the version of rev-utils to 1.0.8
 
-3. Continue with the bundle install as described above.
+`gem 'revs-utils', '~>1.0.8'`
+
+1. Continue with step 3 - the bundle install - as described above.
+
+1. Prior to step 5 - creating and migrating the databases - you will need to remove all migrations involving `edit-store` from `revs/db/migrate/` otherwise `rake db:migrate` will error and list the migration that fails. You can do this by hand or in `revs/db/migrate/` run `ls *edit-store*` to see the files that match that filter and delete them with `rm -i *edit-store*`.
+
+1. The rest should work - let us know if you find any other errors :)
 
 ## Default Users
 
