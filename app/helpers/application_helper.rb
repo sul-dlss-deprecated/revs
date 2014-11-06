@@ -121,6 +121,10 @@ module ApplicationHelper
     end
   end
   
+  def valid_email?(value)
+    value =~ /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i  
+  end
+  
   def has_activity?(user)
     favorites_count(user) > 0 || annotations_count(user) > 0 || flags_count(user) > 0 || edits_count(user) > 0 || galleries_count(user) > 0
   end
