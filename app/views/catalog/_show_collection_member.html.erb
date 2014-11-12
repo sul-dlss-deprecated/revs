@@ -51,6 +51,7 @@
     <noscript>
         <%= link_to(image_tag(@document.images(:large).first), "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'_new') %>
     </noscript>
+    <div class="revs-identifier"><span><%=t('revs.show.label_identifier') %>:</span> <%=@document.identifier%></div>
   </div>
 
   <div class="span5 metadata">

@@ -381,6 +381,12 @@
   }
 }
 
+.revs-identifier {
+  font-size: 0.8em;
+  margin-left: 3px;
+  span {font-weight: 700;}
+}
+
 /* Responsive styles */
 @media screen and (max-width: 979px) {
   .blacklight-catalog-show {

@@ -166,12 +166,12 @@ en:
       tracks: "Tracks"
     contact:
       us: 'contact us'
-      instructions_html: 'If you are asking about access or re-use of images, select "Request an image or terms of use question" as the subject or view %{reuse_link}.  If you have corrections to metadata or content on the site, please use the "Flag correction to this item" link next to the image.'
+      instructions_html: 'If you are asking about access or purchase of images, select "Contact the photo sales department" as the subject or view %{reuse_link}.  If you have corrections to metadata or content on the site, please use the "Flag correction to this item" link next to the image.'
       permission_information_html: 'permission information and contact The Revs Institute for Automotive Research, Inc.'  
       select_topic: 'Select a topic...'
       problem: 'Problem with the website'
       other_questions: 'Other questions'
-      terms_of_use: 'Request an image or terms of use question'
+      terms_of_use: 'Contact the photos sales department'
       metadata_issue: 'Corrections to content'
       name: 'Your name'
       email: 'Your email'
@@ -182,7 +182,7 @@ en:
       spambot: 'Please leave this field blank - it is used to prevent spam submissions'
       describe_problem: 'Please describe your question or problem.'
       image_license_agreement: "permission to use requirements"
-      image_reuse_agreement: "To request access or to re-use this image, please review the %{license_agreement_link}"
+      image_reuse_agreement: "To request access or purchase this image, please review the %{license_agreement_link}"
       reuse_contact: "and %{reuse_contact_link}"
       contact_linktext_html: "contact The Revs Institute for Automotive Research, Inc."
       reuse_contact_message: "Request for image ID %{reuse_contact_message_doc} at %{reuse_contact_message_url}"
