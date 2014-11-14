@@ -52,7 +52,7 @@ describe("Item Pages",:type=>:request,:integration=>true) do
     expect(find('.show-document-title')).to have_content('Marlboro 12 Hour, August 12-14')
     expect(page).to have_content('Vehicle Information')
     expect(page).to have_content('Marque:')
-    expect(page).to have_content('Ford, Chevrolet')
+    expect(page).to have_content('Ford, Chevy')
     expect(page).to have_content('Model:')
     expect(page).to have_content('Camaro, Mustang, Camaro')
     expect(page).to have_content('Model Year:')

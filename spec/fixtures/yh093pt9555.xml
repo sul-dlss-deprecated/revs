@@ -12,7 +12,7 @@
   <field name="subjects_ssim">Automobile</field>
   <field name="subjects_ssim">History</field>
   <field name="marque_ssim">Ford</field>
-  <field name="marque_ssim">Chevrolet</field>
+  <field name="marque_ssim">Chevy</field>
   <field name="people_ssim">Flintstone, Fred</field>
   <field name="people_ssim">Rubble, Barney</field>
   <field name="entrant_ssim">Gonzales, Speedy</field>
