@@ -10,7 +10,7 @@ gem 'sitemap_generator'
 gem 'editstore', '>= 1.1.5'
 gem 'revs-utils', '~> 1.0.5'
 
-gem 'rails', '~> 3.2.19'
+gem 'rails', '~> 3.2.20'
 
 # user authentication and roles
 gem 'devise', '~> 2.2.5'
