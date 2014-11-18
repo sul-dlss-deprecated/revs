@@ -134,7 +134,8 @@
     
     <fieldType name="text" class="solr.TextField" omitNorms="false">
       <analyzer type="query">
-        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <tokenizer class="solr.ICUTokenizerFactory"/>
+        <filter class="solr.ICUFoldingFilterFactory"/>  <!-- NFKC, case folding, diacritics removed -->
         <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
       </analyzer>
       <analyzer>
