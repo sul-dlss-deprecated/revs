@@ -1,5 +1,4 @@
 source 'https://rubygems.org'
-source 'http://sul-gems.stanford.edu'
 
 ruby "2.1.2"
 
