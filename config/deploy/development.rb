@@ -1,7 +1,10 @@
-server "revs-dev.stanford.edu", user: 'lyberadmin', roles: %w{web db app}
-#Capistrano::OneTimeKey.generate_one_time_key!
+set :deploy_host, ask("Server", 'enter in the server you are deploying to. do not include .stanford.edu')
+server "#{fetch(:deploy_host)}.stanford.edu", user: fetch(:user), roles: %w{web db app}
+
 set :bundle_without, [:deployment]
 set :rails_env, "development"
+
+Capistrano::OneTimeKey.generate_one_time_key!
 
 namespace :deploy do
   namespace :assets do
@@ -10,7 +13,7 @@ namespace :deploy do
   end
 end
 
-after "deploy:finalize_update", "db:symlink_sqlite"
-after "deploy:finalize_update", "jetty:remove"
-after "deploy:finalize_update", "fixtures:refresh"
-after "deploy:create_symlink", "db:loadseeds"
+before  "deploy:finishing", "db:symlink_sqlite"
+after  "deploy:finishing", "jetty:remove"
+after  "deploy:finished", "fixtures:refresh"
+after  "deploy:finished", "db:loadseeds"

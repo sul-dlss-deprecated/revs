@@ -81,8 +81,10 @@ end
 # gems necessary for capistrano deployment
 group :deployment do
   gem 'capistrano', '~> 3.0'
+  gem 'capistrano-bundler'
   gem 'capistrano-rails'
-  gem 'lyberteam-capistrano-devel'
+  gem 'lyberteam-capistrano-devel', '~>3'
+  gem 'capistrano-rvm'
 end
 
 gem 'jquery-rails'

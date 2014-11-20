@@ -1,18 +1,16 @@
 # config valid only for Capistrano 3.1
 lock '3.2.1'
 
-require 'squash/rails/capistrano3'
-require 'whenever/capistrano'
-
 set :application, "revs-lib"
 set :repo_url, "https://github.com/sul-dlss/revs"
-set :deploy_to, "/home/lyberadmin/revs-lib"
+set :user, ask("User", 'enter in the app username')
+
+set :home_directory, "/home/#{fetch(:user)}"
+set :deploy_to, "#{fetch(:home_directory)}/#{fetch(:application)}"
 
 set :stages, %W(staging development production)
 
-set :deploy_via, :remote_cache
-set :whenever_command, "bundle exec whenever"
-set :whenever_environment, defer { stage }
+set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
 
 # Default value for :linked_files is []
 set :linked_files, %w{config/database.yml config/solr.yml}
@@ -20,18 +18,11 @@ set :linked_files, %w{config/database.yml config/solr.yml}
 # Default value for linked_dirs is []
 set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/uploads}
 
-set :copy_cache, true
-set :copy_exclude, [".git"]
-set :use_sudo, false
+last_tag = `git describe --abbrev=0 --tags`.strip
+default_tag='master'
+set :tag, ask("Tag to deploy (make sure to push the tag first): [default: #{default_tag}, last tag: #{last_tag}] ", default_tag)
 
-set :branch do
-  last_tag = `git describe --abbrev=0 --tags`.strip
-  default_tag = 'master'
-  
-  tag = Capistrano::CLI.ui.ask "Tag to deploy (make sure to push the tag first): [default: #{default_tag}, last tag: #{last_tag}] "
-  tag = default_tag if tag.empty?
-  tag
-end
+set :branch, fetch(:tag)
 
 namespace :jetty do
   task :start do 
@@ -88,10 +79,11 @@ namespace :deploy do
       # Your restart mechanism here, for example:
       execute :touch, release_path.join('tmp/restart.txt')
     end
+  end
   after :publishing, :restart
 
 end
 
 before 'deploy:compile_assets', 'squash:write_revision'
-after "deploy:update", "deploy:dev_options_set"
-after "deploy:finalize_update", "deploy:symlink_editstore"
+before "deploy:finishing", "deploy:dev_options_set"
+after  "deploy:finishing", "deploy:symlink_editstore"
