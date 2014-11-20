@@ -36,10 +36,10 @@ describe("Search Pages",:type=>:request,:integration=>true) do
     search_strings=['chevy','chevrolet','Chevy',"Chevrolet"]
     search_strings.each do |search|
       visit search_path(:q=>search)      
-      page.should have_content('Results')
-      page.should have_content('1 - 2 of 2')
-      page.should have_content('Lime Rock Continental, September 1')
-      page.should have_content('Marlboro 12 Hour, August 12-14')
+      expect(page).to have_content('Results')
+      expect(page).to have_content('1 - 2 of 2')
+      expect(page).to have_content('Lime Rock Continental, September 1')
+      expect(page).to have_content('Marlboro 12 Hour, August 12-14')
     end
   end
     
