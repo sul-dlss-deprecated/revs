@@ -31,7 +31,18 @@ describe("Search Pages",:type=>:request,:integration=>true) do
     page.should have_content('The David Nadig Collection of the Revs Institute')
     page.should have_content('The John Dugdale Collection of the Revs Institute')
   end
-  
+
+  it "should show 2 results for both chevy and chevrolet due to synonym matching" do
+    search_strings=['chevy','chevrolet','Chevy',"Chevrolet"]
+    search_strings.each do |search|
+      visit search_path(:q=>search)      
+      page.should have_content('Results')
+      page.should have_content('1 - 2 of 2')
+      page.should have_content('Lime Rock Continental, September 1')
+      page.should have_content('Marlboro 12 Hour, August 12-14')
+    end
+  end
+    
   it "should show a facet search result for 1955" do
     visit search_path(:"f[pub_year_isim][]"=>'1955')
     page.should have_content('Results')

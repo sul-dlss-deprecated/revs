@@ -52,7 +52,7 @@ describe("Item Pages",:type=>:request,:integration=>true) do
     find('.show-document-title').should have_content('Marlboro 12 Hour, August 12-14')
     page.should have_content('Vehicle Information')
     page.should have_content('Marque:')
-    page.should have_content('Ford, Chevrolet')
+    page.should have_content('Ford, Chevy')
     page.should have_content('Model:')
     page.should have_content('Camaro, Mustang, Camaro')
     page.should have_content('Model Year:')
