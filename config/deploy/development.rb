@@ -13,7 +13,7 @@ namespace :deploy do
   end
 end
 
-before  "deploy:finishing", "db:symlink_sqlite"
+before  "deploy:updated", "db:symlink_sqlite"
 after  "deploy:finishing", "jetty:remove"
 after  "deploy:finished", "fixtures:refresh"
 after  "deploy:finished", "db:loadseeds"

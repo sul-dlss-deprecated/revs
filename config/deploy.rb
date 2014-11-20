@@ -26,50 +26,69 @@ set :branch, fetch(:tag)
 
 namespace :jetty do
   task :start do 
-    run "cd #{deploy_to}/current && rake jetty:start RAILS_ENV=#{rails_env}"
+    on roles(:app) do    
+      execute "cd #{deploy_to}/current && bundle exec rake jetty:start RAILS_ENV=#{fetch(:rails_env)}"
+    end
   end
   task :stop do
-    run "if [ -d #{deploy_to}/current ]; then cd #{deploy_to}/current && rake jetty:stop RAILS_ENV=#{rails_env}; fi"
+    on roles(:app) do
+      execute "if [ -d #{deploy_to}/current ]; then cd #{deploy_to}/current && bundle exec rake jetty:stop RAILS_ENV=#{fetch(:rails_env)}; fi"
+    end
   end
   task :remove do
-    run "rm -fr #{release_path}/jetty"
+    on roles(:app) do
+      execute "rm -fr #{release_path}/jetty"
+    end
   end  
   task :symlink do
-    run "rm -fr #{release_path}/jetty"
-    run "ln -s #{shared_path}/jetty #{release_path}/jetty"
+    on roles(:app) do
+      execute "rm -fr #{release_path}/jetty"
+      execute "ln -s #{shared_path}/jetty #{release_path}/jetty"
+    end
   end
 end
 
 namespace :fixtures do
   task :ingest do
-    run "cd #{deploy_to}/current && rake revs:index_fixtures RAILS_ENV=#{rails_env}"
+    on roles(:app) do
+      execute "cd #{deploy_to}/current && bundle exec rake revs:index_fixtures RAILS_ENV=#{fetch(:rails_env)}"
+    end
   end
   task :refresh do
-    run "cd #{deploy_to}/current && rake revs:refresh_fixtures RAILS_ENV=#{rails_env}"
+    on roles(:app) do
+      execute "cd #{deploy_to}/current && bundle exec rake revs:refresh_fixtures RAILS_ENV=#{fetch(:rails_env)}"
+    end
   end
 end
 
 namespace :db do
-  task :migrate do
-    run "cd #{deploy_to}/current && rake db:migrate RAILS_ENV=#{rails_env}"
-  end
   task :loadfixtures do
-    run "cd #{deploy_to}/current && rake db:fixtures:load RAILS_ENV=#{rails_env}"
+    on roles(:app) do
+      execute "cd #{deploy_to}/current && bundle exec rake db:fixtures:load RAILS_ENV=#{fetch(:rails_env)}"
+    end
   end
   task :loadseeds do
-    run "cd #{deploy_to}/current && rake db:seed RAILS_ENV=#{rails_env}"
+    on roles(:app) do
+      execute "cd #{deploy_to}/current && bundle exec rake db:seed RAILS_ENV=#{fetch(:rails_env)}"
+    end
   end  
   task :symlink_sqlite do
-    run "ln -s #{shared_path}/#{rails_env}.sqlite3 #{release_path}/db/#{rails_env}.sqlite3"
+    on roles(:app) do
+      execute "ln -s #{shared_path}/#{fetch(:rails_env)}.sqlite3 #{release_path}/db/#{fetch(:rails_env)}.sqlite3"
+    end
   end  
 end
 
 namespace :deploy do
   task :symlink_editstore do
-    run "ln -s /home/lyberadmin/editstore-updater/current/public #{release_path}/public/editstore"
+    on roles(:app) do
+      execute "ln -s /home/lyberadmin/editstore-updater/current/public #{release_path}/public/editstore"
+    end
   end  
   task :dev_options_set do
-    run "cd #{deploy_to}/current && rake revs:dev_options_set RAILS_ENV=#{rails_env}"
+    on roles(:app) do
+      execute "cd #{deploy_to}/current && bundle exec rake revs:dev_options_set RAILS_ENV=#{fetch(:rails_env)}"
+    end
   end
   task :start do ; end
   task :stop do ; end
