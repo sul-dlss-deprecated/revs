@@ -185,7 +185,7 @@ en:
       image_reuse_agreement: "To request access or purchase this image, please review the %{license_agreement_link}"
       reuse_contact: "and %{reuse_contact_link}"
       contact_linktext_html: "contact The Revs Institute for Automotive Research, Inc."
-      reuse_contact_message: "Request for image ID %{reuse_contact_message_doc} at %{reuse_contact_message_url}"
+      reuse_contact_message: "Request to purchase image image ID %{reuse_contact_message_doc} at %{reuse_contact_message_url}"
       thanks: 'Thanks for contacting the Revs Digital Library'
     authentication:
       new_user: 'New user?'
