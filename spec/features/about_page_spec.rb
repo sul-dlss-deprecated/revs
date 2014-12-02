@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe("About Pages",:type=>:request,:integration=>true) do
-  
+
   before :each do
     @about_page_title=I18n.t("revs.about.project_title")
     @project_team_title=I18n.t("revs.about.team_title")
@@ -11,14 +11,20 @@ describe("About Pages",:type=>:request,:integration=>true) do
     @video_tutorials=I18n.t("revs.about.video_tutorials_title")
     RevsMailer.stub_chain(:contact_message,:deliver).and_return('a mailer')
   end
-  
+
   it "should show the about project page for various URLs" do
     visit '/about'
     expect(page).to have_content(@about_page_title)
     visit '/about/project'
-    expect(page).to have_content(@about_page_title)    
+<<<<<<< HEAD
+    expect(page).to have_content(@about_page_title)
     visit '/about/bogusness'
-    expect(page).to have_content(@about_page_title)    
+    expect(page).to have_content(@about_page_title)
+=======
+    page.should have_content(@about_page_title)
+    visit '/about/bogusness'
+    page.should have_content(@about_page_title)
+>>>>>>> 90e0d6e... Update video tutorials with new titles and durations
   end
 
   it "should detect a spammer as someone who submits the form too quickly" do
@@ -79,7 +85,7 @@ describe("About Pages",:type=>:request,:integration=>true) do
     visit '/about/tutorials'
     expect(page).to have_content(@video_tutorials)
     # update link URL when Overview video is updated/replaced
-    expect(page).to have_link(I18n.t("revs.help.videos.titles.overview"), href: "https://www.youtube.com/watch?v=rVBI_VCfWYg")
+    page.should have_link(I18n.t("revs.help.videos.titles.overview"), href: "https://www.youtube.com/watch?v=dkMS7jTseVk")
   end
 
 end
