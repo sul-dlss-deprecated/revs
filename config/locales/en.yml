@@ -140,7 +140,7 @@ en:
       go_back: 'Go back'
       feedback: 'Feedback'
       content_corrections: 'Do you have corrections to the metadata for this item? Flag a correction above. If you %{create_an_account_link}, you can see when your flags are resolved.'
-      create_an_account: 'create an account'      
+      create_an_account: 'create an account'
       more: 'More'
       please_wait: 'Please wait...'
       return_to_gallery: '&laquo; return to gallery'
@@ -167,7 +167,7 @@ en:
     contact:
       us: 'contact us'
       instructions_html: 'If you are asking about access or purchase of images, select "Contact the photo sales department" as the subject or view %{reuse_link}.  If you have corrections to metadata or content on the site, please use the "Flag correction to this item" link next to the image.'
-      permission_information_html: 'permission information and contact The Revs Institute for Automotive Research, Inc.'  
+      permission_information_html: 'permission information and contact The Revs Institute for Automotive Research, Inc.'
       select_topic: 'Select a topic...'
       problem: 'Problem with the website'
       other_questions: 'Other questions'
@@ -224,12 +224,12 @@ en:
       administer_users: "Manage Users"
       find_users: "Find users"
       update_users: "Update users"
-      administer_highlights: 
+      administer_highlights:
         title: "Feature Collections"
         description: "To feature a collection on the home page, check the box next to its name.  The collections are shown in the order they are checked (last checked shown first)."
-      administer_galleries: 
+      administer_galleries:
         title: "Feature Galleries"
-        description: "To feature a gallery on the galleries page, check the box next its name.  Drag and drop to change the ordering."        
+        description: "To feature a gallery on the galleries page, check the box next its name.  Drag and drop to change the ordering."
       administer_ontologies:
         title: "Manage Autocomplete Terms"
         description: |
@@ -256,7 +256,7 @@ en:
       login_count: "Logins"
       filter_role: "By role"
       filter_type: "By type"
-      filter_visibility: "By visibility"      
+      filter_visibility: "By visibility"
       registered_on: "Registered"
       confirmed: "Confirmed?"
       no_users_found: "No users were found with your search criteria."
@@ -361,12 +361,12 @@ en:
       save_to_favorites: "Save to favorites"
       remove_from_favorites: "Remove from %{list_type}"
       saved: "Item has been saved to favorites."
-      removed: "Item has been removed from %{list_type}."  
+      removed: "Item has been removed from %{list_type}."
       none: 'There are no favorites.'
       edit_item_note: 'Edit item note'
       add_item_note: 'Add item note'
       item_note: 'Item note'
-      item_note_updated: "Item note updated."  
+      item_note_updated: "Item note updated."
       you_can_add_a_note_html: "You can %{href} to your %{item_type}."
       you_can_add_a_note_linktext: 'add a note'
       manage: 'Manage items'
@@ -403,10 +403,10 @@ en:
       item: 'item'
       you_can_add_a_description_html: "You can %{href} to your gallery."
       you_can_add_a_description_linktext: 'add a description'
-      items_deleted: 
+      items_deleted:
         one: "You have removed one item from this gallery."
         other: "You have removed %{count} items from this gallery."
-      items_moved: 
+      items_moved:
         one: "You have moved one item to '%{gallery_name}'."
         other: "You have moved %{count} items to '%{gallery_name}'."
       items_copied:
@@ -596,12 +596,11 @@ en:
     help:
       videos:
         titles:
-          overview: "Overview of the Revs Digital Library"
-          account: "Create an account"
-          logging_in: "Log in"
-          favorites_flags: "Save favorites and flag metadata issues"
-          gallery: "Create a gallery"
-          annotation: "Create an annotation"
+          overview: "Introduction to the Revs Digital Library"
+          account: "Creating an account and logging in"
+          flags: "Flagging metadata issues"
+          gallery: "Saving favorites and creating galleries"
+          annotation: "Adding annotations"
       sidebar:
         bulk_edits: "Edit records in bulk"
         metadata_editing_guidelines: "Metadata editing guidelines"

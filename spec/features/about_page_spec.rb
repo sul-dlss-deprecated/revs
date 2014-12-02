@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe("About Pages",:type=>:request,:integration=>true) do
-  
+
   before :each do
     @about_page_title=I18n.t("revs.about.project_title")
     @project_team_title=I18n.t("revs.about.team_title")
@@ -10,14 +10,14 @@ describe("About Pages",:type=>:request,:integration=>true) do
     @terms_of_use=I18n.t("revs.about.terms_of_use_title")
     @video_tutorials=I18n.t("revs.about.video_tutorials_title")
   end
-  
+
   it "should show the about project page for various URLs" do
     visit '/about'
     page.should have_content(@about_page_title)
     visit '/about/project'
-    page.should have_content(@about_page_title)    
+    page.should have_content(@about_page_title)
     visit '/about/bogusness'
-    page.should have_content(@about_page_title)    
+    page.should have_content(@about_page_title)
   end
 
   it "should detect a spammer as someone who submits the form too quickly" do
@@ -75,7 +75,7 @@ describe("About Pages",:type=>:request,:integration=>true) do
     visit '/about/tutorials'
     page.should have_content(@video_tutorials)
     # update link URL when Overview video is updated/replaced
-    page.should have_link(I18n.t("revs.help.videos.titles.overview"), href: "https://www.youtube.com/watch?v=rVBI_VCfWYg")
+    page.should have_link(I18n.t("revs.help.videos.titles.overview"), href: "https://www.youtube.com/watch?v=dkMS7jTseVk")
   end
 
 end
