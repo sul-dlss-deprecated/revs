@@ -79,7 +79,7 @@ describe("About Pages",:type=>:request,:integration=>true) do
     visit '/about/tutorials'
     expect(page).to have_content(@video_tutorials)
     # update link URL when Overview video is updated/replaced
-    page.should have_link(I18n.t("revs.help.videos.titles.overview"), href: "https://www.youtube.com/watch?v=dkMS7jTseVk")
+    expect(page).to have_link(I18n.t("revs.help.videos.titles.overview"), href: "https://www.youtube.com/watch?v=dkMS7jTseVk")
   end
 
 end
