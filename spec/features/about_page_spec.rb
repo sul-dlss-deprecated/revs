@@ -16,15 +16,9 @@ describe("About Pages",:type=>:request,:integration=>true) do
     visit '/about'
     expect(page).to have_content(@about_page_title)
     visit '/about/project'
-<<<<<<< HEAD
     expect(page).to have_content(@about_page_title)
     visit '/about/bogusness'
     expect(page).to have_content(@about_page_title)
-=======
-    page.should have_content(@about_page_title)
-    visit '/about/bogusness'
-    page.should have_content(@about_page_title)
->>>>>>> 90e0d6e... Update video tutorials with new titles and durations
   end
 
   it "should detect a spammer as someone who submits the form too quickly" do
