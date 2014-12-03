@@ -9,6 +9,7 @@ require 'revs-utils'
 
 namespace :revs do
   @sourceid = 'sourceid'
+  @visibility= 'hide'
   @seperator = '|'
   @filename = 'filename'
   @csv_extension_wild = '*.csv'
@@ -492,6 +493,76 @@ namespace :revs do
 
   end
 
+  desc "Bulk hide or show images from a given spreadsheet"
+  task :change_visibility, [:file, :visibility_value] => :environment do |t, args|
+    # call with RAILS_ENV=production rake revs:change_visilibty["/path/to/manifest.csv",1] to show all images not having a value in the visibility column
+    # call with RAILS_ENV=production rake revs:change_visilibty["/path/to/manifest.csv",0] to hide all images not having a value in the visibility column
+    
+    Revs::Application.config.use_editstore = false
+
+    file = args[:file] 
+    default_visibility_value = args[:visibility_value] 
+
+    raise "no spreadsheet specified or spreadsheet not found" unless File.exists?(file)
+    raise "no default visibility value specified" unless default_visibility_value
+    
+    name = Pathname.new(file).basename.to_s
+    name.slice! @csv_extension
+    
+    log = Logger.new("#{Rails.root}/log/change_visibility_#{Time.now.to_i}.#{name}#{@log_extension}")
+    
+    puts "Running #{file}"
+    puts "Running in #{Rails.env}"
+    puts "default visibility value of #{default_visibility_value}"
+    log.info("Running #{file}")
+    log.info("Running in #{Rails.env}")
+    log.info("default visibility value of #{default_visibility_value}")
+
+    manifest = RevsUtils.read_csv_with_headers(file)
+    error_count=0
+    
+    manifest.each do |row|
+      
+      if row[@sourceid]
+              
+        puts "...working on #{row[@sourceid]}"
+      
+        #Attempt to get the target based on the source_id
+        target = find_doc_via_blacklight(row[@sourceid])
+      
+        #If we can't get the target based on source_id, try it with the filename
+        if(target == nil and row[@filename] != nil)
+          alt_attempt = row[@filename]
+          alt_attempt.slice! file_ext
+          target = find_doc_via_blacklight(alt_attempt)
+        end
+      
+        #Catch sourceid with no matching druid
+        if target == nil
+          log.error("no druid found for #{row[@sourceid]}") 
+          error_count += 1
+        end 
+      
+        if target != nil #Begin Altering Single Solr Document
+            begin
+             doc = SolrDocument.new(target)
+             visibility_value = ( (row[@visibility].nil? || row[@visibility].blank?) ? default_visibility_value : 0)
+             puts ".....found #{doc.id}, setting visibility to #{visibility_value}"
+             doc.visibility_value=visibility_value
+             doc.save
+           rescue
+             log.error("Could not update #{row[@sourceid]} to #{visibility_value}") 
+             error_count += 1 
+           end
+        end
+      end
+      
+    end
+    puts "Errors: #{error_count}"
+    log.info "Errors: #{error_count}"
+
+  end
+  
   desc "Cleanup marques in solr documents by removing 'automobile'"
   task :cleanup_marques => :environment do
     Revs::Application.config.use_editstore = false
