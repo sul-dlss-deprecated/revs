@@ -6,10 +6,15 @@ class UserController < ApplicationController
   authorize_resource
   
   # user profile pages
-      
+  
+  def show
+    @page_title=I18n.t('revs.user.user_dashboard',:name=>(is_logged_in_user?(@user) ? t('revs.user.your') : "#{@user.to_s}'s"))
+  end    
+
   # all of the user's annotations
   def annotations
     @annotations=@user.annotations(current_user).order(@order).page(@current_page).per(@per_page)
+    @page_title="#{@user.to_s}: #{I18n.t('revs.annotations.plural')}"
   end
 
   # all of the user's favorites (visibility set on the favorites list)
@@ -28,16 +33,20 @@ class UserController < ApplicationController
     @current_page = max_pages.to_s if @current_page.to_i > max_pages
     
     @saved_items=Kaminari.paginate_array(unsorted_favorites.order(@order)).page(@current_page).per(@per_page)
+    @page_title="#{@user.to_s}: #{I18n.t('revs.favorites.head')}"
+    
   end
   
  def galleries
    @galleries=@user.galleries(current_user).page(@current_page).per(@per_page)
+   @page_title="#{@user.to_s}: #{I18n.t('revs.nav.galleries')}"
  end
  
   # all of the user's item edits
   def edits
     @order="change_logs.#{@order}" if @order.downcase == 'created_at desc'
     @edits=@user.metadata_updates.order(@order).page(@current_page).per(@per_page)
+    @page_title="#{@user.to_s}: #{I18n.t('revs.curator.edits')}"
   end
   
   # all of the user's flags
@@ -46,6 +55,7 @@ class UserController < ApplicationController
     @selection = s.split(',')    
     @flags=flagListForStates(@selection, @user, @order)      
     @all_flag_count=@user.flags.count
+    @page_title="#{@user.to_s}: #{I18n.t('revs.flags.plural')}"
   end
   
   def update_flag_table

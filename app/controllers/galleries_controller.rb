@@ -7,6 +7,7 @@ class GalleriesController < ApplicationController
     @filter=params[:filter] || "featured"
     @view=params[:view] || "grid"
     @per_page = Revs::Application.config.num_default_per_page_collections # override the default for galleries
+    @page_title = I18n.t('revs.nav.galleries')
     case @filter
       when 'featured'
         @galleries=Gallery.featured.page(@current_page).per(@per_page)  
@@ -25,6 +26,7 @@ class GalleriesController < ApplicationController
       routing_error
       return
     end
+    @page_title = @gallery.title
     authorize! :show, @gallery
     @view=params[:view] || "grid"
     @manage=params[:manage]
