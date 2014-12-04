@@ -67,6 +67,7 @@
 				model_ssim
 				visibility_isi
         pub_date_ssi
+        vehicle_markings_tsi
 			    <!-- Begin references to copy fields for searching-->
 				people_tim
 				entrant_tim
