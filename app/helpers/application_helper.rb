@@ -196,7 +196,8 @@ module ApplicationHelper
       ['Country','country',{'data-autocomplete-field'=>'country'}],
       ['Group/Class','group_class'],
       ['Race Data','race_data'],
-      ['Photographer','photographer']
+      ['Photographer','photographer'],
+      ['Institutional Notes','institutional_notes']
     ]
   end
 
