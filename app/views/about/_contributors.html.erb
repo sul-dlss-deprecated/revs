@@ -1,24 +1,57 @@
-<p>
-  We would like to acknowledge and thank the following users of the website, who have provided many suggested edits and helped add metadata to images.
-</p>
-	<div class="row">
-	  <div class="span1">
-      <%= image_tag 'default-avatar_32x32.png', :alt=>'profile image if one exists'%> 
-    </div>
-    <div class="span8">
-       <%=link_to 'Joe Smith','#', {:title=>'link to profile page'}%>
-      Number of edits: 100
-    </div>
-  </div>  
+<%= t('revs.about.contributors.intro_html') %>
 
-	<div class="row">
-	  <div class="span1">
-      <%= image_tag 'default-avatar_32x32.png', :alt=>'profile image if one exists'%> 
+<div class="row">
+<!-- Add a new .contributor div block within this row for each contributor.
+     No need to start a new row. -->
+
+  <!-- Contributor block start -->
+  <div class="span4 contributor">
+    <%= image_tag 'default-avatar.png', :alt=>'' %>
+    <div class="media-body">
+      <h4 class="media-heading">
+        <%= link_to 'Joe Smith','#', {:title=>'link to profile page'} %>
+      </h4>
+      100 <%= t('revs.about.contributors.flags') %>
     </div>
-    <div class="span8">
-       <%=link_to 'Jane Smith','#', {:title=>'link to profile page'}%>
-      Number of edits: 501
+  </div>
+  <!-- Contributor block end -->
+
+  <!-- Contributor block start -->
+  <div class="span4 contributor">
+    <%= image_tag 'default-avatar.png', :alt=>'' %>
+    <div class="media-body">
+      <h4 class="media-heading">
+        Jane Longer-Lastname
+      </h4>
+      100 <%= t('revs.about.contributors.flags') %>
     </div>
-  </div>  
-  
+  </div>
+  <!-- Contributor block end -->
+
+  <!-- Contributor block start -->
+  <div class="span4 contributor">
+    <%= image_tag 'http://revslib.stanford.edu/uploads/user/avatar/4/thumb_RPB_headshot_1600.jpg', :alt=>'' %>
+    <div class="media-body">
+      <h4 class="media-heading">
+        <%= link_to 'John Suitguy','#', {:title=>'link to profile page'} %>
+      </h4>
+      100 <%= t('revs.about.contributors.flags') %>
+    </div>
+  </div>
+  <!-- Contributor block end -->
+
+  <!-- Contributor block start -->
+  <div class="span4 contributor">
+    <%= image_tag 'default-avatar.png', :alt=>'' %>
+    <div class="media-body">
+      <h4 class="media-heading">
+        <%= link_to 'Joe Smith','#', {:title=>'link to profile page'} %>
+      </h4>
+      100 <%= t('revs.about.contributors.flags') %>
+    </div>
+  </div>
+  <!-- Contributor block end -->
+
+</div>
+
 <%= render :partial=>'end_page_slug'%>
