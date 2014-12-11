@@ -1,0 +1,24 @@
+<p>
+  We would like to acknowledge and thank the following users of the website, who have provided many suggested edits and helped add metadata to images.
+</p>
+	<div class="row">
+	  <div class="span1">
+      <%= image_tag 'default-avatar_32x32.png', :alt=>'profile image if one exists'%> 
+    </div>
+    <div class="span8">
+       <%=link_to 'Joe Smith','#', {:title=>'link to profile page'}%>
+      Number of edits: 100
+    </div>
+  </div>  
+
+	<div class="row">
+	  <div class="span1">
+      <%= image_tag 'default-avatar_32x32.png', :alt=>'profile image if one exists'%> 
+    </div>
+    <div class="span8">
+       <%=link_to 'Jane Smith','#', {:title=>'link to profile page'}%>
+      Number of edits: 501
+    </div>
+  </div>  
+  
+<%= render :partial=>'end_page_slug'%>
