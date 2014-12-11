@@ -39,11 +39,11 @@ en:
         <p class="faq-question">
           When I try and download a full size image, it asks me to login with a SUNET ID and says I need be part of Stanford University.  What is that and can I get one?
         </p>
-        <p class="faq-answer">High resolution images are only available to members of the Stanford community through a prior agreement.  SUNET IDs are only available to authorized Stanford users and we are not able to create one for you.  If you wish 
+        <p class="faq-answer">High resolution images are only available to members of the Stanford community through a prior agreement.  SUNET IDs are only available to authorized Stanford users and we are not able to create one for you.  If you wish
           to obtain a high resolution image for any reason, please review %{reuse_link}.  Note that anyone can view high resolution versions of the images in the website by selecting "zoom" in the drop-down menu under any of the images.  You can then zoom in and out to view detail, but you will not be able to download the images to your computer.
         </p>
       terms_of_use_text_html: |
-        Any of the content displayed on this site may be under copyright, and it is up to the user to comply with the content's specific copyright provisions. 
+        Any of the content displayed on this site may be under copyright, and it is up to the user to comply with the content's specific copyright provisions.
         Each piece of content may have a different license and re-use requirement, which may be shown with the content.  If a license is not shown, you
         should assume full rights remain with the owner.  For questions about terms of use, you may %{contact_us_link}, review the %{reuse_link} and review the %{terms_of_use_link}.
         You may also %{copyright_infringement_link}.
@@ -59,25 +59,25 @@ en:
         </ul>
       project_text_html: |
         <p>
-        	 The %{revs_institute} has a large and varied collection of automotive materials, including images, research books, ephemera, and specialized documents. 
+        	 The %{revs_institute} has a large and varied collection of automotive materials, including images, research books, ephemera, and specialized documents.
            The Revs Program at Stanford is producing research data and generating course materials.  The primary goal of the Stanford Library is to ensure these materials are indexed, preserved and made
            available to library patrons, researchers and the general public.  By digitizing materials and making them discoverable, content that was once available to a select few becomes useful and
-           discoverable for a wide range of researchers. 
+           discoverable for a wide range of researchers.
         </p>
         <p>
         	%{revs_about_scanning_image}
         	Working with <a href="http://pixelacuity.com/">Pixel Acuity</a>, The Revs Institute for Automotive Research, Inc. is digitizing their collection of images using specialized digital cameras.  Each slide, negative or print is cleaned and imaged at a high resolution.
-          The images and associated metadata are collected and transferred to Stanford, where they are being accessioned into the 
+          The images and associated metadata are collected and transferred to Stanford, where they are being accessioned into the
           <a href="http://library.stanford.edu/projects/stanford-digital-repository">Stanford Digital Repository</a> (SDR).
         </p>
         <p>
-        	The Stanford Digital Repository ensures each digital object is preserved, made available via a permanent persistent URL (web address), enforces content rights and restrictions and provides a common 
+        	The Stanford Digital Repository ensures each digital object is preserved, made available via a permanent persistent URL (web address), enforces content rights and restrictions and provides a common
           storage mechanism for other applications to build upon.  Research and course material from the Revs Program at Stanford will also be stored in SDR, and all materials will be discoverable via Stanford
            Library's online catalog, <a href="http://searchworks.stanford.edu">SearchWorks</a>.
         </p>
         <p>
-        	The Revs Digital Library is built on top of the Stanford Digital Repository to provide a web based platform for discovery of automotive research and images. The Digital Library is developed 
-          in <a href="http://www.rubyonrails.org">Ruby on Rails</a> using open source technologies, including <a href="http://projectblacklight.org/">Blacklight</a>, <a href="http://projecthydra.org/">Hydra</a>, 
+        	The Revs Digital Library is built on top of the Stanford Digital Repository to provide a web based platform for discovery of automotive research and images. The Digital Library is developed
+          in <a href="http://www.rubyonrails.org">Ruby on Rails</a> using open source technologies, including <a href="http://projectblacklight.org/">Blacklight</a>, <a href="http://projecthydra.org/">Hydra</a>,
           and <a href="http://fedora-commons.org/">Fedora Commons</a> and will allow for metadata editing, provide community features, and tools for researchers to further utilize the data.
         </p>
       homepage_about_counts_linktext: " collections"
@@ -92,3 +92,12 @@ en:
           The Stanford Digital Repository ensures each digital object is preserved, made available via a permanent persistent URL
           (web address), enforces content rights and restrictions and provides a common storage mechanism for other applications to build upon.
       video_tutorials_title: "Video Tutorials"
+      contributors:
+        intro_html: |
+          <p>
+            We would like to acknowledge and thank the following users of
+            the Revs website, who have provided many suggested edits
+            and helped add metadata to items.
+          </p>
+        flags: "flags"
+

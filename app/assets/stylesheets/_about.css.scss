@@ -27,6 +27,21 @@
     text-indent: -9999px;
     background: #999;
   }
+  #about-section .contributor {
+    margin-bottom: 10px;
+    h4 {
+      color: #555;
+      font-size: 16px;
+    }
+    .media-body { margin: 3px 0 20px;}
+    img {
+      border: 1px solid #ddd;
+      margin-right: 10px;
+      margin-bottom: 15px;
+      max-height: 40px;
+      padding: 5px;
+    }
+  }
 
   // Make textarea wide as reasonable given viewport size
   @media screen and (min-width: 980px) {
@@ -37,5 +52,6 @@
   }
   @media screen and (max-width: 767px) {
     textarea#message {}
+    #about-section .contributor {clear: left;}
   }
 }
