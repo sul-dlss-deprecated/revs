@@ -229,7 +229,7 @@ describe("User registration system",:type=>:request,:integration=>true) do
     page.should have_content "Guy in the background looking sideways"
     visit user_flags_user_index_path(admin_account.username)    
     page.should have_content "#{admin_account.username}'s Flags"
-    page.should have_content "This user does not have any flags."  
+    page.should have_content I18n.t('revs.flags.none')
     visit user_edits_user_index_path(admin_account.username)    
     page.should have_content "#{admin_account.username}'s Item Edits"
     page.should have_content "A Somewhat Shorter Than Ave"
