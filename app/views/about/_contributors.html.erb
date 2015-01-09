@@ -23,7 +23,7 @@
                   <%= user.to_s %>
                 <% end %>
               </h4>
-               <%= "#{user.flags.where(:state=>Flag.fixed).count} #{t('revs.about.contributors.flags')}" %>
+               <%= link_to "#{user.flags.where(:state=>Flag.fixed).count} #{t('revs.about.contributors.flags')}",user_flags_user_index_path(user,:selection=>Flag.fixed) %>
             </div>
           </div>
           <!-- Contributor block end -->

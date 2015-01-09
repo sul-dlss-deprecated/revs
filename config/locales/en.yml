@@ -107,7 +107,7 @@ en:
       singular: 'Flag'
       plural: 'Flags'
       resolve: 'Resolve'
-      none: 'This user does not have any flags.'
+      none: 'This user does not have any open flags.'
       flag_history: "Flagged by %{flagger} on %{flag_date} with comment '%{comment}'. Marked as %{state_name} by %{resolver} on %{resolve_date}"
       flag_history_comment: "with comment '%{comment}'"
       personal_none: 'You do not have any flags.'
