@@ -4,54 +4,32 @@
 <!-- Add a new .contributor div block within this row for each contributor.
      No need to start a new row. -->
 
-  <!-- Contributor block start -->
-  <div class="span4 contributor">
-    <%= image_tag 'default-avatar.png', :alt=>'' %>
-    <div class="media-body">
-      <h4 class="media-heading">
-        <%= link_to 'Joe Smith','#', {:title=>'link to profile page'} %>
-      </h4>
-      100 <%= t('revs.about.contributors.flags') %>
-    </div>
-  </div>
-  <!-- Contributor block end -->
-
-  <!-- Contributor block start -->
-  <div class="span4 contributor">
-    <%= image_tag 'default-avatar.png', :alt=>'' %>
-    <div class="media-body">
-      <h4 class="media-heading">
-        Jane Longer-Lastname
-      </h4>
-      100 <%= t('revs.about.contributors.flags') %>
-    </div>
-  </div>
-  <!-- Contributor block end -->
-
-  <!-- Contributor block start -->
-  <div class="span4 contributor">
-    <%= image_tag 'http://revslib.stanford.edu/uploads/user/avatar/4/thumb_RPB_headshot_1600.jpg', :alt=>'' %>
-    <div class="media-body">
-      <h4 class="media-heading">
-        <%= link_to 'John Suitguy','#', {:title=>'link to profile page'} %>
-      </h4>
-      100 <%= t('revs.about.contributors.flags') %>
-    </div>
-  </div>
-  <!-- Contributor block end -->
-
-  <!-- Contributor block start -->
-  <div class="span4 contributor">
-    <%= image_tag 'default-avatar.png', :alt=>'' %>
-    <div class="media-body">
-      <h4 class="media-heading">
-        <%= link_to 'Joe Smith','#', {:title=>'link to profile page'} %>
-      </h4>
-      100 <%= t('revs.about.contributors.flags') %>
-    </div>
-  </div>
-  <!-- Contributor block end -->
-
+  <%  Revs::Application.config.featured_contributors.each do |contributor| 
+        begin
+          user=User.find(contributor)
+        rescue
+          user=nil
+        end
+        if user
+          %>
+          <!-- Contributor block start -->
+          <div class="span4 contributor">
+            <%= image_tag user.avatar.url(:thumb), :alt=>'user image' %>
+            <div class="media-body">
+              <h4 class="media-heading">
+                <% if user.public %>
+                  <%= link_to user.to_s,user_path(user), {:title=>"link to #{user.to_s} profile page"} %>
+                <% else %>
+                  <%= user.to_s %>
+                <% end %>
+              </h4>
+               <%= "#{user.flags.where(:state=>Flag.fixed).count} #{t('revs.about.contributors.flags')}" %>
+            </div>
+          </div>
+          <!-- Contributor block end -->
+        <% end # end check for user found%>
+  <% end # end loop over all top contributors%>
+  
 </div>
 
 <%= render :partial=>'end_page_slug'%>
