@@ -95,9 +95,9 @@ en:
       contributors:
         intro_html: |
           <p>
-            We would like to acknowledge and thank the following users of
-            the Revs website, who have provided many suggested edits
-            and helped add metadata to items.
+            We would like to acknowledge and specifically thank the following users of
+            the Revs Digital Library website, who have provided many suggested edits
+            and helped improve the information on many of the images.
           </p>
-        flags: "flags"
+        flags: "fixed flags"
 
