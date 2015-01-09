@@ -5,7 +5,7 @@
 			<li><%= link_to t('revs.about.project_title'), about_pages_path(:id=>'project') %></li>
 			<li><%= link_to t('revs.about.project_team'), about_pages_path(:id=>'team') %></li>
 			<li><%= link_to t('revs.about.acknowledgements'), about_pages_path(:id=>'acknowledgements')%></li>
-			<li><%= link_to t('revs.about.contributors_title'), about_pages_path(:id=>'contributors')%></li>
+			<li><%= link_to t('revs.about.contributors_title'), about_pages_path(:id=>'contributors') if Revs::Application.config.featured_contributors && Revs::Application.config.featured_contributors.size > 0 %></li>
 	  </ul>
 
     <%# List of links to FAQ and other help pages %>
