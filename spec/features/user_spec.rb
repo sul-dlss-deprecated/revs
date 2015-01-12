@@ -229,7 +229,7 @@ describe("User registration system",:type=>:request,:integration=>true) do
     expect(page).to have_content "Guy in the background looking sideways"
     visit user_flags_user_index_path(admin_account.username)    
     expect(page).to have_content "#{admin_account.username}'s Flags"
-    expect(page).to have_content "This user does not have any flags."  
+    expect(page).to have_content I18n.t('revs.flags.none') # no flags
     visit user_edits_user_index_path(admin_account.username)    
     expect(page).to have_content "#{admin_account.username}'s Item Edits"
     expect(page).to have_content "A Somewhat Shorter Than Ave"
