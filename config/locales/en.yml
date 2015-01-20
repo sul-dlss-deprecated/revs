@@ -166,12 +166,12 @@ en:
       tracks: "Tracks"
     contact:
       us: 'contact us'
-      instructions_html: 'If you are asking about access or purchase of images, select "Contact the photo sales department" as the subject or view %{reuse_link}.  If you have corrections to metadata or content on the site, please use the "Flag correction to this item" link next to the image.'
+      instructions_html: 'If you would like to purchase an image, our policies and Image Order Forms can be found here: %{reuse_link}  Or, if you have questions about placing an order, select "Contact the Image Sales Department." If you have corrections to metadata or content on the site, please use the "Flag correction to this item" link next to the image.'
       permission_information_html: 'permission information and contact The Revs Institute for Automotive Research, Inc.'
       select_topic: 'Select a topic...'
       problem: 'Problem with the website'
       other_questions: 'Other questions'
-      terms_of_use: 'Contact the photos sales department'
+      terms_of_use: 'Contact the Image Sales Department'
       metadata_issue: 'Corrections to content'
       name: 'Your name'
       email: 'Your email'
