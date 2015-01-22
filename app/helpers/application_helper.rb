@@ -80,6 +80,7 @@ module ApplicationHelper
   
   def show_linked_value(val,opts={})
     value = (opts[:simple_format].blank? ? val : simple_format(val))
+    value = value.first if value.class == Array # be sure we have an array
     if opts[:facet].blank?
       value
     else
@@ -94,9 +95,33 @@ module ApplicationHelper
   
   def show_formatted_list(mvf,opts={})
     return "" if mvf.blank?
-    return show_linked_value(mvf,opts) if mvf.class != Array
-    separator=opts[:separator] || ', '
-    return mvf.collect {|val|show_linked_value(val,opts)}.join(separator).html_safe
+    if SolrDocument.field_mappings[opts[:facet].to_sym][:field] == 'pub_year_isim' # years are special, if there are multiple, show in a friendly format, not as a list of clickable years
+      if mvf.size == 1
+        return show_linked_value(mvf.first,opts) # single year, link it
+      else
+        return format_years(mvf) # multiple years, format more nicely
+      end
+    else  
+      return show_linked_value(mvf,opts) if mvf.class != Array
+      separator=opts[:separator] || ', '
+      return mvf.collect {|val|show_linked_value(val,opts)}.join(separator).html_safe
+    end
+  end
+  
+  def format_years(years)
+    years.sort!.uniq
+    display_years=years.first.to_s
+    years.each_with_index do |year,index|
+      if index > 0 && year != years[index-1] + 1 # if we are not on the first year and the current year we are indexing over is not just one bigger than the previous, we need to start a new series
+        if index == 1 
+          display_years += ", #{year}" # second year in the list is not consecutive, so add current year after a comma
+        else
+          display_years += "-#{years[index-1]}, #{year}" # this is not just the second non consecutive year, so finish the range, and then start the new range
+        end
+      end  
+    end
+    display_years += "-#{years.last}" if years.last.to_s != display_years[-4,4] 
+    return display_years.to_s
   end
   
   def render_locale_class
