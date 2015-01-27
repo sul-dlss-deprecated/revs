@@ -150,15 +150,15 @@ class SolrDocument
       when :pub_year_single_isi  # if the user has updated a year field, we need to blank out the full date, since its no longer valid, and set the years field
         immediate_remove('pub_date_ssi')
         immediate_update('pub_year_isim',new_value)
-      when :pub_date_ssi # if the user has updated a date field, we need to set the years appropriately
+      when :pub_date_ssi # if the user has updated a date field, we need to set the years appropriately but NOT send the year fields to editstore (since we only need the date field there)
         new_value=new_value.first if new_value.class == Array
         full_date=get_full_date(new_value)
         if full_date # if it's a valid full date, extract the year into the single and multi-valued year fields
-          immediate_update('pub_year_single_isi',full_date.year.to_s)
-          immediate_update('pub_year_isim',full_date.year.to_s)
+          immediate_update('pub_year_single_isi',full_date.year.to_s,:ignore_editstore=>true)
+          immediate_update('pub_year_isim',full_date.year.to_s,:ignore_editstore=>true) # but never send the year to editstore since the actual date is enough for the MODs
         else # if it's not a valid date, clear the year fields
           immediate_remove('pub_year_isim')
-          immediate_remove('pub_year_single_isi')
+          immediate_remove('pub_year_single_isi') 
         end
     end    
   end
@@ -169,7 +169,7 @@ class SolrDocument
     
     @errors=[]
     
-    unsaved_edits.each do |solr_field_name,value| 
+    unsaved_edits.dup.each do |solr_field_name,value| 
 
       case solr_field_name.to_sym
         when :model_year_ssim
@@ -178,8 +178,10 @@ class SolrDocument
         when :pub_date_ssi
           @errors << 'Date must be in the format MM/DD/YYYY' if (!self.class.blank_value?(value) && get_full_date(value) == false)
         when :pub_year_isim,:pub_year_single_isi
-          years=self.class.to_array(value)
-          @errors << 'A year must be after 1800 up until this year and must be in the format YYYY' if (!self.class.blank_value?(years) && !years.all?{|new_value| is_valid_year?(new_value,1800)})
+          self.years=RevsUtils.parse_years(SolrDocument.to_array(value).join('|'))
+          if (!value.blank? && (self.class.blank_value?(self.years) || !self.years.all?{|new_value| is_valid_year?(new_value,1800)}))
+            @errors << 'A year must be after 1800 up until this year and must be in the format YYYY or XXXX-YYYY for a range of years' 
+          end
         when :visibility_isi
           @errors << 'Visibility value not_valid' unless SolrDocument.visibility_mappings.values.include? value.to_s
       end

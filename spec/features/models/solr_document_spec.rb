@@ -64,12 +64,16 @@ describe SolrDocument, :integration => true do
      expect(@doc.valid?).to be_truthy        
    end
    
-    it "should catch invalid years" do
+  it "should allow a multiple year entry with one good value" do
       expect(@doc.valid?).to be_truthy
-      @doc.years = ['crap','1961'] # bad value
+      @doc.years = 'crap','1961' # this is ok, it will just ditch the bad crap value
       expect(@doc.dirty?).to be_truthy
-      expect(@doc.valid?).to be_falsey
-      expect(@doc.save).to be_falsey   
+      expect(@doc.valid?).to be_truthy
+      expect(@doc.save).to be_truthy
+      expect(@doc.years).to eq(['1961'])   
+    end
+
+    it "should catch invalid years" do       
       @doc.years = '1750' # this is bad (before 1800)
       expect(@doc.valid?).to be_falsey   
       @doc.years = Date.today.year+1 # this is bad (future)
@@ -82,16 +86,35 @@ describe SolrDocument, :integration => true do
       expect(@doc.valid?).to be_truthy      
       @doc.years_mvf = '1959|1961' # mvf ok
       expect(@doc.valid?).to be_truthy
-      @doc.years_mvf = 'abc|1961' # bad
-      expect(@doc.valid?).to be_falsey
+      @doc.years_mvf = 'abc|1961'  # ok, just ditch the bad value
+      expect(@doc.valid?).to be_truthy
       @doc.years_mvf = '1961' # ok
       expect(@doc.valid?).to be_truthy
-      @doc.years = '' # blanks is ok
+      @doc.years = '' # blank is ok
       expect(@doc.valid?).to be_truthy   
-      @doc.years_mvf = '' # blanks is ok
-      expect(@doc.valid?).to be_truthy         
+      @doc.years_mvf = '' # blank is ok
+      expect(@doc.valid?).to be_truthy                
+      @doc.years = '1961-63' # year ranges are ok
+      expect(@doc.valid?).to be_truthy                
+      @doc.years = '1961-1964' # year ranges are ok
+      expect(@doc.valid?).to be_truthy                
    end
-      
+
+   it "should store year ranges correctly" do             
+     @doc.years = '1961-63' # year ranges are ok
+     expect(@doc.valid?).to be_truthy
+     expect(@doc.save).to be_truthy
+     expect(@doc.years).to eq(['1961','1962','1963'])        
+     @doc.years = '1961-1964' # year ranges are ok
+     expect(@doc.valid?).to be_truthy
+     expect(@doc.save).to be_truthy
+     expect(@doc.years).to eq(['1961','1962','1963','1964'])     
+     @doc.years = '196x' # year ranges are ok
+     expect(@doc.valid?).to be_truthy
+     expect(@doc.save).to be_truthy
+     expect(@doc.years).to eq(['1960','1961','1962','1963','1964','1965','1966','1967','1968','1969'])       
+  end
+        
   end
     
   describe "metadata_editing" do
@@ -232,6 +255,8 @@ describe SolrDocument, :integration => true do
         doc.save(:user=>user) # now let's save it
         
         expect(ChangeLog.where(:druid=>druid,:operation=>'metadata update',:user_id=>user.id).size).to eq(1)
+        expect(Editstore::Change.where(:druid=>druid).size).to eq(1) # only the date field is set
+        expect(Editstore::Change.where(:druid=>druid).first.field).to eq('pub_date_ssi') # only the date field is set
         
         reload_doc=SolrDocument.find(druid)
         expect(reload_doc.years).to eq([1999]) # year has now been updated

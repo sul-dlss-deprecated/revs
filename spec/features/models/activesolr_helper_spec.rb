@@ -445,7 +445,7 @@ describe ActivesolrHelper, :integration => true do
       expect(@doc.years).to eq(old_value) # its an array with an integer value
       expect(unchanged(@doc)).to be_truthy
       @doc.years="1961"
-      expect(changed(@doc,{:pub_year_isim=>'1961'})).to be_truthy
+      expect(changed(@doc,{:pub_year_isim=>['1961']})).to be_truthy
       reload_doc = SolrDocument.find('yt907db4998') # change is not saved to solr or editstore though
       expect(reload_doc.years).to eq(old_value)    
       expect(Editstore::Change.count).to eq(0)  # no changes to Editstore yet

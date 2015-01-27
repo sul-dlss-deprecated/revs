@@ -24,7 +24,7 @@ module ActivesolrHelper
        value.class == Array ? value : [value]
      end
      
-     # tells you if have an blank value or an array that has just blank values
+     # tells you if have a blank value or an array that has just blank values
      def blank_value?(value)
         value.class == Array ? !value.delete_if(&:blank?).any? : value.blank? 
      end
@@ -153,20 +153,22 @@ module ActivesolrHelper
   end
   
   # updates the field in solr, editstore and in the object itself (useful in a callback method where you don't want to wait for saving or re-trigger callbacks)
-  def immediate_update(field_name,new_value)
+  def immediate_update(field_name,new_value,params={})
+    ignore_editstore=params[:ignore_editstore] || false
     if self.class.blank_value?(new_value)
       immediate_remove(field_name)
     else
       update_solr(field_name,'set',new_value)
-      send_update_to_editstore(new_value,self[field_name],field_name) if self.class.use_editstore
+      send_update_to_editstore(new_value,self[field_name],field_name) if (self.class.use_editstore && !ignore_editstore)
       self[field_name]=new_value
     end
   end
 
   # removes the field in solr, editstore and in the object itself (useful in a callback method where you don't want to wait for saving or re-trigger callbacks)
-  def immediate_remove(field_name)
+  def immediate_remove(field_name,params={})
+    ignore_editstore=params[:ignore_editstore] || false
     update_solr(field_name,'remove',nil)
-    send_delete_to_editstore(field_name) if self.class.use_editstore
+    send_delete_to_editstore(field_name) if (self.class.use_editstore && !ignore_editstore)
     self[field_name]=nil
   end
   
