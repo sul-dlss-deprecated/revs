@@ -21,7 +21,8 @@ describe SolrDocument, :integration => true do
   describe "validation" do
 
     before :each do
-      @doc = SolrDocument.find('yt907db4998')
+      @druid='yt907db4998'
+      @doc = SolrDocument.find(@druid)
     end
     
     it "should catch invalid dates" do
@@ -71,6 +72,7 @@ describe SolrDocument, :integration => true do
       @doc.valid?.should be_true
       @doc.save.should be_true
       @doc.years.should == ['1961']
+      reindex_solr_docs(@druid)
     end
 
     it "should catch invalid years" do       
@@ -113,6 +115,7 @@ describe SolrDocument, :integration => true do
      @doc.valid?.should be_true 
      @doc.save.should be_true
      @doc.years.should == ['1960','1961','1962','1963','1964','1965','1966','1967','1968','1969']        
+     reindex_solr_docs(@druid)
   end
         
   end
