@@ -439,7 +439,7 @@ describe ActivesolrHelper, :integration => true do
       @doc.years.should == old_value # its an array with an integer value
       unchanged(@doc).should be_true
       @doc.years="1961"
-      changed(@doc,{:pub_year_isim=>'1961'}).should be_true
+      changed(@doc,{:pub_year_isim=>['1961']}).should be_true
       reload_doc = SolrDocument.find('yt907db4998') # change is not saved to solr or editstore though
       reload_doc.years.should == old_value    
       Editstore::Change.count.should == 0  # no changes to Editstore yet

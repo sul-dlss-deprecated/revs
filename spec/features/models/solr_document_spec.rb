@@ -64,12 +64,16 @@ describe SolrDocument, :integration => true do
      @doc.valid?.should be_true        
    end
    
-    it "should catch invalid years" do
+    it "should allow a multiple year entry with one good value" do
       @doc.valid?.should be_true
-      @doc.years = ['crap','1961'] # bad value
+      @doc.years = 'crap|1961' # this is ok, it will just ditch the bad crap value
       @doc.dirty?.should be_true
-      @doc.valid?.should be_false
-      @doc.save.should be_false   
+      @doc.valid?.should be_true
+      @doc.save.should be_true
+      @doc.years.should == ['1961']
+    end
+
+    it "should catch invalid years" do       
       @doc.years = '1750' # this is bad (before 1800)
       @doc.valid?.should be_false   
       @doc.years = Date.today.year+1 # this is bad (future)
@@ -82,16 +86,35 @@ describe SolrDocument, :integration => true do
       @doc.valid?.should be_true      
       @doc.years_mvf = '1959|1961' # mvf ok
       @doc.valid?.should be_true
-      @doc.years_mvf = 'abc|1961' # bad
-      @doc.valid?.should be_false
+      @doc.years_mvf = 'abc|1961' # ok, just ditch the bad value
+      @doc.valid?.should be_true
       @doc.years_mvf = '1961' # ok
       @doc.valid?.should be_true
-      @doc.years = '' # blanks is ok
+      @doc.years = '' # blank is ok
       @doc.valid?.should be_true   
-      @doc.years_mvf = '' # blanks is ok
+      @doc.years_mvf = '' # blank is ok
+      @doc.valid?.should be_true         
+      @doc.years = '1961-63' # year ranges are ok
+      @doc.valid?.should be_true         
+      @doc.years = '1961-1964' # year ranges are ok
       @doc.valid?.should be_true         
    end
-      
+
+   it "should store year ranges correctly" do             
+     @doc.years = '1961-63' # year ranges are ok
+     @doc.valid?.should be_true 
+     @doc.save.should be_true
+     @doc.years.should == ['1961','1962','1963']        
+     @doc.years = '1961-1964' # year ranges are ok
+     @doc.valid?.should be_true 
+     @doc.save.should be_true
+     @doc.years.should == ['1961','1962','1963','1964']        
+     @doc.years = '196x' # year ranges are ok
+     @doc.valid?.should be_true 
+     @doc.save.should be_true
+     @doc.years.should == ['1960','1961','1962','1963','1964','1965','1966','1967','1968','1969']        
+  end
+        
   end
     
   describe "metadata_editing" do
@@ -233,6 +256,8 @@ describe SolrDocument, :integration => true do
         doc.save(:user=>user) # now let's save it
         
         ChangeLog.where(:druid=>druid,:operation=>'metadata update',:user_id=>user.id).size.should == 1
+        Editstore::Change.where(:druid=>druid).size.should == 1 # only the date field is set
+        Editstore::Change.where(:druid=>druid).first.field.should == 'pub_date_ssi' # only the date field is set
         
         reload_doc=SolrDocument.find(druid)
         reload_doc.years.should == [1999] # year has now been updated
