@@ -27,13 +27,14 @@ namespace :revs do
   #Run Me: RAILS_ENV=production rake revs:fix_missing_dates collection="John Dugdale Collection" # limited to a collection
   #Run Me: RAILS_ENV=production rake revs:fix_missing_dates dry_run=true # dry run, no updates
   #Run Me: RAILS_ENV=production rake revs:fix_missing_dates limit=100 # sets a limit of number of items
+  #Run Me: RAILS_ENV=production rake revs:fix_missing_dates state_id=1 # override the editstore state id
   # you can mix and match those parameters
   task :fix_missing_dates => :environment do |t, args| 
     
     limit = ENV['limit'] || '' # if passed, limits to this many items only
     dry_run = ENV['dry_run'] || false # if passed, no updates are sent to editstore
     collection = ENV['collection'] || '' # if passed, limits to this collection only
-    
+    state_id = ENV['state_id'] || 2 # defaults to the ready state in editstore, but can be overriden to "wait"
     num_noop=0
     num_updated=0
     num_not_sent=0
@@ -70,8 +71,8 @@ namespace :revs do
         else
           old_date=(mods_date.count == 1 ? mods_date.text.strip : "non-existent")
           puts "-- date in MODs is #{old_date}, sending editstore update to #{item.full_date} if needed"
-          if (Revs::Application.config.use_editstore && !dry_run && Editstore::Change.where(:druid=>item.id,:field=>'pub_date_ssi',:state_id=>2,:new_value=>item.full_date).count == 0) # if we are not a dry run, editstore is disabled or the update doesn't already exist, send it
-            item.send_update_to_editstore(item.full_date,mods_date.text.strip,'pub_date_ssi',note='rake task to port missing full date from solr to fedora')
+          if (Revs::Application.config.use_editstore && !dry_run && Editstore::Change.where(:druid=>item.id,:field=>'pub_date_ssi',:state_id=>state_id,:new_value=>item.full_date).count == 0) # if we are not a dry run, editstore is disabled or the update doesn't already exist, send it
+            Editstore::Change.create(:new_value=>item.full_date,:old_value=>mods_date.text.strip,:operation=>:update,:state_id=>state_id,:field=>'pub_date_ssi',:druid=>item.id,:client_note=>'rake task to port missing full date from solr to fedora')            
             num_updated+=1
           else
             num_not_sent+=1
