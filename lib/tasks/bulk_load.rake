@@ -35,57 +35,79 @@ namespace :revs do
     dry_run = ENV['dry_run'] || false # if passed, no updates are sent to editstore
     collection = ENV['collection'] || '' # if passed, limits to this collection only
     state_id = ENV['state_id'] || 2 # defaults to the ready state in editstore, but can be overriden to "wait"
+    date_field='pub_date_ssi'
     num_noop=0
     num_updated=0
     num_not_sent=0
+    num_invalid=0
 
-    q="pub_date_ssi:[* TO *]"
+    start_time=Time.now
+
+    q="#{date_field}:[* TO *]"
     q+=" AND collection_ssim:\"#{collection}\"" unless collection.blank?
     rows = limit.blank? ? "100000" : limit
     
     @all_docs = Blacklight.solr.select(:params => {:q => q, :rows=>rows})    
 
+    total_docs=@all_docs['response']['docs'].size
+    n=0
+    
     puts ""
-    puts "Started at #{Time.now}, #{@all_docs['response']['numFound']} documents match search and #{@all_docs['response']['docs'].size} returned"
+    puts "Started at #{start_time}, #{total_docs} docs returned"
     puts " limited to collection: #{collection}" unless collection.blank?
     puts " limited to #{limit} items" unless limit.blank?
     puts " dry run" if dry_run
+    puts "field checked: #{date_field}"
     puts "solr: #{Blacklight.solr.options[:url]}"
     puts "editstore enabled: #{Revs::Application.config.use_editstore}"
     puts "***********WARNING: Editstore is not enabled" unless Revs::Application.config.use_editstore
     puts ""
     
     @all_docs['response']['docs'].each do |doc|
-    
-      item=SolrDocument.new(doc)
-      normalized_full_date=item.get_full_date(item.full_date)
-      if normalized_full_date # we have a valid full date, compare against the MODs in PURL
-        puts "#{item.id} has a solr document date value of #{item.full_date} which is a valid full date"
-        # now gets entry in mods
-        response = RestClient.get("http://purl.stanford.edu/#{item.id}.mods")
-        mods_xml=Nokogiri::XML(response)
-        mods_date=mods_xml.css('originInfo/dateCreated')
-        if mods_date.count == 1 && (item.get_full_date(mods_date.text.strip) == normalized_full_date) # dates match between MODs and Solr Document == noop
-          puts "-- date matches to MODs, NOOP"
-          num_noop+=1
-        else
-          old_date=(mods_date.count == 1 ? mods_date.text.strip : "non-existent")
-          puts "-- date in MODs is #{old_date}, sending editstore update to #{item.full_date} if needed"
-          if (Revs::Application.config.use_editstore && !dry_run && Editstore::Change.where(:druid=>item.id,:field=>'pub_date_ssi',:state_id=>state_id,:new_value=>item.full_date).count == 0) # if we are not a dry run, editstore is disabled or the update doesn't already exist, send it
-            Editstore::Change.create(:new_value=>item.full_date,:old_value=>mods_date.text.strip,:operation=>:update,:state_id=>state_id,:field=>'pub_date_ssi',:druid=>item.id,:client_note=>'rake task to port missing full date from solr to fedora')            
-            num_updated+=1
+      
+      n+=1
+
+      begin
+        
+        item=SolrDocument.new(doc)
+        normalized_full_date=item.get_full_date(item.full_date)
+        if normalized_full_date # we have a valid full date, compare against the MODs in PURL
+          puts "#{n} of #{total_docs}: #{item.id} has a solr document date value of #{item.full_date} which is a valid full date"
+          # now gets entry in mods
+          response = RestClient.get("http://purl.stanford.edu/#{item.id}.mods")
+          mods_xml=Nokogiri::XML(response)
+          mods_date=mods_xml.css('originInfo/dateCreated')
+          if mods_date.count == 1 && (item.get_full_date(mods_date.text.strip) == normalized_full_date) # dates match between MODs and Solr Document == noop
+            puts "-- date matches to MODs, NOOP"
+            num_noop+=1
           else
-            num_not_sent+=1
+            old_date=(mods_date.count == 1 ? mods_date.text.strip : "non-existent")
+            puts "-- date in MODs is #{old_date}, sending editstore update for #{date_field} to #{item.full_date}"
+            if (Revs::Application.config.use_editstore && !dry_run && Editstore::Change.where(:druid=>item.id,:field=>date_field,:state_id=>state_id,:new_value=>item.full_date).count == 0) # if we are not a dry run, editstore is disabled or the update doesn't already exist, send it
+              Editstore::Change.create(:new_value=>item.full_date,:old_value=>mods_date.text.strip,:operation=>:update,:state_id=>state_id,:field=>date_field,:druid=>item.id,:client_note=>'rake task to port missing full date from solr to fedora')            
+              num_updated+=1
+            else
+              num_not_sent+=1
+            end
           end
+        else
+          num_invalid+=1
+          puts "#{item.id} has a value of #{item.full_date} which is a NOT a valid full date"
         end
-      else
-        puts "#{item.id} has a value of #{item.full_date} which is a NOT a valid full date"
+
+      rescue e
+        
+        num_error+=1
+        puts "  error!"
+        
       end
-    
+      
     end
     
+    end_time=Time.now
+    
     puts ""
-    puts "Finished at #{Time.now}, #{@all_docs['response']['docs'].size} checked, #{num_noop} no action needed, #{num_updated} updated, #{num_not_sent} updates not sent to edistore (existed, dry run or editstore disabled)"
+    puts "Finished at #{Time.now}, run lasted #{((end_time-start_time)/60).round} minutes, #{total_docs} checked, #{num_errors} errors, #{num_noop} no action needed, #{num_invalid} invalid dates in solr, #{num_updated} updated in editstore, #{num_not_sent} updates not sent to edistore (existed, dry run or editstore disabled)"
     puts ""
     
   end
