@@ -95,7 +95,7 @@ namespace :revs do
           puts "#{item.id} has a value of #{item.full_date} which is a NOT a valid full date"
         end
 
-      rescue e
+      rescue
         
         num_error+=1
         puts "  error!"
