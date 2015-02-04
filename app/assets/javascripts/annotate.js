@@ -4,7 +4,7 @@ anno.addHandler('onAnnotationCreated', function(annotation) {
 		type: "POST",
 		url: "/annotations",
 		dataType: "JSON",
-		data: "annotation="+JSON.stringify(annotation)+"&druid=" + druid(),
+		data: "annotation="+encodeURIComponent(JSON.stringify(annotation))+"&druid=" + druid(),
 		success: function(data) {
 	    annotation.id=data.id; // the annotation ID should match the database row ID so we can delete it if needed
 			updateAnnotationsPanel(data.num_annotations,druid());
@@ -21,7 +21,7 @@ anno.addHandler('onAnnotationUpdated', function(annotation) {
 	  type: "PUT",
 		dataType: "JSON",
 	  url: "/annotations/" + annotation.id,
-	  data: "annotation="+JSON.stringify(annotation),
+	  data: "annotation="+encodeURIComponent(JSON.stringify(annotation)),
 		success: function(data) {
 			updateAnnotationsPanel(data.num_annotations,druid());
 	  }	
