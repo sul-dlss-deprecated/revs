@@ -1,5 +1,7 @@
 require 'rest_client'
 
+# annotation location is specified as x,y,height,width normalized to 1... x=0,y=0 is the top left corner of the image
+# we are using the annotorious plugin
 class Annotation < WithSolrDocument
   
   belongs_to :user  
