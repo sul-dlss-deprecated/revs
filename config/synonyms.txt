@@ -12,20 +12,20 @@
 
 #-----------------------------------------------------------------------
 #some test synonym mappings unlikely to appear in real input text
-chevy,chevrolet
+chevy, chevrolet
 offy, offenhauser
 Formula One, F1, Formula 1
 Formula Two, F2, Formula 2
 Formula Three, F3, Formula 3
 Formula V, Formula Vee, FV
 GT, Grand Touring
-GP, G.P., Grand Prix
+GP, G.P, Grand Prix
 Hill climb, Hillclimb
 Indy 500, Indianapolis 500
 km, kilometers, kilometres 
 TT, Tourist Trophy
 US, United States 
-ADAC, Allgemeiner Deutscher Automobil-Club e.V.
+ADAC, Allgemeiner Deutscher Automobil-Club e.V
 ARCA, Automobile Racing Club of America
 BRDC, British Racing Drivers’ Club
 BRSCC, British Racing Sports Car Club
