@@ -40,6 +40,7 @@ namespace :revs do
     num_updated=0
     num_not_sent=0
     num_invalid=0
+    num_errors=0
 
     start_time=Time.now
 
@@ -97,7 +98,7 @@ namespace :revs do
 
       rescue e
         
-        num_error+=1
+        num_errors+=1
         puts "  error!"
         
       end
