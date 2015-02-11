@@ -272,7 +272,7 @@ describe ActivesolrHelper, :integration => true do
       expect(Editstore::Change.count).to eq(0)
     
       # current value
-      expect(@doc.vehicle_model).to eq(['Mystique','328i'])
+      expect(@doc.vehicle_model).to eq(['Mystique','328i','GT-350'])
 
       # clear out values
       @doc.vehicle_model_mvf=''
@@ -355,7 +355,7 @@ describe ActivesolrHelper, :integration => true do
       new_values_as_array=['Contour','128i']
       
       # current values
-      expect(@doc.vehicle_model).to eq(['Mystique','328i'])
+      expect(@doc.vehicle_model).to eq(['Mystique','328i','GT-350'])
 
       # set new value
       @doc.vehicle_model_mvf=new_values

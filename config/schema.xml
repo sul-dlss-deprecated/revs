@@ -131,18 +131,20 @@
     -->
     <fieldType name="location_rpt" class="solr.SpatialRecursivePrefixTreeFieldType"
       geo="true" distErrPct="0.025" maxDistErr="0.000009" units="degrees" />
-    
-    <fieldType name="text" class="solr.TextField" omitNorms="false">
-      <analyzer type="query">
-        <tokenizer class="solr.ICUTokenizerFactory"/>
-        <filter class="solr.ICUFoldingFilterFactory"/>  <!-- NFKC, case folding, diacritics removed -->
-        <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
-      </analyzer>
-      <analyzer>
-        <tokenizer class="solr.ICUTokenizerFactory"/>
-        <filter class="solr.ICUFoldingFilterFactory"/>  <!-- NFKC, case folding, diacritics removed -->
-      </analyzer>
-    </fieldType>
+
+      <fieldtype name="text" class="solr.TextField" autoGeneratePhraseQueries="false" positionIncrementGap="100">
+        <analyzer>
+          <tokenizer class="solr.WhitespaceTokenizerFactory" />
+          <filter class="solr.ICUFoldingFilterFactory"/>  <!-- NFKC, case folding, diacritics removed -->
+          <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
+          <filter class="solr.WordDelimiterFilterFactory"
+            splitOnCaseChange="0" generateWordParts="1" catenateWords="1"
+            splitOnNumerics="1" generateNumberParts="1" catenateNumbers="1"
+            catenateAll="0" preserveOriginal="0" stemEnglishPossessive="1" />
+          <filter class="solr.SnowballPorterFilterFactory" language="English"/>
+          <filter class="solr.RemoveDuplicatesTokenFilterFactory" />
+        </analyzer>
+      </fieldtype>
     
     <!-- A text field that only splits on whitespace for exact matching of words -->
     <fieldType name="text_ws" class="solr.TextField" positionIncrementGap="100">

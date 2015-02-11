@@ -1,6 +1,19 @@
 require 'jettywrapper' unless Rails.env.production? 
 require 'rest_client'
 
+namespace :jetty do
+    
+  desc "Restart jetty with new settings and reload fixtures"
+  task :reset do
+    Rake::Task["jetty:stop"].invoke
+    Rake::Task["revs:config"].invoke
+    sleep 3
+    Rake::Task["jetty:start"].invoke
+    sleep 1
+    Rake::Task["revs:refresh_fixtures"].invoke
+  end
+end
+
 desc "Run continuous integration suite"
 task :ci do
   Rails.env='test'

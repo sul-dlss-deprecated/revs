@@ -33,7 +33,7 @@ describe("Search Pages",:type=>:request,:integration=>true) do
   end
 
   it "should show 2 results for both chevy and chevrolet due to synonym matching" do
-    search_strings=['chevy','chevrolet','Chevy',"Chevrolet"]
+    search_strings=['chevy','chevrolet','Chevy','Chevrolet']
     search_strings.each do |search|
       visit search_path(:q=>search)      
       expect(page).to have_content('Results')
@@ -42,7 +42,19 @@ describe("Search Pages",:type=>:request,:integration=>true) do
       expect(page).to have_content('Marlboro 12 Hour, August 12-14')
     end
   end
-    
+  
+  it "should find matches for gt-350, gt350 and gt 350 due to tokenization setup" do
+    search_strings=['gt 350','gt-350','gt350']
+    search_strings.each do |search|
+      visit search_path(:q=>search)      
+      page.should have_content('Results')
+      page.should have_content('1 - 3 of 3')
+      page.should have_content('Thompson Raceway, May 2')
+      page.should have_content('Record 1')
+      page.should have_content('Lime Rock Continental, September 1')
+    end
+  end
+  
   it "should show a facet search result for 1955" do
     visit search_path(:"f[pub_year_isim][]"=>'1955')
     expect(page).to have_content('Results')
