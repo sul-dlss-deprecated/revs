@@ -10,8 +10,10 @@
   <field name="image_id_ssm">2012-027NADI-1969-b4_12.0_0005</field>
   <field name="subjects_ssim">Automobile</field>
   <field name="subjects_ssim">History</field>
+  <field name="venue_ssi">ARCA</field>
   <field name="marque_ssim">Ferrari</field>
   <field name="marque_ssim">Chevrolet</field>
+  <field name="model_ssim">GT 350</field>
   <field name="entrant_ssim">Jackson, Samuel</field>
   <field name="track_ssi">Laguna Seca</field>
   <field name="cities_ssi">Monterey</field>

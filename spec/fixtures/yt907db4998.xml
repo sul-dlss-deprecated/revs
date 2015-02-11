@@ -10,7 +10,9 @@
   <field name="image_id_ssm">2011-023DUG-3.0_0017</field>
   <field name="annotations_tsim">Nazi symbol</field>
   <field name="model_ssim">Mystique</field>
+  <field name="venue_ssi">Automobile Racing Club of America</field>
   <field name="model_ssim">328i</field>
+  <field name="model_ssim">GT-350</field>
   <field name="entrant_ssim">Fastguy, Some</field>
   <field name="priority_isi">1</field>
   <field name="visibility_isi">1</field>

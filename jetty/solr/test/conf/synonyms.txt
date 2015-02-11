@@ -12,7 +12,7 @@
 
 #-----------------------------------------------------------------------
 #some test synonym mappings unlikely to appear in real input text
-chevy,chevrolet
+chevy, chevrolet
 offy, offenhauser
 Formula One, F1, Formula 1
 Formula Two, F2, Formula 2

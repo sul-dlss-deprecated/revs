@@ -23,6 +23,54 @@ namespace :revs do
   @max_expected_collection_size = 2147483647
   @id = "id"
   
+  desc "Touch all solr docs (but not update them) - useful when synonym file has changed"
+  #Run Me: RAILS_ENV=production rake revs:touch_solr_docs collection="John Dugdale Collection" # limited to a collection
+  #Run Me: RAILS_ENV=production rake revs:touch_solr_docs limit=100 # sets a limit of number of items
+  task :touch_solr_docs  => :environment do |t, args|
+ 
+    limit = ENV['limit'] || '' # if passed, limits to this many items only
+    collection = ENV['collection'] || '' # if passed, limits to this collection only
+
+    q="*:*"
+    q+=" AND collection_ssim:\"#{collection}\"" unless collection.blank?
+    rows = limit.blank? ? "1000000" : limit
+        
+    @all_docs = Blacklight.solr.select(:params => {:q => q, :rows=>rows})            
+    total_docs=@all_docs['response']['docs'].size
+    
+    start_time=Time.now
+    n=0
+    num_errors=0
+
+    puts ""
+    puts "Started at #{start_time}, #{total_docs} docs returned"
+    puts " limited to collection: #{collection}" unless collection.blank?
+    puts " limited to #{limit} items" unless limit.blank?
+    puts ""
+    
+    @all_docs['response']['docs'].each do |doc|
+      
+      id=doc['id']
+      n+=1
+      puts "#{n} of #{total_docs}: #{id}"
+      begin
+        url="#{Blacklight.solr.options[:url]}/update?commit=true"
+        params={:add=>{:doc=>doc}}.to_json
+        RestClient.post url, params,:content_type => :json, :accept=>:json
+      rescue
+        puts ' *** ERRROR'
+        num_errors+=1
+      end
+  end
+
+    end_time=Time.now
+    
+    puts ""
+    puts "Finished at #{Time.now}, run lasted #{((end_time-start_time)/60).round} minutes, #{total_docs} touched, #{num_errors} errors"
+    puts ""
+
+  end
+
   desc "Apply missing dates in MODs from solr documents - fixing previous bug where dates were not making it to editstore"
   #Run Me: RAILS_ENV=production rake revs:fix_missing_dates collection="John Dugdale Collection" # limited to a collection
   #Run Me: RAILS_ENV=production rake revs:fix_missing_dates dry_run=true # dry run, no updates

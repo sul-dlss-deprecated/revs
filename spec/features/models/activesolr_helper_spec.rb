@@ -271,7 +271,7 @@ describe ActivesolrHelper, :integration => true do
       Editstore::Change.count.should == 0
     
       # current value
-      @doc.vehicle_model.should == ['Mystique','328i']
+      @doc.vehicle_model.should == ['Mystique','328i','GT-350']
 
       # clear out values
       @doc.vehicle_model_mvf=''
@@ -354,7 +354,7 @@ describe ActivesolrHelper, :integration => true do
       new_values_as_array=['Contour','128i']
       
       # current values
-      @doc.vehicle_model.should == ['Mystique','328i']
+      @doc.vehicle_model.should == ['Mystique','328i','GT-350']
 
       # set new value
       @doc.vehicle_model_mvf=new_values

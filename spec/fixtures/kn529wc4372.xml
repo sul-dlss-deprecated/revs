@@ -3,6 +3,8 @@
   <field name="title_tsi">Thompson Raceway, May 2</field>
   <field name="pub_year_isim">1966</field>
   <field name="pub_year_single_isi">1966</field>
+  <field name="venue_ssi">G.P.</field>
+  <field name="model_ssim">GT350</field>
   <field name="format_ssim">black-and-white negatives</field>
   <field name="is_member_of_ssim">kz071cg8658</field>
   <field name="source_id_ssi">2012-027NADI-1966-b1_2.1_0006</field>
