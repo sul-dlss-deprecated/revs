@@ -4,4 +4,7 @@
 # User-Agent: *
 # Disallow: /
 
+User-Agent: *
+Disallow: /catalog/range_limit
+
 Sitemap: http://revslib.stanford.edu/sitemap.xml.gz
