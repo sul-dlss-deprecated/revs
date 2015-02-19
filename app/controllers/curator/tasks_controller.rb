@@ -9,15 +9,20 @@ class Curator::TasksController < ApplicationController
    end
 
    def flags
-     s = params[:selection] || Flag.open
+     s = params[:curator_flag_selection] || Flag.open
      
      @selection = s.split(',')
-     @order=params[:order] || "created_at DESC"
      @order_all=params[:order_all] || "created_at DESC"
      @order_user = params[:order_user] || "num_flags DESC"
      
      @flag_states = Flag.groupByFlagState
-     @flags = Kaminari.paginate_array(Flag.where(:state => @selection).order(@order)).page(params[:pagina]).per(@per_page)
+     
+     flags = Flag.all
+     if !@search.blank?
+       flags=flags.where(['comment like ?',"%#{@search}%"])
+     end
+     @flags = Kaminari.paginate_array(flags.where(:state => @selection).order(@order)).page(params[:pagina]).per(@per_page)
+     
      @flags_grouped=Flag.select('*,COUNT("druid") as num_flags,max(flags.updated_at) as updated_at').group("druid").order(@order_all).page(params[:pagina2]).per(@per_page)
      @flags_by_user=Flag.select('*,count(id) as num_flags,max(flags.updated_at) as updated_at').includes(:user).group("user_id").order(@order_user).page(params[:pagina3]).per(@per_page)
 

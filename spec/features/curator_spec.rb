@@ -103,34 +103,33 @@ describe("Curator Section",:type=>:request,:integration=>true) do
         expect(current_path).to eq(item_path('yt907db4998'))
       end
       
-      it "Should show a refresh button on the list of all open flags by flag state" do
+      it "Should show a submit button to refresh list of all open flags by flag state" do
         login_as(curator_login)
         visit curator_tasks_path
-        expect(page).to have_content I18n.t('revs.flags.refresh_list')
+        expect(page).to have_button I18n.t('revs.nav.submit')
       end
     
-      #TODO: Test refresh button once we have phanton.js running on jenkins
-      # it "The refresh button should refresh the list of all open flags" do
-#         druid = "dd482qk0417"
-#         message = "Sample Flag To Test Refresh"
-#         login_as(curator_login)
-#         visit curator_tasks_path
-#         #Make sure the flag is not there
-#         page.should have_no_content message
-#         
-#         #Add it
-#         login_and_add_a_flag(curator_login, druid, message)
-#         
-#         #Return to the page and make sure it is there
-#         visit curator_tasks_path
-#         page.should have_content message
-#         
-#         #Delete the last flag
-#         Flag.last.delete
-#         
-#         click I18n.t('revs.flags.refresh_list')
-#         page.should have_no_content message
-#       end
+      it "The submit button should refresh the list of all open flags" do
+        druid = "dd482qk0417"
+        message = "Sample Flag To Test Refresh"
+        login_as(curator_login)
+        visit curator_tasks_path
+        #Make sure the flag is not there
+        expect(page).to have_no_content message
+
+        #Add it
+        login_and_add_a_flag(curator_login, druid, message)
+
+        #Return to the page and make sure it is there
+        visit curator_tasks_path
+        expect(page).to have_content message
+
+        #Delete the last flag
+        Flag.last.delete
+
+        click_button I18n.t('revs.nav.submit')
+        expect(page).to have_no_content message
+      end
     
       
       

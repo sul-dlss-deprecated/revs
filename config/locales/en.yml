@@ -293,6 +293,8 @@ en:
       new_value: 'new value'
       search_value: 'old value'
       item_title: "Item title"
+      search_by_comment: "Search comments"
+      search_by_state: "Status"
       flagging_user: "Flagged by"
       flag_created: "Flagged on"
       created_on: "Created on"
