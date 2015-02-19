@@ -2,7 +2,6 @@ class Admin::UsersController < AdminController
 
   def index
     get_paging_params
-    @search=params[:search]
     @role = params[:role] || 'curator'
     @filter = params[:filter] || 'all'
     @filter_role = params[:filter_role] || 'all'

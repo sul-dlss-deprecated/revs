@@ -17,8 +17,38 @@
 
 <%# -- Tab: Flag Status -- %>
     <div  id="<%=@tab_list_flag%>" class="tab-pane <%="active" if @tab == @tab_list_flag %>">
-      <%= select_tag 'curator_flag_selection', options_from_collection_for_select(Flag.for_dropdown, :first, :last, :selected => @selection.join(",")) %>
-      <div id='refresh_flags' class='flag-button btn btn-small'><%=t('revs.flags.refresh_list')%></div>
+
+      <%= form_tag request.path, :method=>:get, :class => 'form-horizontal find-users' do %>
+        <fieldset>
+
+          <div class="control-group">
+            <label for="state" class="control-label">
+              <%=t('revs.curator.search_by_state')%>
+            </label>
+            <div class="controls">
+              <%= select_tag 'curator_flag_selection', options_from_collection_for_select(Flag.for_dropdown, :first, :last, :selected => @selection.join(","), class: "span2") %>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label for="search" class="control-label">
+              <%=t('revs.curator.search_by_comment')%>
+            </label>
+            <div class="controls">
+              <%= text_field_tag :search, @search, :class => 'input-large' %>
+            </div>
+          </div>
+
+          <%= render :partial=>'shared/per_page_dropdown' %>
+
+          <div class="control-group">
+            <div class="controls">
+              <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-medium' %>
+            </div>
+          </div>
+        </fieldset>
+      <% end %>
+      
       <%= render :partial => 'user/flags_table', :locals=>{:selection=>@selection, :flags=>@flags, :user=>current_user,:curate_view=>true }%>
     </div>
 

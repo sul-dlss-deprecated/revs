@@ -241,6 +241,7 @@ class ApplicationController < ActionController::Base
    @order=params[:order] || 'created_at DESC'
    @per_page=(params[:per_page] || Revs::Application.config.num_default_per_page).to_i
    @from=params[:from]
+   @search=params[:search]
   end
 
   # extract relevant paging params from params hash to add to some links
