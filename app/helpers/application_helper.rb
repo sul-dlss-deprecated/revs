@@ -109,7 +109,7 @@ module ApplicationHelper
   end
   
   def format_years(years)
-    years.sort!.uniq
+    years=SolrDocument.to_array(years).sort.uniq
     display_years=years.first.to_s
     years.each_with_index do |year,index|
       if index > 0 && year != years[index-1] + 1 # if we are not on the first year and the current year we are indexing over is not just one bigger than the previous, we need to start a new series

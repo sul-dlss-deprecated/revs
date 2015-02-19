@@ -173,13 +173,13 @@ class SolrDocument
 
       case solr_field_name.to_sym
         when :model_year_ssim
-          model_years=self.class.to_array(value)
-          @errors << 'Model years must be after 1850 up until this year and must be in the format YYYY'  if (!self.class.blank_value?(model_years) && !model_years.all?{|new_value| is_valid_year?(new_value,1850)})
+          model_years=SolrDocument.to_array(value)
+          @errors << 'Model years must be after 1850 up until this year and must be in the format YYYY'  if (!SolrDocument.blank_value?(model_years) && !model_years.all?{|new_value| is_valid_year?(new_value,1850)})
         when :pub_date_ssi
-          @errors << 'Date must be in the format MM/DD/YYYY' if (!self.class.blank_value?(value) && get_full_date(value) == false)
+          @errors << 'Date must be in the format MM/DD/YYYY' if (!SolrDocument.blank_value?(value) && get_full_date(value) == false)
         when :pub_year_isim,:pub_year_single_isi
           self.years=RevsUtils.parse_years(SolrDocument.to_array(value).join('|'))
-          if (!value.blank? && (self.class.blank_value?(self.years) || !self.years.all?{|new_value| is_valid_year?(new_value,1800)}))
+          if (!value.blank? && (SolrDocument.blank_value?(self.years) || !self.years.all?{|new_value| is_valid_year?(new_value,1800)}))
             @errors << 'A year must be after 1800 up until this year and must be in the format YYYY or XXXX-YYYY for a range of years' 
           end
         when :visibility_isi
