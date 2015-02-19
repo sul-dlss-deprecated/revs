@@ -8,7 +8,7 @@ class Admin::UsersController < AdminController
     @filter_role = params[:filter_role] || 'all'
     @filter_visibility = params[:filter_visibility] || 'all'
 
-    @users = User.where(nil)
+    @users = User.all
     
     if !@search.blank?
       @users=@users.where(['email like ? OR username like ? OR first_name like ? OR last_name like ?',"%#{@search}%","%#{@search}%","%#{@search}%","%#{@search}%"])
