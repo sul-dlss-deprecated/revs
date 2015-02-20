@@ -127,7 +127,7 @@ describe("Curator Section",:type=>:request,:integration=>true) do
         #Delete the last flag
         Flag.last.delete
 
-        click_button I18n.t('revs.nav.submit')
+        first(:button, I18n.t('revs.nav.submit')).click
         expect(page).to have_no_content message
       end
     
