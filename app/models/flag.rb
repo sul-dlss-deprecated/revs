@@ -11,6 +11,7 @@ class Flag < WithSolrDocument
   FLAG_STATE_DISPLAYS = {FLAG_STATES[:open]=> I18n.t('revs.flags.open_state_display_name'),FLAG_STATES[:fixed]=> I18n.t('revs.flags.fixed_state_diplay_name'),FLAG_STATES[:wont_fix]=> I18n.t('revs.flags.wont_fix_state_display_name'),FLAG_STATES[:wont_fix]+","+FLAG_STATES[:fixed]=>I18n.t('revs.flags.all_closed_name'),FLAG_STATES[:open]+","+FLAG_STATES[:wont_fix]+","+FLAG_STATES[:fixed]=>I18n.t('revs.flags.all_flags_name')}
   
   attr_accessible :druid, :comment, :flag_type, :user_id, :notification_state, :private_comment, FLAG_TYPES
+  after_save :update_item
   
   validates :druid, :is_druid=>true
   validate :check_user_id

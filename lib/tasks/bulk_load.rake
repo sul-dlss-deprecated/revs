@@ -71,6 +71,27 @@ namespace :revs do
 
   end
 
+  desc "Update/add title to each item model record associated with Flags, Annotations and Saved Items - should only need to be run once after migration adding title to item model"
+  task :update_item_title => :environment do |t, args| 
+    
+    flags=Flag.all
+    annotations=Annotation.all
+    saved_items=SavedItem.all
+    
+    [flags,annotations,saved_items].each do |models|
+      total=models.count
+      puts "Updating #{total} #{models.first.class.name.downcase}s" 
+      n=0
+      models.each do |model|
+          n+=1
+          puts "#{n} of #{total} : #{model.druid}"
+          solr_doc=model.solr_document
+          solr_doc.update_item
+       end  
+    end
+    
+  end
+  
   desc "Apply missing dates in MODs from solr documents - fixing previous bug where dates were not making it to editstore"
   #Run Me: RAILS_ENV=production rake revs:fix_missing_dates collection="John Dugdale Collection" # limited to a collection
   #Run Me: RAILS_ENV=production rake revs:fix_missing_dates dry_run=true # dry run, no updates

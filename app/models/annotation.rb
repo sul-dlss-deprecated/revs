@@ -12,6 +12,7 @@ class Annotation < WithSolrDocument
   after_create :add_annotation_to_solr
   after_update :update_annotation_in_solr
   after_destroy :update_annotation_in_solr
+  after_save :update_item
 
   validates :druid, :is_druid=>true
   validates :text, :presence=>true

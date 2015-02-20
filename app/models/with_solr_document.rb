@@ -3,4 +3,8 @@ class WithSolrDocument < ActiveRecord::Base
   def solr_document
      @solr_document ||= SolrDocument.find(druid)
   end
+
+  def update_item
+    solr_document.update_item
+  end
 end
