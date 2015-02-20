@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20141027203015) do
+=======
+ActiveRecord::Schema.define(:version => 20150219220327) do
+>>>>>>> f537903... add title to item table, rake task to update item titles, ensure item titles are added when related models are saved
 
   create_table "annotations", force: true do |t|
     t.integer  "user_id"
@@ -96,8 +100,14 @@ ActiveRecord::Schema.define(version: 20141027203015) do
   create_table "items", force: true do |t|
     t.string   "druid"
     t.integer  "visibility_value"
+<<<<<<< HEAD
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+=======
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+    t.string   "title",            :limit => 400
+>>>>>>> f537903... add title to item table, rake task to update item titles, ensure item titles are added when related models are saved
   end
 
   add_index "items", ["druid"], name: "index_items_on_druid", unique: true

@@ -395,12 +395,13 @@ class SolrDocument
     end
   end
   
-  # propogate unique information to database as well when saving solr document
+  # propogate unique information and cache title to database as well when saving solr document
   def update_item
-    @item=Item.find(id)
-    @item.visibility_value=visibility_value
-    @item.save
-    @item
+    item=Item.find(id)
+    item.title=title[0..399]
+    item.visibility_value=(visibility_value.blank? ? SolrDocument.visibility_mappings[:visible] : visibility_value) 
+    item.save
+    item
   end
   
    ##################################################################

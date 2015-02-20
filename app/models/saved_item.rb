@@ -7,6 +7,7 @@ class SavedItem < WithSolrDocument
   ranks :row_order,:column => :position, :with_same => :gallery_id
   
   after_save :update_gallery_last_updated
+  after_save :update_item
 
   validates :gallery_id, :numericality => { :only_integer => true }
   validates :druid, :is_druid=>true
