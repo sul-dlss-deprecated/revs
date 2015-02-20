@@ -132,7 +132,7 @@ module ApplicationHelper
     params[:q].to_s.empty? and params[:f].to_s.empty? and params[:id].nil? and controller_name != 'sessions' and controller_name != 'registrations'
   end
 
-  # crete a link to an item
+  # crete a link to an item (pass in a solr document or an item object)
   # opts[:length] can be set to the length to truncate the text title (defaults to 100)
   # opts[:truncate] can be set to true or false to indicate if long titles should be truncated (defaults to false)
   # opts[:target] can be set to "_blank" or another value to target the link
@@ -142,7 +142,7 @@ module ApplicationHelper
     else
       length = (opts[:length].to_i == 0 ? 100 : opts[:length].to_i)
       name=opts[:truncate] ? truncate(item.title,:length=>length) : item.title
-      return link_to name,item_path(item.id,opts[:params]),target: opts[:target]
+      return link_to name,item_path(item.druid,opts[:params]),target: opts[:target]
     end
   end
   

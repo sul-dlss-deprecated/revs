@@ -120,7 +120,7 @@ en:
       all_flags_name: "All flags"
       flagging_user: "Flagging User"
       resolution_time: "Resolution Time"
-      no_results: "There are no flags with this status."
+      no_results: "There are no results."
       help: "Use the Flag action to tell us about a correction to the metadata for this item. To report more general problems, please use the Feedback link at the top of the web site."
     nav:
       home: 'Home'
@@ -293,7 +293,9 @@ en:
       new_value: 'new value'
       search_value: 'old value'
       item_title: "Item title"
-      search_by_comment: "Search comments"
+      search_flags: "Search comment or title"
+      search_title: "Search title"
+      search_annotations: "Search annotation or title"
       search_by_state: "Status"
       flagging_user: "Flagged by"
       flag_created: "Flagged on"

@@ -72,19 +72,22 @@ namespace :revs do
   end
 
   desc "Update/add title to each item model record associated with Flags, Annotations and Saved Items - should only need to be run once after migration adding title to item model"
+  #Run Me: RAILS_ENV=production rake revs:update_item_title verbsose=true
   task :update_item_title => :environment do |t, args| 
-    
+
+    verbose = ENV['verbose'] || false
+
     flags=Flag.all
     annotations=Annotation.all
     saved_items=SavedItem.all
     
     [flags,annotations,saved_items].each do |models|
       total=models.count
-      puts "Updating #{total} #{models.first.class.name.downcase}s" 
+      puts "Updating #{total} #{models.first.class.name.downcase}s" if verbose
       n=0
       models.each do |model|
           n+=1
-          puts "#{n} of #{total} : #{model.druid}"
+          puts "#{n} of #{total} : #{model.druid}" if verbose
           solr_doc=model.solr_document
           solr_doc.update_item
        end  
