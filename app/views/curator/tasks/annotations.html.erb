@@ -18,6 +18,28 @@
 <%# -- Tab: Annotations Grouped By Item -- %>
     <div id='annotations-grouped' class="tab-pane <%="active" if @tab == @tab_list_item%>">
 
+      <%= form_tag request.path, :method=>:get, :class => 'form-horizontal find-users' do %>
+        <fieldset>
+
+          <div class="control-group">
+            <label for="search" class="control-label">
+              <%=t('revs.curator.search_title')%>
+            </label>
+            <div class="controls">
+              <%= text_field_tag :search, @search, :class => 'input-large' %>
+            </div>
+          </div>
+
+          <%= render :partial=>'shared/per_page_dropdown' %>
+
+          <div class="control-group">
+            <div class="controls">
+              <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-medium' %>
+            </div>
+          </div>
+        </fieldset>
+      <% end %>
+      
         <div class="row results-controls">
           <div class="span5 offset4 saved-item-pagination">
             <span>
@@ -26,28 +48,50 @@
           </div>
         </div>
 
+
       <table class="table table-bordered table-condensed table-hover table-striped">
         <tr>
-          <th><%= t('revs.curator.item_title') %></th>
-          <th class="right"><%= link_to t('revs.curator.annotations_made'), annotations_table_curator_tasks_path(:order_by_item=>'num_annotations DESC',  :tab=>@tab_list_item) %></th>
-          <th><%=link_to t('revs.curator.last_updated'), annotations_table_curator_tasks_path(:order_by_item=>'updated_at desc', :tab=>@tab_list_item  )%></th>
+          <th><%= link_to t('revs.curator.item_title'), annotations_table_curator_tasks_path(:order_by_item=>'items.title ASC',  :tab=>@tab_list_item,:search=>@search) %></th>
+          <th class="right"><%= link_to t('revs.curator.annotations_made'), annotations_table_curator_tasks_path(:order_by_item=>'num_annotations DESC',  :tab=>@tab_list_item,:search=>@search) %></th>
+          <th><%=link_to t('revs.curator.last_updated'), annotations_table_curator_tasks_path(:order_by_item=>'annotations.updated_at desc', :tab=>@tab_list_item,:search=>@search  )%></th>
         </tr>
 
         <% @annotations_by_item.each do |annotation| %>
           <tr>
-            <td><%=item_link(annotation.solr_document,:truncate=>true)%></td>
+            <td><%=item_link(annotation.item,:truncate=>true)%></td>
             <td class="right"><%= annotation.num_annotations%></td>
             <td><%= show_as_date(annotation.updated_at.in_time_zone)%></td>
           </tr>
         <% end %>
       </table>
 
-      <%= paginate @annotations_by_item,:param_name => :pagina,  :params => {:order=>@order_by_item, :tab=>@tab_list_item} %>
+      <%= paginate @annotations_by_item,:param_name => :pagina,  :params => {:search=>@search,:order=>@order_by_item, :tab=>@tab_list_item} %>
     </div>
 
 <%# -- Tab: Annotations Shown By Annotation -- %>
     <div id='annotations-list' class="tab-pane <%="active" if @tab == @tab_list_all%>">
+      <%= form_tag request.path, :method=>:get, :class => 'form-horizontal find-users' do %>
+        <%= hidden_field_tag :tab, @tab_list_all%>
+        <fieldset>
 
+          <div class="control-group">
+            <label for="search" class="control-label">
+              <%=t('revs.curator.search_title')%>
+            </label>
+            <div class="controls">
+              <%= text_field_tag :search, @search, :class => 'input-large' %>
+            </div>
+          </div>
+
+          <%= render :partial=>'shared/per_page_dropdown' %>
+
+          <div class="control-group">
+            <div class="controls">
+              <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-medium' %>
+            </div>
+          </div>
+        </fieldset>
+      <% end %>
         <div class="row results-controls">
           <div class="span5 offset4 saved-item-pagination">
             <span>
@@ -58,14 +102,14 @@
 
       <table class="table table-bordered table-condensed table-hover table-striped">
         <tr>
-          <th><%= t('revs.curator.item_title') %></th>
+          <th><%= link_to t('revs.curator.item_title'), annotations_table_curator_tasks_path(:order_by_item=>'items.title ASC',  :tab=>@tab_list_all,:search=>@search) %></th>
           <th><%=t('revs.annotations.annotation_text')%></th>
-          <th><%=link_to t('revs.curator.username'), annotations_table_curator_tasks_path(:order_all=>'user_id', :tab=>@tab_list_all)%></th>
-          <th><%=link_to t('revs.curator.created_on'), annotations_table_curator_tasks_path(:order_all=>'created_at desc', :tab=>@tab_list_all  )%></th>
+          <th><%=link_to t('revs.curator.username'), annotations_table_curator_tasks_path(:order_all=>'user_id', :tab=>@tab_list_all,:search=>@search)%></th>
+          <th><%=link_to t('revs.curator.created_on'), annotations_table_curator_tasks_path(:order_all=>'annotations.created_at desc', :tab=>@tab_list_all,:search=>@search  )%></th>
         </tr>
         <%@annotations_list.each do |annotation| %>
           <tr>
-            <td><%=item_link(annotation.solr_document,:truncate=>true)%></td>
+            <td><%=item_link(annotation.item,:truncate=>true)%></td>
             <td><%= annotation.text%></td>
             <td><%= display_user_name(annotation.user,user_annotations_user_index_path(annotation.user.username))%></td>
             <td><%= show_as_datetime(annotation.created_at.in_time_zone)%></td>
@@ -73,7 +117,7 @@
         <% end %>
       </table>
 
-      <%= paginate @annotations_list,:param_name => :pagina2,  :params => {:order_all=>@order_all, :tab=>@tab_list_all} %>
+      <%= paginate @annotations_list,:param_name => :pagina2,  :params => {:search=>@search,:order_all=>@order_all, :tab=>@tab_list_all} %>
     </div>
 
 <%# -- Tab: Annotations Grouped By User -- %>
@@ -89,9 +133,9 @@
 
       <table class="table table-bordered table-condensed table-hover table-striped">
         <tr>
-          <th><%=link_to t('revs.curator.username'), annotations_table_curator_tasks_path(:order_user=>'user_id', :tab=>@tab_list_user) %></th>
-          <th class="right"><%=link_to t('revs.curator.annotations_made'), annotations_table_curator_tasks_path(:order_user=>'num_annotations DESC', :tab=>@tab_list_user) %></th>
-          <th><%=link_to t('revs.curator.last_annotation'), annotations_table_curator_tasks_path(:order_user=>'updated_at desc', :tab=>@tab_list_user  )%></th>
+          <th><%=link_to t('revs.curator.username'), annotations_table_curator_tasks_path(:order_user=>'user_id', :tab=>@tab_list_user,:search=>@search) %></th>
+          <th class="right"><%=link_to t('revs.curator.annotations_made'), annotations_table_curator_tasks_path(:order_user=>'num_annotations DESC', :tab=>@tab_list_user,:search=>@search) %></th>
+          <th><%=link_to t('revs.curator.last_annotation'), annotations_table_curator_tasks_path(:order_user=>'updated_at desc', :tab=>@tab_list_user,:search=>@search)%></th>
         </tr>
         <% @annotations_by_user.each do |result| %>
           <tr>
@@ -102,7 +146,7 @@
         <% end %>
       </table>
 
-      <%= paginate @annotations_by_user, :param_name => :pagina3, :params => {:order_user=>@order_user, :tab=>@tab_list_user} %>
+      <%= paginate @annotations_by_user, :param_name => :pagina3, :params => {:search=>@search,:order_user=>@order_user, :tab=>@tab_list_user} %>
    </div>
 
   </div>

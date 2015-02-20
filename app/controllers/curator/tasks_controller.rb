@@ -12,18 +12,21 @@ class Curator::TasksController < ApplicationController
      s = params[:curator_flag_selection] || Flag.open
      
      @selection = s.split(',')
-     @order_all=params[:order_all] || "created_at DESC"
+     @order=params[:order] || "flags.created_at DESC"
+     @order_all=params[:order_all] || "flags.created_at DESC"
      @order_user = params[:order_user] || "num_flags DESC"
      
      @flag_states = Flag.groupByFlagState
      
-     flags = Flag.all
+     flags_all = Flag.all
+     flags_grouped = Flag.all
      if !@search.blank?
-       flags=flags.where(['comment like ?',"%#{@search}%"])
+       flags_all=flags_all.where(['comment like ? OR items.title like ? OR flags.druid=?',"%#{@search}%","%#{@search}%",@search])
+       flags_grouped=flags_grouped.where(['items.title like ? OR flags.druid=?',"%#{@search}%",@search])
      end
-     @flags = Kaminari.paginate_array(flags.where(:state => @selection).order(@order)).page(params[:pagina]).per(@per_page)
      
-     @flags_grouped=Flag.select('*,COUNT("druid") as num_flags,max(flags.updated_at) as updated_at').group("druid").order(@order_all).page(params[:pagina2]).per(@per_page)
+     @flags = Kaminari.paginate_array(flags_all.includes(:item).where(:state => @selection).order(@order)).page(params[:pagina]).per(@per_page)
+     @flags_grouped=flags_grouped.select('*,COUNT("flags.druid") as num_flags,max(flags.updated_at) as updated_at').joins(:item).group("flags.druid").order(@order_all).page(params[:pagina2]).per(@per_page)
      @flags_by_user=Flag.select('*,count(id) as num_flags,max(flags.updated_at) as updated_at').includes(:user).group("user_id").order(@order_user).page(params[:pagina3]).per(@per_page)
 
      @tab_list_item = 'flags-by-item'
@@ -34,11 +37,19 @@ class Curator::TasksController < ApplicationController
    
    def annotations
      @order_by_item = params[:order_by_item] || "num_annotations DESC"
-     @order_all = params[:order_all] || "created_at DESC"
+     @order_all = params[:order_all] || "annotations.created_at DESC"
      @order_user = params[:order_user] || "num_annotations DESC"
      
-     @annotations_by_item = Annotation.select('druid,COUNT("druid") as num_annotations,max(annotations.updated_at) as updated_at').group("druid").order(@order_by_item).includes(:user).page(params[:pagina]).per(@per_page)
-     @annotations_list = Annotation.order(@order_all).page(params[:pagina2]).per(@per_page)
+     annotations_list=Annotation.all
+     annotations_item=Annotation.all
+     
+     if !@search.blank?
+       annotations_item=annotations_list.where(['items.title like ? OR annotations.druid=?',"%#{@search}%",@search])
+       annotations_list=annotations_item.where(['items.title like ? OR annotations.druid=?',"%#{@search}%",@search])
+     end
+     
+     @annotations_by_item = annotations_item.select('annotations.druid,COUNT("annotations.druid") as num_annotations,max(annotations.updated_at) as updated_at').joins(:item).group("annotations.druid").order(@order_by_item).includes(:user).page(params[:pagina]).per(@per_page)
+     @annotations_list = annotations_list.order(@order_all).includes(:item).page(params[:pagina2]).per(@per_page)
      @annotations_by_user=Annotation.select('*,count(id) as num_annotations,max(annotations.updated_at) as updated_at').includes(:user).group("user_id").order(@order_user).page(params[:pagina3]).per(@per_page)
      
      @tab_group = 'annotations-group'
@@ -63,7 +74,12 @@ class Curator::TasksController < ApplicationController
       @order = params[:order] || "num_favorites DESC"
       @order_user = params[:order_user] || "num_galleries DESC"
 
-      @saved_items_by_item=SavedItem.select("count(id) as num_favorites,druid,max(saved_items.updated_at) as updated_at").includes(:gallery).group('druid').order(@order).page(params[:pagina]).per(@per_page)
+      saved_items_by_item=SavedItem.all     
+      if !@search.blank?
+        saved_items_by_item=saved_items_by_item.where(['items.title like ? OR saved_items.druid=?',"%#{@search}%",@search])
+      end
+      
+      @saved_items_by_item=saved_items_by_item.select("count(saved_items.id) as num_favorites,saved_items.druid,max(saved_items.updated_at) as updated_at").joins(:gallery,:item).group('saved_items.druid').order(@order).page(params[:pagina]).per(@per_page)
       @saved_items_by_user=Gallery.select("count(id) as num_galleries,sum(saved_items_count) as saved_items_count,user_id,max(galleries.updated_at) as updated_at").includes(:user,:all_saved_items).where('galleries.saved_items_count > 0').group('user_id').order(@order_user).page(params[:pagina2]).per(@per_page)
 
       @tab_list_item = 'favorites-by-item'

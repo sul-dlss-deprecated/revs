@@ -13,7 +13,7 @@ class UserController < ApplicationController
 
   # all of the user's annotations
   def annotations
-    @annotations=@user.annotations(current_user).order(@order).page(@current_page).per(@per_page)
+    @annotations=@user.annotations(current_user).includes(:item).order(@order).page(@current_page).per(@per_page)
     @page_title="#{@user.to_s}: #{I18n.t('revs.annotations.plural')}"
   end
 
@@ -83,9 +83,9 @@ class UserController < ApplicationController
     flags = []
       
       if user == nil #curator, we want all flags
-         temp = Flag.where(:state=>states).order(sort)
+         temp = Flag.where(:state=>states).includes(:item).order(sort)
       else
-        temp = user.flags(current_user).where(:state=>states, :user_id=> @user.id).order(sort)
+        temp = user.flags(current_user).includes(:item).where(:state=>states, :user_id=> @user.id).order(sort)
       end
      
     flags = temp || []  

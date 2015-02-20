@@ -17,6 +17,28 @@
 <%# -- Tab: Saved Items Grouped By Item -- %>
       <div id='<%=@tab_list_item%>' class="tab-pane <%="active" if @tab == @tab_list_item%>">
 
+      <%= form_tag request.path, :method=>:get, :class => 'form-horizontal find-users' do %>
+        <fieldset>
+
+          <div class="control-group">
+            <label for="search" class="control-label">
+              <%=t('revs.curator.search_title')%>
+            </label>
+            <div class="controls">
+              <%= text_field_tag :search, @search, :class => 'input-large' %>
+            </div>
+          </div>
+
+          <%= render :partial=>'shared/per_page_dropdown' %>
+
+          <div class="control-group">
+            <div class="controls">
+              <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-medium' %>
+            </div>
+          </div>
+        </fieldset>
+      <% end %>
+      
         <div class="row results-controls">
           <div class="span5 offset4 saved-item-pagination">
             <span>
@@ -27,19 +49,19 @@
 
         <table class="table table-bordered table-condensed table-hover table-striped">
           <tr>
-            <th width="50%"><%= t('revs.curator.item_title') %></th>
-            <th class="right"><%= link_to t('revs.curator.total_times_saved'), favorites_table_curator_tasks_path(:order=>'num_favorites DESC', :tab=>@tab_list_item  ) %></th>
-            <th><%=link_to t('revs.curator.last_saved'), favorites_table_curator_tasks_path(:order=>'updated_at DESC', :tab=>@tab_list_item) %></th>
+            <th width="50%"><%= link_to t('revs.curator.item_title'), favorites_table_curator_tasks_path(:order=>'items.title ASC', :tab=>@tab_list_item,:search=>@search  ) %></th>
+            <th class="right"><%= link_to t('revs.curator.total_times_saved'), favorites_table_curator_tasks_path(:order=>'num_favorites DESC', :tab=>@tab_list_item,:search=>@search  ) %></th>
+            <th><%=link_to t('revs.curator.last_saved'), favorites_table_curator_tasks_path(:order=>'saved_items.updated_at DESC', :tab=>@tab_list_item,:search=>@search) %></th>
           </tr>
           <% @saved_items_by_item.each do |result| %>
             <tr>
-              <td><%=item_link(result.solr_document,:truncate=>true)%></td>
+              <td><%=item_link(result.item,:truncate=>true)%></td>
               <td class="right"><%= result.num_favorites%></td>
               <td><%= show_as_date(result.updated_at.in_time_zone) %></td>
             </tr>
           <% end %>
         </table>  
-        <%= paginate @saved_items_by_item,:param_name => :pagina,  :params => {:order=>@order, :tab=>@tab_list_item} %>
+        <%= paginate @saved_items_by_item,:param_name => :pagina,  :params => {:order=>@order, :tab=>@tab_list_item,:search=>@search} %>
       </div>
 
 <%# -- Tab: Saved Items Grouped By User -- %>

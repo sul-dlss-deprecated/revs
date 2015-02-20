@@ -113,6 +113,10 @@ class SolrDocument
     }
   end
   
+  def druid
+    id
+  end
+  
   def copyright
     value=self['copyright_ss']
     value="" if value == 'Courtesy of the Revs Institute for Automotive Research. All rights reserved unless otherwise indicated.' # blank it out if its the bad value, so it gets replaced with the correct value on display

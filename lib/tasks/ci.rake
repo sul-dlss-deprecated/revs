@@ -31,6 +31,7 @@ task :local_ci do
   Rake::Task["db:migrate"].invoke
   Rake::Task["db:fixtures:load"].invoke
   Rake::Task["db:seed"].invoke
+  Rake::Task["revs:update_item_title"].invoke  
   Rake::Task["rspec"].invoke
 end
 
