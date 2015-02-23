@@ -85,7 +85,7 @@ describe("Curator Section",:type=>:request,:integration=>true) do
       login_as(curator_login)
       visit edits_table_curator_tasks_path
       expect(current_path).to eq(edits_table_curator_tasks_path)
-      edited_titles=["A Somewhat Shorter Than Average Title 3","Marlboro Governor's Cup, April 2-3","Thompson Raceway, May 1 1","Curator Revs 4","admin1 1"]
+      edited_titles=["A Somewhat Shorter Than Average Title 3","Marlboro Governor's Cup, April 2-3","Thompson Raceway, May 1 1"]
       edited_titles.each {|title| expect(page).to have_content(title)}
       expect(page).to have_content 'By Item'
       expect(page).to have_content 'By User'

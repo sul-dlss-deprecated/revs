@@ -90,7 +90,7 @@ class UserController < ApplicationController
      
     flags = temp || []  
       
-    return Kaminari.paginate_array(flags).page(params[:pagina]).per(Revs::Application.config.num_default_per_page)
+    return Kaminari.paginate_array(flags).page(@current_page).per(Revs::Application.config.num_default_per_page)
   end
   
   private  
