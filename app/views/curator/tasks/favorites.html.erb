@@ -8,8 +8,8 @@
   </h3>
   
   <ul class="nav nav-tabs">
-      <li class="<%="active" if @tab == @tab_list_item%>"><a href="#<%=@tab_list_item%>" data-toggle="tab"><%=t('revs.curator.by_item') %></a></li>
-      <li class="<%="active" if @tab == @tab_list_user%>"><a href="#<%=@tab_list_user%>" data-toggle="tab"><%= t('revs.curator.by_user') %></a></li>
+      <li class="<%="active" if @tab == @tab_list_item%>"><a href="<%=request.path%>?tab=<%=@tab_list_item%>"><%=t('revs.curator.by_item') %></a></li>
+      <li class="<%="active" if @tab == @tab_list_user%>"><a href="<%=request.path%>?tab=<%=@tab_list_user%>"><%= t('revs.curator.by_user') %></a></li>
   </ul>
 
   <div class="tab-content">
@@ -17,82 +17,86 @@
 <%# -- Tab: Saved Items Grouped By Item -- %>
       <div id='<%=@tab_list_item%>' class="tab-pane <%="active" if @tab == @tab_list_item%>">
 
-      <%= form_tag request.path, :method=>:get, :class => 'form-horizontal find-users' do %>
-        <fieldset>
+        <% if @tab == @tab_list_item %>
+        <%= form_tag request.path, :method=>:get, :class => 'form-horizontal find-users' do %>
+          <fieldset>
 
-          <div class="control-group">
-            <label for="search" class="control-label">
-              <%=t('revs.curator.search_title')%>
-            </label>
-            <div class="controls">
-              <%= text_field_tag :search, @search, :class => 'input-large' %>
+            <div class="control-group">
+              <label for="search" class="control-label">
+                <%=t('revs.curator.search_title')%>
+              </label>
+              <div class="controls">
+                <%= text_field_tag :search, @search, :class => 'input-large' %>
+              </div>
             </div>
-          </div>
 
-          <%= render :partial=>'shared/per_page_dropdown' %>
+            <%= render :partial=>'shared/per_page_dropdown' %>
 
-          <div class="control-group">
-            <div class="controls">
-              <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-medium' %>
+            <div class="control-group">
+              <div class="controls">
+                <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-medium' %>
+              </div>
             </div>
-          </div>
-        </fieldset>
-      <% end %>
+          </fieldset>
+        <% end %>
       
-        <div class="row results-controls">
-          <div class="span5 offset4 saved-item-pagination">
-            <span>
-              <%= page_entries_info @saved_items_by_item, :entry_name=>t('revs.user_galleries.item') %>
-            </span>
+          <div class="row results-controls">
+            <div class="span5 offset4 saved-item-pagination">
+              <span>
+                <%= page_entries_info @saved_items, :entry_name=>t('revs.user_galleries.item') %>
+              </span>
+            </div>
           </div>
-        </div>
 
-        <table class="table table-bordered table-condensed table-hover table-striped">
-          <tr>
-            <th width="50%"><%= link_to t('revs.curator.item_title'), favorites_table_curator_tasks_path(:order=>'items.title ASC', :tab=>@tab_list_item,:search=>@search  ) %></th>
-            <th class="right"><%= link_to t('revs.curator.total_times_saved'), favorites_table_curator_tasks_path(:order=>'num_favorites DESC', :tab=>@tab_list_item,:search=>@search  ) %></th>
-            <th><%=link_to t('revs.curator.last_saved'), favorites_table_curator_tasks_path(:order=>'saved_items.updated_at DESC', :tab=>@tab_list_item,:search=>@search) %></th>
-          </tr>
-          <% @saved_items_by_item.each do |result| %>
+          <table class="table table-bordered table-condensed table-hover table-striped">
             <tr>
-              <td><%=item_link(result.item,:truncate=>true)%></td>
-              <td class="right"><%= result.num_favorites%></td>
-              <td><%= show_as_date(result.updated_at.in_time_zone) %></td>
+              <th width="50%"><%= link_to t('revs.curator.item_title'), favorites_table_curator_tasks_path(:order=>'items.title ASC', :tab=>@tab_list_item,:search=>@search  ) %></th>
+              <th class="right"><%= link_to t('revs.curator.total_times_saved'), favorites_table_curator_tasks_path(:order=>'num_favorites DESC', :tab=>@tab_list_item,:search=>@search  ) %></th>
+              <th><%=link_to t('revs.curator.last_saved'), favorites_table_curator_tasks_path(:order=>'saved_items.updated_at DESC', :tab=>@tab_list_item,:search=>@search) %></th>
             </tr>
-          <% end %>
-        </table>  
-        <%= paginate @saved_items_by_item,:param_name => :pagina,  :params => {:order=>@order, :tab=>@tab_list_item,:search=>@search} %>
+            <% @saved_items.each do |result| %>
+              <tr>
+                <td><%=item_link(result.item,:truncate=>true)%></td>
+                <td class="right"><%= result.num_favorites%></td>
+                <td><%= show_as_date(result.updated_at.in_time_zone) %></td>
+              </tr>
+            <% end %>
+          </table>  
+          <%= paginate @saved_items,  :params => {:order=>@order, :tab=>@tab_list_item,:search=>@search} %>
+        <% end %>
       </div>
 
 <%# -- Tab: Saved Items Grouped By User -- %>
       <div id='<%=@tab_list_user%>' class="tab-pane <%="active" if @tab == @tab_list_user%>">
 
-        <div class="row results-controls">
-          <div class="span5 offset4 saved-item-pagination">
-            <span>
-              <%= page_entries_info @saved_items_by_user, :entry_name=>'user' %>
-            </span>
-          </div>
-        </div>
+        <% if @tab == @tab_list_user %>
+            <div class="row results-controls">
+              <div class="span5 offset4 saved-item-pagination">
+                <span>
+                  <%= page_entries_info @saved_items, :entry_name=>'user' %>
+                </span>
+              </div>
+            </div>
 
-        <table class="table table-bordered table-condensed table-hover table-striped">
-          <tr>
-            <th><%=link_to t('revs.curator.username'),favorites_table_curator_tasks_path(:order_user=>'user_id ASC',:tab=>@tab_list_user) %></th>
-            <th class="right"><%=link_to t('revs.curator.lists_made'), favorites_table_curator_tasks_path(:order_user=>'num_galleries DESC', :tab=>@tab_list_user) %></th>
-            <th class="right"><%=link_to t('revs.curator.favorites_made'), favorites_table_curator_tasks_path(:order_user=>'galleries.saved_items_count DESC', :tab=>@tab_list_user) %></th>
-            <th><%=link_to t('revs.curator.last_save'), favorites_table_curator_tasks_path(:order_user=>'updated_at DESC', :tab=>@tab_list_user) %></th>
-          </tr>
-          <% @saved_items_by_user.each do |result| %>
-            <tr>
-              <td><%=link_user_name(result.user)%></td>
-              <td class="right"><%= result.num_galleries%></td>
-              <td class="right"><%= result.saved_items_count %></td>
-              <td><%= show_as_date(result.updated_at.in_time_zone) %></td>
-            </tr>
+            <table class="table table-bordered table-condensed table-hover table-striped">
+              <tr>
+                <th><%=link_to t('revs.curator.username'),favorites_table_curator_tasks_path(:order=>'user_id ASC',:tab=>@tab_list_user) %></th>
+                <th class="right"><%=link_to t('revs.curator.lists_made'), favorites_table_curator_tasks_path(:order=>'num_galleries DESC', :tab=>@tab_list_user) %></th>
+                <th class="right"><%=link_to t('revs.curator.favorites_made'), favorites_table_curator_tasks_path(:order=>'galleries.saved_items_count DESC', :tab=>@tab_list_user) %></th>
+                <th><%=link_to t('revs.curator.last_save'), favorites_table_curator_tasks_path(:order=>'updated_at DESC', :tab=>@tab_list_user) %></th>
+              </tr>
+              <% @saved_items.each do |result| %>
+                <tr>
+                  <td><%=link_user_name(result.user)%></td>
+                  <td class="right"><%= result.num_galleries%></td>
+                  <td class="right"><%= result.saved_items_count %></td>
+                  <td><%= show_as_date(result.updated_at.in_time_zone) %></td>
+                </tr>
+              <% end %>
+            </table>
+
+            <%= paginate @saved_items, :params => {:order_user=>@order, :tab=>@tab_list_user} %>
           <% end %>
-        </table>
-
-        <%= paginate @saved_items_by_user,:param_name => :pagina2,  :params => {:order_user=>@order_user, :tab=>@tab_list_user} %>
       </div>
 
   </div>

@@ -8,8 +8,8 @@
   </h3>
   
   <ul class="nav nav-tabs">
-      <li class="<%="active" if @tab == @tab_list_item%>"><a href="#<%=@tab_list_item%>" data-toggle="tab"><%=t('revs.curator.by_item') %></a></li>
-      <li class="<%="active" if @tab == @tab_list_user%>"><a href="#<%=@tab_list_user%>" data-toggle="tab"><%= t('revs.curator.by_user') %></a></li>
+      <li class="<%="active" if @tab == @tab_list_item%>"><a href="<%=request.path%>?tab=<%=@tab_list_item%>"><%=t('revs.curator.by_item') %></a></li>
+      <li class="<%="active" if @tab == @tab_list_user%>"><a href="<%=request.path%>?tab=<%=@tab_list_user%>"><%= t('revs.curator.by_user') %></a></li>
   </ul>
 
   <div class="tab-content">
@@ -17,55 +17,60 @@
 <%# -- Tab: Edits Grouped By Item -- %>
     <div id='<%=@tab_list_item%>' class="tab-pane <%="active" if @tab == @tab_list_item%>">
 
-        <div class="row results-controls">
-          <div class="span5 offset4 saved-item-pagination">
-            <span>
-              <%= page_entries_info @edits_by_item, :entry_name => t('revs.user_galleries.item') %>
-            </span>
+      <% if @tab == @tab_list_item %>
+
+          <div class="row results-controls">
+            <div class="span5 offset4 saved-item-pagination">
+              <span>
+                <%= page_entries_info @edits, :entry_name => t('revs.user_galleries.item') %>
+              </span>
+            </div>
           </div>
-        </div>
 
-      <table class="table table-bordered table-condensed table-hover table-striped">
-        <tr>
-          <th><%= t('revs.curator.item_title') %></th>
-          <th class="right edit-count"><%= link_to t('revs.curator.edit_count'), edits_table_curator_tasks_path(:order=>'num_edits DESC', :tab=>@tab_list_item  ) %></th>
-        </tr>
-        <% @edits_by_item.each do |result| %>
+        <table class="table table-bordered table-condensed table-hover table-striped">
           <tr>
-            <td><%=item_link(result.solr_document,:truncate=>true)%></td>
-            <td class="right"><%= result.num_edits%></td>
+            <th><%= t('revs.curator.item_title') %></th>
+            <th class="right edit-count"><%= link_to t('revs.curator.edit_count'), edits_table_curator_tasks_path(:order=>'num_edits DESC', :tab=>@tab_list_item  ) %></th>
           </tr>
-        <% end %>
-      </table>
+          <% @edits.each do |result| %>
+            <tr>
+              <td><%=item_link(result.solr_document,:truncate=>true)%></td>
+              <td class="right"><%= result.num_edits%></td>
+            </tr>
+          <% end %>
+        </table>
 
-      <%= paginate @edits_by_item,:param_name => :pagina,  :params => {:order=>@order, :tab=>@tab_list_item} %>
+        <%= paginate @edits, :params => {:order=>@order, :tab=>@tab_list_item} %>
+      <% end %>
     </div>
 
 <%# -- Tab: Edits Grouped By User -- %>
     <div id='<%=@tab_list_user%>' class="tab-pane <%="active" if @tab == @tab_list_user%>">
-
-        <div class="row results-controls">
-          <div class="span5 offset4 saved-item-pagination">
-            <span>
-              <%= page_entries_info @edits_by_user, :entry_name => 'user' %>
-            </span>
+      
+      <% if @tab == @tab_list_user %>
+          <div class="row results-controls">
+            <div class="span5 offset4 saved-item-pagination">
+              <span>
+                <%= page_entries_info @edits, :entry_name => 'user' %>
+              </span>
+            </div>
           </div>
-        </div>
 
-      <table class="table table-bordered table-condensed table-hover table-striped">
-        <tr>
-          <th><%=link_to t('revs.curator.username'), edits_table_curator_tasks_path(:order_user=>'user_id', :tab=>@tab_list_user) %></th>
-          <th class="right"><%=link_to t('revs.curator.edits_made'), edits_table_curator_tasks_path(:order_user=>'num_edits DESC', :tab=>@tab_list_user) %></th>
-        </tr>
-        <% @edits_by_user.each do |result| %>
+        <table class="table table-bordered table-condensed table-hover table-striped">
           <tr>
-            <td><%=display_user_name(result.user,user_edits_user_index_path(result.user.username))%></td>
-            <td class="right"><%= result.num_edits%></td>
+            <th><%=link_to t('revs.curator.username'), edits_table_curator_tasks_path(:order=>'user_id', :tab=>@tab_list_user) %></th>
+            <th class="right"><%=link_to t('revs.curator.edits_made'), edits_table_curator_tasks_path(:order=>'num_edits DESC', :tab=>@tab_list_user) %></th>
           </tr>
-        <% end %>
-      </table>
+          <% @edits.each do |result| %>
+            <tr>
+              <td><%=display_user_name(result.user,user_edits_user_index_path(result.user.username))%></td>
+              <td class="right"><%= result.num_edits%></td>
+            </tr>
+          <% end %>
+        </table>
 
-      <%= paginate @edits_by_user,:param_name => :pagina2,  :params => {:order_user=>@order_user, :tab=>@tab_list_user} %>
+        <%= paginate @edits,  :params => {:order=>@order_user, :tab=>@tab_list_user} %>
+      <% end %>
     </div>
 
   </div>

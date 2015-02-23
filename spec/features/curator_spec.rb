@@ -85,7 +85,7 @@ describe("Curator Section",:type=>:request,:integration=>true) do
       login_as(curator_login)
       visit edits_table_curator_tasks_path
       current_path.should == edits_table_curator_tasks_path
-      edited_titles=["A Somewhat Shorter Than Average Title 3","Marlboro Governor's Cup, April 2-3","Thompson Raceway, May 1 1","Curator Revs 4","admin1 1"]
+      edited_titles=["A Somewhat Shorter Than Average Title 3","Marlboro Governor's Cup, April 2-3","Thompson Raceway, May 1 1"]
       edited_titles.each {|title| page.should have_content(title)}
       page.should have_content 'By Item'
       page.should have_content 'By User'
