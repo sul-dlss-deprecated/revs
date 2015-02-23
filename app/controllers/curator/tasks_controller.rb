@@ -28,7 +28,7 @@ class Curator::TasksController < ApplicationController
      
        when @tab_list_flag
          flags=flags.where(['comment like ? OR items.title like ? OR flags.druid=?',"%#{@search}%","%#{@search}%",@search]) unless @search.blank?
-         flags = flags.includes(:item).where(:state => @selection)
+         flags=flags.includes(:item).where(:state => @selection)
       
        when @tab_list_item
          flags=flags.where(['items.title like ? OR flags.druid=?',"%#{@search}%",@search]) unless @search.blank?
@@ -58,11 +58,11 @@ class Curator::TasksController < ApplicationController
       
         when @tab_list_item
           annotations=annotations.where(['items.title like ? OR annotations.druid=?',"%#{@search}%",@search]) unless @search.blank?
-          annotations = annotations.select('annotations.druid,COUNT("annotations.druid") as num_annotations,max(annotations.updated_at) as updated_at').joins(:item).group("annotations.druid").includes(:user)
+          annotations = annotations.select('annotations.druid,COUNT("annotations.druid") as num_annotations,max(annotations.updated_at) as updated_at').joins(:item,:user).group("annotations.druid")
         
         when @tab_list_all
           annotations=annotations.includes(:item)
-          annotations=annotations.where(['items.title like ? OR annotations.druid=?',"%#{@search}%",@search]).includes(:item) unless @search.blank?
+          annotations=annotations.where(['items.title like ? OR annotations.druid=?',"%#{@search}%",@search]) unless @search.blank?
         
         when @tab_list_user
           annotations=annotations.select('*,count(id) as num_annotations,max(annotations.updated_at) as updated_at').includes(:user).group("user_id")
