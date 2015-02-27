@@ -93,7 +93,14 @@ end
 namespace :deploy do
   task :symlink_editstore do
     run "ln -s /home/lyberadmin/editstore-updater/current/public #{release_path}/public/editstore"
-  end  
+  end 
+  task :symlink_robotstxt do
+    shared_robots="#{shared_path}/robots.txt"
+    puts remote_file_exists?(shared_robots)
+    if remote_file_exists?(shared_robots)
+      run "rm -fr #{release_path}/public/robots.txt && ln -s #{shared_robots} #{release_path}/public/robots.txt"
+    end
+  end     
   task :dev_options_set do
     run "cd #{deploy_to}/current && rake revs:dev_options_set RAILS_ENV=#{rails_env}"
   end
@@ -112,4 +119,15 @@ after "deploy:create_symlink", "deploy:migrate"
 after "deploy:update", "deploy:cleanup" 
 after "deploy:update", "deploy:dev_options_set"
 after "deploy:finalize_update", "deploy:symlink_editstore"
+after "deploy:finalize_update", "deploy:symlink_robotstxt"
 after "deploy:finalize_update", "deploy:symlink_uploads"
+
+def remote_file_exists?(path)
+  results = []
+
+  invoke_command("if [ -e '#{path}' ]; then echo -n 'true'; fi") do |ch, stream, out|
+    results << (out == 'true')
+  end
+
+  results.all?
+end
