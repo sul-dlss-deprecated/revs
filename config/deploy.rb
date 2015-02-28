@@ -1,6 +1,3 @@
-# config valid only for Capistrano 3.1
-lock '3.2.1'
-
 set :application, "revs-lib"
 set :repo_url, "https://github.com/sul-dlss/revs"
 set :user, ask("User", 'enter in the app username')
@@ -85,6 +82,14 @@ namespace :deploy do
       execute "ln -s /home/lyberadmin/editstore-updater/current/public #{release_path}/public/editstore"
     end
   end  
+  task :symlink_robotstxt do
+    shared_robots="#{shared_path}/robots.txt"
+    if remote_file_exists?(shared_robots)
+      on roles(:app) do
+        execute "rm -fr #{release_path}/public/robots.txt && ln -s #{shared_robots} #{release_path}/public/robots.txt"
+      end
+    end
+  end       
   task :dev_options_set do
     on roles(:app) do
       execute "cd #{deploy_to}/current && bundle exec rake revs:dev_options_set RAILS_ENV=#{fetch(:rails_env)}"
@@ -106,3 +111,18 @@ end
 before 'deploy:compile_assets', 'squash:write_revision'
 before "deploy:finishing", "deploy:dev_options_set"
 after  "deploy:finishing", "deploy:symlink_editstore"
+after  "deploy:finishing", "deploy:symlink_robotstxt"
+
+
+def remote_file_exists?(path)
+  
+  results = []
+  
+  on roles(:app), in: :sequence, wait: 1 do
+   execute("if [ -e '#{path}' ]; then echo -n 'true'; fi") do |ch, stream, out|
+      results << (out == 'true')
+    end
+  end
+  results.all?
+  
+end
