@@ -186,7 +186,7 @@ GEM
     net-ssh-krb (0.3.0)
       gssapi (~> 1.1.2)
       net-ssh (>= 2.0)
-    netrc (0.10.2)
+    netrc (0.10.3)
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
     omniauth (1.1.4)
@@ -230,7 +230,7 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     ref (1.0.5)
-    rest-client (1.7.2)
+    rest-client (1.7.3)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
     revs-utils (1.0.14)
@@ -341,7 +341,7 @@ DEPENDENCIES
   quiet_assets
   rails (~> 3.2.20)
   ranked-model
-  rest-client
+  rest-client (~> 1.7.3)
   revs-utils (~> 1.0.14)
   rspec-rails
   rvm-capistrano

@@ -87,7 +87,7 @@ end
 gem 'gssapi', :git => 'https://github.com/cbeer/gssapi.git'
 
 gem 'jquery-rails'
-gem 'rest-client'
+gem 'rest-client', '~>1.7.3'
 
 gem 'json', '~> 1.8'
 
