@@ -96,7 +96,6 @@ namespace :deploy do
   end 
   task :symlink_robotstxt do
     shared_robots="#{shared_path}/robots.txt"
-    puts remote_file_exists?(shared_robots)
     if remote_file_exists?(shared_robots)
       run "rm -fr #{release_path}/public/robots.txt && ln -s #{shared_robots} #{release_path}/public/robots.txt"
     end
@@ -114,6 +113,7 @@ namespace :deploy do
   end
 end
 
+before 'deploy:assets:precompile', "deploy:symlink_robotstxt"
 before 'deploy:assets:precompile', 'squash:write_revision'
 after "deploy:create_symlink", "deploy:migrate"
 after "deploy:update", "deploy:cleanup" 
@@ -123,11 +123,13 @@ after "deploy:finalize_update", "deploy:symlink_robotstxt"
 after "deploy:finalize_update", "deploy:symlink_uploads"
 
 def remote_file_exists?(path)
+  
   results = []
 
-  invoke_command("if [ -e '#{path}' ]; then echo -n 'true'; fi") do |ch, stream, out|
-    results << (out == 'true')
+  run("if [ -e '#{path}' ]; then echo -n 'true'; fi") do |ch, stream, out|
+    results << (out == 'true') if stream==:out
   end
 
-  results.all?
+  results.all? && results.size > 0 
+    
 end
