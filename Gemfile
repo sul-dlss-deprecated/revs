@@ -88,7 +88,7 @@ group :deployment do
 end
 
 gem 'jquery-rails'
-gem 'rest-client', '~>1.7.3'
+gem 'rest-client', '~>1.7'
 
 gem 'json', '~> 1.8'
 

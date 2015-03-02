@@ -329,7 +329,7 @@ DEPENDENCIES
   quiet_assets
   rails (~> 4.1.1)
   ranked-model
-  rest-client (~> 1.7.3)
+  rest-client (~> 1.7)
   revs-utils (>= 2.0.7)
   rspec-rails
   sass-rails (~> 5.0.0.beta1)
