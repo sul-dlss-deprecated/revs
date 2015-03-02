@@ -116,13 +116,12 @@ after  "deploy:finishing", "deploy:symlink_robotstxt"
 
 def remote_file_exists?(path)
   
-  results = []
-  
-  on roles(:app), in: :sequence, wait: 1 do
-   execute("if [ -e '#{path}' ]; then echo -n 'true'; fi") do |ch, stream, out|
-      results << (out == 'true')
+  on roles(:all) do
+    if test("[ -f #{path}]")
+      true
+    else
+      false
     end
   end
-  results.all?
   
 end
