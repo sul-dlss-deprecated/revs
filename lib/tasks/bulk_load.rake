@@ -22,10 +22,58 @@ namespace :revs do
   @mvf = "_mvf"
   @max_expected_collection_size = 2147483647
   @id = "id"
-  
-  desc "Touch all solr docs (but not update them) - useful when synonym file has changed"
-  #Run Me: RAILS_ENV=production rake revs:touch_solr_docs collection="John Dugdale Collection" # limited to a collection
-  #Run Me: RAILS_ENV=production rake revs:touch_solr_docs limit=100 # sets a limit of number of items
+
+  desc "Re-save all solr docs - useful for adding the score or other data that is added on save"
+  #Run Me: RAILS_ENV=production rake revs:save_all_solr_docs collection="John Dugdale Collection" # optiontally limited to a collection
+  #Run Me: RAILS_ENV=production rake revs:save_all_solr_docs limit=100 # optionally sets a limit of number of items
+  task :save_all_solr_docs  => :environment do |t, args|
+ 
+    limit = ENV['limit'] || '' # if passed, limits to this many items only
+    collection = ENV['collection'] || '' # if passed, limits to this collection only
+
+    q="*:*"
+    q+=" AND collection_ssim:\"#{collection}\"" unless collection.blank?
+    rows = limit.blank? ? "1000000" : limit
+        
+    @all_docs = Blacklight.solr.select(:params => {:q => q, :rows=>rows})            
+    total_docs=@all_docs['response']['docs'].size
+    
+    start_time=Time.now
+    n=0
+    num_errors=0
+
+    puts ""
+    puts "Started at #{start_time}, #{total_docs} docs returned"
+    puts " limited to collection: #{collection}" unless collection.blank?
+    puts " limited to #{limit} items" unless limit.blank?
+    puts ""
+    
+    @all_docs['response']['docs'].each do |doc|
+      
+      id=doc['id']
+      n+=1
+      puts "#{n} of #{total_docs}: #{id}"
+       begin
+         s=SolrDocument.new(doc)
+         s.timestamp=Time.now.strftime('%Y-%m-%dT%H:%M:%S.%3NZ') # write out a new timestamp to be sure we have at least one update for solr to write the doc out
+         s.save
+       rescue
+         puts ' *** ERROR'
+         num_errors+=1
+       end
+  end
+
+    end_time=Time.now
+    
+    puts ""
+    puts "Finished at #{Time.now}, run lasted #{((end_time-start_time)/60).round} minutes, #{total_docs} saved, #{num_errors} errors"
+    puts ""
+
+  end
+    
+  desc "Touch all solr docs (but not update them) - useful when synonym file or config has changed"
+  #Run Me: RAILS_ENV=production rake revs:touch_solr_docs collection="John Dugdale Collection" # optionally limited to a collection
+  #Run Me: RAILS_ENV=production rake revs:touch_solr_docs limit=100 # optionally sets a limit of number of items
   task :touch_solr_docs  => :environment do |t, args|
  
     limit = ENV['limit'] || '' # if passed, limits to this many items only
@@ -58,7 +106,7 @@ namespace :revs do
         params={:add=>{:doc=>doc}}.to_json
         RestClient.post url, params,:content_type => :json, :accept=>:json
       rescue
-        puts ' *** ERRROR'
+        puts ' *** ERROR'
         num_errors+=1
       end
   end
@@ -232,66 +280,6 @@ namespace :revs do
     puts "#{@all_docs['response']['docs'].size} scanned; #{num_with_spaces} have a space in the image"
   end
   
-  desc "Go back and touch every SolrDocument so that it will update the year field to use the sortable year field, remove the UUID from previous pass.."
-  #Run Me: rake revs:touch_all["UUID"]
-  task :touch_all, [:uuid] => :environment do |t, args|
-    #Have Editstore ignore updates by this rake task
-    Revs::Application.config.use_editstore = false
-    log = Logger.new("#{Rails.root}/log/#{Time.now.to_i}.touch_all#{@log_extension}")
-    log.info("Starting touch all, removing UUID: #{args[:uuid]} in production notes.")
-    
-    #Get all collections
-    total_success_count = 0
-    total_error_count = 0 
-    SolrDocument.all_collections.each do |collection|
-      collection_success_count = 0 
-      collection_error_count = 0 
-      #changes = [[:production_notes, args[:uuid], true]]
-      changes = [[:production_notes, args[:uuid],true]]  #Append a new UUID to ensure there is a save
-     
-      #For each collection, touch every member
-      collection.get_members(:include_hidden=>true, :rows=> @max_expected_collection_size).each do |doc|
-        druid = doc.id
-        doc_changes = changes.dup 
-        doc_changes << [:single_year,doc.years.first] if doc.years.size == 1 # set the single year field if there is only one year in the multi-years field
-        result_a = update_multi_fields(doc, doc_changes)        
-        
-        prod_notes = join_content(doc, :production_notes, "") #make an empty call to get the current content
-        slice = true
-        while slice do
-           slice = prod_notes.slice! args[:uuid] #Remove the UUID, multiple times if needed
-        end
-        doc = SolrDocument.find(druid)
-        result_b = update_multi_fields(doc, [[:production_notes, prod_notes]])  #Slice off the UUID and save again
-        
-        if result_a and result_b
-          collection_success_count += 1
-        else
-          collection_error_count += 1
-          log.error("Failed to save: #{druid}") 
-        end
-        
-      end  
-      #Record Collection Stats
-      total_success_count += collection_success_count
-      total_error_count += collection_error_count
-      col_druid = collection[@id]
-      if collection_error_count == 0
-        log.info("#{@success} for collection #{col_druid}, touched #{collection_success_count} with no errors.")
-      else
-        log.info("#{@failure} for collection #{col_druid}, #{collection_error_count} errors and #{collection_success_count} touched successfully.  #{collection_error_count+collection_success_count} total touches attempted for collection.")
-      end
-      
-    end
-    
-    if total_error_count == 0
-      log.info("#{@success} Run complete with #{total_success_count} touched with no errors.")
-    else
-      log.info("#{@failure} run complete with #{total_error_count} errors and #{total_success_count} touched successfully.  #{total_error_count+total_success_count} total touches attempted on this run.")
-    end
-      
-  end
- 
   desc "Convert entrant to multivalued field"
   #Run Me: rake revs:convert_entrant
   task :convert_entrant => :environment do |t, args|

@@ -39,6 +39,23 @@ module ActivesolrHelper
      
   end
   
+  # used to computed a weight "score" for the document, based on how you weight each fields; helps identify how "filled in" a document is for metadata purposes
+  # final result is a value between 0 (nothing) and 100 (all filled in)
+  def compute_score
+    
+    total_score=0
+    total_weights=0
+    self.class.field_mappings.each do |field_name,field_config| 
+      if !field_config[:weight].blank?
+        total_score += field_config[:weight].to_f * (self.class.blank_value?(self.send(field_name)) ? 0 : 1) # if the field is blank, it is a 0 regardless of weight, otherwise it is a 1 times its weight
+        total_weights += field_config[:weight].to_f
+      end
+    end
+    
+    return ((total_score/total_weights)*100).ceil
+    
+  end
+  
   # used to cache edits that can be saved later
   def unsaved_edits
     @unsaved_edits || {}

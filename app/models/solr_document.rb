@@ -14,7 +14,7 @@ class SolrDocument
 
   extend Revs::Utils
   include Revs::Utils
-      
+        
   # Email uses the semantic field mappings below to generate the body of an email.
   SolrDocument.use_extension( Blacklight::Solr::Document::Email )
 
@@ -64,18 +64,18 @@ class SolrDocument
   
   def self.field_mappings
     {
-      :title=>{:field=>'title_tsi',:default=>'Untitled'},
-      :description=>{:field=>'description_tsim', :multi_valued => true},
-      :photographer=>{:field=>'photographer_ssi'},
-      :years=>{:field=>'pub_year_isim', :multi_valued => true},
+      :title=>{:field=>'title_tsi',:default=>'Untitled', :weight => 5},
+      :description=>{:field=>'description_tsim', :multi_valued => true, :weight => 4},
+      :photographer=>{:field=>'photographer_ssi', :weight => 2},
+      :years=>{:field=>'pub_year_isim', :multi_valued => true, :weight => 3},
       :single_year=>{:field=>'pub_year_single_isi'},
       :full_date=>{:field=>'pub_date_ssi'},
-      :people=>{:field=>'people_ssim', :multi_valued => true},
+      :people=>{:field=>'people_ssim', :multi_valued => true, :weight => 3},
       :subjects=>{:field=>'subjects_ssim', :multi_valued => true},
       :city_section=>{:field=>'city_sections_ssi'},
-      :city=>{:field=>'cities_ssi'},
-      :state=>{:field=>'states_ssi'},
-      :country=>{:field=>'countries_ssi'},
+      :city=>{:field=>'cities_ssi', :weight => 0.5},
+      :state=>{:field=>'states_ssi', :weight => 1},
+      :country=>{:field=>'countries_ssi', :weight => 2},
       :formats=>{:field=>'format_ssim', :multi_valued => true},
       :identifier=>{:field=>'source_id_ssi'},
       :production_notes=>{:field=>'prod_notes_tsi'},
@@ -83,21 +83,23 @@ class SolrDocument
       :metadata_sources=>{:field=>'metadata_sources_tsi'},
       :has_more_metadata=>{:field=>'has_more_metadata_ssi'},
       :vehicle_markings=>{:field=>'vehicle_markings_tsi'},
-      :marque=>{:field=>'marque_ssim', :multi_valued => true},
-      :vehicle_model=>{:field=>'model_ssim', :multi_valued => true},
-      :model_year=>{:field=>'model_year_ssim', :multi_valued => true},
-      :current_owner=>{:field=>'current_owner_tsi'},
-      :entrant=>{:field=>'entrant_ssim', :multi_valued => true},
-      :venue=>{:field=>'venue_ssi'},
-      :track=>{:field=>'track_ssi'},
-      :event=>{:field=>'event_ssi'},
-      :group_class=>{:field=>'group_class_tsi'},
-      :race_data=>{:field=>'race_data_tsi'},
+      :marque=>{:field=>'marque_ssim', :multi_valued => true, :weight => 3},
+      :vehicle_model=>{:field=>'model_ssim', :multi_valued => true, :weight => 3},
+      :model_year=>{:field=>'model_year_ssim', :multi_valued => true, :weight => 3},
+      :current_owner=>{:field=>'current_owner_tsi', :weight => 1},
+      :entrant=>{:field=>'entrant_ssim', :multi_valued => true, :weight => 2},
+      :venue=>{:field=>'venue_ssi', :weight => 2},
+      :track=>{:field=>'track_ssi', :weight => 2},
+      :event=>{:field=>'event_ssi', :weight => 2},
+      :group_class=>{:field=>'group_class_tsi', :weight => 1},
+      :race_data=>{:field=>'race_data_tsi', :weight => 1},
       :priority=>{:field=>'priority_isi',:default=>0,:editstore=>false},
       :collections=>{:field=>'is_member_of_ssim', :multi_valued => true},
       :collection_names=>{:field=>'collection_ssim', :multi_valued => true,:editstore=>false},
       :highlighted=>{:field=>'highlighted_ssi',:editstore=>false},
       :visibility_value=>{:field=>'visibility_isi',:editstore=>false},
+      :score=>{:field=>'score_isi', :editstore=>false},
+      :timestamp=>{:field=>'timestamp', :editstore=>false}
     }  
   end
 
@@ -379,10 +381,12 @@ class SolrDocument
     (item_priority == collection_priority) && item_priority != 0
   end
 
+  # override the general save method from activesolr helper so we can do some revs specific stuff first
   # store the change log info into our local database before going to the ActiveSolr save method to perform the saves and editstore updates
   def save(params={})
     user=params[:user] || nil # currently logged in user, needed for some updates
     add_changelog(user)
+    self.score = compute_score
     update_item # propoage unique information to database as well when saving solr document
     super
   end
