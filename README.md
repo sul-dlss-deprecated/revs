@@ -130,9 +130,9 @@ Typically before deploying, you will merge the latest code from develop to maste
     git tag TAG_NAME # standard is month-yearincrement, eg. June-2014a
     git push --tags
 
-    cap production deploy   # for production  (revslib.stanford.edu)
-    cap staging deploy      # for staging     (revs-stage.stanford.edu)
-    cap development deploy  # for development (revs-dev.stanford.edu)
+    bundle exec cap production deploy   # for production  (revslib.stanford.edu)
+    bundle exec cap staging deploy      # for staging     (revs-stage.stanford.edu)
+    bundle exec cap development deploy  # for development (revs-dev.stanford.edu)
 
 You must specify a branch or tag to deploy.  You can deploy the latest by specifying "master".
 

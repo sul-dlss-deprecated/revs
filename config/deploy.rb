@@ -21,6 +21,9 @@ set :tag, ask("Tag to deploy (make sure to push the tag first): [default: #{defa
 
 set :branch, fetch(:tag)
 
+set :deploy_host, ask("Server", 'enter in the server you are deploying to. do not include .stanford.edu')
+server "#{fetch(:deploy_host)}.stanford.edu", user: fetch(:user), roles: %w{web db app}
+
 namespace :jetty do
   task :start do 
     on roles(:app) do    

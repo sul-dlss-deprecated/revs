@@ -39,8 +39,9 @@ module ActivesolrHelper
      
   end
   
-  # used to computed a weight "score" for the document, based on how you weight each fields; helps identify how "filled in" a document is for metadata purposes
+  # used to computed a weight "score" for the document, based on how you weight each field; helps identify how "filled in" a document is for metadata purposes
   # final result is a value between 0 (nothing) and 100 (all filled in)
+  # if you have a more complicated algorithm, you can override this method in solr_document.rb
   def compute_score
     
     total_score=0

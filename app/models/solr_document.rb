@@ -64,33 +64,33 @@ class SolrDocument
   
   def self.field_mappings
     {
-      :title=>{:field=>'title_tsi',:default=>'Untitled', :weight => 5},
-      :description=>{:field=>'description_tsim', :multi_valued => true, :weight => 4},
-      :photographer=>{:field=>'photographer_ssi', :weight => 2},
-      :years=>{:field=>'pub_year_isim', :multi_valued => true, :weight => 3},
+      :title=>{:field=>'title_tsi',:default=>'Untitled'},
+      :description=>{:field=>'description_tsim', :multi_valued => true, :weight => 3},
+      :photographer=>{:field=>'photographer_ssi', :weight => 1},
+      :years=>{:field=>'pub_year_isim', :multi_valued => true, :weight => 5},
       :single_year=>{:field=>'pub_year_single_isi'},
       :full_date=>{:field=>'pub_date_ssi'},
-      :people=>{:field=>'people_ssim', :multi_valued => true, :weight => 3},
-      :subjects=>{:field=>'subjects_ssim', :multi_valued => true},
+      :people=>{:field=>'people_ssim', :multi_valued => true, :weight => 4},
+      :subjects=>{:field=>'subjects_ssim', :multi_valued => true, :weight => 1},
       :city_section=>{:field=>'city_sections_ssi'},
-      :city=>{:field=>'cities_ssi', :weight => 0.5},
-      :state=>{:field=>'states_ssi', :weight => 1},
-      :country=>{:field=>'countries_ssi', :weight => 2},
+      :city=>{:field=>'cities_ssi'},
+      :state=>{:field=>'states_ssi'},
+      :country=>{:field=>'countries_ssi'},
       :formats=>{:field=>'format_ssim', :multi_valued => true},
       :identifier=>{:field=>'source_id_ssi'},
       :production_notes=>{:field=>'prod_notes_tsi'},
       :institutional_notes=>{:field=>'inst_notes_tsi'},
       :metadata_sources=>{:field=>'metadata_sources_tsi'},
       :has_more_metadata=>{:field=>'has_more_metadata_ssi'},
-      :vehicle_markings=>{:field=>'vehicle_markings_tsi'},
-      :marque=>{:field=>'marque_ssim', :multi_valued => true, :weight => 3},
-      :vehicle_model=>{:field=>'model_ssim', :multi_valued => true, :weight => 3},
-      :model_year=>{:field=>'model_year_ssim', :multi_valued => true, :weight => 3},
+      :vehicle_markings=>{:field=>'vehicle_markings_tsi', :weight => 1},
+      :marque=>{:field=>'marque_ssim', :multi_valued => true, :weight => 4},
+      :vehicle_model=>{:field=>'model_ssim', :multi_valued => true, :weight => 2},
+      :model_year=>{:field=>'model_year_ssim', :multi_valued => true, :weight => 1},
       :current_owner=>{:field=>'current_owner_tsi', :weight => 1},
-      :entrant=>{:field=>'entrant_ssim', :multi_valued => true, :weight => 2},
-      :venue=>{:field=>'venue_ssi', :weight => 2},
-      :track=>{:field=>'track_ssi', :weight => 2},
-      :event=>{:field=>'event_ssi', :weight => 2},
+      :entrant=>{:field=>'entrant_ssim', :multi_valued => true, :weight => 1},
+      :venue=>{:field=>'venue_ssi'},
+      :track=>{:field=>'track_ssi', :weight => 1},
+      :event=>{:field=>'event_ssi'},
       :group_class=>{:field=>'group_class_tsi', :weight => 1},
       :race_data=>{:field=>'race_data_tsi', :weight => 1},
       :priority=>{:field=>'priority_isi',:default=>0,:editstore=>false},
@@ -141,7 +141,29 @@ class SolrDocument
   def update_attribute(attribute,value)
      self.send("#{attribute}=",value) # this sets the given attribute
   end
-  
+
+  # we have a more complicated algorith, so will override the default scoring in activesolr helper
+  def compute_score
+
+    total_score=0
+    total_weights=0
+    self.class.field_mappings.each do |field_name,field_config|
+      if !field_config[:weight].blank?
+        total_score += field_config[:weight].to_f * (self.class.blank_value?(self.send(field_name)) ? 0 : 1) # if the field is blank, it is a 0 regardless of weight, otherwise it is a 1 times its weight
+        total_weights += field_config[:weight].to_f
+      end
+    end
+
+    # now we will account for the location, which has a weighting of 3 for *any* location like field having a value
+    location_score = (location.blank? && venue.blank? && event.blank?) ? 0 : 1
+    location_weight = 3
+    total_weights += location_weight
+    total_score += (location_score * location_weight)
+    
+    return ((total_score/total_weights)*100).ceil
+
+  end
+    
   # if the user updates one of the date fields, we'll run some computations to update the others as needed
   # this method is set as a callback when one of the date fields is updated
   def update_date_fields(field_name,new_value)
