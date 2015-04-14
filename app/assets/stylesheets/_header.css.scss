@@ -128,6 +128,7 @@
   clear: left;
   float: left;
   margin-left: -20px;
+  padding-top: 4px;
   > .active > a, > .active > a:hover {
     background-color: #f7f7f7;
     box-shadow: none;
@@ -146,9 +147,9 @@
       font-family: "news-gothic-std","Helvetica","Arial",sans-serif;
       font-weight: 700;
       text-transform: uppercase;
-      font-size: 0.965em;
+      font-size: 1em;
     	-webkit-font-smoothing: antialiased;
-      padding: 12px 24px;
+      padding: 10px 24px 8px 24px;
       &:hover, &:focus {
         background-color: white;
         color: #990000;
