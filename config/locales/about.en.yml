@@ -59,7 +59,7 @@ en:
         </ul>
       project_text_html: |
         <p>
-        	 The %{revs_institute} has a large and varied collection of automotive materials, including images, research books, ephemera, and specialized documents.
+        	 %{revs_institute} has a large and varied collection of automotive materials, including images, research books, ephemera, and specialized documents.
            The Revs Program at Stanford is producing research data and generating course materials.  The primary goal of the Stanford Library is to ensure these materials are indexed, preserved and made
            available to library patrons, researchers and the general public.  By digitizing materials and making them discoverable, content that was once available to a select few becomes useful and
            discoverable for a wide range of researchers.
