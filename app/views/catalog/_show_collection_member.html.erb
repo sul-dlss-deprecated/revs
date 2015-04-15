@@ -1,10 +1,10 @@
 <script type="text/javascript">
-  // fetch collection members grid at bottom of the page on a delay so main image loads first 
+  // fetch collection members grid at bottom of the page on a delay so main image loads first
   // unless we are in the context of a search result or coming from a gallery/favorites page
   <% if !in_search_result? && !from_gallery? && !from_favorites?%>
     var timeout = setTimeout(function() {loadCollectionMembersGrid('<%=document.id%>','item')}, 3000);
   <% end %>
-  
+
   $(document).ready(function(){
     $("#image_workspace").embedPurl({'server': '<%=Revs::Application.config.purl_plugin_server%>',
                                      'druid': '<%= document.id %>',
@@ -73,7 +73,7 @@
               <%= link_to_next_document @next_document %>
           </span>
         </div>
-      </div>      
+      </div>
     <% end %>
 
     <div class="row">
@@ -102,7 +102,7 @@
               </div>
             </li>
           <% end %>
-          
+
 					<% if (can?(:read, Annotation) || can?(:create, Annotation))
    					  @annotations = @document.annotations(current_user)
 							annotation_link_text = can?(:create, Annotation) ?  t('revs.annotations.add') : t('revs.annotations.view')
@@ -119,7 +119,7 @@
 		             <%= link_to(("<i class='icon-edit'></i> #{t('revs.annotations.hide')}".html_safe + content_tag(:span, @annotations.size, :class => "#{display_class(@annotations.size)} num-annotations-badge badge badge-revs")).html_safe, '#',:id=>'hide_annotations_link',:class=>"hidden-offscreen") %>
 		          </li>
 				    <% end %>
-	          <div id="all-annotations" class="hide">
+	          <div id="all-annotations" class="hidden">
 	              <%= render(:partial => "annotations/all", :locals=>{:annotations=>@annotations}) if @annotations.size > 0 %>
 	        	 </div>
 					<% end %>
@@ -145,7 +145,7 @@
 				        <div id="new_flag_form">
 							  	<%= render :partial=>"flags/new",:locals=>{:druid=>@document.id, :flags=>@document.flags} %>
 								</div>
-                
+
 								<div id="all_flags">
                   <%= render :partial=>"flags/all",:locals=>{:flags=>@document.flags} %>
                 </div>
@@ -269,7 +269,7 @@
    <% if from_gallery? # if we are in the context of a gallery, let's show the gallery items here immediately --- for other cases when we are not in search result we will load this area via ajax for performance reasons %>
      <%= render :partial=>'galleries/members_grid' %>
    <% else %>
-   
+
 <%# if javascript is disabled, we'll just show navigation to the relevant collection %>
   <noscript>
     <div class="row">

@@ -4,8 +4,12 @@
       <%= f.hidden_field :druid, :value=>druid %>
       <%= f.hidden_field :flag_type, :value=>'error' %>
       <%= hidden_field_tag :loadtime,Time.now%>
-      <%= f.label :comment, t('revs.flags.comment_optional')%>
-      <%= f.text_area :comment, :rows => '2', :class => "form-control" %>
+      <div class="row">
+        <div class="col-xs-11">
+          <%= f.label :comment, t('revs.flags.comment_optional')%>
+          <%= f.text_area :comment, :rows => '2', :class => "form-control" %>
+        </div>
+      </div>
     </div>
     <div class="form-group">
       <div class="hidden">
@@ -16,8 +20,10 @@
     </div>
     <% if user_signed_in? %>
       <div class="checkbox">
-        <%= f.check_box :notify_me %>
-        <%= t('revs.flags.notify_me')%>
+        <label>
+          <%= f.check_box :notify_me %>
+          <%= t('revs.flags.notify_me')%>
+        </label>
       </div>
     <% end %>
     <%= f.submit t('revs.flags.flag'), :class => "flag-button btn btn-default btn-sm" %>

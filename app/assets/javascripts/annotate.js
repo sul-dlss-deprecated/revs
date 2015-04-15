@@ -24,7 +24,7 @@ anno.addHandler('onAnnotationUpdated', function(annotation) {
 	  data: "annotation="+encodeURIComponent(JSON.stringify(annotation)),
 		success: function(data) {
 			updateAnnotationsPanel(data.num_annotations,druid());
-	  }	
+	  }
 	});
 });
 
@@ -42,7 +42,7 @@ anno.addHandler('onAnnotationRemoved', function(annotation) {
 	  url: "/annotations/" + annotation.id,
 		success: function(data) {
 			updateAnnotationsPanel(data.num_annotations,druid());
-	  }	
+	  }
 	});
 });
 
@@ -50,7 +50,7 @@ anno.addHandler('onAnnotationRemoved', function(annotation) {
 annotorious.plugin.addUsernamePlugin = function(opt_config_options) { }
 annotorious.plugin.addUsernamePlugin.prototype.onInitAnnotator = function(annotator) {
   // A Field can be an HTML string or a function(annotation) that returns a string
-	  annotator.popup.addField(function(annotation) { 
+	  annotator.popup.addField(function(annotation) {
 		 	if (annotation.username != '') {
 	    	return '<em>from ' + annotation.username + ' - '+ annotation.updated_at +'</em>'
 		  }
@@ -60,7 +60,7 @@ annotorious.plugin.addUsernamePlugin.prototype.onInitAnnotator = function(annota
 			}
 	  });
 }
-anno.addPlugin('addUsernamePlugin', {});	
+anno.addPlugin('addUsernamePlugin', {});
 
 function updateAnnotationsPanel(num_annotations,druid) {
 	$(".num-annotations-badge").text(num_annotations); // update the total annotations badge
@@ -69,7 +69,7 @@ function updateAnnotationsPanel(num_annotations,druid) {
 	$('#all-annotations').removeClass('hidden-offscreen hidden'); // be sure it is visible
 }
 
-function showAnnotations() {	
+function showAnnotations() {
 	togglePURLEmbed();
 	toggleThumbImage();
 	loadAnnotations();
@@ -80,9 +80,9 @@ function hideAnnotations() {
 	togglePURLEmbed();
 	toggleThumbImage();
 }
-	 
+
 function enableAnnotations() {
-	anno.makeAnnotatable(jQuery('#annotatable_image')[0]);	
+	anno.makeAnnotatable(jQuery('#annotatable_image')[0]);
 }
 
 function loadAnnotations() {
@@ -95,15 +95,15 @@ function loadAnnotations() {
 }
 
 function togglePURLEmbed() {
-	jQuery('#image_workspace').toggleClass('hidden');	
+	jQuery('#image_workspace').toggleClass('hidden');
 }
 
 function toggleThumbImage() {
-	jQuery('#annotatable_workspace').toggleClass('hidden');	
+	jQuery('#annotatable_workspace').toggleClass('hidden');
 }
 
 function disableNewAnnotations() {
-	try{anno.setSelectionEnabled(false);}	
+	try{anno.setSelectionEnabled(false);}
 	catch(err) {}
 }
 
@@ -112,32 +112,41 @@ function toggleLinks() {
   $('#hide_annotations_link').toggleClass('hidden-offscreen');
 }
 
+// Added if/else conditions below during Bootstrap 3 upgrade because BS 3 prevents
+// JQuery from toggling the .hide and .show classes during animations as expected:
+// https://github.com/twbs/bootstrap/issues/9237
+// They might fix in Bootstrap 4; if so, it might be that
+// only the slideToggle line is needed.
 function toggleAnnotationList(){
-  $('#all-annotations').slideToggle('slow');
+	if ($('#all-annotations').hasClass('hidden')) {
+		$('#all-annotations').removeClass('hidden').hide().slideToggle('slow');
+	} else {
+		$('#all-annotations').slideToggle('slow');
+	}
 }
 
 $(document).ready(function(){
-	
-	$('#annotate_link').click(function() { 
-		showAnnotations(); 
+
+	$('#annotate_link').click(function() {
+		showAnnotations();
     toggleLinks();
     toggleAnnotationList();
 		return false;
 	 });
-	
+
 	$('#view_annotations_link').click(function() {
-		 showAnnotations(); 
-		 disableNewAnnotations(); 
+		 showAnnotations();
+		 disableNewAnnotations();
      toggleLinks();
      toggleAnnotationList();
 		 return false;
 	 });
 
 	$('#hide_annotations_link').click(function() {
-		 hideAnnotations(); 
+		 hideAnnotations();
 		 toggleLinks();
 		 toggleAnnotationList();
 		 return false;
 	 });
-	
+
 });

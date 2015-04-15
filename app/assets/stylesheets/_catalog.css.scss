@@ -52,6 +52,7 @@
     border-bottom: 1px solid #e5e5e5;
     font-size: 11px;
     font-weight: bold;
+    line-height: 1.8;
     margin-bottom: 6px;
     padding: 6px 0 0;
     text-transform: uppercase;
@@ -119,7 +120,6 @@
     }
     .previousNextDocument {
       float: right;
-//      margin-right: -20px;
       padding-bottom: 2px;
     }
   }
@@ -168,20 +168,18 @@
     }
     li {
       line-height: 20px;
-      height: 24px;
     }
     #favorites_link {
-//      height: 24px;
       i.icon-heart {
         color: #990000;
       }
       .button_to {
         display: inline-block;
         margin-bottom: 0;
+        vertical-align: top;
         input[type=submit] {
           font-size: 13px;
-          padding-left: 0;
-          padding-top: 0;
+          padding: 0;
         }
       }
     }
@@ -198,7 +196,10 @@
     }
     &.nav > li > a {
       padding: 2px 15px;
-      &.help, &.purl {padding: 0;}
+      &.help, &.purl, &.accordion-toggle {
+        padding-left: 0;
+        padding-right: 0;
+      }
     }
     a:hover i, div:hover i {
       color: #990000;
@@ -206,9 +207,17 @@
     #annotate_link {padding: 0;}
     a#hide_annotations_link {
       background-color: #eee;
+      padding-left: 0;
       i {
         color: #990000;
       }
+    }
+    #favorites_link, #user_galleries,
+    #view_annotations_link, #annotate_link, .purl {
+      padding: 2px 0;
+    }
+    .flag-history-list li {
+      padding: 6px 0;
     }
     #user_galleries a i {
      margin-left: 1px;
@@ -231,6 +240,10 @@
     #current_in_galleries {
       margin-left: 24px;
       padding-bottom: 6px;
+      ul {
+        margin-top: 6px;
+        padding-left: 16px;
+      }
       a {
         color: $active_link_color;
       }
@@ -270,6 +283,7 @@
           }
           ul {
             margin-bottom: 6px;
+            padding-left: 15px;
           }
         }
       }
@@ -293,6 +307,7 @@
         blockquote {
           border-left: none;
           color: #555;
+          font-size: 1em;
           font-style: italic;
           margin-bottom: 6px;
           margin-top: 9px;
@@ -314,13 +329,15 @@
       background-color: #fff;
       font-size: 0.85em;
       font-weight: bold;
+      line-height: 1.2;
       margin-left: 5px;
       color: #990000;
       border: 1px solid #999;
-      padding: 1px 5px 0px;
+      padding: 2px 5px 0px;
+      vertical-align: text-bottom;
     }
     form.new_flag, div#all_flags, div#all-annotations {
-      margin: 6px 0 0 25px;
+      margin: 6px 10px 0 25px;
       label {
         margin-left: 2px;
       }
@@ -349,6 +366,9 @@
       width: 90%;
     }
     #new_flag_form {
+      label {
+        font-weight: normal;
+      }
       input#flag_notify_me {
         margin-bottom: 12px;
         vertical-align: baseline;
@@ -359,6 +379,9 @@
       .flag-button {
         display: inline-block;
       }
+    }
+    #all_flags {
+      padding-bottom: 1px;
     }
     a.flag-details {
       margin-bottom: 6px;
@@ -388,6 +411,9 @@
     .pe-display-note {
       font-size: 13px;
       line-height: 1.4;
+    }
+    .pe-full-screen-ctrl {
+      width: 24px;
     }
   }
 }
