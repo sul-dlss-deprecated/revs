@@ -128,8 +128,9 @@
 
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'formats',:label=>t('revs.show.label_formats'),:multivalued=>true,:editable=>true,:facet=>true, :input_type=>'text_area'} %>
 
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'institutional_notes',:label=>t('revs.show.label_institutional_notes'),:simple_format=>true,:editable=>true, :input_type=>'text_area'} %>
+
           <% if can? :curate,:all # the following fields are only useful to show for curators%>
-            <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'institutional_notes',:label=>t('revs.show.label_institutional_notes'),:simple_format=>true,:editable=>true, :input_type=>'text_area'} %>
           
   					<%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'production_notes',:label=>t('revs.show.label_production_notes'),:simple_format=>true,:editable=>true, :input_type=>'text_area'} %>       
 

@@ -80,6 +80,8 @@ module Revs
     config.contact_us_recipients = {'default'=>'digcoll@jirasul.stanford.edu', 'terms of use'=>'ldrake@chmotorcars.com','metadata'=>'digcoll@jirasul.stanford.edu','error'=>'digcoll@jirasul.stanford.edu','other'=>'digcoll@jirasul.stanford.edu'} # sets the email address for each contact us topic configed aboveend
     config.contact_us_cc_recipients = {'default'=>'revs-other@jirasul.stanford.edu', 'metadata'=>'revs-metadata-comment@jirasul.stanford.edu', 'error'=>'revs-problems@jirasul.stanford.edu','other'=>'revs-other@jirasul.stanford.edu'} # sets the CC email address for each contact us topic configed above
 
+    config.collections_not_available_for_reproduction = ['td221fy0182','jh550nq3200','kv107xd8164'] # these collections are not available for reproduction and will show a special statement instead of the use and reproduction statement in the item itself...currently Breslauer, Bochroch and Worner
+    
     config.revs_reuse_link='http://revsinstitute.org/research-education/permission-to-use/'
     
     config.num_latest_user_activity = 3 # the latest number of flags/annotations to show on the user profile page     

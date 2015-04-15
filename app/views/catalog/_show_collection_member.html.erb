@@ -15,16 +15,7 @@
                                          'availableSizes': [<%=raw available_sizes%>],
                                          'zoomOnClick': true,
                                          'disableKeyboardShortcuts': true,
-                                         'displayNote': '<%=@document.copyright %> <%= t("revs.contact.image_reuse_agreement",
-              :license_agreement_link => link_to(t("revs.contact.image_license_agreement"),
-              "http://revsinstitute.org/research-education/permission-to-use",:target=>"_new")).html_safe %>  <%= t("revs.contact.reuse_contact",
-              :reuse_contact_link => link_to(t("revs.contact.contact_linktext_html"),
-              contact_us_path(:subject=>"terms of use",
-                              :from=>request.path,
-                              :message=> t("revs.contact.reuse_contact_message",
-                                :reuse_contact_message_doc => @document.identifier,
-                                :reuse_contact_message_url => catalog_url(@document.id)
-              )))).html_safe %>.',
+                                         'displayNote': '<%=@document.copyright %> <%= @use_and_reproduction.html_safe %>',
                                          'showDisplayNoteOnlyOnFullScreen': true,
                                      'tooltipTexts': {
                                      '<%= I18n.locale %>': {
@@ -264,18 +255,7 @@
 
         <div class="license-image">
           <%=@document.copyright %>
-          
-          <%= t('revs.contact.image_reuse_agreement',
-              :license_agreement_link => link_to(t('revs.contact.image_license_agreement'),
-              'http://revsinstitute.org/research-education/permission-to-use',:target=>'_new')).html_safe %>
-          <%= t('revs.contact.reuse_contact',
-              :reuse_contact_link => link_to(t('revs.contact.contact_linktext_html'),
-              contact_us_path(:subject=>'terms of use',
-                              :from=>request.path,
-                              :message=> t('revs.contact.reuse_contact_message',
-                                :reuse_contact_message_doc => @document.identifier,
-                                :reuse_contact_message_url => catalog_url(@document.id)
-              )))).html_safe %>
+          <%=@use_and_reproduction.html_safe %>
         </div>
 
       </div>
