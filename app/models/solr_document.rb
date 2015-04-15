@@ -118,18 +118,33 @@ class SolrDocument
   def druid
     id
   end
+
+  # helper to determine if this is a revs_item, relies on the copyright statement
+  def revs_item?
+    copyright.downcase.include?('revs')
+  end
+
+  # some collections are not available for reproduction and will have their use and reproduction statement overriden on the website display to reduce re-use requests -- it can be done per collection
+  # set the collections this applies for in config/application.rb
+  def reproduction_not_available?
+    !collections.blank? && !(collections & Revs::Application.config.collections_not_available_for_reproduction).blank?
+  end
   
   def copyright
     value=self['copyright_ss']
-    value="" if value == 'Courtesy of the Revs Institute for Automotive Research. All rights reserved unless otherwise indicated.' # blank it out if its the bad value, so it gets replaced with the correct value on display
-    value = "Courtesy of The Revs Institute for Automotive Research, Inc. All rights reserved unless otherwise indicated." if value.blank? # default value
+    value = I18n.t('revs.contact.default_revs_copyright') if value.blank? # default value if not supplied
     return value
   end
   
+  # revs items will be overridden in the view so we can add a link to the contact us page
   def use_and_reproduction
-    value=self['use_and_reproduction_ss']
-    value="" if value == 'Users must contact The Revs Institute for Automotive Research for re-use and reproduction information.' # blank it out if its the bad value, so it gets replaced with the correct value on display
-    value = "Users must contact The Revs Institute for Automotive Research, Inc. for re-use and reproduction information." if value.blank? # default value
+    if reproduction_not_available?
+      value=I18n.t('revs.contact.image_not_available_for_reproduction')
+    elsif self['use_and_reproduction_ss'].blank?
+      value=I18n.t('revs.contact.default_revs_rights_statement')
+    else
+      value=self['use_and_reproduction_ss']    
+    end
     return value
   end
   
