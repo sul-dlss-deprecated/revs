@@ -136,7 +136,7 @@
 
             <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'metadata_sources',:label=>t('revs.show.label_metadata_sources'),:simple_format=>true,:editable=>true, :input_type=>'text_area'} %>
 
-            <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'has_more_metadata',:label=>t('revs.show.label_more_metadata'),:simple_format=>true,:editable=>true,:input_type=>'checkbox',:checked_value=>'yes'} %>
+            <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'has_more_metadata',:label=>t('revs.show.label_more_metadata'),:simple_format=>true,:editable=>true} %>
 
           <% end %>
             
