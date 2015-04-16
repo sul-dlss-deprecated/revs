@@ -3,7 +3,7 @@
 
   <p><%=t('revs.contact.instructions_html',:reuse_link=>link_to(Revs::Application.config.revs_reuse_link))%></p>
 
-	<div id="contact-us-errors" class="contact-us-errors alert alert-error hidden"></div>
+	<div id="contact-us-errors" class="contact-us-errors alert alert-danger hidden"></div>
 
 	<%= hidden_field_tag 'from',@from%>
 	<%= hidden_field_tag 'auto_response',@auto_response || true%>
@@ -19,7 +19,7 @@
 	<% else %>
 			<%= hidden_field_tag 'subject',Revs::Application.config.contact_us_topics.keys.first%>
 	<% end %>
-	
+
 	<div class="form-group">
 	  <label class="control-label col-xs-12 col-sm-3 col-md-2" for="message"><%=t('revs.contact.message')%></label>
 	  <div class="col-xs-12 col-sm-9 col-md-10">

@@ -1,8 +1,8 @@
 $(document).ready(function(){
-	
+
 	setup_links_that_disable();
   enable_autocomplete();
-	  
+
 	// Modal behavior for collection member show page.
 	$("[data-modal-selector]").on('click', function(){
 		$($(this).attr("data-modal-selector")).modal('show');
@@ -15,7 +15,16 @@ $(document).ready(function(){
   $('#new_flag, #all_flags').hide();
   // Toggle details (new flag form and posted flags) when Flag action is selected.
   $('.flag-details').click(function(){
-    $('#new_flag, #all_flags').slideToggle('slow');
+		// Added if/else conditions below during Bootstrap 3 upgrade because BS 3 prevents
+		// JQuery from toggling the .hide and .show classes during animations as expected:
+		// https://github.com/twbs/bootstrap/issues/9237
+		// They might fix in Bootstrap 4; if so, it might be that
+		// only the slideToggle line in 'else' is needed.
+		if ($('#new_flag, #all_flags').hasClass('hide')) {
+			$('#new_flag, #all_flags').removeClass('hide').hide().slideToggle('slow');
+		} else {
+			$('#new_flag, #all_flags').slideToggle('slow');
+		}
     $('.flag-details').toggleClass('active');
 		$('#flag_comment').focus();
     return false;
@@ -36,14 +45,14 @@ $(document).ready(function(){
   // $( '#admin-select-all-users' ).click( function () {
   //    $( 'input[type="checkbox"]' ).prop('checked', this.checked);
   //    }
-  // ); 
+  // );
 
   // saved_items select all
   $( '#saved_items-select-all' ).click( function () {
      $( 'input[type="checkbox"]' ).prop('checked', this.checked);
      toggle_highlight(this,$('.saved-item-row'));
      }
-  ); 
+  );
 
     $( '.selected_items' ).change( function () {
       toggle_highlight(this,$('#saved_item_' + $(this).data('saved-item-id')));
@@ -89,19 +98,19 @@ $(document).ready(function(){
       bulkEditHideReplace();
       bulkEditShowUpdate();
       bulkEditShowUpdateHeading();
-    }      
+    }
     if ($( '#bulk_edit_action_remove' ).is(':checked')) {
       bulkEditHideUpdate();
       bulkEditHideReplace();
       bulkEditHideUpdateHeading();
-    } 
+    }
    if ($( '#bulk_edit_action_replace' ).is(':checked')) {
       bulkEditHideUpdate();
       bulkEditHideReplace();
       bulkEditShowUpdate();
       bulkEditShowReplace();
       bulkEditShowUpdateHeading();
-    } 
+    }
 
     function bulkEditShowReplace() {
       $('#bulk_edit_search_value' ).show();
@@ -149,7 +158,7 @@ $(document).ready(function(){
    $('#bulk_edit_new_value').blur(function() { // input loses focus
      updateBulkEditStatus();
    });
-		
+
    // Enter/leave curator edit mode
    $('#edit_mode_link').click(function() { // click the curator edit mode action link
     if (curatorEditMode() == 'false'){ // currently not in edit mode, click is to enter edit mode
@@ -183,7 +192,7 @@ $(document).ready(function(){
 		  $('#report-problem-form').slideToggle('slow');
 		  return false;
 		});
-		
+
 	$('#contact_us_link, .error-page-feedback').click(function() {
     $(".report-problem")[0].reset();
 	  $('#report-problem-form').slideToggle('slow');
@@ -220,7 +229,7 @@ function visibility() {
 }
 
 function curatorEditMode() {
-	return jQuery("#data-vars").attr('data-curator-edit-mode');	
+	return jQuery("#data-vars").attr('data-curator-edit-mode');
 }
 
 function setCuratorEditMode(value) {
@@ -251,7 +260,7 @@ $(document).on('blur',".user-login-email",function(){
 			        type: "POST",
 			        url: "/check_email",
 							data: "email=" + email
-			});		
+			});
 		}
 	}
 );
@@ -265,11 +274,11 @@ $(document).on('blur',"#register-username",function(){
 			        type: "POST",
 			        url: "/check_username",
 							data: "username=" + username
-			});		
+			});
 		}
 	}
 );
-	
+
 function showOnLoad() {
 	$('.showOnLoad').removeClass('hidden hidden-offscreen');
 	$('.showOnLoad').show();
@@ -349,7 +358,7 @@ function enable_autocomplete() {
             }
           },
           minLength: 2,
-          max: 10});  
+          max: 10});
 
         $( ".autocomplete.mvf").autocomplete({
           source: function( request, response ) {
@@ -383,8 +392,8 @@ function enable_autocomplete() {
             }, response );
           },
           minLength: 2,
-          max: 10});     
-  } 
+          max: 10});
+  }
 
 // href links with the disable_after_click=true attribute will be automatically disabled after clicking to prevent double clicks
 function setup_links_that_disable() {
@@ -411,10 +420,10 @@ function ajax_loading_indicator(element) {
   if (element) {
       element.animate({opacity:0.25});
   		element.addClass("disabled");
-  		if (element.attr("disable_with") != '') { 
+  		if (element.attr("disable_with") != '') {
   			element.attr("enable_with",element.text()); // store the current text
   			element.text(element.attr("disable_with"));  // change the text
-  			}		
+  			}
     }
 }
 
@@ -429,7 +438,7 @@ function ajax_loading_done(element) {
     element.animate({opacity:1.0});
     element.removeAttr("disabled");
     element.removeClass("disabled");
-		if (element.attr("enable_with") != '') { element.text(element.attr("enable_with"));} // change the text back		
+		if (element.attr("enable_with") != '') { element.text(element.attr("enable_with"));} // change the text back
     }
 }
 

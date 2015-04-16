@@ -80,73 +80,73 @@
       <div class="col-sm-12">
         <h4 class="show-document-title"><%=@document.title%></h4>
 
-				<div id="item_details">
+        <div id="item_details">
           <%= render :partial => "show_default_collection_member", :locals => {:document => @document} %>
-			  </div>
+        </div>
 
         <ul class="nav list-unstyled item-actions">
           <li class="nav-header"><%=t('revs.admin.sidebar.actions')%></li>
 
-					<% if can?(:create, SavedItem) && (@document.visibility != :hidden || @document.is_favorite?(current_user))%>
-					  <li>
+          <% if can?(:create, SavedItem) && (@document.visibility != :hidden || @document.is_favorite?(current_user))%>
+            <li>
               <div id="favorites_link">
                 <%= render :partial=>'saved_items/add_to_favorites'%>
               </div>
             </li>
           <% end %>
 
-					<% if can?(:create, Gallery) && can?(:create, SavedItem) && @document.visibility != :hidden%>
-					  <li>
-					    <div id="user_galleries">
+          <% if can?(:create, Gallery) && can?(:create, SavedItem) && @document.visibility != :hidden%>
+            <li>
+              <div id="user_galleries">
                 <%= render(:partial => "saved_items/add_to_gallery") %>
               </div>
             </li>
           <% end %>
 
-					<% if (can?(:read, Annotation) || can?(:create, Annotation))
-   					  @annotations = @document.annotations(current_user)
-							annotation_link_text = can?(:create, Annotation) ?  t('revs.annotations.add') : t('revs.annotations.view')
-							annotation_link_id = can?(:create, Annotation) ?  "annotate_link" : "view_annotations_link"
-							annotation_link_class = can?(:create, Annotation) || @annotations.size > 0 ? "" : "hidden"
-				 			%>
+          <% if (can?(:read, Annotation) || can?(:create, Annotation))
+               @annotations = @document.annotations(current_user)
+              annotation_link_text = can?(:create, Annotation) ?  t('revs.annotations.add') : t('revs.annotations.view')
+              annotation_link_id = can?(:create, Annotation) ?  "annotate_link" : "view_annotations_link"
+              annotation_link_class = can?(:create, Annotation) || @annotations.size > 0 ? "" : "hidden"
+               %>
 
-					  <% if can?(:create, Annotation) || @annotations.size > 0 %>
-							<li>
+            <% if can?(:create, Annotation) || @annotations.size > 0 %>
+              <li>
                 <%= link_to "#", :class => "help hidden-offscreen showOnLoad", :data => { :toggle => "tooltip", :placement => "left", :title => "#{t('revs.annotations.help')}" } do %>
                   <i class="icon-question-sign"></i>
                 <% end %>
-		             <%= link_to(("<span class='#{annotation_link_class}' id='annotation-link-text'><i class='icon-edit'></i> #{annotation_link_text}</span>".html_safe + content_tag(:span, @annotations.size, :class => "#{display_class(@annotations.size)} num-annotations-badge badge badge-revs")).html_safe,'#',:id=>annotation_link_id,:class=>"annotation_links showOnLoad hidden-offscreen") %>
-		             <%= link_to(("<i class='icon-edit'></i> #{t('revs.annotations.hide')}".html_safe + content_tag(:span, @annotations.size, :class => "#{display_class(@annotations.size)} num-annotations-badge badge badge-revs")).html_safe, '#',:id=>'hide_annotations_link',:class=>"hidden-offscreen") %>
-		          </li>
-				    <% end %>
-	          <div id="all-annotations" class="hidden">
-	              <%= render(:partial => "annotations/all", :locals=>{:annotations=>@annotations}) if @annotations.size > 0 %>
-	        	 </div>
-					<% end %>
+                 <%= link_to(("<span class='#{annotation_link_class}' id='annotation-link-text'><i class='icon-edit'></i> #{annotation_link_text}</span>".html_safe + content_tag(:span, @annotations.size, :class => "#{display_class(@annotations.size)} num-annotations-badge badge badge-revs")).html_safe,'#',:id=>annotation_link_id,:class=>"annotation_links showOnLoad hidden-offscreen") %>
+                 <%= link_to(("<i class='icon-edit'></i> #{t('revs.annotations.hide')}".html_safe + content_tag(:span, @annotations.size, :class => "#{display_class(@annotations.size)} num-annotations-badge badge badge-revs")).html_safe, '#',:id=>'hide_annotations_link',:class=>"hidden-offscreen") %>
+              </li>
+            <% end %>
+            <div id="all-annotations" class="hidden">
+                <%= render(:partial => "annotations/all", :locals=>{:annotations=>@annotations}) if @annotations.size > 0 %>
+             </div>
+          <% end %>
 
           <li>
             <%= link_to("<i class='icon-picture'></i> #{sunet_user_signed_in? ? t('revs.citations.view_and_download') : t('revs.citations.view')}".html_safe,
             "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>"_new", :class => "purl") %>
           </li>
 
-          <% if (can?(:read, Flag) || can?(:add_new_flag_to, @document))	%>
-            	<li>
+          <% if (can?(:read, Flag) || can?(:add_new_flag_to, @document))  %>
+              <li>
 
-							  <div id="flags_link">
-									<%= render :partial=>'flags/link'%>
+                <div id="flags_link">
+                  <%= render :partial=>'flags/link'%>
                   <%# only show help icon if user can add flags %>
                   <% if can? :add_new_flag_to, @document  %>
                     <%= link_to "#", :class => "help hidden-offscreen showOnLoad", :data => { :toggle => "tooltip", :placement => "left", :title => "#{t('revs.flags.help')}" } do %>
                       <i class="icon-question-sign"></i>
                     <% end %>
                   <% end %>
-								</div>
+                </div>
 
-				        <div id="new_flag_form">
-							  	<%= render :partial=>"flags/new",:locals=>{:druid=>@document.id, :flags=>@document.flags} %>
-								</div>
+                <div id="new_flag_form">
+                  <%= render :partial=>"flags/new",:locals=>{:druid=>@document.id, :flags=>@document.flags} %>
+                </div>
 
-								<div id="all_flags">
+                <div id="all_flags">
                   <%= render :partial=>"flags/all",:locals=>{:flags=>@document.flags} %>
                 </div>
 
@@ -184,16 +184,16 @@
                 <% end # end check for a logged in user having resolved flags%>
             <% end # end check for user has ability to add flags%>
 
-							<% if !user_signed_in? && can?(:add_new_flag_to, @document)%>
-							<li>
-							  <span id="feedback_link">
-							    <%= t('revs.nav.content_corrections',:create_an_account_link=>link_to(t('revs.nav.create_an_account'),new_user_session_path),:feedback_link=>link_to(t('revs.nav.feedback'),contact_us_path(:from=>request.path,:subject=>'metadata',:message=>"Correction to \"#{@document.title}\" (identifier: #{@document.identifier})"))).html_safe %>
-							  </span>
-							</li>
-	          	<% end %>
-					<% end %>
+              <% if !user_signed_in? && can?(:add_new_flag_to, @document)%>
+              <li>
+                <span id="feedback_link">
+                  <%= t('revs.nav.content_corrections',:create_an_account_link=>link_to(t('revs.nav.create_an_account'),new_user_session_path),:feedback_link=>link_to(t('revs.nav.feedback'),contact_us_path(:from=>request.path,:subject=>'metadata',:message=>"Correction to \"#{@document.title}\" (identifier: #{@document.identifier})"))).html_safe %>
+                </span>
+              </li>
+              <% end %>
+          <% end %>
 
-				</ul>
+        </ul>
 
         <% if can? :curate, :all %>
           <ul class="nav list-unstyled item-actions curator-actions showOnLoad hidden-offscreen">

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140904172751) do
+ActiveRecord::Schema.define(:version => 20141027203015) do
 
   create_table "annotations", force: true do |t|
     t.integer  "user_id"
@@ -32,7 +32,6 @@ ActiveRecord::Schema.define(:version => 20140904172751) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.string   "user_type"
-    t.string   "document_type"
   end
 
   add_index "bookmarks", ["user_id"], name: "index_bookmarks_on_user_id"

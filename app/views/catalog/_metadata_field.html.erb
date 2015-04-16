@@ -1,42 +1,51 @@
 <%
-	 multivalued = defined?(multivalued) ? multivalued : false # indicates if field is mulivalued or not for display purposes (defaults to false)
-	 facet_field_name = defined?(facet) ? field_name : nil # indicates if the display should render values as a linked facet field
-	 editable = defined?(editable) ? editable : false # indicates if this field should be in-place editable if that mode is set
-	 input_type = defined?(input_type) ? input_type : 'input' # indicates form field type of editing (defaults to 'input')
- 	 edit_field_name = multivalued ? "#{field_name}#{SolrDocument.multivalued_field_marker}" : field_name # the edit field name is different if we are using a mutlivalued field, since we want to edit/display mutlivalues delimited with a | character
-	 simple_format = defined?(simple_format) ? simple_format : 'false' # indicates if we want to use the simple_format command to format single valued fields
-	 autocomplete = defined?(autocomplete) ? autocomplete : false # indicates the name of the autocomplete field we want to use (undefined if no autocomplete)
+   multivalued = defined?(multivalued) ? multivalued : false # indicates if field is mulivalued or not for display purposes (defaults to false)
+   facet_field_name = defined?(facet) ? field_name : nil # indicates if the display should render values as a linked facet field
+   editable = defined?(editable) ? editable : false # indicates if this field should be in-place editable if that mode is set
+   input_type = defined?(input_type) ? input_type : 'input' # indicates form field type of editing (defaults to 'input')
+    edit_field_name = multivalued ? "#{field_name}#{SolrDocument.multivalued_field_marker}" : field_name # the edit field name is different if we are using a mutlivalued field, since we want to edit/display mutlivalues delimited with a | character
+   simple_format = defined?(simple_format) ? simple_format : 'false' # indicates if we want to use the simple_format command to format single valued fields
+   autocomplete = defined?(autocomplete) ? autocomplete : false # indicates the name of the autocomplete field we want to use (undefined if no autocomplete)
    checked_value = defined?(checked_value) ? checked_value : true # indicates the checked value for a checkbox field
    separator = defined?(separator) ? separator : nil # indicates the separator to be used when showing multivalued fields (defaults to , as defined by helper method "show_formatted_list")
 
-	class_value = (multivalued ? 'mvf' : 'single')
-	class_value += (autocomplete ? ' autocomplete' : '')
+  class_value = (multivalued ? 'mvf' : 'single')
+  class_value += (autocomplete ? ' autocomplete' : '')
 
 %>
 
-<% if !document.send(field_name.to_s).blank? || (editable && in_curator_edit_mode)  %>
-	<dt><%=label%>:</dt>
-	<% if editable && in_curator_edit_mode%>
-    <dd>
-			<% case input_type 
-				when 'text_area' %>
-				 <%= text_area_tag "document[#{edit_field_name}]",document.send(edit_field_name), :rows => 3, :cols => 40, :class => class_value, :"data-autocomplete-field"=>autocomplete %>			  
- 				<% when 'checkbox' %>
-          <%= check_box_tag "document[#{edit_field_name}]",checked_value,(document.send(edit_field_name) == checked_value) %>
-			 <% else %>
-				 <%= text_field_tag "document[#{edit_field_name}]",document.send(edit_field_name),:size => 40, :class => class_value, :"data-autocomplete-field"=>autocomplete  %>
-			<% end %>
-			<% if multivalued %>
-			  <small>
-			    <span class="help-block"><%= t('revs.show.mvf_help_text') %></span>
-			  </small>
-			<% end %>
-    </dd>
-		<% else %>
-			<% if multivalued %>
-  			<dd><%= show_formatted_list(document.send(field_name),:facet=>facet_field_name,:separator=>separator) %></dd>
-		  <% else %>
-				<dd><%= show_linked_value(document.send(field_name),:simple_format=>simple_format,:facet=>facet_field_name) %></dd>
-			 <% end %>
- 		<% end %>
-<% end %>
+<div class="form-group">
+  <% if !document.send(field_name.to_s).blank? || (editable && in_curator_edit_mode) %>
+    <% if editable && in_curator_edit_mode %>
+      <dt><%= label_tag "document[#{edit_field_name}]", label, class: "control-label" unless checked_value %></dt>
+      <dd>
+        <% case input_type
+          when 'text_area' %>
+           <%= text_area_tag "document[#{edit_field_name}]",document.send(edit_field_name), :rows => 3, :cols => 40, :class => "#{class_value} form-control", :"data-autocomplete-field"=>autocomplete %>
+           <% when 'checkbox' %>
+            <div class="checkbox">
+              <label>
+                <%= check_box_tag "document[#{edit_field_name}]",checked_value,(document.send(edit_field_name) == checked_value), :class => "#{class_value}" %>
+                <%= label %>
+              </label>
+            </div>
+        <% else %>
+           <%= text_field_tag "document[#{edit_field_name}]",document.send(edit_field_name),:size => 40, :class => "#{class_value} form-control", :"data-autocomplete-field"=>autocomplete  %>
+        <% end %>
+        <% if multivalued %>
+          <small>
+            <span class="help-block"><%= t('revs.show.mvf_help_text') %></span>
+          </small>
+        <% end %>
+      </dd>
+      <% else %>
+        <% if multivalued %>
+          <dt><%= label_tag document.send(field_name), label, class: "control-label" %></dt>
+          <dd><%= show_formatted_list(document.send(field_name),:facet=>facet_field_name,:separator=>separator) %></dd>
+        <% else %>
+          <dt><%= label_tag document.send(field_name), label, class: "control-label" %></dt>
+          <dd><%= show_linked_value(document.send(field_name),:simple_format=>simple_format,:facet=>facet_field_name) %></dd>
+         <% end %>
+       <% end %>
+  <% end %>
+</div>

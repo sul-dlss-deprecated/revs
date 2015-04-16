@@ -41,9 +41,9 @@
     }
   }
 
-.menu-bar ul.nav > li > a {
-  color: #000;
-}
+  .menu-bar ul.nav > li > a {
+    color: #000;
+  }
 
   .item-nav {
     float: right;
@@ -80,20 +80,66 @@
     dt {
       float: left;
       clear: left;
-      overflow: hidden;
-      text-overflow: ellipsis;
       text-align: left;
-      white-space: nowrap;
-      width: 90px;
+      white-space: normal;
+      width: 91px;
+      label {
+        font-weight: normal;
+        &:after {
+          content: ":";
+        }
+      }
     }
     dd {
       margin-left: 100px;
       margin-right: 15px;
       p {
+        margin-bottom: 0;
         margin-top: 0;
+        + p {
+          margin-top: 12px;
+        }
       }
     }
   }
+  .accordion-group .dl-horizontal .form-group {
+    @extend .clearfix; // so values for multiline labels line up vertically
+    margin-bottom: 2px;
+  }
+  // in curator edit mode
+  form.edit-metadata .accordion-group .dl-horizontal {
+    .form-group {
+      margin-bottom: 12px;
+    }
+    button {
+      float: right;
+      margin: 12px 15px;
+    }
+
+    // Change when in edit mode so labels are above inputs, both left-aligned
+    dt {
+      width: initial;
+      margin-right: 20px;
+      label {
+        font-weight: bold;
+        &:after {
+          content: "";
+        }
+      }
+    }
+    dd {
+      margin-left: initial;
+      margin-right: 6px;
+      .form-control {
+        padding: 6px;
+      }
+      .help-block {
+        margin-bottom: 0;
+        margin-left: 5px;
+      }
+    }
+  }
+
   .blacklight-collection .dl-horizontal {
     dt {
       width: 75px;
@@ -138,6 +184,7 @@
       }
     }
     .accordion-inner {
+      @extend .clearfix;
       background: #f8f8f8;
       border-top: none;
       box-shadow: inset 0 0 10px #eee, inset 0 0 10px #eee, inset 0 0 10px #eee;
@@ -147,13 +194,9 @@
       }
       input[type=submit] {
         float: right;
-        margin-top: 12px;
       }
       .mvf {
         margin-bottom: 0;
-      }
-      textarea, input:not([type=submit]):not([type=file]) {
-        width: 95%;
       }
       .item-edit-errors {
         clear: both;
@@ -218,6 +261,7 @@
     }
     .flag-history-list li {
       padding: 6px 0;
+      color: #555;
     }
     #user_galleries a i {
      margin-left: 1px;
@@ -277,6 +321,7 @@
           background: #f8f8f8;
           border-top: none;
           box-shadow: inset 0 0 10px #eee, inset 0 0 10px #eee, inset 0 0 10px #eee;
+          color: #555;
           padding: 12px 9px 3px 15px;
           p {
             margin-top: 0;
@@ -457,6 +502,11 @@
     #current_in_galleries {
       clear: right;
       padding-top: 12px;
+    }
+    form {
+      dt {
+
+      }
     }
   }
 }
