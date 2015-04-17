@@ -264,29 +264,28 @@
   </div>
 </div>
 
-<div id="collection-members-grid">
+<div id="collection-members-grid" class="row">
 
    <% if from_gallery? # if we are in the context of a gallery, let's show the gallery items here immediately --- for other cases when we are not in search result we will load this area via ajax for performance reasons %>
      <%= render :partial=>'galleries/members_grid' %>
    <% else %>
 
-<%# if javascript is disabled, we'll just show navigation to the relevant collection %>
-  <noscript>
-    <div class="row">
-      <div class="col-md-12 collection-members">
-        <div class="row">
-            <div class="col-md-8">
-              <h5><%= document[blacklight_config.collection_member_collection_title_field].first %> <span class="text-muted">(<%= number_with_delimiter(@document.siblings(:include_hidden=>can?(:view_hidden, SolrDocument)).total_members) %>)</span></h5>
-            </div>
-            <div class="col-md-3 col-md-offset-1 controls">
-              <%= link_to(t('revs.collection_members_grid.collection_link'), catalog_path(@document[blacklight_config.collection_member_identifying_field])) %>
-              |
-              <%= link_to(t('revs.collection_members_grid.members_link'), catalog_index_path( {:f => { blacklight_config.collection_member_collection_title_field => @document.siblings(:include_hidden=>can?(:view_hidden, SolrDocument)).first[blacklight_config.collection_member_collection_title_field]  } } ))%>
-            </div>
+    <%# if javascript is disabled, we'll just show navigation to the relevant collection %>
+    <%# TODO: This doesn't appear to work, in production, before the Bootstrap 3 upgrade %>
+      <noscript>
+        <div class="col-md-12 collection-members">
+          <div class="row">
+              <div class="col-md-8">
+                <h5><%= document[blacklight_config.collection_member_collection_title_field].first %> <span class="text-muted">(<%= number_with_delimiter(@document.siblings(:include_hidden=>can?(:view_hidden, SolrDocument)).total_members) %>)</span></h5>
+              </div>
+              <div class="col-md-3 col-md-offset-1 controls">
+                <%= link_to(t('revs.collection_members_grid.collection_link'), catalog_path(@document[blacklight_config.collection_member_identifying_field])) %>
+                |
+                <%= link_to(t('revs.collection_members_grid.members_link'), catalog_index_path( {:f => { blacklight_config.collection_member_collection_title_field => @document.siblings(:include_hidden=>can?(:view_hidden, SolrDocument)).first[blacklight_config.collection_member_collection_title_field]  } } ))%>
+              </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </noscript>
+      </noscript>
    <% end %>
 
 </div>
