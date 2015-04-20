@@ -78,7 +78,7 @@ end
 group :development,:deployment do
   gem 'capistrano', '~>2'
   gem 'capistrano-ext'
-  gem 'rvm-capistrano'
+  gem 'rvm-capistrano',  require: false
   gem 'lyberteam-devel', '>=1.0.0'
   gem 'lyberteam-gems-devel', '>=1.0.0'
 	gem 'lyberteam-capistrano-devel', '>= 1.1.0'
