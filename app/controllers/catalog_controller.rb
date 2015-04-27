@@ -1,53 +1,53 @@
 # -*- encoding : utf-8 -*-
 require 'blacklight/catalog'
 
-class CatalogController < ApplicationController  
+class CatalogController < ApplicationController
 
   include Blacklight::Catalog
 
   before_filter :ajax_only, :only=>[:update_carousel,:show_collection_members_grid]
-  
+
   before_filter :filter_params
   before_filter :add_facets_for_curators
   before_filter :set_default_image_visibility_query
-  
+
   # delete editing form parameters when there is a get request so they don't get picked up and carried to all links by Blacklight
   def filter_params
     if request.get?
-      params.delete(:bulk_edit) 
+      params.delete(:bulk_edit)
       params.delete(:authenticity_token)
     end
   end
-  
+
   def add_facets_for_curators
     if can? :curate, :all
       self.blacklight_config.add_facet_field 'has_more_metadata_ssi', :label => "More Metadata"
       self.blacklight_config.add_facet_field 'visibility_isi', :label => 'Visibility', :query => {:visibility_1=>{:label=>"Hidden", :fq=>"visibility_isi:0"}}
     end
   end
-  
+
   def index
-    
+
     not_authorized if params[:view]=='curator' && cannot?(:bulk_update_metadata,:all)
-    
+
     if on_home_page || @force_render_home # on the home page
-        
+
       not_authorized unless can? :read,:home_page
-      
+
       unless fragment_exist?("home") # fragment cache for performance
 
         @highlight_collections=SolrDocument.highlighted_collections
         @random_collection_number=Random.new.rand(@highlight_collections.size) # pick a random one to start with for non-JS users
         @highlighted_galleries=Gallery.featured.limit(4)
-      
+
       end
-    
+
     elsif can?(:bulk_update_metadata,:all) && params[:bulk_edit] && request.post? # user submitted a bulk update operation and has the rights to do it
 
       not_authorized unless can?(:bulk_update_metadata,:all)
-      
+
       @bulk_edit=params[:bulk_edit]
-            
+
       if @bulk_edit[:attribute].blank? || @bulk_edit[:selected_druids].blank? || (invalid_entry?(@bulk_edit[:new_value]) && @bulk_edit[:action] == 'update') || ((invalid_entry?(@bulk_edit[:new_value]) || invalid_entry?(@bulk_edit[:search_value])) && @bulk_edit[:action] == 'replace')
         flash.now[:error]=t('revs.messages.bulk_update_instructions')
       else
@@ -62,36 +62,36 @@ class CatalogController < ApplicationController
     else
 
        not_authorized(:replace_message=>t('revs.messages.in_beta_not_authorized_html')) unless can? :read,:search_pages
- 
+
     end
-    
+
     super
 
     if @response['response']['docs'].nil? # nothing
       routing_error
       return
-    else    
+    else
     # if we get this far, it may have been a search operation, so if we only have one search result, just go directly there
       redirect_to item_path(@response['response']['docs'].first['id']) if (@response['response']['numFound'] == 1 && @response['response']['docs'].size > 0 && can?(:read,:item_pages))
     end
-    
+
   end
-  
+
   def show
-    
+
     unless can? :read,:item_pages
-      not_authorized(:replace_message=>t('revs.messages.in_beta_not_authorized_html')) 
+      not_authorized(:replace_message=>t('revs.messages.in_beta_not_authorized_html'))
     else
       super
       not_authorized if (@document.visibility == :hidden && cannot?(:view_hidden, SolrDocument)) || (@document.is_collection? && !@document.visible_items_in_collection? && cannot?(:view_hidden, SolrDocument))
 
     end
-    
+
     if from_gallery? # if we are coming from a gallery link, grab the gallery and items to show at the bottom of the page
       @galleries=Gallery.where(:id=>params[:gallery_id])
       if @galleries.size != 1 # we should only have one, otherwise something is wrong
         not_authorized
-        return 
+        return
       end
       @gallery=@galleries.first
       if cannot? :read, @gallery  # we should not see the gallery items in the grid at the bottom of the page if we don't have permission to
@@ -124,7 +124,7 @@ class CatalogController < ApplicationController
     end
 
   end
-  
+
   # an ajax call to show just the collection members grid at the bottom of the page
   def show_collection_members_grid
     @document=SolrDocument.find(params[:id])
@@ -135,10 +135,10 @@ class CatalogController < ApplicationController
     else
       @collection_members=@document.collection_members(:include_hidden=>can?(:view_hidden, SolrDocument))
       @type=:collection
-      @show_full_width=false     
+      @show_full_width=false
     end
   end
-  
+
   # call from metadata edit form for fields that allow autocomplete
   def autocomplete
     result=Ontology.terms(params[:field],params[:term]).map {|term| term.value }
@@ -157,15 +157,15 @@ class CatalogController < ApplicationController
     @carousel_members = @document.get_members(:rows=>@rows,:start=>@start,:include_hidden=>can?(:view_hidden, SolrDocument))
   end
 
-  # when a request for /catalog/BAD_SOLR_ID is made, this method is executed... overriding default blacklight behavior 
+  # when a request for /catalog/BAD_SOLR_ID is made, this method is executed... overriding default blacklight behavior
   def invalid_solr_id_error
     routing_error
   end
-      
+
   configure_blacklight do |config|
     ## Default parameters to send to solr for all search-like requests. See also SolrHelper#solr_search_params
-   
-    config.default_solr_params = { 
+
+    config.default_solr_params = {
       :qt => 'standard',
       :facet => 'true',
       :rows => 20,
@@ -173,42 +173,43 @@ class CatalogController < ApplicationController
       :"facet.mincount" => 1,
       :echoParams => "all"
     }
-    
-    
+
+
     # various Revs specific collection field configurations
-    
+
     # needs to be stored so we can retreive it
     # needs to be in field list for all request handlers so we can identify collections in the search results.
     config.collection_identifying_field = "format_ssim"
     config.collection_identifying_value = "collection"
-    
+
     # needs to be indexed so we can search it to return relationships.
     # needs to be in field list for all request handlers so we can identify collection members in the search results.
     config.collection_member_identifying_field = "is_member_of_ssim"
-    
+
     # needs to be stored so we can retreive it for display
     # needs to be in field list for all request handlers
     config.collection_member_collection_title_field = "collection_ssim"
-    
+
     config.collection_member_grid_items = 20
     config.collection_member_carousel_items = 5
-    
+
     # needs to be sotred so we can retreive it
     # needs to be in field list for all request handlers so we can get images the document anywhere in the app.
     config.image_identifier_field = "image_id_ssm"
 
-    ## Default parameters to send on single-document requests to Solr. These settings are the Blackligt defaults (see SolrHelper#solr_doc_params) or 
+    ## Default parameters to send on single-document requests to Solr. These settings are the Blackligt defaults (see SolrHelper#solr_doc_params) or
     ## parameters included in the Blacklight-jetty document requestHandler.
     #
     config.default_document_solr_params = {
      :qt => 'standard',
      :fl => '*',
      :rows => 1,
-     :q => '{!raw f=id v=$id}' 
+     :q => '{!raw f=id v=$id}'
     }
-    
-    # tentatively removed 'brief' view type
-    config.document_index_view_types = ["gallery","detailed","curator"]
+
+    # Define our results views.
+    # These are in "_document_gallery", "document_detailed", etc.
+    config.view = {:gallery => {}, :detailed => {}, :curator => {} }
 
     # solr field configuration for search results/index views
     config.index.title_field = 'title_tsi'
@@ -218,7 +219,7 @@ class CatalogController < ApplicationController
     config.show.title_field  = 'title_tsi'
     #config.show.title_field = 'title_tsi'
     config.show.display_type_field = 'format_ssim'
-    
+
 
     # solr fields that will be treated as facets by the blacklight application
     #   The ordering of the field names is the order of the display
@@ -227,17 +228,17 @@ class CatalogController < ApplicationController
     # * If left unset, then all facet values returned by solr will be displayed.
     # * If set to an integer, then "f.somefield.facet.limit" will be added to
     # solr request, with actual solr request being +1 your configured limit --
-    # you configure the number of items you actually want _displayed_ in a page.    
+    # you configure the number of items you actually want _displayed_ in a page.
     # * If set to 'true', then no additional parameters will be sent to solr,
     # but any 'sniffed' request limit parameters will be used for paging, with
-    # paging at requested limit -1. Can sniff from facet.limit or 
+    # paging at requested limit -1. Can sniff from facet.limit or
     # f.specific_field.facet.limit solr request params. This 'true' config
     # can be used if you set limits in :default_solr_params, or as defaults
     # on the solr side in the request handler itself. Request handler defaults
     # sniffing requires solr requests to be made with "echoParams=all", for
-    # app code to actually have it echo'd back to see it.  
+    # app code to actually have it echo'd back to see it.
     #
-    # :show may be set to false if you don't want the facet to be drawn in the 
+    # :show may be set to false if you don't want the facet to be drawn in the
     # facet bar
     config.add_facet_field 'pub_year_isim', :label => 'Year', :sort => 'index', :limit => 25, :range => true
     config.add_facet_field 'format_ssim', :label => 'Format'
@@ -251,12 +252,12 @@ class CatalogController < ApplicationController
     config.add_facet_field 'venue_ssi', :label => "Venue", :limit => 25
     config.add_facet_field 'track_ssi', :label => "Track", :limit => 25
     config.add_facet_field 'event_ssi', :label => "Event", :limit => 25
-    
+
     config.add_facet_field 'timestamp', :label => 'Added recently', :query => {
        :weeks_1 => { :label => 'within last week', :fq => "timestamp:[\"#{show_as_timestamp(1.week.ago)}\" TO *]" },
        :months_1 => { :label => 'within last month', :fq => "timestamp:[\"#{show_as_timestamp(1.month.ago)}\" TO *]" },
        :months_6 => { :label => 'within last six months', :fq => "timestamp:[\"#{show_as_timestamp(6.months.ago)}\" TO *]" },
-       :years_1 => { :label => 'within last year', :fq => "timestamp:[\"#{show_as_timestamp(1.year.ago)}\" TO *]" }  
+       :years_1 => { :label => 'within last year', :fq => "timestamp:[\"#{show_as_timestamp(1.year.ago)}\" TO *]" }
     }
 
 
@@ -266,13 +267,13 @@ class CatalogController < ApplicationController
     config.add_facet_fields_to_solr_request!
 
     # solr fields to be displayed in the index (search results) view
-    #   The ordering of the field names is the order of the display 
+    #   The ordering of the field names is the order of the display
 
     config.add_index_field 'pub_year_isim', :label => 'Year:'
     config.add_index_field 'format_ssim', :label => 'Format:'
 
     # solr fields to be displayed in the show (single result) view
-    #   The ordering of the field names is the order of the display 
+    #   The ordering of the field names is the order of the display
     config.add_show_field 'pub_year_isim', :label => 'Year:'
     config.add_show_field 'format_ssim', :label => 'Format:'
     config.add_show_field 'description_tsim', :label => 'Description:'
@@ -291,48 +292,48 @@ class CatalogController < ApplicationController
     # The :key is what will be used to identify this BL search field internally,
     # as well as in URLs -- so changing it after deployment may break bookmarked
     # urls.  A display label will be automatically calculated from the :key,
-    # or can be specified manually to be different. 
+    # or can be specified manually to be different.
 
     # This one uses all the defaults set by the solr request handler. Which
     # solr request handler? The one set in config[:default_solr_parameters][:qt],
-    # since we aren't specifying it otherwise. 
-    
+    # since we aren't specifying it otherwise.
+
     config.add_search_field 'all_fields', :label => 'All Fields'
-    
+
 
     # Now we see how to over-ride Solr request handler defaults, in this
     # case for a BL "search field", which is really a dismax aggregate
-    # of Solr search fields. 
-    
+    # of Solr search fields.
+
     config.add_search_field('title') do |field|
-      # solr_parameters hash are sent to Solr as ordinary url query params. 
+      # solr_parameters hash are sent to Solr as ordinary url query params.
       field.solr_parameters = { :'spellcheck.dictionary' => 'title' }
 
       # :solr_local_parameters will be sent using Solr LocalParams
       # syntax, as eg {! qf=$title_qf }. This is neccesary to use
       # Solr parameter de-referencing like $title_qf.
       # See: http://wiki.apache.org/solr/LocalParams
-      field.solr_local_parameters = { 
+      field.solr_local_parameters = {
         :qf => '$title_qf',
         :pf => '$title_pf'
       }
     end
-    
+
     config.add_search_field('author') do |field|
       field.solr_parameters = { :'spellcheck.dictionary' => 'author' }
-      field.solr_local_parameters = { 
+      field.solr_local_parameters = {
         :qf => '$author_qf',
         :pf => '$author_pf'
       }
     end
-    
+
     # Specifying a :qt only to show it's possible, and so our internal automated
-    # tests can test it. In this case it's the same as 
-    # config[:default_solr_parameters][:qt], so isn't actually neccesary. 
+    # tests can test it. In this case it's the same as
+    # config[:default_solr_parameters][:qt], so isn't actually neccesary.
     config.add_search_field('subject') do |field|
       field.solr_parameters = { :'spellcheck.dictionary' => 'subject' }
       field.qt = 'search'
-      field.solr_local_parameters = { 
+      field.solr_local_parameters = {
         :qf => '$subject_qf',
         :pf => '$subject_pf'
       }
@@ -349,7 +350,7 @@ class CatalogController < ApplicationController
     config.add_sort_field 'source_id_ssi asc, title_tsi desc', :label => 'identifier'
     config.add_sort_field 'pub_year_single_isi asc, title_tsi asc', :label => 'year'
 
-    # If there are more than this many search results, no spelling ("did you 
+    # If there are more than this many search results, no spelling ("did you
     # mean") suggestion is offered.
     config.spell_max = 5
   end
@@ -360,7 +361,7 @@ class CatalogController < ApplicationController
     if request.post?
       if params[:to]
         url_gen_params = {:host => request.host_with_port, :protocol => request.protocol}
-        
+
         if params[:to].match(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/)
           email = RecordMailer.email_record(@documents, {:to => params[:to], :message => params[:message]}, url_gen_params)
         else
@@ -371,13 +372,13 @@ class CatalogController < ApplicationController
       end
 
       unless flash[:error]
-        email.deliver 
+        email.deliver
         flash[:success] = t('revs.about.contact_message_sent')
         if request.xhr?
           render :email_sent, :formats => [:js]
           return
         else
-          redirect_to catalog_path(params['id']) 
+          redirect_to catalog_path(params['id'])
         end
       end
     end
@@ -395,4 +396,4 @@ class CatalogController < ApplicationController
     str.blank? || str.length < 2
   end
 
-end 
+end
