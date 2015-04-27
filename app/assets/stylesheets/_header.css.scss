@@ -111,10 +111,21 @@
   background-color: #fff;
   border-bottom: 1px solid #dddddd;
   padding-left: 40px;
+  .search-container {
+    padding-left: 0;
+  }
   .nav-searchbox {
     float: right;
     margin-bottom: 6px;
     margin-top: 6px;
+    button[type="submit"] {
+      padding-top: 3px;
+      padding-bottom: 3px;
+    }
+    input.search-query {
+      font-size: 14px;
+      height: 26px;
+    }
   }
   .search-form-nav {
     margin-bottom: 0;
@@ -128,7 +139,6 @@
   clear: left;
   float: left;
   margin-left: -20px;
-  padding-top: 4px;
   > .active > a, > .active > a:hover {
     background-color: #f7f7f7;
     box-shadow: none;
@@ -136,6 +146,7 @@
   }
   > li {
     float: left;
+    line-height: 20px;
     &.active > a {
       border-left: 1px solid #ddd;
       border-right: 1px solid #ddd;
@@ -149,7 +160,7 @@
       text-transform: uppercase;
       font-size: 1em;
     	-webkit-font-smoothing: antialiased;
-      padding: 10px 24px 8px 24px;
+      padding: 10px 23px 8px 23px;
       &:hover, &:focus {
         background-color: white;
         color: #990000;
