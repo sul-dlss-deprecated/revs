@@ -240,6 +240,9 @@
         vertical-align: baseline;
       }
     }
+    .radio-inline + .radio-inline {
+      margin-left: 0;
+    }
     .field-selector {
       font-weight: bold;
       margin-left: 0;
@@ -263,8 +266,7 @@
     }
     .update-field-action {
       display: inline-block;
-      margin-left: 15px;
-      label.radio.update {
+      label.radio-inline.update {
         display: block;
       }
       input[type="radio"] {
@@ -273,17 +275,19 @@
     }
     .update-field-value {
       display: inline-block;
-      .btn {
+      float: right;
+      padding-right: 10px;
+      .form-group, input[type="text"] {
+        width: 100%;
+      }
+      input[type="submit"] {
+        margin-top: 6px;
       }
     }
     .update-field-heading {
       color: #777;
       margin-bottom: 10px;
-    }
-    #bulk-update-button {
-      &.extra-padding {
-        margin-top: 5px;
-      }
+      font-weight: 700;
     }
     #bulk_edit_attribute {
       display: block;
@@ -437,6 +441,7 @@ span.constraints-label {margin-right: 0.5em;}
       .update-field-value {
         display: block;
         position: inherit;
+        float: left;
       }
       .update-field {
         display: block;
@@ -444,6 +449,17 @@ span.constraints-label {margin-right: 0.5em;}
       }
       #bulk_edit_new_value {
         margin-bottom: 10px;
+      }
+      .update-field select {
+        margin-top: 10px;
+        width: auto;
+      }
+      .update-field-action {
+        margin-left: 0;
+      }
+      .update-field-heading {
+        margin-bottom: 5px;
+        margin-top: 15px;
       }
     }
   }
@@ -487,21 +503,6 @@ span.constraints-label {margin-right: 0.5em;}
       width: 100%;
     }
   }
-  .curator-edit-options form {
-    .update-field select {
-      margin-top: 10px;
-    }
-    .update-field-value input[type='submit'] {
-      float: right;
-    }
-    .update-field-action {
-      margin-left: 0;
-    }
-    .update-field-heading {
-      margin-bottom: 5px;
-      margin-top: 15px;
-    }
-  }
 }
 @media (max-width: 480px) {
   #documents.detailed {
@@ -519,21 +520,9 @@ span.constraints-label {margin-right: 0.5em;}
       max-width: 150px;
     }
   }
-  .curator-edit-options form #bulk-update-button {
-    &.extra-padding {
-      margin-top: 25px;
-    }
-  }
 }
-@media screen and (min-width: 1200px) {
-  .curator-edit-options form {
-    .update-field {
-      margin-left: 30px;
-    }
-    #bulk-update-button {
-      &.extra-padding {
-        margin-top: 25px;
-      }
-    }
+@media (max-width: $screen-sm-max) {
+  .curator-edit-options .form-group {
+    margin-bottom: 0;
   }
 }
