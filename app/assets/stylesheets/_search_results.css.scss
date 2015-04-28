@@ -12,6 +12,8 @@
   .document {
     border-bottom: none;
     position: relative;
+    padding-top: 0;
+    margin-top: 0;
   }
 }
 
@@ -20,10 +22,12 @@
   ul.image-grid {
     list-style-type: none;
     margin-left: 0;
+    margin-top: 15px;
+    padding-left: 0;
   }
   ul.image-grid li.image-item {
     float: left;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     margin-left: 10px;
     margin-right: 10px;
     min-height: 169px;

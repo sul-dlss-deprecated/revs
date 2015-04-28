@@ -2,10 +2,10 @@
 
 <div id="documents" class="gallery">
   <ul class="image-grid">
-    <%- documents.each_with_index do |document, index| -%>
+    <% documents.each_with_index do |document, index| %>
       <li class="image-item">
         <%= render_document_partial document, :index, :document_counter => index %>
       </li>
-  <%- end -%>
+    <% end %>
   </ul>
 </div>
