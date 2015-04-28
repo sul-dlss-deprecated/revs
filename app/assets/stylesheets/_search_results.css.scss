@@ -264,10 +264,16 @@
     .update-field-toggle-container {
       margin-left: 0;
     }
+    .update-field-toggle {
+      label.checkbox-inline {
+        line-height: 1.6;
+      }
+    }
     .update-field-action {
       display: inline-block;
-      label.radio-inline.update {
+      label.radio-inline {
         display: block;
+        line-height: 1.7;
       }
       input[type="radio"] {
         margin-right: 5px;
@@ -519,6 +525,9 @@ span.constraints-label {margin-right: 0.5em;}
     .result-thumbnail img {
       max-width: 150px;
     }
+  }
+  .curator-edit-options input[type="submit"].extra-padding {
+    margin-top: 0;
   }
 }
 @media (max-width: $screen-sm-max) {
