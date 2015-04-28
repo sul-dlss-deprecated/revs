@@ -52,8 +52,8 @@
       background-color: lighten($header_bg_color, 10%);
       border: 1px solid darken($header_bg_color, 5%);
       margin-left: 6px;
-      padding-top: 4px;
-      padding-bottom: 4px;
+      padding-top: 3px;
+      padding-bottom: 3px;
     }
     li > a:hover {
       background-color: lighten($header_bg_color, 5%);

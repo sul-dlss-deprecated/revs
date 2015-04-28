@@ -305,8 +305,12 @@
 
 /* Results paging/controls */
 .row.results-controls {
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   margin-top: 16px;
+}
+
+.view-toggle {
+  padding-left: 10px;
 }
 
 .gallery-filters .gallery_toggle {
@@ -315,6 +319,7 @@
 
 .gallery_toggle {
   @include result-controls;
+  margin-top: 4px;
 }
 
 .prev-next {
@@ -322,12 +327,19 @@
   float: right;
   font-size: 13px;
   font-weight: normal;
-  margin-top: 5px;
+  margin-top: 0;
   text-transform: lowercase;
+  .page_links {
+    padding: 0 0 0 12px;
+  }
 }
 #sort-dropdown, #per_page-dropdown {
   margin-top: 3px;
   z-index: 9999;
+  button {
+    @extend .btn-sm;
+    line-height: 1.3;
+  }
 }
 .css-dropdown li {
   font-size: 12px;
@@ -340,6 +352,7 @@ span.constraints-label {margin-right: 0.5em;}
   background-color: $body_bg_color;
   border: none;
   box-shadow: none;
+  float: right;
   margin-bottom: 0;
   padding: 0;
 }
@@ -393,6 +406,10 @@ span.constraints-label {margin-right: 0.5em;}
   }
   .btn {
     border-radius: 4px;
+  }
+  h4 {
+    margin-top: 3px;
+    margin-bottom: 18px;
   }
 }
 
