@@ -373,6 +373,12 @@
   }
 }
 
+table.user-annotations {
+  td.item, td.date {
+    width: 20%;
+  }
+}
+
 // Galleries //
 #documents.gallery .blacklight-collection {
   .image-wrapper {
