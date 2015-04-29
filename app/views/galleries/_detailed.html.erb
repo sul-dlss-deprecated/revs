@@ -1,6 +1,6 @@
 <div id="documents" class="detailed">
 
-  <% @galleries.each_with_index do |gallery, counter| 
+  <% @galleries.each_with_index do |gallery, counter|
 
       num_items_in_gallery=gallery.saved_items(current_user).size%>
 
@@ -23,7 +23,7 @@
             <%= "#{t('revs.messages.created_by')} #{gallery.user.to_s}" %>
           </span>
         <% else %>
-          <span class="label creator label-success creator-self">
+          <span class="label creator label-info creator-self">
             <%= "#{t('revs.messages.created_by')} #{t('revs.messages.you')}" %>
           </span>
         <% end %>

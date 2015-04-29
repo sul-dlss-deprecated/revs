@@ -17,14 +17,14 @@
           <li class="account-profile">
            <% unless on_user_profile_page %>
             <%= link_to_unless_current t('revs.user.view_profile_page'), user_path(@user.username), :class => "view-profile-link" %>
-            <span class="label profile-visibility <%= @user.public ? 'label-success' : '' %>">
+            <span class="label profile-visibility <%= @user.public ? 'label-info' : '' %>">
               <%= @user.public ? t('revs.user.public').downcase : t('revs.user.private').downcase %>
             </span>
            <% end %>
             <% unless on_edit_page %>
               <%= link_to_unless_current t('revs.user.update_your_profile').humanize, edit_user_registration_path, :class => ("edit-profile-link" if on_user_profile_page) %>
               <% if on_user_profile_page %>
-                <span class="label profile-visibility <%= @user.public ? 'label-success' : '' %>">
+                <span class="label profile-visibility <%= @user.public ? 'label-info' : '' %>">
                   <%= @user.public ? t('revs.user.public').downcase : t('revs.user.private').downcase %>
                 </span>
               <% end %>

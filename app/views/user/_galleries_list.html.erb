@@ -18,7 +18,7 @@
         <div class="item-title">
           <%= link_to(gallery.title,gallery_path(gallery)) %>
           <% if request.path == galleries_table_curator_tasks_path || (request.path != galleries_table_curator_tasks_path && is_logged_in_user?(gallery.user)) # this label is not necessary if this a public gallery not being viewed by the current user%>
-            <span class="label <%= gallery.public ? 'label-success' : '' %>">
+            <span class="label <%= gallery.public ? 'label-info' : '' %>">
               <%= display_gallery_visibility(gallery) %>
             </span>
           <% end %>
