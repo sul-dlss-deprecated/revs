@@ -378,15 +378,20 @@ class SolrDocument
     !self.collections.blank?
   end
   
-  def first_item
+  def first_item(params={})
     return nil unless is_collection?
-    self.get_members(:rows=>1,:start=>0).first # never cache this so its always current
+    self.get_members({:rows=>1,:start=>0}.merge(params)).first # never cache this so its always current
+  end
+  
+  # tells you if there are any visible items in the collection (for the special case where all of the items in a collection have been hidden)
+  def visible_items_in_collection?
+    !first_item.nil?
   end
   
   # gives you the representative image of the collection
-  def first_image
+  def first_image(params={})
     return nil unless is_collection?
-    first_item.images(:large).first
+    first_item(params).nil? ? nil : first_item(params).images(:large).first
   end
 
   # gives you a random item from the given collection
@@ -398,7 +403,7 @@ class SolrDocument
   # gives you the current top priority number for item sorting for the given collection
   def current_top_priority
     return nil unless is_collection?
-    first_item.priority.to_i
+    first_item(:include_hidden=>true).priority.to_i
   end
   
   # if an item, set it to be the top priority item for that particular collection
@@ -471,6 +476,7 @@ class SolrDocument
      highlighted=params[:highlighted] || false
      rows=params[:rows] || "10000"
      fq="#{self.config.collection_identifying_field}:\"#{self.config.collection_identifying_value}\""
+     fq+=self.images_query(:visible) # only show collections marked as visible
      if highlighted
        default_sort="highlighted_dti desc"     
        fq+=" AND highlighted_ssi:\"true\"" 
@@ -492,7 +498,7 @@ class SolrDocument
 
    def self.highlighted_collections
      collections=self.all_collections(:highlighted=>true)
-     collections.size > 0 ? collections : self.all_collections
+     collections.size > 0 ? collections : self.all_collections # if there are highlighted collections, show them, else show them all
    end
    
    # count the total number of images (default to those marked as visible only, can also pass in :all or :hidden)

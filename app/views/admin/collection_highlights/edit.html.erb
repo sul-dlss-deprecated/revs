@@ -18,7 +18,7 @@
 
     <div class="control-group">
       <div class="controls">
-        <%=image_tag @collection.first_image%>
+        <%=image_tag @collection.first_image(:include_hidden=>can?(:view_hidden, SolrDocument))%>
       </div>
     </div>
 

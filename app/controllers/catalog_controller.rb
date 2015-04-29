@@ -83,7 +83,8 @@ class CatalogController < ApplicationController
       not_authorized(:replace_message=>t('revs.messages.in_beta_not_authorized_html')) 
     else
       super
-      not_authorized if @document.visibility == :hidden && cannot?(:view_hidden, SolrDocument)
+      not_authorized if (@document.visibility == :hidden && cannot?(:view_hidden, SolrDocument)) || (@document.is_collection? && !@document.visible_items_in_collection? && cannot?(:view_hidden, SolrDocument))
+
     end
     
     if from_gallery? # if we are coming from a gallery link, grab the gallery and items to show at the bottom of the page
@@ -100,8 +101,7 @@ class CatalogController < ApplicationController
       @saved_items=@gallery.saved_items(current_user).limit(CatalogController.blacklight_config.collection_member_grid_items)
     end
     
-    # some logic around the displkay of reproduction statements which is special for revs items and includes contact links, which is why it is not in the model
-
+    # some logic around the display of reproduction statements which is special for revs items and includes contact links, which is why it is not in the model
     if @document && @document.revs_item? && !@document.reproduction_not_available?
   
       @use_and_reproduction=""
@@ -122,7 +122,6 @@ class CatalogController < ApplicationController
       @use_and_reproduction = @document.use_and_reproduction 
 
     end
-
 
   end
   

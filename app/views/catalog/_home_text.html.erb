@@ -7,7 +7,7 @@
         <div class="carousel-inner">
 	        <%- @highlight_collections.each_with_index do |collection, index| -%>
 	          <div class="item<%= " active" if index == 0 %>" data-collection-title="<%= clean_collection_name(collection.title) %>" data-collection-href="<%= collection_path(collection) %>" data-collection-description="<%= truncate(collection.description,:length=>250) %>">
-	            <a id="collection-image-link" href="<%=collection_path(collection)%>"><%=image_tag collection.first_image%></a>
+	            <a id="collection-image-link" href="<%=collection_path(collection)%>"><%=image_tag collection.first_image(:include_hidden=>can?(:view_hidden, SolrDocument))%></a>
 	          </div>
 	        <%- end -%>
         </div>
@@ -39,7 +39,7 @@
 		      <div class="carousel-inner">
 		        <%- collection = @highlight_collections[@random_collection_number] -%>
 		          <div class="item active">
-		            <a id="collection-image-link" href="<%=collection_path(collection)%>"><img id="image-0" src="<%= collection.first_image %>"></img></a>
+		            <a id="collection-image-link" href="<%=collection_path(collection)%>"><img id="image-0" src="<%= collection.first_image(:include_hidden=>can?(:view_hidden, SolrDocument)) %>"></img></a>
 							</div>
 		      </div>
 		    </div>
