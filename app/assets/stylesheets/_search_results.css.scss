@@ -169,7 +169,6 @@
     max-height: 135px;
   }
   .result-metadata-details {
-    clear: left;
     .result-detail-field {
       display: block;
       margin-bottom: 6px;
@@ -186,11 +185,15 @@
     margin-left: 0;
     &.highlighted {
       @include item-highlighting;
+      margin-right: 0;
+      .result-item-checkbox {
+        padding-left: 12px;
+      }
     }
   }
   .result-item-checkbox {
     margin-left: 0;
-    padding-left: 4px;
+    padding-left: 20px;
   }
   .result-thumbnail {
     margin-left: 0;
@@ -216,6 +219,10 @@
   }
   &#documents {
     border-top: 2px solid #dedede;
+    padding-top: 20px;
+    span.label {
+      margin-left: 0;
+    }
   }
 }
 
@@ -533,5 +540,9 @@ span.constraints-label {margin-right: 0.5em;}
 @media (max-width: $screen-sm-max) {
   .curator-edit-options .form-group {
     margin-bottom: 0;
+  }
+  .curator .result-item.row.highlighted {
+    margin-bottom: 20px;
+    padding-bottom: 6px;
   }
 }
