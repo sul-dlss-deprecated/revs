@@ -247,7 +247,14 @@
 }
 
 /* Just phones */
-@media screen and (max-width:525px) {
+@media screen and (max-width: $screen-xs-max) {
+  a.sul-logo {
+    display: inline;
+    float: left;
+  }
+  #report-problem {
+    margin-right: 15px;
+  }
   // Reduce font size of site header
   #revs-masthead {
     h1 {
