@@ -23,20 +23,9 @@
             <span class="more-link">
               <%= link_to t('revs.nav.more'), collection_path(collection), :id => "collection-link" %>
             </span>
-          </h5>
-        </div>
+          <% end %>
+        </span>
       </div>
-      <div class="row collection-details">
-        <div class="span4">
-          <span class="collection-description">
-            <%= truncate(collection.description, :length=>300) %>
-            <% if collection.description.size > 300 %>
-              <span class="more-link">
-                <%= link_to t('revs.nav.more'), collection_path(collection), :id => "collection-link" %>
-              </span>
-            <% end %>
-          </span>
-        </div>
 
       <div class="col-md-8 image-filmstrip" data-thumb-width="<%=@num_to_show_in_filmstrip%>" data=thumb-height="<%=@num_to_show_in_filmstrip%>">
 
@@ -70,5 +59,5 @@
         </div>
       </div>
     <% end %>
-  <% end %>
+
 </div>
