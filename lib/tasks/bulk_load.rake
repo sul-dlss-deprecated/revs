@@ -671,6 +671,7 @@ namespace :revs do
 
     manifest = RevsUtils.read_csv_with_headers(file)
     error_count=0
+    updated_count=0
     
     manifest.each do |row|
       
@@ -701,6 +702,7 @@ namespace :revs do
              puts ".....found #{doc.id}, setting visibility to #{visibility_value}"
              doc.visibility_value=visibility_value
              doc.save
+             updated_count += 1
            rescue
              log.error("Could not update #{row[@sourceid]} to #{visibility_value}") 
              error_count += 1 
@@ -710,7 +712,76 @@ namespace :revs do
       
     end
     puts "Errors: #{error_count}"
+    puts "Updated: #{updated_count}"
+    
     log.info "Errors: #{error_count}"
+    log.info "Updated: #{updated_count}"
+
+  end
+  
+  desc "Bulk hide or show images from a given collection"
+  task :change_visibility_collection, [:collection_name, :visibility_value] => :environment do |t, args|
+    # call with RAILS_ENV=production rake revs:change_visibility_collection["Albert R. Bochroch Photographic Archive",1] to show all images in the collection; note the collection itself is unaffected
+    # call with RAILS_ENV=production rake revs:change_visibility_collection["Albert R. Bochroch Photographic Archive",0] to hide all images in the collection; note the collection itself is unaffected
+    
+    Revs::Application.config.use_editstore = false
+
+    collection = args[:collection_name] 
+    default_visibility_value = args[:visibility_value] 
+
+    raise "no collection specified" unless collection
+    raise "no default visibility value specified" unless default_visibility_value
+
+    q="*:*"
+    q+=" AND collection_ssim:\"#{collection}\"" unless collection.blank?
+    rows = "10000000" 
+        
+    @all_docs = Blacklight.solr.select(:params => {:q => q, :rows=>rows})            
+    total_docs=@all_docs['response']['docs'].size
+    
+    start_time=Time.now
+    n=0
+
+    puts ""
+    puts "Started at #{start_time}, #{total_docs} docs returned"
+    puts " limited to collection: #{collection}"
+    puts " default visibility value of #{default_visibility_value}"
+    puts " running in #{Rails.env}"
+    puts ""
+    
+    log = Logger.new("#{Rails.root}/log/change_visibility_#{collection.gsub(' ','_')}_#{Time.now.to_i}.#{@log_extension}")
+          
+    log.info("Started at #{start_time}, #{total_docs} docs returned")
+    log.info("limited to collection: #{collection}")
+    log.info("running in #{Rails.env}")
+    log.info("default visibility value of #{default_visibility_value}")
+    error_count=0
+    updated_count=0
+        
+    @all_docs['response']['docs'].each do |doc|
+      
+      id=doc['id']
+
+      begin
+         doc = SolrDocument.find(id)
+         unless doc.visibility_value.to_s == default_visibility_value.to_s  # noop if it already matches
+           puts ".....found #{doc.id}, setting visibility to #{default_visibility_value}"
+           doc.visibility_value=default_visibility_value 
+           doc.save
+           updated_count +=1
+         end
+       rescue
+         log.error("Could not update #{id} to #{default_visibility_value}") 
+         error_count += 1 
+       end
+      
+    end
+    puts ""
+    puts "Errors: #{error_count}"
+    puts "Updated: #{updated_count}"
+    
+    log.info "Errors: #{error_count}"
+    log.info "Updated: #{updated_count}"
 
   end
   
