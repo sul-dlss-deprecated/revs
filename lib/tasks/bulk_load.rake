@@ -188,7 +188,7 @@ namespace :revs do
   
   desc "Find all objects with missing image"
   #Run Me: rake revs:missing_images["John Dugdale Collection"] to just show items
-  #Run Me: rake revs:missing_images["John Dugdale Collection","delete] to delete from solr index
+  #Run Me: rake revs:missing_images["John Dugdale Collection","delete"] to delete from solr index
   task :missing_images, [:collection_name,:delete] => :environment do |t, args| 
     num_missing=0
     q="collection_ssim:\"#{args[:collection_name]}\""
@@ -659,8 +659,8 @@ namespace :revs do
 
   desc "Bulk hide or show images from a given spreadsheet"
   task :change_visibility, [:file, :visibility_value] => :environment do |t, args|
-    # call with RAILS_ENV=production rake revs:change_visilibty["/path/to/manifest.csv",1] to show all images not having a value in the visibility column
-    # call with RAILS_ENV=production rake revs:change_visilibty["/path/to/manifest.csv",0] to hide all images not having a value in the visibility column
+    # call with RAILS_ENV=production rake revs:change_visibility["/path/to/manifest.csv",1] to show all images not having a value in the visibility column
+    # call with RAILS_ENV=production rake revs:change_visibility["/path/to/manifest.csv",0] to hide all images not having a value in the visibility column
     
     Revs::Application.config.use_editstore = false
 
