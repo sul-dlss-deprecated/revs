@@ -1,20 +1,20 @@
 <div class="col-md-12 error-page">
-  <h2><i class='icon-exclamation-sign'></i><%= t('revs.errors.sorry') %></h2>
+  <h2><i class='fa fa-exclamation-circle'></i><%= t('revs.errors.sorry') %></h2>
   <p><%= t('revs.errors.404_message') %></p>
   <ul>
     <li>
-      <i class='icon-search'></i>
+      <i class='fa fa-search'></i>
       <%= t('revs.errors.action_search_html',
         :href => link_to(t('revs.errors.action_search_linktext',
         :project => t('revs.digital_library')), root_url)) %>.
     </li>
     <li>
-      <i class='icon-sitemap'></i>
+      <i class='fa fa-sitemap'></i>
       <%= t('revs.errors.action_browse_collections_html',
         :href => link_to(t('revs.errors.action_browse_collections_linktext'), all_collections_url)) %>.
     </li>
     <li>
-      <i class='icon-comment-alt'></i>
+      <i class='fa fa-comment-o'></i>
       <%= t('revs.errors.tell_us_html',
         :href => link_to(t('revs.errors.tell_us_linktext'), contact_us_path(:from=>request.path),
         :class=>'error-page-feedback')) %>.

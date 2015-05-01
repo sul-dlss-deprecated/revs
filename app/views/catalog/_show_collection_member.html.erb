@@ -113,10 +113,10 @@
             <% if can?(:create, Annotation) || @annotations.size > 0 %>
               <li>
                 <%= link_to "#", :class => "help hidden-offscreen showOnLoad", :data => { :toggle => "tooltip", :placement => "left", :title => "#{t('revs.annotations.help')}" } do %>
-                  <i class="icon-question-sign"></i>
+                  <i class="fa fa-question-sign"></i>
                 <% end %>
-                 <%= link_to(("<span class='#{annotation_link_class}' id='annotation-link-text'><i class='icon-edit'></i> #{annotation_link_text}</span>".html_safe + content_tag(:span, @annotations.size, :class => "#{display_class(@annotations.size)} num-annotations-badge badge badge-revs")).html_safe,'#',:id=>annotation_link_id,:class=>"annotation_links showOnLoad hidden-offscreen") %>
-                 <%= link_to(("<i class='icon-edit'></i> #{t('revs.annotations.hide')}".html_safe + content_tag(:span, @annotations.size, :class => "#{display_class(@annotations.size)} num-annotations-badge badge badge-revs")).html_safe, '#',:id=>'hide_annotations_link',:class=>"hidden-offscreen") %>
+                 <%= link_to(("<span class='#{annotation_link_class}' id='annotation-link-text'><i class='fa fa-edit'></i> #{annotation_link_text}</span>".html_safe + content_tag(:span, @annotations.size, :class => "#{display_class(@annotations.size)} num-annotations-badge badge badge-revs")).html_safe,'#',:id=>annotation_link_id,:class=>"annotation_links showOnLoad hidden-offscreen") %>
+                 <%= link_to(("<i class='fa fa-edit'></i> #{t('revs.annotations.hide')}".html_safe + content_tag(:span, @annotations.size, :class => "#{display_class(@annotations.size)} num-annotations-badge badge badge-revs")).html_safe, '#',:id=>'hide_annotations_link',:class=>"hidden-offscreen") %>
               </li>
             <% end %>
             <div id="all-annotations" class="hidden">
@@ -125,7 +125,7 @@
           <% end %>
 
           <li>
-            <%= link_to("<i class='icon-picture'></i> #{sunet_user_signed_in? ? t('revs.citations.view_and_download') : t('revs.citations.view')}".html_safe,
+            <%= link_to("<i class='fa fa-picture-o'></i> #{sunet_user_signed_in? ? t('revs.citations.view_and_download') : t('revs.citations.view')}".html_safe,
             "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>"_new", :class => "purl") %>
           </li>
 
@@ -137,7 +137,7 @@
                   <%# only show help icon if user can add flags %>
                   <% if can? :add_new_flag_to, @document  %>
                     <%= link_to "#", :class => "help hidden-offscreen showOnLoad", :data => { :toggle => "tooltip", :placement => "left", :title => "#{t('revs.flags.help')}" } do %>
-                      <i class="icon-question-sign"></i>
+                      <i class="fa fa-question-sign"></i>
                     <% end %>
                   <% end %>
                 </div>
@@ -163,7 +163,7 @@
               if closed_flags.size > 0  # show the flagging history to logged in users%>
                 <li id="item-flag-history-accordion">
                   <a class="accordion-toggle" data-toggle="collapse" data-parent="#item-flag-history-accordion" href="#item-flag-history">
-                    <i class="icon-list-ol"></i>
+                    <i class="fa fa-list-ol"></i>
                     <%=label_text%>
                     <span class="<%=display_class(closed_flags.size)%> badge badge-revs num-closed-flags-badge">
                      <%= closed_flags.size%>
@@ -202,7 +202,7 @@
                 edit_mode_link_text = in_curator_edit_mode ? t('revs.curator.leave_edit_mode') : t('revs.curator.enter_edit_mode')
                 %>
               <li>
-                <%= link_to("<i class='icon-edit'></i> <span data-leave-mode-text='#{t('revs.curator.leave_edit_mode')}' data-enter-mode-text='#{t('revs.curator.enter_edit_mode')}' id='edit-mode-text'>#{edit_mode_link_text}</span>".html_safe, '#', :id=>'edit_mode_link', :class=>"showOnLoad hidden-offscreen curator-action-link") %>
+                <%= link_to("<i class='fa fa-edit'></i> <span data-leave-mode-text='#{t('revs.curator.leave_edit_mode')}' data-enter-mode-text='#{t('revs.curator.enter_edit_mode')}' id='edit-mode-text'>#{edit_mode_link_text}</span>".html_safe, '#', :id=>'edit_mode_link', :class=>"showOnLoad hidden-offscreen curator-action-link") %>
                 <span class="edit-mode-status label label-warning <%="hidden-offscreen" if session[:curator_edit_mode] != 'true'%>"><%= t('revs.curator.active') %></span>
               </li>
             <% end %>
@@ -210,7 +210,7 @@
             <% if @document.edits.size > 0 %>
               <li id="item-edit-history-accordion">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#item-edit-history-accordion" href="#item-edit-history">
-                  <i class="icon-list-ol"></i>
+                  <i class="fa fa-list-ol"></i>
                   <%= t('revs.curator.metadata_edit_history_show') %>
                 </a>
               </li>
@@ -235,7 +235,7 @@
                       visibility_class = 'open'
                     end
                 %>
-                <%= link_to("<i class='icon-eye-#{visibility_class}'></i> <span data-visibility-show-text='#{t('revs.messages.public_visibility_show')}' data-visibility-hide-text='#{t('revs.messages.public_visibility_hide')}' id='visibility-text'>#{visibility_link_text}</span>".html_safe, '#', :id=>'visibility_link', :class=>"showOnLoad hidden-offscreen curator-action-link") %>
+                <%= link_to("<i class='fa fa-eye-slash'></i> <span data-visibility-show-text='#{t('revs.messages.public_visibility_show')}' data-visibility-hide-text='#{t('revs.messages.public_visibility_hide')}' id='visibility-text'>#{visibility_link_text}</span>".html_safe, '#', :id=>'visibility_link', :class=>"showOnLoad hidden-offscreen curator-action-link") %>
 
                 <%= render :partial=>'/catalog/hidden_message', :locals=>{:document=>document,:full=>true}%>
 

@@ -65,7 +65,7 @@
   //BLACKLIGHT-UPGRADE-REMOVAL
   //@include buttonBackground(darken($navbarBackgroundHighlight, 5%), darken($navbarBackground, 5%));
   @include box-shadow(#{inset 0 1px 0 rgba(255,255,255,.1), 0 1px 0 rgba(255,255,255,.075)});
-  & .icon-bar {
+  & .fa-bars {
     display: block;
     width: 18px;
     height: 2px;
@@ -75,7 +75,7 @@
     //@include border-radius(1px);
     @include box-shadow(0 1px 0 rgba(0,0,0,.25));
   }
-  & .icon-bar + .icon-bar {
+  & .fa-bars + .fa-bars {
     margin-top: 3px;
   }
 }

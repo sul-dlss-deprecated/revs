@@ -297,9 +297,9 @@ function setupItemDetailPanels() {
   $('.accordion-body').collapse({
      toggle: false
    }).on('show',function (e) {
-     $(e.target).parent().find(".icon-caret-right").removeClass("icon-caret-right").addClass("icon-caret-down");
+     $(e.target).parent().find(".fa-caret-right").removeClass("fa-caret-right").addClass("fa-caret-down");
    }).on('hide', function (e) {
-     $(e.target).parent().find(".icon-caret-down").removeClass("icon-caret-down").addClass("icon-caret-right");
+     $(e.target).parent().find(".fa-caret-down").removeClass("fa-caret-down").addClass("fa-caret-right");
    });
 
    // Collapse Item Details metadata sections if JavaScript (open by default for no-JS browsers).

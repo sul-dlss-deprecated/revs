@@ -1,8 +1,8 @@
-<% 
+<%
 galleries = @document.saved_items.where(:'galleries.user_id' => current_user.id,:'galleries.gallery_type' => 'user').collect {|saved_item| saved_item.gallery.title}
 in_gallery_text= galleries.blank? ? "" : "#{t('revs.user_galleries.in_gallery')}: #{galleries.join(', ')}"
 %>
 
-<%= link_to("<i class='icon-plus'></i>".html_safe + t('revs.user_galleries.add_to_gallery'), '#', :id => 'add_to_gallery_link', :title => 'in_gallery_text') %>
+<%= link_to("<i class='fa fa-plus'></i>".html_safe + t('revs.user_galleries.add_to_gallery'), '#', :id => 'add_to_gallery_link', :title => 'in_gallery_text') %>
 
 <%= render :partial=>'saved_items/add_to_gallery_form' %>

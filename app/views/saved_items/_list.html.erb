@@ -56,7 +56,7 @@ end%>
                     <%= check_box_tag 'selected_items[]', saved_item.id, nil, :id=>"selected_items_#{saved_item.id}", :"data-saved-item-id" => saved_item.id, :class => 'selected_items' %>
                   </span>
                   <span class="hidden handle">
-                    <i title="<%=t('revs.messages.reorder')%>" class="icon-move"></i>
+                    <i title="<%=t('revs.messages.reorder')%>" class="fa fa-arrows"></i>
                   </span>
                 <% end %>
                 <%= item_link(saved_item.solr_document, :params => paging_params(item_link_params), :truncate => true, :length => 50) %>

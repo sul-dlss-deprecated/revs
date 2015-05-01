@@ -1,6 +1,6 @@
 <% if @document.top_priority? %>
   <span class="curator-action-link disabled">
-    <i class='icon-picture'></i>
+    <i class='fa fa-picture-o'></i>
     <%= t('revs.curator.set_posterframe').html_safe %>
   </span>
   <span id="is_top_priority" class="posterframe-status label label-info">
@@ -8,7 +8,7 @@
   </span>
 
 <% else %>
-  <%= link_to "<i class='icon-picture'></i>
+  <%= link_to "<i class='fa fa-picture-o'></i>
      #{t('revs.curator.set_posterframe')}".html_safe,
      set_top_priority_item_curator_tasks_path,
      :method => 'put',
