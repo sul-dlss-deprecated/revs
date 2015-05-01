@@ -47,11 +47,11 @@ describe("Search Pages",:type=>:request,:integration=>true) do
   #   search_strings=['gt 350','gt-350','gt350']
   #   search_strings.each do |search|
   #     visit search_path(:q=>search)
-  #     page.should have_content('Results')
-  #     page.should have_content('1 - 3 of 3')
-  #     page.should have_content('Thompson Raceway, May 2')
-  #     page.should have_content('Record 1')
-  #     page.should have_content('Lime Rock Continental, September 1')
+  #     expect(page).to have_content('Results')
+  #     expect(page).to have_content('1 - 3 of 3')
+  #     expect(page).to have_content('Thompson Raceway, May 2')
+  #     expect(page).to have_content('Record 1')
+  #     expect(page).to have_content('Lime Rock Continental, September 1')
   #   end
   # end
   
