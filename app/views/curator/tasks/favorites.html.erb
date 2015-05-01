@@ -43,7 +43,7 @@
 	    <div class="row results-controls">
 	      <div class="col-md-5 col-md-offset-4 saved-item-pagination">
 	        <span>
-	          <%= page_entries_info @saved_items_by_item, :entry_name=>t('revs.user_galleries.item') %>
+	          <%= page_entries_info @saved_items, :entry_name=>t('revs.user_galleries.item') %>
 	        </span>
 	      </div>
 
@@ -72,7 +72,7 @@
 
         <div class="saved-item-pagination">
           <span>
-            <%= page_entries_info @saved_items_by_user, :entry_name=>'user' %>
+            <%= page_entries_info @saved_items, :entry_name=>'user' %>
           </span>
         </div>
 

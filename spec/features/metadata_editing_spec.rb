@@ -24,7 +24,7 @@ describe("Metadata Editing",:type=>:request,:integration=>true) do
     visible ? expect(page).to(have_link(I18n.t('revs.search.gallery_toggle.curator'))) : expect(page).not_to(have_link(I18n.t('revs.search.gallery_toggle.curator')))
   end
   
-  pending it "should not show editing interface to non-logged in users or non-curator users, but show it for admin and curators" do
+  it "should not show editing interface to non-logged in users or non-curator users, but show it for admin and curators" do
       
       bulk_edit_interface_shown_should_be_shown(false)            
       
@@ -42,7 +42,7 @@ describe("Metadata Editing",:type=>:request,:integration=>true) do
 
   end
 
-  pending it "should show error messages when the curator doesn't enter in all required information to perform a bulk edit" do
+  it "should show error messages when the curator doesn't enter in all required information to perform a bulk edit" do
 
       druids_to_edit=%w{sc411ff4198 bg152pb0116}
       new_value='newbie!'
@@ -75,14 +75,14 @@ describe("Metadata Editing",:type=>:request,:integration=>true) do
       # druids_to_edit.each {|druid| check "bulk_edit_selected_druids_#{druid}"} # select some druids      # 
       # click_button 'Update' # now perform the update
       # 
-      # page.should have_content 'Your update has been applied to all the items you selected.' # it worked!
-      # page.should have_content new_value # the new title entered should be on the page
+      # expect(page).to have_content 'Your update has been applied to all the items you selected.' # it worked!
+      # expect(page).to have_content new_value # the new title entered should be on the page
       # 
       # # confirm new field has been updated in solr and has correct rows in editstore database
       # druids_to_edit.each do |druid|
       #   doc=SolrDocument.find(druid)
-      #   doc.title.should == new_value
-      #   Editstore::Change.where(:new_value=>new_value,:old_value=>old_values[druid],:druid=>druid).size.should == 1
+      #   expect(doc.title).to eq new_value
+      #   expect(page).to(Editstore::Change.where(:new_value=>new_value,:old_value=>old_values[druid],:druid=>druid).size).to eq 1
       # end
             
   end

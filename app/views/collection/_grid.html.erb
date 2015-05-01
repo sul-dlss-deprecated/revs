@@ -1,14 +1,15 @@
 <div id="documents" class="gallery">
   <ul class="image-grid">
-    <% @collections.each do |collection| %>
+    <% @collections.each do |collection| 
+      collection_title=fix_revs_institute_name(collection.title.html_safe)%>
       <li class="image-item">
         <div class="blacklight-collection document">
           <%= link_to_document(collection,
               :label => image_tag(collection.first_image,
-              :alt => collection.title.html_safe,:title=>collection.title.html_safe))  %>
+              :alt => collection_title,:title=>collection_title))  %>
 
           <h5 class="index_title">
-            <%= link_to_document collection, :label=>collection.title.html_safe %>
+            <%= link_to_document collection, :label=>collection_title %>
             <span class="text-muted">
               (<%= pluralize(number_with_delimiter(collection.collection_members(:include_hidden=>can?(:view_hidden, SolrDocument)).total_members),
                   t('revs.collection_members.items_name')) %>)

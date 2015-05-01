@@ -1,4 +1,4 @@
-require "rails_helper"
+require 'spec_helper'
 
 describe("Item Visibility",:type=>:request,:integration=>true) do
 
@@ -13,49 +13,49 @@ describe("Item Visibility",:type=>:request,:integration=>true) do
   
   it "should update image visibility" do
     item1=Item.where(:druid=>@hidden_druid)
-    expect(item1.size).to eq(1)
+    expect(item1.size).to eq 1
     doc1=SolrDocument.find(@hidden_druid)
     expect(doc1.visibility_value).to eq(0)
-    expect(doc1.visibility).to eq(:hidden)
+    expect(doc1.visibility).to eq :hidden
     doc1.visibility=:visible
     doc1.save
     doc1=SolrDocument.find(@hidden_druid)
-    expect(doc1.visibility_value).to eq(1)
-    expect(doc1.visibility).to eq(:visible)
+    expect(doc1.visibility_value).to eq 1
+    expect(doc1.visibility).to eq :visible
     item1=Item.where(:druid=>@hidden_druid)
-    expect(item1.size).to eq(1)
-    expect(item1.first.visibility).to eq(:visible)
+    expect(item1.size).to eq 1
+    expect(item1.first.visibility).to eq :visible
     doc1=SolrDocument.find(@hidden_druid)
     doc1.visibility=:hidden
     doc1.save
     item1=Item.where(:druid=>@hidden_druid)
-    expect(item1.size).to eq(1)
-    expect(item1.first.visibility).to eq(:hidden)
+    expect(item1.size).to eq 1
+    expect(item1.first.visibility).to eq :hidden
     
     doc2=SolrDocument.find(@visible_druid)
-    expect(doc2.visibility_value).to eq("")
-    expect(doc2.visibility).to eq(:visible)
+    expect(doc2.visibility_value).to eq ""
+    expect(doc2.visibility).to eq :visible
     doc2.visibility=:hidden
     doc2.save
     doc2=SolrDocument.find(@visible_druid)
-    expect(doc2.visibility_value).to eq(0)
-    expect(doc2.visibility).to eq(:hidden)
+    expect(doc2.visibility_value).to eq 0
+    expect(doc2.visibility).to eq :hidden
 
     doc3=SolrDocument.find(@default_visible_druid)
-    expect(doc3.visibility_value).to eq(1)
-    expect(doc3.visibility).to eq(:visible)
+    expect(doc3.visibility_value).to eq 1
+    expect(doc3.visibility).to eq :visible
 
     reindex_solr_docs([@hidden_druid,@visible_druid])    
   end
   
   it "should not show the visibility facet to non-curators" do
     visit root_path
-    expect(page).not_to have_css(".facet-label", :text=>"Hidden")
+    expect(page).not_to have_content("Visibility")
     login_as(user_login)
     visit root_path
-    expect(page).not_to have_css(".facet-label", :text=>"Hidden")
+    expect(page).not_to have_content("Visibility")
     login_as(curator_login)
-    expect(page).to have_css(".facet-label", :text=>"Hidden")
+    expect(page).to have_content("Visibility")
   end
   
   it "should not show hidden items to non-logged in or regular users" do
