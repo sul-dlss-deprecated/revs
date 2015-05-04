@@ -49,9 +49,6 @@
   .update-users select {
     margin-left: 6px;
   }
-  .btn-sm {
-    margin-left: 6px;
-  }
   .lock-account label {
     vertical-align: top;
   }
@@ -65,6 +62,9 @@
     font-size: 16px;
     line-height: 24px;
     margin-bottom: 12px;
+  }
+  label {
+    font-weight: normal;
   }
   form.find-users, form.update-users {
     margin-top: 20px;

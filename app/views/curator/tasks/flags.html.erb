@@ -20,35 +20,34 @@
 
       <% if @tab == @tab_list_flag %>
 
-       <%= form_tag request.path, :method=>:get, :class => 'form-horizontal find-users' do %>
-          <fieldset>
+        <%= form_tag request.path, :method=>:get, :class => 'form-horizontal find-users' do %>
 
-            <div class="control-group">
-              <label for="state" class="control-label">
-                <%=t('revs.curator.search_by_state')%>
-              </label>
-              <div class="controls">
-                <%= select_tag 'curator_flag_selection', options_from_collection_for_select(Flag.for_dropdown, :first, :last, :selected => @selection.join(","), class: "span2") %>
-              </div>
+          <div class="form-group">
+            <label for="curator_flag_selection" class="col-sm-4 col-lg-3 control-label">
+              <%=t('revs.curator.search_by_state')%>
+            </label>
+            <div class="col-sm-6">
+              <%= select_tag 'curator_flag_selection', options_from_collection_for_select(Flag.for_dropdown, :first, :last, :selected => @selection.join(",")), class: "form-control input-sm" %>
             </div>
+          </div>
 
-            <div class="control-group">
-              <label for="search" class="control-label">
-                <%=t('revs.curator.search_flags')%>
-              </label>
-              <div class="controls">
-                <%= text_field_tag :search, @search, :class => 'input-large' %>
-              </div>
+          <div class="form-group">
+            <label for="search" class="col-sm-4 col-lg-3 control-label">
+              <%=t('revs.curator.search_flags')%>
+            </label>
+            <div class="col-sm-6">
+              <%= text_field_tag :search, @search, :class => "form-control" %>
             </div>
+          </div>
 
-            <%= render :partial=>'shared/per_page_dropdown' %>
+          <%= render :partial=>'shared/per_page_dropdown' %>
 
-            <div class="control-group">
-              <div class="controls">
-                <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-medium' %>
-              </div>
+          <div class="form-group">
+            <div class="col-sm-offset-4 col-sm-8 col-lg-offset-3">
+              <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-default btn-sm' %>
             </div>
-          </fieldset>
+          </div>
+
         <% end %>
 
         <%= render :partial => 'user/flags_table', :locals=>{:selection=>@selection, :flags=>@flags, :user=>current_user,:curate_view=>true,:search=>@search }%>
@@ -64,31 +63,32 @@
         <%= hidden_field_tag :tab, @tab_list_item%>
         <fieldset>
 
-          <div class="control-group">
-            <label for="search" class="control-label">
+          <div class="form-group">
+            <label for="search" class="col-sm-4 col-lg-3 control-label">
               <%=t('revs.curator.search_title')%>
             </label>
-            <div class="controls">
-              <%= text_field_tag :search, @search, :class => 'input-large' %>
+            <div class="col-sm-6">
+              <%= text_field_tag :search, @search, :class => 'form-control' %>
             </div>
           </div>
 
           <%= render :partial=>'shared/per_page_dropdown' %>
 
-          <div class="control-group">
-            <div class="controls">
-              <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-medium' %>
+          <div class="form-group">
+            <div class="col-sm-offset-4 col-sm-8 col-lg-offset-3">
+              <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-default btn-sm' %>
             </div>
           </div>
         </fieldset>
       <% end %>
 
       <div class="row results-controls">
-        <div class="col-md-5 col-md-offset-4 saved-item-pagination">
+        <div class="col-xs-12 saved-item-pagination">
           <span>
             <%= page_entries_info @flags, :entry_name => t('revs.user_galleries.item') %>
           </span>
         </div>
+      </div>
 
       <table class="admin table table-bordered table-condensed table-hover table-striped">
         <tr>
@@ -118,12 +118,12 @@
   </div>
 
 <%# -- Tab: Flag By User -- %>
-      <div id="<%=@tab_list_user%>" class="tab-pane <%="active" if @tab == @tab_list_user%>">
+  <div id="<%=@tab_list_user%>" class="tab-pane <%="active" if @tab == @tab_list_user%>">
 
     <% if @tab == @tab_list_user %>
 
         <div class="row results-controls">
-          <div class="col-md-5 col-md-offset-4 saved-item-pagination">
+          <div class="col-xs-12 saved-item-pagination">
             <span>
               <%# why do I need to reference @flags before page_entries_info will work? %>
               <%= page_entries_info @flags, :entry_name => 'user' %>
