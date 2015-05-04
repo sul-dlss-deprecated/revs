@@ -4,7 +4,7 @@
 <!-- Add a new .contributor div block within this row for each contributor.
      No need to start a new row. -->
 
-  <%  Revs::Application.config.featured_contributors.each do |contributor| 
+  <%  Revs::Application.config.featured_contributors.each do |contributor|
         begin
           user=User.find(contributor)
         rescue
@@ -13,7 +13,7 @@
         if user
           %>
           <!-- Contributor block start -->
-          <div class="span4 contributor">
+          <div class="col-sm-12 contributor">
             <%= image_tag user.avatar.url(:thumb), :alt=>'user image' %>
             <div class="media-body">
               <h4 class="media-heading">
@@ -29,7 +29,7 @@
           <!-- Contributor block end -->
         <% end # end check for user found%>
   <% end # end loop over all top contributors%>
-  
+
 </div>
 
 <%= render :partial=>'end_page_slug'%>
