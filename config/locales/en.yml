@@ -297,7 +297,7 @@ en:
       search_value: 'old value'
       item_title: "Item title"
       search_flags: "Search comment or title"
-      search_title: "Search title"
+      search_title: "Item title"
       search_annotations: "Search annotation or title"
       search_by_state: "Status"
       flagging_user: "Flagged by"
