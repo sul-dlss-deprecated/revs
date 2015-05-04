@@ -20,11 +20,12 @@
       <% if @tab == @tab_list_item %>
 
         <div class="row results-controls">
-          <div class="col-md-5 col-md-offset-4 saved-item-pagination">
+          <div class="col-xs-12 saved-item-pagination">
             <span>
               <%= page_entries_info @edits, :entry_name => t('revs.user_galleries.item') %>
             </span>
           </div>
+        </div>
 
         <table class="table table-bordered table-condensed table-hover table-striped">
           <tr>
@@ -49,11 +50,12 @@
       <% if @tab == @tab_list_user %>
 
         <div class="row results-controls">
-          <div class="col-md-5 col-md-offset-4 saved-item-pagination">
+          <div class="col-xs-12 saved-item-pagination">
             <span>
               <%= page_entries_info @edits, :entry_name => 'user' %>
             </span>
           </div>
+        </div>
 
         <table class="table table-bordered table-condensed table-hover table-striped">
           <tr>
