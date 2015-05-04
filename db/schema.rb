@@ -18,8 +18,8 @@ ActiveRecord::Schema.define(version: 20150219220327) do
     t.text     "json"
     t.text     "text"
     t.string   "druid"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "annotations", ["druid"], name: "index_annotations_on_druid"
@@ -29,8 +29,8 @@ ActiveRecord::Schema.define(version: 20150219220327) do
     t.integer  "user_id",       null: false
     t.string   "document_id"
     t.string   "title"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "user_type"
     t.string   "document_type"
   end
@@ -42,8 +42,8 @@ ActiveRecord::Schema.define(version: 20150219220327) do
     t.string   "druid",      null: false
     t.string   "operation",  null: false
     t.text     "note"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "change_logs", ["druid"], name: "index_change_logs_on_druid"
@@ -55,8 +55,8 @@ ActiveRecord::Schema.define(version: 20150219220327) do
     t.string   "druid",                                null: false
     t.string   "flag_type",          default: "error", null: false
     t.text     "comment"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "resolution"
     t.integer  "resolving_user"
     t.datetime "resolved_time"
@@ -77,8 +77,8 @@ ActiveRecord::Schema.define(version: 20150219220327) do
     t.string   "title"
     t.text     "description"
     t.string   "gallery_type",                      null: false
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "views",             default: 0,     null: false
     t.string   "slug"
     t.boolean  "featured",          default: false, null: false
@@ -96,8 +96,8 @@ ActiveRecord::Schema.define(version: 20150219220327) do
   create_table "items", force: true do |t|
     t.string   "druid"
     t.integer  "visibility_value"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "title",            limit: 400
   end
 
@@ -107,8 +107,8 @@ ActiveRecord::Schema.define(version: 20150219220327) do
     t.string   "field"
     t.string   "value"
     t.integer  "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "ontologies", ["field"], name: "index_ontologies_on_field"
@@ -117,8 +117,8 @@ ActiveRecord::Schema.define(version: 20150219220327) do
     t.string   "druid",       null: false
     t.integer  "gallery_id",  null: false
     t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "position"
   end
 
@@ -129,16 +129,16 @@ ActiveRecord::Schema.define(version: 20150219220327) do
   create_table "searches", force: true do |t|
     t.text     "query_params"
     t.integer  "user_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "user_type"
   end
 
   add_index "searches", ["user_id"], name: "index_searches_on_user_id"
 
   create_table "users", force: true do |t|
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "sunet",                  default: "",    null: false
     t.string   "email",                  default: "",    null: false
     t.string   "encrypted_password",     default: "",    null: false
