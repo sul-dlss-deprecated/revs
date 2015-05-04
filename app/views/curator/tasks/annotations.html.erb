@@ -22,31 +22,32 @@
         <%= form_tag request.path, :method=>:get, :class => 'form-horizontal find-users' do %>
           <fieldset>
 
-            <div class="control-group">
-              <label for="search" class="control-label">
+            <div class="form-group">
+              <label for="search" class="col-sm-4 col-lg-3 control-label">
                 <%=t('revs.curator.search_title')%>
               </label>
-              <div class="controls">
-                <%= text_field_tag :search, @search, :class => 'input-large' %>
+              <div class="col-sm-6">
+                <%= text_field_tag :search, @search, :class => 'form-control' %>
               </div>
             </div>
 
             <%= render :partial=>'shared/per_page_dropdown' %>
 
-            <div class="control-group">
-              <div class="controls">
-                <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-medium' %>
+            <div class="form-group">
+              <div class="col-sm-offset-4 col-sm-8 col-lg-offset-3">
+                <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-default btn-sm' %>
               </div>
             </div>
           </fieldset>
         <% end %>
 
         <div class="row results-controls">
-          <div class="col-md-5 col-md-offset-4 saved-item-pagination">
+          <div class="col-xs-12 saved-item-pagination">
             <span>
               <%= page_entries_info @annotations, :entry_name=>t('revs.user_galleries.item') %>
             </span>
           </div>
+        </div>
 
         <table class="table table-bordered table-condensed table-hover table-striped">
           <tr>
@@ -77,31 +78,32 @@
           <%= hidden_field_tag :tab, @tab_list_all%>
           <fieldset>
 
-            <div class="control-group">
-              <label for="search" class="control-label">
+            <div class="form-group">
+              <label for="search" class="col-sm-4 col-lg-3 control-label">
                 <%=t('revs.curator.search_title')%>
               </label>
-              <div class="controls">
-                <%= text_field_tag :search, @search, :class => 'input-large' %>
+              <div class="col-sm-6">
+                <%= text_field_tag :search, @search, :class => 'form-control' %>
               </div>
             </div>
 
             <%= render :partial=>'shared/per_page_dropdown' %>
 
-            <div class="control-group">
-              <div class="controls">
-                <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-medium' %>
+            <div class="form-group">
+              <div class="col-sm-offset-4 col-sm-8 col-lg-offset-3">
+                <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-default btn-sm' %>
               </div>
             </div>
           </fieldset>
         <% end %>
 
         <div class="row results-controls">
-          <div class="col-md-5 col-md-offset-4 saved-item-pagination">
+          <div class="col-xs-12 saved-item-pagination">
             <span>
               <%= page_entries_info @annotations, :entry_name=>'annotations' %>
             </span>
           </div>
+        </div>
 
         <table class="table table-bordered table-condensed table-hover table-striped">
           <tr>
@@ -130,11 +132,12 @@
       <% if @tab == @tab_list_user %>
 
         <div class="row results-controls">
-          <div class="col-md-5 col-md-offset-4 saved-item-pagination">
+          <div class="col-xs-12 saved-item-pagination">
             <span>
               <%= page_entries_info @annotations, :entry_name=>'user' %>
             </span>
           </div>
+        </div>
 
         <table class="table table-bordered table-condensed table-hover table-striped">
           <tr>
