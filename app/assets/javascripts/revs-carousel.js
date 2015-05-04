@@ -8,25 +8,50 @@ $(document).ready(function(){
 	  var start = parseInt($('.carousel-inner', carousel).attr('start'));
 	  var total = parseInt($('.carousel-inner', carousel).attr('total'));
 	  var end=parseInt(start)+parseInt(rows)
-	  $(".iterator", carousel).text(index);	
+	  $(".iterator", carousel).text(index);
 		if (index == 1) { $('#back-carousel-button').hide();}
 			else
 			{$('#back-carousel-button').show();}// enable back button unless we are on the first image
 		if (index == total) { $('#forward-carousel-button').hide();}
 			else
-			{$('#forward-carousel-button').show();}// enable forward button unless we are on the last image			
+			{$('#forward-carousel-button').show();}// enable forward button unless we are on the last image
 	  if (index == end - 2) { // fetch more items when we get close to the end of our set
 		  $.getScript("/update_carousel?druid=" + druid + "&rows=" + rows + "&start=" + end)
 		}
-	});	
-	
-	// Carousel on home page
-	$("#all_collections_carousel").bind('slid', function(){
-		var active_item = $(".active", $(this));
-		$("#featured-collection-nav #collection-title-link").text(active_item.attr("data-collection-title"));
-		$("#featured-collection-nav #collection-title-link").attr('href',active_item.attr("data-collection-href"));
-		$("#all_collections_carousel #collection-image-link").attr('href',active_item.attr("data-collection-href"));		
-		$("#featured-collection-nav #collection-description").text(active_item.attr("data-collection-description"));
-		$("#featured-collection-nav #collection-link").attr("href", active_item.attr("data-collection-href"));
 	});
+
+  // Core jCarousel
+  $('.jcarousel').jcarousel();
+
+  $('.jcarousel-control-prev')
+      .on('jcarouselcontrol:active', function() {
+          $(this).removeClass('inactive');
+      })
+      .on('jcarouselcontrol:inactive', function() {
+          $(this).addClass('inactive');
+      })
+      .jcarouselControl({
+          target: '-=1'
+      });
+
+  $('.jcarousel-control-next')
+      .on('jcarouselcontrol:active', function() {
+          $(this).removeClass('inactive');
+      })
+      .on('jcarouselcontrol:inactive', function() {
+          $(this).addClass('inactive');
+      })
+      .jcarouselControl({
+          target: '+=1'
+      });
+
+  // Carousel on home page
+  $('.jcarousel').on('jcarousel:targetin', 'li', function() {
+    $("#featured-collection-nav #collection-title-link").text($(this).attr("data-collection-title"));
+    $("#featured-collection-nav #collection-title-link").attr('href', $(this).attr("data-collection-href"));
+    $("#featured-collection-nav #collection-image-link").attr('href', $(this).attr("data-collection-href"));
+    $("#featured-collection-nav #collection-description").text($(this).attr("data-collection-description"));
+    $("#featured-collection-nav #collection-link").attr('href', $(this).attr("data-collection-href"));
+  });
+
 });

@@ -16,7 +16,7 @@ $collection-image-right-gutter: 30px;
 }
 #featured-collection-nav {
   @include red-top_border;
-  width: auto;
+  margin-left: 420px;
   .carousel-controls {
     margin-top: 0;
     a.left {
@@ -118,12 +118,23 @@ $collection-image-right-gutter: 30px;
   }
 }
 
+// Adjustments for no-JS version
+noscript {
+  #featured-collection-nav {
+    margin-left: 0;
+    padding-left: 0;
+    @media screen and (max-width: $screen-sm-max) {
+      margin-left: 15px;
+    }
+  }
+}
+
 /* Adjustments for screen sizes below 1200px */
 
 /* Put nav buttons close together when tablet or smaller */
 @media screen and (max-width: 991px) {
-  #featured-collection-nav .carousel-controls a.right {
-    left: 75px;
+  #featured-collection-nav .carousel-controls .jcarousel-control-next {
+    left: 100px;
   }
 }
 
@@ -157,7 +168,8 @@ $collection-image-right-gutter: 30px;
 
 @media screen and (max-width: 991px) {
   #featured-collection-nav {
-    padding-top: 6px;
+    margin-left: 0;
+    padding-top: 12px;
     clear: both;
     width: 100%;
     border-top: none;
@@ -200,12 +212,6 @@ $collection-image-right-gutter: 30px;
     h4 {
       max-width: $highlighted-item-width - 4px;
     }
-  }
-}
-
-@media screen and (max-width: 767px) {
-  #all_collections_carousel.carousel {
-    margin-bottom: 6px;
   }
 }
 

@@ -1,73 +1,69 @@
 <% cache("home", :expires_in=>6.hours)  do %>
-	<!-- begin collection carousel for JavaScript users -->
+  <!-- begin collection carousel for JavaScript users -->
   <div class="row slideshow showOnLoad" style="display:none;">
     <div class="col-md-12">
-      <!-- collection image block -->
-      <div id="all_collections_carousel" class="carousel slide">
-        <div class="carousel-inner">
-	        <%- @highlight_collections.each_with_index do |collection, index| -%>
-	          <div class="item<%= " active" if index == 0 %>" data-collection-title="<%= clean_collection_name(collection.title) %>" data-collection-href="<%= collection_path(collection) %>" data-collection-description="<%= truncate(collection.description,:length=>250) %>">
-	            <a id="collection-image-link" href="<%=collection_path(collection)%>"><%=image_tag collection.first_image(:include_hidden=>can?(:view_hidden, SolrDocument))%></a>
-	          </div>
-	        <%- end -%>
+      <div class="jcarousel-wrapper">
+        <div class="jcarousel">
+          <ul>
+            <% @highlight_collections.each_with_index do |collection, index| %>
+              <li class="item<%= " active" if index == 0 %>" data-collection-title="<%= clean_collection_name(collection.title) %>" data-collection-href="<%= collection_path(collection) %>" data-collection-description="<%= truncate(collection.description,:length=>250) %>">
+                <a id="collection-image-link" href="<%=collection_path(collection)%>"><%=image_tag collection.first_image(:include_hidden=>can?(:view_hidden, SolrDocument))%></a>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+        <!-- carousel controls and teaser block -->
+        <div id="featured-collection-nav">
+          <div class="all_collections carousel-controls">
+            <a href="#" class="jcarousel-control-prev">&lsaquo;</a>
+            <a href="#" class="jcarousel-control-next">&rsaquo;</a>
+          </div>
+          <div class="collection-teaser">
+            <span class="content-type collection"><%= t('revs.collection.featured_collection')%></span>
+            <h3><%= link_to clean_collection_name(@highlight_collections.first.title), collection_path(@highlight_collections.first), :id => "collection-title-link" %></h3>
+            <p>
+              <span id="collection-description"><%= truncate(@highlight_collections.first.description,:length=>310) %></span>
+              <%= link_to t('revs.nav.more'), collection_path(@highlight_collections.first), :id => "collection-link" %>
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- end carousel for JavaScript users -->
+
+  <!-- begin single image for non JavaScript users -->
+  <noscript>
+    <div class="row slideshow">
+      <div class="col-md-6">
+        <div id="all_collections_carousel" class="carousel slide">
+          <div class="carousel-inner">
+            <% collection = @highlight_collections[@random_collection_number] %>
+              <div class="item active">
+                <a id="collection-image-link" href="<%=collection_path(collection)%>"><img id="image-0" src="<%= collection.first_image(:include_hidden=>can?(:view_hidden, SolrDocument)) %>"></img></a>
+              </div>
+          </div>
         </div>
       </div>
-      <!-- carousel controls and teaser block -->
-      <div id="featured-collection-nav">
-		    <div class="all_collections carousel-controls">
-		      <a class="carousel-control left" href="#all_collections_carousel" data-slide="prev">&lsaquo;</a>
-		      <a class="carousel-control right" href="#all_collections_carousel" data-slide="next">&rsaquo;</a>
-		    </div>
-        <div class="collection-teaser">
+      <div id="featured-collection-nav" class="col-md-6">
+        <div id="featured-description">
           <span class="content-type collection"><%= t('revs.collection.featured_collection')%></span>
-          <h3><%= link_to clean_collection_name(@highlight_collections.first.title), collection_path(@highlight_collections.first), :id => "collection-title-link" %></h3>
+          <h3><%= link_to clean_collection_name(collection.title), collection_path(collection), :id => "collection-title-link" %></h3>
           <p>
-            <span id="collection-description"><%= truncate(@highlight_collections.first.description,:length=>310) %></span>
-            <%= link_to t('revs.nav.more'), collection_path(@highlight_collections.first), :id => "collection-link" %>
+            <span id="collection-description"><%= truncate(collection.description,:length=>300) %></span>
+            <%= link_to "#{t('revs.nav.more')}", collection_path(collection), :id => "collection-link" %>
           </p>
         </div>
       </div>
     </div>
-  </div>
-	<!-- end carousel for JavaScript users -->
-
-	<!-- begin single image for non JavaScript users -->
-	<noscript>
-		<div class="row slideshow">
-		  <div class="col-md-6">
-		    <div id="all_collections_carousel" class="carousel slide">
-		      <div class="carousel-inner">
-		        <%- collection = @highlight_collections[@random_collection_number] -%>
-		          <div class="item active">
-		            <a id="collection-image-link" href="<%=collection_path(collection)%>"><img id="image-0" src="<%= collection.first_image(:include_hidden=>can?(:view_hidden, SolrDocument)) %>"></img></a>
-							</div>
-		      </div>
-		    </div>
-		  </div>
-		  <div id="featured-collection-nav" class="col-md-3">
-				<div class="row">
-					<div class="col-md-3">
-					</div>
-				</div>
-				<div class="row">
-			    <div id="featured-description" class="col-md-3">
-			      <span class="content-type collection"><%= t('revs.collection.featured_collection')%></span>
-			      <h3><%= link_to clean_collection_name(collection.title), collection_path(collection), :id => "collection-title-link" %></h3>
-			      <p>
-			        <span id="collection-description"><%= truncate(collection.description,:length=>300) %></span>
-			        <%= link_to "#{t('revs.nav.more')}", collection_path(collection), :id => "collection-link" %>
-			      </p>
-			    </div>
-				</div>
-		  </div>
-		</div>
-	</noscript>
-	<!-- end single image for non JavaScript users -->
+  </noscript>
+  <!-- end single image for non JavaScript users -->
 
   <%# Featured Galleries row %>
-	<div class="row">
-		<div class="col-md-12 highlight-list">
-			<h3 class="section-heading">
+  <div class="row">
+    <div class="col-md-12 highlight-list">
+      <h3 class="section-heading">
         <%= t('revs.user_galleries.heading_featured') %>
         <span class="more-link">
           <%= link_to t('revs.nav.more_galleries'), galleries_path %>
@@ -93,13 +89,13 @@
             </li>
           <% end %>
         </ul>
-		</div>
-	</div>
+    </div>
+  </div>
 
   <%# More to Explore row %>
-	<div class="row">
-		<div class="col-md-12 highlight-list explore">
-			<h3 class="section-heading">
+  <div class="row">
+    <div class="col-md-12 highlight-list explore">
+      <h3 class="section-heading">
         <%= t('revs.nav.more_to_explore') %>
       </h3>
         <ul class="image-grid">
@@ -167,7 +163,7 @@
             </div>
           </li>
         </ul>
-		</div>
-	</div>
+    </div>
+  </div>
 
 <% end %>

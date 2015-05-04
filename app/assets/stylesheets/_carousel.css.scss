@@ -52,3 +52,77 @@
 @media screen and (max-width: 767px) {
   #collection_carousel.carousel {margin-bottom: 0;}
 }
+
+
+
+/** Carousel **/
+// Sizes below set up carousel to show one image at a time
+.jcarousel {
+  float: left;
+  overflow: hidden;
+	width: 400px; // size of carousel image area
+}
+
+.jcarousel ul {
+  width: 20000em;
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.jcarousel li {
+  float: left;
+  width: 400px; // size of image on homepage
+}
+
+/** Carousel Controls **/
+.jcarousel-control-prev,
+.jcarousel-control-next {
+  position: absolute;
+  top: 0;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  background: #4E443C;
+  color: #fff;
+  text-decoration: none;
+  text-shadow: 0 0 1px #000;
+  font: 24px/27px Arial, sans-serif;
+  -webkit-border-radius: 8px;
+     -moz-border-radius: 8px;
+          border-radius: 8px;
+  -webkit-box-shadow: 0 0 2px #999;
+     -moz-box-shadow: 0 0 2px #999;
+          box-shadow: 0 0 2px #999;
+
+	&:active, &:hover, &.inactive {
+		color: $container_bg_color;
+		text-decoration: none;
+	}
+	&:active, &:hover {
+		background-color: #8c1515;
+	}
+	&.inactive, &.inactive:hover {
+		background-color: #999;
+	}
+}
+
+.jcarousel-control-prev {
+	left: 0;
+}
+
+.jcarousel-control-next {
+  right: 0;
+}
+
+.jcarousel-control-prev:hover span,
+.jcarousel-control-next:hover span {
+  display: block;
+}
+
+.jcarousel-control-prev.inactive,
+.jcarousel-control-next.inactive {
+  opacity: .5;
+  cursor: default;
+}
