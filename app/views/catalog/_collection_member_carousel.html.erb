@@ -1,10 +1,16 @@
-<div start="<%=start%>" rows="<%=rows%>" druid="<%=@document.id%>" total="<%=@carousel_members.total_members%>" id="carousel-items" class="carousel-inner">
-	<%= render :partial=> "collection_member_carousel_items", :locals => {:rows=>rows,:start=>start}%>
+<div start="<%=start%>" rows="<%=rows%>" data-druid="<%=@document.id%>" total="<%=@carousel_members.total_members%>" class="collection_carousel">
+	<ul id="carousel-items">
+		<%= render :partial=> "collection_member_carousel_items", :locals => {:rows=>rows,:start=>start}%>
+	</ul>
 </div>
 
 <div class="hidden showOnLoad carousel-controls">
-	 <a id="back-carousel-button" class="carousel-control left" style="display:none;" href="#collection_carousel" data-slide="prev">&lsaquo;</a>
+	<a href="#collection_carousel" class="jcarousel-control-prev">&lsaquo;</a>
 	 <span class="number-of-items">
-		<span class="iterator"><%=start.to_i+1%></span> of <%= pluralize(number_with_delimiter(@carousel_members.total_members), t('revs.collection_members.items_name')) %></span>
-	 <a id="forward-carousel-button"  class="carousel-control right"  href="#collection_carousel" data-slide="next">&rsaquo;</a>
+		<span class="iterator">
+			<%=start.to_i+1%>
+		</span>
+		of <%= pluralize(number_with_delimiter(@carousel_members.total_members), t('revs.collection_members.items_name')) %>
+	</span>
+	<a href="#collection_carousel" class="jcarousel-control-next">&rsaquo;</a>
 </div>

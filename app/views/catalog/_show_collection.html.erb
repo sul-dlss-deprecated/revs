@@ -15,17 +15,16 @@ $(document).ready(function(){
   </div>
 </div>
 
+<!-- Collection carousel -->
 <div class="row">
-  <div class="col-sm-7 col-lg-6 carousel-container">
-    <div id="collection_carousel" class="carousel slide">
-		  <% @carousel_members = @document.get_members(:rows=>blacklight_config.collection_member_carousel_items,:start=>0,:include_hidden=>can?(:view_hidden, SolrDocument))%>
-			<%= render :partial=> "collection_member_carousel", :locals => {:rows=>blacklight_config.collection_member_carousel_items,:start=>0}%>
-    </div>
-  </div>
-  <div class="col-sm-5 col-lg-6">
-    <h4 class="show-document-title"><%= fix_revs_institute_name(document.title.html_safe) %></h4>
-    <%= render :partial => "show_default_collection", :locals => {:document => @document} %>
-  </div>
+	<div class="col-sm-7 col-lg-6 jcarousel-wrapper">
+		<% @carousel_members = @document.get_members(:rows=>blacklight_config.collection_member_carousel_items,:start=>0,:include_hidden=>can?(:view_hidden, SolrDocument))%>
+		<%= render :partial=> "collection_member_carousel", :locals => {:rows=>blacklight_config.collection_member_carousel_items,:start=>0}%>
+	</div>
+	<div class="col-sm-5 col-lg-6 collection-description">
+		<h4 class="show-document-title"><%= fix_revs_institute_name(document.title.html_safe) %></h4>
+		<%= render :partial => "show_default_collection", :locals => {:document => @document} %>
+	</div>
 </div>
 
 <div id="collection-members-grid" class="row">

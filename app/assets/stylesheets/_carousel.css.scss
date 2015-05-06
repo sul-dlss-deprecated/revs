@@ -1,69 +1,17 @@
-.carousel {
-	display: inline-block;
-	.carousel-caption {
-	  background: rgba(0, 0, 0, 0.4);
-	  padding: 0 0 10px 0;
-    bottom: 0;
-    left: 2px;
-    right: 2px;
-	  p {
-	    color: #ddd;
-	    font-size: 14px;
-      margin-bottom: 0;
-	  }
-	}
-}
-.carousel-controls {
-	position: relative;
-	margin-top: 20px;
-	height: 45px;
-	.number-of-items {
-		@extend .text-muted;
-		position: absolute;
-		left: 36%;
-		top: 25%;
-	}
-  /* Deliberate overrides to change look of default buttons */
-  .carousel-control {
-    background: none;
-    border: none;
-    color: #333;
-    font-size: 90px;
-    font-weight: 200;
-    height: 30px;
-    width: 40px;
-    line-height: 22px;
-    &.left {margin-left:-12px;}
-    &.right {margin-right:-12px;}
-  }
-}
-.carousel-inner > .item > img, .carousel-inner > .item > a > img{
+/** Carousel **/
+.jcarousel img, .collection_carousel img {
   border: 2px solid #bbb;
 }
-@media screen and (min-width: 992px) and (max-width: 1199px) {
- .carousel-inner {max-width: 380px;}
-}
 
-/* Responsive overrides specific to Collection page carousel */
-@media screen and (max-width: 991px) {
-  #collection_carousel.carousel {margin-bottom: 5px;}
-}
-
-@media screen and (max-width: 767px) {
-  #collection_carousel.carousel {margin-bottom: 0;}
-}
-
-
-
-/** Carousel **/
-// Sizes below set up carousel to show one image at a time
-.jcarousel {
+// The width sizes below set up the carousel to show one image at a time
+// (It can show more than one image if item width is less than carousel width.)
+.jcarousel, .collection_carousel {
   float: left;
   overflow: hidden;
 	width: 400px; // size of carousel image area
 }
 
-.jcarousel ul {
+.jcarousel ul, .collection_carousel ul {
   width: 20000em;
   position: relative;
   list-style: none;
@@ -71,12 +19,48 @@
   padding: 0;
 }
 
-.jcarousel li {
+.jcarousel li, .collection_carousel li {
   float: left;
-  width: 400px; // size of image on homepage
+  width: 400px; // size of image to display
 }
 
-/** Carousel Controls **/
+.collection_carousel {
+	float: none;
+	li {
+		position: relative;
+		height: 263px;
+	}
+	.item-caption {
+		background-color: rgba(0,0,0,0.4);
+		position: absolute;
+		bottom: 0;
+		left: 2px;
+		width: 99%;
+		p {
+			color: #ddd;
+			font-size: 14px;
+			line-height: 1.3;
+			text-shadow: 0 1px 0 #000;
+			margin: 0;
+			padding: 8px 12px;
+		}
+	}
+}
+
+// Carousel controls
+.carousel-controls {
+	position: relative;
+	margin-top: 15px;
+	margin-right: 10px;
+	height: 40px;
+	.number-of-items {
+		@extend .text-muted;
+		position: absolute;
+		left: 39%;
+		top: 25%;
+	}
+}
+
 .jcarousel-control-prev,
 .jcarousel-control-next {
   position: absolute;
@@ -84,7 +68,7 @@
   width: 30px;
   height: 30px;
   text-align: center;
-  background: #4E443C;
+  background: #999;
   color: #fff;
   text-decoration: none;
   text-shadow: 0 0 1px #000;
@@ -96,7 +80,7 @@
      -moz-box-shadow: 0 0 2px #999;
           box-shadow: 0 0 2px #999;
 
-	&:active, &:hover, &.inactive {
+	&:active, &:hover, &:focus, &.inactive {
 		color: $container_bg_color;
 		text-decoration: none;
 	}
@@ -123,6 +107,23 @@
 
 .jcarousel-control-prev.inactive,
 .jcarousel-control-next.inactive {
-  opacity: .5;
+  opacity: .3;
   cursor: default;
+}
+
+@media screen and (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+	.carousel-controls {
+		margin-right: 0;
+	}
+}
+@media screen and (max-width: $screen-xs-max) {
+	.jcarousel-wrapper + .collection-description {
+		margin-top: 20px;
+	}
+}
+
+@media screen and (max-width: $screen-xs-max) {
+	.carousel-controls {
+		max-width: 400px;
+	}
 }
