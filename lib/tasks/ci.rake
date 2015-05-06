@@ -1,6 +1,11 @@
 require 'jettywrapper' unless Rails.env.production? 
 require 'rest_client'
 
+# before doing stuff with fixtures, be sure we are not running in production or pointing to a actual real solr server
+def allowed_solr?
+  !Rails.env.production? && Blacklight.solr.uri.port != 8080 && !Blacklight.solr.uri.to_s.include?('sul-solr') && !Blacklight.solr.uri.to_s.include?('stanford.edu')
+end
+
 namespace :jetty do
     
   desc "Restart jetty with new settings and reload fixtures"
@@ -60,22 +65,26 @@ namespace :revs do
   
   desc "Delete and index all fixtures in solr"
   task :refresh_fixtures do
-    unless Blacklight.solr.uri.port == 8080
+    if allowed_solr?
       Rake::Task["revs:delete_records_in_solr"].invoke
       Rake::Task["revs:index_fixtures"].invoke
     else
-      puts "Refusing to refresh fixtures since you are connecting on port 8080.  You know, for safety."
+      puts "Refusing to refresh fixtures.  You know, for safety.  Check your solr config."
     end
   end
   
   desc "Index all fixutres into solr"
   task :index_fixtures do
-    add_docs = []
-    Dir.glob("#{Rails.root}/spec/fixtures/*.xml") do |file|
-      add_docs << File.read(file)
+    if allowed_solr?
+      add_docs = []
+      Dir.glob("#{Rails.root}/spec/fixtures/*.xml") do |file|
+        add_docs << File.read(file)
+      end
+      puts "Adding #{add_docs.count} documents to #{Blacklight.solr.options[:url]}"
+      RestClient.post "#{Blacklight.solr.options[:url]}/update?commit=true", "<update><add>#{add_docs.join(" ")}</add></update>", :content_type => "text/xml"
+    else
+      puts "Refusing to index fixtures.  You know, for safety.  Check your solr config."
     end
-    puts "Adding #{add_docs.count} documents to #{Blacklight.solr.options[:url]}"
-    RestClient.post "#{Blacklight.solr.options[:url]}/update?commit=true", "<update><add>#{add_docs.join(" ")}</add></update>", :content_type => "text/xml"
   end
   
   desc "Clean up saved items - remove any saved items which reference items/solr documents that do not exist"
@@ -85,11 +94,11 @@ namespace :revs do
 
   desc "Delete all records in solr"
   task :delete_records_in_solr do
-   unless Rails.env.production? || Blacklight.solr.uri.port == 8080
+    if allowed_solr?
       puts "Deleting all solr documents from #{Blacklight.solr.options[:url]}"
       RestClient.post "#{Blacklight.solr.options[:url]}/update?commit=true", "<delete><query>*:*</query></delete>" , :content_type => "text/xml"
     else
-      puts "Refusing to delete since we're running under the #{Rails.env} environment or connecting on port 8080. You know, for safety."
+      puts "Refusing to delete fixtures.  You know, for safety.  Check your solr config."
     end
   end
 end
