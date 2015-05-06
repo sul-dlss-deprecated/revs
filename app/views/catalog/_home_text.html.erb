@@ -3,7 +3,7 @@
   <div class="row slideshow showOnLoad" style="display:none;">
     <div class="col-md-12">
       <div class="jcarousel-wrapper">
-        <div class="jcarousel">
+        <div class="homepage-carousel carousel">
           <ul>
             <% @highlight_collections.each_with_index do |collection, index| %>
               <li class="item<%= " active" if index == 0 %>" data-collection-title="<%= clean_collection_name(collection.title) %>" data-collection-href="<%= collection_path(collection) %>" data-collection-description="<%= truncate(collection.description,:length=>250) %>">

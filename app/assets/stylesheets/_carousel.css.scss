@@ -1,17 +1,17 @@
 /** Carousel **/
-.jcarousel img, .collection_carousel img {
+.carousel img{
   border: 2px solid #bbb;
 }
 
 // The width sizes below set up the carousel to show one image at a time
 // (It can show more than one image if item width is less than carousel width.)
-.jcarousel, .collection_carousel {
+.carousel {
   float: left;
   overflow: hidden;
 	width: 400px; // size of carousel image area
 }
 
-.jcarousel ul, .collection_carousel ul {
+.carousel ul {
   width: 20000em;
   position: relative;
   list-style: none;
@@ -19,7 +19,7 @@
   padding: 0;
 }
 
-.jcarousel li, .collection_carousel li {
+.carousel li {
   float: left;
   width: 400px; // size of image to display
 }

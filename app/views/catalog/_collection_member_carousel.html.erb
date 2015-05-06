@@ -1,4 +1,4 @@
-<div start="<%=start%>" rows="<%=rows%>" data-druid="<%=@document.id%>" total="<%=@carousel_members.total_members%>" class="collection_carousel">
+<div start="<%=start%>" rows="<%=rows%>" data-druid="<%=@document.id%>" total="<%=@carousel_members.total_members%>" class="collection_carousel carousel">
 	<ul id="carousel-items">
 		<%= render :partial=> "collection_member_carousel_items", :locals => {:rows=>rows,:start=>start}%>
 	</ul>

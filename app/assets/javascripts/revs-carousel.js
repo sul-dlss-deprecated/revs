@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
   // Initialize homepage carousel
-  $('.jcarousel').jcarousel();
+  $('.homepage-carousel').jcarousel();
 
   // Initialize collection details carousel with autoscrolling at 3 second interval
   $('.collection_carousel').jcarousel()
@@ -35,7 +35,7 @@ $(document).ready(function(){
 
   // Carousel on home page
   // When new item slides into view, update metadata shown for item
-  $('.jcarousel').on('jcarousel:targetin', 'li', function() {
+  $('.homepage-carousel').on('jcarousel:targetin', 'li', function() {
     $("#featured-collection-nav #collection-title-link").text($(this).attr("data-collection-title"));
     $("#featured-collection-nav #collection-title-link").attr('href', $(this).attr("data-collection-href"));
     $("#featured-collection-nav #collection-image-link").attr('href', $(this).attr("data-collection-href"));
