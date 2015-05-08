@@ -4,7 +4,7 @@
       <div class="col-xs-1 result-item-checkbox">
 			  <%= check_box_tag 'bulk_edit[selected_druids][]', document.id, (@bulk_edit.nil? || @bulk_edit[:selected_druids].nil?) ? false : @bulk_edit[:selected_druids].include?(document.id), :id=>"bulk_edit_selected_druids_#{document.id}"  %>
       </div>
-      <div class="col-xs-4 result-thumbnail">
+      <div class="col-xs-4 col-md-3 col-lg-4 result-thumbnail">
         <%= link_to_document document,
               :label => image_tag(document.images(:large).first,
               :alt => document.title.html_safe,
@@ -13,7 +13,7 @@
               :counter => (document_counter + 1 + @response.params[:start].to_i) %>
       </div>
 
-      <div class="col-xs-7 col-md-4 result-metadata">
+      <div class="col-xs-7 col-md-5 col-lg-4 result-metadata">
         <h5 class="index_title">
           <%= link_to_document document,
               :label => document.title.html_safe,
@@ -43,7 +43,7 @@
         </div>
       </div>
 
-      <div class="col-xs-7 col-xs-offset-5 col-md-3 col-md-offset-0 edit-field-value">
+      <div class="col-xs-7 col-md-3 edit-field-value">
         <span class="current-value"></span>
         <span class="field-label"></span>
         <span class="new-value"></span>
