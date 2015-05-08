@@ -1,4 +1,4 @@
-/*  
+/*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
  *
@@ -9,11 +9,11 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- 
+
  *
  * Used by blacklight_range_limit
  *= require  'blacklight_range_limit'
- *         
+ *
 */
 
 /*@import "bootstrap-variables";*/
@@ -37,7 +37,6 @@
 @import "variables";
 @import "mixins";
 @import "bootstrap_overrides";
-@import "blacklight_overrides";
 
 @import "global";
 @import "layout";
@@ -64,10 +63,10 @@
 @import "stanford_footer";
 @import "jquery-ui-1.10.4.custom.min";
 
-/* load print last 
+/* load print last
  *
  * Used by blacklight_range_limit
  *= require  'blacklight_range_limit'
- *         
+ *
 */
 @import "print";
