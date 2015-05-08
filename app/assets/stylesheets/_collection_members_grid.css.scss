@@ -1,5 +1,7 @@
 #collection-members-grid {
   @include member-section-header;
+  margin-left: 0;
+  margin-right: 0;
 	.controls {
 	  font-size: 12px;
 	  margin-bottom: 10px;
@@ -28,12 +30,15 @@
 	}
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+  #collection-members-grid .collection-members .item {
+    margin: 5px;
+  }
+}
+
+@media screen and (max-width: $screen-xs-max) {
   #collection-members-grid .collection-members-grid-header .controls {
     padding-top: 3px;
     text-align: left;
-  }
-  .collection-members {
-    padding-left: 15px;
   }
 }
