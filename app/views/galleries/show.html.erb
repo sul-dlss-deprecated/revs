@@ -1,7 +1,7 @@
 <div class="col-md-9">
   <h2>
     <%= @gallery.title %>
-    <% if is_logged_in_user?(current_user) %>
+    <% if is_logged_in_user?(@gallery.user) %>
       <span class="label profile-visibility <%= @gallery.public ? 'label-success' : '' %>"><%= display_gallery_visibility(@gallery) %></span>
     <% end %>
   </h2>
