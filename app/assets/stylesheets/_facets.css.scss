@@ -1,4 +1,4 @@
-#facets {
+#facet-panel-collapse {
   padding-bottom: 2px;
   padding-top: 2px;
   background-color: #fff;
@@ -37,7 +37,7 @@
       color: inherit;
     }
   }
-  .facets-collapse > .panel-default:last-child {
+  > .panel-default:last-child {
     border-bottom: 0;
   }
 }
@@ -48,7 +48,13 @@
    move the Browse heading outside of the facet box (for Revs theme)
    and keep the responsive controls working as intended.
 */
-//#facets-revs {margin-top: 15px;}
+#facets-revs {
+  .top-panel-heading.panel-heading {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
 #facets-revs .btn-navbar {
 // Navbar button for toggling navbar items in responsive layouts
 // These definitions need to come after '.navbar .btn'
@@ -71,9 +77,6 @@
     //@include border-radius(1px);
     @include box-shadow(0 1px 0 rgba(0,0,0,.25));
   }
-  & .fa-bars + .fa-bars {
-    margin-top: 3px;
-  }
 }
 
 /* Override date range slider styling */
@@ -94,11 +97,13 @@
   }
 }
 
-@media screen and (max-width: 767px) {
-//  #facets-revs .btn-navbar {
-//    display: block;
-//    margin: 5px;
-//  }
+@media screen and (max-width: $screen-xs-max) {
+  .searchbox {
+    margin-bottom: 50px;
+  }
+  .facets-toggle {
+    margin-top: -6px;
+  }
 }
 
 @media screen and (min-width: 768px) and (max-width: 1199px) {
@@ -123,7 +128,7 @@
       display: none;
     }
   }
-  #facets .limit_content.range_limit .current {
+  #facet-panel-collapse .limit_content.range_limit .current {
     text-align: left;
     margin-left: 18px;
   }

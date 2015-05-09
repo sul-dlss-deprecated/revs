@@ -2,18 +2,24 @@
 <% if has_facet_values?  %>
 
 	<div id="facets-revs">
-    <h4><%= t('revs.search.facets.title') %></h4>
-    <div data-toggle="collapse" data-target=".facets-collapse">
-        <a class="btn btn-default btn-navbar">
-          <span class="fa fa-bars"></span>
-          <span class="fa fa-bars"></span>
-					<span class="fa fa-bars"></span>
-        </a>
+
+		<div class="top-panel-heading panel-heading">
+			<h4 class="facets-heading">
+				<%= t('revs.search.facets.title') %>
+
+				<button type="button" class="facets-toggle" data-toggle="collapse" data-target="#facet-panel-collapse">
+					<span class="sr-only">Toggle facets</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+
+			</h4>
+		</div>
+
+		<div id="facet-panel-collapse" class="collapse panel-group">
+      <%= render_facet_partials %>
     </div>
-    <div id="facets" class="facets sidenav">
-      <div class="facets-collapse">
-        <%= render_facet_partials %>
-      </div>
-    </div>
+
   </div>
-<% end %>&nbsp;
+<% end %>
