@@ -7,7 +7,7 @@
     <div class="blacklight-collection document row<%= " first" if counter == 0 %>">
       <div class="col-xs-12 collection-title">
         <h5 class="index_title">
-          <%= link_to_document collection, :label=>fix_revs_institute_name(collection.title.html_safe) %>
+          <%= link_to_document collection, fix_revs_institute_name(collection.title.html_safe) %>
           <span class="text-muted">
             (<%= pluralize(number_with_delimiter(collection_members.total_members),
                 t('revs.collection_members.items_name')) %>)

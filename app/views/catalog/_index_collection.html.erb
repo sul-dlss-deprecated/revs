@@ -2,12 +2,12 @@
 
 <div class="<%= render_document_class document %> document">
   <%= link_to_document(document,
-      :label => image_tag(document.collection_members.first.images(:large).first,
+      image_tag(document.collection_members.first.images(:large).first,
       :alt => document.title.html_safe,:title=>document.title.html_safe),
       :counter => (document_counter + 1 + @response.params[:start].to_i))  %>
 
   <h5 class="index_title">
-    <%= link_to_document document, :label=>document.title.html_safe,
+    <%= link_to_document document, document.title.html_safe,
         :counter => (document_counter + 1 + @response.params[:start].to_i) %>
     <span class="text-muted">
       (<%= pluralize(number_with_delimiter(document.collection_members.total_members),

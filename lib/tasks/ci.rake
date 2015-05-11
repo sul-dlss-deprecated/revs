@@ -3,7 +3,7 @@ require 'rest_client'
 
 # before doing stuff with fixtures, be sure we are not running in production or pointing to a actual real solr server
 def allowed_solr?
-  !Rails.env.production? && Blacklight.solr.uri.port != 8080 && !Blacklight.solr.uri.to_s.include?('sul-solr') && !Blacklight.solr.uri.to_s.include?('stanford.edu')
+  !Rails.env.production? && Blacklight.default_index.connection.uri.port != 8080 && !Blacklight.default_index.connection.uri.to_s.include?('sul-solr') && !Blacklight.default_index.connection.uri.to_s.include?('stanford.edu')
 end
 
 namespace :jetty do
@@ -54,10 +54,10 @@ namespace :revs do
   desc "Copy configuration files"
   task :config do
 
-    config_files = %w{database.yml solr.yml secrets.yml}
+    config_files = %w{database.yml blacklight.yml secrets.yml}
     config_files.each {|config_file| cp("#{Rails.root}/config/#{config_file}.example", "#{Rails.root}/config/#{config_file}.yml") unless File.exists?("#{Rails.root}/config/#{config_file}.yml")}
 
-    solr_files = %w{synonyms.yml schema.yml solrconfig.yml}
+    solr_files = %w{synonyms.txt schema.xml solrconfig.xml}
     solr_files.each do |solr_file|
       cp("#{Rails.root}/config/#{solr_file}", "#{Rails.root}/jetty/solr/dev/conf/#{solr_file}")
       cp("#{Rails.root}/config/#{solr_file}", "#{Rails.root}/jetty/solr/test/conf/#{solr_file}")
@@ -82,8 +82,8 @@ namespace :revs do
       Dir.glob("#{Rails.root}/spec/fixtures/*.xml") do |file|
         add_docs << File.read(file)
       end
-      puts "Adding #{add_docs.count} documents to #{Blacklight.solr.options[:url]}"
-      RestClient.post "#{Blacklight.solr.options[:url]}/update?commit=true", "<update><add>#{add_docs.join(" ")}</add></update>", :content_type => "text/xml"
+      puts "Adding #{add_docs.count} documents to #{Blacklight.default_index.connection.options[:url]}"
+      RestClient.post "#{Blacklight.default_index.connection.options[:url]}/update?commit=true", "<update><add>#{add_docs.join(" ")}</add></update>", :content_type => "text/xml"
     else
       puts "Refusing to index fixtures.  You know, for safety.  Check your solr config."
     end
@@ -97,8 +97,8 @@ namespace :revs do
   desc "Delete all records in solr"
   task :delete_records_in_solr do
     if allowed_solr?
-      puts "Deleting all solr documents from #{Blacklight.solr.options[:url]}"
-      RestClient.post "#{Blacklight.solr.options[:url]}/update?commit=true", "<delete><query>*:*</query></delete>" , :content_type => "text/xml"
+      puts "Deleting all solr documents from #{Blacklight.default_index.connection.options[:url]}"
+      RestClient.post "#{Blacklight.default_index.connection.options[:url]}/update?commit=true", "<delete><query>*:*</query></delete>" , :content_type => "text/xml"
     else
       puts "Refusing to delete fixtures.  You know, for safety.  Check your solr config."
     end

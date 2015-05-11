@@ -3,7 +3,7 @@
 <div class="<%= render_document_class document %> document">
   <% raise "Object missing image for #{document.id}" if document.images.nil? %>
   <%= link_to_document document,
-        :label => image_tag(document.images(:large).first,
+        image_tag(document.images(:large).first,
         :alt => document.title.html_safe,
         :title => document.title.html_safe,
         :border => 0),
@@ -15,7 +15,7 @@
 
   <h5 class="index_title">
     <%= link_to_document document,
-        :label => document.title.html_safe,
+        document.title.html_safe,
         :counter => (document_counter + 1 + @response.params[:start].to_i) %>
   </h5>
 </div>

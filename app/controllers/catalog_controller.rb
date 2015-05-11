@@ -158,7 +158,7 @@ class CatalogController < ApplicationController
   end
 
   # when a request for /catalog/BAD_SOLR_ID is made, this method is executed... overriding default blacklight behavior
-  def invalid_solr_id_error
+  def invalid_document_id_error
     routing_error
   end
 
