@@ -16,9 +16,9 @@ describe SolrDocument do
     describe "collection siblings" do
       it "should memoize the solr request to get the siblings of a collection member" do
         response = {"response" => {"numFound" => 3, "docs" => [{:id=>"1234"}, {:id =>"4321"}]}}
-        solr = double("solr")
-        expect(solr).to receive(:select).with(:params => {:fq=>"is_member_of_ssim:\"collection-1\" AND ((*:* -visibility_isi:[* TO *]) OR visibility_isi:1)", :sort=>"priority_isi desc",:rows => "20", :start=>"0"}).once.and_return(response)
-        expect(Blacklight).to receive(:solr).and_return(solr)
+        connection = double("connection")
+        expect(connection).to receive(:select).with(:params => {:fq=>"is_member_of_ssim:\"collection-1\" AND ((*:* -visibility_isi:[* TO *]) OR visibility_isi:1)", :sort=>"priority_isi desc",:rows => "20", :start=>"0"}).once.and_return(response)
+        expect(Blacklight.default_index).to receive(:connection).and_return(connection)
         doc = SolrDocument.new({:id => "abc123", :is_member_of_ssim => ["collection-1"]})
         5.times do
           doc.siblings
@@ -32,19 +32,19 @@ describe SolrDocument do
       end
       it "should memoize the solr request to get collection members" do
         response = {"response" => {"numFound" => 3, "docs" => [{:id=>"1234"}, {:id =>"4321"}]}}
-        solr = double("solr")
-        expect(solr).to receive(:select).with(:params => {:fq=>"is_member_of_ssim:\"collection-1\" AND ((*:* -visibility_isi:[* TO *]) OR visibility_isi:1)", :sort=>"priority_isi desc",:rows => "20",:start=>"0"}).once.and_return(response)
-        expect(Blacklight).to receive(:solr).and_return(solr)
+        connection = double("connection")
+        expect(connection).to receive(:select).with(:params => {:fq=>"is_member_of_ssim:\"collection-1\" AND ((*:* -visibility_isi:[* TO *]) OR visibility_isi:1)", :sort=>"priority_isi desc",:rows => "20",:start=>"0"}).once.and_return(response)
+        expect(Blacklight.default_index).to receive(:connection).and_return(connection)
         doc = SolrDocument.new({:id => "collection-1", :format_ssim => "collection"})
         5.times do
           doc.collection_members
         end
       end
-      it "should memoize the solr request to get a collection member's parent collection" do
+      it "should memorize the solr request to get a collection member's parent collection" do
         response = {"response" => {"numFound" => 1, "docs" => [{:id=>"1234"}]}}
-        solr = double("solr")
-        expect(solr).to receive(:select).with(:params => {:fq => "id:\"abc123\""}).once.and_return(response)
-        expect(Blacklight).to receive(:solr).and_return(solr)
+        connection = double("connection")
+        expect(connection).to receive(:select).with(:params => {:fq => "id:\"abc123\""}).once.and_return(response)
+        expect(Blacklight.default_index).to receive(:connection).and_return(connection)
         doc = SolrDocument.new({:id => "item-1", :is_member_of_ssim => ["abc123"]})
         5.times do
           doc.collection

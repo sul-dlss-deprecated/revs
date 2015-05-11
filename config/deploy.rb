@@ -11,7 +11,7 @@ set :stages, %W(staging development production)
 set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
 
 # Default value for :linked_files is []
-set :linked_files, %w{config/database.yml config/solr.yml}
+set :linked_files, %w{config/database.yml config/blacklight.yml config/secrets.yml}
 
 # Default value for linked_dirs is []
 set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/uploads}
