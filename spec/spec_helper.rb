@@ -192,7 +192,7 @@ def reindex_solr_docs(druids)
   druids.each do |druid|
     add_docs << File.read(File.join("#{Rails.root}/spec/fixtures","#{druid}.xml"))
   end
-  RestClient.post "#{Blacklight.solr.options[:url]}/update?commit=true", "<update><add>#{add_docs.join(" ")}</add></update>", :content_type => "text/xml"
+  RestClient.post "#{Blacklight.default_index.connection.options[:url]}/update?commit=true", "<update><add>#{add_docs.join(" ")}</add></update>", :content_type => "text/xml"
 end
 
 
@@ -421,7 +421,7 @@ def get_title_from_druid(druid)
 end
 
 def get_solrdoc_from_druid(druid)
-  return Blacklight.solr.select(:params =>{:q=>"id:#{druid}"})["response"]["docs"][0]
+  return Blacklight.default_index.connection.select(:params =>{:q=>"id:#{druid}"})["response"]["docs"][0]
 end
 
 def cleanup_editstore_changes

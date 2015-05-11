@@ -35,7 +35,7 @@ namespace :revs do
     q+=" AND collection_ssim:\"#{collection}\"" unless collection.blank?
     rows = limit.blank? ? "1000000" : limit
         
-    @all_docs = Blacklight.solr.select(:params => {:q => q, :rows=>rows})            
+    @all_docs = Blacklight.default_index.connection.select(:params => {:q => q, :rows=>rows})            
     total_docs=@all_docs['response']['docs'].size
     
     start_time=Time.now
@@ -83,7 +83,7 @@ namespace :revs do
     q+=" AND collection_ssim:\"#{collection}\"" unless collection.blank?
     rows = limit.blank? ? "1000000" : limit
         
-    @all_docs = Blacklight.solr.select(:params => {:q => q, :rows=>rows})            
+    @all_docs = Blacklight.default_index.connection.select(:params => {:q => q, :rows=>rows})            
     total_docs=@all_docs['response']['docs'].size
     
     start_time=Time.now
@@ -102,7 +102,7 @@ namespace :revs do
       n+=1
       puts "#{n} of #{total_docs}: #{id}"
       begin
-        url="#{Blacklight.solr.options[:url]}/update?commit=true"
+        url="#{Blacklight.default_index.connection.options[:url]}/update?commit=true"
         params={:add=>{:doc=>doc}}.to_json
         RestClient.post url, params,:content_type => :json, :accept=>:json
       rescue
@@ -168,7 +168,7 @@ namespace :revs do
     q+=" AND collection_ssim:\"#{collection}\"" unless collection.blank?
     rows = limit.blank? ? "100000" : limit
     
-    @all_docs = Blacklight.solr.select(:params => {:q => q, :rows=>rows})    
+    @all_docs = Blacklight.default_index.connection.select(:params => {:q => q, :rows=>rows})    
 
     total_docs=@all_docs['response']['docs'].size
     n=0
@@ -179,7 +179,7 @@ namespace :revs do
     puts " limited to #{limit} items" unless limit.blank?
     puts " dry run" if dry_run
     puts "field checked: #{date_field}"
-    puts "solr: #{Blacklight.solr.options[:url]}"
+    puts "solr: #{Blacklight.default_index.connection.options[:url]}"
     puts "editstore enabled: #{Revs::Application.config.use_editstore}"
     puts "***********WARNING: Editstore is not enabled" unless Revs::Application.config.use_editstore
     puts ""
@@ -240,14 +240,14 @@ namespace :revs do
   task :missing_images, [:collection_name,:delete] => :environment do |t, args| 
     num_missing=0
     q="collection_ssim:\"#{args[:collection_name]}\""
-    @all_docs = Blacklight.solr.select(:params => {:q => q, :rows=>'100000'})
+    @all_docs = Blacklight.default_index.connection.select(:params => {:q => q, :rows=>'100000'})
     puts "#{@all_docs['response']['numFound']} documents match search and #{@all_docs['response']['docs'].size} returned"
     @all_docs['response']['docs'].each do |doc|
       item=SolrDocument.new(doc)
       if item.is_item? && (item.images.nil? || item.images.size != 1)
         puts "#{item.id}  ---   #{item.identifier}" 
         if !args[:delete].nil? && args[:delete]="delete"
-          url="#{Blacklight.solr.options[:url]}/update?commit=true"
+          url="#{Blacklight.default_index.connection.options[:url]}/update?commit=true"
           params="<delete><query>id:#{item.id}</query></delete>"
           puts "DELETING!"
           RestClient.post url, params,:content_type => :xml, :accept=>:xml
@@ -263,7 +263,7 @@ namespace :revs do
   task :images_with_spaces, [:collection_name,:delete] => :environment do |t, args| 
     num_with_spaces=0
     q="collection_ssim:\"#{args[:collection_name]}\""
-    @all_docs = Blacklight.solr.select(:params => {:q => q, :rows=>'100000'})
+    @all_docs = Blacklight.default_index.connection.select(:params => {:q => q, :rows=>'100000'})
     puts "#{@all_docs['response']['numFound']} documents match search and #{@all_docs['response']['docs'].size} returned"
     @all_docs['response']['docs'].each do |doc|
       item=SolrDocument.new(doc)
@@ -291,7 +291,7 @@ namespace :revs do
     #Get all docs with a non-blank entrant
     total_success_count = 0
     total_error_count = 0 
-    results=Blacklight.solr.select(:params => {:q=>'entrant_ssi:[* TO *]',:rows=>'2000000'})
+    results=Blacklight.default_index.connection.select(:params => {:q=>'entrant_ssi:[* TO *]',:rows=>'2000000'})
 
     puts "Found #{results['response']['docs'].size} documents with value in entrant_ssi field"
     results['response']['docs'].each do |result|
@@ -328,7 +328,7 @@ namespace :revs do
     #Get all docs with a non-blank current_owner
     total_success_count = 0
     total_error_count = 0 
-    results=Blacklight.solr.select(:params => {:q=>'current_owner_ssi:[* TO *]',:rows=>'2000000'})
+    results=Blacklight.default_index.connection.select(:params => {:q=>'current_owner_ssi:[* TO *]',:rows=>'2000000'})
 
     puts "Found #{results['response']['docs'].size} documents with value in current_owner_ssi field"
     results['response']['docs'].each do |result|
@@ -497,7 +497,7 @@ namespace :revs do
           row[sourceid] = debug_source_id if local_testing
         
           #Attempt to get the target based on the source_id
-          #target = Blacklight.solr.select(:params =>{:q=>'source_id_ssi:"'+ row['sourceid']+'"'})["response"]["docs"][0]
+          #target = Blacklight.default_index.connection.select(:params =>{:q=>'source_id_ssi:"'+ row['sourceid']+'"'})["response"]["docs"][0]
           target = find_doc_via_blacklight(row[@sourceid])
           
       
@@ -507,7 +507,7 @@ namespace :revs do
             alt_attempt = row[filename]
             alt_attempt.slice! file_ext
             target = find_doc_via_blacklight(alt_attempt)
-            #target = Blacklight.solr.select(:params =>{:q=>'source_id_ssi:"'+ alt_attempt+'"'})["response"]["docs"][0]
+            #target = Blacklight.default_index.connection.select(:params =>{:q=>'source_id_ssi:"'+ alt_attempt+'"'})["response"]["docs"][0]
           end
           
        
@@ -633,7 +633,7 @@ namespace :revs do
     formats_to_cleanup=["black-and-white film ","black-and-white negatives/color negatives "]
 
     formats_to_cleanup.each do |format_to_cleanup|
-      results=Blacklight.solr.select(:params => {:fq=>'format_ssim:"' + format_to_cleanup + '"',:rows=>'200000'})
+      results=Blacklight.default_index.connection.select(:params => {:fq=>'format_ssim:"' + format_to_cleanup + '"',:rows=>'200000'})
       puts "Found #{results['response']['docs'].size} documents with '#{format_to_cleanup}'"
       results['response']['docs'].each do |result|
         doc=SolrDocument.new(result)
@@ -736,7 +736,7 @@ namespace :revs do
     q+=" AND collection_ssim:\"#{collection}\"" unless collection.blank?
     rows = "10000000" 
         
-    @all_docs = Blacklight.solr.select(:params => {:q => q, :rows=>rows})            
+    @all_docs = Blacklight.default_index.connection.select(:params => {:q => q, :rows=>rows})            
     total_docs=@all_docs['response']['docs'].size
     
     start_time=Time.now
@@ -789,7 +789,7 @@ namespace :revs do
   task :cleanup_marques => :environment do
     Revs::Application.config.use_editstore = false
 
-    results=Blacklight.solr.select(:params => {:q=>'automobiles OR automobile',:rows=>'200000'})
+    results=Blacklight.default_index.connection.select(:params => {:q=>'automobiles OR automobile',:rows=>'200000'})
     puts "Found #{results['response']['docs'].size} documents with the term automobile"
     results['response']['docs'].each do |result|
       doc=SolrDocument.new(result)
@@ -887,7 +887,7 @@ namespace :revs do
   end
 
   def find_doc_via_blacklight(source)
-     return Blacklight.solr.select(:params =>{:q=>'source_id_ssi:"'+ source+'"'})["response"]["docs"][0]
+     return Blacklight.default_index.connection.select(:params =>{:q=>'source_id_ssi:"'+ source+'"'})["response"]["docs"][0]
   end
   
   #Note, this function doesn't save the document, I just return a content string!

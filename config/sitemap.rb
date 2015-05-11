@@ -45,7 +45,7 @@ SitemapGenerator::Sitemap.create do
 
       add collection_path(collection.id), :lastmod => collection['timestamp'] # add the collection object
 
-      result=Blacklight.solr.select(:params => {:q=>'is_member_of_ssim:"' + collection.id + '"',:rows=>@max_expected_collection_size}) # get all members of the collection
+      result=Blacklight.default_index.connection.select(:params => {:q=>'is_member_of_ssim:"' + collection.id + '"',:rows=>@max_expected_collection_size}) # get all members of the collection
       puts ".working on collection #{collection.id}: #{collection.title} with #{result['response']['numFound']} total images"
       total_images+= result['response']['numFound']
 

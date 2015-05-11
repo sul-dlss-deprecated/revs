@@ -7,7 +7,7 @@ module ActivesolrHelper
   module ClassMethods
 
      def find(id) # get a specific druid from solr and return a solrdocument class
-       response = Blacklight.solr.select(
+       response = Blacklight.default_index.connection.select(
                                    :params => {
                                      :fq => "id:\"#{id}\"" }
                                  )
@@ -263,7 +263,7 @@ module ActivesolrHelper
   end
   
   def update_solr(field_name,operation,new_values,commit=true)
-    url="#{Blacklight.solr.options[:url]}/update?commit=#{commit}"
+    url="#{Blacklight.default_index.connection.options[:url]}/update?commit=#{commit}"
     params="[{\"id\":\"#{id}\",\"#{field_name}\":"
     if operation == 'add'
       params+="{\"add\":\"#{new_values.gsub('"','\"')}\"}}]"

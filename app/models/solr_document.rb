@@ -257,7 +257,7 @@ class SolrDocument
   def collection
     return nil unless is_item?
     @collection ||= SolrDocument.new(
-                      Blacklight.solr.select(
+                      Blacklight.default_index.connection.select(
                         :params => {
                           :fq => "#{SolrDocument.unique_key}:\"#{self[blacklight_config.collection_member_identifying_field].first}\""
                         }
@@ -307,7 +307,7 @@ class SolrDocument
     fq="#{blacklight_config.collection_member_identifying_field}:\"#{self[blacklight_config.collection_member_identifying_field].first}\""
     fq+=" AND #{SolrDocument.images_query(:visible)}" unless include_hidden
     @siblings ||= CollectionMembers.new(
-                               Blacklight.solr.select(
+                               Blacklight.default_index.connection.select(
                                  :params => {
                                    :fq => fq,
                                    :sort=> sort,
@@ -344,7 +344,7 @@ class SolrDocument
     fq="#{blacklight_config.collection_member_identifying_field}:\"#{self[SolrDocument.unique_key]}\""
     fq+=" AND #{SolrDocument.images_query(:visible)}" unless include_hidden
     return CollectionMembers.new(
-                              Blacklight.solr.select(
+                              Blacklight.default_index.connection.select(
                                 :params => {
                                   :fq => fq,
                                   :sort=> sort,
@@ -485,7 +485,7 @@ class SolrDocument
      end
      sort=params[:sort] || default_sort
      
-     Blacklight.solr.select(
+     Blacklight.default_index.connection.select(
        :params => {
          :fq => fq,
          :rows => rows,
@@ -504,7 +504,7 @@ class SolrDocument
    # count the total number of images (default to those marked as visible only, can also pass in :all or :hidden)
   def self.total_images(visibility=:visible)
     params={:q=>'-format_ssim:collection',:fq=>self.images_query(visibility)}
-    items=Blacklight.solr.get 'select',:params=>params      
+    items=Blacklight.default_index.connection.get 'select',:params=>params      
     return items['response']['numFound']
   end
   
