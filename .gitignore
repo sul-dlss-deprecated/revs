@@ -7,10 +7,11 @@
 # Ignore bundler config
 /.bundle
 
-config/database.yml
-config/solr.yml
-config/secrets.yml
-config/secrets.yml.yml
+database.yml
+solr.yml
+secrets.yml
+secrets.yml.yml
+database.yml.yml
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
