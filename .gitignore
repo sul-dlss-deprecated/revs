@@ -9,6 +9,8 @@
 
 config/database.yml
 config/solr.yml
+config/secrets.yml
+config/secrets.yml.yml
 
 # Ignore the default SQLite database.
 /db/*.sqlite3

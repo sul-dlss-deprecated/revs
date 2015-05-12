@@ -55,7 +55,7 @@ namespace :revs do
   task :config do
 
     config_files = %w{database.yml blacklight.yml secrets.yml}
-    config_files.each {|config_file| cp("#{Rails.root}/config/#{config_file}.example", "#{Rails.root}/config/#{config_file}.yml") unless File.exists?("#{Rails.root}/config/#{config_file}.yml")}
+    config_files.each {|config_file| cp("#{Rails.root}/config/#{config_file}.example", "#{Rails.root}/config/#{config_file}") unless File.exists?("#{Rails.root}/config/#{config_file}.yml")}
 
     solr_files = %w{synonyms.txt schema.xml solrconfig.xml}
     solr_files.each do |solr_file|

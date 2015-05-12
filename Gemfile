@@ -15,6 +15,7 @@ gem 'editstore', '>= 2.0.2'
 gem 'revs-utils', '>= 2.0.10'
 
 gem 'rails', '>= 4'
+gem 'responders', '~> 2.0'
 
 # user authentication and roles
 gem 'devise'

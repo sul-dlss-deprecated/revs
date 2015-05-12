@@ -5,7 +5,7 @@ class CreateSearches < ActiveRecord::Migration
       t.text  :query_params
       t.integer :user_id
 
-      t.timestamps
+      t.timestamps :null=>false
     end
     add_index :searches, :user_id
   end

@@ -11,7 +11,7 @@ class CreateRunLog < ActiveRecord::Migration
         t.string :note
         t.datetime :started
         t.datetime :ended
-        t.timestamps
+        t.timestamps :null=>false
       end
     end
   end

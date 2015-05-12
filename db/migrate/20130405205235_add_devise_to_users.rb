@@ -35,7 +35,7 @@ class AddDeviseToUsers < ActiveRecord::Migration
       t.string :authentication_token
 
       # Uncomment below if timestamps were not included in your original model.
-      # t.timestamps
+      # t.timestamps :null=>false
     end
 
     add_index :users, :sunet

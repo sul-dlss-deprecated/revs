@@ -132,8 +132,8 @@ GEM
     diff-lcs (1.2.5)
     domain_name (0.5.23)
       unf (>= 0.0.5, < 1.0.0)
-    druid-tools (0.3.1)
-    editstore (2.0.2)
+    druid-tools (0.4.1)
+    editstore (2.0.3)
       druid-tools (>= 0.2.0)
       rails (>= 4.1)
     ensure_valid_encoding (0.5.3)
@@ -363,6 +363,7 @@ DEPENDENCIES
   quiet_assets
   rails (>= 4)
   ranked-model
+  responders (~> 2.0)
   rest-client (~> 1.7)
   revs-utils (>= 2.0.10)
   rspec-rails

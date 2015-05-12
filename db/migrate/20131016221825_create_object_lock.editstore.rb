@@ -6,7 +6,7 @@ class CreateObjectLock < ActiveRecord::Migration
       create_table :editstore_object_locks do |t|
         t.string :druid, :null=>false
         t.datetime :locked
-        t.timestamps
+        t.timestamps :null=>false
       end
     end
   end

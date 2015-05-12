@@ -4,7 +4,7 @@ class CreateOntologies < ActiveRecord::Migration
       t.string :field
       t.string :value
       t.integer :position
-      t.timestamps
+      t.timestamps :null=>false
     end
     add_index :ontologies, :field
   end

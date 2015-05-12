@@ -5,7 +5,7 @@ class CreateChangeLogs < ActiveRecord::Migration
       t.string  :druid, :null=>false
       t.string  :operation, :null=>false
       t.text    :note
-      t.timestamps
+      t.timestamps :null=>false
     end
   end
 end

@@ -1,7 +1,7 @@
 class AddUser < ActiveRecord::Migration
   def up
     create_table :users do |t|
-      t.timestamps
+      t.timestamps :null=>false
     end
     
   end

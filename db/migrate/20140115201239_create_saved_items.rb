@@ -4,7 +4,7 @@ class CreateSavedItems < ActiveRecord::Migration
       t.string :druid, :null=>false
       t.integer :gallery_id,  :null => false
       t.text   :description
-      t.timestamps
+      t.timestamps :null=>false
     end
     add_index :saved_items,:druid
     add_index :saved_items,:gallery_id    

@@ -3,7 +3,7 @@ class CreateItems < ActiveRecord::Migration
     create_table :items do |t|
       t.string :druid
       t.integer :visibility_value
-      t.timestamps
+      t.timestamps :null=>false
     end
     add_index :items,:druid, :unique=>true
   end

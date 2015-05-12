@@ -6,7 +6,7 @@ class CreateGalleries < ActiveRecord::Migration
       t.string :title
       t.text   :description
       t.string :gallery_type, :null => false
-      t.timestamps
+      t.timestamps :null=>false
     end
     add_index :galleries,:user_id
     add_index :galleries,:public

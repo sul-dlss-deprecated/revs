@@ -6,7 +6,7 @@ class CreateEditstoreFields < ActiveRecord::Migration
       create_table :editstore_fields do |t|
         t.integer :project_id,:null=>false
         t.string  :name,:null=>false
-        t.timestamps
+        t.timestamps :null=>false
       end
       fields=%w{title description}
       fields.each do |field_name|

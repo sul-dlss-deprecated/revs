@@ -5,7 +5,7 @@ class CreateAnnotations < ActiveRecord::Migration
       t.text :json
       t.string :text
       t.string :druid
-      t.timestamps
+      t.timestamps :null=>false
     end
     add_index :annotations, :druid
     add_index :annotations, :user_id
