@@ -339,7 +339,7 @@ form.report-problem {
   position: absolute;
   left: 35%;
   top: 80%;
-  content: url(asset-path("500-page.png", image));
+  content: image-url("500-page.png"); 
   opacity: 0.05;
 }
 

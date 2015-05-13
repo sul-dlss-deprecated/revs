@@ -388,7 +388,7 @@ span.constraints-label {margin-right: 0.5em;}
     margin-bottom: 6px;
     .btnRemove {
       /* override the BL icon used as separator */
-      background: asset_url('remove.png', image) no-repeat center center;
+      background: image-url('remove.png') no-repeat center center;
       background-size: 8px 8px;
       border-left-color: $constraint_border_color;
     }
