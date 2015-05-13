@@ -5,7 +5,7 @@
   <field name="is_member_of_ssim">mr163sv5231</field>
   <field name="source_id_ssi">sul:M1919_b27_f5</field>
   <field name="collection_ssim">The Road and Track Archive</field>
-  <field name="archive_ssi">The Road and Track Archive</field>
+  <field name="archive_ssi">Road and Track Archive</field>
   <field name="image_id_ssm">bc915dc7146_00_0001</field>
   <field name="image_id_ssm">bc915dc7146_00_0002</field>
   <field name="image_id_ssm">bc915dc7146_00_0003</field>
@@ -24,4 +24,5 @@
   <field name="image_id_ssm">bc915dc7146_00_0016</field>
   <field name="image_id_ssm">bc915dc7146_00_0017</field>
   <field name="visibility_isi">1</field>
+  <field name="score_isi">0</field>
 </doc>

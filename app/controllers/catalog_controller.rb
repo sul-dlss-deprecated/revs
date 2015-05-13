@@ -23,6 +23,7 @@ class CatalogController < ApplicationController
     if can? :curate, :all
       self.blacklight_config.add_facet_field 'has_more_metadata_ssi', :label => "More Metadata"
       self.blacklight_config.add_facet_field 'visibility_isi', :label => 'Visibility', :query => {:visibility_1=>{:label=>"Hidden", :fq=>"visibility_isi:0"}}
+      self.blacklight_config.add_sort_field 'score_isi asc, title_tsi asc', :label => 'score'
     end
   end
 
@@ -246,6 +247,7 @@ class CatalogController < ApplicationController
     config.add_facet_field 'model_year_ssim', :label => 'Model Year', :sort => 'index', :limit => 25
     config.add_facet_field 'model_ssim', :label => 'Model', :limit => 25
     config.add_facet_field 'collection_ssim', :label => "Collection"
+    config.add_facet_field 'archive_ssi', :label => "Archive"
     config.add_facet_field 'photographer_ssi', :label => "Photographer", :limit => 25
     config.add_facet_field 'entrant_ssim', :label => "Entrant", :limit => 25
     config.add_facet_field 'people_ssim', :label => "People", :limit => 25

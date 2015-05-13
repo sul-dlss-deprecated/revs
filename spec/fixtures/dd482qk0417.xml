@@ -13,4 +13,5 @@
   <field name="subjects_ssim">History</field>
   <field name="people_ssim">Guy, First</field>
   <field name="people_ssim">Woman, Second</field>
+  <field name="score_isi">34</field>
 </doc>

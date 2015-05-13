@@ -14,6 +14,8 @@
 
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'collection_names',:label=>t('revs.show.label_collection'),:multivalued=>true,:facet=>true,:editable=>false} %>
 
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'archive_name',:label=>t('revs.show.label_archive'),:facet=>true,:editable=>false} %>
+
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'title',:label=>t('revs.show.label_title'),:editable=>true} if in_curator_edit_mode %>
 
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'description',:label=>t('revs.show.label_description'),:simple_format=>true, :editable=>true, :input_type=>'text_area'} %>
@@ -148,6 +150,8 @@
             <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'metadata_sources',:label=>t('revs.show.label_metadata_sources'),:simple_format=>true,:editable=>true, :input_type=>'text_area'} %>
 
             <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'has_more_metadata',:label=>t('revs.show.label_more_metadata'),:simple_format=>true,:editable=>true} %>
+
+            <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'score',:label=>t('revs.show.label_score'),:editable=>false} %>
 
           <% end %>
 

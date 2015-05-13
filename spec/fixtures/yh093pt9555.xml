@@ -39,4 +39,5 @@
   <field name="model_ssim">Camaro</field>
   <field name="model_year_ssim">1950</field>
   <field name="model_year_ssim">1951</field>
+  <field name="score_isi">100</field>
 </doc>

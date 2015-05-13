@@ -5,4 +5,5 @@
   <field name="highlighted_ssi">true</field>
   <field name="description_tsim">The Road and Track Archive is at Stanford Library.</field>
   <field name="archive_ssi">Road and Track Archive</field>
+  <field name="score_isi">10</field>
 </doc>

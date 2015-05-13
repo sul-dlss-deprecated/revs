@@ -27,4 +27,5 @@
   <field name="race_data_tsi">It was hot that day.</field>
   <field name="metadata_sources_tsi">Just made it up</field>
   <field name="vehicle_markings_tsi">Driver door scratched</field>
+  <field name="score_isi">67</field>
 </doc>
