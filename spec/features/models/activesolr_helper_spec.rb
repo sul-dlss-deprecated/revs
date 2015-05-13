@@ -80,6 +80,8 @@ describe ActivesolrHelper, :integration => true do
       expect(doc.photographer.class).to eq(String)
       expect(doc.description).to eq(doc['description_tsim'].first) # returns a single value even though this is a multivalued field in solr
       expect(doc.description.class).to eq(String)
+      expect(doc.archive_name).to eq(doc['archive_ssi'])
+      expect(doc.archive_name.class).to eq(String)
     end
 
     it "should retrieve a couple multivalued fields correctly" do
@@ -88,6 +90,8 @@ describe ActivesolrHelper, :integration => true do
       expect(doc.marque.class).to eq(Array)
       expect(doc.people).to eq(doc['people_ssim'])
       expect(doc.people.class).to eq(Array)
+      expect(doc.collection_names).to eq(doc['collection_ssim'])
+      expect(doc.collection_names.class).to eq(Array)
     end
 
     it "should retrieve a couple a multivalued fields correctly with a split when using the MFV syntax" do

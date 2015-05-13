@@ -237,7 +237,7 @@ GEM
     rake (10.4.2)
     ranked-model (0.4.0)
       activerecord (>= 3.1.12)
-    rdf (1.1.12)
+    rdf (1.1.13)
       link_header (~> 0.0, >= 0.0.8)
     ref (1.0.5)
     responders (2.1.0)

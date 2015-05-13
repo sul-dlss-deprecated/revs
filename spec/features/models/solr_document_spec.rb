@@ -440,18 +440,18 @@ describe SolrDocument, :integration => true do
       end
     end
 
-    describe "all_images" do
-      it "should return the total number of images" do
-        expect(SolrDocument.total_images).to eq(16) # default is visible
-        expect(SolrDocument.total_images(:visible)).to eq(16)
+    describe "all_objects" do
+      it "should return the total number of objects" do
+        expect(SolrDocument.total_images).to eq(18) # default is visible
+        expect(SolrDocument.total_images(:visible)).to eq(18)
         expect(SolrDocument.total_images(:hidden)).to eq(1)
-        expect(SolrDocument.total_images(:all)).to eq(17)
+        expect(SolrDocument.total_images(:all)).to eq(19)
       end
     end
     
     describe "all_collections" do
       it "shold return an array of collection SolrDocuments" do
-        expect(SolrDocument.all_collections.length).to eq(2)
+        expect(SolrDocument.all_collections.length).to eq(3)
         SolrDocument.all_collections.each do |doc|
           expect(doc.is_collection?).to be_truthy
           expect(doc).to be_a SolrDocument
