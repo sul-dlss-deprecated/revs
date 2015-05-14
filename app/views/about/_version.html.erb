@@ -7,6 +7,7 @@
 
 <p>
   <strong>Last deployed time:</strong> <%=File.new('REVISION').mtime if File.exists?('REVISION')%><br />
+  <strong>Git Revision:</strong> <%=File.read('REVISION') if File.exists?('REVISION')%><br />
   <strong>Current deployed version:</strong> <%=Revs::Application.config.version %><br />
   <strong>Last restart time:</strong> <%=File.new('tmp/restart.txt').mtime  if File.exists?('tmp/restart.txt')%>
 </p>
