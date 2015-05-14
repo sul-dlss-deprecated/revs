@@ -1,11 +1,11 @@
 // Override Bootstrap Tooltip styling
 .tooltip-inner {
-  background: #fff;
-  border: 1px solid #000;
-  color: #000;
-  -moz-box-shadow: 2px 5px 10px 2px #999;
-  -webkit-box-shadow: 2px 5px 10px 2px #999;
-  box-shadow: 2px 5px 10px 2px #999;
+  background: $white;
+  border: 1px solid $gray-base;
+  color: $gray-base;
+  -moz-box-shadow: 2px 5px 10px 2px $revs-gray-light;
+  -webkit-box-shadow: 2px 5px 10px 2px $revs-gray-light;
+  box-shadow: 2px 5px 10px 2px $revs-gray-light;
 }
 .tooltip.in {
   opacity: 1;

@@ -36,7 +36,7 @@ $collection-image-right-gutter: 30px;
    margin-top: 0;
    padding-top: 0;
    > a {
-     color: #000;
+     color: $gray-base;
    }
   }
 }
@@ -89,7 +89,7 @@ $collection-image-right-gutter: 30px;
       padding-top: 3px;
     }
     a {
-      color: #333333;
+      color: $gray-dark;
     }
   }
   h3 {
@@ -111,7 +111,7 @@ $collection-image-right-gutter: 30px;
       }
     }
     .item-links a {
-      color: #990000;
+      color: $active-link-color;
       font-size: 13px;
       font-weight: 500;
     }

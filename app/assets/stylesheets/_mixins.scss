@@ -1,17 +1,17 @@
 /* Mixins */
 @mixin red-top_border {
-  border-top: 5px solid #990000;
+  border-top: 5px solid $revs-red;
   padding-top: 10px;
 }
 
 @mixin gray-top_border {
-  border-top: 5px solid #DDDDDD;
+  border-top: 5px solid $revs-gray;
   padding-top: 10px;
 }
 
 @mixin page-header {
   @include gray-top_border;
-  color: #990000;
+  color: $revs-red;
   margin-top: 0;
   padding-top: 10px;
   text-transform: uppercase;
@@ -19,7 +19,7 @@
 
 @mixin member-section-header {
   @include gray-top_border;
-  color: #990000;
+  color: $revs-red;
   margin-top: 20px;
   padding-top: 10px;
   text-transform: uppercase;
@@ -27,7 +27,7 @@
 
 @mixin image_border_thumbnail {
   border: 1px solid #bbb;
-  box-shadow: 2px 2px #ddd;
+  box-shadow: 2px 2px $revs-gray;
 }
 
 @mixin hidden-visibility-overlay-label {
@@ -78,7 +78,7 @@
 }
 
 @mixin item-highlighting {
-  background: #eee;
+  background: $gray-lighter;
   border: 1px dotted #aaaaaa;
   border-radius: 5px;
   padding: 12px 6px 0;
@@ -86,12 +86,12 @@
 
 @mixin tooltip-styling {
   .help i {
-    color: #999;
+    color: $revs-gray-light;
     font-size: 16px;
     padding-left: 3px;
   }
   .help i:hover {
-    color: #990000;
+    color: $revs-red;
     text-decoration: none;
   }
   .tooltip {

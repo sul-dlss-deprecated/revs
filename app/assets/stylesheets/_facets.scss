@@ -1,30 +1,30 @@
 #facet-panel-collapse {
   padding-bottom: 2px;
   padding-top: 2px;
-  background-color: #fff;
+  background-color: $white;
   border: 1px solid #d4d4d4;
   border-radius: 6px;
   .panel {
     border: none;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid $revs-gray;
     border-radius: 0;
     margin-bottom: 0;
   }
   .panel-default > .panel-heading {
-    background-color: #fff;
+    background-color: $white;
     border-bottom: none;
     padding-right: 8px;
   }
   .panel-title {
     font-size: 14px;
     font-weight: 700;
-    &:after {color: #999;}
-    a {color: #333;}
+    &:after {color: $revs-gray-light;}
+    a {color: $gray-dark;}
     a:hover {color: inherit;}
   }
   .panel-body {
-    background-color: #f7f7f7;
-    border-top: 1px solid #ddd;
+    background-color: $off-white;
+    border-top: 1px solid $revs-gray;
     padding-right: 12px;
   }
   ul.facet-values {
@@ -71,7 +71,7 @@
     display: block;
     width: 18px;
     height: 2px;
-    background-color: #f5f5f5;
+    background-color: $white-smoke;
 
     //BLACKLIGHT-UPGRADE-REMOVAL
     //@include border-radius(1px);
@@ -88,8 +88,8 @@
     border-color: #aaa;
   }
   .slider-handle {
-    background-color: #990000;
-    background-image: linear-gradient(to bottom, #990000, darken(#990000, 10%));
+    background-color: $revs-red;
+    background-image: linear-gradient(to bottom, $revs-red, darken($revs-red, 10%));
   }
   .missing {
     padding-left: 12px;

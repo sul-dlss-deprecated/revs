@@ -36,19 +36,19 @@ body {
         border: none;
         text-decoration: none;
         &:hover {
-          color: #660000;
+          color: $revs-red-dark;
         }
       }
       &:hover {
-        background-color: #eee;
-        color: #660000;
+        background-color: $gray-lighter;
+        color: $revs-red-dark;
       }
     }
   }
 }
 
 a:focus {
-	outline: thin dotted #333;
+	outline: thin dotted $gray-dark;
 	outline: 5px auto -webkit-focus-ring-color;
 	outline-offset: -2px;
 }
@@ -65,11 +65,11 @@ img {
 }
 
 a, .btn-link {
-	color: #990000;
+	color: $active-link-color;
 	text-decoration: none;
 }
 a:hover, .btn-link:hover {
-	color: #660000;
+	color: $revs-red-dark;
 	text-decoration: underline;
 }
 #news-gothic .normal {
@@ -101,11 +101,11 @@ h1 {
 	font-weight: 700;
 	font-size: 1.5em;
 	line-height: 1.5em;
-	color: #000000;
+	color: $gray-base;
 	margin-top: 30px;
 	-webkit-font-smoothing: antialiased;
 	margin-bottom: 30px;
-	border-bottom: 2px solid #dddddd;
+	border-bottom: 2px solid $revs-gray;
 	padding-bottom: 10px;
 }
 h2 {
@@ -119,7 +119,7 @@ h3 {
 }
 p {
   font-family: "Helvetica","Arial",sans-serif;
-  color: #333333;
+  color: $gray-dark;
 //  font-size: 0.8em;
   font-size: 13px;
   line-height: 1.5em;
@@ -129,10 +129,10 @@ span.content-type {
 	font-size: 0.8em;
 	font-weight: bold;
 	display: block;
-	color: #990000;
+	color: $revs-red;
 	text-transform: uppercase;
 	-webkit-font-smoothing: antialiased;
-	&.collection {color: #01835F;}
+	&.collection {color: $green;}
 }
 .slideshow {
   margin-bottom: 20px;
@@ -141,22 +141,22 @@ span.content-type {
 .search_form .btn {float: right;}
 
 .modal-header {
-  background-color: #990000;
-  border-bottom: 1px solid #dddddd;
+  background-color: $revs-red;
+  border-bottom: 1px solid $revs-gray;
   h3 {
-    color: #eee;
+    color: $gray-lighter;
     font-size: 1.5em;
     padding-top: 0;
     text-align: center;
   }
   button.close {
-    color: #eee;
+    color: $gray-lighter;
     opacity: 0.9;
   }
 }
 
 .modal-footer {
-  background-color: #f5f5f5;
+  background-color: $white-smoke;
   border-radius: 0 0 6px 6px;
 }
 
@@ -173,7 +173,7 @@ span.content-type {
   display: inline;
 }
 #sidebar-nav .nav-header {
-  color: #999;
+  color: $revs-gray-light;
   padding: 3px 0;
   font-size: 11px;
   font-weight: 700;
@@ -192,7 +192,7 @@ span.content-type {
       margin-bottom: 0;
     }
     .account-date {
-      color: #777;
+      color: $gray-light;
       font-size: 13px;
       font-style: italic;
       padding-bottom: 3px;
@@ -233,11 +233,11 @@ form .controls > #submit.btn {
   padding: 1px 5px 2px;
 }
 .badge-revs, .label-revs {
-  background-color: #990000;
+  background-color: $revs-red;
 }
 
 #report-problem-form {
-  border-bottom: 1px solid #dddddd;
+  border-bottom: 1px solid $revs-gray;
   display: none;
   h2 {
     border-top: none;
@@ -289,16 +289,16 @@ select:focus {
 .handle:hover{cursor: move;}
 
 .btn.btn-default {
-  color: #333333;
-  background-color: #FFFFFF;
-  background-image: linear-gradient(to bottom, #FFFFFF, #E0E0E0);
-  border-color: #CCCCCC #CCCCCC #CCCCCC;
+  color: $gray-dark;
+  background-color: $white;
+  background-image: linear-gradient(to bottom, $white, $revs-gray);
+  border-color: $gray-ccc $gray-ccc $gray-ccc;
 }
 .btn.btn-default:hover {
-  color: #333333;
-  background-color: #E0E0E0;
-  background-image: linear-gradient(to bottom, #E0E0E0, #E0E0E0);
-  border-color: #CCCCCC #CCCCCC #CCCCCC;
+  color: $gray-dark;
+  background-color: $revs-gray;
+  background-image: linear-gradient(to bottom, $revs-gray, $revs-gray);
+  border-color: $gray-ccc $gray-ccc $gray-ccc;
 }
 
 form.report-problem {
@@ -339,7 +339,7 @@ form.report-problem {
   position: absolute;
   left: 35%;
   top: 80%;
-  content: image-url("500-page.png"); 
+  content: image-url("500-page.png");
   opacity: 0.05;
 }
 
@@ -366,7 +366,7 @@ form.report-problem {
     }
   }
   #sidebar-nav {
-    border-top: 5px solid #ddd;
+    border-top: 5px solid $revs-gray;
   }
   .user-dashboard-sidebar #sidebar-nav {margin-top: 20px;}
 }
@@ -383,7 +383,7 @@ form.report-problem {
   .error-500:before {
     left: 10%;
   }
-  .blacklight-about #sidebar-nav {border-top: 5px solid #ddd;}
+  .blacklight-about #sidebar-nav {border-top: 5px solid $revs-gray;}
 }
 
 @media screen and (max-width: 479px) {
@@ -393,5 +393,5 @@ form.report-problem {
 }
 
 @media screen and (min-width: 768px) {
-  .blacklight-about #sidebar-nav {border-top: 5px solid #990000;}
+  .blacklight-about #sidebar-nav {border-top: 5px solid $revs-red;}
 }

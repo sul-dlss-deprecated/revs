@@ -1,5 +1,5 @@
 .image-filmstrip {
-  border: 1px solid #ccc;
+  border: 1px solid $gray-ccc;
   border-radius: 4px;
   background-color: #fafafa;
   bottom: 0;
@@ -9,7 +9,7 @@
   -moz-border-sizing: border-box;
 
   .prev, .next {
-    background-color: #fff;
+    background-color: $white;
     border-radius: 5px;
     opacity: 0.9;
     outline: none;
@@ -61,7 +61,7 @@
 
         img {
           border-width: 0;
-          background-color: #ddd;
+          background-color: $revs-gray;
           margin: 0;
           min-height: 100px;
           cursor: pointer;
@@ -78,7 +78,7 @@
           width: 80%;
         }
         .more-imgs {
-          border: 1px dashed #ccc;
+          border: 1px dashed $gray-ccc;
           height: 100px;
           width: 100px;
         }

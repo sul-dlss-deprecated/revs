@@ -1,6 +1,6 @@
 .admin {
   h3 {
-    color: #555;
+    color: $gray;
     font-size: 16px;
     margin-top: 10px;
     padding-top: 6px;
@@ -23,8 +23,8 @@
   }
 
   .notice {
-    background-color: #fff;
-    border: 1px solid #ddd;
+    background-color: $white;
+    border: 1px solid $revs-gray;
     border-radius: 6px;
     margin: 0 0 20px;
     padding: 0 12px;
@@ -104,7 +104,7 @@
     padding-top: 7px;
   }
   i.fa-arrows {
-    color: #555;
+    color: $gray;
   }
 }
 

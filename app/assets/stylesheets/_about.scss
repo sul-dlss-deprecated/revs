@@ -24,18 +24,18 @@
     width: 10px;
     height: 10px;
     text-indent: -9999px;
-    background: #999;
+    background: $revs-gray-light;
   }
 
   #about-section .contributor {
     margin-bottom: 10px;
     h4 {
-      color: #555;
+      color: $gray;
       font-size: 16px;
     }
     .media-body { margin: 3px 0 20px;}
     img {
-      border: 1px solid #ddd;
+      border: 1px solid $revs-gray;
       margin-right: 10px;
       margin-bottom: 15px;
       max-height: 80px;

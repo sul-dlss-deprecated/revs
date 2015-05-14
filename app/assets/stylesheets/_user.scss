@@ -34,7 +34,7 @@
   .profile-vitals {
     margin-top: 15px;
     .user-image {
-      border: 1px solid #ddd;
+      border: 1px solid $revs-gray;
       max-height: 150px;
       padding: 5px;
     }
@@ -47,7 +47,7 @@
     }
   }
   .profile-links {
-    border-bottom: 2px solid #ddd;
+    border-bottom: 2px solid $revs-gray;
     margin: 10px 0 30px;
     padding-bottom: 8px;
     .user-name {
@@ -66,7 +66,7 @@
         font-weight: bold;
         margin-left: 5px;
         &:hover, &:active, &:visited, &:link {
-          color: #555;
+          color: $gray;
           text-decoration: none;
         }
         i {
@@ -83,7 +83,7 @@
         }
       }
       .divider {
-        color: #999;
+        color: $revs-gray-light;
       }
     }
   }
@@ -115,9 +115,9 @@
       }
     }
     h3 {
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid $revs-gray;
       clear: left;
-      color: #777;
+      color: $gray-light;
       font-size: 1.25em;
       margin-bottom: 15px;
     }
@@ -129,7 +129,7 @@
     }
     i {
       background-image: none;
-      color: #777;
+      color: $gray-light;
       margin-right: 6px;
       vertical-align: baseline;
     }
@@ -203,7 +203,7 @@
       display: inline-block;
       margin-bottom: 0;
       .btn-link {
-        color: #990000;
+        color: $active-link-color;
         font-size: 13px;
         padding: 0;
         vertical-align: baseline;
@@ -447,7 +447,7 @@ table.user-annotations {
     }
   }
 //  #sidebar.user-dashboard-sidebar {
-//    border-top: 2px solid #ddd;
+//    border-top: 2px solid $revs-gray;
 //    margin-top: 12px;
 //    padding-top: 12px;
 //  }

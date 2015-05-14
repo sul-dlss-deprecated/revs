@@ -9,9 +9,9 @@
     float: right;
     font-size: 0.85em;
     margin-top: 9px;
-    a, input[type="submit"] {color: #ddd;}
+    a, input[type="submit"] {color: $revs-gray;}
     .caret {
-      border-top-color: #ddd;
+      border-top-color: $revs-gray;
     }
     .btn-group {
       display: inline-block;
@@ -34,12 +34,12 @@
         }
       }
       .dropdown-menu {
-        background-color: #fff;
-        border: 1px solid #999;
+        background-color: $white;
+        border: 1px solid $revs-gray-light;
         left: auto;
         right: 0;
         li .button_to input[type="submit"], li > a, li > a:visited {
-          color: #555;
+          color: $gray;
           font-size: 0.9em;
           padding: 2px 12px;
         }
@@ -48,9 +48,9 @@
         li.signout:hover, li.signout:focus {
           background-color: $active-link-color;
           background-image: none;
-          color: #fff;
+          color: $white;
           .button_to .btn-link {
-            color: #fff;
+            color: $white;
           }
         }
         li.divider:hover {
@@ -73,7 +73,7 @@
 
 #revs-masthead {
   background: white;
-  border-bottom: 1px solid #dddddd;
+  border-bottom: 1px solid $revs-gray;
   padding-bottom: 10px;
   padding-top: 5px;
   h1 {
@@ -91,7 +91,7 @@
   h2 {
     border: none;
     clear: left;
-    color: #555;
+    color: $gray;
     font-size: 1.2em;
     font-style: italic;
     font-weight: normal;
@@ -102,14 +102,14 @@
       float: right;
       font-size: 13px;
       font-style: normal;
-      color: #999;
+      color: $revs-gray-light;
     }
   }
 }
 
 .menu-bar {
-  background-color: #fff;
-  border-bottom: 1px solid #dddddd;
+  background-color: $white;
+  border-bottom: 1px solid $revs-gray;
   padding-left: 40px;
   .search-container {
     padding-left: 0;
@@ -140,7 +140,7 @@
   float: left;
   margin-left: -20px;
   > .active > a, > .active > a:hover {
-    background-color: #f7f7f7;
+    background-color: $off-white;
     box-shadow: none;
     -webkit-box-shadow: none;
   }
@@ -148,13 +148,13 @@
     float: left;
     line-height: 20px;
     &.active > a {
-      border-left: 1px solid #ddd;
-      border-right: 1px solid #ddd;
-      color: #990000;
+      border-left: 1px solid $revs-gray;
+      border-right: 1px solid $revs-gray;
+      color: $active-link-color;
     }
     > a {
       box-shadow: none;
-      color: #000000;
+      color: $gray-base;
       font-family: "news-gothic-std","Helvetica","Arial",sans-serif;
       font-weight: 700;
       text-transform: uppercase;
@@ -163,7 +163,7 @@
       padding: 10px 23px 8px 23px;
       &:hover, &:focus {
         background-color: white;
-        color: #990000;
+        color: $active-link-color;
       }
     }
   }

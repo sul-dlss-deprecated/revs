@@ -20,8 +20,8 @@
     }
   }
   img {
-    background: #fff;
-    border: 1px solid #ccc;
+    background: $white;
+    border: 1px solid $gray-ccc;
     display: block;
     padding: 5px;
     -webkit-box-shadow: 3px 6px 18px -7px rgba(153,153,153,1);
@@ -29,9 +29,9 @@
     box-shadow: 3px 6px 18px -7px rgba(153,153,153,1);
   }
   code {
-    background-color: #fff;
+    background-color: $white;
     border: none;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid $revs-gray;
     color: inherit;
   }
   img.help-image-full-width {
@@ -74,7 +74,7 @@
       text-align: center;
     }
     span.duration {
-      color: #777;
+      color: $gray-light;
       font-weight: 400;
     }
   }

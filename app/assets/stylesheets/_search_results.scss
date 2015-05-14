@@ -11,7 +11,7 @@
     }
   }
 
-  a {color: #333;}
+  a {color: $gray-dark;}
   .document {
     border-bottom: 0;
     margin-top: 0;
@@ -121,7 +121,7 @@
 
       .more-imgs {
         background: #dedede;
-        border-color: #999;
+        border-color: $revs-gray-light;
         color: #8a0f0f;
         font-size: 13px;
         line-height: 100px;
@@ -138,7 +138,7 @@
   }
 
   span.no-description {
-    color: #999;
+    color: $revs-gray-light;
     font-size: 13px;
     font-style: italic;
     font-weight: 300;
@@ -158,7 +158,7 @@
   }
 
   &.document {
-    border-top: 1px dotted #ccc;
+    border-top: 1px dotted $gray-ccc;
     margin-left: 0;
     margin-top: 35px;
     padding-bottom: 0;
@@ -190,7 +190,7 @@
   }
 
   img {
-    border: 1px solid #ccc;
+    border: 1px solid $gray-ccc;
     float: left;
     margin-bottom: 10px;
     margin-left: 10px;
@@ -240,7 +240,7 @@
   }
 
   .field-label {
-    color: #777;
+    color: $gray-light;
     display: block;
     font-size: 11px;
     padding-top: 3px;
@@ -271,7 +271,7 @@
 
 // .curator-edit-options == bulk edit controls in Curator view
 .curator-edit-options {
-  background-color: #fff;
+  background-color: $white;
   border-top: 2px solid #dedede;
   display: block;
   margin: 18px 0 0;
@@ -317,7 +317,7 @@
     }
 
     .help-block {
-      color: #333;
+      color: $gray-dark;
       margin-left: 20px;
     }
 
@@ -361,7 +361,7 @@
     }
 
     .update-field-heading {
-      color: #777;
+      color: $gray-light;
       font-weight: 700;
       margin-bottom: 10px;
     }
@@ -415,7 +415,7 @@
 }
 
 .prev-next {
-  color: #777;
+  color: $gray-light;
   float: right;
   font-size: 13px;
   font-weight: normal;
@@ -506,7 +506,7 @@ span.constraints-label {margin-right: .5em;}
   }
 
   .btn.remove {
-    color: #777;
+    color: $gray-light;
 
     span {font-size: 11px;}
 
@@ -541,7 +541,7 @@ span.constraints-label {margin-right: .5em;}
 
 // Pagination
 .pagination-container {
-  border-top: 1px solid #ddd;
+  border-top: 1px solid $revs-gray;
   clear: left;
 
   ul {
@@ -569,9 +569,9 @@ span.constraints-label {margin-right: .5em;}
     }
 
     > .active > a, > .active > a:hover {
-      background-color: #eee;
-      border-color: #ddd;
-      color: #555;
+      background-color: $gray-lighter;
+      border-color: $revs-gray;
+      color: $gray;
       font-weight: bold;
     }
   }
@@ -579,7 +579,7 @@ span.constraints-label {margin-right: .5em;}
 
 // Collection results pagination
 .collections-pagination-container {
-  border-top: 1px solid #ddd;
+  border-top: 1px solid $revs-gray;
 
   .pagination {
     display: block;
@@ -590,7 +590,7 @@ span.constraints-label {margin-right: .5em;}
     }
 
     span.page > a:active {
-      color: #999;
+      color: $revs-gray-light;
     }
 
     span.page.current {
