@@ -49,19 +49,19 @@
   .nav-pills {
     margin-bottom: 0;
     li > a {
-      background-color: lighten($header_bg_color, 10%);
-      border: 1px solid darken($header_bg_color, 5%);
+      background-color: lighten($header-bg-color, 10%);
+      border: 1px solid darken($header-bg-color, 5%);
       margin-left: 6px;
       padding-top: 3px;
       padding-bottom: 3px;
     }
     li > a:hover {
-      background-color: lighten($header_bg_color, 5%);
+      background-color: lighten($header-bg-color, 5%);
     }
     li > a.active, a.active:hover {
-      background-color: desaturate($active_link_color, 20%);
-      border: 1px solid darken($header_bg_color, 10%);
-      color: lighten($header_bg_color, 5%);
+      background-color: desaturate($active-link-color, 20%);
+      border: 1px solid darken($header-bg-color, 10%);
+      color: lighten($header-bg-color, 5%);
     }
   }
 }

@@ -87,7 +87,7 @@
           box-shadow: 0 0 2px #999;
 
 	&:active, &:hover, &:focus, &.inactive {
-		color: $container_bg_color;
+		color: $container-bg-color;
 		text-decoration: none;
 	}
 	&:active, &:hover {

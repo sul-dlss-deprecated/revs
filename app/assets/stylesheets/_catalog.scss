@@ -289,7 +289,7 @@
         padding-left: 16px;
       }
       a {
-        color: $active_link_color;
+        color: $active-link-color;
       }
     }
     .nav-header {
@@ -306,7 +306,7 @@
         display: inline-block;
         padding-left: 0;
         &.disabled {
-          background-color: $body_bg_color;
+          background-color: $body-bg-color;
           i {
             margin-right: 9px;
           }

@@ -1,5 +1,5 @@
 #documents {
-  border-top: 2px dotted darken($container_bg_color, 10%);
+  border-top: 2px dotted darken($container-bg-color, 10%);
   margin-top: 0;
   padding-top: 3px;
 
@@ -102,7 +102,7 @@
     font-size: 13px;
 
     a {
-      color: $active_link_color;
+      color: $active-link-color;
       text-decoration: none;
     }
 
@@ -252,7 +252,7 @@
   }
 
   .current-value {
-    color: $active_link_color;
+    color: $active-link-color;
   }
 
   .new-value {
@@ -439,7 +439,7 @@
 
   .dropdown-toggle,
   .dropdown-menu > li > a {
-    color: $active_link_color;
+    color: $active-link-color;
   }
 
   .dropdown-menu {
@@ -458,7 +458,7 @@
 span.constraints-label {margin-right: .5em;}
 
 #sortAndPerPage {
-  background-color: $body_bg_color;
+  background-color: $body-bg-color;
   border: 0;
   box-shadow: none;
   float: right;
@@ -482,7 +482,7 @@ span.constraints-label {margin-right: .5em;}
       // override the BL icon used as separator
       background: image-url('remove.png') no-repeat center center;
       background-size: 8px 8px;
-      border-left-color: $constraint_border_color;
+      border-left-color: $constraint-border-color;
     }
 
     .queryName,.filterName {
@@ -498,10 +498,10 @@ span.constraints-label {margin-right: .5em;}
   }
 
   .constraint-value, .btn.remove {
-    background-color: $constraint_bg_color;
-    border-color: $constraint_border_color;
+    background-color: $constraint-bg-color;
+    border-color: $constraint-border-color;
     border-radius: 12px;
-    color: $active_link_color;
+    color: $active-link-color;
     padding: 2px 10px;
   }
 
@@ -549,12 +549,12 @@ span.constraints-label {margin-right: .5em;}
 
       > a {
 
-        background-color: $body_bg_color;
-        color: $active_link_color;
+        background-color: $body-bg-color;
+        color: $active-link-color;
       }
 
       > a:hover {
-        color: $active_link_color;
+        color: $active-link-color;
         text-decoration: underline;
       }
 
@@ -598,7 +598,7 @@ span.constraints-label {margin-right: .5em;}
     }
 
     a:hover, a:focus {
-      color: $active_link_color;
+      color: $active-link-color;
       text-decoration: underline;
     }
   }

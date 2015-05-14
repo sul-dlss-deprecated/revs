@@ -9,7 +9,7 @@ html {
 
 body {
   font-family: "Helvetica","Arial",sans-serif;
-  background: $body_bg_color;
+  background: $body-bg-color;
   font-size: 0.85em;
   line-height: 18px;
   margin: 0;
@@ -28,7 +28,7 @@ body {
     form.button_to {
       margin: 0;
       input[type="submit"] {
-        color: $active_link_color;
+        color: $active-link-color;
         font-size: 1em;
         padding: 1px 0 2px;
       }

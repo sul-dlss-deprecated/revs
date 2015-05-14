@@ -1,18 +1,18 @@
-/* Variables */
+// Variables
 
-$body_bg_color: #f7f7f7;
-$header_bg_color: #DDDDDD;
-$active_link_color: #990000;
-$container_bg_color: #f7f7f7;
+$body-bg-color: #f7f7f7;
+$header-bg-color: #ddd;
+$active-link-color: #900;
+$container-bg-color: #f7f7f7;
 
-/* constraint (you searched for:) details: */
-$constraint_bg_color: lighten($header_bg_color, 10%);
-$constraint_border_color: darken($header_bg_color, 5%);
-$constraint_border_active_color: #FFD27A !default;
+// constraint (you searched for:) details
+$constraint-bg-color: lighten($header-bg-color, 10%);
+$constraint-border-color: darken($header-bg-color, 5%);
+$constraint-border-active-color: #ffd27a !default;
 
-/* label colors in rgba */
-$success: rgba(70,136,71, 0.9);
-$warning: rgba(248, 148, 6, 0.9);
-$important: rgba(185, 74, 72, 0.9);
-$default: rgba(153, 153, 153, 0.9);
-$info: rgba(58, 135, 173, 0.9);
+// label colors in rgba
+$success: rgba(70, 136, 71, .9);
+$warning: rgba(248, 148, 6, .9);
+$important: rgba(185, 74, 72, .9);
+$default: rgba(153, 153, 153, .9);
+$info: rgba(58, 135, 173, .9);

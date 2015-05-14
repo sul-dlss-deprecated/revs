@@ -9,8 +9,8 @@ $collection-image-right-gutter: 30px;
 #all_collections_carousel {
   float: left;
   .carousel-inner {
-    background-color: $body_bg_color;
-    border-right: $collection-image-right-gutter solid $body_bg_color;
+    background-color: $body-bg-color;
+    border-right: $collection-image-right-gutter solid $body-bg-color;
     max-height: 265px;
   }
 }
