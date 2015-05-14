@@ -40,4 +40,6 @@ end
 
 Squash::Ruby.configure :api_host => 'https://squash-dev.stanford.edu',
                        :api_key => '20f28544-89ff-42f8-b310-4d79a70a9b29',
-                       :disabled => true
+                       :disabled => true,
+                       :revision_file => 'REVISION'
+                       
