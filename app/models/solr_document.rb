@@ -430,7 +430,8 @@ class SolrDocument
     user=params[:user] || nil # currently logged in user, needed for some updates
     add_changelog(user)
     self.score = compute_score
-    update_item # propoage unique information to database as well when saving solr document
+    self.archive_name = Revs::Application.config.collier_archive_name if self.archive_name.blank?
+    update_item # propogate unique information to database as well when saving solr document
     super
   end
 

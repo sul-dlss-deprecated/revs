@@ -80,6 +80,8 @@ module Revs
     
     config.revs_reuse_link='http://revsinstitute.org/research-education/permission-to-use/'
     
+    config.collier_archive_name = 'Collier Collection' # this is the name of the collier archive, it will be added to records if it does not yet exist when saving
+    
     config.num_latest_user_activity = 3 # the latest number of flags/annotations to show on the user profile page     
     config.num_flags_per_item_per_user = 5 # the number of times each user is allowed to flag a particular item
     #config.flag_sort_display = {FLAG_STATES[:open]=> I18n.t('revs.flags.open_state_display_name'),FLAG_STATES[:fixed]=> I18n.t('revs.flags.fixed_state_display_name'),FLAG_STATES[:wont_fix]=> I18n.t('revs.flags.wont_fix_state_display_name')}

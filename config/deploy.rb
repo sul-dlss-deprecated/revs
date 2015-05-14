@@ -4,7 +4,7 @@ set :user, ask("User", 'enter in the app username')
 
 set :home_directory, "/home/#{fetch(:user)}"
 set :deploy_to, "#{fetch(:home_directory)}/#{fetch(:application)}"
-set :rvm_ruby_version, '2.1.2'
+set :rvm_ruby_version, '2.2.2'
 
 set :stages, %W(staging development production)
 
