@@ -472,6 +472,32 @@
   span {font-weight: 700;}
 }
 
+// Item metadata score
+.score-viz {
+  margin-bottom: 20px;
+  position: relative;
+
+  .max-score,
+  .item-score {
+    height: 6px;
+    left: 0;
+    position: absolute;
+    top: 0;
+  }
+
+  .max-score {
+    background-color: $revs-gray;
+    width: 100px;
+  }
+
+  .item-score {
+    background-color: $revs-red;
+    opacity: .5;
+    width: 0; // updated to actual item score via JavaScript
+    z-index: 5;
+  }
+}
+
 /* Responsive styles */
 @media screen and (max-width: 991px) {
   .blacklight-catalog-show {

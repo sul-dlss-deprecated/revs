@@ -142,6 +142,10 @@ $(document).ready(function(){
       $('#bulk-update-button').addClass('extra-padding');
     }
 
+		// Use item metadata score value to update score visualization
+		var score = $('.item-score').data('score-value');
+		$('.item-score').css('width', score);
+
    // Called when an individual checkbox is checked or unchecked in bulk edit view.
    // Update row status message if user changes individual checkbox
    $('.result-item-checkbox > input[type="checkbox"]').change(function() {
