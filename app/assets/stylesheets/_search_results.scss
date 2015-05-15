@@ -568,7 +568,10 @@ span.constraints-label {margin-right: .5em;}
       }
     }
 
-    > .active > a, > .active > a:hover {
+    > .active > span,
+    > .active > span:hover,
+    > .active > a,
+    > .active > a:hover {
       background-color: $gray-lighter;
       border-color: $revs-gray;
       color: $gray;
@@ -597,7 +600,8 @@ span.constraints-label {margin-right: .5em;}
       font-weight: bold;
     }
 
-    a:hover, a:focus {
+    a:hover,
+    a:focus {
       color: $active-link-color;
       text-decoration: underline;
     }
