@@ -42,7 +42,12 @@
     <noscript>
         <%= link_to(image_tag(@document.images(:large).first), "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'_new') %>
     </noscript>
-    <div class="revs-identifier"><span><%=t('revs.show.label_identifier') %>:</span> <%=@document.identifier%></div>
+
+    <div class="revs-identifier">
+      <span><%= t('revs.show.label_identifier') %>:</span>
+      <%= @document.identifier %>
+    </div>
+
   </div>
 
   <div class="col-sm-5 metadata">
@@ -50,13 +55,13 @@
     <% if from_gallery? %>
       <div class="row results-nav">
         <div class="col-sm-6 back-to-results">
-          <%= link_to t('revs.nav.return_to_gallery').html_safe, gallery_path(params[:gallery_id],extract_paging_params(params)) %>
+          <%= link_to t('revs.nav.return_to_gallery').html_safe, gallery_path(params[:gallery_id], extract_paging_params(params)) %>
         </div>
       </div>
     <% elsif from_favorites? %>
       <div class="row results-nav">
         <div class="col-sm-6 back-to-results">
-           <%=link_to t('revs.nav.return_to_favorites',:user_name=>params[:favorite_user_name]).html_safe,user_favorites_user_index_path(params[:user],extract_paging_params(params)) %>
+           <%=link_to t('revs.nav.return_to_favorites', :user_name=>params[:favorite_user_name]).html_safe, user_favorites_user_index_path(params[:user], extract_paging_params(params)) %>
         </div>
       </div>
     <% elsif in_search_result?  %>
@@ -78,16 +83,24 @@
 
     <div class="row">
       <div class="col-sm-12">
-        <h4 class="show-document-title"><%=@document.title%></h4>
+        <h4 class="show-document-title"><%= @document.title %></h4>
+
+        <%# Show curators a small metadata score visualization %>
+        <% if can? :curate, :all %>
+          <div class="score-viz">
+            <div class="max-score"></div>
+            <div class="item-score" data-score-value="<%= @document.score %>"></div>
+          </div>
+        <% end %>
 
         <div id="item_details">
-          <%= render :partial => "show_default_collection_member", :locals => {:document => @document} %>
+          <%= render :partial => "show_default_collection_member", :locals => { :document => @document } %>
         </div>
 
         <ul class="nav list-unstyled item-actions">
-          <li class="nav-header"><%=t('revs.admin.sidebar.actions')%></li>
+          <li class="nav-header"><%= t('revs.admin.sidebar.actions') %></li>
 
-          <% if can?(:create, SavedItem) && (@document.visibility != :hidden || @document.is_favorite?(current_user))%>
+          <% if can?(:create, SavedItem) && (@document.visibility != :hidden || @document.is_favorite?(current_user)) %>
             <li>
               <div id="favorites_link">
                 <%= render :partial=>'saved_items/add_to_favorites'%>
@@ -95,7 +108,7 @@
             </li>
           <% end %>
 
-          <% if can?(:create, Gallery) && can?(:create, SavedItem) && @document.visibility != :hidden%>
+          <% if can?(:create, Gallery) && can?(:create, SavedItem) && @document.visibility != :hidden %>
             <li>
               <div id="user_galleries">
                 <%= render(:partial => "saved_items/add_to_gallery") %>
@@ -104,7 +117,7 @@
           <% end %>
 
           <% if (can?(:read, Annotation) || can?(:create, Annotation))
-               @annotations = @document.annotations(current_user)
+              @annotations = @document.annotations(current_user)
               annotation_link_text = can?(:create, Annotation) ?  t('revs.annotations.add') : t('revs.annotations.view')
               annotation_link_id = can?(:create, Annotation) ?  "annotate_link" : "view_annotations_link"
               annotation_link_class = can?(:create, Annotation) || @annotations.size > 0 ? "" : "hidden"
@@ -129,13 +142,13 @@
             "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>"_new", :class => "purl") %>
           </li>
 
-          <% if (can?(:read, Flag) || can?(:add_new_flag_to, @document))  %>
+          <% if (can?(:read, Flag) || can?(:add_new_flag_to, @document)) %>
               <li>
 
                 <div id="flags_link">
-                  <%= render :partial=>'flags/link'%>
+                  <%= render :partial=>'flags/link' %>
                   <%# only show help icon if user can add flags %>
-                  <% if can? :add_new_flag_to, @document  %>
+                  <% if can? :add_new_flag_to, @document %>
                     <%= link_to "#", :class => "help hidden-offscreen showOnLoad", :data => { :toggle => "tooltip", :placement => "left", :title => "#{t('revs.flags.help')}" } do %>
                       <i class="fa fa-question-sign"></i>
                     <% end %>
@@ -143,30 +156,30 @@
                 </div>
 
                 <div id="new_flag_form">
-                  <%= render :partial=>"flags/new",:locals=>{:druid=>@document.id, :flags=>@document.flags} %>
+                  <%= render :partial=>"flags/new", :locals => { :druid=>@document.id, :flags=>@document.flags } %>
                 </div>
 
                 <div id="all_flags">
-                  <%= render :partial=>"flags/all",:locals=>{:flags=>@document.flags} %>
+                  <%= render :partial=>"flags/all", :locals => { :flags=>@document.flags } %>
                 </div>
 
             </li>
 
             <% if can?(:add_new_flag_to, @document) && current_user  # flagging history area
-              closed_flags=@document.flags.where(:state=>Flag.closed) # get all closed flags
+              closed_flags = @document.flags.where(:state=>Flag.closed) # get all closed flags
               if cannot?(:curate,:all) # non curators can only see their OWN closed flags
-                closed_flags=closed_flags.where(:user_id=>current_user.id)
-                label_text=t('revs.flags.your_closed_flags')
+                closed_flags = closed_flags.where(:user_id=>current_user.id)
+                label_text = t('revs.flags.your_closed_flags')
               else
-                label_text=t('revs.flags.all_closed_flags')
+                label_text = t('revs.flags.all_closed_flags')
               end
-              if closed_flags.size > 0  # show the flagging history to logged in users%>
+              if closed_flags.size > 0  # show the flagging history to logged in users %>
                 <li id="item-flag-history-accordion">
                   <a class="accordion-toggle" data-toggle="collapse" data-parent="#item-flag-history-accordion" href="#item-flag-history">
                     <i class="fa fa-list-ol"></i>
-                    <%=label_text%>
-                    <span class="<%=display_class(closed_flags.size)%> badge badge-revs num-closed-flags-badge">
-                     <%= closed_flags.size%>
+                    <%= label_text%>
+                    <span class="<%= display_class(closed_flags.size) %> badge badge-revs num-closed-flags-badge">
+                     <%= closed_flags.size %>
                    </span>
                   </a>
                 </li>
@@ -174,20 +187,20 @@
                   <div class="flag-history-list">
                     <ul>
                       <% closed_flags.each do |flag| %>
-                        <li><%=t('revs.flags.flag_history',:flagger=>(flag.user == current_user ? t('revs.user.you') : (flag.user.blank? ? t('revs.user.anonymous') : flag.user.to_s)),:comment=>flag.comment,:flag_date=>show_as_datetime(flag.created_at.in_time_zone),:state_name=>flag.state_display_name,:resolver=>(flag.resolving_user == current_user.id ? t('revs.user.you') : flag.resolved_by.to_s),:resolve_date=>show_as_datetime(flag.resolved_time.in_time_zone))%>
-                          <%=t('revs.flags.flag_history_comment',:comment=>flag.resolution) unless flag.resolution.blank? %>
+                        <li><%= t('revs.flags.flag_history', :flagger=>(flag.user == current_user ? t('revs.user.you') : (flag.user.blank? ? t('revs.user.anonymous') : flag.user.to_s)), :comment=>flag.comment, :flag_date=>show_as_datetime(flag.created_at.in_time_zone), :state_name=>flag.state_display_name, :resolver=>(flag.resolving_user == current_user.id ? t('revs.user.you') : flag.resolved_by.to_s), :resolve_date=>show_as_datetime(flag.resolved_time.in_time_zone)) %>
+                          <%= t('revs.flags.flag_history_comment', :comment=>flag.resolution) unless flag.resolution.blank? %>
                         </li>
                       <% end %>
                     </ul>
                   </div>
                 </div>
-                <% end # end check for a logged in user having resolved flags%>
+                <% end # end check for a logged in user having resolved flags %>
             <% end # end check for user has ability to add flags%>
 
-              <% if !user_signed_in? && can?(:add_new_flag_to, @document)%>
+              <% if !user_signed_in? && can?(:add_new_flag_to, @document) %>
               <li>
                 <span id="feedback_link">
-                  <%= t('revs.nav.content_corrections',:create_an_account_link=>link_to(t('revs.nav.create_an_account'),new_user_session_path),:feedback_link=>link_to(t('revs.nav.feedback'),contact_us_path(:from=>request.path,:subject=>'metadata',:message=>"Correction to \"#{@document.title}\" (identifier: #{@document.identifier})"))).html_safe %>
+                  <%= t('revs.nav.content_corrections', :create_an_account_link => link_to(t('revs.nav.create_an_account'), new_user_session_path), :feedback_link => link_to(t('revs.nav.feedback'), contact_us_path(:from => request.path, :subject => 'metadata', :message => "Correction to \"#{@document.title}\" (identifier: #{@document.identifier})"))).html_safe %>
                 </span>
               </li>
               <% end %>
@@ -197,7 +210,7 @@
 
         <% if can? :curate, :all %>
           <ul class="nav list-unstyled item-actions curator-actions showOnLoad hidden-offscreen">
-            <li class="nav-header"><%=t('revs.curator.curator_actions')%></li>
+            <li class="nav-header"><%= t('revs.curator.curator_actions') %></li>
             <% if can? :update_metadata, :all
                 edit_mode_link_text = in_curator_edit_mode ? t('revs.curator.leave_edit_mode') : t('revs.curator.enter_edit_mode')
                 %>
@@ -216,7 +229,7 @@
               </li>
               <div id="item-edit-history" class="collapse">
                 <div class="edit-history-list">
-                  <p><%=t('revs.curator.metadata_edit_history_description')%>:</p>
+                  <p><%= t('revs.curator.metadata_edit_history_description') %>:</p>
                   <ul>
                     <% @document.edits.each do |edit| %>
                       <li><%=show_as_datetime(edit.created_at.in_time_zone)%> by <%=edit.user.to_s%></li>

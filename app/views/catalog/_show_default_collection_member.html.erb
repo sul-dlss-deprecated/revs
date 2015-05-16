@@ -151,7 +151,15 @@
 
             <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'has_more_metadata',:label=>t('revs.show.label_more_metadata'),:simple_format=>true,:editable=>true} %>
 
-            <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'score',:label=>t('revs.show.label_score'),:editable=>false} %>
+            <%# Show metadata score in a visualization %>
+            <dt><%= label_tag "score-viz-detailed", t('revs.show.label_score'), class: "control-label" %></dt>
+            <dd>
+              <div class="score-viz-detailed">
+                <div class="max-score"></div>
+                <div class="item-score" data-score-value="<%= @document.score %>"></div>
+                <div class="score"><%= @document.score %></div>
+              </div>
+            </dd>
 
           <% end %>
 

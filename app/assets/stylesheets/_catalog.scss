@@ -3,36 +3,46 @@
     padding-top: 5px;
     &.section-heading {border-top: 3px solid $revs-gray;}
   }
+
   .documentHeader {
-	  .index_title {
-		  float: left;
-	  }
-	  .documentFunctions {
-		  float: right;
-	  }
+    .index_title {
+      float: left;
+    }
+
+    .documentFunctions {
+      float: right;
+    }
   }
 }
 
 .index_title {color: $revs-gray-light;}
+
 .bookmark_toggle {
-	label {
-		cursor: pointer;
-		display: inline;
-	}
+  label {
+    cursor: pointer;
+    display: inline;
+  }
 }
 
 .blacklight-catalog-show {
   h2 {
     @include page-header;
   }
+
   ul.nav {
     color: $revs-gray-light;
-    font-size: 0.95em;
+    font-size: .95em;
     padding-left: 1px;
-    > li >, > li > div {
-      div, a, a:visited, input.btn-link {
+
+    > li >,
+    > li > div {
+      div,
+      a,
+      a:visited,
+      input.btn-link {
         color: $gray-dark;
         text-decoration: none;
+
         i {
           background-image: none;
           margin-right: 9px;
@@ -48,6 +58,7 @@
   .item-nav {
     float: right;
   }
+
   .nav-header {
     border-bottom: 1px solid #e5e5e5;
     font-size: 11px;
@@ -56,61 +67,78 @@
     margin-bottom: 6px;
     padding: 6px 0 0;
     text-transform: uppercase;
+
     a {
       color: $revs-gray-light;
       text-decoration: none;
     }
+
     i {
       font-weight: 200;
     }
   }
+
   .member-image img {margin-bottom: 20px;}
+
   .show-document-title {
     margin-top: 0;
     padding-top: 0;
   }
+
   .zoom-image-link {
     display: block;
+
     &.visible-phone {margin-bottom: 15px;}
+
     &.hidden-phone {margin-top: 20px; margin-bottom: none;}
   }
+
   .dl-horizontal {
+    font-size: .95em;
     margin-bottom: 0;
-    font-size: 0.95em;
+
     dt {
-      float: left;
       clear: left;
+      float: left;
       text-align: left;
       white-space: normal;
       width: 91px;
+
       label {
         font-weight: normal;
+
         &:after {
-          content: ":";
+          content: ':';
         }
       }
     }
+
     dd {
       margin-left: 100px;
       margin-right: 15px;
+
       p {
         margin-bottom: 0;
         margin-top: 0;
+
         + p {
           margin-top: 12px;
         }
       }
     }
   }
+
   .accordion-group .dl-horizontal .form-group {
     @extend .clearfix; // so values for multiline labels line up vertically
     margin-bottom: 2px;
   }
+
   // in curator edit mode
   form.edit-metadata .accordion-group .dl-horizontal {
     .form-group {
       margin-bottom: 12px;
     }
+
     button {
       float: right;
       margin: 12px 15px;
@@ -118,21 +146,26 @@
 
     // Change when in edit mode so labels are above inputs, both left-aligned
     dt {
-      width: initial;
       margin-right: 20px;
+      width: initial;
+
       label {
         font-weight: bold;
+
         &:after {
-          content: "";
+          content: '';
         }
       }
     }
+
     dd {
       margin-left: initial;
       margin-right: 6px;
+
       .form-control {
         padding: 6px;
       }
+
       .help-block {
         margin-bottom: 0;
         margin-left: 5px;
@@ -144,10 +177,12 @@
     dt {
       width: 75px;
     }
+
     dd {
       margin-left: 10px;
     }
   }
+
   #feedback_link {
     background-color: $white;
     border: 1px solid $gray-ccc;
@@ -157,47 +192,59 @@
     margin-top: 20px;
     padding: 4px 9px;
   }
+
   .results-nav {
     border-bottom: 1px solid $gray-ccc;
-    margin: 0 0 12px 0;
     font-size: 12px;
+    margin: 0 0 12px;
+
     div {
       padding: 0;
     }
+
     .previousNextDocument {
       float: right;
       padding-bottom: 2px;
     }
   }
+
   .accordion {
     margin-bottom: 24px;
     margin-left: 1px;
+
     .accordion-group {
-      border: none;
+      border: 0;
       margin-bottom: 3px;
     }
+
     // removed .nav-header styles from here
     .accordion-toggle {
       padding: 0;
+
       .accordion-icon {
         float: right;
       }
     }
+
     .accordion-inner {
       @extend .clearfix;
       background: #f8f8f8;
-      border-top: none;
+      border-top: 0;
       box-shadow: inset 0 0 10px $gray-lighter, inset 0 0 10px $gray-lighter, inset 0 0 10px $gray-lighter;
       padding: 12px 9px 3px 15px;
+
       dt {
         color: $gray-light;
       }
+
       input[type=submit] {
         float: right;
       }
+
       .mvf {
         margin-bottom: 0;
       }
+
       .item-edit-errors {
         clear: both;
         margin-bottom: 6px;
@@ -207,91 +254,120 @@
   .item-actions {
     li:hover {
       background: $gray-lighter;
+
       &.nav-header {background: inherit;}
     }
+
     li {
       line-height: 20px;
     }
+
     #favorites_link {
       i.fa-heart {
         color: $revs-red;
       }
+
       .button_to {
         display: inline-block;
         margin-bottom: 0;
         vertical-align: top;
+
         input[type=submit] {
           font-size: 13px;
           padding: 0;
         }
       }
     }
+
     .help {
       float: right;
       z-index: 999;
+
       i {
         color: $revs-gray-light;
         font-size: 16px;
       }
     }
+
     #flags_link {
-      padding: 2px 0 2px 0;
+      padding: 2px 0;
     }
+
     &.nav > li > a {
       padding: 2px 15px;
-      &.help, &.purl, &.accordion-toggle {
+
+      &.help,
+      &.purl,
+      &.accordion-toggle {
         padding-left: 0;
         padding-right: 0;
       }
     }
+
     a:hover i, div:hover i {
       color: $revs-red;
     }
+
     #annotate_link {padding: 0;}
+
     a#hide_annotations_link {
       background-color: $gray-lighter;
       padding-left: 0;
+
       i {
         color: $active-link-color;
       }
     }
-    #favorites_link, #user_galleries,
-    #view_annotations_link, #annotate_link, .purl {
+
+    #favorites_link,
+    #user_galleries,
+    #view_annotations_link,
+    #annotate_link,
+    .purl {
       padding: 2px 0;
     }
+
     .flag-history-list li {
-      padding: 6px 0;
       color: $gray;
+      padding: 6px 0;
     }
+
     #user_galleries a i {
      margin-left: 1px;
      margin-right: 15px;
     }
+
     #add_to_gallery_form {
       margin-bottom: 10px;
+
       form {
         margin-bottom: 6px;
         margin-top: 6px;
         padding-bottom: 6px;
       }
     }
+
     select#saved_item_gallery_id {
-      vertical-align: inherit;
       font-size: 13px;
       margin-left: 23px;
       max-width: 300px;
+      vertical-align: inherit;
     }
+
     #current_in_galleries {
       margin-left: 24px;
       padding-bottom: 6px;
+
       ul {
         margin-top: 6px;
         padding-left: 16px;
       }
+
       a {
         color: $active-link-color;
       }
     }
+
     .nav-header {
       i {
         background-image: none;
@@ -300,32 +376,40 @@
         margin-right: 0
       }
     }
+
     &.curator-actions {
       margin-top: 24px;
+
       .curator-action-link {
         display: inline-block;
         padding-left: 0;
+
         &.disabled {
           background-color: $body-bg-color;
+
           i {
             margin-right: 9px;
           }
         }
       }
+
       #item-public-visibility-status a {
         display: inline-block;
       }
+
       #item-edit-history-accordion {
         + #item-edit-history .edit-history-list  {
-          margin: 6px 0 12px 25px;
           background: #f8f8f8;
-          border-top: none;
+          border-top: 0;
           box-shadow: inset 0 0 10px $gray-lighter, inset 0 0 10px $gray-lighter, inset 0 0 10px $gray-lighter;
           color: $gray;
+          margin: 6px 0 12px 25px;
           padding: 12px 9px 3px 15px;
+
           p {
             margin-top: 0;
           }
+
           ul {
             margin-bottom: 6px;
             padding-left: 15px;
@@ -333,24 +417,29 @@
         }
       }
     }
+
     #all_flags, #all-annotations {
       color: $gray;
-      .flag-info, .annotation-info {
-        background: rgba(0,0,0,0.05);
-        border: 1px solid rgba(0,0,0,0.05);
+
+      .flag-info,
+      .annotation-info {
+        background: rgba(0, 0, 0, .05);
+        border: 1px solid rgba(0, 0, 0, .05);
         border-radius: 4px;
-        box-shadow: rgba(0,0,0,0.2) 0 -1px 0,rgba(255,255,255,0.8) 0 1px 0;
+        box-shadow: rgba(0, 0, 0, .2) 0 -1px 0, rgba(255, 255, 255, .8) 0 1px 0;
         color: $gray-light;
-        font-size: 0.9em;
+        font-size: .9em;
         margin: 12px 0;
         padding: 6px 9px;
+
         &:hover {
-          background: rgba(0,0,0,0.1);
-          border: 1px solid rgba(0,0,0,0.1);
-          box-shadow: rgba(0,0,0,0.4) 0 -1px 0,rgba(255,255,255,0.8) 0 1px 0;
+          background: rgba(0, 0, 0, .1);
+          border: 1px solid rgba(0, 0, 0, .1);
+          box-shadow: rgba(0, 0, 0, .4) 0 -1px 0, rgba(255, 255, 255, .8) 0 1px 0;
         }
+
         blockquote {
-          border-left: none;
+          border-left: 0;
           color: $gray;
           font-size: 1em;
           font-style: italic;
@@ -358,6 +447,7 @@
           margin-top: 9px;
           padding-left: 0;
         }
+
         form.button_to {
           margin-bottom: 6px;
           margin-top: 12px;
@@ -365,74 +455,96 @@
         }
       }
     }
+
     .edit-mode-status.label,
     .posterframe-status.label,
     .public-visibility-status.label {
       margin-left: 10px;
     }
+
     .badge {
       background-color: $white;
-      font-size: 0.85em;
+      border: 1px solid $revs-gray-light;
+      color: $revs-red;
+      font-size: .85em;
       font-weight: bold;
       line-height: 1.2;
       margin-left: 5px;
-      color: $revs-red;
-      border: 1px solid $revs-gray-light;
-      padding: 2px 5px 0px;
+      padding: 2px 5px 0;
       vertical-align: text-bottom;
     }
-    form.new_flag, div#all_flags, div#all-annotations {
+
+    form.new_flag,
+    div#all_flags,
+    div#all-annotations {
       margin: 6px 10px 0 25px;
+
       label {
         margin-left: 2px;
       }
+
       .flag-button {
         display: block;
       }
     }
+
     form.new_flag {
       margin-bottom: 24px;
     }
-    form.edit_flag, div#all_flags .flag-info .resolution-history {
+
+    form.edit_flag,
+    div#all_flags .flag-info .resolution-history {
       border-top: 1px dotted $revs-gray-light;
       margin-bottom: 4px;
       margin-top: 12px;
       padding-top: 6px;
+
       label {
         display: inline;
         font-weight: 700;
         margin-left: 0;
       }
+
       span {
         display: block;
       }
     }
+
     #flag_resolution {
       width: 90%;
     }
+
     #new_flag_form {
       label {
         font-weight: normal;
       }
+
       input#flag_notify_me {
         margin-bottom: 12px;
         vertical-align: baseline;
       }
     }
-    div#all-annotations, div#all_flags .flag-info {
+
+    div#all-annotations,
+    div#all_flags .flag-info {
       margin-top: 0;
+
       .flag-button {
         display: inline-block;
       }
     }
+
     #all_flags {
       padding-bottom: 1px;
     }
+
     a.flag-details {
       margin-bottom: 6px;
+
       &.active {
         background-color: $gray-lighter;
       }
+
       &:hover {
         i {
           color: $revs-red;
@@ -440,26 +552,32 @@
       }
     }
   }
+
   .license-image {
-    font-size: 0.9em;
+    font-size: .9em;
     margin-top: 24px;
   }
+
   .pe-img-viewer-thumbs-nav-bottom {
     img.pe-img-canvas {
       border: 1px solid $gray-ccc;
       cursor: pointer;
     }
+
     .pe-purl-url {
       border-top-style: none;
       margin-left: 3px;
     }
+
     .pe-display-note {
       font-size: 13px;
       line-height: 1.4;
     }
+
     .pe-full-screen-ctrl {
       width: 24px;
     }
+
     .zpr-controls img {
       width: initial;
     }
@@ -467,12 +585,102 @@
 }
 
 .revs-identifier {
-  font-size: 0.8em;
+  font-size: .8em;
   margin-left: 3px;
+
   span {font-weight: 700;}
 }
 
-/* Responsive styles */
+// Item metadata score
+.score-viz {
+  height: 6px;
+  width: 100px;
+}
+
+.score-viz-detailed {
+  $score-viz-detailed-width: 200px;
+  height: 17px;
+  margin-top: 6px;
+  width: $score-viz-detailed-width;
+
+  .score {
+    color: $gray-base;
+    font-size: 13px;
+    left: ($score-viz-detailed-width / 2) - 7;
+    position: absolute;
+    text-shadow: 0 1px 0 $white;
+    z-index: 10;
+
+    &.half-full {
+      color: $white;
+      text-shadow: 0 1px 0 $gray-base;
+    }
+  }
+
+  .max-score {
+    border-bottom-right-radius: 3px;
+    border-top-right-radius: 3px;
+  }
+
+  .item-score {
+    border-bottom-left-radius: 3px;
+    border-top-left-radius: 3px;
+  }
+}
+
+.score-viz,
+.score-viz-detailed {
+  margin-bottom: 20px;
+  position: relative;
+
+  .max-score,
+  .item-score {
+    left: 0;
+    position: absolute;
+    top: 0;
+  }
+
+  .max-score {
+    background-color: $revs-gray;
+    height: 100%;
+    width: 100%;
+  }
+
+  .item-score {
+    background-color: $revs-red;
+    height: 100%;
+    opacity: .5;
+    width: 0; // updated to actual item score via JavaScript
+    z-index: 5;
+  }
+}
+
+.edit-metadata .score-viz-detailed {
+  margin-top: 25px;
+}
+
+// Responsive styles
+
+@media screen and (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+  .score-viz-detailed { // has to be narrower on sm viewport
+    $score-viz-detailed-width: 120px;
+    width: $score-viz-detailed-width;
+
+    .score {
+      left: ($score-viz-detailed-width / 2) - 7;
+
+      &.half-full {
+        color: $gray-base;
+        text-shadow: 0 1px 0 $white;
+      }
+    }
+
+    .item-score {
+      background-color: transparent; // hide colored part of viz on sm viewports
+    }
+  }
+}
+
 @media screen and (max-width: 991px) {
   .blacklight-catalog-show {
     .metadata {
@@ -480,9 +688,11 @@
       margin-top: 20px;
     }
   }
+
   .unresolved-label {
     display: none;
   }
+
   .blacklight-catalog-show #sidebar-nav {
     border-top: 5px solid $revs-gray;
     margin-top: 20px;
@@ -492,24 +702,20 @@
 @media screen and (max-width: 991px) and (min-width: 768px) {
   .blacklight-catalog-show .metadata {
     margin-top: 5px;
-    .dl-horizontal {
-      dt {
-        float: left;
-        clear: none;
-      }
+
+    .dl-horizontal dt {
+      clear: none;
+      float: left;
     }
+
     #new_saved_item input[type="submit"] {
       float: right;
       margin-right: 12px;
     }
+
     #current_in_galleries {
       clear: right;
       padding-top: 12px;
-    }
-    form {
-      dt {
-
-      }
     }
   }
 }
@@ -520,21 +726,27 @@
       margin-top: 10px;
       text-align: center;
     }
+
     .back-to-results {
       display: inline;
     }
+
     dt {
       float: none;
     }
+
     dd {
       margin-left: 0;
     }
+
     .results-nav {
       clear: left;
       padding-top: 30px;
     }
+
     .results-pagination {
       display: inline;
+
       .previousNextDocument {
         float: none;
         margin-left: 30px;
