@@ -144,13 +144,17 @@ $(document).ready(function(){
 
 		// Use item metadata score value to update score visualization
 		var score = $('.item-score').data('score-value');
-		$('.item-score').css('width', score);
+		$('.score-viz .item-score').css('width', score);
+		$('.score-viz-detailed .item-score').css('width', score * 2);
+		if (score > 53) {
+			$('.score-viz-detailed .score').addClass('half-full');
+		}
 
    // Called when an individual checkbox is checked or unchecked in bulk edit view.
    // Update row status message if user changes individual checkbox
    $('.result-item-checkbox > input[type="checkbox"]').change(function() {
      var field = $('#bulk_edit_attribute option:selected').text(); // current value of select menu
-     var row = $(this).closest('.result-item')
+     var row = $(this).closest('.result-item');
      toggle_highlight(this,row);
      updateEditStatus(field,"div[data-item-id='" + row.data('item-id') + "']"); // update status message
    });
