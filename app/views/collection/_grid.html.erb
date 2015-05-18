@@ -1,6 +1,6 @@
 <div id="documents" class="gallery">
   <ul class="image-grid">
-    <% @collections.each do |collection| 
+    <% @collections.each do |collection|
       collection_title=fix_revs_institute_name(collection.title.html_safe)%>
       <li class="image-item">
         <div class="blacklight-collection document">
@@ -10,6 +10,7 @@
 
           <h5 class="index_title">
             <%= link_to_document collection, collection_title %>
+            <%= archive_label(collection.archive_name) %>
             <span class="text-muted">
               (<%= pluralize(number_with_delimiter(collection.collection_members(:include_hidden=>can?(:view_hidden, SolrDocument)).total_members),
                   t('revs.collection_members.items_name')) %>)

@@ -18,6 +18,12 @@
     padding-top: 0;
     position: relative;
   }
+
+  .archive-label {
+    @include archive-label;
+    display: inline-block;
+    margin: 4px 0;
+  }
 }
 
 // Gallery View
@@ -66,7 +72,7 @@
 
 // Collections - Grid View
 #documents.gallery .blacklight-collection {
-  min-height: 205px;
+  min-height: 222px;
   min-width: 188px;
   text-align: center;
 
@@ -88,6 +94,7 @@
 
   .collection-details {
     margin-bottom: 20px;
+    margin-top: 12px;
 
     span.label {
       display: inline-block;
@@ -173,6 +180,10 @@
   .collection-title {
     margin-left: 0;
     padding-left: 0;
+  }
+
+  .index_title {
+    margin-bottom: 3px;
   }
 }
 

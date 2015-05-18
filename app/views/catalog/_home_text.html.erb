@@ -25,9 +25,7 @@
           <div class="collection-teaser">
             <span class="content-type collection"><%= t('revs.collection.featured_collection')%></span>
             <h3><%= link_to clean_collection_name(@highlight_collections.first.title), collection_path(@highlight_collections.first), :id => "collection-title-link" %></h3>
-            <span id="collection-archive" class="label label-default archive-label">
-              <%= @highlight_collections.first.archive_name %>
-            </span>
+            <%= archive_label(@highlight_collections.first.archive_name) %>
             <p>
               <span id="collection-description"><%= truncate(@highlight_collections.first.description,:length=>310) %></span>
               <%= link_to t('revs.nav.more'), collection_path(@highlight_collections.first), :id => "collection-link" %>
@@ -57,9 +55,7 @@
         <div id="featured-description">
           <span class="content-type collection"><%= t('revs.collection.featured_collection')%></span>
           <h3><%= link_to clean_collection_name(collection.title), collection_path(collection), :id => "collection-title-link" %></h3>
-          <span id="collection-archive" class="label label-default archive-label">
-            <%= collection.archive_name %>
-          </span>
+          <%= archive_label(collection.archive_name) %>
           <p>
             <span id="collection-description"><%= truncate(collection.description,:length=>300) %></span>
             <%= link_to "#{t('revs.nav.more')}", collection_path(collection), :id => "collection-link" %>

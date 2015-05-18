@@ -37,7 +37,7 @@ $(document).ready(function(){
   // When new item slides into view, update metadata shown for item
   $('.homepage-carousel').on('jcarousel:targetin', 'li', function() {
     $("#featured-collection-nav #collection-title-link").text($(this).attr("data-collection-title"));
-    $("#featured-collection-nav #collection-archive").text($(this).attr("data-collection-archive"));
+    $("#featured-collection-nav .archive-label").text($(this).attr("data-collection-archive"));
     $("#featured-collection-nav #collection-title-link").attr('href', $(this).attr("data-collection-href"));
     $("#featured-collection-nav #collection-image-link").attr('href', $(this).attr("data-collection-href"));
     $("#featured-collection-nav #collection-description").text($(this).attr("data-collection-description"));
