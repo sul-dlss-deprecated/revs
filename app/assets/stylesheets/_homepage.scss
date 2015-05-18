@@ -1,5 +1,4 @@
 // Homepage carousel
-
 // Default values are for screen sizes 1200px and larger
 $collection-image-container: 402px;
 $collection-image-right-gutter: 30px;
@@ -42,12 +41,18 @@ $collection-image-right-gutter: 30px;
   }
 
   h3 {
+    margin-bottom: 6px;
     margin-top: 0;
     padding-top: 0;
 
     > a {
-     color: $gray-base;
+      color: $gray-base;
     }
+  }
+
+  .archive-label {
+    @include archive-label;
+    margin-left: 0;
   }
 }
 
