@@ -502,7 +502,7 @@ class SolrDocument
      
      response=Blacklight.default_index.connection.select(
          :params=> {
-           :q=>'*:*',
+           :q=>'-format_ssim:"collection"',
            :rows=>0,
            :stats=>true,
            :'stats.field'=>'score_isi'
