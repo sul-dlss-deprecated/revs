@@ -517,7 +517,7 @@ span.constraints-label {margin-right: .5em;}
 .searchbox {
   margin-bottom: 70px;
   @include tooltip-styling;
-  @include red-top_border;
+  @include red-top-border;
 
   input.hide {
     left: -1000px;

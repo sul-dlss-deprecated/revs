@@ -4,19 +4,24 @@
     font-size: 16px;
     margin-top: 10px;
     padding-top: 6px;
+
     &.new-ontology {
       margin-top: 30px;
     }
   }
+
   p {
     max-width: 550px;
   }
-  td.centered, th.centered {
+
+  td.centered,
+  th.centered {
     text-align: center;
   }
 
   .form-inline {
     margin-top: 20px;
+
     input#email {
       margin-bottom: 10px;
     }
@@ -28,81 +33,107 @@
     border-radius: 6px;
     margin: 0 0 20px;
     padding: 0 12px;
+
     .text-info {
       margin: 9px 0;
     }
   }
+
   .row.results-controls {
     margin-top: 0;
   }
+
   .nav-tabs {
     margin-bottom: 10px;
     margin-top: 20px;
   }
-  form, #refresh_flags, #curator_flag_selection {
-    margin-top: 6px;
+
+  form,
+  #refresh_flags,
+  #curator_flag_selection {
     margin-bottom: 0;
+    margin-top: 6px;
   }
+
   .update-users input[type="submit"] {
     vertical-align: top;
   }
+
   .lock-account label {
     vertical-align: top;
   }
-  th.edit-count, th.admin-actions {
+
+  th.edit-count,
+  th.admin-actions {
     min-width: 80px;
   }
+
   td > .admin-action-link {
     display: block;
   }
+
   legend {
     font-size: 16px;
     line-height: 24px;
     margin-bottom: 12px;
   }
+
   label {
     font-weight: normal;
   }
-  form.find-users, form.update-users {
+
+  form.find-users,
+  form.update-users {
     margin-top: 20px;
+
     .control-group {
       margin-bottom: 10px;
     }
+
     legend + .control-group {
       margin-top: 10px;
     }
   }
+
   form.update-field-terms input[type="submit"] {
     margin-bottom: 12px;
   }
+
   @include item-stats;
 }
 
 .admin.table {
   .feature-collection {
     padding: 6px;
+
     &.gallery {
       width: 55%;
     }
+
     a {
       font-size: 15px;
     }
+
     &.collection-image img.gallery {
       width: 75px;
     }
+
     img {
       margin-right: 12px;
       margin-top: 2px;
       max-width: 120px;
-      @include image_border_thumbnail;
+      @include image-border-thumbnail;
     }
+
     div {
       margin-top: 6px;
     }
   }
+
   td.centered.move {
     padding-top: 7px;
   }
+
   i.fa-arrows {
     color: $gray;
   }
@@ -114,45 +145,39 @@
     .feature-collection.gallery {
       width: 45%;
     }
+
     .feature-collection.collection-image img.gallery {
       width: 60px;
     }
   }
 }
-@media screen and (min-width: 768px) {
-//  .admin {
-//    .form-search {
-//      input#email {
-//        margin-bottom: 0;
-//      }
-//    }
-//  }
-}
+
 @media screen and (min-width: 768px) and (max-width: 991px) {
   #sidebar-nav .nav-header .label {
     margin-left: 6px;
   }
 }
+
 @media screen and (max-width: 991px) {
   .admin.table {
     .feature-collection.gallery .description-teaser {
       display: none;
     }
   }
+
   ul.item-stats {
     margin-left: 2px;
   }
 }
+
 @media screen and (max-width: 767px) {
   .admin {
     .form-inline label {
       margin-top: 12px;
     }
+
     .btn-small {
       margin-left: 0;
     }
   }
-}
-@media screen and (max-width: 479px) {
-
 }

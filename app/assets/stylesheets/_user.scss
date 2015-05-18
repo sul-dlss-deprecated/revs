@@ -1,43 +1,55 @@
-#new_user, #edit_user {
+#new_user,
+#edit_user {
   margin-top: 20px;
+
   .forgot-password {
     display: block;
     margin-left: 6px;
     margin-top: 12px;
   }
-  .btn.signin, .btn.signup {
+
+  .btn.signin,
+  .btn.signup {
     margin-right: 20px;
   }
+
   .subscribe {
     margin-top: 20px;
   }
+
   #user_bio {
     width: 90%;
   }
+
   .avatar img {
     width: 100px;
     border: 1px solid #bbb;
   }
+
   .checkbox.inline {
     display: block;
   }
+
   #user_avatar {
     display: block;
     margin-top: 12px;
   }
+
   .checkbox + .checkbox {
-      padding-top: 0;
+    padding-top: 0;
   }
 }
 
 .blacklight-user {
   .profile-vitals {
     margin-top: 15px;
+
     .user-image {
       border: 1px solid $revs-gray;
       max-height: 150px;
       padding: 5px;
     }
+
     .user-bio {
       font-size: 1.2em;
       font-style: italic;
@@ -46,67 +58,86 @@
       margin-bottom: 12px;
     }
   }
+
   .profile-links {
     border-bottom: 2px solid $revs-gray;
     margin: 10px 0 30px;
     padding-bottom: 8px;
+
     .user-name {
       font-size: 1.1em;
       font-weight: bold;
       line-height: 1.3em;
       padding-left: 3px;
     }
+
     .user-links {
       border-top: 1px dotted #bbb;
       padding-left: 0;
-      margin-top: -6px;
       padding-top: 6px;
+      margin-top: -6px;
+
       a.user-link {
-        font-size: 0.95em;
+        font-size: .95em;
         font-weight: bold;
         margin-left: 5px;
-        &:hover, &:active, &:visited, &:link {
+
+        &:hover,
+        &:active,
+        &:visited,
+        &:link {
           color: $gray;
           text-decoration: none;
         }
+
         i {
           vertical-align: middle;
         }
+
         &.website {
           padding-right: 12px;
+
           i {
             padding-right: 2px;
           }
         }
+
         &.twitter {
           padding-left: 8px;
         }
       }
+
       .divider {
         color: $revs-gray-light;
       }
     }
   }
+
   .profile-activity {
     ul {
       list-style-type: none;
       margin: 0;
       padding: 0;
+
       li {
         &.activity-item {
           clear: left;
+
           li {
             margin-bottom: 3px;
+
             img {
               float: left;
               margin-bottom: 20px;
               margin-right: 12px;
               max-width: 80px;
-              @include image_border_thumbnail;
+              @include image-border-thumbnail;
             }
+
             &.item-title {
               font-size: 1.1em;
             }
+
             &.annotation {
               font-style: italic;
             }
@@ -114,6 +145,7 @@
         }
       }
     }
+
     h3 {
       border-bottom: 1px solid $revs-gray;
       clear: left;
@@ -121,27 +153,32 @@
       font-size: 1.25em;
       margin-bottom: 15px;
     }
+
     .activity-count {
       color: #888;
       float: right;
       font-size: 1.25em;
       margin-right: 10px;
     }
+
     i {
       background-image: none;
       color: $gray-light;
       margin-right: 6px;
       vertical-align: baseline;
     }
+
     .more-link {
       clear: left;
       font-size: 1.1em;
       font-style: italic;
     }
   }
+
   .saved-items .thumbnail-preview {
     margin-right: 20px;
   }
+
   .item-details {padding-left: 0;}
 }
 
@@ -150,58 +187,72 @@
   .grid .row.item .saved-item-actions noscript {
     display: none;
   }
+
   .manage-items {
     font-size: 12px;
+
     a.active {
       @include manage-items-toggle;
     }
   }
+
   .saved-items {
     border-top: 2px dotted #dedede;
     padding-top: 12px;
   }
+
   .row.results-controls {
     margin-top: 20px;
+
     .gallery_toggle .nav-pills li:first-child a {
       margin-left: 0;
     }
   }
+
   .row.item {
+    margin-bottom: 30px;
     margin-left: 0;
     margin-right: 0;
-    margin-bottom: 30px;
+
     > div {
       margin-left: 0;
     }
+
     ul {
       list-style-type: none;
       margin: 0;
       padding: 0;
+
       li {
         img {
           float: left;
           margin-bottom: 12px;
           margin-right: 12px;
           max-width: 80px;
-          @include image_border_thumbnail;
+          @include image-border-thumbnail;
         }
       }
     }
+
     .item-annotation {
-      margin-top: 3px;
       margin-bottom: 0;
+      margin-top: 3px;
       max-width: 500px;
     }
+
     .item-creation-date {
       font-size: 13px;
     }
+
     .saved-item-actions {
       font-size: 13px;
       margin-top: 12px;
     }
+
     .button_to {
       display: inline-block;
       margin-bottom: 0;
+
       .btn-link {
         color: $active-link-color;
         font-size: 13px;
@@ -210,10 +261,11 @@
       }
     }
   }
+
   .prev-next {
-    //font-size: 0.9em;
     margin-top: 0;
   }
+
   .edit_saved_item {
     input[type="submit"] {
       margin-right: 6px;
@@ -224,14 +276,17 @@
 .thumbnail-column {
   margin-right: 20px;
   vertical-align: top;
+
   img {
-    max-width: 100px;
     margin-top: 4px;
+    max-width: 100px;
   }
 }
 
-.edit-content, .gallery-metadata {
+.edit-content,
+.gallery-metadata {
   @include item-stats;
+
   form {
     .form-group.buttons {
       margin-top: 30px;
@@ -240,100 +295,124 @@
 }
 
 .saved-items {
- .item-details, .item-description, .item-annotation {
-   display: inline-block;
-   vertical-align: top;
+  .item-details,
+  .item-description,
+  .item-annotation {
+    display: inline-block;
+    vertical-align: top;
   }
+
   .item-details {
     margin-right: 15px;
-    width: 50%;
     position: relative;
+    width: 50%;
   }
+
   .item-description {
     font-size: 13px;
     width: 45%;
+
     textarea {
       font-size: inherit;
       width: 100%;
     }
   }
+
   .item-annotation {
     > span {
       font-style: italic;
     }
   }
+
   .item-title {
     font-size: 1.1em;
-    margin-bottom: 8px;
     line-height: 18px;
+    margin-bottom: 8px;
   }
+
   .thumbnail-preview {
     float: left;
+
     img {
-      border: none;
+      border: 0;
       margin: 0;
     }
   }
+
   ul {
     vertical-align: bottom;
+
     span {
       color: #888;
     }
   }
+
   .highlighted {
     @include item-highlighting;
   }
+
   &.detailed {
     .thumbnail-preview {
       margin-right: 20px;
     }
   }
+
   &.grid {
-    .item-creation-date, .saved-item-actions a,
+    .item-creation-date,
+    .saved-item-actions a,
     .item-description {
       display: none;
     }
+
     ul#saved_items {
       float: left;
       width: 100%;
     }
+
     .item-details {
       width: 100px;
     }
+
     .item-title {
       font-size: 13px;
-      margin-top: 6px;
       line-height: 16px;
+      margin-top: 6px;
       text-align: center;
+
       span.handle {
         display: none !important;
       }
     }
+
     .saved-item-row {
       display: inline-block;
       margin-bottom: 12px;
       vertical-align: top;
     }
+
     .highlighted {
       background: inherit;
-      border: none;
+      border: 0;
       padding: 0;
     }
   }
+
   &.manage-mode {
     .saved-item-actions {
       input {
-        position: absolute;
-        top: 0;
         left: 0;
         margin-top: 0;
+        position: absolute;
+        top: 0;
       }
+
       .handle {
         margin-right: 6px;
       }
     }
+
     .thumbnail-preview {
-      opacity: 0.9;
+      opacity: .9;
     }
   }
 }
@@ -345,55 +424,67 @@
     max-width: 195px;
   }
 }
+
 .gallery-metadata {
   margin-left: 0;
+
   ul.item-stats {
     margin-bottom: 10px;
     margin-left: 0;
   }
+
   .gallery-actions {
     font-size: 13px;
+
     form, form > div {
       display: inline;
+
       .btn-link {
         font-size: 13px;
         padding: 0;
         vertical-align: inherit;
       }
     }
+
     .manage-items {
       display: inline;
+
       a.active {
         @include manage-items-toggle;
       }
     }
   }
+
   .label-info {
     margin-left: 0;
   }
 }
 
 table.user-annotations {
-  td.item, td.date {
+  td.item,
+  td.date {
     width: 20%;
   }
 }
 
-// Galleries //
+// Galleries
 #documents.gallery .blacklight-collection {
   .image-wrapper {
     min-width: 188px;
     position: relative;
+
     span.label {
-      position: absolute;
-      right: 1px;
       bottom: 10px;
       margin-left: 0;
-      opacity: 0.9;
+      opacity: .9;
+      position: absolute;
+      right: 1px;
+
       &.creator {
         background-color: $important;
         border: 1px solid darken($important, 5%);
       }
+
       &.creator-self {
         background-color: $success;
         border: 1px solid darken($success, 5%);
@@ -411,6 +502,7 @@ table.user-annotations {
       vertical-align: middle;
     }
   }
+
   .gallery-details {
     img {
       max-width: 250px;
@@ -422,59 +514,55 @@ table.user-annotations {
     margin-right: 25px;
   }
 }
-@media screen and (min-width: 768px) and (max-width: 991px) {
-//  .gallery-metadata {
-//    margin-left: 20px;
-//  }
-//  .gallery-details {
-//    img {
-//      max-width: 165px;
-//    }
-//  }
-}
+
 @media screen and (max-width: 767px) {
   .blacklight-user {
     .profile-vitals {
       .user-image {
         width: 120px;
       }
+
       .user-bio {
         margin-bottom: 0;
       }
     }
+
     .profile-links .user-links {
       margin-top: 12px;
     }
   }
-//  #sidebar.user-dashboard-sidebar {
-//    border-top: 2px solid $revs-gray;
-//    margin-top: 12px;
-//    padding-top: 12px;
-//  }
+
   .galleries-landing .gallery_toggle,
   .saved-items-list .gallery_toggle {
     float: left;
   }
 }
+
 @media screen and (max-width: 991px) {
   .favorites-index .row.item .item-annotation {
     margin-top: 0;
   }
+
   .saved-items {
-    .item-details, .item-description {
+    .item-details,
+    .item-description {
       float: left;
       width: 100%;
     }
+
     .item-description {
       margin-top: 12px;
     }
   }
+
   .edit-content ul.item-stats,
   .gallery-metadata ul.item-stats {
     margin-left: 2px;
   }
+
   .blacklight-user .saved-items .item-description {padding-left: 0;}
 }
+
 @media screen and (max-width: 479px) {
   #new_user {
     margin-top: 10px;

@@ -1,44 +1,48 @@
-/* TODO: Refactor to use mix-ins, etc. */
-/* --- */
-
 html {
   font-size: 100%;
-	-webkit-text-size-adjust: 100%;
-	-ms-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   font-family: "Helvetica","Arial",sans-serif;
   background: $body-bg-color;
-  font-size: 0.85em;
+  font-size: .85em;
   line-height: 18px;
   margin: 0;
 }
 
 .highlighted {
-  background: yellow;
+  background: ffff00;
 }
 
 #sidebar-nav ul {
   margin-bottom: 20px;
-  li > a, li .button_to input[type="submit"] {
+
+  li > a,
+  li .button_to input[type="submit"] {
     padding: 1px 0;
   }
+
   li {
     form.button_to {
       margin: 0;
+
       input[type="submit"] {
         color: $active-link-color;
         font-size: 1em;
         padding: 1px 0 2px;
       }
+
       .btn-link {
-        border: none;
+        border: 0;
         text-decoration: none;
+
         &:hover {
           color: $revs-red-dark;
         }
       }
+
       &:hover {
         background-color: $gray-lighter;
         color: $revs-red-dark;
@@ -48,92 +52,111 @@ body {
 }
 
 a:focus {
-	outline: thin dotted $gray-dark;
-	outline: 5px auto -webkit-focus-ring-color;
-	outline-offset: -2px;
+  outline: thin dotted $gray-dark;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
 }
+
 a:hover,a:active {
-	outline: 0;
+  outline: 0;
 }
 
 img {
-	max-width: 100%;
-	height:auto !important;
-	vertical-align: middle;
-	border: 0;
-	-ms-interpolation-mode: bicubic;
+  border: 0;
+  height: auto !important;
+  -ms-interpolation-mode: bicubic;
+  max-width: 100%;
+  vertical-align: middle;
 }
 
-a, .btn-link {
-	color: $active-link-color;
-	text-decoration: none;
+a,
+.btn-link {
+  color: $active-link-color;
+  text-decoration: none;
 }
-a:hover, .btn-link:hover {
-	color: $revs-red-dark;
-	text-decoration: underline;
+
+a:hover,
+.btn-link:hover {
+  color: $revs-red-dark;
+  text-decoration: underline;
 }
+
 #news-gothic .normal {
-	font-family: "news-gothic-std","Helvetica","Arial",sans-serif;
-	font-weight: 400;
+  font-family: "news-gothic-std","Helvetica","Arial",sans-serif;
+  font-weight: 400;
 }
+
 #news-gothic .bold {
-	font-family: "news-gothic-std","Helvetica","Arial",sans-serif;
-	font-weight: 700;
-}
-#chaparral-pro .normal {
-	font-family: "chaparral-pro","Georgia","Times New Roman",serif;
-	font-weight: 400;
-}
-#chaparral-pro .bold {
-	font-family: "chaparral-pro","Georgia","Times New Roman",serif;
-	font-weight: 700;
-}
-#helvetica {
-	font-family: "Helvetica","Arial",sans-serif;
-}
-h1, h2, h3, h4 {
+  font-family: "news-gothic-std","Helvetica","Arial",sans-serif;
   font-weight: 700;
 }
-h1 {
-	display: block;
-	float: left;
-	font-family: "news-gothic-std","Helvetica","Arial",sans-serif;
-	font-weight: 700;
-	font-size: 1.5em;
-	line-height: 1.5em;
-	color: $gray-base;
-	margin-top: 30px;
-	-webkit-font-smoothing: antialiased;
-	margin-bottom: 30px;
-	border-bottom: 2px solid $revs-gray;
-	padding-bottom: 10px;
+
+#chaparral-pro .normal {
+  font-family: "chaparral-pro","Georgia","Times New Roman",serif;
+  font-weight: 400;
 }
+
+#chaparral-pro .bold {
+  font-family: "chaparral-pro","Georgia","Times New Roman",serif;
+  font-weight: 700;
+}
+
+#helvetica {
+  font-family: "Helvetica","Arial",sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 700;
+}
+
+h1 {
+  border-bottom: 2px solid $revs-gray;
+  color: $gray-base;
+  display: block;
+  float: left;
+  font-family: "news-gothic-std","Helvetica","Arial",sans-serif;
+  font-size: 1.5em;
+  font-weight: 700;
+  line-height: 1.5em;
+  margin-bottom: 30px;
+  margin-top: 30px;
+  padding-bottom: 10px;
+  -webkit-font-smoothing: antialiased;
+}
+
 h2 {
   @include page-header;
-	font-size: 1.325em;
-	line-height: 1.3em;
+  font-size: 1.325em;
+  line-height: 1.3em;
 }
+
 h3 {
-	font-size: 1.125em;
-	line-height: 1.3em;
+  font-size: 1.125em;
+  line-height: 1.3em;
 }
+
 p {
-  font-family: "Helvetica","Arial",sans-serif;
   color: $gray-dark;
-//  font-size: 0.8em;
+  font-family: "Helvetica","Arial",sans-serif;
   font-size: 13px;
   line-height: 1.5em;
-  margin:12px 0;
+  margin: 12px 0;
 }
+
 span.content-type {
-	font-size: 0.8em;
-	font-weight: bold;
-	display: block;
-	color: $revs-red;
-	text-transform: uppercase;
-	-webkit-font-smoothing: antialiased;
-	&.collection {color: $green;}
+  color: $revs-red;
+  display: block;
+  font-size: .8em;
+  font-weight: bold;
+  text-transform: uppercase;
+  -webkit-font-smoothing: antialiased;
+
+  &.collection {color: $green;}
 }
+
 .slideshow {
   margin-bottom: 20px;
 }
@@ -143,15 +166,17 @@ span.content-type {
 .modal-header {
   background-color: $revs-red;
   border-bottom: 1px solid $revs-gray;
+
   h3 {
     color: $gray-lighter;
     font-size: 1.5em;
     padding-top: 0;
     text-align: center;
   }
+
   button.close {
     color: $gray-lighter;
-    opacity: 0.9;
+    opacity: .9;
   }
 }
 
@@ -172,40 +197,50 @@ span.content-type {
 .nav > li > a.inline-link {
   display: inline;
 }
+
 #sidebar-nav .nav-header {
   color: $revs-gray-light;
-  padding: 3px 0;
   font-size: 11px;
   font-weight: 700;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  padding: 3px 0;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
 }
+
 #sidebar-nav li {
   padding: 1px 0;
 }
+
 #sidebar-nav {
-  @include red-top_border;
+  @include red-top-border;
+
   .nav-header .label {
     margin-left: 12px;
   }
+
   ul.account {
     li.nav-header {
       margin-bottom: 0;
     }
+
     .account-date {
       color: $gray-light;
       font-size: 13px;
       font-style: italic;
       padding-bottom: 3px;
     }
+
     li.account-profile a {
       display: block;
+
       &.view-profile-link {display: inline-block;}
+
       &.edit-profile-link {display: inline-block;}
     }
   }
 }
 
-span.label, span.badge {
+span.label,
+span.badge {
   font-weight: normal;
   margin-left: 6px;
 }
@@ -219,7 +254,8 @@ h2 span.label {
   margin-left: 6px;
 }
 
-.form-horizontal input + .help-block, .form-horizontal .help-block {
+.form-horizontal input + .help-block,
+.form-horizontal .help-block {
   margin-top: 4px;
 }
 
@@ -232,29 +268,37 @@ form .controls > #submit.btn {
   border-radius: 5px;
   padding: 1px 5px 2px;
 }
-.badge-revs, .label-revs {
+
+.badge-revs,
+.label-revs {
   background-color: $revs-red;
 }
 
 #report-problem-form {
   border-bottom: 1px solid $revs-gray;
   display: none;
+
   h2 {
-    border-top: none;
+    border-top: 0;
     padding-top: 20px;
   }
-  textarea, input:not([type=submit]):not([type=file]) {
+
+  textarea,
+  input:not([type=submit]):not([type=file]) {
     width: 80%;
   }
+
   select {
     width: auto;
   }
 }
 
 #about-section {
-   textarea, input:not([type=submit]):not([type=file]) {
+  textarea,
+  input:not([type=submit]):not([type=file]) {
     width: 80%;
   }
+
   select {
     width: auto;
   }
@@ -264,11 +308,13 @@ form .controls > #submit.btn {
   margin-left: 12px;
 }
 
-td.right, th.right {
+td.right,
+th.right {
   text-align: right;
 }
 
-td.centered, th.centered {
+td.centered,
+th.centered {
   text-align: center;
 }
 
@@ -283,106 +329,123 @@ select:focus {
 }
 
 .thumbnail-preview {
-  @include image_border_thumbnail;
+  @include image-border-thumbnail;
 }
 
-.handle:hover{cursor: move;}
+.handle:hover {cursor: move;}
 
 .btn.btn-default {
-  color: $gray-dark;
   background-color: $white;
   background-image: linear-gradient(to bottom, $white, $revs-gray);
   border-color: $gray-ccc $gray-ccc $gray-ccc;
-}
-.btn.btn-default:hover {
   color: $gray-dark;
+}
+
+.btn.btn-default:hover {
   background-color: $revs-gray;
   background-image: linear-gradient(to bottom, $revs-gray, $revs-gray);
   border-color: $gray-ccc $gray-ccc $gray-ccc;
+  color: $gray-dark;
 }
 
 form.report-problem {
   margin-bottom: 30px;
+
   p {
-    margin-top: 6px;
     margin-bottom: 24px;
+    margin-top: 6px;
     max-width: 85%;
   }
 }
+
 // Error page styling
 .error-page {
   margin-left: 50px;
   position: relative;
+
   h2 {
-    border-top: none;
+    border-top: 0;
     font-size: 1.5em;
     font-weight: 500;
     padding-top: none;
     text-transform: none;
   }
+
   p {
     font-size: 14px;
   }
+
   ul {
     list-style-type: none;
+
     li {
       line-height: 2em;
     }
   }
+
   i {
     margin-right: 10px;
   }
 }
+
 // Show image on 500 page
 .error-500:before {
-  z-index: -1;
-  position: absolute;
-  left: 35%;
-  top: 80%;
   content: image-url("500-page.png");
-  opacity: 0.05;
+  left: 35%;
+  opacity: .05;
+  position: absolute;
+  top: 80%;
+  z-index: -1;
 }
 
 // Hide element offscreen but still readable by screen readers
 .hidden-offscreen {
-  position: absolute !important;
-  height: 1px; width: 1px;
-  overflow: hidden;
-  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip: rect(1px 1px 1px 1px); // IE6, IE7
   clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  position: absolute !important;
+  width: 1px;
 }
 
 .entries-info {
-  text-align: right;
   margin-bottom: 5px;
+  text-align: right;
 }
 
 @media screen and (max-width: 991px) {
   .error-page {
     margin-left: 0;
+
     .error-500:before {
       left: 10%;
       top: 110%;
     }
   }
+
   #sidebar-nav {
     border-top: 5px solid $revs-gray;
   }
+
   .user-dashboard-sidebar #sidebar-nav {margin-top: 20px;}
 }
 
 @media screen and (max-width: 767px) {
   .pagination {clear: both;}
+
   #sidebar {
-    border-top: none;
+    border-top: 0;
     padding-top: 0;
   }
+
   #report-problem-form {
     margin-left: 20px;
   }
+
   .error-500:before {
     left: 10%;
   }
+
   .blacklight-about #sidebar-nav {border-top: 5px solid $revs-gray;}
 }
 

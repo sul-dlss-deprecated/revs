@@ -1,16 +1,16 @@
-/* Mixins */
-@mixin red-top_border {
+// Mixins
+@mixin red-top-border {
   border-top: 5px solid $revs-red;
   padding-top: 10px;
 }
 
-@mixin gray-top_border {
+@mixin gray-top-border {
   border-top: 5px solid $revs-gray;
   padding-top: 10px;
 }
 
 @mixin page-header {
-  @include gray-top_border;
+  @include gray-top-border;
   color: $revs-red;
   margin-top: 0;
   padding-top: 10px;
@@ -18,14 +18,14 @@
 }
 
 @mixin member-section-header {
-  @include gray-top_border;
+  @include gray-top-border;
   color: $revs-red;
   margin-top: 20px;
   padding-top: 10px;
   text-transform: uppercase;
 }
 
-@mixin image_border_thumbnail {
+@mixin image-border-thumbnail {
   border: 1px solid #bbb;
   box-shadow: 2px 2px $revs-gray;
 }
@@ -39,26 +39,33 @@
 
 @mixin result-controls {
   font-size: 12px;
+
   .active {
-    color: black;
+    color: $gray-base;
     cursor: default;
+
     &:hover {
       text-decoration: none;
     }
   }
+
   .nav-pills {
     margin-bottom: 0;
+
     li > a {
       background-color: lighten($header-bg-color, 10%);
       border: 1px solid darken($header-bg-color, 5%);
       margin-left: 6px;
-      padding-top: 3px;
       padding-bottom: 3px;
+      padding-top: 3px;
     }
+
     li > a:hover {
       background-color: lighten($header-bg-color, 5%);
     }
-    li > a.active, a.active:hover {
+
+    li > a.active,
+    a.active:hover {
       background-color: desaturate($active-link-color, 20%);
       border: 1px solid darken($header-bg-color, 10%);
       color: lighten($header-bg-color, 5%);
@@ -79,7 +86,7 @@
 
 @mixin item-highlighting {
   background: $gray-lighter;
-  border: 1px dotted #aaaaaa;
+  border: 1px dotted #aaa;
   border-radius: 5px;
   padding: 12px 6px 0;
 }
@@ -90,28 +97,35 @@
     font-size: 16px;
     padding-left: 3px;
   }
+
   .help i:hover {
     color: $revs-red;
     text-decoration: none;
   }
+
   .tooltip {
     font-weight: 500;
   }
 }
+
 @mixin item-stats {
   ul.item-stats {
     margin-bottom: 20px;
     margin-left: 0;
+
     > li {
       font-size: 13px;
       padding-left: 0;
       padding-right: 0;
+
       &:after {
-        content: " \00b7";
+        content: ' \00b7';
       }
+
       &:last-child:after {
         content: none;
       }
+
       .item-stats-heading {
         font-weight: 600;
       }
