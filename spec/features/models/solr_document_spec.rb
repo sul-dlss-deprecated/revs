@@ -446,6 +446,8 @@ describe SolrDocument, :integration => true do
         expect(SolrDocument.total_images(:visible)).to eq(18)
         expect(SolrDocument.total_images(:hidden)).to eq(1)
         expect(SolrDocument.total_images(:all)).to eq(19)
+        expect(SolrDocument.score_stats['count']).to eq(22)
+        expect(SolrDocument.score_stats['mean']).to eq(25.40909090909091)
       end
     end
     

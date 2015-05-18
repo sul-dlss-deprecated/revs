@@ -498,6 +498,21 @@ class SolrDocument
      end
    end
 
+   def self.score_stats
+     
+     response=Blacklight.default_index.connection.select(
+         :params=> {
+           :q=>'*:*',
+           :rows=>0,
+           :stats=>true,
+           :'stats.field'=>'score_isi'
+         }
+       )
+       
+       return response['stats']['stats_fields']['score_isi']
+
+   end
+   
    def self.highlighted_collections
      collections=self.all_collections(:highlighted=>true)
      collections.size > 0 ? collections : self.all_collections # if there are highlighted collections, show them, else show them all
