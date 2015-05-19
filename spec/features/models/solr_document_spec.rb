@@ -452,9 +452,23 @@ describe SolrDocument, :integration => true do
       end
     end
     
+    describe "all_archives" do
+      it "should return an array of archive names" do
+        expect(SolrDocument.archives.length).to eq(2)
+      end
+    end
+    
+    
     describe "all_collections" do
       it "shold return an array of collection SolrDocuments" do
         expect(SolrDocument.all_collections.length).to eq(3)
+        SolrDocument.all_collections.each do |doc|
+          expect(doc.is_collection?).to be_truthy
+          expect(doc).to be_a SolrDocument
+        end
+      end
+      it "shold return an array of collection SolrDocuments filtered by archive" do
+        expect(SolrDocument.all_collections(:archive=>"Road and Track Archive").length).to eq(1)
         SolrDocument.all_collections.each do |doc|
           expect(doc.is_collection?).to be_truthy
           expect(doc).to be_a SolrDocument
