@@ -9,6 +9,7 @@ describe("About Pages",:type=>:request,:integration=>true) do
     @contact_us=I18n.t("revs.about.contact_title")
     @terms_of_use=I18n.t("revs.about.terms_of_use_title")
     @video_tutorials=I18n.t("revs.about.video_tutorials_title")
+    @archives_title = I18n.t('revs.about.archives_title')
     RevsMailer.stub_chain(:contact_message,:deliver).and_return('a mailer')
   end
 
@@ -82,4 +83,8 @@ describe("About Pages",:type=>:request,:integration=>true) do
     expect(page).to have_link(I18n.t("revs.help.videos.titles.overview"), href: "https://www.youtube.com/watch?v=dkMS7jTseVk")
   end
 
+  it 'should show the content donors page' do
+    visit '/about/archives'
+    expect(page).to have_content(@archives_title)
+  end
 end

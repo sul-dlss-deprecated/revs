@@ -6,7 +6,11 @@
         <div class="homepage-carousel carousel">
           <ul>
             <% @highlight_collections.each_with_index do |collection, index| %>
-              <li class="item<%= " active" if index == 0 %>" data-collection-title="<%= clean_collection_name(collection.title) %>" data-collection-href="<%= collection_path(collection) %>" data-collection-description="<%= truncate(collection.description,:length=>250) %>">
+              <li class="item<%= " active" if index == 0 %>"
+                data-collection-title="<%= clean_collection_name(collection.title) %>"
+                data-collection-href="<%= collection_path(collection) %>"
+                data-collection-archive="<%= collection.archive_name %>"
+                data-collection-description="<%= truncate(collection.description,:length=>250) %>">
                 <a id="collection-image-link" href="<%=collection_path(collection)%>"><%=image_tag collection.first_image(:include_hidden=>can?(:view_hidden, SolrDocument))%></a>
               </li>
             <% end %>
@@ -21,6 +25,7 @@
           <div class="collection-teaser">
             <span class="content-type collection"><%= t('revs.collection.featured_collection')%></span>
             <h3><%= link_to clean_collection_name(@highlight_collections.first.title), collection_path(@highlight_collections.first), :id => "collection-title-link" %></h3>
+            <%= archive_label(@highlight_collections.first.archive_name) %>
             <p>
               <span id="collection-description"><%= truncate(@highlight_collections.first.description,:length=>310) %></span>
               <%= link_to t('revs.nav.more'), collection_path(@highlight_collections.first), :id => "collection-link" %>
@@ -50,6 +55,7 @@
         <div id="featured-description">
           <span class="content-type collection"><%= t('revs.collection.featured_collection')%></span>
           <h3><%= link_to clean_collection_name(collection.title), collection_path(collection), :id => "collection-title-link" %></h3>
+          <%= archive_label(collection.archive_name) %>
           <p>
             <span id="collection-description"><%= truncate(collection.description,:length=>300) %></span>
             <%= link_to "#{t('revs.nav.more')}", collection_path(collection), :id => "collection-link" %>

@@ -591,6 +591,13 @@
   span {font-weight: 700;}
 }
 
+#document.blacklight-collection {
+  .archive-label {
+    @include archive-label;
+    margin-left: 0;
+  }
+}
+
 // Item metadata score
 .score-viz {
   height: 6px;

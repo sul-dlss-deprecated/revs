@@ -37,6 +37,7 @@ $(document).ready(function(){
   // When new item slides into view, update metadata shown for item
   $('.homepage-carousel').on('jcarousel:targetin', 'li', function() {
     $("#featured-collection-nav #collection-title-link").text($(this).attr("data-collection-title"));
+    $("#featured-collection-nav .archive-label").text($(this).attr("data-collection-archive"));
     $("#featured-collection-nav #collection-title-link").attr('href', $(this).attr("data-collection-href"));
     $("#featured-collection-nav #collection-image-link").attr('href', $(this).attr("data-collection-href"));
     $("#featured-collection-nav #collection-description").text($(this).attr("data-collection-description"));
@@ -48,7 +49,7 @@ $(document).ready(function(){
   $('.collection_carousel').on('jcarousel:targetin', 'li', function() {
     var current_item = $(this);
     current_item.addClass('active');
-    var druid= $('.collection_carousel').attr('data-druid');
+    var druid = $('.collection_carousel').attr('data-druid');
     var index = parseInt(current_item.attr('data-image-number'));
     var rows = parseInt($('.collection_carousel').attr('rows'));
     var start = parseInt($('.collection_carousel').attr('start'));
@@ -59,7 +60,7 @@ $(document).ready(function(){
       $.getScript("/update_carousel?druid=" + druid + "&rows=" + rows + "&start=" + end);
     }
     // Ensure jCarousel knows about remotely added items and makes next button active
-    if ((index % 5) == 0) {
+    if ((index % 5) === 0) {
       $('.collection_carousel').jcarousel('reload');
     }
   });

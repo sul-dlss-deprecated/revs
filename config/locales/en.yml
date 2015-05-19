@@ -164,6 +164,8 @@ en:
       marques: "Marques"
       venues: "Venues"
       tracks: "Tracks"
+      filter_archive: 'Filter by archive'
+      filter_archive_sr_only: 'Filter collections by archive'
     contact:
       us: 'contact us'
       instructions_html: 'If you would like to purchase an image, our policies and Image Order Forms can be found here: %{reuse_link}  Or, if you have questions about placing an order, select "Contact the Image Sales Department." If you have corrections to metadata or content on the site, please use the "Flag correction to this item" link next to the image.'

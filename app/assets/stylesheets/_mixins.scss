@@ -37,6 +37,13 @@
   top: 0;
 }
 
+@mixin archive-label {
+  background-color: $white;
+  border: 1px dotted $revs-red;
+  color: $revs-red;
+  padding: 2px 6px 1px;
+}
+
 @mixin result-controls {
   font-size: 12px;
 

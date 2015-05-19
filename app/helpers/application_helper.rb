@@ -240,4 +240,9 @@ module ApplicationHelper
     html.html_safe
   end
 
+  # create label with name of archive
+  def archive_label(archive)
+    content_tag(:span, archive, class: ['label', 'label-default', 'archive-label'])
+  end
+
 end

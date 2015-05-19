@@ -12,9 +12,9 @@
       <div class="accordion-inner">
         <dl class="dl-horizontal  dl-invert">
 
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'collection_names',:label=>t('revs.show.label_collection'),:multivalued=>true,:facet=>true,:editable=>false} %>
-
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'archive_name',:label=>t('revs.show.label_archive'),:facet=>true,:editable=>false} %>
+
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'collection_names',:label=>t('revs.show.label_collection'),:multivalued=>true,:facet=>true,:editable=>false} %>
 
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'title',:label=>t('revs.show.label_title'),:editable=>true} if in_curator_edit_mode %>
 
