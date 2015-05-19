@@ -101,14 +101,14 @@ class CatalogController < ApplicationController
       end
       @saved_items=@gallery.saved_items(current_user).limit(CatalogController.blacklight_config.collection_member_grid_items)
     end
-    
+
     # some logic around the display of reproduction statements which is special for revs items and includes contact links, which is why it is not in the model
     if @document && @document.revs_item? && !@document.reproduction_not_available?
-  
+
       @use_and_reproduction=""
       @use_and_reproduction += I18n.t('revs.contact.image_reuse_agreement',
           :license_agreement_link => ActionController::Base.helpers.link_to(t('revs.contact.image_license_agreement'),
-          'http://revsinstitute.org/research-education/permission-to-use',:target=>'_new')).html_safe 
+          'http://revsinstitute.org/research-education/permission-to-use',:target=>'_new')).html_safe
       @use_and_reproduction += I18n.t('revs.contact.reuse_contact',
           :reuse_contact_link => ActionController::Base.helpers.link_to(t('revs.contact.contact_linktext_html'),
           contact_us_path(:subject=>'terms of use',
@@ -119,8 +119,8 @@ class CatalogController < ApplicationController
           )))).html_safe
 
     elsif @document
-  
-      @use_and_reproduction = @document.use_and_reproduction 
+
+      @use_and_reproduction = @document.use_and_reproduction
 
     end
 
@@ -246,8 +246,8 @@ class CatalogController < ApplicationController
     config.add_facet_field 'marque_ssim', :label => 'Marque', :limit => 25
     config.add_facet_field 'model_year_ssim', :label => 'Model Year', :sort => 'index', :limit => 25
     config.add_facet_field 'model_ssim', :label => 'Model', :limit => 25
-    config.add_facet_field 'collection_ssim', :label => "Collection"
     config.add_facet_field 'archive_ssi', :label => "Archive"
+    config.add_facet_field 'collection_ssim', :label => "Collection"
     config.add_facet_field 'photographer_ssi', :label => "Photographer", :limit => 25
     config.add_facet_field 'entrant_ssim', :label => "Entrant", :limit => 25
     config.add_facet_field 'people_ssim', :label => "People", :limit => 25
