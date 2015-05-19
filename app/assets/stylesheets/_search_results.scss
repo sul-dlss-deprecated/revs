@@ -439,7 +439,8 @@
 }
 
 #sort-dropdown,
-#per_page-dropdown {
+#per_page-dropdown,
+#archive-filter {
   margin-top: 3px;
   z-index: 9999;
 
@@ -464,6 +465,14 @@
 
   > a {padding: 2px;}
 
+}
+
+#archive-filter {
+  float: right;
+
+  .dropdown-toggle .caret {
+    color: $gray-base;
+  }
 }
 
 span.constraints-label {margin-right: .5em;}
