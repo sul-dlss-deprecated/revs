@@ -10,7 +10,7 @@ describe("Item Visibility",:type=>:request,:integration=>true) do
     @nadig_collection_druid='kz071cg8658'
     @nadig_collection_path=catalog_path(@nadig_collection_druid)
   end
-  
+
   it "should update image visibility" do
     item1=Item.where(:druid=>@hidden_druid)
     expect(item1.size).to eq 1
@@ -31,7 +31,7 @@ describe("Item Visibility",:type=>:request,:integration=>true) do
     item1=Item.where(:druid=>@hidden_druid)
     expect(item1.size).to eq 1
     expect(item1.first.visibility).to eq :hidden
-    
+
     doc2=SolrDocument.find(@visible_druid)
     expect(doc2.visibility_value).to eq ""
     expect(doc2.visibility).to eq :visible
@@ -45,9 +45,9 @@ describe("Item Visibility",:type=>:request,:integration=>true) do
     expect(doc3.visibility_value).to eq 1
     expect(doc3.visibility).to eq :visible
 
-    reindex_solr_docs([@hidden_druid,@visible_druid])    
+    reindex_solr_docs([@hidden_druid,@visible_druid])
   end
-  
+
   it "should not show the visibility facet to non-curators" do
     visit root_path
     expect(page).not_to have_content("Visibility")
@@ -57,15 +57,17 @@ describe("Item Visibility",:type=>:request,:integration=>true) do
     login_as(curator_login)
     expect(page).to have_content("Visibility")
   end
-  
+
   it "should not show hidden items to non-logged in or regular users" do
     should_deny_access(@hidden_druid_path)
     login_as(user_login)
     should_deny_access(@hidden_druid_path)
     visit all_collections_path
-    expect(page).to have_content("The David Nadig Collection of The Revs Institute (14 items)")
+    expect(page).to have_content('The David Nadig Collection of The Revs Institute')
+    expect(page).to have_content('Collier Collection')
+    expect(page).to have_content('14 items')
     visit @nadig_collection_path
-    expect(page).to have_content("14 items")
+    expect(page).to have_content('14 items')
   end
 
   it "should show hidden items to curators and admins" do
@@ -73,14 +75,16 @@ describe("Item Visibility",:type=>:request,:integration=>true) do
     logins.each do |user|
       login_as(user)
       visit @hidden_druid_path
-      expect(page).to have_content("Bryar 250 Trans-American:10")
-      expect(page).to have_content("Hidden")
+      expect(page).to have_content('Bryar 250 Trans-American:10')
+      expect(page).to have_content('Hidden')
       visit all_collections_path
-      expect(page).to have_content("The David Nadig Collection of The Revs Institute (15 items)")
+      expect(page).to have_content('The David Nadig Collection of The Revs Institute')
+      expect(page).to have_content('Collier Collection')
+      expect(page).to have_content('15 items')
       visit @nadig_collection_path
-      expect(page).to have_content("15 items")
+      expect(page).to have_content('15 items')
       logout
     end
-  end  
-  
+  end
+
 end

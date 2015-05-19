@@ -100,4 +100,15 @@ en:
             and helped improve the information on many of the images.
           </p>
         flags: "fixed flags"
-
+      archives_title: 'Content Donors'
+      archives:
+        collier_html: |
+          <h3>Collier Collection</h3>
+          <p>
+            This is text about the Collier Collection.
+          </p>
+        road_and_track_html: |
+          <h3>Road and Track Archive</h3>
+          <p>
+            This is text about the Road and Track Archive.
+          </p>
