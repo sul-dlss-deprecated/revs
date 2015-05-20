@@ -150,6 +150,14 @@ $(document).ready(function(){
 			$('.score-viz-detailed .score').addClass('half-full');
 		}
 
+		// Collections Results 'filter by archive' pulldown.
+		// Use querystring value of 'archive' to show current filter in pulldown
+		var archive = getParamValuesByName('archive');
+		if (archive === '') {
+			archive = "archive";
+		}
+	  $('#archive-filter.btn-group').find('.dropdown-toggle').html('Filter by ' + archive +' <span class="caret"></span>');
+
    // Called when an individual checkbox is checked or unchecked in bulk edit view.
    // Update row status message if user changes individual checkbox
    $('.result-item-checkbox > input[type="checkbox"]').change(function() {
@@ -255,6 +263,20 @@ function setVisibility(value) {
 					data: "value=" + value
 	});
 }
+
+function getParamValuesByName(querystring) {
+	name = querystring.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+	var regexS = "[\\?&]" + name + "=([^&#]*)";
+	var regex = new RegExp(regexS);
+	var results = regex.exec(window.location.search);
+	if (results === null) {
+		return "";
+	}
+	else {
+		return decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
+}
+
 
 $(document).on('blur',".user-login-email",function(){
 	  var email=$(this).val();

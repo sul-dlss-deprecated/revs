@@ -16,17 +16,17 @@
       </div>
     </div>
 
-    <div class="col-sm-6 hidden-xs">
+    <div class="col-sm-6 hidden-xs hidden showOnLoad">
       <span class="sr-only"><%= t('revs.nav.filter_archive_sr_only') %></span>
       <div id="archive-filter" class="btn-group">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
           <%= t('revs.nav.filter_archive') %> <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
-          <%# TODO: The menu items and links need to be populated dynamically
-              and call a query that filters out other archives %>
-          <li><a href="#">Collier Collection</a></li>
-          <li><a href="#">Road and Track</a></li>
+            <li><%= link_to t('revs.nav.toggle_all'), all_collections_path(params.symbolize_keys.merge(:archive => ''))%></li>
+          <% SolrDocument.archives.each do |archive| %>
+            <li><%= link_to archive, all_collections_path(params.symbolize_keys.merge(:archive => archive))%></li>
+          <% end %>
         </ul>
       </div>
     </div>

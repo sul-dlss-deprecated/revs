@@ -473,12 +473,33 @@ class SolrDocument
       end
    end
    
+   # return an array of archive names
+   def self.archives
+     response=Blacklight.default_index.connection.select(
+       :params => {
+         :q => '*:*',
+         :facet => 'on',
+         :'facet.field' => 'archive_ssi',
+         :rows => 0,
+       }
+     )
+     return response['facet_counts']['facet_fields']['archive_ssi'].delete_if {|val| val.is_a? Integer}
+   end
+   
    # Return an Array of all collection type SolrDocuments
+   # you can specify
+   #  :highlighted=>true to only get highlighted collections
+   #  :rows=>n to only get those number of results
+   #  :archive=>'archive name' to filter by that archive
    def self.all_collections(params={})
      highlighted=params[:highlighted] || false
+     archive=params[:archive] || ""
      rows=params[:rows] || "10000"
      fq="#{self.config.collection_identifying_field}:\"#{self.config.collection_identifying_value}\""
      fq+=self.images_query(:visible) # only show collections marked as visible
+     unless archive.blank?
+         fq+=" AND archive_ssi:\"#{archive}\"" 
+     end
      if highlighted
        default_sort="highlighted_dti desc"     
        fq+=" AND highlighted_ssi:\"true\"" 
