@@ -245,4 +245,9 @@ module ApplicationHelper
     content_tag(:span, archive, class: ['label', 'label-default', 'archive-label'])
   end
 
+  # Get average metadata score of entire repository
+  # Width of visualization is 200px so multiply score by 2 to get adjusted offset
+  def get_repo_metadata_score
+    SolrDocument.score_stats['mean'].round * 2
+  end
 end
