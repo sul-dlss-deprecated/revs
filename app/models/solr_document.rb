@@ -62,46 +62,9 @@ class SolrDocument
     }
   end
   
+  # the field mappings are ordinarly defined here, but we have defined them in the revs-utils gem (included in this method) since they are shared with the revs-indexing-service
   def self.field_mappings
-    {
-      :title=>{:field=>'title_tsi',:default=>'Untitled'},
-      :description=>{:field=>'description_tsim', :multi_valued => true, :weight => 3},
-      :photographer=>{:field=>'photographer_ssi', :weight => 1},
-      :years=>{:field=>'pub_year_isim', :multi_valued => true, :weight => 5},
-      :single_year=>{:field=>'pub_year_single_isi'},
-      :full_date=>{:field=>'pub_date_ssi'},
-      :people=>{:field=>'people_ssim', :multi_valued => true, :weight => 4},
-      :subjects=>{:field=>'subjects_ssim', :multi_valued => true, :weight => 1},
-      :city_section=>{:field=>'city_sections_ssi'},
-      :city=>{:field=>'cities_ssi'},
-      :state=>{:field=>'states_ssi'},
-      :country=>{:field=>'countries_ssi'},
-      :formats=>{:field=>'format_ssim', :multi_valued => true},
-      :identifier=>{:field=>'source_id_ssi'},
-      :production_notes=>{:field=>'prod_notes_tsi'},
-      :institutional_notes=>{:field=>'inst_notes_tsi'},
-      :metadata_sources=>{:field=>'metadata_sources_tsi'},
-      :has_more_metadata=>{:field=>'has_more_metadata_ssi'},
-      :vehicle_markings=>{:field=>'vehicle_markings_tsi', :weight => 1},
-      :marque=>{:field=>'marque_ssim', :multi_valued => true, :weight => 4},
-      :vehicle_model=>{:field=>'model_ssim', :multi_valued => true, :weight => 2},
-      :model_year=>{:field=>'model_year_ssim', :multi_valued => true, :weight => 1},
-      :current_owner=>{:field=>'current_owner_tsi', :weight => 1},
-      :entrant=>{:field=>'entrant_ssim', :multi_valued => true, :weight => 1},
-      :venue=>{:field=>'venue_ssi'},
-      :track=>{:field=>'track_ssi', :weight => 1},
-      :event=>{:field=>'event_ssi'},
-      :group_class=>{:field=>'group_class_tsi', :weight => 1},
-      :race_data=>{:field=>'race_data_tsi', :weight => 1},
-      :priority=>{:field=>'priority_isi',:default=>0,:editstore=>false},
-      :collections=>{:field=>'is_member_of_ssim', :multi_valued => true},
-      :collection_names=>{:field=>'collection_ssim', :multi_valued => true,:editstore=>false},
-      :archive_name=>{:field=>'archive_ssi',:editstore=>false},
-      :highlighted=>{:field=>'highlighted_ssi',:editstore=>false},
-      :visibility_value=>{:field=>'visibility_isi',:editstore=>false},
-      :score=>{:field=>'score_isi', :editstore=>false},
-      :timestamp=>{:field=>'timestamp', :editstore=>false}
-    }  
+    revs_field_mappings
   end
 
   # you can configure a callback method to execute if any of these fields are changed
@@ -150,8 +113,9 @@ class SolrDocument
   end
   
   # a helper that makes it easy to show the document location as a single string
+  # this method is actually defined in the revs-utils gem since it shared with the revs-indexer-service
   def location
-    [city_section,city,state,country].reject(&:blank?).join(', ')
+    revs_location(self._source.merge(self.unsaved_edits))
   end
 
   def update_attribute(attribute,value)
@@ -159,25 +123,9 @@ class SolrDocument
   end
 
   # we have a more complicated algorith, so will override the default scoring in activesolr helper
+  # this method is actually defined in the revs-utils gem since it shared with the revs-indexer-service
   def compute_score
-
-    total_score=0
-    total_weights=0
-    self.class.field_mappings.each do |field_name,field_config|
-      if !field_config[:weight].blank?
-        total_score += field_config[:weight].to_f * (self.class.blank_value?(self.send(field_name)) ? 0 : 1) # if the field is blank, it is a 0 regardless of weight, otherwise it is a 1 times its weight
-        total_weights += field_config[:weight].to_f
-      end
-    end
-
-    # now we will account for the location, which has a weighting of 3 for *any* location like field having a value
-    location_score = (location.blank? && venue.blank? && event.blank?) ? 0 : 1
-    location_weight = 3
-    total_weights += location_weight
-    total_score += (location_score * location_weight)
-    
-    return ((total_score/total_weights)*100).ceil
-
+    revs_compute_score(self._source.merge(self.unsaved_edits))
   end
     
   # if the user updates one of the date fields, we'll run some computations to update the others as needed
