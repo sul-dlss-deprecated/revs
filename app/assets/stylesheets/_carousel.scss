@@ -1,5 +1,5 @@
-/** Carousel **/
-.carousel img{
+// Carousels
+.carousel img {
   border: 2px solid #bbb;
 }
 
@@ -12,11 +12,11 @@
 }
 
 .carousel ul {
-  width: 20000em;
-  position: relative;
   list-style: none;
   margin: 0;
   padding: 0;
+  position: relative;
+  width: 20000em;
 }
 
 .carousel li {
@@ -32,67 +32,107 @@
 
 .collection_carousel {
 	float: none;
+
 	li {
-		position: relative;
 		height: 263px;
+		position: relative;
 	}
+
 	.item-caption {
-		background-color: rgba(0,0,0,0.4);
-		position: absolute;
+		background-color: rgba(0, 0, 0, .4);
 		bottom: 0;
 		left: 2px;
+		position: absolute;
 		width: 99%;
+
 		p {
 			color: $revs-gray;
 			font-size: 14px;
 			line-height: 1.3;
-			text-shadow: 0 1px 0 $gray-base;
 			margin: 0;
 			padding: 8px 12px;
+			text-shadow: 0 1px 0 $gray-base;
 		}
 	}
 }
 
+.saved-items-carousel {
+  margin-bottom: 15px;
+}
+
+.saved-items.slideshow {
+  margin-left: 0;
+  margin-right: 0;
+  padding-top: 18px;
+
+  .jcarousel-wrapper {
+    padding-left: 0;
+
+  }
+  .saved-item-metadata {
+    padding-right: 0;
+  }
+
+  .saved-item-year,
+  .saved-item-location,
+  .saved-item-description {
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+
+  .saved-item-title {
+    font-size: 1.25em;
+    padding-bottom: 12px;
+  }
+
+  .saved-item-annotation {
+    font-style: italic;
+  }
+}
+
 // Carousel controls
 .carousel-controls {
-	position: relative;
+	height: 40px;
 	margin-top: 15px;
 	margin-right: 10px;
-	height: 40px;
+	position: relative;
+
 	.number-of-items {
 		@extend .text-muted;
-		position: absolute;
 		left: 39%;
+		position: absolute;
 		top: 25%;
 	}
 }
 
 .jcarousel-control-prev,
 .jcarousel-control-next {
-  position: absolute;
-  top: 0;
-  width: 30px;
-  height: 30px;
-  text-align: center;
   background: $revs-gray-light;
   color: $white;
+  font: 24px/27px Arial, sans-serif;
+  height: 30px;
+  position: absolute;
+  text-align: center;
   text-decoration: none;
   text-shadow: 0 0 1px $gray-base;
-  font: 24px/27px Arial, sans-serif;
   -webkit-border-radius: 8px;
      -moz-border-radius: 8px;
           border-radius: 8px;
   -webkit-box-shadow: 0 0 2px $revs-gray-light;
      -moz-box-shadow: 0 0 2px $revs-gray-light;
           box-shadow: 0 0 2px $revs-gray-light;
+  top: 0;
+  width: 30px;
 
 	&:active, &:hover, &:focus, &.inactive {
 		color: $container-bg-color;
 		text-decoration: none;
 	}
+
 	&:active, &:hover {
 		background-color: #8c1515;
 	}
+
 	&.inactive, &.inactive:hover {
 		background-color: $revs-gray-light;
 	}
@@ -113,23 +153,37 @@
 
 .jcarousel-control-prev.inactive,
 .jcarousel-control-next.inactive {
-  opacity: .3;
   cursor: default;
+  opacity: .3;
 }
 
 @media screen and (min-width: $screen-md-min) and (max-width: $screen-md-max) {
 	.carousel-controls {
 		margin-right: 0;
 	}
+
+
+  .jcarousel-wrapper {
+    padding-right: 8px;
+  }
 }
-@media screen and (max-width: $screen-xs-max) {
-	.jcarousel-wrapper + .collection-description {
-		margin-top: 20px;
-	}
+
+@media screen and (max-width: $screen-sm-max) {
+  .carousel-controls {
+    margin-bottom: 18px;
+  }
+
+  .saved-item-metadata {
+    padding-left: 0;
+  }
 }
 
 @media screen and (max-width: $screen-xs-max) {
 	.carousel-controls {
 		max-width: 400px;
 	}
+
+  .jcarousel-wrapper + .collection-description {
+    margin-top: 20px;
+  }
 }

@@ -45,7 +45,7 @@
           <%= link_to t('revs.user_galleries.edit'), edit_gallery_path(@gallery) %> |
         <% end%>
         <% if can? :destroy, @gallery%>
-          <%= button_to(t('revs.user_galleries.delete'), gallery_path(@gallery.id), :confirm=>t('revs.actions.confirm_delete'), :method=> :delete, class: 'btn btn-link') %>
+          <%= button_to(t('revs.user_galleries.delete'), gallery_path(@gallery.id), :confirm => t('revs.actions.confirm_delete'), :method=> :delete, class: 'btn btn-link') %>
         <% end %>
         <%= render :partial => 'saved_items/manage_items_toggle', :locals => {:saved_list_type => 'gallery'} %>
       </div>
@@ -55,7 +55,12 @@
   <div class="row">
     <div id="content" class="col-md-12 favorites-index">
        <div id="favorites_area">
-         <%=render :partial => "saved_items/list", :locals=>{:saved_items=>@saved_items,:gallery_type=>'user'} %>
+         <% if @view == 'slideshow' %>
+          <%= render :partial => "saved_items/slideshow",
+            :locals => {:saved_items => @saved_items, :gallery_type => 'user', :start => 0} %>
+         <% else %>
+          <%= render :partial => "saved_items/list", :locals => {:saved_items => @saved_items, :gallery_type => 'user'} %>
+         <% end %>
        </div>
     </div>
   </div>
@@ -63,5 +68,5 @@
 </div>
 
 <div class="col-md-3">
-  <%= render :partial => 'user/side_nav', :locals=>{:user=>@gallery.user} %>
+  <%= render :partial => 'user/side_nav', :locals => {:user => @gallery.user} %>
 </div>

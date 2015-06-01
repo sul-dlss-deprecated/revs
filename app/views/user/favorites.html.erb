@@ -1,11 +1,20 @@
 <div id="content" class="col-md-9 favorites-index">
-  <h2><%= display_user_name(@user) %><span class="text-lowercase">'s</span> <%=t('revs.favorites.head')%></h2>
+  <h2><%= display_user_name(@user) %>
+    <span class="text-lowercase">'s</span>
+    <%= t('revs.favorites.head') %>
+  </h2>
 
   <%= render :partial => 'saved_items/manage_items_toggle', :locals => {:saved_list_type => 'favorites'} %>
 
-   <div id = "favorites_area">
-     <%=render :partial => "saved_items/list", :locals=>{:saved_items=>@saved_items,:gallery_type=>'favorites'} %>
-   </div>      
+   <div id="favorites_area">
+     <% if @view == 'slideshow' %>
+       <%= render :partial => "saved_items/slideshow",
+         :locals => {:saved_items => @saved_items, :gallery_type => 'user', :start => 0} %>
+     <% else %>
+       <%= render :partial => "saved_items/list",
+         :locals => {:saved_items => @saved_items, :gallery_type => 'favorites'} %>
+     <% end %>
+   </div>
 </div>
 
 <div class="col-md-3">

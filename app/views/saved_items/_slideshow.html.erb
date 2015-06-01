@@ -1,0 +1,51 @@
+<%= render :partial => 'saved_items/order_and_pagination', :locals => {:saved_items => saved_items} %>
+
+<div class="row saved-items <%= @view %>" id="saved_items_list">
+
+  <div class="col-sm-7 col-lg-6 jcarousel-wrapper">
+    <div start="<%= start %>" total="<%= saved_items.count %>" class="saved-items-carousel carousel">
+      <ul id="carousel-items">
+        <% saved_items.each_with_index do |item, index| %>
+          <% image_number = (index + start).to_i + 1 %>
+          <li data-image-number="<%= image_number %>" class="item<%= " active" if image_number == 1 %>"
+            data-title="<%= item.solr_document.title %>"
+            data-href="<%= item_path(item.solr_document) %>"
+            data-year="<%= item.solr_document.single_year %>"
+            data-location="<%= item.solr_document.location %>"
+            data-description="<%= item.solr_document.description %>"
+            data-annotation="<%= item.description %>">
+            <a id="saved-item-image-link" href="<%= item_path(item.solr_document) %>">
+              <%= image_tag(item.solr_document.images(:large).first) %>
+            </a>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+
+    <!-- Carousel controls -->
+    <div class="hidden showOnLoad carousel-controls">
+      <a href="#saved-items-carousel" class="jcarousel-control-prev">&lsaquo;</a>
+       <span class="number-of-items">
+        <span class="iterator">
+          <%= start.to_i + 1 %>
+        </span>
+        of <%= pluralize(number_with_delimiter(saved_items.count), t('revs.collection_members.items_name')) %>
+      </span>
+      <a href="#saved-items-carousel" class="jcarousel-control-next">&rsaquo;</a>
+    </div>
+  </div>
+
+  <!-- Selected item metadata -->
+  <div class=" col-sm-5 col-lg-6 saved-item-metadata">
+    <div class="saved-item-title">
+      <a href="<%= item_path(saved_items.first.solr_document) %>">
+        <%= saved_items.first.solr_document.title %>
+      </a>
+    </div>
+    <div class="saved-item-year"><%= saved_items.first.solr_document.single_year %></div>
+    <div class="saved-item-location"><%= saved_items.first.solr_document.location %></div>
+    <div class="saved-item-description"><%= saved_items.first.solr_document.description %></div>
+    <div class="saved-item-annotation"><%= saved_items.first.description %></div>
+  </div>
+
+</div>

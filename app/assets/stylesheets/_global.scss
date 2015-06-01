@@ -5,8 +5,8 @@ html {
 }
 
 body {
-  font-family: "Helvetica","Arial",sans-serif;
   background: $body-bg-color;
+  font-family: 'Helvetica','Arial',sans-serif;
   font-size: .85em;
   line-height: 18px;
   margin: 0;
@@ -16,48 +16,14 @@ body {
   background: ffff00;
 }
 
-#sidebar-nav ul {
-  margin-bottom: 20px;
-
-  li > a,
-  li .button_to input[type="submit"] {
-    padding: 1px 0;
-  }
-
-  li {
-    form.button_to {
-      margin: 0;
-
-      input[type="submit"] {
-        color: $active-link-color;
-        font-size: 1em;
-        padding: 1px 0 2px;
-      }
-
-      .btn-link {
-        border: 0;
-        text-decoration: none;
-
-        &:hover {
-          color: $revs-red-dark;
-        }
-      }
-
-      &:hover {
-        background-color: $gray-lighter;
-        color: $revs-red-dark;
-      }
-    }
-  }
-}
-
 a:focus {
   outline: thin dotted $gray-dark;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
 
-a:hover,a:active {
+a:hover,
+a:active {
   outline: 0;
 }
 
@@ -131,6 +97,10 @@ h2 {
   @include page-header;
   font-size: 1.325em;
   line-height: 1.3em;
+
+  span.label {
+    text-transform: capitalize;
+  }
 }
 
 h3 {
@@ -149,8 +119,8 @@ p {
 span.content-type {
   color: $revs-red;
   display: block;
-  font-size: .8em;
   font-weight: bold;
+  font-size: .8em;
   text-transform: uppercase;
   -webkit-font-smoothing: antialiased;
 
@@ -198,43 +168,74 @@ span.content-type {
   display: inline;
 }
 
-#sidebar-nav .nav-header {
-  color: $revs-gray-light;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 3px 0;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
-}
-
-#sidebar-nav li {
-  padding: 1px 0;
-}
-
 #sidebar-nav {
   @include red-top-border;
 
-  .nav-header .label {
-    margin-left: 12px;
+  .nav-header {
+    color: $revs-gray-light;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 0;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
+
+    .label {
+      margin-left: 12px;
+    }
   }
 
-  ul.account {
-    li.nav-header {
-      margin-bottom: 0;
+  ul {
+    margin-bottom: 20px;
+
+    li > a,
+    li .button_to input[type="submit"] {
+      padding: 1px 0;
     }
 
-    .account-date {
-      color: $gray-light;
-      font-size: 13px;
-      font-style: italic;
-      padding-bottom: 3px;
+    li {
+      form.button_to {
+        margin: 0;
+
+        input[type="submit"] {
+          color: $active-link-color;
+          font-size: 1em;
+          padding: 1px 0 2px;
+        }
+
+        .btn-link {
+          border: 0;
+          text-decoration: none;
+
+          &:hover {
+            color: $revs-red-dark;
+          }
+        }
+
+        &:hover {
+          background-color: $gray-lighter;
+          color: $revs-red-dark;
+        }
+      }
     }
 
-    li.account-profile a {
-      display: block;
+    &.account {
+      li.nav-header {
+        margin-bottom: 0;
+      }
 
-      &.view-profile-link {display: inline-block;}
+      .account-date {
+        color: $gray-light;
+        font-size: 13px;
+        font-style: italic;
+        padding-bottom: 3px;
+      }
 
-      &.edit-profile-link {display: inline-block;}
+      li.account-profile a {
+        display: block;
+
+        &.view-profile-link {display: inline-block;}
+
+        &.edit-profile-link {display: inline-block;}
+      }
     }
   }
 }
@@ -243,10 +244,6 @@ span.label,
 span.badge {
   font-weight: normal;
   margin-left: 6px;
-}
-
-h2 span.label {
-  text-transform: capitalize;
 }
 
 .inline-help-block {
@@ -337,14 +334,14 @@ select:focus {
 .btn.btn-default {
   background-color: $white;
   background-image: linear-gradient(to bottom, $white, $revs-gray);
-  border-color: $gray-ccc $gray-ccc $gray-ccc;
+  border-color: $gray-ccc;
   color: $gray-dark;
 }
 
 .btn.btn-default:hover {
   background-color: $revs-gray;
   background-image: linear-gradient(to bottom, $revs-gray, $revs-gray);
-  border-color: $gray-ccc $gray-ccc $gray-ccc;
+  border-color: $gray-ccc;
   color: $gray-dark;
 }
 
@@ -390,7 +387,7 @@ form.report-problem {
 
 // Show image on 500 page
 .error-500:before {
-  content: image-url("500-page.png");
+  content: image-url('500-page.png');
   left: 35%;
   opacity: .05;
   position: absolute;
@@ -413,7 +410,7 @@ form.report-problem {
   text-align: right;
 }
 
-@media screen and (max-width: 991px) {
+@media screen and (max-width: $screen-sm-max) {
   .error-page {
     margin-left: 0;
 
@@ -430,7 +427,7 @@ form.report-problem {
   .user-dashboard-sidebar #sidebar-nav {margin-top: 20px;}
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: $screen-xs-max) {
   .pagination {clear: both;}
 
   #sidebar {
@@ -455,6 +452,6 @@ form.report-problem {
   }
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: $screen-sm-min) {
   .blacklight-about #sidebar-nav {border-top: 5px solid $revs-red;}
 }
