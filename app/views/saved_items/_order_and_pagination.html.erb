@@ -1,15 +1,16 @@
 <div class="row results-controls saved-items-list">
 
-  <div class="col-sm-4">
+  <div class="col-sm-6">
     <div class='gallery_toggle tabbable'>
       <ul class="nav nav-pills">
-        <li><%= link_to(t('revs.nav.grid'), url_for({:view=>'grid',:manage=>@manage}), :class=>"#{'active' if @view == 'grid'}") %></li>
-        <li><%= link_to(t('revs.nav.detailed'), url_for({:view=>'detailed',:manage=>@manage}), :class=>"#{'active' if @view == 'detailed'}") %></li>
+        <li><%= link_to(t('revs.nav.grid'), url_for({:view=>'grid', :manage=>@manage}), :class => "#{'active' if @view == 'grid'}") %></li>
+        <li><%= link_to(t('revs.nav.detailed'), url_for({:view=>'detailed', :manage=>@manage}), :class => "#{'active' if @view == 'detailed'}") %></li>
+        <li><%= link_to(t('revs.nav.slideshow'), url_for({:view=>'slideshow', :manage=>@manage}), :class => "#{'active' if @view == 'slideshow'} hidden showOnLoad") %></li>
       </ul>
     </div>
   </div>
 
-  <div class="col-sm-8 saved-item-pagination">
+  <div class="col-sm-6 saved-item-pagination">
     <span class="prev-next">
       <%= page_entries_info saved_items, :entry_name => t('revs.user_galleries.item') %>
     </span>
@@ -35,12 +36,12 @@
 
           <% if can? :destroy, saved_items.first %>
             <%= submit_tag t('revs.user_galleries.remove'),
-              :id=>'delete-button',
+              :id => 'delete-button',
               :class => 'btn btn-default btn-xs',
               :disable_with => t('revs.nav.please_wait'),
               :show_loading_indicator=>"true",
-              :name=>:delete,
-              :confirm=>t('revs.user_galleries.confirm_remove_items')
+              :name => :delete,
+              :confirm => t('revs.user_galleries.confirm_remove_items')
             %>
           <% end %>
 

@@ -7,12 +7,10 @@
 
 .reorder-controls {
   @include result-controls;
+
   .nav-pills li > a {
     margin-left: 0;
   }
-}
-.saved-items img {
-  max-width: 100px;
 }
 
 .manage-list-items-controls {
@@ -20,17 +18,43 @@
   margin-top: 6px;
   padding-top: 9px;
 }
+
 #manage-item-form {
   margin-bottom: 3px;
+
   label {
     margin-right: 24px;
   }
-  label, select, .btn {
+
+  label,
+  select,
+  .btn {
     font-size: 13px;
   }
-  select {width: 140px;}
+
+  select {
+    width: 140px;
+  }
 }
 
-@media screen and (max-width: 767px) {
-  #manage-item-form select#move_to_gallery {margin-bottom: 6px;}
+.saved-items {
+  img {
+    max-width: 100px;
+  }
+
+  .carousel-controls {
+    clear: left;
+  }
+
+  .carousel {
+    img {
+      max-width: 400px;
+    }
+  }
+}
+
+@media screen and (max-width: $screen-xs-max) {
+  #manage-item-form select#move_to_gallery {
+    margin-bottom: 6px;
+  }
 }
