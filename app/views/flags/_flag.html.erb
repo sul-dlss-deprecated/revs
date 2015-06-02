@@ -14,7 +14,7 @@
       <blockquote><%= flag.comment%></blockquote>
 
       <% if can? :destroy, flag %>
-        <%= button_to t('revs.actions.remove'),flag_path(flag.id), :method=>:delete,:remote=>true, :confirm=>t('revs.flags.are_you_sure'), :class => "btn btn-xs btn-danger" %>
+        <%= button_to t('revs.actions.remove'),flag_path(flag.id), :method=>:delete,:remote=>true, :data => {confirm: t('revs.flags.are_you_sure')}, :class => "btn btn-xs btn-danger" %>
       <% end %>
 
       <% if !flag.resolved? and can? :resolve, flag %>
