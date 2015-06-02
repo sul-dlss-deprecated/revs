@@ -4,7 +4,9 @@
     <%= t('revs.favorites.head') %>
   </h2>
 
-  <%= render :partial => 'saved_items/manage_items_toggle', :locals => {:saved_list_type => 'favorites'} %>
+  <% unless @view == 'slideshow' %>
+    <%= render :partial => 'saved_items/manage_items_toggle', :locals => {:saved_list_type => 'favorites'} %>
+  <% end %>
 
    <div id="favorites_area">
      <% if @view == 'slideshow' %>
