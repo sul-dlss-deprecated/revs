@@ -99,7 +99,7 @@
   		      <th class="right"><%= t('revs.flags.open_state_display_name')%></th>
             <th class="right"><%= t('revs.flags.fixed_state_diplay_name')%></th>
             <th class="right"><%= t('revs.flags.wont_fix_state_display_name')%></th>
-            <th><%=link_to t('revs.curator.last_updated'), flags_table_curator_tasks_path(:order=>'updated_at DESC', :tab=>@tab_list_item,:search=>@search) %></th>
+            <th><%=link_to t('revs.curator.last_updated'), flags_table_curator_tasks_path(:order=>'flags.flag_updated_at DESC', :tab=>@tab_list_item,:search=>@search) %></th>
           </tr>
 
         <% @flags.each do |flag|%>
