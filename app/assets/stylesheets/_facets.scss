@@ -1,53 +1,66 @@
 #facet-panel-collapse {
-  padding-bottom: 2px;
-  padding-top: 2px;
   background-color: $white;
   border: 1px solid #d4d4d4;
   border-radius: 6px;
+  padding-bottom: 2px;
+  padding-top: 2px;
+
   .panel {
-    border: none;
+    border: 0;
     border-bottom: 1px solid $revs-gray;
     border-radius: 0;
     margin-bottom: 0;
   }
+
   .panel-default > .panel-heading {
     background-color: $white;
-    border-bottom: none;
+    border-bottom: 0;
     padding-right: 8px;
   }
+
   .panel-title {
     font-size: 14px;
     font-weight: 700;
+
     &:after {color: $revs-gray-light;}
+
     a {color: $gray-dark;}
+
     a:hover {color: inherit;}
   }
+
   .panel-body {
     background-color: $off-white;
     border-top: 1px solid $revs-gray;
     padding-right: 12px;
   }
+
   ul.facet-values {
     margin-bottom: 0;
+
     .facet-label {
       padding-left: 0;
       text-indent: 0;
     }
+
     li .selected {
       color: inherit;
     }
+
+    .selected {
+      margin-right: 12px;
+    }
+
+    .remove {
+      text-indent: 0;
+    }
   }
+
   > .panel-default:last-child {
     border-bottom: 0;
   }
 }
 
-
-/* "#facets-revs" serves as "#facets" does in Blacklight for CSS below.
-   An extra wrapper div with the id of "facets-revs" is used to
-   move the Browse heading outside of the facet box (for Revs theme)
-   and keep the responsive controls working as intended.
-*/
 #facets-revs {
   .top-panel-heading.panel-heading {
     padding-left: 0;
@@ -60,37 +73,37 @@
 // These definitions need to come after '.navbar .btn'
   display: none;
   float: right;
-  padding: 7px 10px;
   margin-left: 5px;
   margin-right: 5px;
+  padding: 7px 10px;
 
-  //BLACKLIGHT-UPGRADE-REMOVAL
-  //@include buttonBackground(darken($navbarBackgroundHighlight, 5%), darken($navbarBackground, 5%));
-  @include box-shadow(#{inset 0 1px 0 rgba(255,255,255,.1), 0 1px 0 rgba(255,255,255,.075)});
-  & .fa-bars {
-    display: block;
-    width: 18px;
-    height: 2px;
+  @include box-shadow(#{inset 0 1px 0 rgba(255, 255, 255, .1), 0 1px 0 rgba(255, 255, 255, .075)});
+
+  .fa-bars {
     background-color: $white-smoke;
+    display: block;
+    height: 2px;
+    width: 18px;
 
-    //BLACKLIGHT-UPGRADE-REMOVAL
-    //@include border-radius(1px);
-    @include box-shadow(0 1px 0 rgba(0,0,0,.25));
+    @include box-shadow(0 1px 0 rgba(0, 0, 0, .25));
   }
 }
 
-/* Override date range slider styling */
+// Override date range slider styling
 .limit_content.range_limit {
   a.ui-slider-handle.ui-state-default.ui-corner-all {
     background: #bbb;
   }
+
   a.ui-slider-handle.ui-state-default.ui-corner-all {
     border-color: #aaa;
   }
+
   .slider-handle {
     background-color: $revs-red;
     background-image: linear-gradient(to bottom, $revs-red, darken($revs-red, 10%));
   }
+
   .missing {
     padding-left: 12px;
     padding-right: 12px;
@@ -101,16 +114,19 @@
   .searchbox {
     margin-bottom: 50px;
   }
+
   .facets-toggle {
     margin-top: -6px;
   }
 }
 
-@media screen and (min-width: 768px) and (max-width: 1199px) {
+@media screen and ($screen-sm-min) and ($screen-md-max) {
   .limit_content.range_limit {
-    .range_begin, .range_end {
+    .range_begin,
+    .range_end {
       width: 4em;
     }
+
     input.submit.btn-default {
       padding-left: 10px;
       padding-right: 10px;
@@ -118,18 +134,21 @@
   }
 }
 
-@media screen and (min-width: 768px) and (max-width: 991px) {
+@media screen and ($screen-sm-min) and ($screen-sm-max) {
   .limit_content.range_limit {
     input[type="submit"] {
       display: block;
       margin-top: 5px;
     }
-    .profile, .selected {
+
+    .profile,
+    .selected {
       display: none;
     }
   }
+
   #facet-panel-collapse .limit_content.range_limit .current {
-    text-align: left;
     margin-left: 18px;
+    text-align: left;
   }
 }
