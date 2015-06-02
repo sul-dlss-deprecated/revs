@@ -51,7 +51,7 @@
       <div class="col-sm-4 col-md-12">
         <ul class="nav list-unstyled">
           <li class="nav-header text-uppercase">
-            <%= t('revs.authentication.sidebar.actions') if has_activity?(@user) %>
+            <%= t('revs.authentication.sidebar.actions') %>
           </li>
           <% if favorites_count(@user) > 0 %>
             <li><%= link_to_unless_current t('revs.user.view_your_favorites'), user_favorites_user_index_path(@user.username) %></li>
