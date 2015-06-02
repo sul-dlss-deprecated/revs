@@ -503,8 +503,8 @@ en:
       label_more_metadata: "Has more metadata"
     user:
       stanford_warning_html: '<strong>Important:</strong> Stanford users should not create a new account or enter their SUNET ID or passwords on this website.  %{webauth_link}'
-      stanford_email_sunet_warning_html: ' <p class="text-info"><strong>Note</strong>.  You have not changed your default username, which is your Stanford SUNET ID.'
-      stanford_email_sunet_warning2_html: 'Since your username may appear on the website, you may want to <a href="/users/edit">change this</a> to avoid other users guessing your email address easily.</p>'
+      stanford_email_sunet_warning_html: ' <strong>Note</strong>.  You have not changed your default username, which is your Stanford SUNET ID.'
+      stanford_email_sunet_warning2_html: 'Since your username may appear on the website, you may want to <a href="/users/edit">change this</a> to avoid other users guessing your email address easily.'
       webauth_link_text: 'Login to webauth first'
       stanford_users_login_webauth_html: |
         <strong>Important:</strong> Stanford users should
