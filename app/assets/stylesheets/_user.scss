@@ -183,6 +183,7 @@
 }
 
 .favorites-index {
+
   // Hide the 'remove from' link in grid view when in no-JS mode
   .grid .row.item .saved-item-actions noscript {
     display: none;
@@ -457,6 +458,14 @@
 
   .label-info {
     margin-left: 0;
+  }
+}
+
+.favorites-index,
+.user-annotations,
+.user-edits {
+  .pagination-container {
+    border-top: 0;
   }
 }
 

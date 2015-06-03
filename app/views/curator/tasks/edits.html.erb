@@ -40,7 +40,11 @@
           <% end %>
         </table>
 
-        <%= paginate @edits, :params => {:order=>@order, :tab=>@tab_list_item} %>
+        <nav class="pagination-container text-center">
+          <%= paginate @edits, :theme => :blacklight,
+           :params => {:order=>@order, :tab=>@tab_list_item} %>
+        </nav>
+
       <% end %>
     </div>
 
@@ -70,7 +74,11 @@
           <% end %>
         </table>
 
-        <%= paginate @edits,  :params => {:order=>@order_user, :tab=>@tab_list_user} %>
+        <nav class="pagination-container text-center">
+          <%= paginate @edits, :theme => :blacklight,
+           :params => {:order=>@order_user, :tab=>@tab_list_user} %>
+        </nav>
+
       <% end %>
     </div>
 

@@ -26,7 +26,7 @@
        <% if local_assigns[:curate_view] %>
         <th><%= link_to t('revs.curator.flag_created'), flags_table_curator_tasks_path(:order=>'flags.created_at DESC', :search=>@search, :selection=>local_assigns[:selection].join(','), :tab=>@tab_list_flag)%></th>
        <% end %>
-       
+
        <% if not local_assigns[:curate_view] %>
         <th><%= link_to t('revs.curator.flag_created'), user_flags_user_index_path(user.username, :order=>'flags.created_at DESC', :search=>@search,:selection=>local_assigns[:selection].join(',')) %></th>
        <% end %>
@@ -74,12 +74,16 @@
 
   <% end %>
 
-  <% if not local_assigns[:curate_view] %>   
-     <%= paginate flags, :params => {:controller => 'user', :action => 'flags',:id=>user.username } %>
-  <% end %>
+  <nav class="pagination-container text-center">
+    <% if not local_assigns[:curate_view] %>
+       <%= paginate flags, :theme => :blacklight,
+        :params => {:controller => 'user', :action => 'flags', :id => user.username } %>
+    <% end %>
 
-  <% if local_assigns[:curate_view] %>   
-     <%= paginate flags, :params => {:controller => 'curator/tasks', :action => 'flags'} %>
-  <% end %>
-  
+    <% if local_assigns[:curate_view] %>
+       <%= paginate flags, :theme => :blacklight,
+        :params => {:controller => 'curator/tasks', :action => 'flags'} %>
+    <% end %>
+  </nav>
+
 </div>

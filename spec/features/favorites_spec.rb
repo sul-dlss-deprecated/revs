@@ -119,12 +119,12 @@ describe("Favorites",:type=>:request,:integration=>true) do
     #Check Out Pagination
     visit user_favorites_user_index_path(user_login)
     expect(page).to have_content @Next
-    expect(page).not_to have_content @Previous
+    expect(page).to have_content @Previous
 
     #Make Sure We Go To the Second Page
     click_link(@Next)
 
-    expect(page).not_to have_content @Next
+    expect(page).to have_content @Next
     expect(page).to have_content @Previous
 
     Revs::Application.config.num_default_per_page=original_default_per_page

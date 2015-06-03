@@ -1,12 +1,12 @@
 <div id="content" class="col-sm-9 admin">
-	<div class="row">
-	  <div class="col-sm-12">
+  <div class="row">
+    <div class="col-sm-12">
       <h2><%= t('revs.user.admin_dashboard') %></h2>
-	  </div>
-	</div>
+    </div>
+  </div>
 
-	<div class="row">
-	  <div class="col-sm-12">
+  <div class="row">
+    <div class="col-sm-12">
       <h3>
         <%= t('revs.admin.administer_users') %>
         <span class="object-count text-muted">
@@ -72,10 +72,10 @@
         <div class="form-group">
           <label for="role">
             <%=t('revs.admin.set_checked_users')%>
-					</label>
+          </label>
             <%= select_tag 'role', options_for_select(User.roles,@role), class:"form-control input-sm" %>
             <!--<input type="checkbox" name="select-all" id="admin-select-all-users"> --> <%#=t('revs.nav.select_all')%>
-				</div>
+        </div>
         <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-default btn-sm' %>
 
         <div class="row results-controls">
@@ -146,14 +146,17 @@
     </table>
 
     <% end %>
-    <%= paginate @users, :params => {:order=>@order} %>
+
+    <nav class="pagination-container text-center">
+      <%= paginate @users, :theme => :blacklight, :params => {:order => @order} %>
+    </nav>
 
   <% else %>
     <%= t('revs.admin.no_users_found') %>
   <% end %>
 
-		</div>
-	</div>
+    </div>
+  </div>
 
 </div>
 

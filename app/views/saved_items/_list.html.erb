@@ -1,6 +1,6 @@
-<% 
+<%
 if not defined?(edit_id)
-  edit_id = params[:edit_id] || nil 
+  edit_id = params[:edit_id] || nil
 
 item_link_params=(gallery_type=='user' ? {:gallery_id=>@gallery.id} : {:user=>@user.username,:favorite_user_name=>@user.to_s})
 end%>
@@ -64,7 +64,7 @@ end%>
 
               <% if can? :curate, :all %>
                 <li class="item-creation-date">
-                  <span><%=t('revs.show.label_identifier')%></span>: 
+                  <span><%=t('revs.show.label_identifier')%></span>:
                   <%=saved_item.solr_document.identifier%>
                 </li>
               <% end %>
@@ -97,7 +97,10 @@ end%>
     <% end %>
   </div>
 
-  <%= paginate saved_items, :params => {:order=>@order, :view => @view} %>
+  <nav class="pagination-container text-center">
+    <%= paginate saved_items, :theme => :blacklight,
+      :params => {:order => @order, :view => @view} %>
+  </nav>
 
    <% if @manage && can?(:update,saved_items.first) %>
      </form>

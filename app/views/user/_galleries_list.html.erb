@@ -81,7 +81,9 @@
     <% end %>
   </div>
 
-  <%= paginate @galleries, :params => {:order=>@order} %>
+  <nav class="pagination-container text-center">
+    <%= paginate @galleries, :theme => :blacklight, :params => {:order => @order} %>
+  </nav>
 
 <% else %>
 

@@ -47,7 +47,10 @@
     <% end %>
   </table>
 
-  <%= paginate @galleries, :params => {:filter => @filter} %>
+  <nav class="pagination-container text-center">
+    <%= paginate @galleries,:theme => :blacklight,
+      :params => {:filter => @filter} %>
+  </nav>
 
 </div>
 

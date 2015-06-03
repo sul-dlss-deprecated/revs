@@ -62,7 +62,12 @@
 	          </tr>
 	        <% end %>
 	      </table>
-	      <%= paginate @saved_items,  :params => {:order=>@order, :tab=>@tab_list_item,:search=>@search} %>
+
+        <nav class="pagination-container text-center">
+	        <%= paginate @saved_items, :theme => :blacklight,
+            :params => {:order => @order, :tab => @tab_list_item, :search => @search} %>
+        </nav>
+
 	    <% end %>
 	  </div>
 
@@ -94,12 +99,15 @@
 	          <% end %>
 	        </table>
 
-	        <%= paginate @saved_items, :params => {:order_user=>@order, :tab=>@tab_list_user} %>
+          <nav class="pagination-container text-center">
+	         <%= paginate @saved_items, :theme => :blacklight,
+            :params => {:order_user => @order, :tab => @tab_list_user} %>
+          </nav>
+
 	      <% end %>
-	  </div>
+	   </div>
 
 	  </div>
-
 
 </div>
 

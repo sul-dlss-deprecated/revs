@@ -113,7 +113,11 @@
 
       </table>
 
-	    <%= paginate @flags, :params => {:order=>@order, :tab=>@tab_list_item,:search=>@search} %>
+      <nav class="pagination-container text-center">
+	       <%= paginate @flags, :theme => :blacklight,
+          :params => {:order => @order, :tab => @tab_list_item, :search => @search} %>
+      </nav>
+
     <% end %>
   </div>
 
@@ -125,7 +129,6 @@
         <div class="row results-controls">
           <div class="col-xs-12 saved-item-pagination">
             <span>
-              <%# why do I need to reference @flags before page_entries_info will work? %>
               <%= page_entries_info @flags, :entry_name => 'user' %>
             </span>
           </div>
@@ -146,7 +149,10 @@
           <% end %>
         </table>
 
-          <%= paginate @flags, :params => {:order=>@order, :tab=>@tab_list_user,:search=>@search} %>
+        <nav class="pagination-container text-center">
+          <%= paginate @flags, :theme => :blacklight,
+           :params => {:order => @order, :tab => @tab_list_user, :search => @search} %>
+        </nav>
 
         <% end %>
       </div>

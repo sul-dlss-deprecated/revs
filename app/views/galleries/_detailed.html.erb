@@ -83,5 +83,8 @@
     </div>
   <% end %>
 
-<%= paginate @galleries %>
+  <nav class="pagination-container text-center">
+    <%= paginate @galleries, :theme => :blacklight %>
+  </nav>
+
 </div>

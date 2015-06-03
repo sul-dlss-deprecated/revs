@@ -41,5 +41,7 @@
 </div>
 
 <div class="col-xs-12 collections-pagination-container">
-  <%= paginate @collections %>
+  <nav class="pagination-container text-center">
+    <%= paginate @collections, :theme => :blacklight %>
+  </nav>
 </div>

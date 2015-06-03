@@ -65,7 +65,11 @@
           <% end %>
         </table>
 
-        <%= paginate @annotations, :params => {:search=>@search,:order=>@order, :tab=>@tab_list_item} %>
+        <nav class="pagination-container text-center">
+          <%= paginate @annotations, :theme => :blacklight,
+           :params => {:search => @search, :order => @order, :tab => @tab_list_item} %>
+        </nav>
+
       <% end %>
     </div>
 
@@ -122,7 +126,11 @@
           <% end %>
         </table>
 
-        <%= paginate @annotations,:params => {:search=>@search,:order=>@order, :tab=>@tab_list_all} %>
+        <nav class="pagination-container text-center">
+          <%= paginate @annotations, :theme => :blacklight,
+           :params => {:search => @search, :order => @order, :tab => @tab_list_all} %>
+        </nav>
+
       <% end %>
     </div>
 
@@ -154,7 +162,11 @@
           <% end %>
         </table>
 
-        <%= paginate @annotations, :params => {:search=>@search,:order=>@order, :tab=>@tab_list_user} %>
+        <nav class="pagination-container text-center">
+          <%= paginate @annotations, :theme => :blacklight,
+           :params => {:search => @search, :order => @order, :tab => @tab_list_user} %>
+        </nav>
+
         <% end %>
 
      </div>

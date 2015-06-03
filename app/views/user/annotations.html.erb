@@ -1,4 +1,4 @@
-<div id="content" class="col-md-9">
+<div id="content" class="col-md-9 user-annotations">
 
   <h2><%= display_user_name(@user) %><span class="text-lowercase">'s</span> <%=t('revs.annotations.plural')%></h2>
 
@@ -30,7 +30,9 @@
       <% end %>
     </table>
 
-    <%= paginate @annotations, :params => {:order=>@order} %>
+    <nav class="pagination-container text-center">
+      <%= paginate @annotations, :theme => :blacklight, :params => {:order => @order} %>
+    </nav>
 
  <% else %>
    <% if is_logged_in_user?(@user)%>
