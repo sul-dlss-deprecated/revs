@@ -30,7 +30,7 @@
       <meta name="description" content="The Stanford University Revs Digital Library provides a web based platform for discovery of automotive research and images, connecting the past, prevent and future of the automobile.">
     <% end %>
     <%= raw(google_analytics) if Rails.env.production? %>
-    <%= stylesheet_link_tag "application" %>
+    <%= stylesheet_link_tag "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
     <%= raw(content_for(:head)) %>
