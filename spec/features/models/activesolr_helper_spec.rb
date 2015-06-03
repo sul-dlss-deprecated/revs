@@ -163,6 +163,7 @@ describe ActivesolrHelper, :integration => true do
    
     before :each do
       @druid='yt907db4998'
+      reindex_solr_docs(@druid)
       @doc = SolrDocument.find(@druid)
       cleanup_editstore_changes
     end
@@ -172,7 +173,7 @@ describe ActivesolrHelper, :integration => true do
       cleanup_editstore_changes # transactions don't seem to work with the second editstore database, so cleanup
     end    
     
-    it "should save an update to a single value field, and propogage to solr and editstore databases" do
+    it "should save an update to a single value field, and propogate to solr and editstore databases" do
       
       expect(Editstore::Change.count).to eq(0)
     
