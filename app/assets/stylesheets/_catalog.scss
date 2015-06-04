@@ -558,6 +558,11 @@
     margin-top: 24px;
   }
 
+  .pe-img-hover-nav-next,
+  .pe-img-hover-nav-prev {
+    display: none;
+  }
+
   .pe-img-viewer-thumbs-nav-bottom {
     img.pe-img-canvas {
       border: 1px solid $gray-ccc;
