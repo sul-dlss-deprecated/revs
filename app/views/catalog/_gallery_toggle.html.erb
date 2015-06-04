@@ -3,11 +3,23 @@
   <div class="col-sm-6 view-toggle">
     <div class='gallery_toggle tabbable'>
       <ul class="nav nav-pills">
-        <li><%= link_to(t('revs.search.gallery_toggle.gallery'), catalog_index_path(params.symbolize_keys.merge(:view => nil)), :class=>"#{'active' if params[:view] == 'gallery' or params[:view].nil?}") %></li>
-        <li><%= link_to(t('revs.search.gallery_toggle.detailed'), catalog_index_path(params.symbolize_keys.merge(:view => 'detailed')), :class=>"#{'active'if params[:view] == 'detailed'}") %></li>
+        <li>
+          <%= link_to(t('revs.search.gallery_toggle.gallery'),
+            catalog_index_path(params.symbolize_keys.merge(:view => 'gallery')),
+            :class=>"#{'active' if session[:preferred_view] == 'gallery' or session[:preferred_view].nil?}") %>
+        </li>
+        <li>
+          <%= link_to(t('revs.search.gallery_toggle.detailed'),
+            catalog_index_path(params.symbolize_keys.merge(:view => 'detailed')),
+            :class=>"#{'active' if session[:preferred_view] == 'detailed'}") %>
+        </li>
 
         <% if can? :curate, :all  %>
-          <li><%= link_to(t('revs.search.gallery_toggle.curator'), catalog_index_path(params.symbolize_keys.merge(:view => 'curator')), :class=>"showOnLoad hidden #{'active'if params[:view] == 'curator'}") %></li>
+          <li>
+            <%= link_to(t('revs.search.gallery_toggle.curator'),
+              catalog_index_path(params.symbolize_keys.merge(:view => 'curator')),
+              :class=>"showOnLoad hidden #{'active' if session[:preferred_view] == 'curator'}") %>
+          </li>
         <% end %>
 
       </ul>
