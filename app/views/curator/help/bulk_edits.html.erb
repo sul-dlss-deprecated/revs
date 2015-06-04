@@ -25,8 +25,9 @@
     on <code>Thompson Raceway</code> narrowed by <code>Year > 1966</code>:
   </p>
 
-  <img class="help-image-full-width" alt="Curator bulk editing view toggle"
-  src="/assets/help/curator-bulk-editing-01.png">
+  <%= image_tag("help/curator-bulk-editing-01.png",
+    class: "help-image-full-width",
+    alt: "Curator bulk editing view toggle") %>
 
   <p>
     Unique to the Curator view
@@ -36,8 +37,9 @@
     field.
   </p>
 
-  <img class="help-image-full-width" alt="Curator bulk editing
-  controls" src="/assets/help/curator-bulk-editing-02.png">
+  <%= image_tag("help/curator-bulk-editing-02.png",
+    class: "help-image-full-width",
+    alt: "Curator bulk editing controls") %>
 
   <ul class="alpha">
     <li>
@@ -47,20 +49,30 @@
     </li>
     <li>
       Select the items you
-      want to be updated. The <code>Select all</code> checkbox is a quick way to
+      want to be updated. The <code>All</code> checkbox is a quick way to
       select all items on the page for editing; you can deselect individually any
       items that you do not want to update after selecting all items with the
-      <code>Select all</code> checkbox.
+      <code>All</code> checkbox.
     </li>
     <li>
-      Select the field you want to
-      update from the <code>Update</code> dropdown menu.
+      Select how you want to update items from the <code>Action</code> list.
+      Use <code>Find and Replace</code> to replace a specific string of text in
+      a field with new text. Use <code>Update</code> to replace the entire value
+      of a field with new text. Use the <code>Remove</code> action to remove
+      all of the current text in a field, without replacing it with a new value.
+    </li>
+    <li>
+      Select the field on which you want to perform the
+      update action from the <code>Field to Select</code> dropdown menu.
     </li>
     <li>
       Enter the new
-      value for the field you selected in the previous step in the <code>new
+      value for the field you selected in the previous step in the <code>Field
       value</code> input box. When you click the <code>Update</code> button, this
-      value will be applied to every item you have checked.
+      value will be applied to every item you have checked. If you are
+      performing a <code>Find and Replace</code> action, you should also enter
+      the current string in the field you want to replace. If you are performing
+      a <code>Remove</code> action, you don't need to enter any field values.
     </li>
     <li>
       Verify that
