@@ -604,20 +604,7 @@ span.constraints-label {margin-right: .5em;}
 .collections-pagination-container {
 
   .pagination {
-    display: block;
-
-    span.page a,
-    span.page.current {
-      padding: .2em .5em;
-    }
-
-    span.page > a:active {
-      color: $revs-gray-light;
-    }
-
-    span.page.current {
-      font-weight: bold;
-    }
+    display: inline-block;
 
     a:hover,
     a:focus {
