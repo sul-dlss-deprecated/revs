@@ -103,12 +103,11 @@ en:
       archives_title: 'Content Donors'
       archives:
         collier_html: |
-          <h3>Collier Collection</h3>
-          <p>
-            This is text about the Collier Collection.
-          </p>
+          <h3>Revs Institute® Archives</h3>          
+          <p>The Revs Institute for Automotive Research, Inc., is a 501 (c) (3) organization located in Naples, Florida.  It is a repository for one of the world’s largest research collections dedicated to the understanding of automotive history.  In addition to books, periodicals, documents, art, and ephemera, the collection includes approximately one million images, many of which can be accessed via the Revs Digital Library. The images within this photograph collection span a period from the late 19th Century to the present day.  They document international motor sports, production and custom-body cars, automotive design and engineering, auto shows, and industry personalities and race car drivers.</p>  
+          <p>The Revs Digital Library provides excellent geographic coverage of both Europe and America with a focus on major international Grand Prix and sports car racing, plus coverage of a broad range of road course and oval events in the United States.  In addition to the study of automotive history, the research facility provides resources to understand the broader historic context of both the 19th and 20th centuries—themes such as the impact of the automobile on art, literature, engineering, architecture and social history.  The Revs Digital Library, which was launched in 2014, is a dynamic resource which continues to grow each year as new images are added to the collection.</p>
         road_and_track_html: |
-          <h3>Road and Track Archive</h3>
-          <p>
-            This is text about the Road and Track Archive.
-          </p>
+          <h3>Road & Track Archive</h3>
+          <p>The Road & Track Archive contains a digitized selection of files from Road & Track magazine's 65-year history.  The full archive includes images, notes, performance data and other types of documents and research that supported production of the magazine over its history.</p>          
+          <p>Among the gems from the full archives: original photography from the '50s and '60s, a sampling of the collection's 2,000 books and even old letters from manufacturers complaining to Road & Track editors about negative product reviews.</p>
+          <p>The archive once filled a two-car garage at Road & Track's Newport Beach facility before the magazine moved to Michigan, and now resides in Stanford Libraries' Special Collections, where they are available on request for academic research.  As additional materials are digited, they will become available in the Revs Digital Library.</p>

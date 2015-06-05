@@ -64,7 +64,7 @@ describe("Item Visibility",:type=>:request,:integration=>true) do
     should_deny_access(@hidden_druid_path)
     visit all_collections_path
     expect(page).to have_content('The David Nadig Collection of The Revs Institute')
-    expect(page).to have_content('Collier Collection')
+    expect(page).to have_content('Revs Institute® Archives')
     expect(page).to have_content('14 items')
     visit @nadig_collection_path
     expect(page).to have_content('14 items')
@@ -79,7 +79,7 @@ describe("Item Visibility",:type=>:request,:integration=>true) do
       expect(page).to have_content('Hidden')
       visit all_collections_path
       expect(page).to have_content('The David Nadig Collection of The Revs Institute')
-      expect(page).to have_content('Collier Collection')
+      expect(page).to have_content('Revs Institute® Archives')
       expect(page).to have_content('15 items')
       visit @nadig_collection_path
       expect(page).to have_content('15 items')

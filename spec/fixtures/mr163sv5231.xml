@@ -1,9 +1,9 @@
 <doc>
   <field name="id">mr163sv5231</field>
-  <field name="title_tsi">The Road and Track Archive</field>
+  <field name="title_tsi">The Road &amp; Track Archive</field>
   <field name="format_ssim">collection</field>
   <field name="highlighted_ssi">true</field>
-  <field name="description_tsim">The Road and Track Archive is at Stanford Library.</field>
-  <field name="archive_ssi">Road and Track Archive</field>
+  <field name="description_tsim">The Road &amp; Track Archive is at Stanford Library.</field>
+  <field name="archive_ssi">Road &amp; Track Archive</field>
   <field name="score_isi">10</field>
 </doc>

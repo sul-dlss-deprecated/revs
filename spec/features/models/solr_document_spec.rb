@@ -468,7 +468,7 @@ describe SolrDocument, :integration => true do
         end
       end
       it "shold return an array of collection SolrDocuments filtered by archive" do
-        expect(SolrDocument.all_collections(:archive=>"Road and Track Archive").length).to eq(1)
+        expect(SolrDocument.all_collections(:archive=>"Road & Track Archive").length).to eq(1)
         SolrDocument.all_collections.each do |doc|
           expect(doc.is_collection?).to be_truthy
           expect(doc).to be_a SolrDocument

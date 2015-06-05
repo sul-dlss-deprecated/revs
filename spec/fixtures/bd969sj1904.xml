@@ -4,8 +4,8 @@
   <field name="format_ssim">color photographs</field>
   <field name="is_member_of_ssim">mr163sv5231</field>
   <field name="source_id_ssi">sul:M1919__b19_f12</field>
-  <field name="collection_ssim">The Road and Track Archive</field>
-  <field name="archive_ssi">Road and Track Archive</field>
+  <field name="collection_ssim">The Road &amp; Track Archive</field>
+  <field name="archive_ssi">Road &amp; Track Archive</field>
   <field name="image_id_ssm">bd969sj1904_00_0001</field>
   <field name="image_id_ssm">bd969sj1904_00_0002</field>
   <field name="image_id_ssm">bd969sj1904_00_0003</field>

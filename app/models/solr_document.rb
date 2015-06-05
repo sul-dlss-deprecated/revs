@@ -423,15 +423,15 @@ class SolrDocument
    
    # return an array of archive names
    def self.archives
-     response=Blacklight.default_index.connection.select(
-       :params => {
-         :q => '*:*',
-         :facet => 'on',
-         :'facet.field' => 'archive_ssi',
-         :rows => 0,
-       }
-     )
-     return response['facet_counts']['facet_fields']['archive_ssi'].delete_if {|val| val.is_a? Integer}
+     @archives ||= Blacklight.default_index.connection.select(
+           :params => {
+             :q => '*:*',
+             :facet => 'on',
+             :'facet.field' => 'archive_ssi',
+             :rows => 0,
+             :'facet.mincount'=>1
+           }
+         )['facet_counts']['facet_fields']['archive_ssi'].delete_if {|val| val.is_a? Integer}
    end
    
    # Return an Array of all collection type SolrDocuments

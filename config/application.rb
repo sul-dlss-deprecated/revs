@@ -86,7 +86,7 @@ module Revs
 
     config.revs_reuse_link='http://revsinstitute.org/research-education/permission-to-use/'
 
-    config.collier_archive_name = 'Collier Collection' # this is the name of the collier archive, it will be added to records if it does not yet exist when saving
+    config.collier_archive_name = 'Revs Institute® Archives' # this is the name of the collier archive, it will be added to records if it does not yet exist when saving for remediating records that existed before we had multiple archives
 
     config.num_latest_user_activity = 3 # the latest number of flags/annotations to show on the user profile page
     config.num_flags_per_item_per_user = 5 # the number of times each user is allowed to flag a particular item
