@@ -10,7 +10,7 @@ describe("About Pages",:type=>:request,:integration=>true) do
     @terms_of_use=I18n.t("revs.about.terms_of_use_title")
     @video_tutorials=I18n.t("revs.about.video_tutorials_title")
     @archives_title = I18n.t('revs.about.archives_title')
-    RevsMailer.stub_chain(:contact_message,:deliver).and_return('a mailer')
+    RevsMailer.stub_chain(:contact_message,:deliver_now).and_return('a mailer')
   end
 
   it "should show the about project page for various URLs" do

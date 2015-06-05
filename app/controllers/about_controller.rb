@@ -38,12 +38,12 @@ class AboutController < ApplicationController
               Flag.create_new({:flag_type=>:error,:comment=>@message,:druid=>druid.to_s,:private_comment=>"#{@fullname}\n#{@email}"},current_user) unless druid.blank?
             end
           else # any other message gets a jira ticket
-            RevsMailer.contact_message(:params=>params,:request=>request).deliver 
+            RevsMailer.contact_message(:params=>params,:request=>request).deliver_now
             flash[:notice]=t("revs.about.contact_message_sent")          
           end
 
           if (!@email.blank? && @auto_response == "true")
-            RevsMailer.auto_response(:email=>@email,:subject=>@subject).deliver 
+            RevsMailer.auto_response(:email=>@email,:subject=>@subject).deliver_now
           end
 
           @message=nil
