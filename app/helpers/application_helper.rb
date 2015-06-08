@@ -128,10 +128,6 @@ module ApplicationHelper
     "lang-#{I18n.locale}"
   end
 
-  def put_cursor_in_searchbox?
-    params[:q].to_s.empty? and params[:f].to_s.empty? and params[:id].nil? and controller_name != 'sessions' and controller_name != 'registrations'
-  end
-
   # crete a link to an item (pass in a solr document or an item object)
   # opts[:length] can be set to the length to truncate the text title (defaults to 100)
   # opts[:truncate] can be set to true or false to indicate if long titles should be truncated (defaults to false)

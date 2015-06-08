@@ -44,8 +44,7 @@
     <%= favicon_link_tag asset_path('favicon.ico') %>
   </head>
 
-  <% onload_text = "$('input#q').focus();" if put_cursor_in_searchbox? %>
-  <body onload="<%= onload_text %>" class="<%= render_body_class %> <%= render_locale_class %>">
+  <body class="<%= render_body_class %> <%= render_locale_class %>">
 
     <div id="su-wrap"> <!-- #su-wrap start -->
       <div id="su-content"> <!-- #su-content start -->
