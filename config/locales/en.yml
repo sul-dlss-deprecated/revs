@@ -67,6 +67,7 @@ en:
       switch_yes: "yes"
       switch_no: "no"
       status: "Status"
+      search_affected: "IMPORTANT NOTE: the website is currently undergoing maintenace and text searches may not produce the expected results or may be missing results until completed."
       reorder: "Drag and drop to reorder"
       changes_not_saved: "Please note, in %{rails_env} your metadata changes will NOT be permanently saved."
       not_authorized: 'You are not authorized to perform this action.'

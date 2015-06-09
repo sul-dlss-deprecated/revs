@@ -75,7 +75,9 @@ class CatalogController < ApplicationController
     # if we get this far, it may have been a search operation, so if we only have one search result, just go directly there
       redirect_to item_path(@response['response']['docs'].first['id']) if (@response['response']['numFound'] == 1 && @response['response']['docs'].size > 0 && can?(:read,:item_pages))
     end
-
+    
+    flash.now[:notice]=t('revs.messages.search_affected') if (Revs::Application.config.search_results_affected && !params[:q].nil? && !(on_home_page || @force_render_home))
+    
   end
 
   def show
