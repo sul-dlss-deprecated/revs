@@ -89,7 +89,7 @@ module Revs
     #config.flag_sort_display = {FLAG_STATES[:open]=> I18n.t('revs.flags.open_state_display_name'),FLAG_STATES[:fixed]=> I18n.t('revs.flags.fixed_state_display_name'),FLAG_STATES[:wont_fix]=> I18n.t('revs.flags.wont_fix_state_display_name')}
     config.num_default_per_page = 25 # the default number of a given item to display per page (e.g. flags, favorites, galleries)
     config.num_default_per_page_collections = 12 # the default number of a collections and public galleries to display per page
-
+    config.search_results_affected = false # set to true to show a message that search results may be impacted (useful during a full re-index)
     config.sunet_timeout_secs = 86400 # the number of seconds a sunet user can stay logged in before getting timeed out (this is separate than the devise config for regular users)
                                        # 1 day = 86400 seconds
   end
