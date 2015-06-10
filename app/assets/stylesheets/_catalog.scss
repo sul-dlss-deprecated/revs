@@ -680,6 +680,29 @@
   margin-top: 25px;
 }
 
+.metadata-preview {
+  position: relative;
+
+  .score-viz {
+    box-shadow: 1px 2px 6px $gray;
+    margin-left: 10px;
+    margin-top: -15px;
+
+    .max-score {
+      opacity: .6;
+    }
+  }
+
+  .fa-info-circle {
+    bottom: -3px;
+    box-shadow: 0 1px 1px $revs-gray-light;
+    color: $off-white;
+    font-size: 18px;
+    position: absolute;
+    right: 8px;
+  }
+}
+
 // Responsive styles
 
 @media screen and (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
