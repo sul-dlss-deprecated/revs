@@ -75,7 +75,7 @@ namespace :revs do
     end
   end
   
-  desc "Index all fixutres into solr"
+  desc "Index all fixtures into solr"
   task :index_fixtures do
     if allowed_solr?
       add_docs = []

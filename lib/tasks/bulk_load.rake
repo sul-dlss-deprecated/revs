@@ -102,7 +102,7 @@ namespace :revs do
       n+=1
       puts "#{n} of #{total_docs}: #{id}"
       begin
-        url="#{Blacklight.default_index.connection.options[:url]}/update?commit=true"
+        url="#{Blacklight.default_index.connection.options[:url]}/update"
         params={:add=>{:doc=>doc}}.to_json
         RestClient.post url, params,:content_type => :json, :accept=>:json
       rescue
@@ -247,7 +247,7 @@ namespace :revs do
       if item.is_item? && (item.images.nil? || item.images.size != 1)
         puts "#{item.id}  ---   #{item.identifier}" 
         if !args[:delete].nil? && args[:delete]="delete"
-          url="#{Blacklight.default_index.connection.options[:url]}/update?commit=true"
+          url="#{Blacklight.default_index.connection.options[:url]}/update"
           params="<delete><query>id:#{item.id}</query></delete>"
           puts "DELETING!"
           RestClient.post url, params,:content_type => :xml, :accept=>:xml

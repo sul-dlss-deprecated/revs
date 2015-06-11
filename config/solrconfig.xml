@@ -35,6 +35,15 @@
     <updateLog>
       <str name="dir">${solr.core0.data.dir:}</str>
     </updateLog>
+    <autoCommit>
+      <maxDocs>500</maxDocs> <!-- maximum uncommited docs before autocommit triggered -->
+      <maxTime>30000</maxTime> <!-- maximum time (in MS) after adding a doc before an autocommit is triggered -->
+      <openSearcher>true</openSearcher> <!-- SOLR 4.0.  Optionally don't open a searcher on hard commit.  This is useful to minimize the size of transaction logs that keep track of uncommitted updates. -->
+    </autoCommit>
+    <autoSoftCommit>
+      <maxDocs>50</maxDocs> <!-- maximum uncommited docs before autosoftcommit triggered -->
+      <maxTime>5000</maxTime> <!-- maximum time (in MS) after adding a doc before an autosoftcommit is triggered -->
+    </autoSoftCommit>
   </updateHandler>
 
   <!-- realtime get handler, guaranteed to return the latest stored fields 
