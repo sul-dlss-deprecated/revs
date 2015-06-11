@@ -39,7 +39,9 @@ $(document).ready(function(){
   });
 
   // Initialize Bootstrap tooltip
-  $('.help').tooltip();
+	$(function () {
+	  $('[data-toggle="tooltip"]').tooltip();
+	});
 
   // // admin users select all
   // $( '#admin-select-all-users' ).click( function () {
@@ -150,10 +152,9 @@ $(document).ready(function(){
 			$('.score-viz-detailed .score').addClass('half-full');
 		}
 
-		// Use item metadata score vallue to update score viz for all items on results page
-		var score;
-		$('.metadata-preview .item-score').each(function() {
-			score = $(this).data('score-value');
+		// Use item metadata score value to update score viz for all items on results page
+		$('.score-preview .item-score').each(function() {
+			var score = $(this).data('score-value');
 			$(this).css('width', score);
 		});
 

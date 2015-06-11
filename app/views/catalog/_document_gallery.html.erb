@@ -7,7 +7,7 @@
         <%= render_document_partial document, :index, :document_counter => index %>
 
         <% if can? :curate, :all  %>
-          <%= render partial: 'metadata_preview', locals: {score: document.score} %>
+          <%= render partial: 'metadata_preview', locals: {document: document} %>
         <% end %>
       </li>
     <% end %>

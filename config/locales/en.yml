@@ -82,6 +82,7 @@ en:
       public_visibility_show: "Show this item to the public"
       public_visibility_hide: "Hide this item from public view"
       you: 'you'
+      no_descriptive_metadata: "This item has no descriptive metadata."
     flags:
       anonymous_not_shown: 'Flags added anonymously are not shown.'
       refresh_list: 'Refresh list'
@@ -343,6 +344,7 @@ en:
         action: "Action"
         field_to_update: "Field to update"
         field_value: "Field value"
+        metadata_preview: "Metadata preview"
     dashboards: 'Dashboards'
     citations:
         view: 'View full citation page'
