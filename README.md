@@ -24,6 +24,10 @@ and are trying to run the code, see the special section below before continuing 
 
         bundle install
 
+1. Get jetty setup
+
+        rake jetty:clean
+        
 1. Copy the .yml example files and the jetty config files:
 
         rake revs:config
@@ -51,7 +55,7 @@ and are trying to run the code, see the special section below before continuing 
 
         rake jetty:start
 
-1. To index the records into an environment's core, ensure jetty is running, then:
+1. To index the records into an environment's core, ensure jetty is running (it may take a few extra seconds after the jetty:start command is issued), then:
 
         rake revs:index_fixtures
 
