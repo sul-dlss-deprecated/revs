@@ -39,7 +39,9 @@ $(document).ready(function(){
   });
 
   // Initialize Bootstrap tooltip
-  $('.help').tooltip();
+	$(function () {
+	  $('[data-toggle="tooltip"]').tooltip();
+	});
 
   // // admin users select all
   // $( '#admin-select-all-users' ).click( function () {
@@ -142,13 +144,19 @@ $(document).ready(function(){
       $('#bulk-update-button').addClass('extra-padding');
     }
 
-		// Use item metadata score value to update score visualization
+		// Use item metadata score value to update score visualization on detail page
 		var score = $('.item-score').data('score-value');
 		$('.score-viz .item-score').css('width', score);
 		$('.score-viz-detailed .item-score').css('width', score * 2);
 		if (score > 53) {
 			$('.score-viz-detailed .score').addClass('half-full');
 		}
+
+		// Use item metadata score value to update score viz for all items on results page
+		$('.score-preview .item-score').each(function() {
+			var score = $(this).data('score-value');
+			$(this).css('width', score);
+		});
 
 		// Collections Results 'filter by archive' pulldown.
 		// Use querystring value of 'archive' to show current filter in pulldown
