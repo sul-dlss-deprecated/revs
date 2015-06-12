@@ -59,8 +59,8 @@ namespace :revs do
 
     solr_files = %w{synonyms.txt schema.xml solrconfig.xml}
     solr_files.each do |solr_file|
-      cp("#{Rails.root}/config/#{solr_file}", "#{Rails.root}/jetty/solr/dev/conf/#{solr_file}")
-      cp("#{Rails.root}/config/#{solr_file}", "#{Rails.root}/jetty/solr/test/conf/#{solr_file}")
+      cp("#{Rails.root}/config/#{solr_file}", "#{Rails.root}/jetty/solr/development-core/conf/#{solr_file}")
+      cp("#{Rails.root}/config/#{solr_file}", "#{Rails.root}/jetty/solr/test-core/conf/#{solr_file}")
     end
 
   end  

@@ -1,3 +1,13 @@
+# Solr instance data
 solr/data/*
-logs/*.log
-.DS_Store
+solr/*/data/*
+
+# Fedora dev instance data
+fcrepo4-data
+
+# Logs
+logs/*
+derby.log
+jettywrapper.log
+velocity.log*
+*.log
