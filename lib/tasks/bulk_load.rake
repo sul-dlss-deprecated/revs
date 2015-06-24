@@ -56,9 +56,13 @@ namespace :revs do
        begin
          s=SolrDocument.new(doc)
          s.timestamp=Time.now.strftime('%Y-%m-%dT%H:%M:%S.%3NZ') # write out a new timestamp to be sure we have at least one update for solr to write the doc out
-         s.save
+         result = s.save(:commit=>false) # do not autocommit when in batch mode, allow the config to decide when to commit
+         unless result
+            puts " *** SAVE RETURNED FALSE: #{id}"
+            num_errors+=1
+         end
        rescue
-         puts ' *** ERROR'
+         puts " *** ERROR: #{id}"
          num_errors+=1
        end
   end
@@ -106,7 +110,7 @@ namespace :revs do
         params={:add=>{:doc=>doc}}.to_json
         RestClient.post url, params,:content_type => :json, :accept=>:json
       rescue
-        puts ' *** ERROR'
+        puts " *** ERROR: #{id}"
         num_errors+=1
       end
   end

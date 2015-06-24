@@ -125,7 +125,7 @@ module ActivesolrHelper
 
         old_values=self[solr_field_name]   
         self.class.blank_value?(value) ? remove_field(solr_field_name,commit) : set_field(solr_field_name,value,commit) # update solr document on server by issuing update queries
-        self[solr_field_name]=value # update in memory solr document so value is available with reloading solr doc from server
+        self[solr_field_name]=value # update in memory solr document so value is available without reloading solr doc from server
         
         # get the solr field configuration for this field
         solr_field_config=self.class.field_mappings.collect{|key,value| value if value[:field]==solr_field_name.to_s}.reject(&:blank?).first
@@ -260,6 +260,12 @@ module ActivesolrHelper
   def execute_callbacks(field_name,value)
     callback_method=self.class.field_update_callbacks[field_name.to_sym]
     self.send(callback_method,field_name,value) unless callback_method.blank?
+  end
+
+  def send_commit
+    url="#{Blacklight.default_index.connection.options[:url]}/update?commit=true"
+    params={}
+    RestClient.post url, params,:content_type => :json, :accept=>:json
   end
   
   def update_solr(field_name,operation,new_values,commit=true)
