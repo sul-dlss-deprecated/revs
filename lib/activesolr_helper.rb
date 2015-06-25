@@ -5,7 +5,7 @@ module ActivesolrHelper
   attr_reader :errors
   
   module ClassMethods
-
+    
      def find(id) # get a specific druid from solr and return a solrdocument class
        response = Blacklight.default_index.connection.select(
                                    :params => {
@@ -120,11 +120,21 @@ module ActivesolrHelper
     commit=params[:commit].nil? ? true : params[:commit] # if solr document should be committed immediately, defaults to true
     
     if valid?
+
+      updates_for_solr=[] # an array of hashes for the solr updates we will post to solr
       
       unsaved_edits.each do |solr_field_name,value| 
 
         old_values=self[solr_field_name]   
-        self.class.blank_value?(value) ? remove_field(solr_field_name,commit) : set_field(solr_field_name,value,commit) # update solr document on server by issuing update queries
+        
+        if self.class.blank_value?(value) 
+          execute_callbacks(solr_field_name,nil)
+          updates_for_solr << {:field=>solr_field_name,:operation=>'remove'}
+        else
+          execute_callbacks(solr_field_name,self.class.to_array(value))
+          updates_for_solr << {:field=>solr_field_name,:operation=>'set',:new_values=>value}
+        end
+        
         self[solr_field_name]=value # update in memory solr document so value is available without reloading solr doc from server
         
         # get the solr field configuration for this field
@@ -157,6 +167,9 @@ module ActivesolrHelper
         end # end send to editstore
       
       end # end loop over all unsaved changes
+      
+      # send updates to solr
+      batch_update(updates_for_solr,commit)
       
       @unsaved_edits={}
       @dirty=false
@@ -261,26 +274,52 @@ module ActivesolrHelper
     callback_method=self.class.field_update_callbacks[field_name.to_sym]
     self.send(callback_method,field_name,value) unless callback_method.blank?
   end
-
-  def send_commit
-    url="#{Blacklight.default_index.connection.options[:url]}/update?commit=true"
-    params={}
-    RestClient.post url, params,:content_type => :json, :accept=>:json
+  
+  # run a bunch of updates to a series of fields all at once, like on save, so that we can update an entire object with one solr call
+  def batch_update(updates,commit=true)
+    params="[{\"id\":\"#{id}\","
+    updates.each do |update|
+      params+="\"#{update[:field]}\":"
+      if update[:operation] == 'add'
+        params+="{\"add\":\"#{update[:new_values].gsub('"','\"')}\"}"
+      elsif update[:operation] == 'remove'
+        params+="{\"set\":null}"          
+      else
+        update[:new_values]=self.class.to_array(update[:new_values])
+        new_values = update[:new_values].map {|s| s.to_s.gsub("\\","\\\\\\").gsub('"','\"').strip} # strip leading/trailing spaces and escape quotes for each value
+        params+="{\"set\":[\"#{new_values.join('","')}\"]}"      
+      end
+      params+=","
+    end    
+    params.chomp!(",")
+    params+="}]"
+    post_to_solr(params,commit)
   end
   
+  # run a single field update/delete to a solr record
   def update_solr(field_name,operation,new_values,commit=true)
-    url="#{Blacklight.default_index.connection.options[:url]}/update?commit=#{commit}"
     params="[{\"id\":\"#{id}\",\"#{field_name}\":"
     if operation == 'add'
       params+="{\"add\":\"#{new_values.gsub('"','\"')}\"}}]"
     elsif operation == 'remove'
       params+="{\"set\":null}}]"          
     else
-      new_values=[new_values] unless new_values.class==Array
+      new_values=self.class.to_array(new_values)
       new_values = new_values.map {|s| s.to_s.gsub("\\","\\\\\\").gsub('"','\"').strip} # strip leading/trailing spaces and escape quotes for each value
       params+="{\"set\":[\"#{new_values.join('","')}\"]}}]"      
     end
+    post_to_solr(params,commit)
+  end
+
+  # just send a hard commit to solr
+  def send_commit
+    post_to_solr({},true)
+  end
+
+  # make a post to solr with the supplied params, and optionally hard commit
+  def post_to_solr(params,commit=true)
+    url="#{Blacklight.default_index.connection.options[:url]}/update?commit=#{commit}"
     RestClient.post url, params,:content_type => :json, :accept=>:json
   end
-  
+    
 end
