@@ -191,7 +191,7 @@ module ApplicationHelper
   end
 
   def in_curator_edit_mode
-    (session[:curator_edit_mode].blank? || session[:curator_edit_mode] == 'false') ? false : can?(:curate,:all)
+    (session[:curator_edit_mode].blank? || session[:curator_edit_mode] == 'false' || Revs::Application.config.disable_editing) ? false : can?(:curate,:all)
   end
 
   def display_class(item_count)

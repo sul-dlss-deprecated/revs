@@ -116,7 +116,7 @@
             </li>
           <% end %>
 
-          <% if (can?(:read, Annotation) || can?(:create, Annotation))
+          <% if (can?(:read, Annotation) || can?(:create, Annotation)) && !Revs::Application.config.disable_editing
               @annotations = @document.annotations(current_user)
               annotation_link_text = can?(:create, Annotation) ?  t('revs.annotations.add') : t('revs.annotations.view')
               annotation_link_id = can?(:create, Annotation) ?  "annotate_link" : "view_annotations_link"
@@ -211,7 +211,12 @@
         <% if can? :curate, :all %>
           <ul class="nav list-unstyled item-actions curator-actions showOnLoad hidden-offscreen">
             <li class="nav-header"><%= t('revs.curator.curator_actions') %></li>
-            <% if can? :update_metadata, :all
+          <% if Revs::Application.config.disable_editing %>
+            <li>
+              <%=t('revs.messages.no_editing_allowed')%>
+            </li>
+          <% end %>
+            <% if can?(:update_metadata, :all) && !Revs::Application.config.disable_editing
                 edit_mode_link_text = in_curator_edit_mode ? t('revs.curator.leave_edit_mode') : t('revs.curator.enter_edit_mode')
                 %>
               <li>
@@ -239,23 +244,25 @@
               </div>
             <% end %>
 
-              <li id="item-public-visibility-status">
-                <% if @document.visibility == :visible
-                      visibility_link_text = t('revs.messages.public_visibility_hide')
-                      visibility_class = 'close'
-                   else
-                      visibility_link_text = t('revs.messages.public_visibility_show')
-                      visibility_class = 'open'
-                    end
-                %>
-                <%= link_to("<i class='fa fa-eye-slash'></i> <span data-visibility-show-text='#{t('revs.messages.public_visibility_show')}' data-visibility-hide-text='#{t('revs.messages.public_visibility_hide')}' id='visibility-text'>#{visibility_link_text}</span>".html_safe, '#', :id=>'visibility_link', :class=>"showOnLoad hidden-offscreen curator-action-link") %>
+              <% if !Revs::Application.config.disable_editing %>
+                  <li id="item-public-visibility-status">
+                    <% if @document.visibility == :visible
+                          visibility_link_text = t('revs.messages.public_visibility_hide')
+                          visibility_class = 'close'
+                       else
+                          visibility_link_text = t('revs.messages.public_visibility_show')
+                          visibility_class = 'open'
+                        end
+                    %>
+                    <%= link_to("<i class='fa fa-eye-slash'></i> <span data-visibility-show-text='#{t('revs.messages.public_visibility_show')}' data-visibility-hide-text='#{t('revs.messages.public_visibility_hide')}' id='visibility-text'>#{visibility_link_text}</span>".html_safe, '#', :id=>'visibility_link', :class=>"showOnLoad hidden-offscreen curator-action-link") %>
 
-                <%= render :partial=>'/catalog/hidden_message', :locals=>{:document=>document,:full=>true}%>
+                    <%= render :partial=>'/catalog/hidden_message', :locals=>{:document=>document,:full=>true}%>
 
-              </li>
-            <li id="item-priority-status">
-              <%= render :partial=>"/catalog/item_priority_status" %>
-            </li>
+                  </li>
+                <li id="item-priority-status">
+                  <%= render :partial=>"/catalog/item_priority_status" %>
+                </li>
+              <% end %>
           </ul>
 
           <% if @document.visibility == :hidden %>
