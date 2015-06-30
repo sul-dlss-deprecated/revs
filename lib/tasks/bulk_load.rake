@@ -24,13 +24,15 @@ namespace :revs do
   @id = "id"
 
   desc "Re-save all solr docs - useful for adding the score or other data that is added on save"
-  #Run Me: RAILS_ENV=production rake revs:save_all_solr_docs collection="John Dugdale Collection" # optiontally limited to a collection
-  #Run Me: RAILS_ENV=production rake revs:save_all_solr_docs limit=100 # optionally sets a limit of number of items
+  #Run Me: RAILS_ENV=production rake bundle exec revs:save_all_solr_docs collection="John Dugdale Collection" # optiontally limited to a collection
+  #Run Me: RAILS_ENV=production rake bundle exec revs:save_all_solr_docs limit=100 # optionally sets a limit of number of items
+  #Run Me: RAILS_ENV=production nohup bundle exec rake revs:save_all_solr_docs > save_all_docs.log 2>&1& # nohup mode with logged output  
   task :save_all_solr_docs  => :environment do |t, args|
  
     limit = ENV['limit'] || '' # if passed, limits to this many items only
     collection = ENV['collection'] || '' # if passed, limits to this collection only
-
+    rerun = ENV['rerun'] || '' # if passed as a filename, will try to just resave any errored out druids
+    
     q="*:*"
     q+=" AND collection_ssim:\"#{collection}\"" unless collection.blank?
     rows = limit.blank? ? "1000000" : limit
@@ -58,14 +60,14 @@ namespace :revs do
          s.timestamp=Time.now.strftime('%Y-%m-%dT%H:%M:%S.%3NZ') # write out a new timestamp to be sure we have at least one update for solr to write the doc out
          result = s.save(:commit=>false) # do not autocommit when in batch mode, allow the config to decide when to commit
          unless result
-            puts " *** SAVE RETURNED FALSE: #{id}"
+            puts " *** ERROR, SAVE RETURNED FALSE: #{id}"
             num_errors+=1
          end
        rescue
          puts " *** ERROR: #{id}"
          num_errors+=1
        end
-  end
+    end
 
     end_time=Time.now
     
@@ -74,6 +76,57 @@ namespace :revs do
     puts ""
 
   end
+
+  desc "Re-save errored solr docs - load a log file from the 'save_all_solr_docs' tasks and re-save errored out druids"
+  #Run Me: RAILS_ENV=production bundle exec rake revs:save_all_solr_docs file=save_all_docs.log # load a logged output file and just resave error out 
+  task :resave_docs  => :environment do |t, args|
+
+    file_path = ENV['file'] || '' # log file
+
+    raise 'no file passed' if (file_path.blank? || !File.exists?(file_path))
+    
+    start_time=Time.now
+    n=0
+    num_errors=0
+
+    puts ""
+    puts "Started at #{start_time}"
+    puts ""
+    
+    IO.readlines(file_path).each do |line|
+
+      downcased_line=line.downcase
+  
+      if downcased_line.include? 'error'
+        id=downcased_line.scan(/[a-z][a-z][0-9][0-9][0-9][a-z][a-z][0-9][0-9][0-9][0-9]/).first  
+        if id
+          n+=1
+          puts "#{n}: #{id}"
+           begin
+             s=SolrDocument.find(id)
+             s.timestamp=Time.now.strftime('%Y-%m-%dT%H:%M:%S.%3NZ') # write out a new timestamp to be sure we have at least one update for solr to write the doc out
+             result = s.save(:commit=>false) # do not autocommit when in batch mode, allow the config to decide when to commit
+             unless result
+                puts " *** ERROR, SAVE RETURNED FALSE: #{id}"
+                num_errors+=1
+             end
+           rescue
+             puts " *** ERROR: #{id}"
+             num_errors+=1
+           end
+         end
+     end
+
+    end
+    
+    end_time=Time.now
+    
+    puts ""
+    puts "Finished at #{Time.now}, run lasted #{((end_time-start_time)/60).round} minutes, #{n} saved, #{num_errors} errors"
+    puts ""
+    
+  end
+
     
   desc "Touch all solr docs (but not update them) - useful when synonym file or config has changed"
   #Run Me: RAILS_ENV=production rake revs:touch_solr_docs collection="John Dugdale Collection" # optionally limited to a collection
