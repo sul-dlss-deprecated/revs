@@ -1,3 +1,5 @@
+RSpec::Expectations.configuration.warn_about_potential_false_positives = false
+
 def item_druids
   return  ["bb004bn8654","bg152pb0116", "dd482qk0417", "hj660zx8618", "jg267fg4283", "kn529wc4372", "nn572km4370", "pt012cb4647", "qb957rw1430", "qk978vx9753", "qt854jh3199", "sc411ff4198", "td830rb1584",  "xf058ys1313", "yh093pt9555", "yt907db4998", "zp006sp7532"] 
 end
