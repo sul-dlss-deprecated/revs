@@ -376,10 +376,11 @@ class SolrDocument
   # store the change log info into our local database before going to the ActiveSolr save method to perform the saves and editstore updates
   def save(params={})
     user=params[:user] || nil # currently logged in user, needed for some updates
+    no_update_db=params[:no_update_db] || false # skip database updates when saving item, potentially useful when running bulk saves across the whole system; default to false
     add_changelog(user)
     self.score = compute_score
     self.archive_name = Revs::Application.config.collier_archive_name if self.archive_name.blank?
-    update_item # propogate unique information to database as well when saving solr document
+    update_item unless no_update_db # propogate unique information to database as well when saving solr document
     super
   end
 
