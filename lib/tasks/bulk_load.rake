@@ -37,7 +37,7 @@ namespace :revs do
     q+=" AND collection_ssim:\"#{collection}\"" unless collection.blank?
     rows = limit.blank? ? "1000000" : limit
         
-    @all_docs = Blacklight.default_index.connection.select(:params => {:q => q, :rows=>rows})            
+    @all_docs = Blacklight.default_index.connection.select(:params => {:q => q, :fl=>'id', :rows=>rows})            
     total_docs=@all_docs['response']['docs'].size
     
     start_time=Time.now
@@ -793,7 +793,7 @@ namespace :revs do
     q+=" AND collection_ssim:\"#{collection}\"" unless collection.blank?
     rows = "10000000" 
         
-    @all_docs = Blacklight.default_index.connection.select(:params => {:q => q, :rows=>rows})            
+    @all_docs = Blacklight.default_index.connection.select(:params => {:q => q, :fl=>'id', :rows=>rows})            
     total_docs=@all_docs['response']['docs'].size
     
     start_time=Time.now
