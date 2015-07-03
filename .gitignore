@@ -22,6 +22,7 @@ tmp
 # Ignore rvm files
 .rvmrc
 
+jetty/*
 # Ignore jetty changes
 /jetty/solr/dev/data/
 /jetty/solr/test/data/

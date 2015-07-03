@@ -63,42 +63,45 @@ class SolrDocument
   end
   
   def self.field_mappings
-    {
-      :title=>{:field=>'title_tsi',:default=>'Untitled'},
-      :description=>{:field=>'description_tsim', :multi_valued => true},
-      :photographer=>{:field=>'photographer_ssi'},
-      :years=>{:field=>'pub_year_isim', :multi_valued => true},
-      :single_year=>{:field=>'pub_year_single_isi'},
-      :full_date=>{:field=>'pub_date_ssi'},
-      :people=>{:field=>'people_ssim', :multi_valued => true},
-      :subjects=>{:field=>'subjects_ssim', :multi_valued => true},
-      :city_section=>{:field=>'city_sections_ssi'},
-      :city=>{:field=>'cities_ssi'},
-      :state=>{:field=>'states_ssi'},
-      :country=>{:field=>'countries_ssi'},
-      :formats=>{:field=>'format_ssim', :multi_valued => true},
-      :identifier=>{:field=>'source_id_ssi'},
-      :production_notes=>{:field=>'prod_notes_tsi'},
-      :institutional_notes=>{:field=>'inst_notes_tsi'},
-      :metadata_sources=>{:field=>'metadata_sources_tsi'},
-      :has_more_metadata=>{:field=>'has_more_metadata_ssi'},
-      :vehicle_markings=>{:field=>'vehicle_markings_tsi'},
-      :marque=>{:field=>'marque_ssim', :multi_valued => true},
-      :vehicle_model=>{:field=>'model_ssim', :multi_valued => true},
-      :model_year=>{:field=>'model_year_ssim', :multi_valued => true},
-      :current_owner=>{:field=>'current_owner_tsi'},
-      :entrant=>{:field=>'entrant_ssim', :multi_valued => true},
-      :venue=>{:field=>'venue_ssi'},
-      :track=>{:field=>'track_ssi'},
-      :event=>{:field=>'event_ssi'},
-      :group_class=>{:field=>'group_class_tsi'},
-      :race_data=>{:field=>'race_data_tsi'},
-      :priority=>{:field=>'priority_isi',:default=>0,:editstore=>false},
-      :collections=>{:field=>'is_member_of_ssim', :multi_valued => true},
-      :collection_names=>{:field=>'collection_ssim', :multi_valued => true,:editstore=>false},
-      :highlighted=>{:field=>'highlighted_ssi',:editstore=>false},
-      :visibility_value=>{:field=>'visibility_isi',:editstore=>false},
-    }  
+      {
+        :title=>{:field=>'title_tsi',:default=>'Untitled'},
+        :description=>{:field=>'description_tsim', :multi_valued => true, :weight => 3},
+        :photographer=>{:field=>'photographer_ssi', :weight => 1},
+        :years=>{:field=>'pub_year_isim', :multi_valued => true, :weight => 5},
+        :single_year=>{:field=>'pub_year_single_isi'},
+        :full_date=>{:field=>'pub_date_ssi'},
+        :people=>{:field=>'people_ssim', :multi_valued => true, :weight => 4},
+        :subjects=>{:field=>'subjects_ssim', :multi_valued => true, :weight => 1},
+        :city_section=>{:field=>'city_sections_ssi'},
+        :city=>{:field=>'cities_ssi'},
+        :state=>{:field=>'states_ssi'},
+        :country=>{:field=>'countries_ssi'},
+        :formats=>{:field=>'format_ssim', :multi_valued => true},
+        :identifier=>{:field=>'source_id_ssi'},
+        :production_notes=>{:field=>'prod_notes_tsi'},
+        :institutional_notes=>{:field=>'inst_notes_tsi'},
+        :metadata_sources=>{:field=>'metadata_sources_tsi'},
+        :has_more_metadata=>{:field=>'has_more_metadata_ssi'},
+        :vehicle_markings=>{:field=>'vehicle_markings_tsi', :weight => 1},
+        :marque=>{:field=>'marque_ssim', :multi_valued => true, :weight => 4},
+        :vehicle_model=>{:field=>'model_ssim', :multi_valued => true, :weight => 2},
+        :model_year=>{:field=>'model_year_ssim', :multi_valued => true, :weight => 1},
+        :current_owner=>{:field=>'current_owner_tsi', :weight => 1},
+        :entrant=>{:field=>'entrant_ssim', :multi_valued => true, :weight => 1},
+        :venue=>{:field=>'venue_ssi'},
+        :track=>{:field=>'track_ssi', :weight => 1},
+        :event=>{:field=>'event_ssi'},
+        :group_class=>{:field=>'group_class_tsi', :weight => 1},
+        :race_data=>{:field=>'race_data_tsi', :weight => 1},
+        :priority=>{:field=>'priority_isi',:default=>0,:editstore=>false},
+        :collections=>{:field=>'is_member_of_ssim', :multi_valued => true},
+        :collection_names=>{:field=>'collection_ssim', :multi_valued => true,:editstore=>false},
+        :archive_name=>{:field=>'archive_ssi',:editstore=>false},
+        :highlighted=>{:field=>'highlighted_ssi',:editstore=>false},
+        :visibility_value=>{:field=>'visibility_isi',:editstore=>false},
+        :score=>{:field=>'score_isi', :editstore=>false},
+        :timestamp=>{:field=>'timestamp', :editstore=>false}
+      }  
   end
 
   # you can configure a callback method to execute if any of these fields are changed
@@ -115,6 +118,26 @@ class SolrDocument
   
   def druid
     id
+  end
+  
+  def compute_score
+    doc_hash=self.merge(self.unsaved_edits)
+    total_score=0
+    total_weights=0
+    self.class.field_mappings.each do |field_name,field_config|
+      if !field_config[:weight].blank?
+        total_score += field_config[:weight].to_f * (blank_value?(doc_hash[field_config[:field]]) ? 0 : 1) # if the field is blank, it is a 0 regardless of weight, otherwise it is a 1 times its weight
+        total_weights += field_config[:weight].to_f
+      end
+    end
+
+    # now we will account for the location, which has a weighting of 3 for *any* location like field having a value
+    location_score = (location.blank? && doc_hash[:venue].blank? && doc_hash[:event].blank?) ? 0 : 1
+    location_weight = 3
+    total_weights += location_weight
+    total_score += (location_score * location_weight)
+
+    return ((total_score/total_weights)*100).ceil
   end
 
   # helper to determine if this is a revs_item, relies on the copyright statement
@@ -403,6 +426,7 @@ class SolrDocument
   def save(params={})
     user=params[:user] || nil # currently logged in user, needed for some updates
     add_changelog(user)
+    self.score = compute_score
     update_item # propoage unique information to database as well when saving solr document
     super
   end
@@ -521,7 +545,11 @@ class SolrDocument
     return valid
     
   end
-
+  
+  # tells you if have a blank value or an array that has just blank values
+  def blank_value?(value)
+     value.class == Array ? !value.delete_if(&:blank?).any? : value.blank? 
+  end
 
   private
   def self.config
