@@ -139,7 +139,7 @@ class SavedItemsController < ApplicationController
     else
       flash[:success]=I18n.t('revs.user_galleries.items_copied',:count=>success_count,:gallery_name=>Gallery.find(@copy_to_gallery).title) if @copy_to_gallery != ""       
       flash[:success]=I18n.t('revs.user_galleries.items_moved',:count=>success_count,:gallery_name=>Gallery.find(@move_to_gallery).title) if @move_to_gallery != ""
-      flash[:success] += "  " + I18n.t('revs.user_galleries.items_duplicated') if success_count != @selected_items.size
+      flash[:success] += "  " + I18n.t('revs.user_galleries.items_duplicated') if (success_count != @selected_items.size && flash[:success])
     end
     redirect_to previous_page
   
