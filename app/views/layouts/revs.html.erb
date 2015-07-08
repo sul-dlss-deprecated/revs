@@ -63,6 +63,7 @@
             <div class="col-md-8 col-md-offset-2">
               <div id="main-flashes">
                 <%= render :partial=>'/flash_msg' %>
+                <%= render :partial=>'shared/flash_site_message' unless Revs::Application.config.site_message.blank? || session[:notice_dismissed] %>
               </div>
             </div>
           </div>

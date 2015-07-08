@@ -5,7 +5,7 @@ class CatalogController < ApplicationController
 
   include Blacklight::Catalog
 
-  before_filter :ajax_only, :only=>[:update_carousel,:show_collection_members_grid]
+  before_filter :ajax_only, :only=>[:update_carousel,:show_collection_members_grid, :notice_dismissed]
 
   before_filter :filter_params
   before_filter :add_facets_for_curators
@@ -160,6 +160,12 @@ class CatalogController < ApplicationController
     @carousel_members = @document.get_members(:rows=>@rows,:start=>@start,:include_hidden=>can?(:view_hidden, SolrDocument))
   end
 
+  # an ajax only call that sets a session variable indicating the user has dismissed the site warning message
+  def notice_dismissed
+    session[:notice_dismissed]=true
+    render :nothing=>true
+  end
+  
   # when a request for /catalog/BAD_SOLR_ID is made, this method is executed... overriding default blacklight behavior
   def invalid_document_id_error
     routing_error
