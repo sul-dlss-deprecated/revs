@@ -1,0 +1,11 @@
+<script language="javascript"> 
+  $(document).ready(function(){
+    $('#site-warning-dismiss').on('click',function(){ 
+      $.post("/notice_dismissed");
+      }
+    );
+   }
+  );
+</script>
+  
+<div class="alert alert-warning"><%=Revs::Application.config.site_message%><a class="close" href="#" id="site-warning-dismiss" data-dismiss="alert">x</a></div>
