@@ -169,7 +169,7 @@ GEM
       activesupport (>= 3.0.0)
     launchy (2.4.3)
       addressable (~> 2.3)
-    libv8 (3.16.14.8)
+    libv8 (3.16.14.11)
     link_header (0.0.8)
     logger (1.2.8)
     loofah (2.0.2)
