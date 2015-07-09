@@ -127,13 +127,20 @@ module ActivesolrHelper
 
         old_values=self[solr_field_name]   
         
-        if self.class.blank_value?(value) 
-          execute_callbacks(solr_field_name,nil)
-          updates_for_solr << {:field=>solr_field_name,:operation=>'remove'}
-        else
-          execute_callbacks(solr_field_name,self.class.to_array(value))
-          updates_for_solr << {:field=>solr_field_name,:operation=>'set',:new_values=>value}
-        end
+        self.class.blank_value?(value) ? remove_field(solr_field_name,commit) : set_field(solr_field_name,value,commit) # update solr document on server by issuing update queries
+
+        # THIS CODE BELOW REPLACES THE LINE ABOVE AND IS THE CODE TO BULK UPDATE A SOLR DOC WITH ALL CHANGES AT ONCE ON SAVE, INSTEAD OF SENDING MANY QUERIES
+        # SEE COMMIT d90da58f28b6c815e8eb1c2c92650a585c21ec4a
+        # IT SEEMS TO SOMETIMES BE SENDING BLANK DOCS THOUGH, SO I AM REVERTING BACK TO THE OLD WAY FOR NOW
+        # SEE THE CALL TO BATCH_UPDATE BELOW, WHICH IS COMMENTED OUT
+        # JULY 9, 2015
+        # if self.class.blank_value?(value)
+        #   execute_callbacks(solr_field_name,nil)
+        #   updates_for_solr << {:field=>solr_field_name,:operation=>'remove'}
+        # else
+        #   execute_callbacks(solr_field_name,self.class.to_array(value))
+        #   updates_for_solr << {:field=>solr_field_name,:operation=>'set',:new_values=>value}
+        # end
         
         self[solr_field_name]=value # update in memory solr document so value is available without reloading solr doc from server
         
@@ -169,7 +176,9 @@ module ActivesolrHelper
       end # end loop over all unsaved changes
       
       # send updates to solr
-      batch_update(updates_for_solr,commit)
+      # THIS IS THE CODE TO BULK UPDATE A SOLR DOC WITH ALL CHANGES AT ONCE ON SAVE, INSTEAD OF SENDING MANY QUERIES
+      # IT SEEMS TO SOMETIMES BE SENDING BLANK DOCS THOUGH, SO I AM REVERTING BACK TO THE OLD WAY FOR NOW
+      #batch_update(updates_for_solr,commit) if updates_for_solr.size > 0 # check to be sure we actually have some updates to apply
       
       @unsaved_edits={}
       @dirty=false
@@ -304,7 +313,7 @@ module ActivesolrHelper
     elsif operation == 'remove'
       params+="{\"set\":null}}]"          
     else
-      new_values=self.class.to_array(new_values)
+      new_values=[new_values] unless new_values.class==Array
       new_values = new_values.map {|s| s.to_s.gsub("\\","\\\\\\").gsub('"','\"').strip} # strip leading/trailing spaces and escape quotes for each value
       params+="{\"set\":[\"#{new_values.join('","')}\"]}}]"      
     end

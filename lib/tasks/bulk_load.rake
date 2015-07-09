@@ -27,14 +27,19 @@ namespace :revs do
   #Run Me: RAILS_ENV=production rake bundle exec revs:save_all_solr_docs collection="John Dugdale Collection" # optiontally limited to a collection
   #Run Me: RAILS_ENV=production rake bundle exec revs:save_all_solr_docs limit=100 # optionally sets a limit of number of items
   #Run Me: RAILS_ENV=production nohup bundle exec rake revs:save_all_solr_docs > save_all_docs.log 2>&1& # nohup mode with logged output  
+  #Run Me: RAILS_ENV=production rake bundle exec revs:save_all_solr_docs zero_score_only=true limit=100 # optionally tells it to save only documents with a score of 0
+
   task :save_all_solr_docs  => :environment do |t, args|
  
     limit = ENV['limit'] || '' # if passed, limits to this many items only
     collection = ENV['collection'] || '' # if passed, limits to this collection only
     rerun = ENV['rerun'] || '' # if passed as a filename, will try to just resave any errored out druids
+    zero_score_only = ENV['zero_score_only'] || "" # if passed in, then only those with a score of 0 will be resaved
     
     q="*:*"
     q+=" AND collection_ssim:\"#{collection}\"" unless collection.blank?
+    q+=" AND score_isi:0" unless zero_score_only.blank?
+
     rows = limit.blank? ? "1000000" : limit
         
     @all_docs = Blacklight.default_index.connection.select(:params => {:q => q, :fl=>'id', :rows=>rows})            
@@ -48,6 +53,10 @@ namespace :revs do
     puts "Started at #{start_time}, #{total_docs} docs returned"
     puts " limited to collection: #{collection}" unless collection.blank?
     puts " limited to #{limit} items" unless limit.blank?
+    puts " limited to only those docs with a score of 0" unless zero_score_only.blank?
+    
+    puts ""
+    puts q
     puts ""
     
     @all_docs['response']['docs'].each do |doc|
@@ -56,7 +65,7 @@ namespace :revs do
       n+=1
       puts "#{n} of #{total_docs}: #{id}"
        begin
-         s=SolrDocument.new(doc)
+         s=SolrDocument.find(id)
          s.timestamp=Time.now.strftime('%Y-%m-%dT%H:%M:%S.%3NZ') # write out a new timestamp to be sure we have at least one update for solr to write the doc out
          result = s.save(:commit=>false,:no_update_db=>true) # do not autocommit when in batch mode, allow the config to decide when to commit
          unless result
@@ -74,6 +83,8 @@ namespace :revs do
     puts ""
     puts "Finished at #{Time.now}, run lasted #{((end_time-start_time)/60).round} minutes, #{total_docs} saved, #{num_errors} errors"
     puts ""
+
+    SolrDocument.new.send_commit
 
   end
 
@@ -120,6 +131,8 @@ namespace :revs do
     end
     
     end_time=Time.now
+    
+    SolrDocument.new.send_commit
     
     puts ""
     puts "Finished at #{Time.now}, run lasted #{((end_time-start_time)/60).round} minutes, #{n} saved, #{num_errors} errors"
