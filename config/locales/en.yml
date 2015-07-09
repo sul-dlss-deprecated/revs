@@ -494,6 +494,7 @@ en:
       label_model_year: "Model Year"
       label_group_class: "Group/Class"
       label_vehicle_markings: "Vehicle Markings"
+      label_vehicle_markings_short: "Markings"
       label_event: "Event"
       label_venue: "Venue"
       label_track: "Track"
