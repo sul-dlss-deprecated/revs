@@ -65,7 +65,7 @@ namespace :revs do
       n+=1
       puts "#{n} of #{total_docs}: #{id}"
        begin
-         s=SolrDocument.new(doc)
+         s=SolrDocument.find(id)
          s.timestamp=Time.now.strftime('%Y-%m-%dT%H:%M:%S.%3NZ') # write out a new timestamp to be sure we have at least one update for solr to write the doc out
          result = s.save(:commit=>false,:no_update_db=>true) # do not autocommit when in batch mode, allow the config to decide when to commit
          unless result
@@ -83,6 +83,8 @@ namespace :revs do
     puts ""
     puts "Finished at #{Time.now}, run lasted #{((end_time-start_time)/60).round} minutes, #{total_docs} saved, #{num_errors} errors"
     puts ""
+
+    SolrDocument.new.send_commit
 
   end
 
@@ -129,6 +131,8 @@ namespace :revs do
     end
     
     end_time=Time.now
+    
+    SolrDocument.new.send_commit
     
     puts ""
     puts "Finished at #{Time.now}, run lasted #{((end_time-start_time)/60).round} minutes, #{n} saved, #{num_errors} errors"
