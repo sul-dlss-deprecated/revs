@@ -169,7 +169,7 @@ module ActivesolrHelper
       end # end loop over all unsaved changes
       
       # send updates to solr
-      batch_update(updates_for_solr,commit)
+      batch_update(updates_for_solr,commit) if updates_for_solr.size > 0 # check to be sure we actually have some updates to apply
       
       @unsaved_edits={}
       @dirty=false
