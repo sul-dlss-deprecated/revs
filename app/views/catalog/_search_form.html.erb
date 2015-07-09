@@ -6,7 +6,7 @@
     </a>
   </h4>
 
-  <%= form_tag search_action_url, :method => :get, :class => 'search_form', :enforce_utf8=>false do %>
+  <%= form_tag search_action_url, :method => :get, :class => 'search_form' do %>
     <div class="form-group">
       <%= render_hash_as_hidden_fields(:omit_keys => [:q, :search_field, :qt, :page]).html_safe %>
       <div class="input-group">
