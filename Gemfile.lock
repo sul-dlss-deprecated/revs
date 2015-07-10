@@ -248,7 +248,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
-    revs-utils (2.1.4)
+    revs-utils (2.1.5)
       actionpack (>= 4.1.6)
       chronic
       countries (= 0.9.2)
@@ -365,7 +365,7 @@ DEPENDENCIES
   ranked-model
   responders (~> 2.0)
   rest-client (~> 1.7)
-  revs-utils (>= 2.1.4)
+  revs-utils (>= 2.1.5)
   rspec-rails
   sass-rails (~> 5.0.0.beta1)
   sitemap_generator
