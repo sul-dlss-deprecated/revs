@@ -83,6 +83,10 @@ class SolrDocument
     id
   end
 
+  def score
+    self['score_isi'].blank? ? 0 : self['score_isi'].to_i
+  end
+  
   # helper to determine if this is a revs_item, relies on the copyright statement
   def revs_item?
     copyright.downcase.include?('revs')
