@@ -1,65 +1,88 @@
 <div class="metadata-preview">
-  <a href="#" class="metadata-panel-trigger showOnLoad" data-placement="left"
-    data-title="
-      <div class='panel'>
-        <h3>
-          <%= t('revs.curator.headings.metadata_preview') %>
-          <span><%= document.score %></span>
-        </h3>
-        <div class='panel-body'>
-          <% if document.score == 0 %>
-            <p><%= t('revs.messages.no_descriptive_metadata') %></p>
-          <% else %>
-            <% unless document.description.blank? %>
-              <p><%= truncate(document.description, length: 100) %></p>
-            <% end %>
-            <dl class='dl-horizontal'>
-              <% unless document.full_date.blank? %>
-                <dt><%= t('revs.show.label_date') %>:</dt>
-                <dd><%= document.full_date %></dd>
+
+  <% if document.score > 1 # only show icon/panel if score is greater than 0 %>
+    <a href="#" class="metadata-panel-trigger showOnLoad" data-placement="left"
+      data-title="
+        <div class='panel'>
+          <h3>
+            <%= t('revs.curator.headings.metadata_preview') %>
+            <span><%= document.score %></span>
+          </h3>
+          <div class='panel-body'>
+            <% if document.score == 0 %>
+              <p><%= t('revs.messages.no_descriptive_metadata') %></p>
+            <% else %>
+              <% unless document.description.blank? %>
+                <p><%= truncate(document.description, length: 100) %></p>
               <% end %>
-              <% unless document.years.blank? %>
-                <dt><%= t('revs.show.label_years') %>:</dt>
-                <dd><%= document.years.join(", ") %></dd>
+              <dl class='dl-horizontal'>
+                <% unless document.full_date.blank? %>
+                  <dt><%= t('revs.show.label_date') %>:</dt>
+                  <dd><%= document.full_date %></dd>
+                <% end %>
+                <% unless document.years.blank? %>
+                  <dt><%= t('revs.show.label_years') %>:</dt>
+                  <dd><%= document.years.join(", ") %></dd>
+                <% end %>
+                <% unless document.photographer.blank? %>
+                  <dt><%= t('revs.show.label_photographer') %>:</dt>
+                  <dd><%= document.photographer %></dd>
+                <% end %>
+                <% unless document.people.blank? %>
+                  <dt><%= t('revs.show.label_people') %>:</dt>
+                  <dd><%= document.people.join("; ") %></dd>
+                <% end %>
+                <% unless document.marque.blank? %>
+                  <dt><%= t('revs.show.label_marque') %>:</dt>
+                  <dd><%= document.marque.join("; ") %></dd>
+                <% end %>
+                <% unless document.vehicle_model.blank? %>
+                  <dt><%= t('revs.show.label_model') %>:</dt>
+                  <dd><%= document.vehicle_model.join("; ") %></dd>
+                <% end %>
+                <% unless document.model_year.blank? %>
+                  <dt><%= t('revs.show.label_model_year') %>:</dt>
+                  <dd><%= document.model_year.join("; ") %></dd>
+                <% end %>
+                <% unless document.group_class.blank? %>
+                  <dt><%= t('revs.show.label_group_class') %>:</dt>
+                  <dd><%= document.group_class %></dd>
+                <% end %>
+                <% unless document.vehicle_markings.blank? %>
+                  <dt><%= t('revs.show.label_vehicle_markings_short') %>:</dt>
+                  <dd><%= document.vehicle_markings %></dd>
+                <% end %>
+                <% unless document.entrant.blank? %>
+                  <dt><%= t('revs.show.label_entrant') %>:</dt>
+                  <dd><%= document.entrant.join("; ") %></dd>
+                <% end %>
+                <% unless document.race_data.blank? %>
+                  <dt><%= t('revs.show.label_race_data') %>:</dt>
+                  <dd><%= document.race_data %></dd>
+                <% end %>
+                <% unless document.event.blank? %>
+                  <dt><%= t('revs.show.label_event') %>:</dt>
+                  <dd><%= document.event %></dd>
+                <% end %>
+                <% unless document.venue.blank? %>
+                  <dt><%= t('revs.show.label_venue') %>:</dt>
+                  <dd><%= document.venue %></dd>
+                <% end %>
+                <% unless document.track.blank? %>
+                  <dt><%= t('revs.show.label_track') %>:</dt>
+                  <dd><%= document.track %></dd>
+                <% end %>
               <% end %>
-              <% unless document.location.blank? %>
-                <dt><%= t('revs.show.label_location') %>:</dt>
-                <dd><%= document.location %></dd>
-              <% end %>
-              <% unless document.people.blank? %>
-                <dt><%= t('revs.show.label_people') %>:</dt>
-                <dd><%= document.people.join("; ") %></dd>
-              <% end %>
-              <% unless document.marque.blank? %>
-                <dt><%= t('revs.show.label_marque') %>:</dt>
-                <dd><%= document.marque.join("; ") %></dd>
-              <% end %>
-              <% unless document.vehicle_model.blank? %>
-                <dt><%= t('revs.show.label_model') %>:</dt>
-                <dd><%= document.vehicle_model.join("; ") %></dd>
-              <% end %>
-              <% unless document.model_year.blank? %>
-                <dt><%= t('revs.show.label_model_year') %>:</dt>
-                <dd><%= document.model_year.join("; ") %></dd>
-              <% end %>
-              <% unless document.event.blank? %>
-                <dt><%= t('revs.show.label_event') %>:</dt>
-                <dd><%= document.event %></dd>
-              <% end %>
-              <% unless document.venue.blank? %>
-                <dt><%= t('revs.show.label_venue') %>:</dt>
-                <dd><%= document.venue %></dd>
-              <% end %>
-            <% end %>
-          </dl>
+            </dl>
+          </div>
         </div>
-      </div>
-      "
-    data-toggle="tooltip"
-    data-html="true"
-    data-original-title=""  title="">
-    <i class="fa fa-info-circle"></i>
-  </a>
+        "
+      data-toggle="tooltip"
+      data-html="true"
+      data-original-title=""  title="">
+      <i class="fa fa-info-circle"></i>
+    </a>
+  <% end %>
 
   <div class="score-preview">
     <div class="score-viz">
