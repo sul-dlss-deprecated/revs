@@ -42,7 +42,7 @@ gem 'kaminari'
 
 #gem "blacklight", :git => 'https://github.com/projectblacklight/blacklight.git'
 gem 'blacklight', ">= 5.3.0"
-gem "blacklight_range_limit", ">=5.0.2"
+gem "blacklight_range_limit", ">=5.0.4"
 gem 'blacklight-marc'
 gem 'druid-tools', '>= 0.2.0'
 

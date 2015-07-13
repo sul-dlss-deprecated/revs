@@ -8,6 +8,7 @@
 /.bundle
 
 database.yml
+blacklight.yml
 solr.yml
 secrets.yml
 secrets.yml.yml
