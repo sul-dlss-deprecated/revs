@@ -13,6 +13,7 @@
 development: &dev
   jetty_path: './jetty'
   url: http://localhost:8983/solr/development
+  #url: https://sul-solr-tester.stanford.edu/revs-prod
 test: &test
   url: http://localhost:<%= ENV["TEST_JETTY_PORT"] || '8983' %>/solr/test
 staging: 
