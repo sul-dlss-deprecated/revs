@@ -12,7 +12,7 @@ gem 'bundler', '>= 1.2.0'
 gem 'sitemap_generator'
 
 gem 'editstore', '>= 2.0.2'
-gem 'revs-utils', '>= 2.1.5'
+gem 'revs-utils', '>= 2.1.6'
 
 gem 'rails', '>= 4'
 gem 'responders', '~> 2.0'
@@ -42,7 +42,7 @@ gem 'kaminari'
 
 #gem "blacklight", :git => 'https://github.com/projectblacklight/blacklight.git'
 gem 'blacklight', ">= 5.3.0"
-gem "blacklight_range_limit", ">=5.0.4"
+gem "blacklight_range_limit", ">=5.1.0"
 gem 'blacklight-marc'
 gem 'druid-tools', '>= 0.2.0'
 

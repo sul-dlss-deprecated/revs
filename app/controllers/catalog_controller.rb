@@ -69,13 +69,11 @@ class CatalogController < ApplicationController
     super
 
     if @response['response']['docs'].nil? # nothing
-      routing_error
-      return
+      routing_error and return
     else
     # if we get this far, it may have been a search operation, so if we only have one search result, just go directly there
        if (@response['response']['numFound'] == 1 && @response['response']['docs'].size > 0 && can?(:read,:item_pages))
-         redirect_to item_path(@response['response']['docs'].first['id'])
-         return
+         redirect_to item_path(@response['response']['docs'].first['id']) and return
        end
     end
     
@@ -269,10 +267,8 @@ class CatalogController < ApplicationController
     config.add_facet_field 'timestamp', :label => 'Added recently', :query => {
        :weeks_1 => { :label => 'within last week', :fq => "timestamp:[\"#{show_as_timestamp(1.week.ago)}\" TO *]" },
        :months_1 => { :label => 'within last month', :fq => "timestamp:[\"#{show_as_timestamp(1.month.ago)}\" TO *]" },
-       :months_6 => { :label => 'within last six months', :fq => "timestamp:[\"#{show_as_timestamp(6.months.ago)}\" TO *]" },
-       :years_1 => { :label => 'within last year', :fq => "timestamp:[\"#{show_as_timestamp(1.year.ago)}\" TO *]" }
+       :months_6 => { :label => 'within last six months', :fq => "timestamp:[\"#{show_as_timestamp(6.months.ago)}\" TO *]" }
     }
-
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request
