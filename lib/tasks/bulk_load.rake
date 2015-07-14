@@ -66,7 +66,7 @@ namespace :revs do
       puts "#{n} of #{total_docs}: #{id}"
        begin
          s=SolrDocument.find(id)
-         s.timestamp=Time.now.strftime('%Y-%m-%dT%H:%M:%S.%3NZ') # write out a new timestamp to be sure we have at least one update for solr to write the doc out
+         s.resaved_at=Time.now.strftime('%Y-%m-%dT%H:%M:%S.%3NZ') # write out a new timestamp to be sure we have at least one update for solr to write the doc out
          result = s.save(:commit=>false,:no_update_db=>true) # do not autocommit when in batch mode, allow the config to decide when to commit
          unless result
             puts " *** ERROR, SAVE RETURNED FALSE: #{id}"
