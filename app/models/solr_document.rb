@@ -87,9 +87,13 @@ class SolrDocument
     self['score_isi'].blank? ? 0 : self['score_isi'].to_i
   end
   
-  # helper to determine if this is a revs_item, relies on the copyright statement
+  # helper to determine if this is a revs_item
   def revs_item?
-    copyright.downcase.include?('revs')
+    archive_name.downcase.include?('revs')
+  end
+  
+  def road_and_track_item?
+    archive_name.downcase.include?('road & track')
   end
 
   # some collections are not available for reproduction and will have their use and reproduction statement overriden on the website display to reduce re-use requests -- it can be done per collection
@@ -98,9 +102,11 @@ class SolrDocument
     !collections.blank? && !(collections & Revs::Application.config.collections_not_available_for_reproduction).blank?
   end
   
+  # override the copyright statement in the solr document as necessary
   def copyright
     value=self['copyright_ss']
-    value = I18n.t('revs.contact.default_revs_copyright') if value.blank? # default value if not supplied
+    value = I18n.t('revs.contact.default_revs_copyright') if (value.blank? && revs_item?) # default revs value if not supplied
+    value = "" if road_and_track_item? # set the copyright to blank for road & track since the actual use and reproduction statement includes copyright and it is otherwise repetitive
     return value
   end
   

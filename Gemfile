@@ -12,7 +12,7 @@ gem 'bundler', '>= 1.2.0'
 gem 'sitemap_generator'
 
 gem 'editstore', '>= 2.0.2'
-gem 'revs-utils', '>= 2.1.6'
+gem 'revs-utils', '>= 2.1.7'
 
 gem 'rails', '>= 4'
 gem 'responders', '~> 2.0'
