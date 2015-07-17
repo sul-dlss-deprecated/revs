@@ -1,95 +1,128 @@
-/* TODO: Refactor to use mix-ins, etc. */
-
 #brandbar {
+  font-family: 'Source Sans Pro',Arial,sans-serif;
+  font-size: 14px;
   min-height: 35px;
+
   .container {
     padding: 0;
   }
+
   #report-problem {
     float: right;
-    font-size: 0.85em;
-    margin-top: 9px;
-    a, input[type="submit"] {color: $revs-gray;}
+    margin-top: 6px;
+
+    #contact_us_link {
+      vertical-align: middle;
+    }
+
+    a,
+    input[type="submit"] {
+      color: $revs-gray;
+      vertical-align: middle;
+    }
+
     .caret {
       border-top-color: $revs-gray;
     }
+
     .btn-group {
       display: inline-block;
-      font-family: "Helvetica","Arial",sans-serif;
-      font-size: inherit;
+
       .btn-mini {
-        border: none;
-        font-size: 12px;
+        border: 0;
         padding: 0 3px 0 0;
         text-shadow: none;
         vertical-align: top;
       }
+
       .dropdown-toggle {
         box-shadow: none;
-        font-family: "Helvetica","Arial",sans-serif;
         padding: 0 3px;
-        &:active, &:hover, &:visited, &:focus {
+
+        &:active,
+        &:hover,
+        &:visited,
+        &:focus {
           background-color: transparent;
           outline-color: transparent;
         }
       }
+
       .dropdown-menu {
         background-color: $white;
         border: 1px solid $revs-gray-light;
         left: auto;
         right: 0;
-        li .button_to input[type="submit"], li > a, li > a:visited {
+
+        li .button_to input[type="submit"],
+        li > a,
+        li > a:visited {
           color: $gray;
-          font-size: 0.9em;
           padding: 2px 12px;
         }
-        li > a:hover, li > a:focus,
-        li:hover, li:focus,
-        li.signout:hover, li.signout:focus {
+
+        li > a:hover,
+        li > a:focus,
+        li:hover,
+        li:focus,
+        li.signout:hover,
+        li.signout:focus {
           background-color: $active-link-color;
           background-image: none;
           color: $white;
+
           .button_to .btn-link {
             color: $white;
+            text-align: left;
+            width: 100%;
           }
         }
+
         li.divider:hover {
           background-color: #e5e5e5;
         }
       }
     }
   }
+
   form.button_to {
     margin-bottom: 0;
+
     input[type="submit"] {
       font-size: 1em;
     }
+
     .btn-link {
-      border: none;
+      border: 0;
       text-decoration: none;
     }
   }
 }
 
 #revs-masthead {
-  background: white;
+  background: $white;
   border-bottom: 1px solid $revs-gray;
   padding-bottom: 10px;
   padding-top: 5px;
+
   h1 {
-    border-bottom: none;
-    font-size: 2.4em;
+    border-bottom: 0;
     font-family: "news-gothic-std","Helvetica","Arial",sans-serif;
+    font-size: 2.4em;
+    line-height: 1.5em;
     margin: 10px 0 0;
-  	line-height: 1.5em;
     padding-bottom: 0;
-    a, a:hover, a:visited {
+
+    a,
+    a:hover,
+    a:visited {
       color: inherit;
       text-decoration: none;
     }
   }
+
   h2 {
-    border: none;
+    border: 0;
     clear: left;
     color: $gray;
     font-size: 1.2em;
@@ -98,11 +131,12 @@
     margin-top: 0;
     padding-top: 0;
     text-transform: none;
+
     > span {
+      color: $revs-gray-light;
       float: right;
       font-size: 13px;
       font-style: normal;
-      color: $revs-gray-light;
     }
   }
 }
@@ -111,73 +145,86 @@
   background-color: $white;
   border-bottom: 1px solid $revs-gray;
   padding-left: 40px;
+
+  > .container {
+    margin-bottom: 0;
+  }
+
   .search-container {
     padding-left: 0;
   }
+
+  .nav {
+    clear: left;
+    float: left;
+    margin-left: -20px;
+
+    > .active > a,
+    > .active > a:hover {
+      background-color: $off-white;
+      box-shadow: none;
+    }
+
+    > li {
+      float: left;
+      line-height: 20px;
+
+      &.active > a {
+        border-left: 1px solid $revs-gray;
+        border-right: 1px solid $revs-gray;
+        color: $active-link-color;
+      }
+
+      > a {
+        box-shadow: none;
+        color: $gray-base;
+        font-family: "news-gothic-std","Helvetica","Arial",sans-serif;
+        font-size: 1em;
+        -webkit-font-smoothing: antialiased;
+        font-weight: 700;
+        padding: 10px 23px 8px;
+        text-transform: uppercase;
+
+        &:hover,
+        &:focus {
+          background-color: $white;
+          color: $active-link-color;
+        }
+      }
+    }
+  }
+
   .nav-searchbox {
     float: right;
     margin-bottom: 6px;
     margin-top: 6px;
+
     button[type="submit"] {
-      padding-top: 3px;
       padding-bottom: 3px;
+      padding-top: 3px;
     }
+
     input.search-query {
       font-size: 14px;
       height: 26px;
     }
   }
+
   .search-form-nav {
     margin-bottom: 0;
     margin-right: 20px;
   }
 }
-.menu-bar > .container {
-  margin-bottom: 0;
-}
-.menu-bar .nav {
-  clear: left;
-  float: left;
-  margin-left: -20px;
-  > .active > a, > .active > a:hover {
-    background-color: $off-white;
-    box-shadow: none;
-    -webkit-box-shadow: none;
-  }
-  > li {
-    float: left;
-    line-height: 20px;
-    &.active > a {
-      border-left: 1px solid $revs-gray;
-      border-right: 1px solid $revs-gray;
-      color: $active-link-color;
-    }
-    > a {
-      box-shadow: none;
-      color: $gray-base;
-      font-family: "news-gothic-std","Helvetica","Arial",sans-serif;
-      font-weight: 700;
-      text-transform: uppercase;
-      font-size: 1em;
-    	-webkit-font-smoothing: antialiased;
-      padding: 10px 23px 8px 23px;
-      &:hover, &:focus {
-        background-color: white;
-        color: $active-link-color;
-      }
-    }
-  }
-}
 
 @mixin main-menu-mobile-styling {
   .nav-collapse .btn {
-    overflow: auto;
     margin-bottom: 6px;
-    padding: 2px 10px 2px;
+    overflow: auto;
+    padding: 2px 10px;
   }
 }
 
-/* If wide desktop viewport */
+// If wide desktop viewport
 @media screen and (min-width: 1200px) {
   // Make brandbar elements line up with site content borders
   #brandbar .container {
@@ -186,33 +233,38 @@
   }
 }
 
-/* Narrower than desktop viewport */
+// Narrower than desktop viewport
 @media screen and (max-width: 991px) {
   // Remove highlight styling on main menu
   .menu-bar .nav > li.active > a {
     background-color: inherit;
-    border: none;
+    border: 0;
+
     &:hover {
       background-color: inherit;
     }
   }
+
   .menu-bar .nav-searchbox {
     float: none;
     text-align: center;
   }
 }
 
-/* All smaller mobile devices */
+// All smaller mobile devices
 @media screen and (max-width: 767px) {
   // Center and reduce text size of site heading for mobile devices
   #revs-masthead {
     .site-header-content {text-align: center;}
+
     h1 {
-      font-size: 2em;
       float: none;
+      font-size: 2em;
     }
+
     h2 {
       font-size: 1em;
+
       > span {
         display: block;
         margin-top: 10px;
@@ -223,11 +275,13 @@
   // Center main menu for mobile devices
   .menu-bar .nav {
     float: none;
-    text-align: center;
     margin-left: -40px;
+    text-align: center;
+
     > li {
       display: inline;
       float: none;
+
       > a {
         display: inline-block;
       }
@@ -235,23 +289,24 @@
   }
 }
 
-/* Just 'tablets' */
+// Just 'tablets'
 @media screen and (min-width: 768px) and (max-width: 991px) {
   // Make sure there is some side margin on site layout
   .navbar {
     .container {
-      width: 724px;
       margin: 0 auto;
+      width: 724px;
     }
   }
 }
 
-/* Just phones */
+// Just phones
 @media screen and (max-width: $screen-xs-max) {
   a.sul-logo {
     display: inline;
     float: left;
   }
+
   #report-problem {
     margin-right: 15px;
   }
@@ -261,6 +316,7 @@
       font-size: 1.8em;
     }
   }
+
   // Tighten main menu item spacing to fit on single row
   .menu-bar .nav > li > a {
     padding: 10px;
