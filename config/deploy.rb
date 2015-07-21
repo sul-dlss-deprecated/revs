@@ -1,8 +1,8 @@
 set :application, "revs-lib"
 set :repo_url, "https://github.com/sul-dlss/revs"
 set :user, ask("User", 'enter in the app username')
+set :home_directory, ask("Directory", 'enter in the app directory (e.g. /home/lyberadmin or /opt/app)')
 
-set :home_directory, "/home/#{fetch(:user)}"
 set :deploy_to, "#{fetch(:home_directory)}/#{fetch(:application)}"
 set :rvm_ruby_version, '2.2.2'
 
@@ -83,7 +83,7 @@ end
 namespace :deploy do
   task :symlink_editstore do
     on roles(:app) do
-      execute "ln -s /home/lyberadmin/editstore-updater/current/public #{release_path}/public/editstore"
+      execute "ln -s #{fetch(:home_directory)}/editstore-updater/current/public #{release_path}/public/editstore"
     end
   end  
   task :symlink_robotstxt do
