@@ -67,6 +67,7 @@ group :development do
 	gem 'meta_request'
 	gem 'launchy'
   gem 'thin'
+  gem 'pry-rails'
   gem 'quiet_assets'
 end
 
