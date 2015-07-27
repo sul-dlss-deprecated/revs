@@ -448,7 +448,7 @@ en:
       collection_text: 'Other Collection Items'
       sibling_text: "Other items in %{collection}"
     search:
-      help: 'Enter terms to search for records with any of those terms. Use quotes around your terms for phrases.  Use AND and OR to further restrict searching.  Text searches can be used to refine specific fields searched below.'
+      help: 'Enter text to search for records with any of those terms. Use quotes around your terms for an exact phrase (e.g. "Tour De France").  Use AND and OR between words or phrases to further restrict searching.  Text searches can be used to refine specific fields searched below.'
       search_results: 'Results'
       gallery_toggle:
         gallery: 'Grid'
