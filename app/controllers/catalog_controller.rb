@@ -4,7 +4,6 @@ require 'blacklight/catalog'
 class CatalogController < ApplicationController
 
   include Blacklight::Catalog
-  include BlacklightAdvancedSearch::ParseBasicQ
 
   before_filter :ajax_only, :only=>[:update_carousel,:show_collection_members_grid, :notice_dismissed]
 
@@ -24,7 +23,7 @@ class CatalogController < ApplicationController
     if can? :curate, :all
       self.blacklight_config.add_facet_field 'has_more_metadata_ssi', :label => "More Metadata"
       self.blacklight_config.add_facet_field 'visibility_isi', :label => 'Visibility', :query => {:visibility_1=>{:label=>"Hidden", :fq=>"visibility_isi:0"}}
-      self.blacklight_config.add_sort_field 'score_isi asc, title_tsi asc', :label => 'score'
+      self.blacklight_config.add_sort_field 'score_isi asc, score desc, title_tsi asc', :label => 'metadata score'
     end
   end
   
@@ -178,6 +177,10 @@ class CatalogController < ApplicationController
   configure_blacklight do |config|
     ## Default parameters to send to solr for all search-like requests. See also SolrHelper#solr_search_params
 
+    config.advanced_search = { 
+      :qt => 'standard'
+    }
+    
     config.default_solr_params = {
       :qt => 'standard',
       :facet => 'true',
@@ -313,7 +316,6 @@ class CatalogController < ApplicationController
     # solr request handler? The one set in config[:default_solr_parameters][:qt],
     # since we aren't specifying it otherwise.
 
-    config.add_search_field 'all_fields', :label => 'All Fields'
     config.add_search_field 'title_tsi', :label => 'Title'
 		config.add_search_field 'description_tsim', :label => 'Description'
 		config.add_search_field 'annotations_tsim', :label => 'Annotations'
