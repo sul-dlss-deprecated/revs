@@ -783,6 +783,16 @@
   }
 }
 
+.search-scope {
+  label {
+    font-size: 13px;
+  }
+
+  input[type="radio"] {
+    margin-top: 1px;
+  }
+}
+
 // Responsive styles
 
 @media screen and (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
