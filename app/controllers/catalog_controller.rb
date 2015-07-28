@@ -4,6 +4,7 @@ require 'blacklight/catalog'
 class CatalogController < ApplicationController
 
   include Blacklight::Catalog
+  include BlacklightAdvancedSearch::ParseBasicQ
 
   before_filter :ajax_only, :only=>[:update_carousel,:show_collection_members_grid, :notice_dismissed]
 
@@ -18,7 +19,7 @@ class CatalogController < ApplicationController
       params.delete(:authenticity_token)
     end
   end
-
+  
   def add_facets_for_curators
     if can? :curate, :all
       self.blacklight_config.add_facet_field 'has_more_metadata_ssi', :label => "More Metadata"
@@ -26,7 +27,7 @@ class CatalogController < ApplicationController
       self.blacklight_config.add_sort_field 'score_isi asc, title_tsi asc', :label => 'score'
     end
   end
-
+  
   def index
 
     not_authorized if params[:view]=='curator' && cannot?(:bulk_update_metadata,:all)
@@ -65,6 +66,8 @@ class CatalogController < ApplicationController
        not_authorized(:replace_message=>t('revs.messages.in_beta_not_authorized_html')) unless can? :read,:search_pages
 
     end
+
+    search_params_logic << :phrase_search # add phrase searching capability (defined in lib/revs_search_builder)
 
     super
 
@@ -207,6 +210,9 @@ class CatalogController < ApplicationController
     # needs to be in field list for all request handlers so we can get images the document anywhere in the app.
     config.image_identifier_field = "image_id_ssm"
 
+    # add the phrase searching capability (defined in the lib folder)
+    config.search_builder_class = RevsSearchBuilder
+
     ## Default parameters to send on single-document requests to Solr. These settings are the Blackligt defaults (see SolrHelper#solr_doc_params) or
     ## parameters included in the Blacklight-jetty document requestHandler.
     #
@@ -308,53 +314,34 @@ class CatalogController < ApplicationController
     # since we aren't specifying it otherwise.
 
     config.add_search_field 'all_fields', :label => 'All Fields'
-
+    config.add_search_field 'title_tsi', :label => 'Title'
+		config.add_search_field 'description_tsim', :label => 'Description'
+		config.add_search_field 'annotations_tsim', :label => 'Annotations'
+		config.add_search_field 'source_id_ssi', :label => 'Source/Revs ID'
+		config.add_search_field 'marque_tim', :label => 'Marque'
+		config.add_search_field 'group_class_tsi', :label => 'Group or Class'
+		config.add_search_field 'model_tim', :label => 'Model'
+		config.add_search_field 'model_year_tim', :label => 'Model Year'
+    config.add_search_field 'vehicle_markings_tsi', :label => 'Vehicle Markings'
+		config.add_search_field 'people_tim', :label => 'People'
+		config.add_search_field 'entrant_tim', :label => 'Entrant'
+		config.add_search_field 'current_owner_ti', :label => 'Current Owner'
+		config.add_search_field 'venue_ti', :label => 'Venue'
+		config.add_search_field 'track_ti', :label => 'Track'
+		config.add_search_field 'event_ti', :label => 'Event'
+		config.add_search_field 'cities_ti', :label => 'City'
+		config.add_search_field 'countries_ti', :label => 'Country'
+		config.add_search_field 'states_ti', :label => 'State'
+		config.add_search_field 'photographer_ti', :label => 'Photographer'
 
     # Now we see how to over-ride Solr request handler defaults, in this
     # case for a BL "search field", which is really a dismax aggregate
     # of Solr search fields.
 
-    config.add_search_field('title') do |field|
-      # solr_parameters hash are sent to Solr as ordinary url query params.
-      field.solr_parameters = { :'spellcheck.dictionary' => 'title' }
-
-      # :solr_local_parameters will be sent using Solr LocalParams
-      # syntax, as eg {! qf=$title_qf }. This is neccesary to use
-      # Solr parameter de-referencing like $title_qf.
-      # See: http://wiki.apache.org/solr/LocalParams
-      field.solr_local_parameters = {
-        :qf => '$title_qf',
-        :pf => '$title_pf'
-      }
-    end
-
-    config.add_search_field('author') do |field|
-      field.solr_parameters = { :'spellcheck.dictionary' => 'author' }
-      field.solr_local_parameters = {
-        :qf => '$author_qf',
-        :pf => '$author_pf'
-      }
-    end
-
-    # Specifying a :qt only to show it's possible, and so our internal automated
-    # tests can test it. In this case it's the same as
-    # config[:default_solr_parameters][:qt], so isn't actually neccesary.
-    config.add_search_field('subject') do |field|
-      field.solr_parameters = { :'spellcheck.dictionary' => 'subject' }
-      field.qt = 'search'
-      field.solr_local_parameters = {
-        :qf => '$subject_qf',
-        :pf => '$subject_pf'
-      }
-    end
-
     # "sort results by" select (pulldown)
     # label in pulldown is followed by the name of the SOLR field to sort by and
     # whether the sort is ascending or descending (it must be asc or desc
     # except in the relevancy case).
-    #config.add_sort_field 'score desc, pub_date_sort desc, title_sort asc', :label => 'relevance'
-    #config.add_sort_field 'author_sort asc, title_sort asc', :label => 'author'
-    #config.add_sort_field 'title_sort asc, pub_date_sort desc', :label => 'title'
     config.add_sort_field 'title_tsi desc, source_id_ssi asc', :label => 'title'
     config.add_sort_field 'source_id_ssi asc, title_tsi desc', :label => 'identifier'
     config.add_sort_field 'pub_year_single_isi asc, title_tsi asc', :label => 'year'
@@ -363,7 +350,7 @@ class CatalogController < ApplicationController
     # mean") suggestion is offered.
     config.spell_max = 5
   end
-
+  
   # Email Action (this will render the appropriate view on GET requests and process the form and send the email on POST requests)
   def email
     @response, @documents = get_solr_response_for_field_values(SolrDocument.unique_key,params[:id])

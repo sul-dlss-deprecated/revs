@@ -1,0 +1,15 @@
+class RevsSearchBuilder < SearchBuilder
+
+  # adjust the solr query by putting quotes around it if the user wants an exact phrase search
+  def phrase_search(request_params)
+    case blacklight_params["search_match"]  
+      when "exact"
+        request_params[:q] = "\"#{blacklight_params[:q]}\""    
+      when "all"
+        request_params[:q] = blacklight_params[:q].split(' ').join(' AND ')
+      else
+        request_params[:q] = blacklight_params[:q]
+    end
+  end
+    
+end
