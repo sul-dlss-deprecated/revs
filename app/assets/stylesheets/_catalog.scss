@@ -784,12 +784,19 @@
 }
 
 .search-scope {
+  float: left;
+  margin-bottom: 20px;
+
   label {
     font-size: 13px;
   }
 
   input[type="radio"] {
     margin-top: 1px;
+  }
+
+  .radio:first-child {
+    margin-top: 5px;
   }
 }
 
