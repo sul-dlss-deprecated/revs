@@ -9,6 +9,14 @@ $(document).ready(function(){
 	  return false;
 	});
 
+  // search result page should auto-submit when the user selects a new search type
+  // $('input[type=radio][name="search_match"]').change(function() {
+  //   // if the user has entered a search term, let's switch the context of the search by re-submitting the search form
+  //   if ($('#q').val()) {
+  //    $('#search_form').submit();
+  //   }
+  // });
+  
 	setupItemDetailPanels();
 
   // Collapse Item Details flag details if JavaScript (open by default for no-JS browsers).
