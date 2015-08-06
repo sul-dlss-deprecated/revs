@@ -7,10 +7,10 @@ User-Agent: bingbot
 Crawl-delay: 3
 
 User-Agent: Slurp  # yahoo too i think, possibly old
-Crawl-delay: 3
+Disallow: /
 
 User-Agent: yahoo
-Crawl-delay: 3
+Disallow: /
 
 User-Agent: *
 Disallow: /catalog/range_limit
