@@ -34,7 +34,7 @@ Revs::Application.routes.draw do
 
   # ajax call from home page to get more images for the carousel
   get 'update_carousel', :to => 'catalog#update_carousel', :as => 'update_carousel'
-
+  
   # ajax call from item page to show collections grid at bottom of the page
   get 'show_collection_members_grid/:id', :to => 'catalog#show_collection_members_grid', :as => 'show_collection_members_grid'
   
@@ -60,7 +60,7 @@ Revs::Application.routes.draw do
   match 'contact', :to=> 'about#contact', :as=>'contact_us', :via=>[:get,:post]
   get 'about/contact', :to=> 'about#contact' # specific contact us about page
   get 'about/tutorials', :to=> 'about#tutorials', :as => 'tutorials' # specific tutorials list page
-  get 'about/boom', :to => 'about#boom' # test exception
+  get 'about/boom', :to => 'about#boom' # test exception handling
   get 'about/:id', :to => 'about#show', :as=>'about_pages' # catch anything else and direct to show page with ID parameter of partial to show
   
   # term acceptance dialog
@@ -71,7 +71,8 @@ Revs::Application.routes.draw do
   
   resources :annotations do
     collection do
-      get 'for_image/:id', :to => 'annotations#index_by_druid'
+      get 'for_image/:id', :to => 'annotations#index_by_druid',:constraints => {:id => /[a-z]{2}\d{3}[a-z]{2}\d{4}/}
+      get 'show_image_number/:id', :to => 'annotations#show_image_number',:constraints => {:id => /[a-z]{2}\d{3}[a-z]{2}\d{4}/}, :as=>'show_image_number'
     end
   end
   

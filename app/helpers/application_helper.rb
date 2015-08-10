@@ -34,6 +34,13 @@ module ApplicationHelper
     HTML
   end
 
+  # this is used to convert the I18n locale translations needed for .js files so they can be injected into the view and accessed from the JS files
+  #  we are only injecting a limited number of translations that we actually need in JS files
+  def translations_for_js
+    @translations ||= I18n.backend.send(:translations)
+    @translations[I18n.locale].with_indifferent_access[:public_js]
+  end
+  
   # pass in a user, if it's the currently logged in user, you will get the full name; otherwise you will get the appropriate name for public display; if you pass in a url as a second parameter, you will get a link back to that url
   def display_user_name(user,link=nil)
      display = is_logged_in_user?(user) ? user.full_name : user.to_s

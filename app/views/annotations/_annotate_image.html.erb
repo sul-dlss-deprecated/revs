@@ -1,0 +1,16 @@
+<%= image_tag(@document.images(:large)[image_number],:id=>'annotatable_image') %>
+<% if @document.images.size > 1 %>
+  <br >
+  <% if image_number > 0 %>
+    <%= link_to 'previous', '#', :id=>'previous_annotatable_image' %>
+  <% else %>
+    previous
+  <% end %>
+   | <%= "#{image_number+1} of #{@document.images.size}" %> |
+  <% if image_number < @document.images.size-1 %>
+    <%= link_to 'next', '#', :id=>'next_annotatable_image'%> 
+  <% else %>
+    next
+  <% end %>
+<% end %>
+<span class="hidden" id="data-vars-image" data-image-number="<%=image_number%>"></span>

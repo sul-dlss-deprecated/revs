@@ -94,6 +94,7 @@ class Ability
   def can_read_annotations
     can :read, Annotation    
     can :index_by_druid, Annotation 
+    can :show_image_number, Annotation 
   end
   
   def can_read_flags
