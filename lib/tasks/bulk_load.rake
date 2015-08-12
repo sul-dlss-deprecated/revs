@@ -718,6 +718,8 @@ namespace :revs do
   task :change_visibility, [:file, :visibility_value] => :environment do |t, args|
     # call with RAILS_ENV=production rake revs:change_visibility["/path/to/manifest.csv",1] to show all images not having a value in the visibility column
     # call with RAILS_ENV=production rake revs:change_visibility["/path/to/manifest.csv",0] to hide all images not having a value in the visibility column
+
+    Revs::Application.config.use_editstore = false
     
     file = args[:file] 
     default_visibility_value = args[:visibility_value] 
@@ -791,6 +793,8 @@ namespace :revs do
   task :change_visibility_collection, [:collection_name, :visibility_value] => :environment do |t, args|
     # call with RAILS_ENV=production rake revs:change_visibility_collection["Albert R. Bochroch Photographic Archive",1] to show all images in the collection; note the collection itself is unaffected
     # call with RAILS_ENV=production rake revs:change_visibility_collection["Albert R. Bochroch Photographic Archive",0] to hide all images in the collection; note the collection itself is unaffected
+
+    Revs::Application.config.use_editstore = false
     
     collection = args[:collection_name] 
     default_visibility_value = args[:visibility_value] 
