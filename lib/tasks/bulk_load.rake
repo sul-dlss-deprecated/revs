@@ -24,17 +24,19 @@ namespace :revs do
   @id = "id"
 
   desc "Re-save all solr docs - useful for adding the score or other data that is added on save"
-  #Run Me: RAILS_ENV=production rake bundle exec revs:save_all_solr_docs collection="John Dugdale Collection" # optiontally limited to a collection
-  #Run Me: RAILS_ENV=production rake bundle exec revs:save_all_solr_docs limit=100 # optionally sets a limit of number of items
+  #Run Me: RAILS_ENV=production bundle exec rake revs:save_all_solr_docs collection="John Dugdale Collection" # optiontally limited to a collection
+  #Run Me: RAILS_ENV=production bundle exec rake revs:save_all_solr_docs limit=100 # optionally sets a limit of number of items
   #Run Me: RAILS_ENV=production nohup bundle exec rake revs:save_all_solr_docs > save_all_docs.log 2>&1& # nohup mode with logged output  
-  #Run Me: RAILS_ENV=production rake bundle exec revs:save_all_solr_docs zero_score_only=true limit=100 # optionally tells it to save only documents with a score of 0
-
+  #Run Me: RAILS_ENV=production bundle exec rake revs:save_all_solr_docs zero_score_only=true limit=100 # optionally tells it to save only documents with a score of 0
+  #Run Me: RAILS_ENV=production bundle exec rake revs:save_all_solr_docs collection="John Dugdale Collection" update_collection_name=true # fix the collection name in all of the items in a given collection by grabbing the name from the collection object and updating it in the items
+  
   task :save_all_solr_docs  => :environment do |t, args|
  
     limit = ENV['limit'] || '' # if passed, limits to this many items only
     collection = ENV['collection'] || '' # if passed, limits to this collection only
     rerun = ENV['rerun'] || '' # if passed as a filename, will try to just resave any errored out druids
     zero_score_only = ENV['zero_score_only'] || "" # if passed in, then only those with a score of 0 will be resaved
+    update_collection_name = ENV['update_collection_name'] || "" # if passed in, will update the collection name in the item with the name from the collection object, useful if the name has changed
     
     q="*:*"
     q+=" AND collection_ssim:\"#{collection}\"" unless collection.blank?
@@ -48,12 +50,14 @@ namespace :revs do
     start_time=Time.now
     n=0
     num_errors=0
+    collection_names={}
 
     puts ""
     puts "Started at #{start_time}, #{total_docs} docs returned"
     puts " limited to collection: #{collection}" unless collection.blank?
     puts " limited to #{limit} items" unless limit.blank?
     puts " limited to only those docs with a score of 0" unless zero_score_only.blank?
+    puts " fixing collection name" unless update_collection_name.blank?
     
     puts ""
     puts q
@@ -66,6 +70,10 @@ namespace :revs do
       puts "#{n} of #{total_docs}: #{id}"
        begin
          s=SolrDocument.find(id)
+         if update_collection_name && !s.is_collection? # grab and cache the collection name if needed and update in the object
+           collection_names[s.collections.first] ||= RevsUtils.clean_collection_name(s.collection.title)
+           s.collection_names=collection_names[s.collections.first]
+        end
          s.resaved_at=Time.now.strftime('%Y-%m-%dT%H:%M:%S.%3NZ') # write out a new timestamp to be sure we have at least one update for solr to write the doc out
          result = s.save(:commit=>false,:no_update_db=>true) # do not autocommit when in batch mode, allow the config to decide when to commit
          unless result
