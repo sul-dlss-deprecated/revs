@@ -27,7 +27,7 @@
             </label>
           </div>
 
-          <% if can?(:update, saved_items.first) && @available_galleries.size > 0 %>
+          <% if can?(:update, saved_items.first) && @available_galleries && @available_galleries.size > 0 %>
             <div class="form-group">
               <%= select_tag 'move_to_gallery', options_from_collection_for_select(@available_galleries,"id","title"), prompt:t('revs.user_galleries.move_to_gallery'), :class => "form-control input-sm" %>
               <%= select_tag 'copy_to_gallery', options_from_collection_for_select(@available_galleries,"id","title"), prompt:t('revs.user_galleries.copy_to_gallery'), :class => "form-control input-sm" %>
