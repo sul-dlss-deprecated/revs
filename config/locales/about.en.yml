@@ -34,13 +34,13 @@ en:
         <p class="faq-question">
           I would like to reuse images on my own website, in a publication, for research or for commercial purposes. Can I do this?
         </p>
-        <p class="faq-answer">All of the content is currently under a full copyright from The Revs Institute for Automotive Research, Inc. and you should review their %{reuse_link}.  You can also review Stanford's %{terms_of_use_link}.
+        <p class="faq-answer">All of the content is currently under a full copyright, mostly from The Revs Institute for Automotive Research, Inc.  The actual copyright and usage statement for each image is available on the page showing the image, to the right.  It is your responsibility to review this statement and adhere to it.  For content owned by The Revs Institute, you should review their %{reuse_link}. You can also review Stanford's %{terms_of_use_link}.
         </p>
         <p class="faq-question">
           When I try and download a full size image, it asks me to login with a SUNET ID and says I need be part of Stanford University.  What is that and can I get one?
         </p>
         <p class="faq-answer">High resolution images are only available to members of the Stanford community through a prior agreement.  SUNET IDs are only available to authorized Stanford users and we are not able to create one for you.  If you wish
-          to obtain a high resolution image for any reason, please review %{reuse_link}.  Note that anyone can view high resolution versions of the images in the website by selecting "zoom" in the drop-down menu under any of the images.  You can then zoom in and out to view detail, but you will not be able to download the images to your computer.
+          to obtain a high resolution image for any reason, please review %{reuse_link}.  Note that anyone can view high resolution versions of the images in the website by selecting "zoom" in the drop-down menu under any of the images.  You can then zoom in and out to view detail, but you will not be able to download the images to your computer.  It is not permissable to obtain high resolution images without following the re-use requirements and terms.
         </p>
       terms_of_use_text_html: |
         Any of the content displayed on this site may be under copyright, and it is up to the user to comply with the content's specific copyright provisions.
@@ -54,7 +54,6 @@ en:
           <li><a href="http://library.stanford.edu/people/snydman">Stuart Snydman</a> - Associate Director for Digital Strategy, Digital Library Systems & Services</li>
           <li><a href="http://library.stanford.edu/people/petucket">Peter Mangiafico</a> - Product Manager, Revs Project</li>
           <li>Gary Geisler - User Experience Designer/Digital Library Web Developer</li>
-          <li>Carrick Rogers - Digital Library Software Engineer</li>
           <li><a href="http://library.stanford.edu/people/jkeck">Jessie Keck</a> - Digital Library Software Engineer</li>
         </ul>
       project_text_html: |
