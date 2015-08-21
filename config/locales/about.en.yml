@@ -59,7 +59,7 @@ en:
       project_text_html: |
         <p>
         	  %{revs_institute} has a large and varied collection of automotive materials, including images, research books, ephemera, and specialized documents.
-           The Revs Program at Stanford is producing research data and generating course materials.  The primary goal of the Stanford Library is to ensure these materials are indexed, preserved and made
+           The Revs Program at Stanford is producing research data and generating course materials.  The primary goal of Stanford Libraries is to ensure these materials are indexed, preserved and made
            available to library patrons, researchers and the general public.  By digitizing materials and making them discoverable, content that was once available to a select few becomes useful and
            discoverable for a wide range of researchers.
         </p>
@@ -71,8 +71,8 @@ en:
         </p>
         <p>
         	The Stanford Digital Repository ensures each digital object is preserved, made available via a permanent persistent URL (web address), enforces content rights and restrictions and provides a common
-          storage mechanism for other applications to build upon.  Research and course material from the Revs Program at Stanford will also be stored in SDR, and all materials will be discoverable via Stanford
-           Library's online catalog, <a href="http://searchworks.stanford.edu">SearchWorks</a>.
+          storage mechanism for other applications to build upon.  Research and course material from the Revs Program at Stanford will also be stored in SDR, and all materials will be discoverable via the Stanford
+          Libraries' online catalog, <a href="http://searchworks.stanford.edu">SearchWorks</a>.
         </p>
         <p>
         	The Revs Digital Library is built on top of the Stanford Digital Repository to provide a web based platform for discovery of automotive research and images. The Digital Library is developed
@@ -102,11 +102,11 @@ en:
       archives_title: 'Content Donors'
       archives:
         collier_html: |
-          <h3>Revs Institute® Archives</h3>          
-          <p>The Revs Institute for Automotive Research, Inc., is a 501 (c) (3) organization located in Naples, Florida.  It is a repository for one of the world’s largest research collections dedicated to the understanding of automotive history.  In addition to books, periodicals, documents, art, and ephemera, the collection includes approximately one million images, many of which can be accessed via the Revs Digital Library. The images within this photograph collection span a period from the late 19th Century to the present day.  They document international motor sports, production and custom-body cars, automotive design and engineering, auto shows, and industry personalities and race car drivers.</p>  
+          <h3>Revs Institute® Archives</h3>
+          <p>The Revs Institute for Automotive Research, Inc., is a 501 (c) (3) organization located in Naples, Florida.  It is a repository for one of the world’s largest research collections dedicated to the understanding of automotive history.  In addition to books, periodicals, documents, art, and ephemera, the collection includes approximately one million images, many of which can be accessed via the Revs Digital Library. The images within this photograph collection span a period from the late 19th Century to the present day.  They document international motor sports, production and custom-body cars, automotive design and engineering, auto shows, and industry personalities and race car drivers.</p>
           <p>The Revs Digital Library provides excellent geographic coverage of both Europe and America with a focus on major international Grand Prix and sports car racing, plus coverage of a broad range of road course and oval events in the United States.  In addition to the study of automotive history, the research facility provides resources to understand the broader historic context of both the 19th and 20th centuries—themes such as the impact of the automobile on art, literature, engineering, architecture and social history.  The Revs Digital Library, which was launched in 2014, is a dynamic resource which continues to grow each year as new images are added to the collection.</p>
         road_and_track_html: |
           <h3>Road & Track Archive</h3>
-          <p>The Road & Track Archive contains a digitized selection of files from Road & Track magazine's 65-year history.  The full archive includes images, notes, performance data and other types of documents and research that supported production of the magazine over its history.</p>          
+          <p>The Road & Track Archive contains a digitized selection of files from Road & Track magazine's 65-year history.  The full archive includes images, notes, performance data and other types of documents and research that supported production of the magazine over its history.</p>
           <p>Among the gems from the full archives: original photography from the '50s and '60s, a sampling of the collection's 2,000 books and even old letters from manufacturers complaining to Road & Track editors about negative product reviews.</p>
           <p>The archive once filled a two-car garage at Road & Track's Newport Beach facility before the magazine moved to Michigan, and now resides in Stanford Libraries' Special Collections, where they are available on request for academic research.  As additional materials are digited, they will become available in the Revs Digital Library.</p>
