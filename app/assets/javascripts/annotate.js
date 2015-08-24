@@ -145,13 +145,6 @@ $(document).ready(function(){
     $("#annotatable_workspace").load("/annotations/show_image_number/" + druid() + "?image_number=" + parseInt(imageNumber()+1),function() {reEnableAnnotations();}
     );
   }); 
-
-  $(document).on( "load","#annotatable_image",function() {
-    alert('yo');
-    loadAnnotations(imageNumber());
-    enableAnnotations();
-    }
-  );
       
 	$(document).on('mouseleave','.annotation-info',function(){anno.highlightAnnotation();});
 	$(document).on('mouseenter','.annotation-info',function(){
