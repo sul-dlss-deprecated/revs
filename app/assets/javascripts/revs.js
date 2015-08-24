@@ -342,14 +342,14 @@ function setupItemDetailPanels() {
   // Swap icon used in Item Details accordion when toggling metadata sections
   $('.accordion-body').collapse({
      toggle: false
-   }).on('show',function (e) {
+   }).on('show.bs.collapse',function (e) {
      $(e.target).parent().find(".fa-caret-right").removeClass("fa-caret-right").addClass("fa-caret-down");
-   }).on('hide', function (e) {
+   }).on('hide.bs.collapse', function (e) {
      $(e.target).parent().find(".fa-caret-down").removeClass("fa-caret-down").addClass("fa-caret-right");
    });
-
+    
    // Collapse Item Details metadata sections if JavaScript (open by default for no-JS browsers).
-   $('.accordion-body').removeClass("in");
+   $('.accordion-body.default-collapsed').removeClass("in");
 
 }
 

@@ -33,11 +33,9 @@
               <%= show_formatted_list(document.years,:facet=>:years) %>
             </span>
           <% end %>
-          <% if !document.formats.blank? %>
             <span class="result-detail-field">
-              <%= show_formatted_list(document.formats,:facet=>:formats) %>
+              <%= "#{t('revs.show.label_score')}: #{document.score}"%>
             </span>
-          <% end %>
           <%= render :partial=>'/catalog/hidden_message', :locals=>{:document=>document,:full=>true} if document.visibility==:hidden %>
 
         </div>
