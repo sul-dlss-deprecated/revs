@@ -126,23 +126,32 @@ function toggleAnnotationList(){
 	}
 }
 
+function reEnableAnnotations() {
+  $("#annotatable_image").load(function() {
+    loadAnnotations(imageNumber());
+    enableAnnotations();
+    }
+  );
+}
+
 $(document).ready(function(){
 
   $(document).on( "click","#previous_annotatable_image",function() {
-    $("#annotatable_workspace").load("/annotations/show_image_number/" + druid() + "?image_number=" + parseInt(imageNumber()-1),function() {
-      loadAnnotations(imageNumber());
-      enableAnnotations();   
-    }
+    $("#annotatable_workspace").load("/annotations/show_image_number/" + druid() + "?image_number=" + parseInt(imageNumber()-1),function() {reEnableAnnotations();}
     );
   });
-
+  
   $(document).on( "click","#next_annotatable_image",function() {
-    $("#annotatable_workspace").load("/annotations/show_image_number/" + druid() + "?image_number=" + parseInt(imageNumber()+1),function() {
-      loadAnnotations(imageNumber());
-      enableAnnotations();
-      }
+    $("#annotatable_workspace").load("/annotations/show_image_number/" + druid() + "?image_number=" + parseInt(imageNumber()+1),function() {reEnableAnnotations();}
     );
   }); 
+
+  $(document).on( "load","#annotatable_image",function() {
+    alert('yo');
+    loadAnnotations(imageNumber());
+    enableAnnotations();
+    }
+  );
       
 	$(document).on('mouseleave','.annotation-info',function(){anno.highlightAnnotation();});
 	$(document).on('mouseenter','.annotation-info',function(){
