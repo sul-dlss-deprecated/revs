@@ -5,10 +5,10 @@
     <div class="accordion-heading nav-header">
       <a class="accordion-toggle" data-toggle="collapse" data-parent="#item-details-accordion" href="#item-default">
         <%= t('revs.show.general_information') %>
-        <span class="accordion-icon showOnLoad hidden"><i class="fa fa-caret-right fa-2x"></i></span>
+        <span class="accordion-icon showOnLoad hidden"><i class="fa fa-caret-down fa-2x"></i></span>
       </a>
     </div>
-    <div id="item-default" class="accordion-body collapse in">
+    <div id="item-default" class="accordion-body in">
       <div class="accordion-inner">
         <dl class="dl-horizontal  dl-invert">
 
@@ -71,7 +71,7 @@
         <span class="accordion-icon showOnLoad hidden"><i class="fa fa-caret-right fa-2x"></i></span>
       </a>
     </div>
-    <div id="item-auto" class="accordion-body collapse in">
+    <div id="item-auto" class="accordion-body default-collapsed collapse in">
       <div class="accordion-inner">
         <dl class="dl-horizontal  dl-invert">
 
@@ -104,7 +104,7 @@
         <span class="accordion-icon showOnLoad hidden"><i class="fa fa-caret-right fa-2x"></i></span>
       </a>
     </div>
-    <div id="item-race" class="accordion-body collapse in">
+    <div id="item-race" class="accordion-body default-collapsed collapse in">
       <div class="accordion-inner">
         <dl class="dl-horizontal  dl-invert">
 
@@ -134,7 +134,7 @@
         <span class="accordion-icon showOnLoad hidden"><i class="fa fa-caret-right fa-2x"></i></span>
       </a>
     </div>
-    <div id="item-sources" class="accordion-body collapse in">
+    <div id="item-sources" class="accordion-body default-collapsed collapse in">
       <div class="accordion-inner">
         <dl class="dl-horizontal  dl-invert">
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'identifier',:label=>t('revs.show.label_identifier')} %>

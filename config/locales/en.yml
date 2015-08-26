@@ -384,6 +384,7 @@ en:
       you_can_add_a_note_html: "You can %{href} to your %{item_type}."
       you_can_add_a_note_linktext: 'add a note'
       manage: 'Manage items'
+      leave_manage: 'Click to leave manage item mode'
     user_galleries:
       head: "Galleries"
       heading_featured: "Featured Galleries"
