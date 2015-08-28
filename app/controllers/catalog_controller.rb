@@ -11,6 +11,13 @@ class CatalogController < ApplicationController
   before_filter :add_facets_for_curators
   before_filter :set_default_image_visibility_query
 
+  # custom archive facet query which excludes collections
+  def self.archives_query
+    opts={}
+    SolrDocument.archives.each_with_index {|archive,index| opts["archive_#{index}"]={:label=>archive,:fq=>"archive_ssi:\"#{archive}\" AND -format_ssim:\"collection\""} }
+    opts
+  end
+  
   # delete editing form parameters when there is a get request so they don't get picked up and carried to all links by Blacklight
   def filter_params
     if request.get?
@@ -264,7 +271,7 @@ class CatalogController < ApplicationController
     config.add_facet_field 'marque_ssim', :label => 'Marque', :limit => 25
     config.add_facet_field 'model_year_ssim', :label => 'Model Year', :sort => 'index', :limit => 25
     config.add_facet_field 'model_ssim', :label => 'Model', :limit => 25
-    config.add_facet_field 'archive_ssi', :label => "Archive"
+    config.add_facet_field 'archive_ssim', :label => "Archive", :query => archives_query
     config.add_facet_field 'collection_ssim', :label => "Collection"
     config.add_facet_field 'photographer_ssi', :label => "Photographer", :limit => 25
     config.add_facet_field 'entrant_ssim', :label => "Entrant", :limit => 25
