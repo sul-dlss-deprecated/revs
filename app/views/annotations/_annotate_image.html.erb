@@ -1,0 +1,18 @@
+<%= image_tag(@document.images(:large)[image_number],:id=>'annotatable_image') %>
+<div class="annotatable-image-nav">
+  <% if @document.images.size > 1 %>
+    <% if image_number > 0 %>
+      <%= link_to raw(t 'views.pagination_compact.previous'), '#', :id=>'previous_annotatable_image' %>
+    <% else %>
+      <%= raw(t 'views.pagination_compact.previous') %>
+    <% end %>
+     | <strong><%= "#{image_number+1}" %></strong> of
+     <strong><%= "#{@document.images.size}" %></strong> images |
+    <% if image_number < @document.images.size-1 %>
+      <%= link_to raw(t 'views.pagination_compact.next'), '#', :id=>'next_annotatable_image'%>
+    <% else %>
+      <%= raw(t 'views.pagination_compact.next') %>
+    <% end %>
+  <% end %>
+  <span class="hidden" id="data-vars-image" data-image-number="<%=image_number%>"></span>
+</div>

@@ -211,12 +211,6 @@ $(document).ready(function(){
 		return false;
   });
 
-	$(document).on('mouseleave','.annotation-info',function(){anno.highlightAnnotation();});
-	$(document).on('mouseenter','.annotation-info',function(){
-		annotation=($(this).data('json'));
-		anno.highlightAnnotation(annotation);
-	});
-
 	$('#feedback_link').click(function() {
       $(".report-problem")[0].reset();
   		$("#subject").val('metadata');
@@ -254,6 +248,10 @@ function updateBulkEditStatus() {
 
 function druid() {
 	return jQuery("#data-vars").attr('data-druid');
+}
+
+function imageNumber() {
+	return parseInt(jQuery("#data-vars-image").attr('data-image-number'));
 }
 
 function visibility() {

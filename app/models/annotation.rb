@@ -25,19 +25,24 @@ class Annotation < WithSolrDocument
     annotation.text=params[:text]
     annotation.json=params[:json]
     annotation.user_id=params[:user_id]
+    annotation.image_number=params[:image_number]
     annotation.save
     annotation
    end
    
   # pass in a druid and a user and get the annotations for that image, with the appropriate json additions required for display annotations on the image
-  def self.for_image_with_user(druid,user)
-    annotations=Annotation.joins(:user).where(:druid=>druid,'users.active'=>true).order('annotations.created_at desc')
+  def self.for_image_with_user(druid,user,image_number=nil)
+    annotations=Annotation.joins(:user).where(:druid=>druid,'users.active'=>true)
+    annotations=annotations.where(:image_number=>image_number) unless image_number.blank?
+    annotations.order('annotations.created_at desc')
     annotations.each do |annotation| # loop through all annotations
       annotation_hash=JSON.parse(annotation.json) # parse the annotation json into a ruby object
       annotation_hash[:editable]=user ? user.can?(:update, annotation) : false 
       annotation_hash[:username]=(user && annotation.user_id==user.id) ? "me" : annotation.user.to_s # add the username (or "me" if current user)
       annotation_hash[:updated_at]=annotation.updated_at.strftime('%B %d, %Y')  
       annotation_hash[:id]=annotation.id
+      annotation_hash[:druid]=annotation.druid
+      annotation_hash[:image_number]=annotation.image_number
       annotation.json=annotation_hash.to_json # convert back to json
     end
     return annotations

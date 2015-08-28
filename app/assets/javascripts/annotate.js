@@ -4,13 +4,13 @@ anno.addHandler('onAnnotationCreated', function(annotation) {
 		type: "POST",
 		url: "/annotations",
 		dataType: "JSON",
-		data: "annotation="+encodeURIComponent(JSON.stringify(annotation))+"&druid=" + druid(),
+		data: "annotation="+encodeURIComponent(JSON.stringify(annotation))+"&druid=" + druid() + "&n=" + imageNumber(),
 		success: function(data) {
 	    annotation.id=data.id; // the annotation ID should match the database row ID so we can delete it if needed
 			updateAnnotationsPanel(data.num_annotations,druid());
 			// these are added so the display to the user is correct for the new annotation; they will be set on the server when the page loads for all annotations
-			annotation.username='me';
-			annotation.updated_at='today';
+			annotation.username=I18n["me"];
+			annotation.updated_at=I18n["today"];
 	  }
 		});
 });
@@ -30,7 +30,7 @@ anno.addHandler('onAnnotationUpdated', function(annotation) {
 
 // this gets called when the user clicks the delete icon
 anno.addHandler('beforeAnnotationRemoved', function(annotation) {
-	var r=confirm("Are you sure you want to delete this annotation?");
+	var r=confirm(I18n["delete_annotation"]);
 	if (r==false) {	return false;}
 });
 
@@ -46,13 +46,13 @@ anno.addHandler('onAnnotationRemoved', function(annotation) {
 	});
 });
 
-// this plug allows us to add the username and date to each annotation and display it
+// this plugin allows us to add the username and date to each annotation and display it
 annotorious.plugin.addUsernamePlugin = function(opt_config_options) { }
 annotorious.plugin.addUsernamePlugin.prototype.onInitAnnotator = function(annotator) {
   // A Field can be an HTML string or a function(annotation) that returns a string
 	  annotator.popup.addField(function(annotation) {
 		 	if (annotation.username != '') {
-	    	return '<em>from ' + annotation.username + ' - '+ annotation.updated_at +'</em>'
+	    	return '<em>' + I18n["from"] + ' ' + annotation.username + ' - '+ annotation.updated_at +'</em>'
 		  }
 		else
 		 {
@@ -85,8 +85,9 @@ function enableAnnotations() {
 	anno.makeAnnotatable(jQuery('#annotatable_image')[0]);
 }
 
-function loadAnnotations() {
-	jQuery.getJSON("/annotations/for_image/"+druid()+ ".json",function(data) {
+function loadAnnotations(image_number) {
+  image_number = typeof image_number !== 'undefined' ? image_number : 0;
+	jQuery.getJSON("/annotations/for_image/"+druid()+ ".json?image_number="+image_number,function(data) {
 		for (var i = 0; i < data.length; i++) {
 				annotation = JSON.parse(data[i].json)
         anno.addAnnotation(annotation);
@@ -125,8 +126,42 @@ function toggleAnnotationList(){
 	}
 }
 
+function reEnableAnnotations() {
+  $("#annotatable_image").load(function() {
+    loadAnnotations(imageNumber());
+    enableAnnotations();
+    }
+  );
+}
+
 $(document).ready(function(){
 
+  $(document).on( "click","#previous_annotatable_image",function() {
+    $("#annotatable_workspace").load("/annotations/show_image_number/" + druid() + "?image_number=" + parseInt(imageNumber()-1),function() {reEnableAnnotations();}
+    );
+  });
+  
+  $(document).on( "click","#next_annotatable_image",function() {
+    $("#annotatable_workspace").load("/annotations/show_image_number/" + druid() + "?image_number=" + parseInt(imageNumber()+1),function() {reEnableAnnotations();}
+    );
+  }); 
+      
+	$(document).on('mouseleave','.annotation-info',function(){anno.highlightAnnotation();});
+	$(document).on('mouseenter','.annotation-info',function(){
+		annotation=($(this).data('json'));
+    if (imageNumber() != annotation.image_number) {  // if we are not currently showing the image with this annotation, switch to it
+      $("#annotatable_workspace").load("/annotations/show_image_number/" + druid() + "?image_number=" + annotation.image_number,function() {
+        loadAnnotations(annotation.image_number);
+        enableAnnotations();
+        anno.highlightAnnotation(annotation); 
+      });
+    	}
+    else
+    {
+     	anno.highlightAnnotation(annotation);   
+    }
+	});
+    
 	$('#annotate_link').click(function() {
 		showAnnotations();
     toggleLinks();
