@@ -73,7 +73,7 @@ class CatalogController < ApplicationController
 
     end
 
-    search_params_logic << :phrase_search # add phrase searching capability (defined in lib/revs_search_builder)
+   search_params_logic << :phrase_search # add phrase searching capability (defined in lib/revs_search_builder)
 
     super
 

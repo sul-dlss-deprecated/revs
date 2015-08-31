@@ -13,6 +13,18 @@ describe("Search Pages",:type=>:request,:integration=>true) do
     expect(page).to have_content('black-and-white negatives')
   end
 
+  it "should not reset the search when faceting after entering a search term" do
+    visit root_path
+    click_link 'black-and-white negatives'
+    expect(page).to have_content('1 - 10 of 14')
+    fill_in 'q', :with=>'Ford'
+    click_button 'Search'
+    expect(page).to have_content('Results')
+    expect(page).to have_content('1 - 2 of 2')
+    expect(page).to have_content('Sebring 12 Hour, Green Park Straight, January 4')
+    expect(page).to have_content('black-and-white negatives')
+  end
+  
   it "should not show a search result after searching for a non existent string" do
     visit search_path(:q=>'bogus')
     expect(page).to have_content('Results')
@@ -43,18 +55,26 @@ describe("Search Pages",:type=>:request,:integration=>true) do
     end
   end
   
-  # it "should find matches for gt-350, gt350 and gt 350 due to tokenization setup" do
-  #   search_strings=['gt 350','gt-350','gt350']
-  #   search_strings.each do |search|
-  #     visit search_path(:q=>search)
-  #     expect(page).to have_content('Results')
-  #     expect(page).to have_content('1 - 3 of 3')
-  #     expect(page).to have_content('Thompson Raceway, May 2')
-  #     expect(page).to have_content('Record 1')
-  #     expect(page).to have_content('Lime Rock Continental, September 1')
-  #   end
-  # end
-  
+  it "should find matches for gt-350, gt350 and gt 350 due to tokenization setup when doing an exact search" do
+    search_strings=['gt 350','gt-350','gt350']
+    search_strings.each do |search|
+      visit search_path(:q=>search,:search_match=>'exact')
+      expect(page).to have_content('Results')
+      expect(page).to have_content('1 - 3 of 3')
+      expect(page).to have_content('Thompson Raceway, May 2')
+      expect(page).to have_content('Record 1')
+      expect(page).to have_content('Lime Rock Continental, September 1')
+    end
+  end
+
+  it "should find different matches for gt-350 and gt 350 based on exact match or not" do
+    visit search_path(:q=>'gt 350')
+    expect(page).to have_content('Results')
+    expect(page).to have_content('1 - 2 of 2')
+    visit search_path(:q=>'gt 350',:search_match=>'exact')
+    expect(page).to have_content('1 - 3 of 3')
+  end
+    
   it "should show a facet search result for 1955" do
     visit search_path(:"f[pub_year_isim][]"=>'1955')
     expect(page).to have_content('Results')
