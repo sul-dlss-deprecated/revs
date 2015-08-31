@@ -243,7 +243,6 @@ class CatalogController < ApplicationController
 
     # solr field configuration for document/show views
     config.show.title_field  = 'title_tsi'
-    #config.show.title_field = 'title_tsi'
     config.show.display_type_field = 'format_ssim'
 
 
@@ -268,17 +267,17 @@ class CatalogController < ApplicationController
     # facet bar
     config.add_facet_field 'pub_year_isim', :label => 'Year', :sort => 'index', :limit => 25, :range => true
     config.add_facet_field 'format_ssim', :label => 'Format'
-    config.add_facet_field 'marque_ssim', :label => 'Marque', :limit => 25
+    config.add_facet_field 'marque_ssim', :label => 'Marque', :limit => 25, :index_pagination=>true
     config.add_facet_field 'model_year_ssim', :label => 'Model Year', :sort => 'index', :limit => 25
-    config.add_facet_field 'model_ssim', :label => 'Model', :limit => 25
+    config.add_facet_field 'model_ssim', :label => 'Model', :limit => 25, :index_pagination=>true
     config.add_facet_field 'archive_ssim', :label => "Archive", :query => archives_query
     config.add_facet_field 'collection_ssim', :label => "Collection"
-    config.add_facet_field 'photographer_ssi', :label => "Photographer", :limit => 25
-    config.add_facet_field 'entrant_ssim', :label => "Entrant", :limit => 25
-    config.add_facet_field 'people_ssim', :label => "People", :limit => 25
-    config.add_facet_field 'venue_ssi', :label => "Venue", :limit => 25
+    config.add_facet_field 'photographer_ssi', :label => "Photographer", :limit => 25, :index_pagination=>true
+    config.add_facet_field 'entrant_ssim', :label => "Entrant", :limit => 25, :index_pagination=>true
+    config.add_facet_field 'people_ssim', :label => "People", :limit => 25, :index_pagination=>true
+    config.add_facet_field 'venue_ssi', :label => "Venue", :limit => 25, :index_pagination=>true
     config.add_facet_field 'track_ssi', :label => "Track", :limit => 25
-    config.add_facet_field 'event_ssi', :label => "Event", :limit => 25
+    config.add_facet_field 'event_ssi', :label => "Event", :limit => 25, :index_pagination=>true
 
     config.add_facet_field 'timestamp', :label => 'Added recently', :query => {
        :weeks_1 => { :label => 'within last week', :fq => "timestamp:[\"#{show_as_timestamp(1.week.ago)}\" TO *]" },
@@ -359,7 +358,29 @@ class CatalogController < ApplicationController
     # mean") suggestion is offered.
     config.spell_max = 5
   end
-  
+
+  # displays values and pagination links for a single facet field
+  # overridden from base blacklight so we can add facet index pagination links
+  def facet
+    extra_controller_params = (params[:"facet.prefix"] ? {"facet.prefix"=>params[:"facet.prefix"]} : {})
+
+    @facet = blacklight_config.facet_fields[params[:id]]
+    @response = get_facet_field_response(@facet.key, params,extra_controller_params)
+    @display_facet = @response.aggregations[@facet.key]
+
+    @pagination = facet_paginator(@facet, @display_facet)
+
+
+    respond_to do |format|
+      # Draw the facet selector for users who have javascript disabled:
+      format.html
+      format.json { render json: render_facet_list_as_json }
+
+      # Draw the partial for the "more" facet modal window:
+      format.js { render :layout => false }
+    end
+  end
+    
   # Email Action (this will render the appropriate view on GET requests and process the form and send the email on POST requests)
   def email
     @response, @documents = get_solr_response_for_field_values(SolrDocument.unique_key,params[:id])
