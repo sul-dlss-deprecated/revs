@@ -460,6 +460,9 @@ en:
       all_terms: 'Contains all of the words'
       advanced: 'More search options'
       search_results: 'Results'
+      any_words: 'Any words'
+      all_words: 'All words'
+      exact_phrase: 'Exact phrase'
       gallery_toggle:
         gallery: 'Grid'
         list: 'Brief'
