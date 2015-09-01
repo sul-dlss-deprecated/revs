@@ -1,9 +1,9 @@
 <% if @facet.index_pagination && params["facet.sort"] == 'index' %>
   <div class="alpha-filter">
     <%= t('revs.search.facets.filter') %>:
-    <%= link_to(t('revs.search.facets.clear'), @pagination.params_for_resort_url('index', params.except(:"facet.prefix")), :data => {:ajax_modal => "preserve"}) %>
+    <%= link_to(t('revs.search.facets.clear'), @pagination.params_for_resort_url('index', params.except(:"facet.prefix")), :data => {:ajax_modal => "preserve"}, :class=>(!params["facet.prefix"] ? 'active' : '')) %>
     <% ('A' .. 'Z').to_a.each do |letter| %>
-      <%=  link_to(letter, @pagination.params_for_resort_url('index', params.merge(:"facet.prefix"=>letter)), :data => {:ajax_modal => "preserve"}) %>
+      <%=  link_to(letter, @pagination.params_for_resort_url('index', params.merge(:"facet.prefix"=>letter)), :data => {:ajax_modal => "preserve"}, :class=>(params["facet.prefix"]==letter ? 'active' : '')) %>
     <% end %>
   </div>
 <% end %>
