@@ -1,30 +1,35 @@
-  <% if @facet.index_pagination && params["facet.sort"] == 'index' %>
-   <div>
-       <%=  link_to("all", @pagination.params_for_resort_url('index', params.except(:"facet.prefix")),  :data => {:ajax_modal => "preserve"}) %> |
-       <% ('A' .. 'Z').to_a.each do |letter| %>
-         <%=  link_to(letter, @pagination.params_for_resort_url('index', params.merge(:"facet.prefix"=>letter)),  :data => {:ajax_modal => "preserve"}) %> |
-       <% end %>
-   </div>
-  <% end %>
-  
-    <div class="prev_next_links btn-group pull-left">
-      <%= link_to_previous_page @pagination, raw(t('views.pagination.previous')), :params => params, :param_name => blacklight_config.facet_paginator_class.request_keys[:page], :class => 'btn btn-link', :data => {:ajax_modal => "preserve"} do %>
-       <span class="disabled btn btn-disabled"><%= raw(t('views.pagination.previous')) %></span>
-     <% end %>
-      <%= link_to_next_page @pagination, raw(t('views.pagination.next')), :params => params, :param_name => blacklight_config.facet_paginator_class.request_keys[:page], :class => 'btn btn-link',  :data => {:ajax_modal => "preserve"} do %>
-       
-       <span class="disabled btn  btn-disabled"><%= raw(t('views.pagination.next')) %></span>
-      <% end %>
-     
-    </div>
- 
-  <div class="sort_options btn-group pull-right">
-    <% if @pagination.sort == 'index' -%>
-      <span class="active az btn btn-default"><%= t('blacklight.search.facets.sort.index') %></span><%= link_to_unless(@pagination.sort == 'count', t('blacklight.search.facets.sort.count'), 
-        @pagination.params_for_resort_url('count', params.except(:"facet.prefix")), :class => "sort_change numeric btn btn-default",  
-        :data => {:ajax_modal => "preserve"}) %>
-    <% elsif @pagination.sort == 'count' -%>
-      <%=  link_to(t('blacklight.search.facets.sort.index'), @pagination.params_for_resort_url('index', params.except(:"facet.prefix")), 
-        :class => "sort_change az btn btn-default",  :data => {:ajax_modal => "preserve"}) %><span class="active numeric btn btn-default"><%= t('blacklight.search.facets.sort.count') %></span>
-    <% end -%>    
+<% if @facet.index_pagination && params["facet.sort"] == 'index' %>
+  <div class="alpha-filter">
+    <%= t('revs.search.facets.filter') %>:
+    <%= link_to(t('revs.search.facets.clear'), @pagination.params_for_resort_url('index', params.except(:"facet.prefix")), :data => {:ajax_modal => "preserve"}) %>
+    <% ('A' .. 'Z').to_a.each do |letter| %>
+      <%=  link_to(letter, @pagination.params_for_resort_url('index', params.merge(:"facet.prefix"=>letter)), :data => {:ajax_modal => "preserve"}) %>
+    <% end %>
   </div>
+<% end %>
+
+<div class="prev_next_links btn-group pull-left">
+  <%= link_to_previous_page @pagination, raw(t('views.pagination.previous')), :params => params,
+    :param_name => blacklight_config.facet_paginator_class.request_keys[:page],
+    :class => 'btn btn-link', :data => {:ajax_modal => "preserve"} do %>
+    <span class="disabled btn btn-disabled"><%= raw(t('views.pagination.previous')) %></span>
+  <% end %>
+  <%= link_to_next_page @pagination, raw(t('views.pagination.next')), :params => params,
+    :param_name => blacklight_config.facet_paginator_class.request_keys[:page],
+    :class => 'btn btn-link',  :data => {:ajax_modal => "preserve"} do %>
+    <span class="disabled btn  btn-disabled"><%= raw(t('views.pagination.next')) %></span>
+  <% end %>
+</div>
+
+<div class="sort_options btn-group pull-right">
+  <% if @pagination.sort == 'index' -%>
+    <span class="active az btn btn-default"><%= t('blacklight.search.facets.sort.index') %></span>
+    <%= link_to_unless(@pagination.sort == 'count', t('blacklight.search.facets.sort.count'),
+      @pagination.params_for_resort_url('count', params.except(:"facet.prefix")), :class => "sort_change numeric btn btn-default",
+      :data => {:ajax_modal => "preserve"}) %>
+  <% elsif @pagination.sort == 'count' -%>
+    <%=  link_to(t('blacklight.search.facets.sort.index'), @pagination.params_for_resort_url('index', params.except(:"facet.prefix")),
+      :class => "sort_change az btn btn-default",  :data => {:ajax_modal => "preserve"}) %>
+      <span class="active numeric btn btn-default"><%= t('blacklight.search.facets.sort.count') %></span>
+  <% end -%>
+</div>

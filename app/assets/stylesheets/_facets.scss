@@ -110,6 +110,17 @@
   }
 }
 
+// Facet modal alphabetical filter
+.alpha-filter {
+  margin-bottom: 18px;
+  text-align: center;
+
+  a {
+    padding: 0 2px;
+  }
+}
+
+
 @media screen and (max-width: $screen-xs-max) {
   .facets-toggle {
     margin-top: -6px;

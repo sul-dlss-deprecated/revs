@@ -471,6 +471,8 @@ en:
       search_label: 'Search'
       facets:
         title: 'Limit your search'
+        filter: 'Filter'
+        clear: 'Clear'
     sidebar:
       navigation:
         title: 'Navigation'
