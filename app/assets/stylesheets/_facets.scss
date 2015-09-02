@@ -117,6 +117,11 @@
 
   a {
     padding: 0 2px;
+
+    &.active {
+      color: inherit;
+      font-weight: bold;
+    }
   }
 }
 
