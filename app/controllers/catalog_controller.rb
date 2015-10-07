@@ -74,7 +74,7 @@ class CatalogController < ApplicationController
     end
 
     # google and other bots continue to use old facet values for the timestamp facet when indexing ... this in turn causes a 500 exception deep within blacklight, triggering excessive logging; just tell them to get lost instead   Peter Mangiafico, October 5 2015
-    if (params && params[:f] && params[:f]['timestamp'] && (blacklight_config.facet_fields['timestamp'].query.keys & params[:f]['timestamp']).empty?)
+    if (params && params[:f] && params[:f][:timestamp] && ((blacklight_config.facet_fields['timestamp'].query.keys + params[:f][:timestamp]).uniq.size) != blacklight_config.facet_fields['timestamp'].query.keys.size)
 
       routing_error
 
