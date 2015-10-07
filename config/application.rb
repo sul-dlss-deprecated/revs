@@ -31,6 +31,8 @@ module Revs
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     config.time_zone = 'Pacific Time (US & Canada)'
 
+    config.log_tags = [ lambda {|r| DateTime.now } ]
+
     config.i18n.enforce_available_locales = true
 
     # Enable locale fallbacks for I18n (makes lookups for any locale fall back to

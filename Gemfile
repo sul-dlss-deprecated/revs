@@ -57,6 +57,8 @@ gem 'therubyracer', :platforms => :ruby
 
 gem 'uglifier', '>= 1.0.3'
 
+gem 'lograge'
+
 group :test do
   gem 'rspec-rails'
   gem 'capybara'
