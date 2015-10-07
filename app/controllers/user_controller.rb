@@ -98,7 +98,8 @@ class UserController < ApplicationController
     begin
       @user = User.find(params[:id])
     rescue
-      profile_not_found && return
+      profile_not_found
+      return
     end      
     @user.create_default_favorites_list # create the default favorites list if for some reason it does not exist
     @latest_annotations=@user.annotations(current_user).order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)

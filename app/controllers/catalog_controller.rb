@@ -25,7 +25,15 @@ class CatalogController < ApplicationController
       params.delete(:authenticity_token)
     end
   end
-  
+
+    # google and other bots continue to use old facet values for the timestamp facet when indexing ... this in turn causes a 500 exception deep within blacklight, triggering excessive logging; just tell them to get lost instead   Peter Mangiafico, October 5 2015  
+  def bad_facet_params
+    params && 
+      params[:f] && 
+        params[:f][:timestamp] && 
+          ((blacklight_config.facet_fields['timestamp'].query.keys + params[:f][:timestamp]).uniq.size) != blacklight_config.facet_fields['timestamp'].query.keys.size
+  end
+
   def add_facets_for_curators
     if can? :curate, :all
       self.blacklight_config.add_facet_field 'has_more_metadata_ssi', :label => "More Metadata"
@@ -73,29 +81,28 @@ class CatalogController < ApplicationController
 
     end
 
-    # google and other bots continue to use old facet values for the timestamp facet when indexing ... this in turn causes a 500 exception deep within blacklight, triggering excessive logging; just tell them to get lost instead   Peter Mangiafico, October 5 2015
-    if (params && params[:f] && params[:f][:timestamp] && ((blacklight_config.facet_fields['timestamp'].query.keys + params[:f][:timestamp]).uniq.size) != blacklight_config.facet_fields['timestamp'].query.keys.size)
-
+    if bad_facet_params
+      session[:search]=nil # blow away the search context
       routing_error
-
-    else
-
-      search_params_logic << :phrase_search # add phrase searching capability (defined in lib/revs_search_builder)
-
-      super
-
-      if @response['response']['docs'].nil? # nothing
-        routing_error and return
-      else
-      # if we get this far, it may have been a search operation, so if we only have one search result, just go directly there
-         if (@response['response']['numFound'] == 1 && @response['response']['docs'].size > 0 && can?(:read,:item_pages))
-           redirect_to item_path(@response['response']['docs'].first['id']) and return
-         end
-      end
-    
-      flash.now[:notice]=t('revs.messages.search_affected') if (Revs::Application.config.search_results_affected && !params[:q].nil? && !(on_home_page || @force_render_home))
-      
+      return
     end
+
+    search_params_logic << :phrase_search # add phrase searching capability (defined in lib/revs_search_builder)
+
+    super
+
+    if @response['response']['docs'].nil? # nothing
+      routing_error
+      return
+    else
+    # if we get this far, it may have been a search operation, so if we only have one search result, just go directly there
+     if (@response['response']['numFound'] == 1 && @response['response']['docs'].size > 0 && can?(:read,:item_pages))
+       redirect_to item_path(@response['response']['docs'].first['id'])
+       return
+     end
+    end
+  
+    flash.now[:notice]=t('revs.messages.search_affected') if (Revs::Application.config.search_results_affected && !params[:q].nil? && !(on_home_page || @force_render_home))
     
   end
 
@@ -106,7 +113,6 @@ class CatalogController < ApplicationController
     else
       super
       not_authorized if (@document.visibility == :hidden && cannot?(:view_hidden, SolrDocument)) || (@document.is_collection? && !@document.visible_items_in_collection? && cannot?(:view_hidden, SolrDocument))
-
     end
 
     if from_gallery? # if we are coming from a gallery link, grab the gallery and items to show at the bottom of the page
