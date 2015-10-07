@@ -73,20 +73,29 @@ class CatalogController < ApplicationController
 
     end
 
-   search_params_logic << :phrase_search # add phrase searching capability (defined in lib/revs_search_builder)
+    # google and other bots continue to use old facet values for the timestamp facet when indexing ... this in turn causes a 500 exception deep within blacklight, triggering excessive logging; just tell them to get lost instead   Peter Mangiafico, October 5 2015
+    if (params && params[:f] && params[:f]['timestamp'] && (blacklight_config.facet_fields['timestamp'].query.keys & params[:f]['timestamp']).empty?)
 
-    super
+      routing_error
 
-    if @response['response']['docs'].nil? # nothing
-      routing_error and return
     else
-    # if we get this far, it may have been a search operation, so if we only have one search result, just go directly there
-       if (@response['response']['numFound'] == 1 && @response['response']['docs'].size > 0 && can?(:read,:item_pages))
-         redirect_to item_path(@response['response']['docs'].first['id']) and return
-       end
-    end
+
+      search_params_logic << :phrase_search # add phrase searching capability (defined in lib/revs_search_builder)
+
+      super
+
+      if @response['response']['docs'].nil? # nothing
+        routing_error and return
+      else
+      # if we get this far, it may have been a search operation, so if we only have one search result, just go directly there
+         if (@response['response']['numFound'] == 1 && @response['response']['docs'].size > 0 && can?(:read,:item_pages))
+           redirect_to item_path(@response['response']['docs'].first['id']) and return
+         end
+      end
     
-    flash.now[:notice]=t('revs.messages.search_affected') if (Revs::Application.config.search_results_affected && !params[:q].nil? && !(on_home_page || @force_render_home))
+      flash.now[:notice]=t('revs.messages.search_affected') if (Revs::Application.config.search_results_affected && !params[:q].nil? && !(on_home_page || @force_render_home))
+      
+    end
     
   end
 

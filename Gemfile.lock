@@ -172,6 +172,10 @@ GEM
     libv8 (3.16.14.11)
     link_header (0.0.8)
     logger (1.2.8)
+    lograge (0.3.4)
+      actionpack (>= 3)
+      activesupport (>= 3)
+      railties (>= 3)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     lyberteam-capistrano-devel (3.2.0)
@@ -363,6 +367,7 @@ DEPENDENCIES
   json (~> 1.8)
   kaminari
   launchy
+  lograge
   lyberteam-capistrano-devel (~> 3)
   meta_request
   mini_magick
