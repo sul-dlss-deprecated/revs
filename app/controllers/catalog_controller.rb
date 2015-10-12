@@ -26,12 +26,16 @@ class CatalogController < ApplicationController
     end
   end
 
-    # google and other bots continue to use old facet values for the timestamp facet when indexing ... this in turn causes a 500 exception deep within blacklight, triggering excessive logging; just tell them to get lost instead   Peter Mangiafico, October 5 2015  
+    # google and other bots continue to use old facet values for the timestamp facet when indexing ... this in turn causes a 500 exception deep within blacklight, triggering excessive logging; just tell them to get lost instead   Peter Mangiafico, October 5 2015  ... # this is fixed in later versions of blacklight
+    # also check for end ranges before beginning ranges
   def bad_facet_params
-    params && 
-      params[:f] && 
-        params[:f][:timestamp] && 
-          ((blacklight_config.facet_fields['timestamp'].query.keys + params[:f][:timestamp]).uniq.size) != blacklight_config.facet_fields['timestamp'].query.keys.size
+
+    return false unless params
+    
+    return true if params[:f] && params[:f][:timestamp] && ((blacklight_config.facet_fields['timestamp'].query.keys + params[:f][:timestamp]).uniq.size) != blacklight_config.facet_fields['timestamp'].query.keys.size
+
+    return true if params[:range] && params[:range][:pub_year_isim] && ((params[:range][:pub_year_isim][:end].to_i - params[:range][:pub_year_isim][:begin].to_i) <= 0)
+           
   end
 
   def add_facets_for_curators
@@ -110,9 +114,13 @@ class CatalogController < ApplicationController
 
     unless can? :read,:item_pages
       not_authorized(:replace_message=>t('revs.messages.in_beta_not_authorized_html'))
+      return
     else
       super
-      not_authorized if (@document.visibility == :hidden && cannot?(:view_hidden, SolrDocument)) || (@document.is_collection? && !@document.visible_items_in_collection? && cannot?(:view_hidden, SolrDocument))
+      if (@document.visibility == :hidden && cannot?(:view_hidden, SolrDocument)) || (@document.is_collection? && !@document.visible_items_in_collection? && cannot?(:view_hidden, SolrDocument))
+        not_authorized
+        return
+      end
     end
 
     if from_gallery? # if we are coming from a gallery link, grab the gallery and items to show at the bottom of the page

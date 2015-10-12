@@ -5,3 +5,5 @@
 require File.expand_path('../config/application', __FILE__)
 
 Revs::Application.load_tasks
+
+task :default => [:ci]
