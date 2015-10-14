@@ -76,14 +76,23 @@ describe("Search Pages",:type=>:request,:integration=>true) do
   end
     
   it "should show a facet search result for 1955" do
-    visit search_path(:"f[pub_year_isim][]"=>'1955')
-    expect(page).to have_content('Results')
-    expect(page).to have_content('1 - 5 of 5')
-    expect(page).to have_content('Lime Rock Continental, September 1')
-    expect(page).to have_xpath("//img[contains(@src, \"image/dd482qk0417/2012-027NADI-1969-b4_12.2_0021_thumb\")]")
-    expect(page).to have_content('black-and-white negatives')
+    search_params=[{:"f[pub_year_isim][]"=>'1955'},{:"range[pub_year_isim][begin]"=>'1955',:"range[pub_year_isim][end]"=>'1955'}]
+    search_params.each do |search_param|
+      visit search_path(search_param)
+      expect(page).to have_content('Results')
+      expect(page).to have_content('1 - 5 of 5')
+      expect(page).to have_content('Lime Rock Continental, September 1')
+      expect(page).to have_xpath("//img[contains(@src, \"image/dd482qk0417/2012-027NADI-1969-b4_12.2_0021_thumb\")]")
+      expect(page).to have_content('black-and-white negatives')
+    end
   end
-  
+
+  it "should show return a 404 if you set the end year before the begin year in the querystring or set bogus values" do
+    visit search_path(:"range[pub_year_isim][begin]"=>'1955',:"range[pub_year_isim][end]"=>'1954')    
+    expect(page).to have_content(I18n.t('revs.errors.sorry'))
+    expect(page.status_code).to be(404)
+  end
+    
   it "should allow case insensitive searches within text fields" do
     copy_fields_to_check = [:marque, :vehicle_model, :people, :entrant, :current_owner, :venue, :track, :event, :city, :country, :state, :city_section, :photographer]
     #model_year

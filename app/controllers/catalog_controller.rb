@@ -34,7 +34,7 @@ class CatalogController < ApplicationController
     
     return true if params[:f] && params[:f][:timestamp] && ((blacklight_config.facet_fields['timestamp'].query.keys + params[:f][:timestamp]).uniq.size) != blacklight_config.facet_fields['timestamp'].query.keys.size
 
-    return true if params[:range] && params[:range][:pub_year_isim] && ((params[:range][:pub_year_isim][:end].to_i - params[:range][:pub_year_isim][:begin].to_i) <= 0)
+    return true if params[:range] && params[:range][:pub_year_isim] && ((params[:range][:pub_year_isim][:end].to_i - params[:range][:pub_year_isim][:begin].to_i) < 0)
            
   end
 
