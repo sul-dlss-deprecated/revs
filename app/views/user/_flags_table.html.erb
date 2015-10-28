@@ -13,22 +13,22 @@
     <table class="table table-bordered table-condensed table-hover table-striped">
       <tr>
         <% if local_assigns[:curate_view] %>
-        <th><%= link_to t('revs.curator.item_title').titleize, flags_table_curator_tasks_path(:order=>'items.title ASC',:search=>@search, :selection=>local_assigns[:selection].join(','), :tab=>@tab_list_flag)%></th>
+        <th><%= link_to t('revs.curator.item_title').titleize, flags_table_curator_tasks_path(:order=>'items_title_asc',:search=>@search, :selection=>local_assigns[:selection].join(','), :tab=>@tab_list_flag)%></th>
          <th><%= t('revs.curator.flagging_user') %></th>
        <% end %>
 
         <% if not local_assigns[:curate_view] %>
-          <th><%= link_to t('revs.collection_members.items_name').titleize,user_flags_user_index_path(user.username, :order=>'items.title ASC',:search=>@search, :selection=>local_assigns[:selection].join(',')) %></th>
+          <th><%= link_to t('revs.collection_members.items_name').titleize,user_flags_user_index_path(user.username, :order=>'items_title_asc',:search=>@search, :selection=>local_assigns[:selection].join(',')) %></th>
         <% end%>
 
         <th><%= t('revs.flags.comment')%></th>
 
        <% if local_assigns[:curate_view] %>
-        <th><%= link_to t('revs.curator.flag_created'), flags_table_curator_tasks_path(:order=>'flags.created_at DESC', :search=>@search, :selection=>local_assigns[:selection].join(','), :tab=>@tab_list_flag)%></th>
+        <th><%= link_to t('revs.curator.flag_created'), flags_table_curator_tasks_path(:order=>'flags_created_at_desc', :search=>@search, :selection=>local_assigns[:selection].join(','), :tab=>@tab_list_flag)%></th>
        <% end %>
 
        <% if not local_assigns[:curate_view] %>
-        <th><%= link_to t('revs.curator.flag_created'), user_flags_user_index_path(user.username, :order=>'flags.created_at DESC', :search=>@search,:selection=>local_assigns[:selection].join(',')) %></th>
+        <th><%= link_to t('revs.curator.flag_created'), user_flags_user_index_path(user.username, :order=>'flags_created_at_desc', :search=>@search,:selection=>local_assigns[:selection].join(',')) %></th>
        <% end %>
 
         <th><%= t('revs.messagaes.status') %></th>

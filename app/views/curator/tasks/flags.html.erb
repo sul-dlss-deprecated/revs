@@ -92,12 +92,12 @@
 
       <table class="admin table table-bordered table-condensed table-hover table-striped">
         <tr>
-          <th><%= link_to t('revs.curator.item_title'),flags_table_curator_tasks_path(:order=>'items.title ASC',:tab=>@tab_list_item,:search=>@search)  %></th>
-		      <th class="right"><%= link_to t('revs.flags.all_flags_name'), flags_table_curator_tasks_path(:order=>'num_flags desc',:tab=>@tab_list_item,:search=>@search) %></th>
+          <th><%= link_to t('revs.curator.item_title'),flags_table_curator_tasks_path(:order=>'items_title_asc',:tab=>@tab_list_item,:search=>@search)  %></th>
+		      <th class="right"><%= link_to t('revs.flags.all_flags_name'), flags_table_curator_tasks_path(:order=>'num_flags_desc',:tab=>@tab_list_item,:search=>@search) %></th>
 		      <th class="right"><%= t('revs.flags.open_state_display_name')%></th>
           <th class="right"><%= t('revs.flags.fixed_state_diplay_name')%></th>
           <th class="right"><%= t('revs.flags.wont_fix_state_display_name')%></th>
-          <th><%=link_to t('revs.curator.last_updated'), flags_table_curator_tasks_path(:order=>'flags.updated_at DESC', :tab=>@tab_list_item,:search=>@search) %></th>
+          <th><%=link_to t('revs.curator.last_updated'), flags_table_curator_tasks_path(:order=>'flags_updated_at_desc', :tab=>@tab_list_item,:search=>@search) %></th>
         </tr>
 
       <% @flags.each do |flag|%>
@@ -137,8 +137,8 @@
         <table class="table table-bordered table-condensed table-hover table-striped">
           <tr>
             <th><%=link_to t('revs.curator.username'), flags_table_curator_tasks_path(:order=>'user_id', :tab=>@tab_list_user,:search=>@search) %></th>
-            <th class="right"><%=link_to t('revs.curator.flags_made'), flags_table_curator_tasks_path(:order=>'num_flags DESC', :tab=>@tab_list_user,:search=>@search) %></th>
-            <th><%=link_to t('revs.curator.last_flagged'), flags_table_curator_tasks_path(:order=>'updated_at DESC', :tab=>@tab_list_user,:search=>@search) %></th>
+            <th class="right"><%=link_to t('revs.curator.flags_made'), flags_table_curator_tasks_path(:order=>'num_flags_desc', :tab=>@tab_list_user,:search=>@search) %></th>
+            <th><%=link_to t('revs.curator.last_flagged'), flags_table_curator_tasks_path(:order=>'updated_at_desc', :tab=>@tab_list_user,:search=>@search) %></th>
           </tr>
           <% @flags.each do |result| %>
             <tr>

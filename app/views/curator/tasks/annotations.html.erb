@@ -51,9 +51,9 @@
 
         <table class="table table-bordered table-condensed table-hover table-striped">
           <tr>
-            <th><%= link_to t('revs.curator.item_title'), annotations_table_curator_tasks_path(:order=>'items.title ASC',  :tab=>@tab_list_item,:search=>@search) %></th>
-            <th class="right"><%= link_to t('revs.curator.annotations_made'), annotations_table_curator_tasks_path(:order=>'num_annotations DESC',  :tab=>@tab_list_item,:search=>@search) %></th>
-            <th><%=link_to t('revs.curator.last_updated'), annotations_table_curator_tasks_path(:order=>'annotations.updated_at desc', :tab=>@tab_list_item,:search=>@search  )%></th>
+            <th><%= link_to t('revs.curator.item_title'), annotations_table_curator_tasks_path(:order=>'items_title_asc',  :tab=>@tab_list_item,:search=>@search) %></th>
+            <th class="right"><%= link_to t('revs.curator.annotations_made'), annotations_table_curator_tasks_path(:order=>'num_annotations_desc',  :tab=>@tab_list_item,:search=>@search) %></th>
+            <th><%=link_to t('revs.curator.last_updated'), annotations_table_curator_tasks_path(:order=>'annotations_updated_at_desc', :tab=>@tab_list_item,:search=>@search  )%></th>
           </tr>
 
           <% @annotations.each do |annotation| %>
@@ -111,10 +111,10 @@
 
         <table class="table table-bordered table-condensed table-hover table-striped">
           <tr>
-            <th><%= link_to t('revs.curator.item_title'), annotations_table_curator_tasks_path(:order=>'items.title ASC',  :tab=>@tab_list_all,:search=>@search) %></th>
+            <th><%= link_to t('revs.curator.item_title'), annotations_table_curator_tasks_path(:order=>'items_title_asc',  :tab=>@tab_list_all,:search=>@search) %></th>
             <th><%=t('revs.annotations.annotation_text')%></th>
             <th><%=link_to t('revs.curator.username'), annotations_table_curator_tasks_path(:order=>'user_id', :tab=>@tab_list_all,:search=>@search)%></th>
-            <th><%=link_to t('revs.curator.created_on'), annotations_table_curator_tasks_path(:order=>'annotations.created_at desc', :tab=>@tab_list_all,:search=>@search  )%></th>
+            <th><%=link_to t('revs.curator.created_on'), annotations_table_curator_tasks_path(:order=>'annotations_created_at_desc', :tab=>@tab_list_all,:search=>@search  )%></th>
           </tr>
           <%@annotations.each do |annotation| %>
             <tr>
@@ -150,8 +150,8 @@
         <table class="table table-bordered table-condensed table-hover table-striped">
           <tr>
             <th><%=link_to t('revs.curator.username'), annotations_table_curator_tasks_path(:order=>'user_id', :tab=>@tab_list_user,:search=>@search) %></th>
-            <th class="right"><%=link_to t('revs.curator.annotations_made'), annotations_table_curator_tasks_path(:order=>'num_annotations DESC', :tab=>@tab_list_user,:search=>@search) %></th>
-            <th><%=link_to t('revs.curator.last_annotation'), annotations_table_curator_tasks_path(:order=>'updated_at desc', :tab=>@tab_list_user,:search=>@search)%></th>
+            <th class="right"><%=link_to t('revs.curator.annotations_made'), annotations_table_curator_tasks_path(:order=>'num_annotations_desc', :tab=>@tab_list_user,:search=>@search) %></th>
+            <th><%=link_to t('revs.curator.last_annotation'), annotations_table_curator_tasks_path(:order=>'updated_at_desc', :tab=>@tab_list_user,:search=>@search)%></th>
           </tr>
           <% @annotations.each do |result| %>
             <tr>

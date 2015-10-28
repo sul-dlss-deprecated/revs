@@ -50,9 +50,9 @@
 
 	      <table class="table table-bordered table-condensed table-hover table-striped">
 	        <tr>
-	          <th width="50%"><%= link_to t('revs.curator.item_title'), favorites_table_curator_tasks_path(:order=>'items.title ASC', :tab=>@tab_list_item,:search=>@search  ) %></th>
-	          <th class="right"><%= link_to t('revs.curator.total_times_saved'), favorites_table_curator_tasks_path(:order=>'num_favorites DESC', :tab=>@tab_list_item,:search=>@search  ) %></th>
-	          <th><%=link_to t('revs.curator.last_saved'), favorites_table_curator_tasks_path(:order=>'saved_items.updated_at DESC', :tab=>@tab_list_item,:search=>@search) %></th>
+	          <th width="50%"><%= link_to t('revs.curator.item_title'), favorites_table_curator_tasks_path(:order=>'items_title_asc', :tab=>@tab_list_item,:search=>@search  ) %></th>
+	          <th class="right"><%= link_to t('revs.curator.total_times_saved'), favorites_table_curator_tasks_path(:order=>'num_favorites_desc', :tab=>@tab_list_item,:search=>@search  ) %></th>
+	          <th><%=link_to t('revs.curator.last_saved'), favorites_table_curator_tasks_path(:order=>'saved_items_updated_at_desc', :tab=>@tab_list_item,:search=>@search) %></th>
 	        </tr>
 	        <% @saved_items.each do |result| %>
 	          <tr>
@@ -84,10 +84,10 @@
 
 	        <table class="table table-bordered table-condensed table-hover table-striped">
 	          <tr>
-	            <th><%=link_to t('revs.curator.username'),favorites_table_curator_tasks_path(:order=>'user_id ASC',:tab=>@tab_list_user) %></th>
-	            <th class="right"><%=link_to t('revs.curator.lists_made'), favorites_table_curator_tasks_path(:order=>'num_galleries DESC', :tab=>@tab_list_user) %></th>
-	            <th class="right"><%=link_to t('revs.curator.favorites_made'), favorites_table_curator_tasks_path(:order=>'galleries.saved_items_count DESC', :tab=>@tab_list_user) %></th>
-	            <th><%=link_to t('revs.curator.last_save'), favorites_table_curator_tasks_path(:order=>'updated_at DESC', :tab=>@tab_list_user) %></th>
+	            <th><%=link_to t('revs.curator.username'),favorites_table_curator_tasks_path(:order=>'user_id',:tab=>@tab_list_user) %></th>
+	            <th class="right"><%=link_to t('revs.curator.lists_made'), favorites_table_curator_tasks_path(:order=>'num_galleries_desc', :tab=>@tab_list_user) %></th>
+	            <th class="right"><%=link_to t('revs.curator.favorites_made'), favorites_table_curator_tasks_path(:order=>'galleries_saved_items_count_desc', :tab=>@tab_list_user) %></th>
+	            <th><%=link_to t('revs.curator.last_save'), favorites_table_curator_tasks_path(:order=>'updated_at_desc', :tab=>@tab_list_user) %></th>
 	          </tr>
 	          <% @saved_items.each do |result| %>
 	            <tr>
