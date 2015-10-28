@@ -25,6 +25,7 @@ gem 'cancan'
 gem 'ranked-model'
 
 gem 'rack-timeout'
+gem 'rack-utf8_sanitizer'
 
 gem 'friendly_id', '>= 5.0.0'
 
