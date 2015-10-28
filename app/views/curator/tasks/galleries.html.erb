@@ -30,8 +30,8 @@
       <% end %>
       <th><%=link_to t('revs.curator.username'),galleries_table_curator_tasks_path(:order=>'user_id')%></th>
       <th class="right"><%=t('revs.user_galleries.total_items')%></th>
-      <th class="right"><%=link_to t('revs.messages.total_views'),galleries_table_curator_tasks_path(:order=>'views DESC')%></th>
-      <th><%=link_to t('revs.curator.last_updated'),galleries_table_curator_tasks_path(:order=>'updated_at DESC') %></th>
+      <th class="right"><%=link_to t('revs.messages.total_views'),galleries_table_curator_tasks_path(:order=>'views')%></th>
+      <th><%=link_to t('revs.curator.last_updated'),galleries_table_curator_tasks_path(:order=>'updated_at_desc') %></th>
     </tr>
     <% @galleries.each do |gallery| %>
       <tr>

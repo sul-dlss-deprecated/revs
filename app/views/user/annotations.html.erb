@@ -17,9 +17,9 @@
 
     <table class="user-annotations table table-bordered table-condensed table-hover table-striped">
       <tr>
-        <th><%= link_to t('revs.collection_members.items_name').titleize, user_annotations_user_index_path(@user,:order=>'items.title ASC') %></th>
+        <th><%= link_to t('revs.collection_members.items_name').titleize, user_annotations_user_index_path(@user,:order=>'items_title_asc') %></th>
         <th><%=t('revs.annotations.singular')%></th>
-        <th><%= link_to t('revs.messages.created'), user_annotations_user_index_path(@user,:order=>'annotations.created_at DESC') %></th>
+        <th><%= link_to t('revs.messages.created'), user_annotations_user_index_path(@user,:order=>'annotations_created_at_desc') %></th>
       </tr>
       <% @annotations.each do |annotation|%>
        <tr>

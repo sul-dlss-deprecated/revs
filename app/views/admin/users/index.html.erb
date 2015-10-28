@@ -108,19 +108,19 @@
         </th>
         <th>
           <%= link_to t('revs.admin.role'),
-                admin_users_path(:order=>'role asc', :search=>@search, :filter=>@filter, :per_page=>@per_page) %>
+                admin_users_path(:order=>'role', :search=>@search, :filter=>@filter, :per_page=>@per_page) %>
         </th>
         <th class="right">
           <%= link_to t('revs.admin.login_count'),
-                admin_users_path(:order=>'login_count desc', :search=>@search, :filter=>@filter, :per_page=>@per_page) %>
+                admin_users_path(:order=>'login_count_desc', :search=>@search, :filter=>@filter, :per_page=>@per_page) %>
         </th>
         <th>
           <%= link_to t('revs.admin.registered_on'),
-                admin_users_path(:order=>'created_at desc', :search=>@search, :filter=>@filter, :per_page=>@per_page) %>
+                admin_users_path(:order=>'created_at_desc', :search=>@search, :filter=>@filter, :per_page=>@per_page) %>
         </th>
         <th class="centered">
           <%= link_to t('revs.admin.confirmed'),
-                admin_users_path(:order=>'confirmed_at desc', :search=>@search, :filter=>@filter, :per_page=>@per_page) %>
+                admin_users_path(:order=>'confirmed_at_desc', :search=>@search, :filter=>@filter, :per_page=>@per_page) %>
         </th>
         <th class="centered admin-actions">
           <%=t('revs.authentication.sidebar.actions')%>
