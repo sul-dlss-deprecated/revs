@@ -17,6 +17,8 @@ module Revs
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
+    config.middleware.insert 0, Rack::UTF8Sanitizer
+
     # Custom directories with classes and modules you want to be autoloadable.
     config.autoload_paths += %W(#{config.root}/lib #{config.root}/lib/validators)
 
@@ -99,11 +101,11 @@ module Revs
     config.search_results_affected = false # set to true to show a message that search results may be impacted (useful during a full re-index)
     config.sunet_timeout_secs = 86400 # the number of seconds a sunet user can stay logged in before getting timeed out (this is separate than the devise config for regular users)
                                        # 1 day = 86400 seconds
-                                       
+
 #    config.site_message="The website will be down for scheduled maintenance today, July 8, at 3pm Pacific Time for approximately 30 minutes." # set to some string to show a message on the top of each message (like to advertise a known site outage) , leave blank for no message
-    
-    config.site_message = ""                                    
-                                         
+
+    config.site_message = ""
+
   end
 end
 
