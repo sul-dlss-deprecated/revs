@@ -1,4 +1,4 @@
-Revs::Application.configure do  
+Revs::Application.configure do
 
   config.eager_load = true
 
@@ -36,7 +36,7 @@ Revs::Application.configure do
   # config.force_ssl = true
 
   # See everything in the log (default is :info)
-  config.log_level = :warn
+  config.log_level = :info
 
   # Prepend all log lines with the following tags
   # config.log_tags = [ :subdomain, :uuid ]
@@ -60,7 +60,7 @@ Revs::Application.configure do
 
   # Enable threaded mode
   # config.threadsafe!
-  
+
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
@@ -68,7 +68,7 @@ Revs::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
-  # Revs App Configuration  
+  # Revs App Configuration
   config.simulate_sunet_user = false # SET TO BLANK OR FALSE IN PRODUCTION (it should be ignored in production anyway) if this has a value, then this will simulate you being logged in as a sunet user
   config.purl_plugin_server = "prod"
   config.purl_plugin_location = "//image-viewer.stanford.edu/assets/purl_embed_jquery_plugin.js"
@@ -76,7 +76,7 @@ Revs::Application.configure do
   config.restricted_beta = false # if set to true, then only beta users (and sunet users) can view the site
   config.use_editstore = true # if set to true, then all changes will be saved to editstore database (SHOULD BE TRUE IN PRODUCTION!)
   config.show_galleries_in_nav = true # if set to true, then galleries is shown in top navigation
-  
+
   config.featured_contributors=['Doug Nye','tvc15','Bergeleven','trigwell','Rupertlt1','Duncan'] # array of usernames of featured contributors for about top contributors page...will be shown in this order, use an empty array if none
 
 end

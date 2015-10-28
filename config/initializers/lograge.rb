@@ -1,5 +1,5 @@
 Revs::Application.configure do
-  config.lograge.enabled = true
+  config.lograge.enabled = false
 
   # add time to lograge
   config.lograge.custom_options = lambda do |event|

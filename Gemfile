@@ -24,6 +24,8 @@ gem 'cancan'
 
 gem 'ranked-model'
 
+gem 'rack-timeout'
+
 gem 'friendly_id', '>= 5.0.0'
 
 # image (user avatar) uploading
