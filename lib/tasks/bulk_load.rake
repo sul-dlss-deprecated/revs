@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-require 'jettywrapper' unless Rails.env.production? 
+require 'jettywrapper' unless Rails.env.production?
 require 'rest_client'
 require 'csv'
 require 'countries'
@@ -26,27 +26,27 @@ namespace :revs do
   desc "Re-save all solr docs - useful for adding the score or other data that is added on save"
   #Run Me: RAILS_ENV=production bundle exec rake revs:save_all_solr_docs collection="John Dugdale Collection" # optiontally limited to a collection
   #Run Me: RAILS_ENV=production bundle exec rake revs:save_all_solr_docs limit=100 # optionally sets a limit of number of items
-  #Run Me: RAILS_ENV=production nohup bundle exec rake revs:save_all_solr_docs > save_all_docs.log 2>&1& # nohup mode with logged output  
+  #Run Me: RAILS_ENV=production nohup bundle exec rake revs:save_all_solr_docs > save_all_docs.log 2>&1& # nohup mode with logged output
   #Run Me: RAILS_ENV=production bundle exec rake revs:save_all_solr_docs zero_score_only=true limit=100 # optionally tells it to save only documents with a score of 0
   #Run Me: RAILS_ENV=production bundle exec rake revs:save_all_solr_docs collection="John Dugdale Collection" update_collection_name=true # fix the collection name in all of the items in a given collection by grabbing the name from the collection object and updating it in the items, NOTE if no collection name needs to be updated, the object may not be saved if there are no other updates (like score)
-  
+
   task :save_all_solr_docs  => :environment do |t, args|
- 
+
     limit = ENV['limit'] || '' # if passed, limits to this many items only
     collection = ENV['collection'] || '' # if passed, limits to this collection only
     rerun = ENV['rerun'] || '' # if passed as a filename, will try to just resave any errored out druids
     zero_score_only = ENV['zero_score_only'] || "" # if passed in, then only those with a score of 0 will be resaved
     update_collection_name = ENV['update_collection_name'] || "" # if passed in, will update the collection name in the item with the name from the collection object, useful if the name has changed
-    
+
     q="*:*"
     q+=" AND collection_ssim:\"#{collection}\"" unless collection.blank?
     q+=" AND score_isi:0" unless zero_score_only.blank?
 
     rows = limit.blank? ? "1000000" : limit
-        
-    @all_docs = Blacklight.default_index.connection.select(:params => {:q => q, :fl=>'id', :rows=>rows})            
+
+    @all_docs = Blacklight.default_index.connection.select(:params => {:q => q, :fl=>'id', :rows=>rows})
     total_docs=@all_docs['response']['docs'].size
-    
+
     start_time=Time.now
     n=0
     num_errors=0
@@ -58,13 +58,13 @@ namespace :revs do
     puts " limited to #{limit} items" unless limit.blank?
     puts " limited to only those docs with a score of 0" unless zero_score_only.blank?
     puts " fixing collection name" unless update_collection_name.blank?
-    
+
     puts ""
     puts q
     puts ""
-    
+
     @all_docs['response']['docs'].each do |doc|
-      
+
       id=doc['id']
       n+=1
       puts "#{n} of #{total_docs}: #{id}"
@@ -88,7 +88,7 @@ namespace :revs do
     end
 
     end_time=Time.now
-    
+
     puts ""
     puts "Finished at #{Time.now}, run lasted #{((end_time-start_time)/60).round} minutes, #{total_docs} saved, #{num_errors} errors"
     puts ""
@@ -98,13 +98,13 @@ namespace :revs do
   end
 
   desc "Re-save errored solr docs - load a log file from the 'save_all_solr_docs' tasks and re-save errored out druids"
-  #Run Me: RAILS_ENV=production bundle exec rake revs:save_all_solr_docs file=save_all_docs.log # load a logged output file and just resave error out 
+  #Run Me: RAILS_ENV=production bundle exec rake revs:save_all_solr_docs file=save_all_docs.log # load a logged output file and just resave error out
   task :resave_docs  => :environment do |t, args|
 
     file_path = ENV['file'] || '' # log file
 
     raise 'no file passed' if (file_path.blank? || !File.exists?(file_path))
-    
+
     start_time=Time.now
     n=0
     num_errors=0
@@ -112,13 +112,13 @@ namespace :revs do
     puts ""
     puts "Started at #{start_time}"
     puts ""
-    
+
     IO.readlines(file_path).each do |line|
 
       downcased_line=line.downcase
-  
+
       if downcased_line.include? 'error'
-        id=downcased_line.scan(/[a-z][a-z][0-9][0-9][0-9][a-z][a-z][0-9][0-9][0-9][0-9]/).first  
+        id=downcased_line.scan(/[a-z][a-z][0-9][0-9][0-9][a-z][a-z][0-9][0-9][0-9][0-9]/).first
         if id
           n+=1
           puts "#{n}: #{id}"
@@ -138,33 +138,33 @@ namespace :revs do
      end
 
     end
-    
+
     end_time=Time.now
-    
+
     SolrDocument.new.send_commit
-    
+
     puts ""
     puts "Finished at #{Time.now}, run lasted #{((end_time-start_time)/60).round} minutes, #{n} saved, #{num_errors} errors"
     puts ""
-    
+
   end
 
-    
+
   desc "Touch all solr docs (but not update them) - useful when synonym file or config has changed"
   #Run Me: RAILS_ENV=production rake revs:touch_solr_docs collection="John Dugdale Collection" # optionally limited to a collection
   #Run Me: RAILS_ENV=production rake revs:touch_solr_docs limit=100 # optionally sets a limit of number of items
   task :touch_solr_docs  => :environment do |t, args|
- 
+
     limit = ENV['limit'] || '' # if passed, limits to this many items only
     collection = ENV['collection'] || '' # if passed, limits to this collection only
 
     q="*:*"
     q+=" AND collection_ssim:\"#{collection}\"" unless collection.blank?
     rows = limit.blank? ? "1000000" : limit
-        
-    @all_docs = Blacklight.default_index.connection.select(:params => {:q => q, :rows=>rows})            
+
+    @all_docs = Blacklight.default_index.connection.select(:params => {:q => q, :rows=>rows})
     total_docs=@all_docs['response']['docs'].size
-    
+
     start_time=Time.now
     n=0
     num_errors=0
@@ -174,9 +174,9 @@ namespace :revs do
     puts " limited to collection: #{collection}" unless collection.blank?
     puts " limited to #{limit} items" unless limit.blank?
     puts ""
-    
+
     @all_docs['response']['docs'].each do |doc|
-      
+
       id=doc['id']
       n+=1
       puts "#{n} of #{total_docs}: #{id}"
@@ -191,7 +191,7 @@ namespace :revs do
   end
 
     end_time=Time.now
-    
+
     puts ""
     puts "Finished at #{Time.now}, run lasted #{((end_time-start_time)/60).round} minutes, #{total_docs} touched, #{num_errors} errors"
     puts ""
@@ -200,14 +200,14 @@ namespace :revs do
 
   desc "Update/add title to each item model record associated with Flags, Annotations and Saved Items - should only need to be run once after migration adding title to item model"
   #Run Me: RAILS_ENV=production rake revs:update_item_title verbsose=true
-  task :update_item_title => :environment do |t, args| 
+  task :update_item_title => :environment do |t, args|
 
     verbose = ENV['verbose'] || false
 
     flags=Flag.all
     annotations=Annotation.all
     saved_items=SavedItem.all
-    
+
     [flags,annotations,saved_items].each do |models|
       total=models.count
       puts "Updating #{total} #{models.first.class.name.downcase}s" if verbose
@@ -217,19 +217,19 @@ namespace :revs do
           puts "#{n} of #{total} : #{model.druid}" if verbose
           solr_doc=model.solr_document
           solr_doc.update_item
-       end  
+       end
     end
-    
+
   end
-  
+
   desc "Apply missing dates in MODs from solr documents - fixing previous bug where dates were not making it to editstore"
   #Run Me: RAILS_ENV=production rake revs:fix_missing_dates collection="John Dugdale Collection" # limited to a collection
   #Run Me: RAILS_ENV=production rake revs:fix_missing_dates dry_run=true # dry run, no updates
   #Run Me: RAILS_ENV=production rake revs:fix_missing_dates limit=100 # sets a limit of number of items
   #Run Me: RAILS_ENV=production rake revs:fix_missing_dates state_id=1 # override the editstore state id
   # you can mix and match those parameters
-  task :fix_missing_dates => :environment do |t, args| 
-    
+  task :fix_missing_dates => :environment do |t, args|
+
     limit = ENV['limit'] || '' # if passed, limits to this many items only
     dry_run = ENV['dry_run'] || false # if passed, no updates are sent to editstore
     collection = ENV['collection'] || '' # if passed, limits to this collection only
@@ -246,12 +246,12 @@ namespace :revs do
     q="#{date_field}:[* TO *]"
     q+=" AND collection_ssim:\"#{collection}\"" unless collection.blank?
     rows = limit.blank? ? "100000" : limit
-    
-    @all_docs = Blacklight.default_index.connection.select(:params => {:q => q, :rows=>rows})    
+
+    @all_docs = Blacklight.default_index.connection.select(:params => {:q => q, :rows=>rows})
 
     total_docs=@all_docs['response']['docs'].size
     n=0
-    
+
     puts ""
     puts "Started at #{start_time}, #{total_docs} docs returned"
     puts " limited to collection: #{collection}" unless collection.blank?
@@ -262,13 +262,13 @@ namespace :revs do
     puts "editstore enabled: #{Revs::Application.config.use_editstore}"
     puts "***********WARNING: Editstore is not enabled" unless Revs::Application.config.use_editstore
     puts ""
-    
+
     @all_docs['response']['docs'].each do |doc|
-      
+
       n+=1
 
       begin
-        
+
         item=SolrDocument.new(doc)
         normalized_full_date=item.get_full_date(item.full_date)
         if normalized_full_date # we have a valid full date, compare against the MODs in PURL
@@ -284,7 +284,7 @@ namespace :revs do
             old_date=(mods_date.count == 1 ? mods_date.text.strip : "non-existent")
             puts "-- date in MODs is #{old_date}, sending editstore update for #{date_field} to #{item.full_date}"
             if (Revs::Application.config.use_editstore && !dry_run && Editstore::Change.where(:druid=>item.id,:field=>date_field,:state_id=>state_id,:new_value=>item.full_date).count == 0) # if we are not a dry run, editstore is disabled or the update doesn't already exist, send it
-              Editstore::Change.create(:new_value=>item.full_date,:old_value=>mods_date.text.strip,:operation=>:update,:state_id=>state_id,:field=>date_field,:druid=>item.id,:client_note=>'rake task to port missing full date from solr to fedora')            
+              Editstore::Change.create(:new_value=>item.full_date,:old_value=>mods_date.text.strip,:operation=>:update,:state_id=>state_id,:field=>date_field,:druid=>item.id,:client_note=>'rake task to port missing full date from solr to fedora')
               num_updated+=1
             else
               num_not_sent+=1
@@ -296,27 +296,27 @@ namespace :revs do
         end
 
       rescue e
-        
+
         num_errors+=1
         puts "  error!"
-        
+
       end
-      
+
     end
-    
+
     end_time=Time.now
-    
+
     puts ""
     puts "Finished at #{Time.now}, run lasted #{((end_time-start_time)/60).round} minutes, #{total_docs} checked, #{num_errors} errors, #{num_noop} no action needed, #{num_invalid} invalid dates in solr, #{num_updated} updated in editstore, #{num_not_sent} updates not sent to edistore (existed, dry run or editstore disabled)"
     puts ""
-    
+
   end
 
-  
+
   desc "Find all objects with missing image"
   #Run Me: rake revs:missing_images["John Dugdale Collection"] to just show items
   #Run Me: rake revs:missing_images["John Dugdale Collection","delete"] to delete from solr index
-  task :missing_images, [:collection_name,:delete] => :environment do |t, args| 
+  task :missing_images, [:collection_name,:delete] => :environment do |t, args|
     num_missing=0
     q="collection_ssim:\"#{args[:collection_name]}\""
     @all_docs = Blacklight.default_index.connection.select(:params => {:q => q, :rows=>'100000'})
@@ -324,7 +324,7 @@ namespace :revs do
     @all_docs['response']['docs'].each do |doc|
       item=SolrDocument.new(doc)
       if item.is_item? && (item.images.nil? || item.images.size != 1)
-        puts "#{item.id}  ---   #{item.identifier}" 
+        puts "#{item.id}  ---   #{item.identifier}"
         if !args[:delete].nil? && args[:delete]="delete"
           url="#{Blacklight.default_index.connection.options[:url]}/update"
           params="<delete><query>id:#{item.id}</query></delete>"
@@ -339,7 +339,7 @@ namespace :revs do
 
   desc "Find all objects with an image that has a space in the filename"
   #Run Me: rake revs:images_with_spaces["John Dugdale Collection"] to just show items
-  task :images_with_spaces, [:collection_name,:delete] => :environment do |t, args| 
+  task :images_with_spaces, [:collection_name,:delete] => :environment do |t, args|
     num_with_spaces=0
     q="collection_ssim:\"#{args[:collection_name]}\""
     @all_docs = Blacklight.default_index.connection.select(:params => {:q => q, :rows=>'100000'})
@@ -349,7 +349,7 @@ namespace :revs do
       if item.is_item? && !item.images.nil? && item.images.size != 0
         item.images.each do |image|
           if !image.match(/\s/).nil?
-            puts "#{item.id}  ---   #{item.identifier}" 
+            puts "#{item.id}  ---   #{item.identifier}"
             num_with_spaces += 1
             next
           end
@@ -358,7 +358,7 @@ namespace :revs do
     end
     puts "#{@all_docs['response']['docs'].size} scanned; #{num_with_spaces} have a space in the image"
   end
-  
+
   desc "Convert entrant to multivalued field"
   #Run Me: rake revs:convert_entrant
   task :convert_entrant => :environment do |t, args|
@@ -366,10 +366,10 @@ namespace :revs do
     Revs::Application.config.use_editstore = false
     log = Logger.new("#{Rails.root}/log/#{Time.now.to_i}.convert_entrant#{@log_extension}")
     log.info("Starting convert_entrant")
-    
+
     #Get all docs with a non-blank entrant
     total_success_count = 0
-    total_error_count = 0 
+    total_error_count = 0
     results=Blacklight.default_index.connection.select(:params => {:q=>'entrant_ssi:[* TO *]',:rows=>'2000000'})
 
     puts "Found #{results['response']['docs'].size} documents with value in entrant_ssi field"
@@ -377,24 +377,24 @@ namespace :revs do
       doc=SolrDocument.new(result)
       druid = doc.id
       puts "Updating #{druid}"
-      doc.entrant = doc['entrant_ssi'] 
+      doc.entrant = doc['entrant_ssi']
       doc.remove_field('entrant_ssi')
-      result = doc.save             
+      result = doc.save
       if result
         total_success_count += 1
       else
         total_error_count += 1
-        log.error("Failed to save: #{druid}") 
+        log.error("Failed to save: #{druid}")
       end
     end
-    
+
     if total_error_count == 0
       log.info("Run complete with #{total_success_count} converted with no errors.")
     else
       log.info("Run complete with #{total_error_count} errors and #{total_success_count} converted successfully.  #{total_error_count+total_success_count} total touches attempted on this run.")
     end
-      
-  end 
+
+  end
 
   desc "Convert current_owner to text field"
   #Run Me: rake revs:convert_current_owner
@@ -403,10 +403,10 @@ namespace :revs do
     Revs::Application.config.use_editstore = false
     log = Logger.new("#{Rails.root}/log/#{Time.now.to_i}.convert_entrant#{@log_extension}")
     log.info("Starting convert_current_owner")
-    
+
     #Get all docs with a non-blank current_owner
     total_success_count = 0
-    total_error_count = 0 
+    total_error_count = 0
     results=Blacklight.default_index.connection.select(:params => {:q=>'current_owner_ssi:[* TO *]',:rows=>'2000000'})
 
     puts "Found #{results['response']['docs'].size} documents with value in current_owner_ssi field"
@@ -414,43 +414,43 @@ namespace :revs do
       doc=SolrDocument.new(result)
       druid = doc.id
       puts "Updating #{druid}"
-      doc.current_owner = doc['current_owner_ssi'] 
+      doc.current_owner = doc['current_owner_ssi']
       doc.remove_field('current_owner_ssi')
-      result = doc.save             
+      result = doc.save
       if result
         total_success_count += 1
       else
         total_error_count += 1
-        log.error("Failed to save: #{druid}") 
+        log.error("Failed to save: #{druid}")
       end
     end
-    
+
     if total_error_count == 0
       log.info("Run complete with #{total_success_count} converted with no errors.")
     else
       log.info("Run complete with #{total_error_count} errors and #{total_success_count} converted successfully.  #{total_error_count+total_success_count} total touches attempted on this run.")
     end
-      
-  end   
+
+  end
   desc "When passed the location of .csv file(s) and a list of headers, this will generate csv with just those fields, plus fields to find the solr document"
   #Run me: rake revs:csv_for_fields["SHEETS_LOCATION", header1|header2|etc, output_name] RAILS_ENV=production
   task :csv_for_fields, [:csv_files, :fields, :fn] => :environment do |t, args|
     always_present = [@sourceid, @filename]
-    additional_headers = args[:fields].split(@seperator) 
+    additional_headers = args[:fields].split(@seperator)
     all_fields = always_present + additional_headers
     files = load_csv_files_from_directory(args[:csv_files])
     full_output_path = "#{Rails.root}/lib/assets/#{args[:fn]}#{@csv_extension}"
-    
+
     #Start Logging
     log = Logger.new("#{Rails.root}/log/#{Time.now.to_i}.csv_for_fields#{@log_extension}")
     log.level = Logger::INFO
     log.info("Starting run with the command line args of csv_fields: #{args[:csv_files]} fields: #{args[:fields]} output filename: #{args[:fn]}")
-    
+
     #Setup the output csv
       CSV.open(full_output_path, "wb") do |csv|
         #Write Out The Headers
         csv << all_fields
-        
+
         #Load each sheet we are taking data from
           files.each do |file|
              data = RevsUtils.read_csv_with_headers(file)
@@ -462,13 +462,13 @@ namespace :revs do
                  out_array = []
                    all_fields.each do |field|
                      out_array.append(row[field])
-                     log.warn("Nil value for #{field}, a required field, in #{file}") if row[field] == nil and always_present.include?(field)  
+                     log.warn("Nil value for #{field}, a required field, in #{file}") if row[field] == nil and always_present.include?(field)
                    end
-                 csv << out_array   
+                 csv << out_array
                end
-      
+
           end
-       end  
+       end
   end
 
   desc "Load all changes to the metadata from CSV files located in specified folder"
@@ -482,14 +482,14 @@ namespace :revs do
     column_name = ENV['column_name'] || '' # if passed, this is the only column to update
     local_testing = args[:local_testing] || false #Assume we are not testing locally unless told so
     debug_source_id = '2012-027NADI-1967-b1_1.0_0008'
-    change_file_location = args[:change_files_loc] 
+    change_file_location = args[:change_files_loc]
     change_file_extension = @csv_extension_wild
 
     puts "Looking in #{change_file_location} for #{change_file_extension} files"
     puts "Only updating #{column_name}" unless column_name.blank?
     puts "Local testing mode with #{debug_source_id}" if local_testing
     puts "Running in #{Rails.env}"
-    
+
     sourceid = @sourceid
     location = "location"
     format = "format"
@@ -505,59 +505,59 @@ namespace :revs do
     model_year = 'model_year'
     collection_name = "collection_name"
     collection_names = "collection_names"
-    ignore_fields = [sourceid, location, filename, collection_name]  
+    ignore_fields = [sourceid, location, filename, collection_name]
     location_fields = ['country', 'city', 'state']
     additional_fields = location_fields + [full_date, years]#add other arrays here if we do anymore splitting
     comma = ","
     comma_splits = [marque, model]
     file_ext = ".tif"
-   
-  
-    #Map the csv names to the field names from 
-    csv_to_solr = {'label' => 'title',   
+
+
+    #Map the csv names to the field names from
+    csv_to_solr = {'label' => 'title',
                    model  => 'vehicle_model',
                    year => years,
                    format => 'formats',
-                   collection_name => collection_names, 
+                   collection_name => collection_names,
                    'inst_notes' => 'institutional_notes',
                    'prod_notes' => 'production_notes'
                   }
-                  
+
     solr_keys = []
     multi_values = []
     SolrDocument.field_mappings.keys.each do |key|
       solr_keys.append(key.to_s)
       multi_values.append(key.to_s) if SolrDocument.field_mappings[key][:multi_valued]
     end
-   
+
    #These should be the field name from /app/models/solr_document.rb
    multi_values = ['vehicle_model', 'years', "formats", "model_year", "marque", "people", "entrant"]
-  
+
    #All the CSV headers we know how to handle
    known_headers = csv_to_solr.keys + ignore_fields + solr_keys
-    
+
    #Get a list of all the files we need to process and loop over them
    change_files = load_csv_files_from_directory(change_file_location)
-  
+
    #Setup a master log
    master_log = Logger.new("#{Rails.root}/log/#{Time.now.to_i}.revs_bulk_load#{@log_extension}")
    sleep 1 #This way the log timestamp will be at least oen second ahead of the next log we make and the master log ends up at the top of the list
-     
-    #Process Each File 
-    change_files.each do |file| 
+
+    #Process Each File
+    change_files.each do |file|
       error_count = 0
       name = Pathname.new(file).basename.to_s
       name.slice! @csv_extension
       log = Logger.new("#{Rails.root}/log/#{Time.now.to_i}.#{name}#{@log_extension}")
       master_log.info("#{file} started at #{Time.now}")
-      
+
       log.level = Logger::ERROR
-      
+
       #Load in the CSV, with the top row being taken as the header
       changes = RevsUtils.read_csv_with_headers(file)
-      
+
       #Ensure we can handle all headers we've found
-      bad_header = false 
+      bad_header = false
       changes[0].keys.each do |header|
         if not known_headers.include?(header.strip.downcase)
           bad_header = true
@@ -565,22 +565,22 @@ namespace :revs do
           master_log.error("#{@failure}#{file} contains unsupported header(s)")
         end
       end
-      
+
       if not bad_header
         changes.each do |row|
-          #Get the Solr Document and set it for updating 
-          
-        
+          #Get the Solr Document and set it for updating
+
+
           #DEBUG AREA
           save_id = row[sourceid] if local_testing
           row[sourceid] = debug_source_id if local_testing
-        
+
           #Attempt to get the target based on the source_id
           #target = Blacklight.default_index.connection.select(:params =>{:q=>'source_id_ssi:"'+ row['sourceid']+'"'})["response"]["docs"][0]
           target = find_doc_via_blacklight(row[@sourceid])
-          
-      
-          
+
+
+
           #If we can't get the target based on source_id, try it with the filename
           if(target == nil and row[filename] != nil)
             alt_attempt = row[filename]
@@ -588,49 +588,49 @@ namespace :revs do
             target = find_doc_via_blacklight(alt_attempt)
             #target = Blacklight.default_index.connection.select(:params =>{:q=>'source_id_ssi:"'+ alt_attempt+'"'})["response"]["docs"][0]
           end
-          
-       
+
+
           #Catch sourceid with no matching druid
           if target == nil
-            log.error("In document #{file} no druid found for #{row[sourceid]}") 
+            log.error("In document #{file} no druid found for #{row[sourceid]}")
             error_count += 1
-          end 
-          
+          end
+
           if target != nil #Begin Altering Single Solr Document
              doc = SolrDocument.new(target)
-           
-             #If we have comma splits, replace them with the expected seperator 
+
+             #If we have comma splits, replace them with the expected seperator
              comma_splits.each do |key|
                row[key] = row[key].strip.gsub(comma, seperator) if row[key] != nil
              end
-           
-           
+
+
              #Check to see if we have a format row and clean it up
-             
+
              #Assume there is no change to the format field and we should ignore this key
              ignore_fields.insert(0, format) if not ignore_fields.include?(format)
-             
+
              if row[format] != nil
                current_format = target[SolrDocument.field_mappings[:formats][:field]]
                current_format = current_format.sort if current_format != nil
                format_changes = RevsUtils.revs_check_formats(row[format].strip.downcase.split(seperator)).sort
-               
-               #We have changes 
+
+               #We have changes
                if current_format != format_changes
                   row[format] = format_changes.join(seperator)
-                  ignore_fields.delete(format) #Pull it out of the ignore fields since we need to make changes here. 
+                  ignore_fields.delete(format) #Pull it out of the ignore fields since we need to make changes here.
                 else
                end
-               
+
              end
 
              #Check to see if we have a location and see if we need to parse it.
              row = RevsUtils.parse_location(row, location) if row[location] != nil
-           
+
              #Check to see if we need need to handle marques # we will no longer auto correct marques
-             # if row[marque] != nil 
+             # if row[marque] != nil
              #   array_marque = row[marque].split(seperator)
-             #   count = 0 
+             #   count = 0
              #   array_marque.each do |m|
              #     result = RevsUtils.revs_lookup_marque(m)
              #     array_marque[count] = result['value'] if result
@@ -638,12 +638,12 @@ namespace :revs do
              #   end
              #   row[marque] = array_marque.join(seperator)
              #   #puts row[marque]
-             #end 
-           
+             #end
+
              #We could have a full date, a year, or a span of years, handle that.
              if row[year] != nil
                is_full_date = RevsUtils.get_full_date(row[year])
-              
+
                if is_full_date
                  row[full_date] = row[year]
                  row[year] = nil if year != full_date
@@ -652,12 +652,12 @@ namespace :revs do
                  row[year] = nil if(csv_to_solr[year] != nil and csv_to_solr[year] != year) #Clear whatever the csv used for year/date if it is not the proper Solr key
                end
              end
-             
+
              #Handle multiple model_years
              if row[model_year] != nil
                row[model_year] = RevsUtils.parse_years(row[model_year]).join(seperator)
              end
-             
+
              #puts (changes[0].keys+additional_fields-ignore_fields)
              (changes[0].keys+additional_fields-ignore_fields).uniq.each do |key|
                key = key.strip.downcase
@@ -668,43 +668,43 @@ namespace :revs do
                      proper_key_name = csv_to_solr[key.strip]
                    else
                      proper_key_name = key
-                   end   
-           
-                   #Set up multivalue and send it the value 
+                   end
+
+                   #Set up multivalue and send it the value
                    update_column_name = proper_key_name.strip
-                   update_column_name += multi if multi_values.include?(proper_key_name) 
-               
-                   begin 
+                   update_column_name += multi if multi_values.include?(proper_key_name)
+
+                   begin
                       # we need to update this field if all columns are being updated, or only a specific column is being updated, the new value of that column is NOT blank and the current value in the document IS blank
                       if column_name.blank? || ((column_name.downcase == update_column_name.downcase || column_name.downcase == proper_key_name.downcase) && doc.send(update_column_name).blank?)
                         doc.send(update_column_name+assigner, row[key].strip)
-                      #  puts "Sending to #{doc.id}: #{update_column_name+assigner}'#{row[key].strip}'" 
+                      #  puts "Sending to #{doc.id}: #{update_column_name+assigner}'#{row[key].strip}'"
                       end
                    rescue
                        log.error("In document #{file} on row #{row[sourceid]}, failed to send the key: #{update_column_name+assigner} and value: #{row[key]}")
-                   end 
+                   end
                end
              end
-           
+
              success = doc.save
-             
+
              log.error("In document #{file} save error for #{save_id} "+" #{changes[0].keys-ignore_fields+additional_fields} #{row}") if(not success and local_testing)
              log.error("In document #{file} save error for #{row[sourceid]}") if(not success and not local_testing)
-             error_count  += 1 if not success 
-           
-           end #End Altering Single Solr Document   
-          
+             error_count  += 1 if not success
+
+           end #End Altering Single Solr Document
+
         end
         master_log.info("#{@success}#{file} had no errors.") if error_count == 0
         master_log.error("#{@failure}#{file} had #{error_count} error(s).") if error_count != 0
         puts "File: #{file}" if local_testing
         puts "Errors: #{error_count}" if local_testing
       end
-      
-    
-    end 
+
+
+    end
   end
-  
+
   desc "Cleanup formats in solr documents by removing extra spaces in specific format fields"
   task :cleanup_formats => :environment do
     Revs::Application.config.use_editstore = false
@@ -729,18 +729,18 @@ namespace :revs do
     # call with RAILS_ENV=production rake revs:change_visibility["/path/to/manifest.csv",0] to hide all images not having a value in the visibility column
 
     Revs::Application.config.use_editstore = false
-    
-    file = args[:file] 
-    default_visibility_value = args[:visibility_value] 
+
+    file = args[:file]
+    default_visibility_value = args[:visibility_value]
 
     raise "no spreadsheet specified or spreadsheet not found" unless File.exists?(file)
     raise "no default visibility value specified" unless default_visibility_value
-    
+
     name = Pathname.new(file).basename.to_s
     name.slice! @csv_extension
-    
+
     log = Logger.new("#{Rails.root}/log/change_visibility_#{Time.now.to_i}.#{name}#{@log_extension}")
-    
+
     puts "Running #{file}"
     puts "Running in #{Rails.env}"
     puts "default visibility value of #{default_visibility_value}"
@@ -751,29 +751,29 @@ namespace :revs do
     manifest = RevsUtils.read_csv_with_headers(file)
     error_count=0
     updated_count=0
-    
+
     manifest.each do |row|
-      
+
       if row[@sourceid]
-              
+
         puts "...working on #{row[@sourceid]}"
-      
+
         #Attempt to get the target based on the source_id
         target = find_doc_via_blacklight(row[@sourceid])
-      
+
         #If we can't get the target based on source_id, try it with the filename
         if(target == nil and row[@filename] != nil)
           alt_attempt = row[@filename]
           alt_attempt.slice! file_ext
           target = find_doc_via_blacklight(alt_attempt)
         end
-      
+
         #Catch sourceid with no matching druid
         if target == nil
-          log.error("no druid found for #{row[@sourceid]}") 
+          log.error("no druid found for #{row[@sourceid]}")
           error_count += 1
-        end 
-      
+        end
+
         if target != nil #Begin Altering Single Solr Document
             begin
              doc = SolrDocument.new(target)
@@ -783,41 +783,41 @@ namespace :revs do
              doc.save
              updated_count += 1
            rescue
-             log.error("Could not update #{row[@sourceid]} to #{visibility_value}") 
-             error_count += 1 
+             log.error("Could not update #{row[@sourceid]} to #{visibility_value}")
+             error_count += 1
            end
         end
       end
-      
+
     end
     puts "Errors: #{error_count}"
     puts "Updated: #{updated_count}"
-    
+
     log.info "Errors: #{error_count}"
     log.info "Updated: #{updated_count}"
 
   end
-  
+
   desc "Bulk hide or show images from a given collection"
   task :change_visibility_collection, [:collection_name, :visibility_value] => :environment do |t, args|
     # call with RAILS_ENV=production rake revs:change_visibility_collection["Albert R. Bochroch Photographic Archive",1] to show all images in the collection; note the collection itself is unaffected
     # call with RAILS_ENV=production rake revs:change_visibility_collection["Albert R. Bochroch Photographic Archive",0] to hide all images in the collection; note the collection itself is unaffected
 
     Revs::Application.config.use_editstore = false
-    
-    collection = args[:collection_name] 
-    default_visibility_value = args[:visibility_value] 
+
+    collection = args[:collection_name]
+    default_visibility_value = args[:visibility_value]
 
     raise "no collection specified" unless collection
     raise "no default visibility value specified" unless default_visibility_value
 
     q="*:*"
-    q+=" AND collection_ssim:\"#{collection}\"" unless collection.blank?
-    rows = "10000000" 
-        
-    @all_docs = Blacklight.default_index.connection.select(:params => {:q => q, :fl=>'id', :rows=>rows})            
+    q+=" AND collection_ssim:\"#{collection}\""
+    rows = "10000000"
+
+    @all_docs = Blacklight.default_index.connection.select(:params => {:q => q, :fl=>'id', :rows=>rows})
     total_docs=@all_docs['response']['docs'].size
-    
+
     start_time=Time.now
     n=0
 
@@ -827,43 +827,53 @@ namespace :revs do
     puts " default visibility value of #{default_visibility_value}"
     puts " running in #{Rails.env}"
     puts ""
-    
+
     log = Logger.new("#{Rails.root}/log/change_visibility_#{collection.gsub(' ','_')}_#{Time.now.to_i}.#{@log_extension}")
-          
+
     log.info("Started at #{start_time}, #{total_docs} docs returned")
     log.info("limited to collection: #{collection}")
     log.info("running in #{Rails.env}")
     log.info("default visibility value of #{default_visibility_value}")
     error_count=0
     updated_count=0
-        
+
+    @collection_doc = Blacklight.default_index.connection.select(:params => {:q => "title_tsi:\"#{collection}\"", :fl=>'id', :rows=>50})
+    @collection_doc['response']['docs'].each do |doc|
+      doc = SolrDocument.find(doc['id'])
+      unless doc.visibility_value.to_s == default_visibility_value.to_s  # noop if it already matches
+        puts ".....setting collection #{collection} with #{doc.id} to #{default_visibility_value}"
+        doc.visibility_value=default_visibility_value
+        doc.save
+      end
+    end
+
     @all_docs['response']['docs'].each do |doc|
-      
+
       id=doc['id']
 
       begin
          doc = SolrDocument.find(id)
          unless doc.visibility_value.to_s == default_visibility_value.to_s  # noop if it already matches
            puts ".....found #{doc.id}, setting visibility to #{default_visibility_value}"
-           doc.visibility_value=default_visibility_value 
+           doc.visibility_value=default_visibility_value
            doc.save
            updated_count +=1
          end
        rescue
-         log.error("Could not update #{id} to #{default_visibility_value}") 
-         error_count += 1 
+         log.error("Could not update #{id} to #{default_visibility_value}")
+         error_count += 1
        end
-      
+
     end
     puts ""
     puts "Errors: #{error_count}"
     puts "Updated: #{updated_count}"
-    
+
     log.info "Errors: #{error_count}"
     log.info "Updated: #{updated_count}"
 
   end
-  
+
   desc "Cleanup marques in solr documents by removing 'automobile'"
   task :cleanup_marques => :environment do
     Revs::Application.config.use_editstore = false
@@ -873,7 +883,7 @@ namespace :revs do
     results['response']['docs'].each do |result|
       doc=SolrDocument.new(result)
       marques=doc.marque
-      if marques.class == Array 
+      if marques.class == Array
         doc.update_solr('marque_ssim','update',marques.map{|marque| RevsUtils.clean_marque_name(marque)})
       end
       puts "Updating #{doc.id}"
@@ -889,15 +899,15 @@ namespace :revs do
         puts "#{username} not found"
       else
         flags=user.flags
-        if flags.size == 0 
-          puts "#{username} has no flags"          
+        if flags.size == 0
+          puts "#{username} has no flags"
         else
           puts "Moving #{flags.size} flags for #{username} to favorites"
           flags.each do |flag|
             existing_fav=user.favorites.where(:druid=>flag.druid)
             if existing_fav.size == 0 # favorite doesn't exist yet, so add it
               favorite=SavedItem.save_favorite(:user_id=>user.id,:description=>flag.comment,:druid=>flag.druid)
-              if favorite.id != nil 
+              if favorite.id != nil
                 flag.destroy
                 puts "Favorite added for #{flag.druid}; flag removed"
               else
@@ -923,7 +933,7 @@ namespace :revs do
   desc "Reset sort order for all saved items"
   task :reset_saved_item_order => :environment do |t,args|
     n=0
-    SavedItem.order('created_at').each do |item| 
+    SavedItem.order('created_at').each do |item|
       item.update_column(:row_order_position,n)
       n+=1
     end
@@ -931,19 +941,19 @@ namespace :revs do
 
   desc "Move annotations to flags for a user, run with rake revs:move_annotations_to_flags['Doug Nye']"
   task :move_annotations_to_flags, [:username] => :environment do |t, args|
-      username=args[:username]  
+      username=args[:username]
       user=User.where(:username=>username).limit(1).first
       if user.nil?
         puts "#{username} not found"
       else
         annotations=user.annotations
-        if annotations.size == 0 
-          puts "#{username} has no annotations"          
+        if annotations.size == 0
+          puts "#{username} has no annotations"
         else
           puts "Moving #{annotations.size} annotations for #{username} to flags"
           annotations.each do |annotation|
             flag=Flag.create_new({:flag_type=>:error,:comment=>annotation.text,:druid=>annotation.druid},user)
-            if flag.id != nil 
+            if flag.id != nil
               flag.created_at=annotation.created_at # have the date match the annotation date
               flag.save
               annotation.destroy
@@ -956,11 +966,11 @@ namespace :revs do
       end
     end
 
-  class RevsUtils    
+  class RevsUtils
     extend Revs::Utils
     include Revs::Utils
   end
-    
+
   def load_csv_files_from_directory(file_location)
     return Dir.glob(File.join(file_location, @csv_extension_wild))
   end
@@ -968,23 +978,23 @@ namespace :revs do
   def find_doc_via_blacklight(source)
      return Blacklight.default_index.connection.select(:params =>{:q=>'source_id_ssi:"'+ source+'"'})["response"]["docs"][0]
   end
-  
+
   #Note, this function doesn't save the document, I just return a content string!
   def join_content(doc, field, content)
-    current_content = doc[SolrDocument.field_mappings[field][:field]]  
+    current_content = doc[SolrDocument.field_mappings[field][:field]]
     return content if current_content == nil
-    current_content = current_content.join(@seperator) if SolrDocument.field_mappings[field][:multi_valued] 
+    current_content = current_content.join(@seperator) if SolrDocument.field_mappings[field][:multi_valued]
     current_content = current_content + content
     return current_content
   end
-  
+
   def get_args_for_send(field)
-    args = @assigner  
+    args = @assigner
     args = @mvf + args if SolrDocument.field_mappings[field][:multi_valued]
     return args
   end
-  
-  
+
+
   #Note you will need to refetch the document to see the changes after calling this function
   def update_multi_fields(doc, changes)
     #Fields is expected to be in the form of [[field, content, append]]
