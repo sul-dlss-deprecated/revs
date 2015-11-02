@@ -286,6 +286,34 @@ class ApplicationController < ActionController::Base
     }
   end
 
+  # pass all querystring sort parameters through a whitelist and set a default if no valid field was found
+  def filter_field(filter_param,default='all')
+    whitelist_filter_fields[filter_param] || default
+  end
+
+  # the allowed filters that can be passed in via the querystring, map these to actual values to pass to SQL to prevent sql injection
+  def whitelist_filter_fields
+    {'stanford'=>'stanford',
+    'non-stanford'=>'non-stanford',
+    'all'=>'all',
+    'user'=>'user',
+    'curator'=>'curator',
+    'featured'=>'featured',
+    'public'=>'public',
+    'private'=>'private'
+    }
+  end
+
+  def is_integer?(input)
+    return true if input.nil?
+    begin
+      Integer(input)
+      true
+    rescue
+      false
+    end
+  end
+
   # extract relevant paging params from params hash to add to some links
   def extract_paging_params(params)
     params.dup.keep_if {|k,v| ['order','page','per_page'].include? k}

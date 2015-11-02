@@ -17,7 +17,7 @@ class CatalogController < ApplicationController
     SolrDocument.archives.each_with_index {|archive,index| opts["archive_#{index}"]={:label=>archive,:fq=>"archive_ssi:\"#{archive}\" AND -format_ssim:\"collection\""} }
     opts
   end
-  
+
   # delete editing form parameters when there is a get request so they don't get picked up and carried to all links by Blacklight
   def filter_params
     if request.get?
@@ -31,11 +31,19 @@ class CatalogController < ApplicationController
   def bad_facet_params
 
     return false unless params
-    
+
     return true if params[:f] && params[:f][:timestamp] && ((blacklight_config.facet_fields['timestamp'].query.keys + params[:f][:timestamp]).uniq.size) != blacklight_config.facet_fields['timestamp'].query.keys.size
 
     return true if params[:range] && params[:range][:pub_year_isim] && ((params[:range][:pub_year_isim][:end].to_i - params[:range][:pub_year_isim][:begin].to_i) < 0)
-           
+
+    return true if is_integer?(params[:page]) == false  # page param is not nil and also not an integer can cause problems
+
+    return true if is_integer?(params["facet.page"]) == false  # page param is not nil and also not an integer can cause problems
+
+    return true if is_integer?(params[:per_page]) == false # per_page param is not nil and also not an integer can cause problems
+
+    return true if params[:per_page] == "0" # per_page param is 0
+
   end
 
   def add_facets_for_curators
@@ -45,7 +53,7 @@ class CatalogController < ApplicationController
       self.blacklight_config.add_sort_field 'score_isi asc, score desc, title_tsi asc', :label => 'metadata score'
     end
   end
-  
+
   def index
 
     not_authorized if params[:view]=='curator' && cannot?(:bulk_update_metadata,:all)
@@ -105,9 +113,9 @@ class CatalogController < ApplicationController
        return
      end
     end
-  
+
     flash.now[:notice]=t('revs.messages.search_affected') if (Revs::Application.config.search_results_affected && !params[:q].nil? && !(on_home_page || @force_render_home))
-    
+
   end
 
   def show
@@ -198,7 +206,7 @@ class CatalogController < ApplicationController
     session[:notice_dismissed]=true
     render :nothing=>true
   end
-  
+
   # when a request for /catalog/BAD_SOLR_ID is made, this method is executed... overriding default blacklight behavior
   def invalid_document_id_error
     routing_error
@@ -207,10 +215,10 @@ class CatalogController < ApplicationController
   configure_blacklight do |config|
     ## Default parameters to send to solr for all search-like requests. See also SolrHelper#solr_search_params
 
-    config.advanced_search = { 
+    config.advanced_search = {
       :qt => 'standard'
     }
-    
+
     config.default_solr_params = {
       :qt => 'standard',
       :facet => 'true',
@@ -386,6 +394,12 @@ class CatalogController < ApplicationController
   def facet
     extra_controller_params = (params[:"facet.prefix"] ? {"facet.prefix"=>params[:"facet.prefix"]} : {})
 
+    if bad_facet_params
+      session[:search]=nil # blow away the search context
+      routing_error
+      return
+    end
+
     @facet = blacklight_config.facet_fields[params[:id]]
     @response = get_facet_field_response(@facet.key, params,extra_controller_params)
     @display_facet = @response.aggregations[@facet.key]
@@ -402,7 +416,7 @@ class CatalogController < ApplicationController
       format.js { render :layout => false }
     end
   end
-    
+
   # Email Action (this will render the appropriate view on GET requests and process the form and send the email on POST requests)
   def email
     @response, @documents = get_solr_response_for_field_values(SolrDocument.unique_key,params[:id])
