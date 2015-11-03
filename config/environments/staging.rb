@@ -25,6 +25,8 @@ Revs::Application.configure do
   # Generate digests for assets URLs
   config.assets.digest = true
 
+  config.middleware.use Rack::Attack
+
   # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH
 
@@ -66,7 +68,7 @@ Revs::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
-  # Revs App Configuration  
+  # Revs App Configuration
   config.simulate_sunet_user = false # SET TO BLANK OR FALSE IN PRODUCTION!!! if this has a value, then this will simulate you being logged in as a sunet user
   config.purl_plugin_server = "prod"
   config.purl_plugin_location = "//image-viewer.stanford.edu/assets/purl_embed_jquery_plugin.js"

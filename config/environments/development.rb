@@ -26,6 +26,8 @@ Revs::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
+  config.middleware.use Rack::Attack
+
   # Revs App Configuration
   config.simulate_sunet_user = "sunetuser" # SET TO BLANK OR FALSE IN PRODUCTION (it should be ignored in production anyway) if this has a value, then this will simulate you being logged in as a sunet user
   config.purl_plugin_server = "prod"
@@ -42,4 +44,3 @@ Squash::Ruby.configure :api_host => 'https://squash-dev.stanford.edu',
                        :api_key => '20f28544-89ff-42f8-b310-4d79a70a9b29',
                        :disabled => true,
                        :revision_file => 'REVISION'
-                       
