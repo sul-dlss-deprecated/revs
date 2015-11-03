@@ -218,6 +218,8 @@ GEM
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
     rack (1.6.4)
+    rack-attack (4.3.0)
+      rack
     rack-contrib (1.3.0)
       git-version-bump (~> 0.15)
       rack (~> 1.4)
@@ -378,6 +380,7 @@ DEPENDENCIES
   omniauth
   pry-rails
   quiet_assets
+  rack-attack
   rack-timeout
   rack-utf8_sanitizer
   rails (>= 4)

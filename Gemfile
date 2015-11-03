@@ -24,6 +24,7 @@ gem 'cancan'
 
 gem 'ranked-model'
 
+gem 'rack-attack'
 gem 'rack-timeout'
 gem 'rack-utf8_sanitizer'
 
