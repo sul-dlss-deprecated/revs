@@ -45,7 +45,7 @@ class UserController < ApplicationController
   # all of the user's item edits
   def edits
     @order="change_logs.#{@order}" if @order == 'created_at desc'
-    @edits=@user.metadata_updates.order(@order).page(@current_page).per(@per_page)
+    @edits=@user.change_logs.order(@order).page(@current_page).per(@per_page)
     @page_title="#{@user.to_s}: #{I18n.t('revs.curator.edits')}"
   end
 
@@ -104,7 +104,7 @@ class UserController < ApplicationController
     @user.create_default_favorites_list # create the default favorites list if for some reason it does not exist
     @latest_annotations=@user.annotations(current_user).order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
     @latest_flags=@user.flags(current_user).where(:state=>Flag.open).order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
-    @latest_edits=@user.metadata_updates(current_user).order('change_logs.created_at desc').limit(Revs::Application.config.num_latest_user_activity)
+    @latest_edits=@user.change_logs(current_user).order('change_logs.created_at desc').limit(Revs::Application.config.num_latest_user_activity)
     @latest_galleries=@user.galleries(current_user).order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
     @latest_favorites=@user.favorites(current_user).order('saved_items.created_at desc').limit(Revs::Application.config.num_latest_user_activity)
   end

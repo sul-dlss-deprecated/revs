@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
 
   extend FriendlyId
   friendly_id :username, use: [:finders]
-  
+
   # class generated with CarrierWave
   mount_uploader :avatar, AvatarUploader
   validates_integrity_of  :avatar
@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   #  update the ability class, and update the strings stored in the user "role" column (only if role names change)
   ROLES=%w{admin curator beta user}
   DEFAULT_ROLE='user' # the default role that any logged in user will have
-  
+
   # Include default devise modules. Others available are:
   # :token_authenticatable
   devise :database_authenticatable, :registerable,
@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
   validates :username, :format => { :with => /\A\D.+/,:message => "must start with a letter" }
 
   delegate :can?, :cannot?, :to => :ability # this saves us some typing so we can ask user.can? instead of user.ability.can?
-  
+
   #### class level methods
   def self.create_new_sunet_user(sunet)
     password=self.create_sunet_user_password
@@ -57,7 +57,7 @@ class User < ActiveRecord::Base
     user.save!
     user
   end
-  
+
   # passwords are irrelvant and never used for SUNET users, but we need to set one in the user table to make devise happy
   # we override the sign_in method from devise (in controllers/sessions_controller) to prevent SUNET users from logging in using this password anyway
   def self.create_sunet_user_password
@@ -80,16 +80,16 @@ class User < ActiveRecord::Base
   def self.roles
     ROLES
   end
-  
+
   # only returning visible items for given class and query depending on user ability passed in
   def self.visibility_filter(things,class_name,user=nil)
     (user.blank? || user.cannot?(:view_hidden, SolrDocument)) ? things.joins("LEFT OUTER JOIN items on items.druid = #{class_name}.druid").where("items.visibility_value = #{SolrDocument.visibility_mappings[:visible]} OR items.visibility_value is null") : things
   end
 
   #### class level methods
-  
+
   # indicate which galleries should be shown based on the user passed in
-  
+
   def gallery_visibility_filter(user)
     all_visibilities=[]
     all_visibilities << 'public' # anyone can see public galleries
@@ -98,7 +98,7 @@ class User < ActiveRecord::Base
     return all_visibilities
   end
 
-  ### has_many custom associations, so we can add visibility filtering   
+  ### has_many custom associations, so we can add visibility filtering
   def all_saved_items
     SavedItem.includes(:gallery).where(:'galleries.user_id'=>id)
   end
@@ -127,7 +127,7 @@ class User < ActiveRecord::Base
     self.class.visibility_filter(Flag.where(:user_id=>id),'flags',user)
   end
 
-  # get just metadata updates from the change logs, grouped by druid
+  # get change_logs
   def change_logs(user=nil)
     self.class.visibility_filter(ChangeLog.where(:user_id=>id),'change_logs',user)
   end
@@ -155,21 +155,21 @@ class User < ActiveRecord::Base
   def active_for_authentication?
     super && active
   end
-  
+
   def inactive_message
     active ? super : :account_has_been_deactivated
   end
-  
+
   def after_database_authentication
     self.increment!(:login_count)
     create_default_favorites_list
   end
-  
+
   # override devise method --- stanford users are never timed out; regular users are timed out according to devise rules
   def timedout?(last_access)
     sunet_user? && !last_access.nil? ? ((Time.now-last_access) > Revs::Application.config.sunet_timeout_secs) : super
   end
-  
+
   # a helper getter method to get to the visibility status of the favorites list
   def favorites_public
     favorites_list.public
@@ -183,9 +183,9 @@ class User < ActiveRecord::Base
   # Blacklight uses #to_s on your user class to get
   # a user-displayable login/identifier for the account.
   def to_s
-    self.public ? full_name : (username || sunet) 
+    self.public ? full_name : (username || sunet)
   end
-  
+
   # override devise behavior for signs so that it allows the user to signin with either username or email
   def self.find_first_by_auth_conditions(tainted_conditions, opts={})
     conditions = tainted_conditions.dup
@@ -195,7 +195,7 @@ class User < ActiveRecord::Base
       to_adapter.find_first(devise_parameter_filter.filter(conditions).merge(opts))
     end
   end
-  
+
   def sunet_user?
     !sunet.blank?
   end
@@ -203,27 +203,27 @@ class User < ActiveRecord::Base
   def is_webauth?
     sunet_user?
   end
-      
+
   def signup_for_mailing_list
-    RevsMailer.mailing_list_signup(:from=>email).deliver 
+    RevsMailer.mailing_list_signup(:from=>email).deliver
   end
 
   def signup_for_revs_institute_mailing_list
-    RevsMailer.revs_institute_mailing_list_signup(:from=>email).deliver 
+    RevsMailer.revs_institute_mailing_list_signup(:from=>email).deliver
   end
-  
+
   def check_role_name
     errors.add(:role, :not_valid) unless ROLES.include? role.to_s
   end
-    
+
   def no_name_entered?
-    first_name.blank? && last_name.blank?  
+    first_name.blank? && last_name.blank?
   end
-  
+
   def full_name
     no_name_entered? ? username : [first_name,last_name].join(' ')
   end
-    
+
   def role?(test_role)
     test_role.to_s.camelize == role
   end
@@ -235,11 +235,11 @@ class User < ActiveRecord::Base
   def ability
     @ability ||= Ability.new(self)
   end
-  
+
   def init_flag_user(current_user)
     return flagListForStates([Flag.open], current_user)
   end
-    
+
   # update the lock status if needed
   def update_lock_status(lock)
     if lock && locked_at.blank?
@@ -248,15 +248,15 @@ class User < ActiveRecord::Base
       unlock_access!
     end
   end
-  
+
   protected
   def assign_default_role
-    self.role=DEFAULT_ROLE 
+    self.role=DEFAULT_ROLE
   end
 
   def trim_names
     first_name.strip!
     last_name.strip!
   end
-  
+
 end
