@@ -1,4 +1,8 @@
 class Rack::Attack
+
+  BANNED_IPS=["107.6.154."] # array of banned ips... to block subnets, only include the first part
+  # (e.g. "10.11." or "10.11.1." or "10.11.1.123") blocks in increasing specificity 
+
   ### Configure Cache ###
 
     # If you don't want to use Rails.cache (Rack::Attack's default), then
@@ -68,7 +72,7 @@ end
 
 Rack::Attack.blacklist('block 1.2.3.4') do |req|
   # Requests are blocked if the return value is truthy
-  !(req.ip =~ /^107.6.154.*/).nil?
+  !(req.ip =~ Regexp.union(BANNED_IPS)).nil?
 end
 
 # Block requests containing '/etc/password' in the params.
