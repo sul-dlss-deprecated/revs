@@ -74,9 +74,9 @@ class Curator::TasksController < ApplicationController
 
    def edits
 
-     @tab_list_item = 'edits-by-item' # first tab (default)
-     @tab_list_user = 'edits-by-user'  # second tab
-     @tab = params[:tab] || @tab_list_item
+     @tab_list_user = 'edits-by-user'  # first tab (default) 
+     @tab_list_item = 'edits-by-item' # second tab
+     @tab = params[:tab] || @tab_list_user
 
      @order=sort_field(params[:order],"num_edits DESC")
 
