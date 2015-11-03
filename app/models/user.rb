@@ -127,14 +127,14 @@ class User < ActiveRecord::Base
     self.class.visibility_filter(Flag.where(:user_id=>id),'flags',user)
   end
 
-  # get change_logs
+  # get all change logs
   def change_logs(user=nil)
     self.class.visibility_filter(ChangeLog.where(:user_id=>id),'change_logs',user)
   end
 
-  # get just metadata updates from the change logs, grouped by druid
+  # get just metadata updates from the change logs
   def metadata_updates(user=nil)
-    change_logs(user).where(:user_id=>id,:operation=>'metadata update').group('change_logs.druid')
+    change_logs(user).where(:user_id=>id,:operation=>'metadata update')
   end
   ### associations
 

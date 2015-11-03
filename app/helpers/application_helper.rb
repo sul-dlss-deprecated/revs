@@ -40,7 +40,7 @@ module ApplicationHelper
     @translations ||= I18n.backend.send(:translations)
     @translations[I18n.locale].with_indifferent_access[:public_js]
   end
-  
+
   # pass in a user, if it's the currently logged in user, you will get the full name; otherwise you will get the appropriate name for public display; if you pass in a url as a second parameter, you will get a link back to that url
   def display_user_name(user,link=nil)
      display = is_logged_in_user?(user) ? user.full_name : user.to_s
@@ -174,7 +174,7 @@ module ApplicationHelper
   end
 
   def edits_count(user)
-    user.metadata_updates.count.keys.count
+    user.metadata_updates.count
   end
 
   def flags_unresolved_count(user)
