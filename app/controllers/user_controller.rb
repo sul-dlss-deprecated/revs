@@ -9,6 +9,7 @@ class UserController < ApplicationController
 
   def show
     @page_title=I18n.t('revs.user.user_dashboard',:name=>(is_logged_in_user?(@user) ? t('revs.user.your') : "#{@user.to_s}'s"))
+    load_latest
   end
 
   # all of the user's annotations
@@ -102,9 +103,12 @@ class UserController < ApplicationController
       return
     end
     @user.create_default_favorites_list # create the default favorites list if for some reason it does not exist
+  end
+
+  def load_latest
     @latest_annotations=@user.annotations(current_user).order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
     @latest_flags=@user.flags(current_user).where(:state=>Flag.open).order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
-    @latest_edits=@user.change_logs(current_user).order('change_logs.created_at desc').limit(Revs::Application.config.num_latest_user_activity)
+    @latest_edits=@user.metadata_updates(current_user).order('change_logs.created_at desc').limit(Revs::Application.config.num_latest_user_activity)
     @latest_galleries=@user.galleries(current_user).order('created_at desc').limit(Revs::Application.config.num_latest_user_activity)
     @latest_favorites=@user.favorites(current_user).order('saved_items.created_at desc').limit(Revs::Application.config.num_latest_user_activity)
   end
