@@ -45,13 +45,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-9 menu-bar-container">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-navbar" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="main-menu-navbar">
+        <div id="main-menu-navbar">
           <ul class="nav navbar-nav">
             <li class="<%="active" if on_home_page %>">
               <%= link_to t('revs.nav.home').upcase, root_path %>

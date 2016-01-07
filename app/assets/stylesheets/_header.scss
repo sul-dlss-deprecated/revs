@@ -137,6 +137,7 @@ $menu-link-background-color-hover: rgba(255, 255, 255, 0.15);
     a:hover,
     a:visited {
       color: inherit;
+      opacity: 0.95;
       text-decoration: none;
     }
   }
@@ -145,7 +146,7 @@ $menu-link-background-color-hover: rgba(255, 255, 255, 0.15);
     color: $off-white;
     display: block;
     letter-spacing: initial;
-    opacity: 0.9;
+    opacity: 0.88;
     padding-top: $padding-base-vertical;
     text-shadow: 1px 1px 0 $gray-base;
 
@@ -390,16 +391,6 @@ $menu-link-background-color-hover: rgba(255, 255, 255, 0.15);
   .menu-bar.navbar {
     min-height: 40px;
   }
-
-  .menu-bar-container {
-    padding-right: 0;
-  }
-}
-
-// Only show collapsed menu at 360px or narrower
-@media screen and (min-width: 361px) {
-  .navbar-toggle { display: none;}
-  .navbar-collapse { padding-right: 0;}
 }
 
 // Adjustments for showing collapsed main menu.
@@ -410,7 +401,7 @@ $menu-link-background-color-hover: rgba(255, 255, 255, 0.15);
   }
 
   #revs-masthead {
-    margin-bottom: 0;
+    margin-bottom: -5px;
 
     .site-title {
       font-size: 2.2em;
@@ -432,13 +423,6 @@ $menu-link-background-color-hover: rgba(255, 255, 255, 0.15);
 
   .menu-bar .nav > li {
     display: block;
-  }
-
-  .navbar-toggle {
-    background-color: $gray-lighter;
-    display: block;
-    float: none;
-    margin: 12px auto;
   }
 
   .menu-bar-container {
