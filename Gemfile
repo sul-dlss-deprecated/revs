@@ -16,6 +16,7 @@ gem 'revs-utils', '>= 2.1.12'
 
 gem 'rails', '>= 4'
 gem 'responders', '~> 2.0'
+gem 'nokogiri', '>=1.6.7.1'
 
 # user authentication and roles
 gem 'devise'
