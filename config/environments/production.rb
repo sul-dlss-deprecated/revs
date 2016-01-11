@@ -79,7 +79,7 @@ Revs::Application.configure do
   config.use_editstore = true # if set to true, then all changes will be saved to editstore database (SHOULD BE TRUE IN PRODUCTION!)
   config.show_galleries_in_nav = true # if set to true, then galleries is shown in top navigation
 
-  config.featured_contributors=['Doug Nye','tvc15','Bergeleven','trigwell','Rupertlt1','Duncan'] # array of usernames of featured contributors for about top contributors page...will be shown in this order, use an empty array if none
+  config.featured_contributors=['Doug Nye','tvc15','enzonz','Bergeleven','trigwell','Rupertlt1','Duncan'] # array of usernames of featured contributors for about top contributors page...will be shown in this order, use an empty array if none
 
 end
 
