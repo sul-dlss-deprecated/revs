@@ -1,3 +1,12 @@
+@mixin masthead-background-containers() {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: block;
+  width: auto;
+  height: inherit;
+}
+
 #brandbar {
   font-family: 'Source Sans Pro',Arial,sans-serif;
   font-size: 14px;
@@ -99,52 +108,95 @@
   }
 }
 
-#revs-masthead {
-  background: $white;
-  border-bottom: 1px solid $revs-gray;
-  padding-bottom: 10px;
-  padding-top: 5px;
+$masthead-height: 186px;
+$masthead-image-blur: 2px;
+$menu-link-background-color-active: rgba(255, 255, 255, 0.25);
+$menu-link-background-color-hover: rgba(255, 255, 255, 0.15);
 
-  h1 {
-    border-bottom: 0;
+#revs-masthead {
+  height: $masthead-height;
+  margin-bottom: -46px;
+  padding: 0;
+  position: static;
+
+  & > .container {
+    position: relative;
+    top: 33%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+
+  .site-title {
+    color: $white;
     font-family: "news-gothic-std","Helvetica","Arial",sans-serif;
     font-size: 2.4em;
-    line-height: 1.5em;
-    margin: 10px 0 0;
-    padding-bottom: 0;
+    letter-spacing: 1.2px;
+    text-shadow: 1px 2px 0 $gray-base;
 
     a,
     a:hover,
     a:visited {
       color: inherit;
+      opacity: 0.95;
       text-decoration: none;
     }
   }
 
-  h2 {
-    border: 0;
-    clear: left;
-    color: $gray;
-    font-size: 1.2em;
-    font-style: italic;
-    font-weight: normal;
-    margin-top: 0;
-    padding-top: 0;
-    text-transform: none;
+  small {
+    color: $off-white;
+    display: block;
+    letter-spacing: initial;
+    opacity: 0.88;
+    padding-top: $padding-base-vertical;
+    text-shadow: 1px 1px 0 $gray-base;
 
     > span {
-      color: $revs-gray-light;
+      color: $gray-lighter;
       float: right;
       font-size: 13px;
       font-style: normal;
+      text-shadow: none;
     }
+  }
+
+  // This is to add a background image to the masthead, in a way that
+  // enables the site title and subtitle text to be visible above it.
+  .background-container {
+    @include masthead-background-containers();
+    background-repeat: no-repeat;
+    background-size: cover;
+    // Add small amount of blur to help text stand out
+    -webkit-filter: blur($masthead-image-blur);
+    filter: blur($masthead-image-blur);
+    // Shift image slightly to hide blurred edge of image
+    margin-left: -$masthead-image-blur;
+    margin-top: -$masthead-image-blur - 1;
+    overflow: hidden;
+    // Add right border to image to hide lighter blurred edge
+    border-right: 1px solid $gray-base;
+  }
+
+  // Include gradient to improve text legibility,
+  // especially on light background images.
+  .background-container-gradient {
+    @include masthead-background-containers();
+    background:
+     linear-gradient(
+       rgba(0, 0, 0, 0.0),
+       rgba(0, 0, 0, 0.2),
+       rgba(0, 0, 0, 0.3)
+     );
+     // Compensate for negative top margin of background-container
+     height: $masthead-height - $masthead-image-blur;
   }
 }
 
 .menu-bar {
-  background-color: $white;
-  border-bottom: 1px solid $revs-gray;
-  padding-left: 40px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 0;
+  border-radius: 0;
+  margin-bottom: 0;
+  margin-top: 0;
 
   > .container {
     margin-bottom: 0;
@@ -154,50 +206,43 @@
     padding-left: 0;
   }
 
-  .nav {
-    clear: left;
-    float: left;
-    margin-left: -20px;
+  &.navbar {
+    min-height: 44px;
+  }
 
-    > .active > a,
-    > .active > a:hover {
-      background-color: $off-white;
-      box-shadow: none;
-    }
+  .navbar-nav {
+    float: left;
+    margin-top: 0;
 
     > li {
       float: left;
-      line-height: 20px;
+      text-transform: uppercase;
 
-      &.active > a {
-        border-left: 1px solid $revs-gray;
-        border-right: 1px solid $revs-gray;
-        color: $active-link-color;
-      }
-
-      > a {
-        box-shadow: none;
-        color: $gray-base;
+      a {
+        color: $gray-lighter;
         font-family: "news-gothic-std","Helvetica","Arial",sans-serif;
-        font-size: 1em;
-        -webkit-font-smoothing: antialiased;
-        font-weight: 700;
-        padding: 10px 23px 8px;
-        text-transform: uppercase;
-
-        &:hover,
-        &:focus {
-          background-color: $white;
-          color: $active-link-color;
-        }
+        letter-spacing: 1px;
+        padding-bottom: 10px;
+        padding-top: 14px;
       }
+
+      a:hover,
+      a:focus {
+        background-color: $menu-link-background-color-hover;
+        color: $gray-lighter;
+      }
+    }
+
+    > .active > a,
+    > .active > a:hover {
+      background-color: $menu-link-background-color-active;
+      color: $white;
     }
   }
 
   .nav-searchbox {
     float: right;
-    margin-bottom: 6px;
-    margin-top: 6px;
+    line-height: 44px;
 
     button[type="submit"] {
       padding-bottom: 3px;
@@ -212,7 +257,6 @@
 
   .search-form-nav {
     margin-bottom: 0;
-    margin-right: 20px;
   }
 }
 
@@ -224,7 +268,11 @@
   }
 }
 
-// If wide desktop viewport
+.navbar-default .navbar-collapse {
+  border: 0;
+}
+
+// Wide desktop viewport
 @media screen and (min-width: 1200px) {
   // Make brandbar elements line up with site content borders
   #brandbar .container {
@@ -235,14 +283,8 @@
 
 // Narrower than desktop viewport
 @media screen and (max-width: 991px) {
-  // Remove highlight styling on main menu
-  .menu-bar .nav > li.active > a {
-    background-color: inherit;
-    border: 0;
-
-    &:hover {
-      background-color: inherit;
-    }
+  .menu-bar {
+    background-color: rgba(0, 0, 0, 0.1);
   }
 
   .menu-bar .nav-searchbox {
@@ -251,11 +293,43 @@
   }
 }
 
-// All smaller mobile devices
-@media screen and (max-width: 767px) {
+// Just 'tablets'
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  // Make sure there is some side margin on site layout
+  .navbar {
+    .container {
+      margin: 0 auto;
+      width: 724px;
+    }
+  }
+}
+
+@media screen and (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+  .menu-bar .form-group {
+    max-width: 160px;
+  }
+
+  .menu-bar .search-query {
+    width: 160px;
+  }
+}
+
+@media screen and (max-width: $screen-xs-max) {
+  a.sul-logo {
+    display: inline;
+    float: left;
+  }
+
+  #report-problem {
+    margin-right: 15px;
+  }
+
   // Center and reduce text size of site heading for mobile devices
   #revs-masthead {
-    .site-header-content {text-align: center;}
+    height: 140px;
+    margin-bottom: -43px;
+
+    .site-title {text-align: center;}
 
     h1 {
       float: none;
@@ -271,54 +345,91 @@
         width: 100%;
       }
     }
+
+    .background-container-gradient {
+      height: 136px;
+    }
   }
-  // Center main menu for mobile devices
+
+  .nav-searchbox .form-group {
+    display: inline-block;
+    margin-bottom: 0;
+  }
+
+  // Tighten main menu item spacing to fit on single row.
+  // Remove highlight styling on main menu.
+  // Center main menu for mobile devices.
   .menu-bar .nav {
     float: none;
-    margin-left: -40px;
+    margin-bottom: 0;
     text-align: center;
 
     > li {
       display: inline;
       float: none;
 
+      &.active > a {
+        background-color: inherit;
+        border: 0;
+
+        &:hover {
+          background-color: initial;
+        }
+      }
+
       > a {
         display: inline-block;
+        padding: 10px;
+
+        &:hover {
+          background-color: initial;
+        }
       }
     }
   }
-}
 
-// Just 'tablets'
-@media screen and (min-width: 768px) and (max-width: 991px) {
-  // Make sure there is some side margin on site layout
-  .navbar {
-    .container {
-      margin: 0 auto;
-      width: 724px;
-    }
+  .menu-bar.navbar {
+    min-height: 40px;
   }
 }
 
-// Just phones
-@media screen and (max-width: $screen-xs-max) {
-  a.sul-logo {
-    display: inline;
-    float: left;
+// Adjustments for showing collapsed main menu.
+@media screen and (max-width: 360px) {
+  #revs-masthead,
+  #revs-masthead .background-container-gradient {
+    height: 80px;
   }
 
-  #report-problem {
-    margin-right: 15px;
-  }
-  // Reduce font size of site header
   #revs-masthead {
-    h1 {
-      font-size: 1.8em;
+    margin-bottom: -5px;
+
+    .site-title {
+      font-size: 2.2em;
+    }
+
+    > .container {
+      top: initial;
+      transform: none;
     }
   }
 
-  // Tighten main menu item spacing to fit on single row
-  .menu-bar .nav > li > a {
-    padding: 10px;
+  .nav-searchbox .form-group {
+    display: block;
+  }
+
+  .menu-bar.navbar {
+    background-color: #556168;
+  }
+
+  .menu-bar .nav > li {
+    display: block;
+  }
+
+  .menu-bar-container {
+    padding-right: 15px;
+  }
+
+  .menu-bar .search-container {
+    padding-left: 15px;
   }
 }

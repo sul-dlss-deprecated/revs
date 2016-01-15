@@ -23,44 +23,48 @@
 
 <% cache("navbar", :expires_in=>6.hours) do %>
   <div id="revs-masthead">
+    <span class='background-container' style="background-image: url('<%= image_path('masthead-image-1800.jpg') %>')"></span>
+    <span class='background-container-gradient'></span>
     <div class="container">
-      <div class="site-header-content">
-        <h1><%= link_to application_name, root_path %></h1>
-        <h2 class="hidden-xs">
-          <%=tag_line%>
-          <span>
+      <div class="site-title h1">
+        <%= link_to application_name, root_path %>
+        <small class="hidden-xs">
+          <%= tag_line %>
+          <span class="hidden-sm">
             <%= t('revs.repository_counts_html',
                 :total_images => number_with_delimiter(@total_images),
                 :number_collections => number_with_delimiter(@total_collections)) %>
           </span>
-        </h2>
+        </small>
       </div>
     </div>
   </div>
 <% end %>
 
-<div class="menu-bar">
+<div class="menu-bar navbar navbar-default">
   <div class="container">
     <div class="row">
-      <div class="col-md-9">
-        <ul class="nav">
-          <li class="<%="active" if on_home_page %>">
-            <%= link_to t('revs.nav.home').upcase, root_path %>
-          </li>
-          <li class="<%="active" if on_collections_page %>">
-            <%= link_to t('revs.nav.collections').upcase, all_collections_path%>
-          </li>
-          <% if Revs::Application.config.show_galleries_in_nav %>
-            <li class="<%="active" if on_galleries_page %>">
-              <%= link_to t('revs.nav.galleries').upcase, galleries_path %>
+      <div class="col-md-9 menu-bar-container">
+        <div id="main-menu-navbar">
+          <ul class="nav navbar-nav">
+            <li class="<%="active" if on_home_page %>">
+              <%= link_to t('revs.nav.home').upcase, root_path %>
             </li>
-          <% end %>
-          <li class="<%="active" if on_about_pages %>"><%= link_to t('revs.about.word').upcase, about_project_path %></li>
-          <li class="hidden-xs"><%= link_to t('revs.revs_program').upcase, 'http://revs.stanford.edu', :target=>'_new' %></li>
-        </ul>
+            <li class="<%="active" if on_collections_page %>">
+              <%= link_to t('revs.nav.collections').upcase, all_collections_path%>
+            </li>
+            <% if Revs::Application.config.show_galleries_in_nav %>
+              <li class="<%="active" if on_galleries_page %>">
+                <%= link_to t('revs.nav.galleries').upcase, galleries_path %>
+              </li>
+            <% end %>
+            <li class="<%="active" if on_about_pages %>"><%= link_to t('revs.about.word').upcase, about_project_path %></li>
+            <li class="hidden-xs"><%= link_to t('revs.revs_program').upcase, 'http://revs.stanford.edu', :target=>'_new' %></li>
+          </ul>
+        </div>
       </div>
 
-      <div class="search-container col-md-3 col-md-offset-0 col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3">
+      <div class="search-container col-md-3 col-md-offset-0 col-xs-12 col-sm-6 col-sm-offset-3">
         <%= render :partial => "/shared/main_menu_searchbox" unless display_sidebar_searchbox %>
       </div>
 
