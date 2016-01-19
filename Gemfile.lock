@@ -131,6 +131,11 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
+    dlss-capistrano (3.2.0)
+      capistrano (~> 3.0)
+      capistrano-bundle_audit (>= 0.0.3)
+      capistrano-one_time_key
+      capistrano-releaseboard
     domain_name (0.5.24)
       unf (>= 0.0.5, < 1.0.0)
     druid-tools (0.4.1)
@@ -140,7 +145,7 @@ GEM
     erubis (2.7.0)
     eventmachine (1.0.7)
     execjs (2.6.0)
-    faraday (0.9.1)
+    faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.10)
     font-awesome-rails (4.3.0.0)
@@ -179,11 +184,6 @@ GEM
       railties (>= 3)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
-    lyberteam-capistrano-devel (3.2.0)
-      capistrano (~> 3.0)
-      capistrano-bundle_audit (>= 0.0.3)
-      capistrano-one_time_key
-      capistrano-releaseboard
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     marc (1.0.0)
@@ -365,6 +365,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0)
   countries
   devise
+  dlss-capistrano
   druid-tools (>= 0.2.0)
   editstore (>= 2.0.2)
   font-awesome-rails
@@ -375,7 +376,6 @@ DEPENDENCIES
   kaminari
   launchy
   lograge
-  lyberteam-capistrano-devel (~> 3)
   meta_request
   mini_magick
   mysql2
