@@ -3,14 +3,15 @@
    facet_field_name = defined?(facet) ? field_name : nil # indicates if the display should render values as a linked facet field
    editable = defined?(editable) ? editable : false # indicates if this field should be in-place editable if that mode is set
    input_type = defined?(input_type) ? input_type : 'input' # indicates form field type of editing (defaults to 'input')
-    edit_field_name = multivalued ? "#{field_name}#{SolrDocument.multivalued_field_marker}" : field_name # the edit field name is different if we are using a mutlivalued field, since we want to edit/display mutlivalues delimited with a | character
+   edit_field_name = multivalued ? "#{field_name}#{SolrDocument.multivalued_field_marker}" : field_name # the edit field name is different if we are using a mutlivalued field, since we want to edit/display mutlivalues delimited with a | character
    simple_format = defined?(simple_format) ? simple_format : 'false' # indicates if we want to use the simple_format command to format single valued fields
    autocomplete = defined?(autocomplete) ? autocomplete : false # indicates the name of the autocomplete field we want to use (undefined if no autocomplete)
    checked_value = defined?(checked_value) ? checked_value : true # indicates the checked value for a checkbox field
    separator = defined?(separator) ? separator : nil # indicates the separator to be used when showing multivalued fields (defaults to , as defined by helper method "show_formatted_list")
+   display_field_name = display_field_name || field_name # indicates a different attribute to call for display vs edit (if it doesn't exist, both are the same)
 
-  class_value = (multivalued ? 'mvf' : 'single')
-  class_value += (autocomplete ? ' autocomplete' : '')
+   class_value = (multivalued ? 'mvf' : 'single')
+   class_value += (autocomplete ? ' autocomplete' : '')
 
 %>
 
@@ -41,10 +42,10 @@
       <% else %>
         <% if multivalued %>
           <dt><%= label_tag document.send(field_name), label, class: "control-label" %></dt>
-          <dd><%= show_formatted_list(document.send(field_name),:facet=>facet_field_name,:separator=>separator) %></dd>
+          <dd><%= show_formatted_list(document.send(display_field_name),:facet=>facet_field_name,:separator=>separator) %></dd>
         <% else %>
           <dt><%= label_tag document.send(field_name), label, class: "control-label" %></dt>
-          <dd><%= show_linked_value(document.send(field_name),:simple_format=>simple_format,:facet=>facet_field_name) %></dd>
+          <dd><%= show_linked_value(document.send(display_field_name),:simple_format=>simple_format,:facet=>facet_field_name) %></dd>
          <% end %>
        <% end %>
   <% end %>

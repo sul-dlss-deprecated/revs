@@ -3,7 +3,7 @@ require "rails_helper"
 describe SolrDocument, :integration => true do
 
   describe "rights and copyright" do
-  
+
     it "should retrieve the default rights and copyright statements if not found in solr document" do
       doc=SolrDocument.find('bb004bn8654') # fixture with none specified
       expect(doc.use_and_reproduction).to eq("Users must contact The Revs Institute for Automotive Research, Inc. for re-use and reproduction information.")
@@ -15,26 +15,26 @@ describe SolrDocument, :integration => true do
       expect(doc.use_and_reproduction).to eq("This is the use and reproduction statement - different from default.")
       expect(doc.copyright).to eq("This is the copyright statement - different from default.")
     end
-    
+
   end
-  
+
   describe "validation" do
 
     before :each do
       @druid='yt907db4998'
       @doc = SolrDocument.find(@druid)
     end
-    
+
     it "should catch invalid dates" do
       expect(@doc.valid?).to be_truthy
       @doc.full_date = 'crap' # bad value
       expect(@doc.dirty?).to be_truthy
       expect(@doc.valid?).to be_falsey
-      expect(@doc.save).to be_falsey      
+      expect(@doc.save).to be_falsey
       @doc.full_date = '5/1/2001' # this is ok
       expect(@doc.valid?).to be_truthy
       @doc.full_date = '' # blanks is ok
-      expect(@doc.valid?).to be_truthy      
+      expect(@doc.valid?).to be_truthy
    end
 
    it "should catch invalid model years" do
@@ -42,17 +42,17 @@ describe SolrDocument, :integration => true do
      @doc.model_year = ['crap','1961'] # bad value
      expect(@doc.dirty?).to be_truthy
      expect(@doc.valid?).to be_falsey
-     expect(@doc.save).to be_falsey      
+     expect(@doc.save).to be_falsey
      @doc.model_year = '1810' # this is bad (before 1850)
-     expect(@doc.valid?).to be_falsey   
+     expect(@doc.valid?).to be_falsey
      @doc.model_year = Date.today.year+1 # this is bad (future)
-     expect(@doc.valid?).to be_falsey  
+     expect(@doc.valid?).to be_falsey
      @doc.model_year = 'crap' # this is bad
      expect(@doc.valid?).to be_falsey
      @doc.model_year = '1999' # this is ok
      expect(@doc.valid?).to be_truthy
      @doc.model_year = ['1959','1961'] # ok
-     expect(@doc.valid?).to be_truthy      
+     expect(@doc.valid?).to be_truthy
      @doc.model_year_mvf = '1959|1961' # mvf ok
      expect(@doc.valid?).to be_truthy
      @doc.model_year_mvf = 'abc|1961' # bad
@@ -60,32 +60,32 @@ describe SolrDocument, :integration => true do
      @doc.model_year_mvf = '1961' # ok
      expect(@doc.valid?).to be_truthy
      @doc.model_year = '' # blanks is ok
-     expect(@doc.valid?).to be_truthy   
+     expect(@doc.valid?).to be_truthy
      @doc.model_year_mvf = '' # blanks is ok
-     expect(@doc.valid?).to be_truthy        
+     expect(@doc.valid?).to be_truthy
    end
-   
+
   it "should allow a multiple year entry with one good value" do
       expect(@doc.valid?).to be_truthy
       @doc.years = 'crap','1961' # this is ok, it will just ditch the bad crap value
       expect(@doc.dirty?).to be_truthy
       expect(@doc.valid?).to be_truthy
       expect(@doc.save).to be_truthy
-      expect(@doc.years).to eq(['1961'])   
+      expect(@doc.years).to eq(['1961'])
       reindex_solr_docs(@druid)
     end
 
-    it "should catch invalid years" do       
+    it "should catch invalid years" do
       @doc.years = '1750' # this is bad (before 1800)
-      expect(@doc.valid?).to be_falsey   
+      expect(@doc.valid?).to be_falsey
       @doc.years = Date.today.year+1 # this is bad (future)
-      expect(@doc.valid?).to be_falsey         
+      expect(@doc.valid?).to be_falsey
       @doc.years = 'crap' # this is bad
       expect(@doc.valid?).to be_falsey
       @doc.years = '1999' # this is ok
       expect(@doc.valid?).to be_truthy
       @doc.years = ['1959','1961'] # ok
-      expect(@doc.valid?).to be_truthy      
+      expect(@doc.valid?).to be_truthy
       @doc.years_mvf = '1959|1961' # mvf ok
       expect(@doc.valid?).to be_truthy
       @doc.years_mvf = 'abc|1961'  # ok, just ditch the bad value
@@ -93,51 +93,51 @@ describe SolrDocument, :integration => true do
       @doc.years_mvf = '1961' # ok
       expect(@doc.valid?).to be_truthy
       @doc.years = '' # blank is ok
-      expect(@doc.valid?).to be_truthy   
+      expect(@doc.valid?).to be_truthy
       @doc.years_mvf = '' # blank is ok
-      expect(@doc.valid?).to be_truthy                
+      expect(@doc.valid?).to be_truthy
       @doc.years = '1961-63' # year ranges are ok
-      expect(@doc.valid?).to be_truthy                
+      expect(@doc.valid?).to be_truthy
       @doc.years = '1961-1964' # year ranges are ok
-      expect(@doc.valid?).to be_truthy                
+      expect(@doc.valid?).to be_truthy
    end
 
-   it "should store year ranges correctly" do             
+   it "should store year ranges correctly" do
      @doc.years = '1961-63' # year ranges are ok
      expect(@doc.valid?).to be_truthy
      expect(@doc.save).to be_truthy
-     expect(@doc.years).to eq(['1961','1962','1963'])        
+     expect(@doc.years).to eq(['1961','1962','1963'])
      @doc.years = '1961-1964' # year ranges are ok
      expect(@doc.valid?).to be_truthy
      expect(@doc.save).to be_truthy
-     expect(@doc.years).to eq(['1961','1962','1963','1964'])     
+     expect(@doc.years).to eq(['1961','1962','1963','1964'])
      @doc.years = '196x' # year ranges are ok
      expect(@doc.valid?).to be_truthy
      expect(@doc.save).to be_truthy
-     expect(@doc.years).to eq(['1960','1961','1962','1963','1964','1965','1966','1967','1968','1969'])       
+     expect(@doc.years).to eq(['1960','1961','1962','1963','1964','1965','1966','1967','1968','1969'])
      reindex_solr_docs(@druid)
   end
-        
+
   end
-    
+
   describe "metadata_editing" do
-    
+
     before :each do
       @field_to_edit='title'
       @solr_field=SolrDocument.field_mappings[@field_to_edit.to_sym][:field]
       @druids_to_edit=%w{nn572km4370 kn529wc4372}
       @old_values={}
       @new_value='newbie!'
-      @user=User.last   
-      cleanup_editstore_changes  
+      @user=User.last
+      cleanup_editstore_changes
     end
 
     after :each do
       cleanup_editstore_changes # transactions don't seem to work with the second database
     end
-    
+
     it "should apply bulk replace updates to solr and editstore when update method is called directly for an update operation" do
-      
+
       # confirm new field doesn't exist in solr and rows don't exist yet in editstore database
       @druids_to_edit.each do |druid|
         doc=SolrDocument.find(druid)
@@ -146,11 +146,11 @@ describe SolrDocument, :integration => true do
         expect(Editstore::Change.where(:new_value=>@new_value,:old_value=>doc.title,:field=>@solr_field,:druid=>druid).size).to eq(0)
         expect(ChangeLog.where(:druid=>druid,:operation=>'metadata update',:user_id=>@user.id).size).to eq(0)
       end
-      
+
       params_hash={:attribute=>@field_to_edit, :action=>'update', :new_value=>@new_value,:selected_druids=>@druids_to_edit}
       success=SolrDocument.bulk_update(params_hash,@user)
       expect(success).to be_truthy
-      
+
       # confirm new field has been updated in solr and has correct rows in editstore database
       @druids_to_edit.each do |druid|
         doc=SolrDocument.find(druid)
@@ -158,14 +158,14 @@ describe SolrDocument, :integration => true do
         expect(Editstore::Change.where(:new_value=>@new_value,:old_value=>@old_values[druid],:field=>@solr_field,:druid=>druid).size).to eq(1)
         expect(ChangeLog.where(:druid=>druid,:operation=>'metadata update',:user_id=>@user.id).size).to eq(1)
       end
-      
+
       # reindex solr docs we changed back to their original values
       reindex_solr_docs(@druids_to_edit)
-      
+
     end
- 
+
      it "should apply bulk updates to solr and editstore when update method is called directly for a search and replace operation for a single value field" do
-      
+
       @druid_that_should_change='nn572km4370'
       @druid_that_should_not_change='kn529wc4372'
       @search_value='Thompson Raceway, May 1'
@@ -188,27 +188,27 @@ describe SolrDocument, :integration => true do
       params_hash={:attribute=>@field_to_edit, :new_value=>@new_value, :search_value=>@search_value, :action=>'replace', :selected_druids=>@druids_to_edit}
       success=SolrDocument.bulk_update(params_hash,@user)
       expect(success).to be_truthy
-      
+
       # confirm new field has been updated in solr and has correct rows in editstore database for only the one record that matches
       doc=SolrDocument.find(@druid_that_should_change) # this druid should change
       expect(doc.title).to eq(@new_value)
       expect(Editstore::Change.where(:new_value=>@new_value,:operation=>:update,:field=>@solr_field,:druid=>@druid_that_should_change).size).to eq(1)
       expect(ChangeLog.where(:druid=>@druid_that_should_change,:operation=>'metadata update',:user_id=>@user.id).size).to eq(1)
- 
+
       # confirm new field has been updated in solr and has correct rows in editstore database for only the one record that matches
       doc=SolrDocument.find(@druid_that_should_not_change) # this druid should change
       expect(doc.title).not_to eq(@new_value)
       expect(doc.title).to eq(@old_values[@druid_that_should_not_change])
       expect(Editstore::Change.where(:new_value=>@new_value,:operation=>:update,:field=>@solr_field,:druid=>@druid_that_should_not_change).size).to eq(0)
-      
+
       expect(ChangeLog.where(:druid=>@druid_that_should_not_change,:operation=>'metadata update',:user_id=>@user.id).size).to eq(0)
       # reindex solr docs we changed back to their original values
       reindex_solr_docs([@druid_that_should_change])
-      
-    end   
+
+    end
 
      it "should apply bulk updates to solr and editstore when update method is called directly for a remove operation" do
-      
+
       # confirm new field doesn't exist in solr and rows don't exist yet in editstore database
       @druids_to_edit.each do |druid|
         doc=SolrDocument.find(druid)
@@ -217,11 +217,11 @@ describe SolrDocument, :integration => true do
         expect(Editstore::Change.where(:new_value=>'',:operation=>:delete,:field=>@solr_field,:druid=>druid).size).to eq(0)
         expect(ChangeLog.where(:druid=>druid,:operation=>'metadata update',:user_id=>@user.id).size).to eq(0)
       end
-      
+
       params_hash={:attribute=>@field_to_edit, :action=>'remove', :selected_druids=>@druids_to_edit}
       success=SolrDocument.bulk_update(params_hash,@user)
       expect(success).to be_truthy
-      
+
       # confirm new field has been updated in solr and has correct rows in editstore database
       @druids_to_edit.each do |druid|
         doc=SolrDocument.find(druid)
@@ -229,38 +229,38 @@ describe SolrDocument, :integration => true do
         expect(Editstore::Change.where(:new_value=>'',:operation=>:delete,:field=>@solr_field,:druid=>druid).size).to eq(1)
         expect(ChangeLog.where(:druid=>druid,:operation=>'metadata update',:user_id=>@user.id).size).to eq(1)
       end
-      
+
       # reindex solr docs we changed back to their original values
       reindex_solr_docs(@druids_to_edit)
-      
-    end   
+
+    end
 
     it "should use editstore" do
       expect(SolrDocument.use_editstore).to be_truthy
     end
-  
+
   end
 
     describe "update_date_fields callback methods" do
-      
+
       it "should automatically set the year field and single year solr field when a full date is set" do
         druid='zp006sp7532'
 
         user=User.last
         expect(ChangeLog.where(:druid=>druid,:operation=>'metadata update',:user_id=>user.id).size).to eq(0)
-       
+
         doc=SolrDocument.find(druid)
         expect(doc.years).to eq([1969]) # current year value
-        expect(doc.single_year).to eq(1969) # check the solr fields        
+        expect(doc.single_year).to eq(1969) # check the solr fields
         expect(doc.full_date).to eq('') # current full date value
         doc.full_date='5/6/1999' # set a new full date
         expect(doc.years).to eq([1969]) # year hasn't be set yet, since we haven't saved
         doc.save(:user=>user) # now let's save it
-        
+
         expect(ChangeLog.where(:druid=>druid,:operation=>'metadata update',:user_id=>user.id).size).to eq(1)
         expect(Editstore::Change.where(:druid=>druid).size).to eq(1) # only the date field is set
         expect(Editstore::Change.where(:druid=>druid).first.field).to eq('pub_date_ssi') # only the date field is set
-        
+
         reload_doc=SolrDocument.find(druid)
         expect(reload_doc.years).to eq([1999]) # year has now been updated
         expect(reload_doc.single_year).to eq(1999) # check the solr fields
@@ -268,14 +268,14 @@ describe SolrDocument, :integration => true do
       end
 
       it "should automatically remove the single year field when multiple years are set" do
-        druid='zp006sp7532'        
+        druid='zp006sp7532'
         doc=SolrDocument.find(druid)
         expect(doc.years).to eq([1969]) # current year value
-        expect(doc.single_year).to eq(1969) # check the solr fields        
+        expect(doc.single_year).to eq(1969) # check the solr fields
         expect(doc.full_date).to eq('') # current full date value
         doc.years_mvf='2000|2001' # set multiple years
         doc.save # now let's save it
-        
+
         reload_doc=SolrDocument.find(druid)
         expect(reload_doc.years).to eq([2000,2001]) # years has now been updated
         expect(reload_doc.single_year).to eq('')
@@ -283,33 +283,45 @@ describe SolrDocument, :integration => true do
       end
 
       it "should automatically set the single year field when a new single year is set" do
-        druid='zp006sp7532'        
+        druid='zp006sp7532'
         doc=SolrDocument.find(druid)
         expect(doc.years).to eq([1969]) # current year value
-        expect(doc.single_year).to eq(1969) # check the solr fields        
+        expect(doc.single_year).to eq(1969) # check the solr fields
         expect(doc.full_date).to eq('') # current full date value
         doc.years_mvf='1989' # set new single year
         doc.save # now let's save it
-        
+
         reload_doc=SolrDocument.find(druid)
         expect(reload_doc.years).to eq([1989]) # years has now been updated
         expect(reload_doc.single_year).to eq(1989) # single year field is updated
         reindex_solr_docs(druid)
       end
-      
+
       it "should clear out the full date field if a new year is set" do
         druid='td830rb1584'
         doc=SolrDocument.find(druid)
         expect(doc.full_date).to eq('5/1/1955') # current full date
         doc.years='2002'
         doc.save
-        
+
         reload_doc=SolrDocument.find(druid)
         expect(reload_doc.full_date).to eq('') # full date is now gone
         expect(reload_doc.single_year).to eq(2002)
         reindex_solr_docs(druid)
       end
-    
+
+      it "should correctly format full dates" do
+        druid='td830rb1584'
+        doc=SolrDocument.find(druid)
+        expect(doc.full_date).to eq('5/1/1955')
+        expect(doc.formatted_full_date).to eq('May 1, 1955')
+
+        druid='jg267fg4283'
+        doc=SolrDocument.find(druid)
+        expect(doc.full_date).to eq('')
+        expect(doc.formatted_full_date).to eq('')
+      end
+
       it "should correctly remove values from a solr document" do
         druid='zp006sp7532'
         doc=SolrDocument.find(druid)
@@ -328,7 +340,7 @@ describe SolrDocument, :integration => true do
         expect(doc.single_year).to eq(1969)
         doc.years=''
         doc.save
-        
+
         reload_doc=SolrDocument.find(druid)
         expect(reload_doc.full_date).to eq('') # no full date
         expect(reload_doc.years).to eq('') # no multivalued year
@@ -346,24 +358,24 @@ describe SolrDocument, :integration => true do
         expect(reload_doc.single_year).to eq('') # no single year
         expect(reload_doc.years).to eq('') # no multivalued year
         reindex_solr_docs(druid)
-        
+
       end
-      
+
     end
-      
+
   describe "image priority for sorting images in a collection" do
-    
-    it "should indicate which is the highest priority number for a collection" do 
+
+    it "should indicate which is the highest priority number for a collection" do
       collection=SolrDocument.find('wn860zc7322')
       expect(collection.current_top_priority).to eq(1)
       expect(collection.first_image).to eq('https://stacks.stanford.edu/image/yt907db4998/2011-023DUG-3.0_0017_thumb')
       item1=SolrDocument.find('yt907db4998')
       expect(item1.priority).to eq(1)
       item2=SolrDocument.find('qb957rw1430')
-      expect(item2.priority).to eq(0)      
+      expect(item2.priority).to eq(0)
       expect(collection.first_item.id).to eq('yt907db4998')
     end
-    
+
     it "should set the highest priority image and have the first image be different" do
       item2=SolrDocument.find('qb957rw1430')
       item2.set_top_priority
@@ -385,7 +397,7 @@ describe SolrDocument, :integration => true do
     end
 
   end
-  
+
   describe "collections" do
     describe "collection" do
       it "should return a the parent document as a SolrDocument" do
@@ -395,15 +407,15 @@ describe SolrDocument, :integration => true do
         expect(doc.collection.is_collection?).to be_truthy
         expect(doc.collection[:id]).to eq("wn860zc7322")
       end
-      
+
       it "should return an item's collection" do
         item=SolrDocument.find('yt907db4998')
         expect(item.is_item?).to be_truthy
         expect(item.is_collection?).to be_falsey
         collection=item.collection
         expect(collection.is_collection?).to be_truthy
-        expect(collection.is_item?).to be_falsey        
-        expect(collection.id).to eq('wn860zc7322')  
+        expect(collection.is_item?).to be_falsey
+        expect(collection.id).to eq('wn860zc7322')
       end
 
       it "should return a collection's items" do
@@ -411,7 +423,7 @@ describe SolrDocument, :integration => true do
         expect(collection.collection_members.size).to eq(2)
         collection.collection_members.each {|item| expect(item.is_item?).to be_truthy}
       end
-      
+
     end
 
     describe "collection_members" do
@@ -451,14 +463,14 @@ describe SolrDocument, :integration => true do
         expect(SolrDocument.score_stats['sum']).to be_between(505,540).inclusive # ditto
       end
     end
-    
+
     describe "all_archives" do
       it "should return an array of archive names" do
         expect(SolrDocument.archives.length).to eq(2)
       end
     end
-    
-    
+
+
     describe "all_collections" do
       it "should return an array of collection SolrDocuments" do
         expect(SolrDocument.all_collections.length).to eq(3)
@@ -475,7 +487,7 @@ describe SolrDocument, :integration => true do
         end
       end
     end
-    
+
   end
-  
+
 end
