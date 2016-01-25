@@ -22,7 +22,7 @@
 
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'years',:label=>t('revs.show.label_years'), :multivalued=>true, :facet=> true, :editable=>true, :input_type=>'text_area'} %>
 
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'full_date',:label=>t('revs.show.label_date'),:editable=>true} %>
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'full_date',:display_field_name=>'formatted_full_date',:label=>t('revs.show.label_date'),:editable=>true} %>
 
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'photographer',:label=>t('revs.show.label_photographer'),:editable=>true,:facet=>true} %>
 

@@ -16,10 +16,10 @@ gem 'revs-utils', '>= 2.1.12'
 
 gem 'rails', '>= 4'
 gem 'responders', '~> 2.0'
-gem 'nokogiri', '>=1.6.7.1'
+gem 'nokogiri', '>=1.6.7.2'
 
 # user authentication and roles
-gem 'devise'
+gem 'devise', '>=3.5.4'
 gem 'omniauth'
 gem 'cancan'
 
@@ -93,7 +93,7 @@ group :deployment do
   gem 'capistrano', '~> 3.0'
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
-  gem 'lyberteam-capistrano-devel', '~>3'
+  gem 'dlss-capistrano'
   gem 'capistrano-rvm'
 end
 

@@ -27,7 +27,7 @@ and are trying to run the code, see the special section below before continuing 
 1. Get jetty setup
 
         rake jetty:clean
-        
+
 1. Copy the .yml example files and the jetty config files:
 
         rake revs:config
@@ -70,18 +70,9 @@ and are trying to run the code, see the special section below before continuing 
 The code has not been tested outside of Stanford University and while it should work, there may be some internal dependencies.
 We believe that making the small modifications listed below will enable the Revs Digital Library code to work outside of Stanford:
 
-1. Open the Gemfile at the root of the project and comment out the following lines.  The first is at the top, and second line is in
-the ":deployment" group.
+1. Open the Gemfile at the root of the project and comment out the following line (in the  ":deployment" group).
 
-source 'http://sul-gems.stanford.edu'
-
-gem 'lyberteam-capistrano-devel'
-
-1. Find the line that references the 'editstore' gem and add rubygems as a source to the end of it (leave the versioning info along if it exists), e.g.
-
-gem 'editstore', :source => 'https://rubygems.org'
-
-1. Continue with the bundle install as described above.
+  gem 'dlss-capistrano'
 
 1. Prior to step 5 - creating and migrating the databases - you will need to remove all migrations involving edit-store from revs/db/migrate/ otherwise rake db:migrate will error and list the migration that fails. You can do this by hand or in revs/db/migrate/ run ls *edit-store* to see the files that match that filter and delete them with rm -i *edit-store*.
 
@@ -194,6 +185,6 @@ from which you later merge your updated work into either *master* or *develop*.
 
 6. Head back to step 2 to continue working
 
-  You can skip step 4 if the `git pull` in step 3 doesn't bring down any updates so you know *working* is already up-to-date. 
-  Step 4 is where you could have merge conflicts. But now you resolve them on *working* so when you then merge back to *develop* (after fixing the conflicts), 
+  You can skip step 4 if the `git pull` in step 3 doesn't bring down any updates so you know *working* is already up-to-date.
+  Step 4 is where you could have merge conflicts. But now you resolve them on *working* so when you then merge back to *develop* (after fixing the conflicts),
   the git history is linear and doesn't show any merge commits.  

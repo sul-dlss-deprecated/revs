@@ -40,6 +40,12 @@ describe("Item Pages",:type=>:request,:integration=>true) do
     expect(page).to have_xpath("//img[contains(@src, \"image/yh093pt9555/2012-027NADI-1966-b1_6.4_0011\")]")
   end
 
+  it "should show a nicely formatted full date if it exists" do
+    druid='td830rb1584'
+    visit catalog_path(druid)
+    expect(page).to have_content('May 1, 1955')
+  end
+
   it "should show a 404 error message when you visit an invalid ID" do
     visit catalog_path('yh093pt9554')
     expect(current_path).to eq(catalog_path('yh093pt9554'))
