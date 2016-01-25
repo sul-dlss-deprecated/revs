@@ -123,7 +123,7 @@ GEM
     debug_inspector (0.0.2)
     deprecation (0.2.2)
       activesupport
-    devise (3.5.1)
+    devise (3.5.5)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 3.2.6, < 5)
@@ -204,7 +204,7 @@ GEM
       net-ssh (>= 2.6.5)
     net-ssh (2.9.2)
     netrc (0.10.3)
-    nokogiri (1.6.7.1)
+    nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     omniauth (1.2.2)
       hashie (>= 1.2, < 4)
@@ -335,7 +335,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.1)
-    warden (1.2.3)
+    warden (1.2.4)
       rack (>= 1.0)
     whenever (0.9.4)
       chronic (>= 0.6.3)
@@ -364,7 +364,7 @@ DEPENDENCIES
   carrierwave
   coffee-rails (~> 4.0)
   countries
-  devise
+  devise (>= 3.5.4)
   dlss-capistrano
   druid-tools (>= 0.2.0)
   editstore (>= 2.0.2)
@@ -379,7 +379,7 @@ DEPENDENCIES
   meta_request
   mini_magick
   mysql2
-  nokogiri (>= 1.6.7.1)
+  nokogiri (>= 1.6.7.2)
   omniauth
   pry-rails
   quiet_assets
