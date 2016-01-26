@@ -9,6 +9,7 @@
    checked_value = defined?(checked_value) ? checked_value : true # indicates the checked value for a checkbox field
    separator = defined?(separator) ? separator : nil # indicates the separator to be used when showing multivalued fields (defaults to , as defined by helper method "show_formatted_list")
    display_field_name = display_field_name || field_name # indicates a different attribute to call for display vs edit (if it doesn't exist, both are the same)
+   help_text = defined?(help_text) ? help_text : nil # indicates special text to be shown after the field for curators
 
    class_value = (multivalued ? 'mvf' : 'single')
    class_value += (autocomplete ? ' autocomplete' : '')
@@ -36,6 +37,11 @@
         <% if multivalued %>
           <small>
             <span class="help-block"><%= t('revs.show.mvf_help_text') %></span>
+          </small>
+        <% end %>
+        <% if help_text %>
+          <small>
+            <span class="help-block"><%= help_text %></span>
           </small>
         <% end %>
       </dd>

@@ -89,7 +89,7 @@ class SolrDocument
 
   # if the full date field exists and is valid, return it formated in a friendly way for display, e.g. 6/10/1951 becomes June 10, 1951; else return blank
   def formatted_full_date
-    revs_is_valid_datestring?(full_date) && !full_date.blank? ? Date.strptime(full_date,'%m/%d/%Y').strftime("%B %-d, %Y") : ""
+    revs_is_valid_datestring?(full_date) && !full_date.blank? ? Chronic.parse(full_date).to_date.strftime("%B %-d, %Y") : ""
   end
 
   # helper to determine if this is a revs_item
