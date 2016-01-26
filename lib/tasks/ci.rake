@@ -1,4 +1,4 @@
-require 'jettywrapper' unless Rails.env.production? 
+require 'jettywrapper' unless (Rails.env.production? || Rails.env.staging?)
 require 'rest_client'
 
 # before doing stuff with fixtures, be sure we are not running in production or pointing to a actual real solr server
@@ -7,7 +7,7 @@ def allowed_solr?
 end
 
 namespace :jetty do
-    
+
   desc "Restart jetty with new settings and reload fixtures"
   task :reset do
     Rake::Task["jetty:stop"].invoke
@@ -29,14 +29,14 @@ task :ci do
 end
 
 desc "Assuming jetty is already running - then migrate, reload all fixtures and run rspec"
-task :local_ci do  
+task :local_ci do
   Rails.env='test'
   ENV['RAILS_ENV']='test'
   Rake::Task["revs:refresh_fixtures"].invoke
   Rake::Task["db:migrate"].invoke
   Rake::Task["db:fixtures:load"].invoke
   Rake::Task["db:seed"].invoke
-  Rake::Task["revs:update_item_title"].invoke  
+  Rake::Task["revs:update_item_title"].invoke
   Rake::Task["rspec"].invoke
 end
 
@@ -50,7 +50,7 @@ namespace :revs do
       puts '**************************************************************'
     end
   end
-  
+
   desc "Copy configuration files"
   task :config do
 
@@ -63,8 +63,8 @@ namespace :revs do
       cp("#{Rails.root}/config/#{solr_file}", "#{Rails.root}/jetty/solr/test-core/conf/#{solr_file}")
     end
 
-  end  
-  
+  end
+
   desc "Delete and index all fixtures in solr"
   task :refresh_fixtures do
     if allowed_solr?
@@ -74,7 +74,7 @@ namespace :revs do
       puts "Refusing to refresh fixtures.  You know, for safety.  Check your solr config."
     end
   end
-  
+
   desc "Index all fixtures into solr"
   task :index_fixtures do
     if allowed_solr?
@@ -88,7 +88,7 @@ namespace :revs do
       puts "Refusing to index fixtures.  You know, for safety.  Check your solr config."
     end
   end
-  
+
   desc "Clean up saved items - remove any saved items which reference items/solr documents that do not exist"
   task :cleanup_saved_items => :environment do |t, args|
     SavedItem.all.each { |saved_item| saved_item.destroy if saved_item.solr_document.nil? }

@@ -320,6 +320,12 @@ describe SolrDocument, :integration => true do
         doc=SolrDocument.find(druid)
         expect(doc.full_date).to eq('')
         expect(doc.formatted_full_date).to eq('')
+
+        strings_to_test=%w{3/30/1946 30/3/1946 1946-3-30}
+        strings_to_test.each do |str|
+          doc.full_date=str
+          expect(doc.formatted_full_date).to eq('March 30, 1946')
+        end
       end
 
       it "should correctly remove values from a solr document" do
