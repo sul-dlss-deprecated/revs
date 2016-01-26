@@ -98,11 +98,13 @@ en:
       updated: 'The flag was updated.'
       resolved_fix: 'The flag was marked as fixed.'
       resolved_wont_fix: "The flag was marked as won't fix."
+      resolved_review: 'The flag was marked as in review.'
       flag: 'Flag correction to this item'
       resolution_notes_optional: 'Resolution Notes (optional)'
       resolution_notes: 'Resolution notes: '
       resolve: 'Resolve'
       fixed: 'Fixed Issue'
+      in_review: 'In review'
       your_closed_flags: 'View your closed flags'
       all_closed_flags: 'View all closed flags'
       wont_fix: "Won't Fix Issue"
@@ -123,6 +125,7 @@ en:
       you: "You"
       open_state_display_name: 'Open'
       fixed_state_diplay_name: 'Fixed'
+      review_state_diplay_name: 'In Review'
       wont_fix_state_display_name: "Won't fix"
       all_closed_name: "All Closed Flags"
       all_flags_name: "All flags"

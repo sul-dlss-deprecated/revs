@@ -9,7 +9,7 @@
       <% end %>
       on <%=show_as_date(flag.created_at)%>
       <% if !flag.resolved? and can? :resolve, flag %>
-        <span class="label label-warning pull-right unresolved-label">Unresolved</span>
+        <span class="label label-warning pull-right unresolved-label"><%=flag.state%></span>
       <% end %>
       <blockquote><%= flag.comment%></blockquote>
 
@@ -24,6 +24,9 @@
           <%= f.hidden_field :druid, :value=>flag.druid%>
           <%= f.submit t('revs.flags.fixed'), :class => "flag-button btn btn-default btn-sm", :name => t('revs.flags.resolve')%>
           <%= f.submit t('revs.flags.wont_fix'), :class => "flag-button btn btn-default btn-sm", :name => t('revs.flags.resolve')%>
+          <% unless flag.state == Flag.review %>
+            <%= f.submit t('revs.flags.in_review'), :class => "flag-button btn btn-default btn-sm", :name => t('revs.flags.resolve')%>
+          <% end %>
          <% end %>
       <% end %>
 
