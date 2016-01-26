@@ -33,6 +33,7 @@ gem "mini_magick"
 gem 'whenever', :require => false
 
 gem 'addressable'
+gem 'chronic'
 
 # paging
 gem 'kaminari'

@@ -1,5 +1,6 @@
 ######################## -*- encoding : utf-8 -*-
 require 'revs-utils'
+require 'chronic'
 
 class SolrDocument
 

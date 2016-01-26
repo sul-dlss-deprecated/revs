@@ -352,6 +352,7 @@ DEPENDENCIES
   capistrano-rvm
   capybara
   carrierwave
+  chronic
   coffee-rails (~> 4.0)
   countries
   devise (>= 3.5.4)
