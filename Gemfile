@@ -4,17 +4,12 @@ ruby "2.2.2"
 
 gem 'bundler', '>= 1.2.0'
 
-# add these gems to help with the transition:
-# gem 'rails-observers'
-# gem 'actionpack-page_caching'
-# gem 'actionpack-action_caching'
-
 gem 'sitemap_generator'
 
 gem 'editstore', '>= 2.0.2'
 gem 'revs-utils', '>= 2.1.12'
 
-gem 'rails', '>= 4'
+gem 'rails', '~> 4.2.5.1'
 gem 'responders', '~> 2.0'
 gem 'nokogiri', '>=1.6.7.2'
 
@@ -42,11 +37,8 @@ gem 'addressable'
 # paging
 gem 'kaminari'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
 #gem "blacklight", :git => 'https://github.com/projectblacklight/blacklight.git'
-gem 'blacklight', ">= 5.3.0"
+gem 'blacklight', "<=5.14"
 #gem 'blacklight_advanced_search', '>=5'
 gem "blacklight_range_limit", ">=5.1.0"
 gem 'blacklight-marc'
@@ -64,22 +56,21 @@ gem 'uglifier', '>= 1.0.3'
 
 gem 'lograge'
 
+group :development do
+  gem 'thin'
+  gem 'better_errors'
+	gem 'binding_of_caller'
+	gem 'launchy'
+  gem 'pry-rails'
+  gem 'quiet_assets'
+end
+
 group :test do
   gem 'rspec-rails'
   gem 'capybara'
 end
 
-group :development do
-	gem 'better_errors'
-	gem 'binding_of_caller'
-	gem 'meta_request'
-	gem 'launchy'
-  gem 'thin'
-  gem 'pry-rails'
-  gem 'quiet_assets'
-end
-
-group :development, :staging, :test do
+group :development, :test do
   gem 'jettywrapper'
   gem 'sqlite3'
 end
