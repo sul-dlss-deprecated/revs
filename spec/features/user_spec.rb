@@ -23,7 +23,7 @@ describe("User registration system",:type=>:request,:integration=>true) do
   end
 
   it "should allow a user to return to the page they were on and not see the admin or curator interface (since they are not admins or curators)" do
-    starting_page=catalog_path('qb957rw1430')
+    starting_page=solr_document_path('qb957rw1430')
     visit starting_page
     should_allow_flagging # anonymous users can flag items
     should_not_allow_annotations

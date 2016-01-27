@@ -92,9 +92,9 @@ module ApplicationHelper
       value
     else
       if SolrDocument.field_mappings[opts[:facet].to_sym][:field] == 'pub_year_isim' # if its the year, formulate the correct date range query
-        link = catalog_index_path(:"range[pub_year_isim][begin]" => "#{val}", :"range[pub_year_isim][end]" => "#{val}")
+        link = search_catalog_path(:"range[pub_year_isim][begin]" => "#{val}", :"range[pub_year_isim][end]" => "#{val}")
       else
-        link = catalog_index_path(:"f[#{SolrDocument.field_mappings[opts[:facet].to_sym][:field]}][]"=>"#{val}")
+        link = search_catalog_path(:"f[#{SolrDocument.field_mappings[opts[:facet].to_sym][:field]}][]"=>"#{val}")
       end
       link_to(value,link)
     end

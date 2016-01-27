@@ -203,7 +203,7 @@ def login_as_user_and_goto_druid(user, druid)
   logout  
   #login as the provided user
   login_as(user)
-  item_page=catalog_path(druid)
+  item_page=solr_document_path(druid)
   visit item_page
 end
 
@@ -266,7 +266,7 @@ def check_flag_was_created(user, druid, content, flag_count)
 end
 
 def check_page_for_flag(user, druid, content)
-  item_page=catalog_path(druid)
+  item_page=solr_document_path(druid)
   expect(current_path).to eq(item_page)
   expect(page).to have_content(I18n.t('revs.flags.created'))
   expect(page).to have_content(content)

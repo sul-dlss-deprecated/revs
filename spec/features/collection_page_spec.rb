@@ -16,7 +16,7 @@ describe("Collection Pages",:type=>:request,:integration=>true) do
   end
 
   it "should show details of the first collection with an image, which is the highest priority image for that collection" do
-    visit catalog_path('kz071cg8658')
+    visit solr_document_path('kz071cg8658')
     expect(page).to have_content(@collection1)
     expect(page).to have_content("Collection Detail")  
     expect(page).to have_content("David Nadig Collection")  

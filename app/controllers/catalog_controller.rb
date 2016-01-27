@@ -99,8 +99,6 @@ class CatalogController < ApplicationController
       return
     end
 
-    search_params_logic << :phrase_search # add phrase searching capability (defined in lib/revs_search_builder)
-
     super
 
     if @response['response']['docs'].nil? # nothing
@@ -158,7 +156,7 @@ class CatalogController < ApplicationController
                           :from=>request.path,
                           :message=> t('revs.contact.reuse_contact_message',
                             :reuse_contact_message_doc => @document.identifier,
-                            :reuse_contact_message_url => catalog_url(@document.id)
+                            :reuse_contact_message_url => solr_document_url(@document.id)
           )))).html_safe
 
     elsif @document
@@ -440,7 +438,7 @@ class CatalogController < ApplicationController
           render :email_sent, :formats => [:js]
           return
         else
-          redirect_to catalog_path(params['id'])
+          redirect_to solr_document_path(params['id'])
         end
       end
     end

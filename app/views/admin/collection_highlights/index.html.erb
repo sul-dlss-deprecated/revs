@@ -29,7 +29,7 @@
                 :class => "pull-left")) %>
           </td>
           <td class="feature-collection">
-            <%= link_to collection.title,catalog_path(collection.id) %>
+            <%= link_to collection.title,solr_document_path(collection.id) %>
             <div><%= truncate(collection.description, length: 200) %></div>
           </td>
         </tr>

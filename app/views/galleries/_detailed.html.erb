@@ -52,7 +52,7 @@
             <ul class="container-images">
               <% gallery.saved_items(current_user).limit(@num_to_show_in_filmstrip).each do |item| %>
                 <li data-preview-in-filmstrip="true">
-                  <a href="<%= catalog_path(item.druid) %>">
+                  <a href="<%= solr_document_path(item.druid) %>">
                     <img src="<%= asset_url('default-thumbnail_square.jpg') %>" title="<%= item.title %>" class="thumb-<%= item.druid %>" data-url="<%= item.image %>">
                   </a>
                 </li>

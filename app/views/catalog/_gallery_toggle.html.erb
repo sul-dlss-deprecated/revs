@@ -5,19 +5,19 @@
       <ul class="nav nav-pills">
         <li>
           <%= link_to(t('revs.search.gallery_toggle.gallery'),
-            catalog_index_path(params.symbolize_keys.merge(:view => 'gallery')),
+            search_catalog_path(params.symbolize_keys.merge(:view => 'gallery')),
             :class=>"#{'active' if session[:preferred_view] == 'gallery' or session[:preferred_view].nil?}") %>
         </li>
         <li>
           <%= link_to(t('revs.search.gallery_toggle.detailed'),
-            catalog_index_path(params.symbolize_keys.merge(:view => 'detailed')),
+            search_catalog_path(params.symbolize_keys.merge(:view => 'detailed')),
             :class=>"#{'active' if session[:preferred_view] == 'detailed'}") %>
         </li>
 
         <% if can? :curate, :all  %>
           <li>
             <%= link_to(t('revs.search.gallery_toggle.curator'),
-              catalog_index_path(params.symbolize_keys.merge(:view => 'curator')),
+              search_catalog_path(params.symbolize_keys.merge(:view => 'curator')),
               :class=>"showOnLoad hidden #{'active' if session[:preferred_view] == 'curator'}") %>
           </li>
         <% end %>

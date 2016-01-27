@@ -301,9 +301,9 @@
                 <h5><%= document[blacklight_config.collection_member_collection_title_field].first %> <span class="text-muted">(<%= number_with_delimiter(@document.siblings(:include_hidden=>can?(:view_hidden, SolrDocument)).total_members) %>)</span></h5>
               </div>
               <div class="col-md-3 col-md-offset-1 controls">
-                <%= link_to(t('revs.collection_members_grid.collection_link'), catalog_path(@document[blacklight_config.collection_member_identifying_field])) %>
+                <%= link_to(t('revs.collection_members_grid.collection_link'), solr_document_path(@document[blacklight_config.collection_member_identifying_field])) %>
                 |
-                <%= link_to(t('revs.collection_members_grid.members_link'), catalog_index_path( {:f => { blacklight_config.collection_member_collection_title_field => @document.siblings(:include_hidden=>can?(:view_hidden, SolrDocument)).first[blacklight_config.collection_member_collection_title_field]  } } ))%>
+                <%= link_to(t('revs.collection_members_grid.members_link'), search_catalog_path( {:f => { blacklight_config.collection_member_collection_title_field => @document.siblings(:include_hidden=>can?(:view_hidden, SolrDocument)).first[blacklight_config.collection_member_collection_title_field]  } } ))%>
               </div>
           </div>
         </div>

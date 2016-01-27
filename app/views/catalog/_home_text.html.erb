@@ -110,13 +110,13 @@
             <div class="image-wrapper">
               <%= image_tag("facets/people-color.jpg", alt: t('revs.nav.people')) %>
               <h4>
-                <%= link_to t('revs.nav.people'), catalog_facet_path('people_ssim'), class: "more_facets_link" %>
+                <%= link_to t('revs.nav.people'), facet_catalog_path('people_ssim'), class: "more_facets_link" %>
                 <span class="item-links">
                   <%= link_to "Stirling Moss", "/?f%5Bpeople_ssim%5D%5B%5D=Moss%2C+Stirling" %>,
                   <%= link_to "Dan Gurney", "/?f%5Bpeople_ssim%5D%5B%5D=Gurney%2C+Dan" %>,
                   <%= link_to "Jackie Stewart", "/?f%5Bpeople_ssim%5D%5B%5D=Stewart%2C+Jackie" %>,
                   <%= link_to "Mario Andretti", "/?f%5Bpeople_ssim%5D%5B%5D=Andretti%2C+Mario" %>,
-                  <%= link_to t('blacklight.search.facets.more'), catalog_facet_path('people_ssim'), class: "more_facets_link" %>
+                  <%= link_to t('blacklight.search.facets.more'), facet_catalog_path('people_ssim'), class: "more_facets_link" %>
                 </span>
               </h4>
             </div>
@@ -126,13 +126,13 @@
             <div class="image-wrapper">
               <%= image_tag("facets/models-black-and-white.jpg", alt: t('revs.nav.models')) %>
               <h4>
-                <%= link_to t('revs.nav.models'), catalog_facet_path('model_ssim'), class: "more_facets_link" %>
+                <%= link_to t('revs.nav.models'), facet_catalog_path('model_ssim'), class: "more_facets_link" %>
                 <span class="item-links">
                   <%= link_to "Chevrolet Corvette", "/?f%5Bmodel_ssim%5D%5B%5D=Chevrolet+Corvette" %>,
                   <%= link_to "Ford Mustang", "/?f%5Bmodel_ssim%5D%5B%5D=Ford+Mustang" %>,
                   <%= link_to "BMW 2002", "/?f%5Bmodel_ssim%5D%5B%5D=BMW+2002" %>,
                   <%= link_to "Porsche 911", "/?f%5Bmodel_ssim%5D%5B%5D=Porsche+911" %>,
-                  <%= link_to t('blacklight.search.facets.more'), catalog_facet_path('model_ssim'), class: "more_facets_link" %>
+                  <%= link_to t('blacklight.search.facets.more'), facet_catalog_path('model_ssim'), class: "more_facets_link" %>
                 </span>
               </h4>
             </div>
@@ -142,12 +142,12 @@
             <div class="image-wrapper">
               <%= image_tag("facets/events-color.jpg", alt: t('revs.nav.events')) %>
               <h4>
-                <%= link_to t('revs.nav.events'), catalog_facet_path('event_ssi'), class: "more_facets_link" %>
+                <%= link_to t('revs.nav.events'), facet_catalog_path('event_ssi'), class: "more_facets_link" %>
                 <span class="item-links">
                   <%= link_to "Indianapolis 500", "/?f%5Bevent_ssi%5D%5B%5D=Indianapolis+500" %>,
                   <%= link_to "24 Hours of Le Mans", "/?f%5Bevent_ssi%5D%5B%5D=24+Hours+of+Le+Mans" %>,
                   <%= link_to "Geneva Motor Show", "/?f%5Bevent_ssi%5D%5B%5D=Geneva+Motor+Show" %>,
-                  <%= link_to t('blacklight.search.facets.more'), catalog_facet_path('event_ssi'), class: "more_facets_link" %>
+                  <%= link_to t('blacklight.search.facets.more'), facet_catalog_path('event_ssi'), class: "more_facets_link" %>
                 </span>
               </h4>
             </div>

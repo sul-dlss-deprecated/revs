@@ -38,7 +38,7 @@
             <ul class="container-images">
               <% collection_members.each do |item| %>
                 <li data-preview-in-filmstrip="true">
-                  <a href="<%= catalog_path(item[:id]) %>">
+                  <a href="<%= solr_document_path(item[:id]) %>">
                     <%= image_tag "default-thumbnail.png", title: "#{item.title}",
                       class: "thumb-#{item[:id]}", data: { url: "#{item.images.first}" } %>
                   </a>

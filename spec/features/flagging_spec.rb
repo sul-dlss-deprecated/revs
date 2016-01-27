@@ -17,7 +17,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
   
   it "should show the flagging link to non-logged in users even if there are no flags" do
     
-    visit catalog_path('xf058ys1313')
+    visit solr_document_path('xf058ys1313')
     should_allow_flagging
     
   end
@@ -25,7 +25,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
   it "should allow a non-logged in user to create up to the maximum number of anonymous flag for an object but no more; and should not show the anonymous flags" do
     
     druid='sc411ff4198'
-    visit catalog_path(druid)
+    visit solr_document_path(druid)
     expect(page).not_to have_css('#flag-details-link.hidden')
     should_allow_flagging
     expect(page).not_to have_content(@ask_to_notify_checkbox) # non-logged in users cannot be notified when flag is resolved
@@ -52,7 +52,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
   
   it "should allow non-logged in users to view flags for items that have them" do
 
-    visit catalog_path('sc411ff4198')
+    visit solr_document_path('sc411ff4198')
     expect(page).not_to have_css('#flag-details-link.hidden')
     should_allow_flagging
     expect(page).to have_content("user comment") # the text of the flag
@@ -65,7 +65,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
     # deactivate a user so their flags are hidden
     disable_user(user_login)
     
-    visit catalog_path('sc411ff4198')
+    visit solr_document_path('sc411ff4198')
     should_allow_flagging
     expect(page).not_to have_content("user comment") # the text of the flag is not there
     expect(find(".num-flags-badge")).to have_content("0")
@@ -75,7 +75,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
   it "should allow logged in users to view flags, even those created by anonynous users" do
     
     druid='sc411ff4198'
-    visit catalog_path(druid)
+    visit solr_document_path(druid)
     anon_comment="anonymous comment"
     create_flag(anon_comment)
     expect(page).not_to have_content(anon_comment) # the text of the anonymous flag is not visible yet
@@ -137,7 +137,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
       create_flag(user_comment)
       
       # check the page for the correct messages
-      expect(current_path).to eq(catalog_path(druid))
+      expect(current_path).to eq(solr_document_path(druid))
       expect(page).to have_content(I18n.t('revs.flags.created'))
       expect(page).to have_content(user_comment)
       expect(page).to have_button(@remove_button)
@@ -158,11 +158,11 @@ describe("Flagging",:type=>:request,:integration=>true) do
       curator_comment='not so bad'
 
       #flag the item
-      visit catalog_path(druid)
+      visit solr_document_path(druid)
       create_flag(curator_comment)
       
       # check the page for the correct messages
-      expect(current_path).to eq(catalog_path(druid))
+      expect(current_path).to eq(solr_document_path(druid))
       expect(page).to have_content(I18n.t('revs.flags.created'))
       expect(page).to have_content(curator_comment)
       expect(page).to have_content(user_comment)
@@ -284,7 +284,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
 
         #Ensure the flag doesn't show up in history for a non-logged in user or for a regular user who did not create it
         logout
-        visit catalog_path(druid)
+        visit solr_document_path(druid)
         show_not_show_flagging_history(user_comment,curator_comment)
         login_as_user_and_goto_druid(beta_login,druid)
         show_not_show_flagging_history(user_comment,curator_comment)
@@ -332,7 +332,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
        other_comments="Bunch of bad flags."
        resolution="Closing bad flag"
        
-       visit catalog_path(druid)
+       visit solr_document_path(druid)
        create_flag(anon_comment)
        
        #The item should have no open flags on it by this user

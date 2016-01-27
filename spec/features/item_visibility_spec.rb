@@ -6,9 +6,9 @@ describe("Item Visibility",:type=>:request,:integration=>true) do
     @hidden_druid='bb004bn8654'
     @default_visible_druid='yt907db4998'
     @visible_druid='xf058ys1313'
-    @hidden_druid_path=catalog_path(@hidden_druid)
+    @hidden_druid_path=solr_document_path(@hidden_druid)
     @nadig_collection_druid='kz071cg8658'
-    @nadig_collection_path=catalog_path(@nadig_collection_druid)
+    @nadig_collection_path=solr_document_path(@nadig_collection_druid)
   end
 
   it "should update image visibility" do
