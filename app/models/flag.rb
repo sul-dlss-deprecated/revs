@@ -109,4 +109,15 @@ class Flag < WithSolrDocument
     self.class.for_dropdown[self.state]
   end
 
+  def move_to_description
+    s=SolrDocument.find(druid)
+    if s.description.blank?
+      s.description = comment
+    else
+      s.description += " #{comment}"
+    end
+    s.save
+    self.state=self.class.review
+  end
+
 end

@@ -935,14 +935,7 @@ namespace :revs do
           puts "Moving #{flags.size} flag comments for #{username} to item descriptions and setting flags to in review"
           flags.each do |flag|
             puts "...working on #{flag.druid}"
-            s=SolrDocument.find(flag.druid)
-            if s.description.blank?
-              s.description = flag.comment
-            else
-              s.description += " #{flag.comment}"
-            end
-            s.save
-            flag.state=Flag.review
+            flag.move_to_description
             flag.save
           end # end loop over open flags
         end # end check for any flags
