@@ -83,4 +83,26 @@ class FlagsController < ApplicationController
     end
   end
 
+  # allow curators to bulk update flag states and apply comments to descriptions
+  def bulk_update
+    flag_update=params[:flag_update]
+    if flag_update
+      flag_ids=flag_update[:selected_flags]
+      flag_ids.each do |id|
+        flag=Flag.find(id)
+        s=SolrDocument.find(flag.druid)
+        if s.description.blank?
+          s.description = flag.comment
+        else
+          s.description += " #{flag.comment}"
+        end
+        s.save
+        flag.state=Flag.review
+        flag.save
+      end
+      flash[:success]=I18n.t('revs.flags.updated')
+    end
+    redirect_to flags_table_curator_tasks_path(params)
+  end
+
 end

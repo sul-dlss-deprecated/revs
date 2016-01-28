@@ -1,8 +1,15 @@
+<% allow_bulk_update = (local_assigns[:curate_view] && local_assigns[:selection].include?('open'))%>
+
 <div id="flags_table">
 
   <% if flags.size == 0 %>
     <p><%=t('revs.flags.no_results')%></p>
   <% else %>
+
+    <% if allow_bulk_update%>
+      <%= form_tag(bulk_update_flags_path(params.except(:flag_update)), method: :post, class:'form-inline', id:'bulk-edit-flags-form') %>
+      <%=t('revs.curator.bulk_update_flags')%> <%= submit_tag(t('revs.nav.update_completely'), :data => {:disable_with=>t('revs.nav.please_wait'),:confirm=>t('revs.curator.are_you_sure_apply_updates')})%>
+    <% end %>
 
     <div class="saved-item-pagination">
       <span>
@@ -40,6 +47,10 @@
             <th><%= t('revs.curator.resolution_date')%></th>
           <% end%>
         <% end %>
+        <% if allow_bulk_update%>
+          <th><%=t('revs.curator.headings.select')%><br /><input type="checkbox" name="flags-select-all" id="flags-select-all">
+                <%= t('revs.nav.toggle_all')%></th>
+        <% end %>
       </tr>
 
       <% flags.each do |flag| %>
@@ -67,10 +78,17 @@
           </td>
         <% end %>
        <% end %>
+       <% if allow_bulk_update%>
+         <td><%= check_box_tag('flag_update[selected_flags][]', flag.id, false, :id=>"flag_update_selected_flags_#{flag.id}") if flag.state == Flag.open  %></td>
+       <% end %>
        </tr>
       <% end %>
 
     </table>
+
+    <% if allow_bulk_update %>
+      </form>
+    <% end %>
 
   <% end %>
 
@@ -85,5 +103,4 @@
         :params => {:controller => 'curator/tasks', :action => 'flags'} %>
     <% end %>
   </nav>
-
 </div>
