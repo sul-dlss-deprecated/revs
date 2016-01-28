@@ -3,9 +3,9 @@
   <h2><%= t('revs.user.admin_dashboard') %></h2>
 
   <h3><%=t('revs.admin.administer_highlights.title')%></h3>
-  
+
   <p><%=t('revs.admin.administer_highlights.description')%></p>
-  
+
   <% if @collections.size > 0 %>
     <table class="admin table table-bordered table-condensed table-hover table-striped">
       <tr>
@@ -22,14 +22,13 @@
                 :class=>'collection-highlight-checkbox' %>
           </td>
           <td class="feature-collection collection-image">
-            <%= link_to_document(collection,
-                image_tag(collection.first_image(:include_hidden=>can?(:view_hidden, SolrDocument)),
+            <%= link_to image_tag(collection.first_image(:include_hidden=>can?(:view_hidden, SolrDocument)),
                 :alt => collection.title.html_safe,
                 :title => collection.title.html_safe,
-                :class => "pull-left")) %>
+                :class => "pull-left"), collection_path(collection) %>
           </td>
           <td class="feature-collection">
-            <%= link_to collection.title,solr_document_path(collection.id) %>
+            <%= link_to collection.title,collection_path(collection.id) %>
             <div><%= truncate(collection.description, length: 200) %></div>
           </td>
         </tr>

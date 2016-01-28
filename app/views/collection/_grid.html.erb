@@ -4,12 +4,10 @@
       collection_title=fix_revs_institute_name(collection.title.html_safe)%>
       <li class="image-item">
         <div class="blacklight-collection document collections-result">
-          <%= link_to_document(collection,
-              image_tag(collection.first_image,
-              :alt => collection_title,:title=>collection_title))  %>
+          <%= link_to image_tag(collection.first_image,:alt => collection_title,:title=>collection_title),collection_path(collection)%>
 
           <h5 class="index_title">
-            <%= link_to_document collection, collection_title %>
+            <%= link_to collection_title, collection_path(collection) %>
             <%= archive_label(collection.archive_name) %>
             <span class="text-muted">
               (<%= pluralize(number_with_delimiter(collection.collection_members(:include_hidden=>can?(:view_hidden, SolrDocument)).total_members),

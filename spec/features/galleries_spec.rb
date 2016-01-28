@@ -61,7 +61,7 @@ describe("Galleries",:type=>:request,:integration=>true) do
 
 
   it "should not show the add to gallery button for non-logged in users" do
-    visit solr_document_path(@druid1)
+    visit item_path((@druid1)
     should_not_have_button(@add_to_gallery)
   end
 
@@ -71,7 +71,7 @@ describe("Galleries",:type=>:request,:integration=>true) do
     login_as(user_login)
     gallery.saved_items(user).count == 0 # no items in this gallery yet
     
-    visit solr_document_path(@druid1)
+    visit item_path((@druid1)
     should_have_button(@add_to_gallery)
     select @gallery1_title,:from=>@gallery_drop_down
     click_button @add_to_gallery

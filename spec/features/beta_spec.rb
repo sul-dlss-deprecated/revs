@@ -11,25 +11,25 @@ describe("Beta Users Only",:type=>:request,:integration=>true) do
   end
   
   it "should not let us visit an item detail page if we are not logged in" do 
-    should_deny_access_for_beta(solr_document_path('yt907db4998'))
+    should_deny_access_for_beta(item_path(('yt907db4998'))
   end
 
   it "should not let us visit an item detail page if we are logged in but not part of the beta" do 
     login_as user_login
-    should_deny_access_for_beta(solr_document_path('yt907db4998'))
+    should_deny_access_for_beta(item_path(('yt907db4998'))
     logout
   end
 
   it "should let us visit an item detail page if we are logged and part of the beta" do 
     login_as beta_login
-    visit solr_document_path('jg267fg4283')
+    visit item_path(('jg267fg4283')
     expect(find('.show-document-title')).to have_content('Untitled')  
     logout  
   end  
 
   it "should let us visit an item detail page if we are logged in as a sunet user" do 
     visit webauth_login_path
-    visit solr_document_path('jg267fg4283')
+    visit item_path(('jg267fg4283')
     expect(find('.show-document-title')).to have_content('Untitled')    
     logout
   end  

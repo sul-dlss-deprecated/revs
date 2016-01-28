@@ -55,6 +55,7 @@ Revs::Application.routes.draw do
   get ':id', :to=>'catalog#show', :constraints => {:id => /[a-z]{2}\d{3}[a-z]{2}\d{4}/}  # so that /DRUID goes to the item page
   get 'item/:id', :to=> 'catalog#show', :as =>'item', :constraints => {:id => /[a-z]{2}\d{3}[a-z]{2}\d{4}/}
   get 'collection/:id', :to=> 'catalog#show', :as =>'collection', :constraints => {:id => /[a-z]{2}\d{3}[a-z]{2}\d{4}/}
+  get 'catalog/:id', :to=> 'catalog#show', :as =>'catalog', :constraints => {:id => /[a-z]{2}\d{3}[a-z]{2}\d{4}/} # so that old style blacklight 5 routes work still
 
   # public user profile pages
   resources :user do

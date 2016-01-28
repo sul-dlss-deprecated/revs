@@ -438,7 +438,7 @@ class CatalogController < ApplicationController
           render :email_sent, :formats => [:js]
           return
         else
-          redirect_to solr_document_path(params['id'])
+          redirect_to item_path(params['id'])
         end
       end
     end

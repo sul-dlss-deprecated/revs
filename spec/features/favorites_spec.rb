@@ -15,7 +15,7 @@ describe("Favorites",:type=>:request,:integration=>true) do
   end
 
   it "should not show save/remove favorites link for non-logged in users" do
-    visit solr_document_path(@druid1)
+    visit item_path((@druid1)
     should_not_have_button(@save_favorites_button)
     should_not_have_button(@remove_favorites_button)
   end
@@ -24,7 +24,7 @@ describe("Favorites",:type=>:request,:integration=>true) do
 
     user=get_user(user_login)
     login_as(user_login)
-    visit solr_document_path(@druid1)
+    visit item_path((@druid1)
     should_have_button(@save_favorites_button)
     should_not_have_button(@remove_favorites_button)
 
@@ -40,7 +40,7 @@ describe("Favorites",:type=>:request,:integration=>true) do
     expect(user.favorites.reload.size).to eq(1) # user now has one favorite
 
     # druid2 is not a favorite yet
-    visit solr_document_path(@druid2)
+    visit item_path((@druid2)
     should_have_button(@save_favorites_button)
     should_not_have_button(@remove_favorites_button)
     click_button(@save_favorites_button) # save it!
@@ -113,7 +113,7 @@ describe("Favorites",:type=>:request,:integration=>true) do
     #Get a two page list of druids
     fav_druids = (item_druids-default_hidden_druids).first(Revs::Application.config.num_default_per_page*2)
     fav_druids.each do |druid|
-      visit solr_document_path(druid)
+      visit item_path((druid)
       click_button(@save_favorites_button)
     end
     #Check Out Pagination
@@ -135,7 +135,7 @@ describe("Favorites",:type=>:request,:integration=>true) do
       new_description="Hello, I am a new description for a favorite."
 
       login_as(user_login)
-      visit solr_document_path(@druid2)
+      visit item_path((@druid2)
       click_button(@save_favorites_button)
       visit user_favorites_user_index_path(user_login)
       expect(page).to have_content get_title_from_druid(@druid2)
@@ -163,7 +163,7 @@ describe("Favorites",:type=>:request,:integration=>true) do
     login_as(user_login)
     user = get_user(user_login)
     expect(user.favorites.size).to eq(0)
-    visit solr_document_path(@druid2)
+    visit item_path((@druid2)
     click_button(@save_favorites_button)
     user = get_user(user_login)
     expect(user.favorites.size).to eq(1)
@@ -182,7 +182,7 @@ describe("Favorites",:type=>:request,:integration=>true) do
    it "should not allow a curator to add a hidden item to their favorites or gallery" do
     hidden_druid=default_hidden_druids.first
     login_as(curator_login)
-    visit solr_document_path(hidden_druid)
+    visit item_path((hidden_druid)
     expect(page).to have_no_content @save_favorites_button
     expect(page).to have_no_content I18n.t('revs.user_galleries.add_to_gallery')
     should_not_have_button("Add") # add to gallery button

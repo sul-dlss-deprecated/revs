@@ -25,7 +25,7 @@ describe("Curator Section",:type=>:request,:integration=>true) do
     end
 
     it "should allow a curator to return to the page they were on and then see the curator interface, but not the admin interface" do
-      starting_page=solr_document_path('qb957rw1430')
+      starting_page=item_path(('qb957rw1430')
       visit starting_page
       should_allow_flagging
       should_not_allow_annotations
@@ -61,7 +61,7 @@ describe("Curator Section",:type=>:request,:integration=>true) do
 
     it "should allow a curator to view edited item history on an item page" do
       login_as(curator_login)
-      visit solr_document_path('qb957rw1430')
+      visit item_path(('qb957rw1430')
       expect(page).to have_content 'metadata edit history'
       expect(page).to have_content 'May 8, 2013 5:00 PM by Curator Revs'
       expect(page).to have_content 'April 5, 2013 5:00 PM by admin1'
@@ -70,14 +70,14 @@ describe("Curator Section",:type=>:request,:integration=>true) do
 
     it "should now allow a non-curator to view edited item history on an item page" do
       logout
-      visit solr_document_path('qb957rw1430')
+      visit item_path(('qb957rw1430')
       expect(page).not_to have_content 'Metadata Edit History'
       expect(page).not_to have_content 'May 8, 2013 by Curator Revs'
     end
 
     it "should not show item edit history to curators if none exists for an item" do
       login_as(curator_login)
-      visit solr_document_path('yh093pt9555')
+      visit item_path(('yh093pt9555')
       expect(page).not_to have_content 'Metadata Edit History'
     end
 

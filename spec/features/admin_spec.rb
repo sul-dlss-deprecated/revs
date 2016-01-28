@@ -16,7 +16,7 @@ describe("Admin Section",:type=>:request,:integration=>true) do
     end
 
     it "should allow an admin user to return to the page they were on and then see the admin interface and curator interface" do
-      starting_page=solr_document_path('qb957rw1430')
+      starting_page=item_path(('qb957rw1430')
       visit starting_page
       should_allow_flagging
       should_not_allow_annotations      

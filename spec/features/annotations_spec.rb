@@ -4,7 +4,7 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
 
   before :each do
     logout
-    @starting_page=solr_document_path('qb957rw1430')
+    @starting_page=item_path(('qb957rw1430')
   end
 
   it "should not show the annotations for a disabled user" do
@@ -28,7 +28,7 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
   end
 
   it "should not show annotations link to a non-logged in user when there are no annotations" do
-    visit solr_document_path('xf058ys1313')
+    visit item_path(('xf058ys1313')
     expect(page).not_to have_css('#view_annotations_link')
   end
   
@@ -97,7 +97,7 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
   it "should allow a curator to remove an annonation entered by someone else." do
     druid='yt907db4998'
     original_annotation_from_fixture='Nazi symbol'
-    item_page=solr_document_path(druid)
+    item_page=item_path((druid)
     logout
 
     #ensure we only have the expected orginial
