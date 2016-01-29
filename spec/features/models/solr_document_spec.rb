@@ -319,13 +319,22 @@ describe SolrDocument, :integration => true do
         druid='jg267fg4283'
         doc=SolrDocument.find(druid)
         expect(doc.full_date).to eq('')
-        expect(doc.formatted_full_date).to eq('')
+        expect(doc.formatted_full_date).to eq('') # blank dates remain blank
 
+        # these all parse to the same thing
         strings_to_test=%w{3/30/1946 30/3/1946 1946-3-30}
         strings_to_test.each do |str|
           doc.full_date=str
           expect(doc.formatted_full_date).to eq('March 30, 1946')
         end
+
+        # these unparsable dates all just show as is
+        strings_to_test=%w{1955 195x 1950s 1955-1956 1955-56}
+        strings_to_test.each do |str|
+          doc.full_date=str
+          expect(doc.formatted_full_date).to eq(str)
+        end
+
       end
 
       it "should correctly remove values from a solr document" do

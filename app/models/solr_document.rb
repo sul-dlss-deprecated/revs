@@ -88,9 +88,10 @@ class SolrDocument
     self['score_isi'].blank? ? 0 : self['score_isi'].to_i
   end
 
-  # if the full date field exists and is valid, return it formated in a friendly way for display, e.g. 6/10/1951 becomes June 10, 1951; else return blank
+  # if the full date field exists and is valid, return it formated in a friendly way for display, e.g. 6/10/1951 becomes June 10, 1951; else return the original string
   def formatted_full_date
-    revs_is_valid_datestring?(full_date) && !full_date.blank? ? Chronic.parse(full_date).to_date.strftime("%B %-d, %Y") : ""
+    parsed_date=get_full_date(full_date) # method from revs utils gem
+    parsed_date == false ? full_date : parsed_date.to_date.strftime("%B %-d, %Y")
   end
 
   # helper to determine if this is a revs_item
