@@ -634,6 +634,7 @@ en:
           flags: "Flagging metadata issues"
           gallery: "Saving favorites and creating galleries"
           annotation: "Adding annotations"
+          searching: "Searching and using facet filters"
       sidebar:
         bulk_edits: "Edit records in bulk"
         metadata_editing_guidelines: "Metadata editing guidelines"
