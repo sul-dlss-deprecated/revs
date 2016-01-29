@@ -455,6 +455,7 @@ en:
       sibling_text: "Other items in %{collection}"
     search:
       help: 'Enter text to search for records with any of those terms. Use quotes around your terms for an exact phrase (e.g. "Tour De France").  Use AND and OR between words or phrases to further restrict searching.  Text searches can be used to refine specific fields searched below.'
+      facet_help: 'Select a value from a facet category below to restrict your search.  If you select more than one facet value, values will be combined to further restrict the search results.  Note that not all items have values for all facet categories, so results may not be comprehensive.'
       exact_phrase: 'Contains the exact phrase'
       any_terms: 'Contains any of the words'
       all_terms: 'Contains all of the words'
