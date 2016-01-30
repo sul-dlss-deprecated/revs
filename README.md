@@ -1,6 +1,6 @@
 # Revs Digital Library
 
-This is a Blacklight Application for the Revs Digital Library at Stanford University.
+This is a Blacklight application for the Revs Digital Library at Stanford University.
 
 ## Getting Started
 
@@ -105,9 +105,9 @@ want the user to see the terms dialog box again for a specific period of time (w
 
 ### Tagging
 
-Before deploying to production, tag the release with a version.  We use date based tags, typically month-year (eg. september-2013) for monthly releases.
+Before deploying to production, tag the release with a version.  We use date-based tags, typically month-year (eg. september-2013) for monthly releases.
 
-  git co master
+  git checkout master
   git tag september-2013
   git push --tags
 
@@ -116,7 +116,7 @@ Before deploying to production, tag the release with a version.  We use date bas
 
 Typically before deploying, you will merge the latest code from develop to master, then bump the version in a new commit on master, create a tag, push, and then deploy:
 
-    git co master
+    git checkout master
     git merge develop
     # bump VERSION file
     git ci -m 'bump version'
