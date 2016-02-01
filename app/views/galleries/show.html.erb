@@ -37,7 +37,7 @@
           <%= "#{t('revs.messages.created_by')} #{@gallery.user.to_s}" %>
         </span>
       <% end %>
-      <p class="gallery-description"><%=simple_format @gallery.description%></p>
+      <p class="gallery-description"><%=auto_link @gallery.description%></p>
 
       <div id="saved_items" class="gallery-actions">
         <% if can? :update, @gallery%>

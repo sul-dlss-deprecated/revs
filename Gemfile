@@ -18,6 +18,8 @@ gem 'devise', '>=3.5.4'
 gem 'omniauth'
 gem 'cancan'
 
+gem 'rails_autolink'
+
 gem 'ranked-model'
 
 gem 'rack-attack'
