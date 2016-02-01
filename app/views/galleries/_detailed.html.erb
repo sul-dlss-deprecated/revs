@@ -29,8 +29,8 @@
         <% end %>
         <span class="collection-description">
           <% if !gallery.description.blank? %>
-            <%= truncate(gallery.description, :length=>300) %>
-            <% if gallery.description.length > 300 %>
+            <%= truncate(gallery.description, :length=>200) %>
+            <% if gallery.description.length > 200 %>
               <span class="more-link">
                 <%= link_to t('revs.nav.more'), gallery_path(gallery), :id => "collection-link" %>
               </span>
