@@ -18,15 +18,15 @@ Revs::Application.routes.draw do
     match "users/webauth_login" => "sessions#webauth_login", :as => "webauth_login", :via=>:get
     match "users/webauth_logout" => "sessions#webauth_logout", :as => "webauth_logout", :via=>:delete
   end
-    
+
   # version and faq pages
   get 'version', :to=>'about#show', :defaults => {:id=>'version'}, :as => 'version'
   get 'faq', :to=>'about#show', :defaults => {:id=>'faq'}, :as => 'faq'
-  
+
   get 'search', :to=> 'catalog#index', :as=>'search'
-  
+
   match 'autocomplete', :to=>'catalog#autocomplete', :as=>'autocomplete', :via=>:get
-  
+
   match 'notice_dismissed', :to=>'catalog#notice_dismissed', :as=>'notice_dismissed', :via=>:post
 
   # all collections pages helper route
@@ -34,27 +34,27 @@ Revs::Application.routes.draw do
 
   # ajax call from home page to get more images for the carousel
   get 'update_carousel', :to => 'catalog#update_carousel', :as => 'update_carousel'
-  
+
   # ajax call from item page to show collections grid at bottom of the page
   get 'show_collection_members_grid/:id', :to => 'catalog#show_collection_members_grid', :as => 'show_collection_members_grid'
-  
+
   # helper routes to we can have a friendly URL for items and collections
   get ':id', :to=>'catalog#show', :constraints => {:id => /[a-z]{2}\d{3}[a-z]{2}\d{4}/}  # so that /DRUID goes to the item page
   get 'item/:id', :to=> 'catalog#show', :as =>'item', :constraints => {:id => /[a-z]{2}\d{3}[a-z]{2}\d{4}/}
   get 'collection/:id', :to=> 'catalog#show', :as =>'collection', :constraints => {:id => /[a-z]{2}\d{3}[a-z]{2}\d{4}/}
-  
+
   # public user profile pages
   resources :user do
     collection do
-      match ':id/favorites', :to=>'user#favorites', :as=>'user_favorites', :via=>:get, :constraints => {:id => /\w+.+/} 
-      match ':id/galleries', :to=>'user#galleries', :as=>'user_galleries', :via=>:get, :constraints => {:id => /\w+.+/} 
-      match ':id/annotations', :to=>'user#annotations', :as=>'user_annotations', :via=>:get, :constraints => {:id => /\w+.+/} 
-      match ':id/flags', :to=>'user#flags', :as=>'user_flags', :via=>:get, :constraints => {:id => /\w+.+/} 
-      match ':id/edits', :to=>'user#edits', :as=>'user_edits', :via=>:get, :constraints => {:id => /\w+.+/} 
-      match ':id', :to=>'user#show', :via=>:get, :constraints => {:id => /\w+.+/} 
+      match ':id/favorites', :to=>'user#favorites', :as=>'user_favorites', :via=>:get, :constraints => {:id => /\w+.+/}
+      match ':id/galleries', :to=>'user#galleries', :as=>'user_galleries', :via=>:get, :constraints => {:id => /\w+.+/}
+      match ':id/annotations', :to=>'user#annotations', :as=>'user_annotations', :via=>:get, :constraints => {:id => /\w+.+/}
+      match ':id/flags', :to=>'user#flags', :as=>'user_flags', :via=>:get, :constraints => {:id => /\w+.+/}
+      match ':id/edits', :to=>'user#edits', :as=>'user_edits', :via=>:get, :constraints => {:id => /\w+.+/}
+      match ':id', :to=>'user#show', :via=>:get, :constraints => {:id => /\w+.+/}
     end
   end
-  
+
   # Handles all About pages.
   get 'about', :to => 'about#show', :as => 'about_project', :defaults => {:id=>'project'} # no page specified, go to project page
   match 'contact', :to=> 'about#contact', :as=>'contact_us', :via=>[:get,:post]
@@ -62,20 +62,20 @@ Revs::Application.routes.draw do
   get 'about/tutorials', :to=> 'about#tutorials', :as => 'tutorials' # specific tutorials list page
   get 'about/boom', :to => 'about#boom' # test exception handling
   get 'about/:id', :to => 'about#show', :as=>'about_pages' # catch anything else and direct to show page with ID parameter of partial to show
-  
+
   # term acceptance dialog
   match 'accept_terms', :to=> 'application#accept_terms', :as=> 'accept_terms', :via=>:post
-  
+
   # bulk metadata editing
   post 'catalog', :to=>'catalog#index', :as=>'bulk_edit'
-  
+
   resources :annotations do
     collection do
       get 'for_image/:id', :to => 'annotations#index_by_druid',:constraints => {:id => /[a-z]{2}\d{3}[a-z]{2}\d{4}/}
       get 'show_image_number/:id', :to => 'annotations#show_image_number',:constraints => {:id => /[a-z]{2}\d{3}[a-z]{2}\d{4}/}, :as=>'show_image_number'
     end
   end
-  
+
   resources :galleries
   resources :saved_items do
     collection do
@@ -84,9 +84,10 @@ Revs::Application.routes.draw do
       post 'manage', :to => 'saved_items#manage', :as=>'manage'
     end
   end
-    
+
   resources :flags do
     collection do
+      post 'bulk_update', :to=>'flags#bulk_update', :as=>'bulk_update'
       get 'for_image/:id', :to => 'flags#index_by_druid'
       get 'update_flag_table', :to => 'user#update_flag_table'
       get 'update_curator_flag_table', :to => 'user#curator_update_flag_table'
@@ -115,10 +116,10 @@ Revs::Application.routes.draw do
       collection do
         post 'set_highlight/:id', :to => 'gallery_highlights#set_highlight'
         post 'sort', :to => 'gallery_highlights#sort', :as=>'sort'
-      end      
+      end
     end
   end
-  
+
   # curator pages
   namespace :curator do
     resources :tasks do
@@ -127,7 +128,7 @@ Revs::Application.routes.draw do
         put 'item/:id/edit_metadata', :to => 'tasks#edit_metadata', :as => 'edit_metadata'
         put 'item/:id/set_top_priority_item', :to => 'tasks#set_top_priority_item', :as => 'set_top_priority_item'
         put 'item/:id/set_visibility', :to => 'tasks#set_visibility', :as => 'set_visibility'
-        get 'annotations', :to => 'tasks#annotations', :as=>"annotations_table"        
+        get 'annotations', :to => 'tasks#annotations', :as=>"annotations_table"
         get 'edits', :to => 'tasks#edits', :as=>"edits_table"
         get 'flags', :to => 'tasks#flags', :as=>"flags_table"
         get 'favorites', :to => 'tasks#favorites', :as=>"favorites_table"
@@ -136,14 +137,14 @@ Revs::Application.routes.draw do
     end
     resources :help do
       collection do
-        get ':action(/:id)(.:format)'       
+        get ':action(/:id)(.:format)'
       end
     end
   end
-    
-    
+
+
   match "*gibberish", :to => "application#routing_error", :via=>[:get,:post,:put]
-    
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -196,5 +197,5 @@ Revs::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
-  
+
 end

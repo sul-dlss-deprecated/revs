@@ -199,7 +199,7 @@ namespace :revs do
   end
 
   desc "Update/add title to each item model record associated with Flags, Annotations and Saved Items - should only need to be run once after migration adding title to item model"
-  #Run Me: RAILS_ENV=production rake revs:update_item_title verbsose=true
+  #Run Me: RAILS_ENV=production rake revs:update_item_title verbose=true
   task :update_item_title => :environment do |t, args|
 
     verbose = ENV['verbose'] || false
@@ -920,6 +920,27 @@ namespace :revs do
       end
     end
   end
+
+  desc "Move open flag comments to item descriptions for a user, run with rake revs:move_flags_to_desc['Doug Nye']"
+  task :move_flags_to_desc, [:username] => :environment do |t, args|
+      username=args[:username]
+      user=User.where(:username=>username).limit(1).first
+      if user.nil?
+        puts "#{username} not found"
+      else
+        flags=user.flags.where(:state=>Flag.open)
+        if flags.size == 0
+          puts "#{username} has no flags"
+        else
+          puts "Moving #{flags.size} flag comments for #{username} to item descriptions and setting flags to in review"
+          flags.each do |flag|
+            puts "...working on #{flag.druid}"
+            flag.move_to_description
+            flag.save
+          end # end loop over open flags
+        end # end check for any flags
+      end # end check for existing user
+  end # end rake task
 
   desc "Reset sort order for galleries"
   task :reset_gallery_order => :environment do |t,args|
