@@ -513,6 +513,7 @@ en:
       label_current_owner: "Current Owner"
       label_marque: "Marque"
       label_model: "Model"
+      label_engine_type: "Engine Type"
       label_model_year: "Model Year"
       label_group_class: "Group/Class"
       label_vehicle_markings: "Vehicle Markings"

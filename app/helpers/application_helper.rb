@@ -215,6 +215,7 @@ module ApplicationHelper
       ['Description','description'],
       ['Marque','marque_mvf',{'data-autocomplete-field'=>'marque'}],
       ['Models','vehicle_model_mvf',{'data-autocomplete-field'=>'vehicle_model'}],
+      ['Engine Type','engine_type'],
       ['Model Years','model_year_mvf'],
       ['People','people_mvf',{'data-autocomplete-field'=>'people'}],
       ['Entrant','entrant_mvf',{'data-autocomplete-field'=>'entrant'}],
