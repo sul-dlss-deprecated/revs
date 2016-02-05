@@ -2,7 +2,7 @@
 <strong><%= t('revs.messages.changes_not_saved',:rails_env=>Rails.env) if ['staging'].include?(Rails.env)%></strong>
 
 <div class="row curator-edit-options">
-  <%= form_tag(bulk_edit_path(params.except(:bulk_edit)), method: :post, class:'form-inline', id:'bulk-update-form') do %>
+  <%= form_tag(bulk_edit_path(params.symbolize_keys.except(:bulk_edit)), method: :post, class:'form-inline', id:'bulk-update-form') do %>
 
     <%= hidden_field_tag 'bulk_edit[operation]','bulk'%>
 

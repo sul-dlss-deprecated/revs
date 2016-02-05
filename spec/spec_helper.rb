@@ -1,7 +1,7 @@
 RSpec::Expectations.configuration.warn_about_potential_false_positives = false
 
 def item_druids
-  return  ["bb004bn8654","bg152pb0116", "dd482qk0417", "hj660zx8618", "jg267fg4283", "kn529wc4372", "nn572km4370", "pt012cb4647", "qb957rw1430", "qk978vx9753", "qt854jh3199", "sc411ff4198", "td830rb1584",  "xf058ys1313", "yh093pt9555", "yt907db4998", "zp006sp7532"] 
+  return  ["bb004bn8654","bg152pb0116", "dd482qk0417", "hj660zx8618", "jg267fg4283", "kn529wc4372", "nn572km4370", "pt012cb4647", "qb957rw1430", "qk978vx9753", "qt854jh3199", "sc411ff4198", "td830rb1584",  "xf058ys1313", "yh093pt9555", "yt907db4998", "zp006sp7532"]
 end
 
 def default_hidden_druids
@@ -14,11 +14,11 @@ end
 
 # the following must match what are in the users.yml fixtures
 def user_login
-  'user1'   
+  'user1'
 end
 
 def user2_login
-  'user2'   
+  'user2'
 end
 
 def sunet_login
@@ -48,7 +48,7 @@ end
 def disable_user(login)
   user=get_user(login)
   user.active=false
-  user.save  
+  user.save
 end
 
 def register_new_user(username,password,email)
@@ -56,7 +56,7 @@ def register_new_user(username,password,email)
   fill_in 'register-email', :with=> email
   fill_in 'register-username', :with=> username
   fill_in 'user_password', :with=> password
-  fill_in 'user_password_confirmation', :with=> password  
+  fill_in 'user_password_confirmation', :with=> password
 end
 
 def should_register_ok
@@ -75,18 +75,18 @@ def login_as(login, password = nil)
 end
 
 def should_have_button(name)
-  expect(page).to have_selector("input[type=submit][value='#{name}']")  
+  expect(page).to have_selector("input[type=submit][value='#{name}']")
 end
 
 def should_not_have_button(name)
-  expect(page).not_to have_selector("input[type=submit][value='#{name}']")  
+  expect(page).not_to have_selector("input[type=submit][value='#{name}']")
 end
 
 def logout
   sign_out_button=I18n.t('revs.user.sign_out')
   if has_button?(sign_out_button)
     within('li.signout') do
-      click_button(sign_out_button) 
+      click_button(sign_out_button)
     end
   end
 end
@@ -98,7 +98,7 @@ def show_show_your_flagging_history(user_comment,curator_comment)
   expect(page).not_to have_content I18n.t('revs.flags.all_closed_flags')
   expect(page).to have_content I18n.t('revs.flags.your_closed_flags')
   expect(page).to have_content user_comment
-  expect(page).to have_content curator_comment 
+  expect(page).to have_content curator_comment
 end
 
 # Flagging history
@@ -106,7 +106,7 @@ def show_not_show_flagging_history(user_comment,curator_comment)
   expect(page).not_to have_content I18n.t('revs.flags.all_closed_flags')
   expect(page).not_to have_content I18n.t('revs.flags.your_closed_flags')
   expect(page).not_to have_content user_comment
-  expect(page).not_to have_content curator_comment 
+  expect(page).not_to have_content curator_comment
 end
 
 # Flagging history
@@ -114,15 +114,15 @@ def show_show_all_flagging_history(user_comment,curator_comment)
   expect(page).to have_content I18n.t('revs.flags.all_closed_flags')
   expect(page).not_to have_content I18n.t('revs.flags.your_closed_flags')
   expect(page).to have_content user_comment
-  expect(page).to have_content curator_comment 
+  expect(page).to have_content curator_comment
 end
 
 # Annotations
-def should_allow_annotations  
+def should_allow_annotations
   expect(page).to have_content(I18n.t('revs.annotations.add'))
 end
 
-def should_not_allow_annotations  
+def should_not_allow_annotations
   expect(page).not_to have_content(I18n.t('revs.annotations.add'))
 end
 
@@ -184,8 +184,8 @@ def editstore_entry(entry,params={})
     entry.new_value == params[:new_value] &&
     entry.old_value == params[:old_value] &&
     entry.druid == params[:druid] &&
-    entry.operation == params[:operation] && 
-    entry.state == Editstore::State.send(params[:state].to_s) 
+    entry.operation == params[:operation] &&
+    entry.state == Editstore::State.send(params[:state].to_s)
 end
 
 def reindex_solr_docs(druids)
@@ -200,7 +200,7 @@ end
 
 def login_as_user_and_goto_druid(user, druid)
   #logout, just in case
-  logout  
+  logout
   #login as the provided user
   login_as(user)
   item_page=catalog_path(druid)
@@ -210,6 +210,11 @@ end
 def remove_flag(user, druid, content)
   login_as_user_and_goto_druid(user, druid)
   find_flag_by_content_and_click_button(content, @remove_button)
+end
+
+def review_flag(user, druid, content)
+  login_as_user_and_goto_druid(user, druid)
+  find_flag_by_content_and_click_button(content, @review_button)
 end
 
 def find_flag_by_content_and_click_button(content, button)
@@ -240,9 +245,9 @@ def get_a_flag_by_content(content)
     all_flags.each do |f|
       if f.has_content?(content)
         return f
-      end 
+      end
     end
-    return nil 
+    return nil
 end
 
 def create_flag(content)
@@ -259,10 +264,10 @@ end
 def check_flag_was_created(user, druid, content, flag_count)
   # check the page for the correct messages
   check_page_for_flag(user, druid, content)
-  
+
   #check the database for the comment and ensure the flag count was incremented
   return check_database_for_flag(user, flag_count, content)
-    
+
 end
 
 def check_page_for_flag(user, druid, content)
@@ -286,7 +291,7 @@ end
 def check_flag_was_deleted(user, druid, expected_total_flags)
   expect(page).to have_content(I18n.t('revs.flags.removed'))
   expect(Flag.count).to eq(expected_total_flags)
-  expect(Flag.where(:user_id=>User.find_by_username(user).id,:druid=>druid).size).to eq(0) 
+  expect(Flag.where(:user_id=>User.find_by_username(user).id,:druid=>druid).size).to eq(0)
 end
 
 def check_flag_was_marked_wont_fix(content, expected_total_flags, resolution, flag_id)
@@ -302,7 +307,7 @@ end
 def check_flag_resolution_on_page(content, message, expected_total_flags)
   expect(page).to have_content(message)
   expect(Flag.count).to eq(expected_total_flags)
-  
+
   #Make sure this flag isn't displaying since it has been resolved
   expect(get_a_flag_by_content(content)).to eq(nil)
 end
@@ -340,7 +345,7 @@ def random_mixed_case_string()
   s = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
   string = (0...50).map{ s[rand(s.length)] }.join
   return string if string != string.downcase and string != string.upcase #return if not all caps and not all lower case
-  return random_mixed_case_string()  #We managed to get a string with entirely the same case, try again.    
+  return random_mixed_case_string()  #We managed to get a string with entirely the same case, try again.
 end
 
 def array_of_unique_strings(len)
@@ -354,7 +359,7 @@ def array_of_unique_strings(len)
 end
 
 def update_solr_field(druid, field, value)
-  
+
   doc = SolrDocument.find(druid)
   #TODO: Refractor me out to a helper
   assigner = '='
@@ -375,7 +380,7 @@ def searches_no_result(search, complex)
   full_search_array(search, complex).each do |query|
     search_no_result(query)
   end
-  
+
 end
 
 def searches_direct_route(search, druid, complex)
@@ -389,7 +394,7 @@ def search_direct_route(search, druid)
   expect(current_path).to eq(item_path(druid))
 end
 
-def search_multiple_results(search, expected) 
+def search_multiple_results(search, expected)
   pag_limit = 25 #Default for Kaminari
   visit search_path(:q=>'photo')
   expect(page).to have_content('Results')
@@ -407,7 +412,7 @@ end
 
 def full_search_array(search, complex)
   return [search] if not complex
-  
+
   searches = [search, search.upcase, search.downcase]
   subs = search.split(" ")
   subs.each do |s|
@@ -417,7 +422,7 @@ def full_search_array(search, complex)
   end
   return searches.uniq
 end
-  
+
 def get_title_from_druid(druid)
   return get_solrdoc_from_druid(druid)['title_tsi']
 end
@@ -429,6 +434,3 @@ end
 def cleanup_editstore_changes
   Editstore::Change.destroy_all
 end
-  
-  
-  

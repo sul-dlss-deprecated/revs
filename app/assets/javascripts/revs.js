@@ -16,7 +16,7 @@ $(document).ready(function(){
   //    $('#search_form').submit();
   //   }
   // });
-  
+
 	setupItemDetailPanels();
 
   // Collapse Item Details flag details if JavaScript (open by default for no-JS browsers).
@@ -56,6 +56,12 @@ $(document).ready(function(){
   //    $( 'input[type="checkbox"]' ).prop('checked', this.checked);
   //    }
   // );
+
+	// flag update select all
+  $( '#flags-select-all' ).click( function () {
+     $( 'input[type="checkbox"]' ).prop('checked', this.checked);
+     }
+  );
 
   // saved_items select all
   $( '#saved_items-select-all' ).click( function () {
@@ -345,7 +351,7 @@ function setupItemDetailPanels() {
    }).on('hide.bs.collapse', function (e) {
      $(e.target).parent().find(".fa-caret-down").removeClass("fa-caret-down").addClass("fa-caret-right");
    });
-    
+
    // Collapse Item Details metadata sections if JavaScript (open by default for no-JS browsers).
    $('.accordion-body.default-collapsed').removeClass("in");
 
