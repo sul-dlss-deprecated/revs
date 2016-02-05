@@ -81,6 +81,8 @@
 
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'vehicle_model',:label=>t('revs.show.label_model'),:multivalued=>true,:editable=>true,:facet=>true, :input_type=>'text_area',:autocomplete=>'vehicle_model'} %>
 
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'engine_type',:label=>t('revs.show.label_engine_type'),:editable=>true, :input_type=>'text_area'} %>
+
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'model_year',:label=>t('revs.show.label_model_year'),:multivalued=>true,:editable=>true,:facet=>true, :input_type=>'text_area'} %>
 
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'group_class',:label=>t('revs.show.label_group_class'),:editable=>true} %>
