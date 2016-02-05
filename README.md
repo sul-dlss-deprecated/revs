@@ -46,6 +46,7 @@ and are trying to run the code, see the special section below before continuing 
 1. Load the fixture data:
 
         rake db:fixtures:load
+        rake revs:update_item_title
 
   This will give you a few test users to work with and should only be used in development.
   See the test/fixtures/users.yml files for usernames/passwords.  
