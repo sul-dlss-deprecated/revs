@@ -138,12 +138,22 @@
           <tr>
             <th><%=link_to t('revs.curator.username'), flags_table_curator_tasks_path(:order=>'user_id', :tab=>@tab_list_user,:search=>@search) %></th>
             <th class="right"><%=link_to t('revs.curator.flags_made'), flags_table_curator_tasks_path(:order=>'num_flags_desc', :tab=>@tab_list_user,:search=>@search) %></th>
+            <th class="right"><%=t('revs.flags.open_state_display_name')%></th>
+            <th class="right"><%=t('revs.flags.review_state_diplay_name') %></th>
+            <th class="right"><%=t('revs.flags.all_closed_name') %></th>
             <th><%=link_to t('revs.curator.last_flagged'), flags_table_curator_tasks_path(:order=>'updated_at_desc', :tab=>@tab_list_user,:search=>@search) %></th>
           </tr>
           <% @flags.each do |result| %>
             <tr>
               <td><%=result.user.nil? ? t('revs.user.anonymous') : display_user_name(result.user,user_flags_user_index_path(result.user.username))%></td>
               <td class="right"><%= result.num_flags%></td>
+              <% if result.user.nil? %>
+                <td colspan="3">&nbsp;</td>
+              <% else %>
+                <td class="right"><%= result.user.flags.where(:state=>Flag.open).count%></td>
+                <td class="right"><%= result.user.flags.where(:state=>Flag.review).count%></td>
+                <td class="right"><%= result.user.flags.where(:state=>Flag.closed).count%></td>
+              <% end %>
               <td><%= show_as_date(result.updated_at.in_time_zone) %></td>
             </tr>
           <% end %>
