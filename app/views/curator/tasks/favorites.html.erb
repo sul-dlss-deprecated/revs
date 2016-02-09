@@ -82,7 +82,7 @@
           </span>
         </div>
 
-	        <table class="table table-bordered table-condensed table-hover table-striped">
+	        <table class="table table-bordered table-condensed table-hover table-striped report-table">
 	          <tr>
 	            <th><%=link_to t('revs.curator.username'),favorites_table_curator_tasks_path(:order=>'user_id',:tab=>@tab_list_user) %></th>
 	            <th class="right"><%=link_to t('revs.curator.lists_made'), favorites_table_curator_tasks_path(:order=>'num_galleries_desc', :tab=>@tab_list_user) %></th>
@@ -91,7 +91,7 @@
 	          </tr>
 	          <% @saved_items.each do |result| %>
 	            <tr>
-	              <td><%=link_user_name(result.user)%></td>
+	              <td><%=link_user_name(result.user)%><% if result.user && result.user.curator?%><span class="label label-revs text-lowercase"><%=result.user.role%></span><% end %></td>
 	              <td class="right"><%= result.num_galleries%></td>
 	              <td class="right"><%= result.saved_items_count %></td>
 	              <td><%= show_as_date(result.updated_at.in_time_zone) %></td>

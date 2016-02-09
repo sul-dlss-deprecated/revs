@@ -109,7 +109,7 @@
           </div>
         </div>
 
-        <table class="table table-bordered table-condensed table-hover table-striped">
+        <table class="table table-bordered table-condensed table-hover table-striped report-table">
           <tr>
             <th><%= link_to t('revs.curator.item_title'), annotations_table_curator_tasks_path(:order=>'items_title_asc',  :tab=>@tab_list_all,:search=>@search) %></th>
             <th><%=t('revs.annotations.annotation_text')%></th>
@@ -120,7 +120,7 @@
             <tr>
               <td><%=item_link(annotation.item,:truncate=>true)%></td>
               <td><%= annotation.text%></td>
-              <td><%= display_user_name(annotation.user,user_annotations_user_index_path(annotation.user.username))%></td>
+              <td><%= display_user_name(annotation.user,user_annotations_user_index_path(annotation.user.username))%><% if annotation.user && annotation.user.curator?%><span class="label label-revs text-lowercase"><%=annotation.user.role%></span><% end %></td>
               <td><%= show_as_datetime(annotation.created_at.in_time_zone)%></td>
             </tr>
           <% end %>
@@ -147,7 +147,7 @@
           </div>
         </div>
 
-        <table class="table table-bordered table-condensed table-hover table-striped">
+        <table class="table table-bordered table-condensed table-hover table-striped report-table">
           <tr>
             <th><%=link_to t('revs.curator.username'), annotations_table_curator_tasks_path(:order=>'user_id', :tab=>@tab_list_user,:search=>@search) %></th>
             <th class="right"><%=link_to t('revs.curator.annotations_made'), annotations_table_curator_tasks_path(:order=>'num_annotations_desc', :tab=>@tab_list_user,:search=>@search) %></th>
@@ -155,7 +155,7 @@
           </tr>
           <% @annotations.each do |result| %>
             <tr>
-              <td><%=display_user_name(result.user,user_annotations_user_index_path(result.user.username))%></td>
+              <td><%=display_user_name(result.user,user_annotations_user_index_path(result.user.username))%><% if result.user && result.user.curator?%><span class="label label-revs text-lowercase"><%=result.user.role%></span><% end %></td>
               <td class="right"><%= result.num_annotations%></td>
               <td><%= show_as_date(result.updated_at.in_time_zone)%></td>
             </tr>

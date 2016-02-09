@@ -22,7 +22,7 @@
     </span>
   </div>
 
-  <table class="table table-bordered table-condensed table-hover table-striped">
+  <table class="table table-bordered table-condensed table-hover table-striped report-table">
     <tr>
       <th width="50%"><%= link_to t('revs.curator.item_title'),galleries_table_curator_tasks_path(:order=>'title') %></th>
       <% if @filter=='all' %>
@@ -39,7 +39,7 @@
         <% if @filter=='all' %>
           <td><%=gallery.visibility%></td>
         <% end %>
-        <td><%= link_user_name(gallery.user) %></td>
+        <td><%= link_user_name(gallery.user) %><% if gallery.user && gallery.user.curator?%><span class="label label-revs text-lowercase"><%=gallery.user.role%></span><% end %></td>
         <td class="right"><%= gallery.saved_items(current_user).count %></td>
         <td class="right"><%= gallery.views %></td>
         <td><%=show_as_date(gallery.updated_at)%></td>
