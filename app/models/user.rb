@@ -88,8 +88,11 @@ class User < ActiveRecord::Base
 
   #### class level methods
 
-  # indicate which galleries should be shown based on the user passed in
+  def curator?
+    %w{admin curator}.include? role
+  end
 
+  # indicate which galleries should be shown based on the user passed in
   def gallery_visibility_filter(user)
     all_visibilities=[]
     all_visibilities << 'public' # anyone can see public galleries

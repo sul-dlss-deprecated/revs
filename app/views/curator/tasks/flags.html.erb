@@ -134,7 +134,7 @@
           </div>
         </div>
 
-        <table class="table table-bordered table-condensed table-hover table-striped">
+        <table class="table table-bordered table-condensed table-hover table-striped report-table">
           <tr>
             <th><%=link_to t('revs.curator.username'), flags_table_curator_tasks_path(:order=>'user_id', :tab=>@tab_list_user,:search=>@search) %></th>
             <th class="right"><%=link_to t('revs.curator.flags_made'), flags_table_curator_tasks_path(:order=>'num_flags_desc', :tab=>@tab_list_user,:search=>@search) %></th>
@@ -145,7 +145,7 @@
           </tr>
           <% @flags.each do |result| %>
             <tr>
-              <td><%=result.user.nil? ? t('revs.user.anonymous') : display_user_name(result.user,user_flags_user_index_path(result.user.username))%></td>
+              <td><%=result.user.nil? ? t('revs.user.anonymous') : display_user_name(result.user,user_flags_user_index_path(result.user.username))%> <% if result.user && result.user.curator?%><span class="label label-revs text-lowercase"><%=result.user.role%></span><% end %></td>
               <td class="right"><%= result.num_flags%></td>
               <% if result.user.nil? %>
                 <td colspan="3">&nbsp;</td>
