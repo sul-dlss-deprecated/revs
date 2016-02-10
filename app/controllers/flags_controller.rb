@@ -95,7 +95,7 @@ class FlagsController < ApplicationController
       end
       flash[:success]=I18n.t('revs.flags.updated')
     end
-    redirect_to flags_table_curator_tasks_path(params)
+    redirect_to flags_table_curator_tasks_path(params.symbolize_keys)
   end
 
 end
