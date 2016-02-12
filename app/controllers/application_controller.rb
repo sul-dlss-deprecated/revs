@@ -267,6 +267,7 @@ class ApplicationController < ActionController::Base
       'last_name' => 'last_name ASC',
       'sunet' => 'sunet ASC',
       'role' => 'role ASC',
+      'state' => 'state ASC',
       'login_count_desc' => 'login_count DESC',
       'created_at_desc' => 'created_at DESC',
       'updated_at_desc' => 'updated_at DESC',
