@@ -28,7 +28,7 @@ class Curator::TasksController < ApplicationController
 
        when @tab_list_flag
          flags=flags.where(['comment like ? OR items.title like ? OR flags.druid=?',"%#{@search}%","%#{@search}%",@search]) unless @search.blank?
-         flags=flags.joins(:item).where(:state => @selection)
+         flags=flags.joins(:item).includes(:user).where(:state => @selection)
 
        when @tab_list_item
          flags=flags.where(['items.title like ? OR flags.druid=?',"%#{@search}%",@search]) unless @search.blank?
@@ -74,7 +74,7 @@ class Curator::TasksController < ApplicationController
 
    def edits
 
-     @tab_list_user = 'edits-by-user'  # first tab (default) 
+     @tab_list_user = 'edits-by-user'  # first tab (default)
      @tab_list_item = 'edits-by-item' # second tab
      @tab = params[:tab] || @tab_list_user
 

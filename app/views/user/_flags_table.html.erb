@@ -1,4 +1,6 @@
-<% allow_bulk_update = (local_assigns[:curate_view] && local_assigns[:selection].include?('open'))%>
+<% allow_bulk_update = (local_assigns[:curate_view] && local_assigns[:selection].include?('open'))
+   table_params={:per_page=>@per_page,:search=>@search, :curator_flag_selection=>local_assigns[:selection].join(','), :tab=>@tab_list_flag}
+%>
 
 <div id="flags_table">
 
@@ -20,31 +22,31 @@
     <table class="table table-bordered table-condensed table-hover table-striped report-table">
       <tr>
         <% if local_assigns[:curate_view] %>
-        <th><%= link_to t('revs.curator.item_title').titleize, flags_table_curator_tasks_path(:order=>'items_title_asc',:search=>@search, :selection=>local_assigns[:selection].join(','), :tab=>@tab_list_flag)%></th>
-         <th><%= t('revs.curator.flagging_user') %></th>
+        <th><%= link_to t('revs.curator.item_title').titleize, flags_table_curator_tasks_path(table_params.merge(:order=>'items_title_asc'))%></th>
+         <th><%= link_to t('revs.curator.flagging_user').titleize, flags_table_curator_tasks_path(table_params.merge(:order=>'user_id')) %></th>
        <% end %>
 
         <% if not local_assigns[:curate_view] %>
-          <th><%= link_to t('revs.collection_members.items_name').titleize,user_flags_user_index_path(user.username, :order=>'items_title_asc',:search=>@search, :selection=>local_assigns[:selection].join(',')) %></th>
+          <th><%= link_to t('revs.collection_members.items_name').titleize,user_flags_user_index_path(user.username, table_params.merge(:order=>'items_title_asc')) %></th>
         <% end%>
 
         <th><%= t('revs.flags.comment')%></th>
 
        <% if local_assigns[:curate_view] %>
-        <th><%= link_to t('revs.curator.flag_created'), flags_table_curator_tasks_path(:order=>'flags_created_at_desc', :search=>@search, :selection=>local_assigns[:selection].join(','), :tab=>@tab_list_flag)%></th>
+        <th><%= link_to t('revs.curator.flag_created'), flags_table_curator_tasks_path(table_params.merge(:order=>'flags_created_at_desc'))%></th>
        <% end %>
 
        <% if not local_assigns[:curate_view] %>
-        <th><%= link_to t('revs.curator.flag_created'), user_flags_user_index_path(user.username, :order=>'flags_created_at_desc', :search=>@search,:selection=>local_assigns[:selection].join(',')) %></th>
+        <th><%= link_to t('revs.curator.flag_created'), user_flags_user_index_path(user.username, table_params.merge(:order=>'flags_created_at_desc')) %></th>
        <% end %>
 
-        <th><%= t('revs.messagaes.status') %></th>
+        <th><%= link_to t('revs.messages.status').titleize, flags_table_curator_tasks_path(table_params.merge(:order=>'state')) %></th>
 
         <% if Flag.display_resolved_columns(local_assigns[:selection])%>
-          <th><%= t('revs.curator.resolver_username') %></th>
+          <th><%= link_to t('revs.curator.resolver_username').titleize, flags_table_curator_tasks_path(table_params.merge(:order=>'resolving_user')) %></th>
           <th><%= t('revs.curator.resolution_notes') %></th>
           <% if local_assigns[:curate_view]%>
-            <th><%= t('revs.curator.resolution_date')%></th>
+            <th><%= link_to t('revs.curator.resolution_date').titleize, flags_table_curator_tasks_path(table_params.merge(:order=>'resolving_time')) %></th>
           <% end%>
         <% end %>
         <% if allow_bulk_update%>
