@@ -125,6 +125,7 @@ Revs::Application.routes.draw do
     resources :tasks do
       collection do
         post 'set_edit_mode/:id', :to => 'tasks#set_edit_mode'
+        get 'autocomplete_user', :to => 'tasks#autocomplete_user'
         put 'item/:id/edit_metadata', :to => 'tasks#edit_metadata', :as => 'edit_metadata'
         put 'item/:id/set_top_priority_item', :to => 'tasks#set_top_priority_item', :as => 'set_top_priority_item'
         put 'item/:id/set_visibility', :to => 'tasks#set_visibility', :as => 'set_visibility'

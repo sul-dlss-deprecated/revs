@@ -1,5 +1,5 @@
 <% allow_bulk_update = (local_assigns[:curate_view] && local_assigns[:selection].include?('open'))
-   table_params={:per_page=>@per_page,:search=>@search, :curator_flag_selection=>local_assigns[:selection].join(','), :tab=>@tab_list_flag}
+   table_params={:filter_user=>@filter_user,:per_page=>@per_page,:search=>@search, :curator_flag_selection=>local_assigns[:selection].join(','), :tab=>@tab_list_flag}
 %>
 
 <div id="flags_table">

@@ -1,7 +1,7 @@
 class Curator::TasksController < ApplicationController
 
   before_filter :check_for_curator_logged_in
-  before_filter :ajax_only, :only=>[:set_edit_mode,:edit_metadata,:set_top_priority_item]
+  before_filter :ajax_only, :only=>[:set_edit_mode,:edit_metadata,:set_top_priority_item,:autocomplete_user]
   before_filter :get_paging_params
 
    def index
@@ -9,6 +9,7 @@ class Curator::TasksController < ApplicationController
    end
 
    def flags
+
 
      s = params[:curator_flag_selection] || Flag.open
      @selection = s.split(',')
@@ -27,7 +28,14 @@ class Curator::TasksController < ApplicationController
      case @tab
 
        when @tab_list_flag
+         @filter_user=params[:filter_user]
+         user=User.where(['username=?',@filter_user]) if @filter_user
          flags=flags.where(['comment like ? OR items.title like ? OR flags.druid=?',"%#{@search}%","%#{@search}%",@search]) unless @search.blank?
+         if (!@filter_user.blank? && user.size == 1)
+           flags=flags.where(:user_id=>user.first.id)
+         else
+           @filter_user = ""
+         end
          flags=flags.joins(:item).includes(:user).where(:state => @selection)
 
        when @tab_list_item
@@ -172,6 +180,15 @@ class Curator::TasksController < ApplicationController
      @document=SolrDocument.find(params[:id])
      @document.set_top_priority
      flash[:success] = t('revs.messages.set_top_priority')
+   end
+
+   # an ajax call from the curator flagging report to filter by username
+   def autocomplete_user
+     result=User.where(['username like ?',"#{params[:term]}%"]).map {|user| user.username }
+      respond_to do |format|
+       format.html { routing_error }
+       format.json { render :json=>result.to_json }
+     end
    end
 
 end

@@ -183,7 +183,7 @@ class CatalogController < ApplicationController
     end
   end
 
-  # call from metadata edit form for fields that allow autocomplete
+  # an ajax call from metadata edit form for fields that allow autocomplete
   def autocomplete
     result=Ontology.terms(params[:field],params[:term]).map {|term| term.value }
      respond_to do |format|

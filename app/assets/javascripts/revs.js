@@ -443,6 +443,15 @@ function enable_autocomplete() {
           },
           minLength: 2,
           max: 10});
+
+		$( ".autocomplete-user.single").autocomplete({
+         source: function( request, response ) {
+           $.getJSON( "/curator/tasks/autocomplete_user.json", {
+             term: request.term
+           }, response );
+         },
+         minLength: 2,
+         max: 10});
   }
 
 // href links with the disable_after_click=true attribute will be automatically disabled after clicking to prevent double clicks
