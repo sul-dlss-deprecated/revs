@@ -1,7 +1,7 @@
 set :application, "revs-lib"
 set :repo_url, "https://github.com/sul-dlss/revs"
-set :user, ask("User", 'enter in the app username')
-set :home_directory, ask("Directory", 'enter in the app directory (e.g. /home/lyberadmin or /opt/app)')
+set :user, "lyberadmin"
+set :home_directory, "/home/lyberadmin" # will eventually be "/opt/app"
 
 set :deploy_to, "#{fetch(:home_directory)}/#{fetch(:application)}"
 set :rvm_ruby_version, '2.2.2'
@@ -22,12 +22,9 @@ set :tag, ask("Tag to deploy (make sure to push the tag first): [default: #{defa
 
 set :branch, fetch(:tag)
 
-set :deploy_host, ask("Server", 'enter in the server you are deploying to. do not include .stanford.edu')
-server "#{fetch(:deploy_host)}.stanford.edu", user: fetch(:user), roles: %w{web db app}
-
 namespace :jetty do
-  task :start do 
-    on roles(:app) do    
+  task :start do
+    on roles(:app) do
       execute "cd #{deploy_to}/current && bundle exec rake jetty:start RAILS_ENV=#{fetch(:rails_env)}"
     end
   end
@@ -40,7 +37,7 @@ namespace :jetty do
     on roles(:app) do
       execute "rm -fr #{release_path}/jetty"
     end
-  end  
+  end
   task :symlink do
     on roles(:app) do
       execute "rm -fr #{release_path}/jetty"
@@ -72,12 +69,12 @@ namespace :db do
     on roles(:app) do
       execute "cd #{deploy_to}/current && bundle exec rake db:seed RAILS_ENV=#{fetch(:rails_env)}"
     end
-  end  
+  end
   task :symlink_sqlite do
     on roles(:app) do
       execute "ln -s #{shared_path}/#{fetch(:rails_env)}.sqlite3 #{release_path}/db/#{fetch(:rails_env)}.sqlite3"
     end
-  end  
+  end
 end
 
 namespace :deploy do
@@ -85,7 +82,7 @@ namespace :deploy do
     on roles(:app) do
       execute "ln -s #{fetch(:home_directory)}/editstore-updater/current/public #{release_path}/public/editstore"
     end
-  end  
+  end
   task :symlink_robotstxt do
     shared_robots="#{shared_path}/robots.txt"
     if remote_file_exists?(shared_robots)
@@ -93,7 +90,7 @@ namespace :deploy do
         execute "rm -fr #{release_path}/public/robots.txt && ln -s #{shared_robots} #{release_path}/public/robots.txt"
       end
     end
-  end       
+  end
   task :dev_options_set do
     on roles(:app) do
       execute "cd #{deploy_to}/current && bundle exec rake revs:dev_options_set RAILS_ENV=#{fetch(:rails_env)}"
@@ -119,7 +116,7 @@ after  "deploy:finishing", "deploy:symlink_robotstxt"
 
 
 def remote_file_exists?(path)
-  
+
   on roles(:all) do
     if test("[ -f #{path}]")
       true
@@ -127,5 +124,5 @@ def remote_file_exists?(path)
       false
     end
   end
-  
+
 end
