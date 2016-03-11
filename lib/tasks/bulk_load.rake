@@ -7,6 +7,7 @@ require 'countries'
 require 'pathname'
 require 'revs-utils'
 require 'nokogiri'
+$stdout.sync = true
 
 namespace :revs do
   @sourceid = 'sourceid'
@@ -928,6 +929,7 @@ namespace :revs do
       if user.nil?
         puts "#{username} not found"
       else
+        puts "Started at #{Time.now}"
         flags=user.flags.where(:state=>Flag.open)
         if flags.size == 0
           puts "#{username} has no flags"
@@ -935,10 +937,12 @@ namespace :revs do
           puts "Moving #{flags.size} flag comments for #{username} to item descriptions and setting flags to in review"
           flags.each do |flag|
             puts "...working on #{flag.druid}"
+            STDOUT.flush
             flag.move_to_description
             flag.save
           end # end loop over open flags
         end # end check for any flags
+        puts "Finished at #{Time.now}"
       end # end check for existing user
   end # end rake task
 

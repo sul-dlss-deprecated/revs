@@ -1,5 +1,5 @@
 <% location = (defined?(location).nil? ? "page-contact-form" : location)%>
-<%= form_tag(contact_us_path, :method=>'post', :class => 'form-horizontal report-problem', :id=>location, :remote=>true) do %>
+<%= form_tag(send_contact_path, :method=>'post', :class => 'form-horizontal report-problem', :id=>location, :authenticity_token=>true, :remote=>true) do %>
 
   <p><%=t('revs.contact.instructions_html',:reuse_link=>link_to(Revs::Application.config.revs_reuse_link,Revs::Application.config.revs_reuse_link))%></p>
 
