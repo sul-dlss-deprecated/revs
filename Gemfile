@@ -9,7 +9,7 @@ gem 'sitemap_generator'
 gem 'editstore', '>= 2.0.2'
 gem 'revs-utils', '>= 2.1.14'
 
-gem 'rails', '~> 4.2.5.1'
+gem 'rails', '>= 4.2.5.2'
 gem 'responders', '~> 2.0'
 gem 'nokogiri', '>=1.6.7.2'
 
