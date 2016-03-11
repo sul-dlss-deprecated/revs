@@ -1,0 +1,5 @@
+$('.contact-us-errors').html('');
+$('.contact-us-errors').addClass('hidden');
+$('#report-problem-form').slideUp('fast');
+$('#main-flashes').html("<%= escape_javascript(render( :partial => "/flash_msg")).html_safe %>");
+document.body.scrollTop = document.documentElement.scrollTop = 0; // scroll to top of page to be sure they see success message
