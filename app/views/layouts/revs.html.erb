@@ -34,7 +34,6 @@
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
     <%= raw(content_for(:head)) %>
-		<script type="text/javascript" src="<%=Revs::Application.config.purl_plugin_location%>"></script>
 
     <script type="text/javascript">
       window.I18n = <%= translations_for_js.to_json.html_safe %>
