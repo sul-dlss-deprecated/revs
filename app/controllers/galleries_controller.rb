@@ -17,6 +17,10 @@ class GalleriesController < ApplicationController
         @galleries=Gallery.regular_users.page(@current_page).per(@per_page)
     end
     @num_to_show_in_filmstrip=100
+    respond_to do |format|
+      format.html
+      format.json { render :json => @galleries }
+    end
   end
 
   def show
@@ -32,6 +36,10 @@ class GalleriesController < ApplicationController
     @manage=params[:manage]
     Gallery.increment_counter(:views, @gallery.id) unless is_logged_in_user?(current_user) # your own views don't count
     @saved_items=@gallery.saved_items(current_user).page(@current_page).per(@per_page)
+    respond_to do |format|
+      format.html
+      format.json { render :json => @gallery }
+    end
   end
 
   def new
