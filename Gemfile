@@ -18,6 +18,8 @@ gem 'devise', '>=3.5.4'
 gem 'omniauth'
 gem 'cancan'
 
+gem 'active_model_serializers'
+
 gem 'rails_autolink'
 
 gem 'ranked-model'
