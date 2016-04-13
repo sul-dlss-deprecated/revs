@@ -19,7 +19,7 @@ class GalleriesController < ApplicationController
     @num_to_show_in_filmstrip=100
     respond_to do |format|
       format.html
-      format.json { render :json => @galleries }
+      format.json { render :json => @galleries.to_json(:only=>[:id,:title,:gallery_type,:saved_items_count,:user_id]) }
     end
   end
 
