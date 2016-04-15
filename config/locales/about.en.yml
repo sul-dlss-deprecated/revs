@@ -19,7 +19,8 @@ en:
       terms_of_use_message: 'The Revs Digital Library is under development and contains content that has not been reviewed by curators. By continuing, I acknowledge I understand and that I can provide feedback about the site and about content.'
       terms_continue: 'Continue'
       terms_disagree: 'Do not continue'
-      acknowledgements_text_html: 'The Revs Digital Library acknowledges the support of the %{revs_institute}, the %{stanford_library}, and the %{revs_program}.'
+      acknowledgements_text_html: |
+        The Revs Digital Library is made possible through the generous support and vision of Miles C. Collier and %{revs_institute}&reg;, with %{stanford_library} and the %{revs_program}.  The Revs Institute&reg; and Revs&reg; are registered trademarks of The Revs Institute.
       copyright_infringement: 'report alleged copyright infringement to Stanford'
       terms_of_use_policy: 'Stanford University Terms of Use Policy'
       contributors_title: 'Top Contributors'
@@ -58,26 +59,33 @@ en:
         </ul>
       project_text_html: |
         <p>
-        	  %{revs_institute} has a large and varied collection of automotive materials, including images, research books, ephemera, and specialized documents.
-           The Revs Program at Stanford is producing research data and generating course materials.  The primary goal of Stanford Libraries is to ensure these materials are indexed, preserved and made
+        	  %{revs_institute_for_auto_research} has an extensive Special Collections library and archive of automotive history materials within its purpose built facility in Naples, Florida. The Revs Institute&reg; library consists of over one million images, research books, ephemera, and specialized documents including items
+            from the Collier Collection&trade;.
+        </p>
+        <p>
+           The %{revs_program} is producing research data and generating course materials.  The primary goal of the %{stanford_library} is to ensure these materials are indexed, preserved and made
            available to library patrons, researchers and the general public.  By digitizing materials and making them discoverable, content that was once available to a select few becomes useful and
            discoverable for a wide range of researchers.
         </p>
         <p>
         	%{revs_about_scanning_image}
-        	Working with <a href="http://pixelacuity.com/">Pixel Acuity</a>, The Revs Institute for Automotive Research, Inc. is digitizing their collection of images using specialized digital cameras.  Each slide, negative or print is cleaned and imaged at a high resolution.
-          The images and associated metadata are collected and transferred to Stanford, where they are being accessioned into the
-          <a href="http://library.stanford.edu/projects/stanford-digital-repository">Stanford Digital Repository</a> (SDR).
+        	Working with <a href="http://pixelacuity.com/">Pixel Acuity</a>, The Revs Institute&reg; is digitizing its collection of images using specialized digital cameras to build a collection for a Digital Library.
+          Each slide, negative or print is cleaned and imaged at a high resolution.  The images and associated metadata are collected and licensed to Stanford University, where they are being accessioned into the
+          <a href="https://library.stanford.edu/research/stanford-digital-repository">Stanford Digital Repository</a> (SDR).
+          Permission for use requirements and sales of Rights Managed images are available directly through the %{photo_sales}&reg;.
         </p>
         <p>
-        	The Stanford Digital Repository ensures each digital object is preserved, made available via a permanent persistent URL (web address), enforces content rights and restrictions and provides a common
+        	The Stanford Digital Repository ensures preservation of each digital object, makes each digital object available via a permanent persistent URL (web address), enforces content rights and restrictions and provides a common
           storage mechanism for other applications to build upon.  Research and course material from the Revs Program at Stanford will also be stored in SDR, and all materials will be discoverable via the Stanford
           Libraries' online catalog, <a href="http://searchworks.stanford.edu">SearchWorks</a>.
         </p>
         <p>
         	The Revs Digital Library is built on top of the Stanford Digital Repository to provide a web based platform for discovery of automotive research and images. The Digital Library is developed
           in <a href="http://www.rubyonrails.org">Ruby on Rails</a> using open source technologies, including <a href="http://projectblacklight.org/">Blacklight</a>, <a href="http://projecthydra.org/">Hydra</a>,
-          and <a href="http://fedora-commons.org/">Fedora Commons</a> and will allow for metadata editing, provide community features, and tools for researchers to further utilize the data.
+          and <a href="http://fedora-commons.org/">Fedora Commons</a> and allows for curator restricted in-line metadata editing, provides community features, annotation, and other tools for researchers to further utilize the data.
+        </p>
+        <p>
+          <em>The Revs Digital Library is made possible through the generous support and vision of Miles C. Collier and The Revs Institute&reg;, with Stanford University Libraries and the Revs Program at Stanford.  The Revs Institute&reg; and Revs&reg; are registered trademarks of The Revs Institute.</em>
         </p>
       homepage_about_counts_linktext: " collections"
       homepage_about_counts_html: |
@@ -102,7 +110,7 @@ en:
       archives_title: 'Content Donors'
       archives:
         collier_html: |
-          <h3>Revs Institute® Archives</h3>
+          <h3>Revs Institute&reg; Archives</h3>
           <p>The Revs Institute for Automotive Research, Inc., is a 501 (c) (3) organization located in Naples, Florida.  It is a repository for one of the world’s largest research collections dedicated to the understanding of automotive history.  In addition to books, periodicals, documents, art, and ephemera, the collection includes approximately one million images, many of which can be accessed via the Revs Digital Library. The images within this photograph collection span a period from the late 19th Century to the present day.  They document international motor sports, production and custom-body cars, automotive design and engineering, auto shows, and industry personalities and race car drivers.</p>
           <p>The Revs Digital Library provides excellent geographic coverage of both Europe and America with a focus on major international Grand Prix and sports car racing, plus coverage of a broad range of road course and oval events in the United States.  In addition to the study of automotive history, the research facility provides resources to understand the broader historic context of both the 19th and 20th centuries—themes such as the impact of the automobile on art, literature, engineering, architecture and social history.  The Revs Digital Library, which was launched in 2014, is a dynamic resource which continues to grow each year as new images are added to the collection.</p>
         road_and_track_html: |
