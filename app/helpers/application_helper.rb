@@ -252,6 +252,11 @@ module ApplicationHelper
     content_tag(:span, archive, class: ['label', 'label-default', 'archive-label'])
   end
 
+  # generate a link to view all of the collection items the document is in (and default to sort by title)
+  def all_collection_items_link(document)
+    link_to(t('revs.collection_members_grid.members_link'), catalog_index_path( {:sort=> 'title_sort asc',:f => { blacklight_config.collection_member_collection_title_field => document.siblings(:include_hidden=>can?(:view_hidden, SolrDocument)).first[blacklight_config.collection_member_collection_title_field]  } } ))
+  end
+
   # Get average metadata score of entire repository
   # Width of visualization is 200px so multiply score by 2 to get adjusted offset
   def get_repo_metadata_score

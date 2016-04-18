@@ -11,7 +11,7 @@
             <h5><%= t('revs.collection_members_grid.collection_text') %> <span class="text-muted">(<%= collection_members.size%> of <%= number_with_delimiter(collection_members.total_members) %>)</span></h5>
           </div>
           <div class="col-sm-3 col-sm-offset-1 controls">
-            <%= link_to(t('revs.collection_members_grid.members_link'), catalog_index_path( {:f => { blacklight_config.collection_member_collection_title_field => collection_members.first[blacklight_config.collection_member_collection_title_field]  } } )) %>
+            <%= all_collection_items_link(document) %>
           </div>
         </div>
       <%- else -%>
@@ -19,7 +19,7 @@
           <h5><%= t('revs.collection_members_grid.sibling_text', :collection => clean_collection_name(document[blacklight_config.collection_member_collection_title_field].first)) %> <span class="text-muted">(<%= collection_members.size%> of <%= number_with_delimiter(collection_members.total_members) %>)</span></h5>
         </div>
         <div class="col-md-3 col-md-offset-1 controls">
-          <%= link_to(t('revs.collection_members_grid.members_link'), catalog_index_path( {:f => { blacklight_config.collection_member_collection_title_field => collection_members.first[blacklight_config.collection_member_collection_title_field]  } } ))%>
+          <%= all_collection_items_link(document) %>
         </div>
       <%- end -%>
     </div>

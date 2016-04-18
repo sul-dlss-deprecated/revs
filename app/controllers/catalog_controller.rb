@@ -50,7 +50,7 @@ class CatalogController < ApplicationController
     if can? :curate, :all
       self.blacklight_config.add_facet_field 'has_more_metadata_ssi', :label => "More Metadata"
       self.blacklight_config.add_facet_field 'visibility_isi', :label => 'Visibility', :query => {:visibility_1=>{:label=>"Hidden", :fq=>"visibility_isi:0"}}
-      self.blacklight_config.add_sort_field 'score_isi asc, score desc, title_tsi asc', :label => 'metadata score'
+      self.blacklight_config.add_sort_field 'score_isi asc, score desc, title_sort asc', :label => 'metadata score'
     end
   end
 
@@ -385,9 +385,10 @@ class CatalogController < ApplicationController
     # label in pulldown is followed by the name of the SOLR field to sort by and
     # whether the sort is ascending or descending (it must be asc or desc
     # except in the relevancy case).
-    config.add_sort_field 'score desc, title_tsi desc, source_id_ssi asc', :label => 'title'
-    config.add_sort_field 'source_id_ssi asc, score desc, title_tsi desc', :label => 'identifier'
-    config.add_sort_field 'pub_year_single_isi asc, score desc, title_tsi asc', :label => 'year'
+    config.add_sort_field 'score desc, title_sort asc, source_id_ssi asc', :label => 'relevancy'
+    config.add_sort_field 'title_sort asc, score desc, source_id_ssi asc', :label => 'title'
+    config.add_sort_field 'source_id_ssi asc, score desc, title_sort asc', :label => 'identifier'
+    config.add_sort_field 'pub_year_single_isi asc, score desc, title_sort asc', :label => 'year'
 
     # If there are more than this many search results, no spelling ("did you
     # mean") suggestion is offered.
