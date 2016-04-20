@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150807201628) do
+ActiveRecord::Schema.define(version: 20160420205356) do
 
   create_table "annotations", force: :cascade do |t|
     t.integer  "user_id"
@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 20150807201628) do
     t.text     "comment"
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
-    t.string   "resolution"
+    t.text     "resolution"
     t.integer  "resolving_user"
     t.datetime "resolved_time"
     t.string   "state",              default: "open"
