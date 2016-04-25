@@ -151,7 +151,7 @@ class CatalogController < ApplicationController
       @use_and_reproduction=""
       @use_and_reproduction += I18n.t('revs.contact.image_reuse_agreement',
           :license_agreement_link => ActionController::Base.helpers.link_to(t('revs.contact.image_license_agreement'),
-          'http://revsinstitute.org/research-education/permission-to-use',:target=>'_new')).html_safe
+          Revs::Application.config.revs_reuse_link,:target=>'_new')).html_safe
       @use_and_reproduction += I18n.t('revs.contact.reuse_contact',
           :reuse_contact_link => ActionController::Base.helpers.link_to(t('revs.contact.contact_linktext_html'),
           contact_us_path(:subject=>'terms of use',
