@@ -18,7 +18,7 @@ changelog2:
   operation: 'metadata update'
   updated_at: 6/1/2013
   created_at: 6/1/2013
-          
+
 changelog3:
    user: curator  # this is the named "curator" fixture object from the users table
    druid: 'bg152pb0116'
@@ -40,3 +40,9 @@ changelog5:
   updated_at: 6/4/2013
   created_at: 6/4/2013
 
+changelog6:
+  user: curator  # this is the named "curator" fixture object from the users table
+  druid: 'bb004bn8654' # this is a hidden item with an edit
+  operation: 'metadata update'
+  updated_at: 6/4/2014
+  created_at: 6/4/2014

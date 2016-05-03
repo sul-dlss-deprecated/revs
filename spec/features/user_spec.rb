@@ -178,14 +178,27 @@ describe("User registration system",:type=>:request,:integration=>true) do
   end
 
   it "should show correct number of item edits made by user on that user's profile page, along with most recent item edits" do
-    edited_titles=["A Somewhat Shorter Than Average Title","Marlboro Governor's Cup, April 2-3","Thompson Raceway, May 1"]
+    edited_titles=["A Somewhat Shorter Than Average Title","Marlboro Governor's Cup, April 2-3","Thompson Raceway, May 1","Bryar 250 Trans-American:10"]
     login_as(curator_login)
+    visit user_path(curator_login)
+    expect(current_path).to eq(user_path(curator_login))
+    expect(page).to have_content 'Item Edits 5'
+    edited_titles.each {|title| expect(page).to have_content(title)}
+    visit user_edits_user_index_path(curator_login)
+    edited_titles.each {|title| expect(page).to have_content(title)}
+  end
+
+  it "should not show hidden item edits to a non-curator user" do
+    edited_titles=["A Somewhat Shorter Than Average Title","Marlboro Governor's Cup, April 2-3","Thompson Raceway, May 1"]
+    hidden_item_titles=["Bryar 250 Trans-American:10"]
     visit user_path(curator_login)
     expect(current_path).to eq(user_path(curator_login))
     expect(page).to have_content 'Item Edits 4'
     edited_titles.each {|title| expect(page).to have_content(title)}
+    hidden_item_titles.each {|title| expect(page).to_not have_content(title)}
     visit user_edits_user_index_path(curator_login)
     edited_titles.each {|title| expect(page).to have_content(title)}
+    hidden_item_titles.each {|title| expect(page).to_not have_content(title)}
   end
 
   it "should show a profile preview link on edit profile page, but only if user profile is private" do
@@ -359,10 +372,13 @@ describe("User registration system",:type=>:request,:integration=>true) do
     curator=get_user(curator_login)
     curator_change_logs=curator.all_change_logs.count
     curator_metadata_updates=curator.metadata_updates.count
+    curator_metadata_updates_with_hidden=curator.metadata_updates(curator).count
+
     total_change_logs=ChangeLog.count
-    expect(curator_change_logs).to eq(4)
-    expect(curator_metadata_updates).to eq(4)
-    expect(total_change_logs).to eq(5)
+    expect(curator_change_logs).to eq(5)
+    expect(curator_metadata_updates).to eq(4) # one is an edit on a hidden item
+    expect(curator_metadata_updates_with_hidden).to eq(5)
+    expect(total_change_logs).to eq(6)
 
     # now kill the user
     curator.destroy
