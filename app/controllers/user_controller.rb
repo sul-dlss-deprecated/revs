@@ -46,7 +46,7 @@ class UserController < ApplicationController
   # all of the user's item edits
   def edits
     @order="change_logs.#{@order}" if @order == 'created_at desc'
-    @edits=@user.change_logs.order(@order).page(@current_page).per(@per_page)
+    @edits=@user.metadata_updates(current_user).order(@order).page(@current_page).per(@per_page)
     @page_title="#{@user.to_s}: #{I18n.t('revs.curator.edits')}"
   end
 
