@@ -174,7 +174,7 @@ module ApplicationHelper
   end
 
   def edits_count(user)
-    user.metadata_updates.count
+    user.metadata_updates(current_user).count
   end
 
   def flags_unresolved_count(user)
