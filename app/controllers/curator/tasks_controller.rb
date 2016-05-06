@@ -11,8 +11,11 @@ class Curator::TasksController < ApplicationController
    def flags
 
 
-     s = params[:curator_flag_selection] || Flag.open
-     @selection = s.split(',')
+     selection = params[:curator_flag_selection] || Flag.open
+     state_filter = params[:curator_flag_state_filter] || Flag.all_states
+
+     @selection = selection.split(',')
+     @state_filter = state_filter.split(',')
 
      @tab_list_flag = 'flags-by-flag' # first tab (default)
      @tab_list_item = 'flags-by-item' # second tab
@@ -44,6 +47,7 @@ class Curator::TasksController < ApplicationController
 
        when @tab_list_user
          flags=flags.select('*,count(id) as num_flags,max(flags.updated_at) as updated_at').includes(:user).group("user_id")
+         flags=flags.where(:state=>@state_filter) if @state_filter
 
      end
 

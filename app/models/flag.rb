@@ -46,6 +46,10 @@ class Flag < WithSolrDocument
     [FLAG_STATES[:wont_fix],FLAG_STATES[:fixed]]
   end
 
+  def self.action_needed
+    [FLAG_STATES[:open],FLAG_STATES[:review]]
+  end
+
   def self.open
     FLAG_STATES[:open]
   end
@@ -55,7 +59,7 @@ class Flag < WithSolrDocument
   end
 
   def self.for_dropdown
-    {FLAG_STATES[:open]=> I18n.t('revs.flags.open_state_display_name'),FLAG_STATES[:fixed]=> I18n.t('revs.flags.fixed_state_diplay_name'),FLAG_STATES[:review]=> I18n.t('revs.flags.review_state_diplay_name'),FLAG_STATES[:wont_fix]=> I18n.t('revs.flags.wont_fix_state_display_name'),self.closed.join(',')=>I18n.t('revs.flags.all_closed_name'),self.all_states.join(',')=>I18n.t('revs.flags.all_flags_name')}
+    {FLAG_STATES[:open]=> I18n.t('revs.flags.open_state_display_name'),self.action_needed.join(',')=> I18n.t('revs.flags.requires_action_state_diplay_name'),FLAG_STATES[:review]=> I18n.t('revs.flags.review_state_diplay_name'),FLAG_STATES[:fixed]=> I18n.t('revs.flags.fixed_state_diplay_name'),FLAG_STATES[:wont_fix]=> I18n.t('revs.flags.wont_fix_state_display_name'),self.closed.join(',')=>I18n.t('revs.flags.all_closed_name'),self.all_states.join(',')=>I18n.t('revs.flags.all_flags_name')}
   end
 
   def self.display_resolved_columns(options)
