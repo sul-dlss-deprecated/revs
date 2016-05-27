@@ -1,4 +1,4 @@
-BANNED_IPS=["107.6.154."] # array of banned ips... to block subnets, only include the first part
+BANNED_IPS=["107.6.154.","216.218.147.199"] # array of banned ips... to block subnets, only include the first part
 # (e.g. "10.11." or "10.11.1." or "10.11.1.123") blocks in increasing specificity
 
 class Rack::Attack
@@ -70,7 +70,7 @@ Rack::Attack.whitelist('allow from localhost') do |req|
   '127.0.0.1' == req.ip
 end
 
-Rack::Attack.blacklist('block 1.2.3.4') do |req|
+Rack::Attack.blacklist('block banned IPs') do |req|
   # Requests are blocked if the return value is truthy
   !(req.ip =~ Regexp.union(BANNED_IPS)).nil?
 end
