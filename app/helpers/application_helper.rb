@@ -209,7 +209,7 @@ module ApplicationHelper
   def bulk_update_fields
     [
       ['Title','title'],
-      ['Formats','formats',{'data-autocomplete-field'=>'format'}],
+      ['Formats','formats_mvf',{'data-autocomplete-field'=>'format'}],
       ['Years','years_mvf'],
       ['Date','full_date'],
       ['Description','description'],
