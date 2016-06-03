@@ -141,7 +141,7 @@
         <dl class="dl-horizontal  dl-invert">
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'identifier',:label=>t('revs.show.label_identifier')} %>
 
-          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'formats',:label=>t('revs.show.label_formats'),:multivalued=>true,:editable=>true,:facet=>true, :input_type=>'text_area'} %>
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'formats',:label=>t('revs.show.label_formats'),:multivalued=>true,:editable=>true,:facet=>true, :input_type=>'text_area', :autocomplete=>'format'} %>
 
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'institutional_notes',:label=>t('revs.show.label_institutional_notes'),:simple_format=>true,:editable=>true, :input_type=>'text_area'} %>
 
