@@ -457,12 +457,14 @@ class SolrDocument
    #  :highlighted=>true to only get highlighted collections
    #  :rows=>n to only get those number of results
    #  :archive=>'archive name' to filter by that archive
+   #  :visibility=>can be :all, :visible, :preview, or :hidden, defines which collections are returned (defaults to :visibile)
    def self.all_collections(params={})
      highlighted=params[:highlighted] || false
      archive=params[:archive] || ""
      rows=params[:rows] || "10000"
+     visibility=params[:visibility] || :visible
      fq="#{self.config.collection_identifying_field}:\"#{self.config.collection_identifying_value}\""
-     fq+=self.images_query(:visible) # only show collections marked as visible
+     fq+=self.images_query(visibility)
      unless archive.blank?
          fq+=" AND archive_ssi:\"#{archive}\""
      end

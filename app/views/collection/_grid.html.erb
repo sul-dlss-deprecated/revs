@@ -5,7 +5,7 @@
       <li class="image-item">
         <div class="blacklight-collection document collections-result">
           <%= link_to_document(collection,
-              image_tag(collection.first_image,
+              image_tag(collection.first_image(:include_hidden=>can?(:view_hidden, SolrDocument)),
               :alt => collection_title,:title=>collection_title))  %>
 
           <h5 class="index_title">
