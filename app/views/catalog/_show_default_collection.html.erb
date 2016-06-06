@@ -1,4 +1,5 @@
 <p>
+  <%= render :partial=>'/catalog/hidden_message', :locals=>{:document=>document,:full=>true} if document.visibility==:hidden %>
   <span class="text-muted">
     <%= t('revs.collection.total_items') %>:
   </span>

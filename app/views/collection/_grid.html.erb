@@ -7,7 +7,9 @@
           <%= link_to_document(collection,
               image_tag(collection.first_image(:include_hidden=>can?(:view_hidden, SolrDocument)),
               :alt => collection_title,:title=>collection_title))  %>
-
+              <% if collection.visibility == :hidden %>
+                <span class="public-visibility-status label label-warning"><%= t('revs.messages.public_visibility_hidden') %></span>
+              <% end %>
           <h5 class="index_title">
             <%= link_to_document collection, collection_title %>
             <%= archive_label(collection.archive_name) %>
