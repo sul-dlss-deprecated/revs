@@ -10,7 +10,7 @@
         :counter => (document_counter + 1 + @response.params[:start].to_i) %>
 
   <% if document.visibility == :hidden %>
-    <span class="public-visibility-status label label-warning">Hidden</span>
+    <span class="public-visibility-status label label-warning"><%= t('revs.messages.public_visibility_hidden') %></span>
   <% end %>
 
   <h5 class="index_title">

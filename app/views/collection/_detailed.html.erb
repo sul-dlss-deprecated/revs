@@ -14,6 +14,7 @@
           </span>
         </h5>
         <%= archive_label(collection.archive_name) %>
+        <%= render :partial=>'/catalog/hidden_message', :locals=>{:document=>collection,:full=>true} if collection.visibility==:hidden %>
       </div>
     </div>
     <div class="row collection-details">
