@@ -13,6 +13,8 @@ gem 'rails', '>= 4.2.5.2'
 gem 'responders', '~> 2.0'
 gem 'nokogiri', '>=1.6.7.2'
 
+gem 'is_it_working-cbeer', require: 'is_it_working'
+
 # user authentication and roles
 gem 'devise', '>=3.5.4'
 gem 'omniauth'

@@ -159,6 +159,7 @@ GEM
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     i18n (0.7.0)
+    is_it_working-cbeer (1.0.16)
     jettywrapper (2.0.3)
       activesupport (>= 3.0.0)
       childprocess
@@ -367,6 +368,7 @@ DEPENDENCIES
   editstore (>= 2.0.2)
   font-awesome-rails
   friendly_id (>= 5.0.0)
+  is_it_working-cbeer
   jettywrapper
   jquery-rails
   json (~> 1.8)
@@ -399,5 +401,8 @@ DEPENDENCIES
   uglifier (>= 1.0.3)
   whenever
 
+RUBY VERSION
+   ruby 2.2.2p95
+
 BUNDLED WITH
-   1.11.2
+   1.12.5
