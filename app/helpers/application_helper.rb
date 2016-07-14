@@ -228,6 +228,8 @@ module ApplicationHelper
       ['State','state',{'data-autocomplete-field'=>'state'}],
       ['Country','country',{'data-autocomplete-field'=>'country'}],
       ['Group/Class','group_class'],
+      ['Group','car_group'],
+      ['Class','car_class'],
       ['Race Data','race_data'],
       ['Photographer','photographer'],
       ['Institutional Notes','institutional_notes']

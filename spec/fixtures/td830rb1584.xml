@@ -8,7 +8,7 @@
   <field name="is_member_of_ssim">kz071cg8658</field>
   <field name="source_id_ssi">2012-027NADI-1966-b1_2.0_0021</field>
   <field name="collection_ssim">David Nadig Collection</field>
-  <field name="archive_ssi">Revs Institute® Archives</field>  
+  <field name="archive_ssi">Revs Institute® Archives</field>
   <field name="image_id_ssm">2012-027NADI-1966-b1_2.0_0021</field>
   <field name="subjects_ssim">Automobile</field>
   <field name="subjects_ssim">History</field>
@@ -21,6 +21,8 @@
   <field name="countries_ssi">USA</field>
   <field name="states_ssi">IN</field>
   <field name="vehicle_markings_tsi">Oil streaks</field>
+  <field name="group_ssi">This cars group</field>
+  <field name="class_ssi">This cars class</field>
   <field name="priority_isi">2</field>
   <field name="copyright_ss">This is the copyright statement - different from default.</field>
   <field name="use_and_reproduction_ss">This is the use and reproduction statement - different from default.</field>

@@ -85,7 +85,12 @@
 
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'model_year',:label=>t('revs.show.label_model_year'),:multivalued=>true,:editable=>true,:facet=>true, :input_type=>'text_area'} %>
 
+          <%  # this field is being split into two fields, but we are leaving it editable since not all values will be split immediately July 2016 Peter Mangiafico %>
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'group_class',:label=>t('revs.show.label_group_class'),:editable=>true} %>
+
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'car_group',:label=>t('revs.show.label_group'),:editable=>true} %>
+
+          <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'car_class',:label=>t('revs.show.label_class'),:editable=>true} %>
 
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'vehicle_markings',:label=>t('revs.show.label_vehicle_markings'),:simple_format=>true,:editable=>true, :input_type=>'text_area'} %>
 
