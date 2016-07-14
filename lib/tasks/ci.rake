@@ -23,6 +23,8 @@ desc "Run continuous integration suite"
 task :ci do
   Rails.env='test'
   ENV['RAILS_ENV']='test'
+  Rake::Task["jetty:clean"].invoke
+  Rake::Task["revs:config"].invoke
   Jettywrapper.wrap(Jettywrapper.load_config) do
     Rake::Task["local_ci"].invoke
   end
@@ -32,10 +34,11 @@ desc "Assuming jetty is already running - then migrate, reload all fixtures and 
 task :local_ci do
   Rails.env='test'
   ENV['RAILS_ENV']='test'
-  Rake::Task["revs:refresh_fixtures"].invoke
   Rake::Task["db:migrate"].invoke
+  Rake::Task["db:test:prepare"].invoke
   Rake::Task["db:fixtures:load"].invoke
   Rake::Task["db:seed"].invoke
+  Rake::Task["revs:refresh_fixtures"].invoke
   Rake::Task["revs:update_item_title"].invoke
   Rake::Task["rspec"].invoke
 end
