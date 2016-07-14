@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/sul-dlss/revs.svg?branch=master)](https://travis-ci.org/sul-dlss/revs)
+
 # Revs Digital Library
 
 This is a Blacklight Application for the Revs Digital Library at Stanford University.
