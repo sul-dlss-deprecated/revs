@@ -125,7 +125,7 @@ Before deploying to production, update the VERSION file, and then tag the releas
     bundle exec cap staging deploy      # for staging     (revs-stage.stanford.edu)
     bundle exec cap development deploy  # for development (revs-dev.stanford.edu)
 
-You must specify a branch or tag to deploy.  You can deploy the latest by specifying "master".
+You must specify a branch to deploy.  You can deploy the latest by specifying "master".
 
 ## Testing
 
@@ -141,39 +141,29 @@ Your local development jetty must be started for this to work.  If your local je
 
 ### Branches
 
-The *master* branch is what is running in production and staging.
-In the examples below, the *working* branch is your local feature branch,
-from which you later merge your updated work into either *master* via a pull request.
+The *master* branch is what is running in production (and usually in staging as well).
+We use feature/task based branches with pull requests that are merged to master for day to day work.
 
-### Typical day to day development workflow
+## Maintaining the fields in the solr document
 
-1. Getting up to date
+If you need to add or remove a field that is in the solr document (i.e. associated with an object), there are many
+codebases that need to be edited because of the nature of the metadata editing that is somewhat unique to the Revs
+Digital Library.  For example, if you wanted to add a new field, you need to:
 
-        git checkout master
-        git pull  
-
-2. Working (*working* is your an example local feature branch)
-
-        git checkout -b working
-        * do stuff *
-        git add .
-        git commit -m 'my changes'
-
-3. Getting your local feature branch (e.g. *working*) up to date
-
-  Look for new updates. If there are none, skip to 5
-
-        git checkout master
-        git pull
-
-4.  If there are updates that have happened to master since you branched, consider doing a rebase:
-
-        git checkout working
-        git rebase master
-
-5. Push your feature branch
-
-        git co working
-        git push -u
-
-6. Submit a pull request from your feature branch to master via git hub.
+1. Be sure the MODs template gets updated to the new field is stored appropriately during accessioning.  The MODs templates are in /config/templates.
+2. Ensure the new field has a column in the metadata spreadsheet supplied by Revs. The name of the column in the spreadsheet should match what is in the MODs template you edited in step 1.
+3. Update the Revs template in editstore-updater to be sure metadata edits coming from the site make it to the MODs correctly.  In the editstore-updater code  (https://github.com/sul-dlss/editstore-updater), this is in the app/models/template/revs.rb file in the "field_definitions" method.  Configure with the name of the solr field and the location in the MODs template.
+4. Update the revs-indexing-service code (https://github.com/sul-dlss/revs-indexer-service) to be sure the MODs is correctly indexed into solr.  You'll need to update the lib/revs_mapper.rb class (in the convert_to_solr_doc method).
+5. Update the revs-utils gem, which has shared configuration around available fields.
+ -- add the new fields in the lib/revs-utils.rb file in the "revs_field_mapping" method.  Configuration specifies the accessor name along with the solr field name.
+ -- update config/manifest_headers.yml to add the new columns that will appear in spreadsheets
+ -- bump and release the gem
+6. Update the revs digital library website code (this codebase) to show the new field and make it editable (if necessary), and add it as a facet (if necessary).
+ -- add facets in the catalog controller
+ -- update the "bulk_update_fields" method in ApplicationHelper if this new field is available for bulk updating by curators
+ -- update the app/views/catalog/_show_default_collection_member.html.erb view to add the new field to the appropriate part of the interface
+  -- in the SolrDocument model, update the "has_XXX?" methods which are used to indicate when certain parts of the webpage interface have metadata
+ -- you may need to update the locale files with new strings for labels in the step above
+ -- bundle update to use the latest revs-utils gem you released above
+7. Possibly adjust the solr schema and config and deploy to production if you need to make a copy field of a text field for searchability.  If you do this, you'll need to edit the config/schema.xml and config/solrconfig.xml documents in this codebase and then have them deployed into the solr cloud.
+8. Release a new pre-assembly with the new version of revs-utils you released above.  This will allow the scripts that confirm spreadsheets before accessioning to be aware of the new column(s).
