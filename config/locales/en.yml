@@ -519,6 +519,8 @@ en:
       label_engine_type: "Engine Type"
       label_model_year: "Model Year"
       label_group_class: "Group/Class"
+      label_group: "Group"
+      label_class: "Class"
       label_vehicle_markings: "Vehicle Markings"
       label_vehicle_markings_short: "Markings"
       label_event: "Event"

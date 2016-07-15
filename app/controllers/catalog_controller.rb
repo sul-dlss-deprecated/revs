@@ -308,6 +308,7 @@ class CatalogController < ApplicationController
     config.add_facet_field 'people_ssim', :label => "People", :limit => 25, :index_pagination=>true
     config.add_facet_field 'venue_ssi', :label => "Venue", :limit => 25, :index_pagination=>true
     config.add_facet_field 'event_ssi', :label => "Event", :limit => 25, :index_pagination=>true
+    config.add_facet_field 'group_ssi', :label => "Group", :limit => 25, :index_pagination=>true
 
     config.add_facet_field 'timestamp', :label => 'Added recently', :query => {
        :weeks_1 => { :label => 'within last week', :fq => "timestamp:[\"#{show_as_timestamp(1.week.ago)}\" TO *]" },
