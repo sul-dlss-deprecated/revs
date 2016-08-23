@@ -214,7 +214,7 @@
   <copyField source = "states_ssi" dest="states_ti"/>
   <copyField source = "city_sections_ssi" dest="city_sections_ti"/>
   <copyField source = "pub_year_isim" dest="pub_year_tim"/>
-  <copyField source = "group_ssi" dest="group_ti"/>
+  <copyField source = "group_ssim" dest="group_tim"/>
   <copyField source = "class_ssi" dest="class_ti"/>
 
 </schema>
