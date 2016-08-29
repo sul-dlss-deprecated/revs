@@ -313,6 +313,65 @@ namespace :revs do
 
   end
 
+  desc "Move single valued group field to multivalued group field"
+  #Run Me: RAILS_ENV=production rake revs:convert_group_to_multivalued collection="John Dugdale Collection" # limited to a collection
+  #Run Me: RAILS_ENV=production rake revs:convert_group_to_multivalued limit=100 # sets a limit of number of items
+  # you can mix and match those parameters
+  task :convert_group_to_multivalued => :environment do |t, args|
+
+    limit = ENV['limit'] || '' # if passed, limits to this many items only
+    collection = ENV['collection'] || '' # if passed, limits to this collection only
+    group_field='group_ssi'
+    group_field_mvf='group_ssim'
+    num_updated=0
+    num_errors=0
+
+    start_time=Time.now
+
+    q="#{group_field}:[* TO *]"
+    q+=" AND collection_ssim:\"#{collection}\"" unless collection.blank?
+    rows = limit.blank? ? "100000" : limit
+
+    @all_docs = Blacklight.default_index.connection.select(:params => {:q => q, :rows=>rows})
+
+    total_docs=@all_docs['response']['docs'].size
+    n=0
+
+    puts ""
+    puts "Started at #{start_time}, #{total_docs} docs returned"
+    puts " limited to collection: #{collection}" unless collection.blank?
+    puts " limited to #{limit} items" unless limit.blank?
+    puts "field checked: #{group_field}"
+    puts "solr: #{Blacklight.default_index.connection.options[:url]}"
+    puts ""
+
+    @all_docs['response']['docs'].each do |doc|
+
+      n+=1
+
+      begin
+
+        item=SolrDocument.new(doc)
+        item.car_group=item[group_field]
+        item.save
+        num_updated+=1
+
+      rescue e
+
+        num_errors+=1
+        puts "  error!"
+
+      end
+
+    end
+
+    end_time=Time.now
+
+    puts ""
+    puts "Finished at #{Time.now}, run lasted #{((end_time-start_time)/60).round} minutes, #{total_docs} checked, #{num_errors} errors, #{num_updated} updated"
+    puts ""
+
+  end
 
   desc "Find all objects with missing image"
   #Run Me: rake revs:missing_images["John Dugdale Collection"] to just show items

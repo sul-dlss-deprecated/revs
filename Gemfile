@@ -1,13 +1,11 @@
 source 'https://rubygems.org'
 
-ruby ">= 2.2.2"
-
 gem 'bundler', '>= 1.2.0'
 
 gem 'sitemap_generator'
 
 gem 'editstore', '>= 2.0.2'
-gem 'revs-utils', '>= 2.1.19'
+gem 'revs-utils', '>= 2.1.21'
 
 gem 'rails', '~> 4.2', '>= 4.2.5.2'
 gem 'responders', '~> 2.0'
