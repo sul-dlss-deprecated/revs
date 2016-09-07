@@ -113,6 +113,9 @@
     <relatedItem type="original">
       <physicalDescription>
         <form authority="<%= manifest_row[:format_authority].blank? ? "aat" : manifest_row[:format_authority]%>"><%=revs_check_format(format).strip%></form>
+        <% if !manifest_row[:original_size].blank? %>
+          <extent><%=manifest_row[:original_size]%></extent>
+        <% end %>
       </physicalDescription>
     </relatedItem>
   <% end %>
