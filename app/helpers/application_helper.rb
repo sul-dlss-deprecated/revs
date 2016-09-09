@@ -228,6 +228,7 @@ module ApplicationHelper
       ['State','state',{'data-autocomplete-field'=>'state'}],
       ['Country','country',{'data-autocomplete-field'=>'country'}],
       ['Group/Class','group_class'],
+      ['Size','original_size'],
       ['Group','car_group_mvf'],
       ['Class','car_class'],
       ['Race Data','race_data'],

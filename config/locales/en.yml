@@ -530,6 +530,7 @@ en:
       label_race_data: "Race Data"
       label_identifier: "Identifier"
       label_formats: "Formats"
+      label_original_size: "Size"
       label_score: "Metadata Score"
       label_institutional_notes: "Institutional Notes"
       label_production_notes: "Production Notes"

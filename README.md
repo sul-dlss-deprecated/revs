@@ -159,11 +159,12 @@ Digital Library.  For example, if you wanted to add a new field, you need to:
  -- update config/manifest_headers.yml to add the new columns that will appear in spreadsheets
  -- bump and release the gem
 6. Update the revs digital library website code (this codebase) to show the new field and make it editable (if necessary), and add it as a facet (if necessary).
- -- add facets in the catalog controller
+ -- add facets in the catalog controller if necessary
  -- update the "bulk_update_fields" method in ApplicationHelper if this new field is available for bulk updating by curators
  -- update the app/views/catalog/_show_default_collection_member.html.erb view to add the new field to the appropriate part of the interface
-  -- in the SolrDocument model, update the "has_XXX?" methods which are used to indicate when certain parts of the webpage interface have metadata
+ -- in the SolrDocument model, update the "has_XXX?" methods which are used to indicate when certain parts of the webpage interface have metadata
  -- you may need to update the locale files with new strings for labels in the step above
  -- bundle update to use the latest revs-utils gem you released above
+ -- update mods template in /config/templates (described in step 1 above) and copy to the places where accessioning occurs (eg. /dor/staging/Revs)
 7. Possibly adjust the solr schema and config and deploy to production if you need to make a copy field of a text field for searchability.  If you do this, you'll need to edit the config/schema.xml and config/solrconfig.xml documents in this codebase and then have them deployed into the solr cloud.
 8. Release a new pre-assembly with the new version of revs-utils you released above.  This will allow the scripts that confirm spreadsheets before accessioning to be aware of the new column(s).
