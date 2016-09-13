@@ -75,6 +75,7 @@ namespace :revs do
            collection_names[s.collections.first] ||= RevsUtils.clean_collection_name(s.collection.title)
            s.collection_names=collection_names[s.collections.first] # update collection name
          else
+           s.timestamp=Time.now.strftime('%Y-%m-%dT%H:%M:%S.%3NZ')
            s.resaved_at=Time.now.strftime('%Y-%m-%dT%H:%M:%S.%3NZ') # write out a new timestamp to be sure we have at least one update for solr to write the doc out
         end
        result = s.save(:commit=>false,:no_update_db=>true) # do not autocommit when in batch mode, allow the config to decide when to commit
@@ -784,14 +785,15 @@ namespace :revs do
   end
 
   desc "Bulk hide or show images from a given spreadsheet"
-  task :change_visibility, [:file, :visibility_value] => :environment do |t, args|
-    # call with RAILS_ENV=production rake revs:change_visibility["/path/to/manifest.csv",1] to show all images not having a value in the visibility column
-    # call with RAILS_ENV=production rake revs:change_visibility["/path/to/manifest.csv",0] to hide all images not having a value in the visibility column
+  task :change_visibility, [:file, :visibility_value, :update_timestamp] => :environment do |t, args|
+    # call with RAILS_ENV=production rake revs:change_visibility["/path/to/manifest.csv",1,true] to show all images not having a value in the visibility column and update the timestamp value so that docs show up in recently added
+    # call with RAILS_ENV=production rake revs:change_visibility["/path/to/manifest.csv",0,false] to hide all images not having a value in the visibility column
 
     Revs::Application.config.use_editstore = false
 
     file = args[:file]
     default_visibility_value = args[:visibility_value]
+    update_timestamp = args[:update_timestamp]
 
     raise "no spreadsheet specified or spreadsheet not found" unless File.exists?(file)
     raise "no default visibility value specified" unless default_visibility_value
@@ -804,9 +806,12 @@ namespace :revs do
     puts "Running #{file}"
     puts "Running in #{Rails.env}"
     puts "default visibility value of #{default_visibility_value}"
+    puts "update timestamp is #{update_timestamp}"
+    puts ""
     log.info("Running #{file}")
     log.info("Running in #{Rails.env}")
     log.info("default visibility value of #{default_visibility_value}")
+    log.info("update timestamp is #{update_timestamp}")
 
     manifest = RevsUtils.read_csv_with_headers(file)
     error_count=0
@@ -840,6 +845,7 @@ namespace :revs do
              visibility_value = ( (row[@visibility].nil? || row[@visibility].blank?) ? default_visibility_value : 0)
              puts ".....found #{doc.id}, setting visibility to #{visibility_value}"
              doc.visibility_value=visibility_value
+             doc.timestamp=Time.now.strftime('%Y-%m-%dT%H:%M:%S.%3NZ') if update_timestamp
              doc.save
              updated_count += 1
            rescue
@@ -859,14 +865,15 @@ namespace :revs do
   end
 
   desc "Bulk hide or show images from a given collection"
-  task :change_visibility_collection, [:collection_name, :visibility_value] => :environment do |t, args|
-    # call with RAILS_ENV=production rake revs:change_visibility_collection["Albert R. Bochroch Photographic Archive",1] to show all images in the collection; note the collection itself is unaffected
-    # call with RAILS_ENV=production rake revs:change_visibility_collection["Albert R. Bochroch Photographic Archive",0] to hide all images in the collection; note the collection itself is unaffected
+  task :change_visibility_collection, [:collection_name, :visibility_value, :update_timestamp] => :environment do |t, args|
+    # call with RAILS_ENV=production rake revs:change_visibility_collection["Albert R. Bochroch Photographic Archive",1,true] to show all images in the collection and update the timestamp; note the collection itself is unaffected
+    # call with RAILS_ENV=production rake revs:change_visibility_collection["Albert R. Bochroch Photographic Archive",0,false] to hide all images in the collection and do not update the timestamp; note the collection itself is unaffected
 
     Revs::Application.config.use_editstore = false
 
     collection = args[:collection_name]
     default_visibility_value = args[:visibility_value]
+    update_timestamp = args[:update_timestamp]
 
     raise "no collection specified" unless collection
     raise "no default visibility value specified" unless default_visibility_value
@@ -885,6 +892,7 @@ namespace :revs do
     puts "Started at #{start_time}, #{total_docs} docs returned"
     puts " limited to collection: #{collection}"
     puts " default visibility value of #{default_visibility_value}"
+    puts " update timestamp is #{update_timestamp}"
     puts " running in #{Rails.env}"
     puts ""
 
@@ -894,6 +902,7 @@ namespace :revs do
     log.info("limited to collection: #{collection}")
     log.info("running in #{Rails.env}")
     log.info("default visibility value of #{default_visibility_value}")
+    log.info("update timestamp is #{update_timestamp}")
     error_count=0
     updated_count=0
 
@@ -903,6 +912,7 @@ namespace :revs do
       unless doc.visibility_value.to_s == default_visibility_value.to_s  # noop if it already matches
         puts ".....setting collection #{collection} with #{doc.id} to #{default_visibility_value}"
         doc.visibility_value=default_visibility_value
+        doc.timestamp=Time.now.strftime('%Y-%m-%dT%H:%M:%S.%3NZ') if update_timestamp
         doc.save
       end
     end
@@ -916,6 +926,7 @@ namespace :revs do
          unless doc.visibility_value.to_s == default_visibility_value.to_s  # noop if it already matches
            puts ".....found #{doc.id}, setting visibility to #{default_visibility_value}"
            doc.visibility_value=default_visibility_value
+           doc.timestamp=Time.now.strftime('%Y-%m-%dT%H:%M:%S.%3NZ') if update_timestamp
            doc.save
            updated_count +=1
          end
