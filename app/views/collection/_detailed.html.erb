@@ -2,7 +2,7 @@
 
   <% @collections.each_with_index do |collection, counter|
 
-      collection_members = collection.collection_members(:rows => @num_to_show_in_filmstrip, :random=>true, :include_hidden=>can?(:view_hidden, SolrDocument))
+      collection_members = collection.collection_members(:rows => @num_to_show_in_filmstrip, :sort=>"random", :include_hidden=>can?(:view_hidden, SolrDocument))
      %>
     <div class="blacklight-collection document row<%= " first" if counter == 0 %>">
       <div class="col-xs-12 collection-title">

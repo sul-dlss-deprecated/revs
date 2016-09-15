@@ -265,10 +265,8 @@ class SolrDocument
 
     rows=params[:rows] || blacklight_config.collection_member_grid_items
     start=params[:start] || 0
-    random=params[:random] || false # if set to true, will give you a random selection from the collection ("start" will be ignored)
+    sort=params[:sort] || "priority" # if set to "random", will give you a random selection from the collection ("start" will be ignored)
     include_hidden=params[:include_hidden] || false # if set to true, the query will also return hidden images
-
-    sort = (random ? "random_#{Random.new.rand(10000)} asc" : "priority_isi desc")
 
     fq="#{blacklight_config.collection_member_identifying_field}:\"#{self[blacklight_config.collection_member_identifying_field].first}\""
     fq+=" AND #{SolrDocument.images_query(:visible)}" unless include_hidden
@@ -276,12 +274,13 @@ class SolrDocument
                                Blacklight.default_index.connection.select(
                                  :params => {
                                    :fq => fq,
-                                   :sort=> sort,
+                                   :sort=> sort_query(sort),
                                    :rows => rows.to_s,
                                    :start => start.to_s
                                  }
                                )
                              )
+                             
   end
 
   def images(size=:default)
@@ -303,17 +302,15 @@ class SolrDocument
 
     rows=params[:rows] || blacklight_config.collection_member_grid_items
     start=params[:start] || 0
+    sort=params[:sort] || "priority"
     include_hidden=params[:include_hidden] || false # if set to true, the query will also return hidden images
-    random=params[:random] || false
-
-    sort = (random ? "random_#{Random.new.rand(10000)} asc" : "priority_isi desc")
     fq="#{blacklight_config.collection_member_identifying_field}:\"#{self[SolrDocument.unique_key]}\""
     fq+=" AND #{SolrDocument.images_query(:visible)}" unless include_hidden
     return CollectionMembers.new(
                               Blacklight.default_index.connection.select(
                                 :params => {
                                   :fq => fq,
-                                  :sort=> sort,
+                                  :sort=> sort_query(sort),
                                   :rows => rows.to_s,
                                   :start => start.to_s
                                 }
@@ -565,6 +562,18 @@ class SolrDocument
 
 
   private
+  def sort_query(sort_param)
+    sort_field = case sort_param
+      when ("priority" || nil || "")
+        "priority_isi desc"
+      when "random"
+        "random_#{Random.new.rand(10000)} asc"
+      when "score"
+        "score_isi asc"
+      end  
+      sort_field
+  end
+  
   def self.config
     CatalogController.blacklight_config
   end

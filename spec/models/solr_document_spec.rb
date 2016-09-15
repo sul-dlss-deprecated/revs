@@ -30,7 +30,7 @@ describe SolrDocument do
         expect(SolrDocument.new({:id => "12345"}).is_item?).to be_falsey
         expect(SolrDocument.new({:"is_member_of_ssim" => "collection-1"}).is_item?).to be_truthy
       end
-      it "should memoize the solr request to get collection members" do
+      it "should memorize the solr request to get collection members" do
         response = {"response" => {"numFound" => 3, "docs" => [{:id=>"1234"}, {:id =>"4321"}]}}
         connection = double("connection")
         expect(connection).to receive(:select).with(:params => {:fq=>"is_member_of_ssim:\"collection-1\" AND ((*:* -visibility_isi:[* TO *]) OR visibility_isi:1)", :sort=>"priority_isi desc",:rows => "20",:start=>"0"}).once.and_return(response)
