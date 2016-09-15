@@ -11,14 +11,14 @@
   </div>
 
   <div class="col-sm-6 saved-item-pagination">
+    <span class="prev-next">
       <%= form_tag(request.path, method: 'get', class:'form-inline autosubmit', id:'per-page-form') do %>
         <%= t('revs.admin.per_page') %>
         <%= hidden_field_tag(:manage,true) if @manage %>
         <%= hidden_field_tag :view, @view %>
         <%= render :partial=>'shared/per_page_select' %>
+        <%= t('revs.messages.showing')%> <%= page_entries_info saved_items, :entry_name => t('revs.user_galleries.item') %>
       <% end %>  
-    <span class="prev-next">
-      <%= page_entries_info saved_items, :entry_name => t('revs.user_galleries.item') %>
     </span>
   </div>
   
