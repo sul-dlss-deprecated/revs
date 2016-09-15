@@ -173,11 +173,13 @@ class CatalogController < ApplicationController
   def show_collection_members_grid
     @document=SolrDocument.find(params[:id])
     if params[:on_page] == 'item'
-      @collection_members=@document.siblings(:random=>true,:include_hidden=>can?(:view_hidden, SolrDocument))
+      sort = (user_signed_in? && current_user.curator?) ? "score" : "random"
+      @collection_members=@document.siblings(:sort=>sort,:include_hidden=>can?(:view_hidden, SolrDocument))
       @type=:siblings
       @show_full_width=true
     else
-      @collection_members=@document.collection_members(:include_hidden=>can?(:view_hidden, SolrDocument))
+      sort = (user_signed_in? && current_user.curator?) ? "score" : "priority"
+      @collection_members=@document.collection_members(:sort=>sort,:include_hidden=>can?(:view_hidden, SolrDocument))
       @type=:collection
       @show_full_width=false
     end
