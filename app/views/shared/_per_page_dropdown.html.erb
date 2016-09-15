@@ -3,6 +3,6 @@
     <%= t('revs.admin.per_page') %>
   </label>
   <div class="col-xs-4 col-md-2">
-    <%= select_tag 'per_page', options_for_select({'10'=>'10','25'=>'25','50'=>'50','100'=>'100','500'=>'500'}, @per_page), class: "form-control" %>
+    <%= render :partial=>'shared/per_page_select' %>
   </div>
 </div>
