@@ -6,7 +6,7 @@ class GalleriesController < ApplicationController
   def index
     @filter=filter_field(params[:filter],"featured")
     @view=params[:view] || "grid"
-    @per_page = Revs::Application.config.num_default_per_page_collections # override the default for galleries
+    @per_page=(params[:per_page] || Revs::Application.config.num_default_per_page_collections).to_i # override the default for galleries
     @page_title = I18n.t('revs.nav.galleries')
     case @filter
       when 'featured'
