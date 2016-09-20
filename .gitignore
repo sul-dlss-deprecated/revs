@@ -25,6 +25,7 @@ tmp
 
 # Ignore rvm files
 .rvmrc
+.ruby-version
 
 # Ignore jetty
 jetty/*
