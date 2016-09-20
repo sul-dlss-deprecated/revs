@@ -170,16 +170,18 @@ class CatalogController < ApplicationController
   end
 
   # an ajax call to show just the collection members grid at the bottom of the page
+  # when logged in as a curator on the item detail page, sort by metadata score, otherwise randomly
+  # collection landing pages will always have a random selection
+  # in all cases, do not show hidden images
   def show_collection_members_grid
     @document=SolrDocument.find(params[:id])
     if params[:on_page] == 'item'
       sort = (user_signed_in? && current_user.curator?) ? "score" : "random"
-      @collection_members=@document.siblings(:sort=>sort,:include_hidden=>can?(:view_hidden, SolrDocument))
+      @collection_members=@document.siblings(:sort=>sort,:include_hidden=>false)
       @type=:siblings
       @show_full_width=true
     else
-      sort = (user_signed_in? && current_user.curator?) ? "score" : "priority"
-      @collection_members=@document.collection_members(:sort=>sort,:include_hidden=>can?(:view_hidden, SolrDocument))
+      @collection_members=@document.collection_members(:sort=>"priority",:include_hidden=>false)
       @type=:collection
       @show_full_width=false
     end
