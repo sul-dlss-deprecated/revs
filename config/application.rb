@@ -87,7 +87,7 @@ module Revs
     config.contact_us_cc_recipients = {'default'=>'revs-other@jirasul.stanford.edu', 'metadata'=>'revs-metadata-comment@jirasul.stanford.edu', 'error'=>'revs-problems@jirasul.stanford.edu','other'=>'revs-other@jirasul.stanford.edu'} # sets the CC email address for each contact us topic configed above
 
     # these collections are not available for reproduction and will show a special statement instead of the use and reproduction statement in the item itself...currently Breslauer, Bochroch, Worner, Cabart, Chambers, Derauw, European Motorsport in the 1950s and 1960s, Richley, Thomas, Tubbs
-    config.collections_not_available_for_reproduction = ['td221fy0182','jh550nq3200','kv107xd8164','ch493nk3954','zg796vp9147','qn776mq9014','vm027cv8758','wt886dn0556','my206bq1956','wz243gf4151']
+    config.collections_not_available_for_reproduction = ['td221fy0182','jh550nq3200','ch493nk3954','zg796vp9147','qn776mq9014','vm027cv8758','wt886dn0556','my206bq1956','wz243gf4151']
 
     config.revs_reuse_link='http://revsinstitute.org/order-images/'
 
