@@ -1,4 +1,4 @@
-BANNED_IPS=["107.6.154.","216.218.147.199"] # array of banned ips... to block subnets, only include the first part
+BANNED_IPS=["107.6.154.","216.218.147.199","178.27.30.234","141.8.143.146"] # array of banned ips... to block subnets, only include the first part
 # (e.g. "10.11." or "10.11.1." or "10.11.1.123") blocks in increasing specificity
 
 class Rack::Attack
