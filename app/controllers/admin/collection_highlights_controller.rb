@@ -2,7 +2,6 @@ class Admin::CollectionHighlightsController < AdminController
 
   before_filter :ajax_only, :only=>[:set_highlight]
   
-
   def index
     @collections=SolrDocument.all_collections(:sort=>'highlighted_ssi desc, highlighted_dti desc')
   end

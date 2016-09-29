@@ -1,11 +1,12 @@
 <% document_counter = 0 if !defined?(document_counter) || document_counter.nil? %>
 
 <div class="<%= render_document_class document %> document">
-  <%= link_to_document(document,
-      image_tag(document.collection_members.first.images(:large).first,
-      :alt => document.title.html_safe,:title=>document.title.html_safe),
-      :counter => (document_counter + 1 + @response.params[:start].to_i))  %>
-
+  <% if document.collection_members.first # guard against a collection showing in search results which has no images in it%>
+    <%= link_to_document(document,
+        image_tag(document.collection_members.first.images(:large).first,
+        :alt => document.title.html_safe,:title=>document.title.html_safe),
+        :counter => (document_counter + 1 + @response.params[:start].to_i))  %>
+  <% end %>
   <h5 class="index_title">
     <%= link_to_document document, document.title.html_safe,
         :counter => (document_counter + 1 + @response.params[:start].to_i) %>

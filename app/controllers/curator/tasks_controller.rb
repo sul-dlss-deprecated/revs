@@ -10,7 +10,6 @@ class Curator::TasksController < ApplicationController
 
    def flags
 
-
      selection = params[:curator_flag_selection] || Flag.open
      state_filter = params[:curator_flag_state_filter] || Flag.all_states
 

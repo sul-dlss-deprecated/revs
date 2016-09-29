@@ -59,6 +59,8 @@ en:
       not_shown: 'not shown'
       view_all: 'View all'
       created: 'Created'
+      new: 'New'
+      create_new: 'Create New'
       created_by: 'Created by'
       switch_on: "On"
       switch_off: "Off"
@@ -139,6 +141,8 @@ en:
       help: "Use the Flag action to tell us about a correction to the metadata for this item. To report more general problems, please use the Feedback link at the top of the web site."
     nav:
       home: 'Home'
+      move: 'Move'
+      lists: 'Lists'
       collections: 'Collections'
       galleries: 'Galleries'
       select_all: 'Select all'
@@ -150,6 +154,7 @@ en:
       update: 'Update'
       create: 'Create'
       submit: 'Submit'
+      image: 'Image'
       send: 'Send'
       cancel: 'Cancel'
       go_back: 'Go back'
@@ -245,6 +250,10 @@ en:
       administer_users: "Manage Users"
       find_users: "Find users"
       update_users: "Update users"
+      administer_saved_queries:
+        title: "Saved Queries"
+        description: "Saved queries appear on the facet bar and can be shown to users as a quick way of directing them to specific items."
+        items: "queries"
       administer_highlights:
         title: "Feature Collections"
         description: "To feature a collection on the home page, check the box next to its name.  The collections are shown in the order they are checked (last checked shown first)."
@@ -295,6 +304,7 @@ en:
         administer_ontologies: "Manage Autocomplete Terms"
         administer_highlights: "Feature Collections"
         administer_galleries: "Feature Galleries"
+        administer_saved_queries: "Saved Queries"
       registered_users: "registered users"
     curator:
       not_found: 'Item not found'
@@ -483,6 +493,7 @@ en:
         title: 'Limit your search'
         filter: 'Filter'
         clear: 'Clear'
+        
     sidebar:
       navigation:
         title: 'Navigation'
@@ -500,6 +511,7 @@ en:
       vehicle_information: "Vehicle Information"
       race_information: "Race Information"
       source_information_html: "Sources, Notes, &amp; Technical Information"
+      query: "Query"
       label_title: "Title"
       label_collection: "Collection"
       label_archive: "Archive"
