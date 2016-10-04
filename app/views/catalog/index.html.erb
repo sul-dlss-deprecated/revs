@@ -26,6 +26,11 @@
 			</h2>
 
 			<div id="search-results-metadata">
+
+        <% if can? :manage, SavedQuery  %>
+            <%= link_to("[#{t('revs.nav.save_query_button')}]", new_admin_saved_query_path(:query=>request.query_string)) %>
+        <% end %>
+        
 				<%#= render 'sort_and_per_page' %>
 		    <%#= render :partial => 'did_you_mean' %>
 	      <%#= render :partial => 'constraints' %>

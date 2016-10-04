@@ -152,18 +152,15 @@
               </h4>
             </div>
           </li>
-          <!-- Video Tutorials -->
+          <!-- Saved Queries -->
           <li class="image-item item-2">
             <div class="image-wrapper">
               <%= image_tag("revs-tutorials.png",
-                alt: t('revs.nav.video_tutorials')) %>
+                alt: t('revs.nav.saved_queries')) %>
                 <h4>
-                  <%= link_to t('revs.nav.video_tutorials'), tutorials_path %>
+                  <%= link_to t('revs.nav.saved_queries'), lists_path %>
                   <span class="item-links">
-                    <%= link_to t('revs.nav.video_titles.overview'), "https://www.youtube.com/watch?v=rVBI_VCfWYg" %>,
-                    <%= link_to t('revs.nav.video_titles.account'), "https://www.youtube.com/watch?v=1KK7egnD6Ko" %>,
-                    <%= link_to t('revs.nav.video_titles.gallery'), "https://www.youtube.com/watch?v=pePDoEA6-rk" %>,
-                    <%= link_to t('blacklight.search.facets.more'), tutorials_path, class: "more-link" %>
+                    <%= link_to t('revs.nav.saved_queries_overview'),lists_path %>
                   </span>
                 </h4>
             </div>

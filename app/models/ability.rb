@@ -51,6 +51,7 @@ class Ability
     can_act_as_logged_in_user(user)
     can_view_any_profile
     can_view_any_gallery
+    can_edit_saved_queries
     can_curate
     can_update_metadata
     can_administer
@@ -65,6 +66,7 @@ class Ability
       can_read_annotations
       can_read_flags
       can_view_public_galleries
+      can_view_saved_queries
       can_view_public_profiles
       can_flag_anonymous if user.id.nil? # if this is really an anonymous user, add this ability -- if they are logged in, it will added in later specifically for logged in users
     end
@@ -75,6 +77,7 @@ class Ability
     can_view_items
     can_read_annotations
     can_read_flags
+    can_view_saved_queries
     can_annotate(user)
     can_flag_logged_in(user)
     can_save_favorites_and_galleries(user)
@@ -91,6 +94,15 @@ class Ability
     can :read,:search_pages
   end
 
+  def can_view_saved_queries
+    can :read, SavedQuery
+    can :read, :lists
+  end
+  
+  def can_edit_saved_queries
+    can :manage, SavedQuery
+  end
+  
   def can_read_annotations
     can :read, Annotation
     can :index_by_druid, Annotation

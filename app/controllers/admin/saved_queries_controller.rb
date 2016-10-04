@@ -1,11 +1,16 @@
 class Admin::SavedQueriesController < AdminController
 
+  before_filter :ajax_only, :only=>[:sort]
+  load_and_authorize_resource 
+  skip_load_resource :only => :create
+
   def index
     @saved_queries = SavedQuery.all.rank(:row_order)
   end
 
   def new
     @saved_query=SavedQuery.new
+    @saved_query.query=params[:query]
     @saved_query.active=true
     @saved_query.user_id=current_user.id
   end
@@ -23,15 +28,14 @@ class Admin::SavedQueriesController < AdminController
   end
   
   def edit
-    @saved_query=SavedQuery.find(params[:id])
+
   end
 
   def show
-    redirect_to :action=>:index
+    redirect_to @saved_query.url
   end
 
   def update
-    @saved_query=SavedQuery.find(params[:id])
     @saved_query.slug = nil # allow the slug to be regenerated
     if @saved_query.update_attributes(saved_query_params)
      flash[:success]=t('revs.messages.saved')
@@ -42,8 +46,11 @@ class Admin::SavedQueriesController < AdminController
   end
   
   def destroy
-    @id=params[:id]
-    @saved_query=SavedQuery.find(@id).destroy
+    @saved_query.destroy
+    respond_to do |format|
+      format.js   { render }
+      format.html { redirect_to admin_saved_queries_path }
+    end
   end
 
   def sort

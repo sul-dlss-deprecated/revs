@@ -156,6 +156,7 @@ en:
       submit: 'Submit'
       image: 'Image'
       send: 'Send'
+      save_query_button: 'save query'
       cancel: 'Cancel'
       go_back: 'Go back'
       feedback: 'Feedback'
@@ -174,6 +175,8 @@ en:
       more_to_explore: "More to Explore"
       more_galleries: "More galleries"
       video_tutorials: "Video tutorials"
+      saved_queries: "Help Identify Images"
+      saved_queries_overview: "View lists of images that need more information and identification"
       video_titles:
         overview: "Revs overview"
         account: "Create an account"

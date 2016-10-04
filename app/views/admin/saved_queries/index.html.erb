@@ -36,7 +36,7 @@
            </span>
          </td>
          <td><%= saved_query.title %></td>
-         <td><%= link_to saved_query.query, saved_query.url, :target=>"_new" %></td>
+         <td><%= link_to truncate(saved_query.query,:length=>50), saved_query.url, :target=>"_new" %></td>
          <td><%= image_tag(saved_query.thumbnail) %></td>
          <td><%= saved_query.active %></td>
          <td class="centered">
