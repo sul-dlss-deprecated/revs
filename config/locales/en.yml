@@ -156,7 +156,7 @@ en:
       submit: 'Submit'
       image: 'Image'
       send: 'Send'
-      save_query_button: 'save query'
+      save_query_button: 'save this query'
       cancel: 'Cancel'
       go_back: 'Go back'
       feedback: 'Feedback'
