@@ -143,6 +143,17 @@
   }
 }
 
+#admin-saved_queries .button_to {
+  display: inline-block;
+  margin-top: 0;
+
+  .btn {
+    padding: 0;
+    vertical-align: initial;
+  }
+}
+
+
 // Responsive styles
 @media screen and (max-width: 1199px) {
   .admin.table {

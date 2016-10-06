@@ -65,6 +65,7 @@ en:
       created: 'Created'
       new: 'New'
       create_new: 'Create New'
+      create_new_query: 'Create new saved query'
       created_by: 'Created by'
       switch_on: "On"
       switch_off: "Off"
@@ -259,7 +260,7 @@ en:
       update_users: "Update users"
       administer_saved_queries:
         title: "Saved Queries"
-        description: "Saved queries appear on the facet bar and can be shown to users as a quick way of directing them to specific items."
+        description: "Saved queries can be shown to users as a way to direct them to specific items."
         items: "queries"
       administer_highlights:
         title: "Feature Collections"
