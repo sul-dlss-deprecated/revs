@@ -1,0 +1,30 @@
+.lists-landing {
+  .item-details {
+    clear: both;
+    width: 100%;
+  }
+  .thumbnail-preview {
+    border: 0;
+  }
+  .item-title {
+    font-size: 1.1em;
+    line-height: 18px;
+    margin-bottom: 8px;
+  }
+  .detailed {
+    border-top: 2px dotted #dedede;
+    padding-top: 12px;
+
+    img {
+      margin-bottom: 15px;
+      max-width: 150px;
+    }
+  }
+}
+
+// Responsive styles
+@media screen and (max-width: 767px) {
+  .lists-landing .detailed img {
+    max-width: 100px;
+  }
+}

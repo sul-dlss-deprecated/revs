@@ -1,30 +1,35 @@
-<div id="content" class="col-md-12 galleries-landing">
+<div id="content" class="col-md-12 lists-landing">
 
   <h2>
     <%=t('revs.nav.lists')%>
   </h2>
 
   <p><%=t('revs.nav.saved_queries_overview')%>
-  <div id="documents" class="detailed">
+    <div class="detailed">
 
-    <% @saved_queries.each_with_index do |saved_query, counter| %>
+      <% @saved_queries.each_with_index do |saved_query, counter| %>
 
-      <div class="blacklight-collection document row<%= " first" if counter == 0 %>">
-        <div class="col-md-12 collection-title">
+      <div class="item-details">
+        <div class="thumbnail-preview">
+          <% if !saved_query.thumbnail.blank? %>
+            <%= link_to(image_tag(saved_query.thumbnail), saved_query.url) %>
+          <% else %>
+            <%= link_to(image_tag("default-thumbnail_thumb.jpg"), saved_query.url) %>
+          <% end %>
+        </div>
+        <div class="item-description">
+          <div class="item-title">
             <%= link_to(saved_query.title,saved_query.url) %>
-            <p><%= saved_query.description %></p>
-            <% if saved_query.thumbnail %>
-                <%= link_to(image_tag(saved_query.thumbnail),saved_query.url) %>
-            <% end %>
+          </div>
+          <p><%= saved_query.description %></p>
         </div>
       </div>
 
-    <% end %>
+      <% end %>
 
-    <nav class="pagination-container text-center">
-      <%= paginate @saved_queries, :theme => :blacklight %>
-    </nav>
+      <nav class="pagination-container text-center">
+        <%= paginate @saved_queries, :theme => :blacklight %>
+      </nav>
 
+    </div>
   </div>
-
-</div>
