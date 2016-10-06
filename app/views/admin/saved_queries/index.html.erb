@@ -13,20 +13,21 @@
           (<%= SavedQuery.count %> <%=t('revs.admin.administer_saved_queries.items')%>)
         </span>
       </h3>
-      
+
       <p><%= t('revs.admin.administer_saved_queries.description') %></p>
        <p> <%= link_to t('revs.messages.create_new'),new_admin_saved_query_path %></p>
-      
+
   <% if @saved_queries.size > 0 %>
 
     <table id="admin-saved_queries" class="admin table table-bordered table-condensed table-hover table-striped">
       <tr>
         <th><%= t('revs.nav.move')   %></th>
         <th><%= t('revs.show.title') %></th>
-        <th><%= t('revs.show.query') %></th>  
-        <th><%= t('revs.nav.image')  %></th>      
+        <th><%= t('revs.show.query') %></th>
+        <th><%= t('revs.nav.image')  %></th>
+        <th><%= t('revs.nav.visibility')  %></th>
         <th><%= t('revs.user.active')%></th>
-        <th class="centered admin-actions"><%=t('revs.authentication.sidebar.actions')%></th>        
+        <th class="centered admin-actions"><%=t('revs.authentication.sidebar.actions')%></th>
       </tr>
       <% @saved_queries.each do |saved_query|%>
        <tr class="saved_queries-row" id="saved_query-<%="#{saved_query.id}"%>" data-saved_query-id="<%="#{saved_query.id}"%>">
@@ -38,9 +39,10 @@
          <td><%= saved_query.title %></td>
          <td><%= link_to truncate(saved_query.query,:length=>50), saved_query.url, :target=>"_new" %></td>
          <td><%= image_tag(saved_query.thumbnail, :width=>150) unless saved_query.thumbnail.blank?%></td>
+         <td><%= saved_query.visibility %></td>
          <td><%= saved_query.active %></td>
          <td class="centered">
-           <%= link_to "#{t('revs.actions.edit')}", edit_admin_saved_query_path(saved_query.id),:id=>"edit-#{saved_query.id}" %> | 
+           <%= link_to "#{t('revs.actions.edit')}", edit_admin_saved_query_path(saved_query.id),:id=>"edit-#{saved_query.id}" %> |
            <%= button_to(t('revs.actions.delete'), admin_saved_query_path(saved_query.id), :id=>"delete-#{saved_query.id}", :data => {confirm: t('revs.actions.confirm_delete')}, :method=> :delete, :remote=>true, class: 'btn btn-link') %>
          </td>
        </tr>
