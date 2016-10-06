@@ -181,6 +181,7 @@ en:
       more_galleries: "More galleries"
       video_tutorials: "Video tutorials"
       saved_queries: "Help Identify Images"
+      saved_queries_home_page_overview: 'View items that need more information and identification.'
       saved_queries_overview: 'The lists below contain groups of items that need more information and identification. Use the "Flag correction to this item" feature on an item page to submit suggestions and corrections to the Revs curators.'
       video_titles:
         overview: "Revs overview"

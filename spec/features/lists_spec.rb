@@ -19,4 +19,10 @@ describe("Lists",:type=>:request,:integration=>true) do
      end
   end
 
+  it "should redirect to home page if there are no saved queries visible" do
+    SavedQuery.where(:active=>true).where(:visibility=>'public').each {|s| s.update_attribute(:active,false)}
+    visit lists_path
+    expect(current_path).to eq(root_path)
+  end
+  
 end
