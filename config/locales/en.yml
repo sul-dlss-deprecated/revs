@@ -20,7 +20,7 @@ en:
         saved_query:
           attributes:
             visibility:
-              must_be_selected: 'must be selected.'              
+              must_be_selected: 'must be selected.'
   helpers:
     page_entries_info:
       more_pages:
@@ -160,7 +160,7 @@ en:
       submit: 'Submit'
       image: 'Image'
       send: 'Send'
-      save_query_button: 'save this query'
+      save_query_button: '[save this query]'
       cancel: 'Cancel'
       go_back: 'Go back'
       feedback: 'Feedback'
