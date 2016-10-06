@@ -148,9 +148,25 @@
   margin-top: 0;
 
   .btn {
+    line-height: 19px;
     padding: 0;
     vertical-align: initial;
   }
+}
+
+.admin.saved-query {
+  label {
+    font-weight: 700;
+    text-align: right;
+  }
+
+  .form-group.buttons {
+    margin-top: 30px;
+  }
+}
+
+#new_saved_query input[type=submit] {
+  margin-right: 12px;
 }
 
 
@@ -193,6 +209,12 @@
 
     .btn-small {
       margin-left: 0;
+    }
+
+    &.saved-query {
+      label {
+        text-align: left;
+      }
     }
   }
 }
