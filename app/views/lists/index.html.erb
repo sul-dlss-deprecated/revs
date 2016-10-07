@@ -12,14 +12,14 @@
       <div class="item-details">
         <div class="thumbnail-preview">
           <% if !saved_query.thumbnail.blank? %>
-            <%= link_to(image_tag(saved_query.thumbnail), saved_query.url) %>
+            <%= link_to(image_tag(saved_query.thumbnail), list_path(saved_query)) %>
           <% else %>
-            <%= link_to(image_tag("default-thumbnail_thumb.jpg"), saved_query.url) %>
+            <%= link_to(image_tag("default-thumbnail_thumb.jpg"), list_path(saved_query)) %>
           <% end %>
         </div>
         <div class="item-description">
           <div class="item-title">
-            <%= link_to(saved_query.title,saved_query.url) %>
+            <%= link_to(saved_query.title,list_path(saved_query)) %>
           </div>
           <p><%= saved_query.description %></p>
         </div>

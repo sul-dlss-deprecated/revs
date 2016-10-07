@@ -24,5 +24,14 @@ describe("Lists",:type=>:request,:integration=>true) do
     visit lists_path
     expect(current_path).to eq(root_path)
   end
-  
+
+  it "should route to the appropriate query" do
+    public_query=SavedQuery.find('public-query')
+    expect(public_query.views).to eq(0)
+    visit list_path(public_query)
+    expect(page).to have_current_path(/#{public_query.url}/)
+    public_query.reload
+    expect(public_query.views).to eq(1)
+  end
+    
 end

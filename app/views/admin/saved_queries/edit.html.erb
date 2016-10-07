@@ -16,6 +16,8 @@
           </label>
           <div class="col-xs-6 col-md-5">
             <%= show_as_date(@saved_query.created_at.in_time_zone) %>
+						
+						(<%= @saved_query.views%> <%= t('revs.messages.total_views') %>)
           </div>
         </div>
 

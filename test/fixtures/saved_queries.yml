@@ -11,6 +11,7 @@ public_list:
   visibility: 'public'
   thumbnail: 'https://stacks.stanford.edu/image/iiif/qt854jh3199%2F2012-027NADI-1966-b1_1.0_0002/full/!400,400/0/default.jpg'
   active: true
+  slug: public-query
   position: 1
   user: admin
 
@@ -18,6 +19,7 @@ curator_list:
   title: 'Curators query'
   description: 'A description of the test query for curators'
   query: 'q=ford'
+  slug: curators-query
   visibility: 'curator'
   thumbnail: 'https://stacks.stanford.edu/image/iiif/td830rb1584%2F2012-027NADI-1966-b1_2.0_0021/full/!400,400/0/default.jpg'
   active: true
@@ -28,6 +30,7 @@ inactive_list:
   title: 'Inactive query'
   description: 'Unsued'
   query: 'q=whatevs'
+  slug: inactive-query
   visibility: 'public'
   thumbnail: ''
   active: false
