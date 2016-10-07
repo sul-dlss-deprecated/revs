@@ -1,5 +1,10 @@
 $(document).ready(function(){
   
+    $( '#saved_query_query' ).change( function () {
+        $('#unencoded-query').text(decodeURI($(this).val()));
+      }
+    );
+  
     $("#admin-saved_queries").sortable({
     axis: 'y',
     dropOnEmpty: false,

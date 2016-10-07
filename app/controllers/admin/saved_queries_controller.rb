@@ -11,7 +11,9 @@ class Admin::SavedQueriesController < AdminController
   def new
     @saved_query=SavedQuery.new
     @saved_query.query=params[:query]
+    @saved_query.thumbnail=params[:thumbnail]
     @saved_query.active=true
+    @saved_query.visibility='public'
     @saved_query.user_id=current_user.id
   end
 

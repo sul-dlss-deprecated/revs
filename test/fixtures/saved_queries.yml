@@ -28,11 +28,11 @@ curator_list:
 
 inactive_list:
   title: 'Inactive query'
-  description: 'Unsued'
+  description: 'Unused'
   query: 'q=whatevs'
   slug: inactive-query
   visibility: 'public'
-  thumbnail: ''
+  thumbnail: nil
   active: false
   position: 3
   user: admin
