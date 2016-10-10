@@ -1,7 +1,7 @@
 <div id="content" class="col-md-12 galleries-landing">
 
   <h2>
-    <%=t('revs.nav.galleries')%>
+    <%=@page_title%>
     <span class="prev-next">
         <%= page_entries_info @galleries, :entry_name => "#{@filter} #{t('revs.user_galleries.singular')}"  %>
     </span>

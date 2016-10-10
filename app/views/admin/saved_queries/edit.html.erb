@@ -1,0 +1,42 @@
+<div id="content" class="col-sm-9 admin saved-query">
+	<div class="row">
+	  <div class="col-sm-12">
+      <h2><%= t('revs.actions.edit') %>: <%=@saved_query.title%></h2>
+	  </div>
+	</div>
+
+	<div class="row">
+	  <div class="col-sm-12">
+
+      <%= form_for(@saved_query, :url => admin_saved_query_path, :html => { :method => :put, :class => "form-horizontal" }) do |f| %>
+
+        <div class="form-group">
+          <label class="col-xs-12 col-sm-4 col-md-3">
+            <%=  t('revs.curator.created_on') %>
+          </label>
+          <div class="col-xs-6 col-md-5">
+            <%= show_as_date(@saved_query.created_at.in_time_zone) %>
+						
+						(<%= @saved_query.views%> <%= t('revs.messages.total_views') %>)
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-xs-12 col-sm-4 col-md-3">
+            <%=  t('revs.messages.created_by') %>
+          </label>
+          <div class="col-xs-6 col-md-5">
+            <%= @saved_query.user.to_s %>
+          </div>
+        </div>
+
+        <%= render :partial=>'form',:locals=>{:f=>f} %>
+
+      <% end %>
+
+	  </div>
+	</div>
+
+</div>
+
+<%= render :partial => 'devise/shared/show_admin_sidebar' %>

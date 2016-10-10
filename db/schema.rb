@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160420205356) do
+ActiveRecord::Schema.define(version: 20160928213450) do
 
   create_table "annotations", force: :cascade do |t|
     t.integer  "user_id"
@@ -126,6 +126,23 @@ ActiveRecord::Schema.define(version: 20160420205356) do
   add_index "saved_items", ["druid"], name: "index_saved_items_on_druid"
   add_index "saved_items", ["gallery_id"], name: "index_saved_items_on_gallery_id"
   add_index "saved_items", ["position"], name: "index_saved_items_on_position"
+
+  create_table "saved_queries", force: :cascade do |t|
+    t.string   "title",                      null: false
+    t.string   "slug"
+    t.text     "description"
+    t.string   "query",                      null: false
+    t.string   "thumbnail"
+    t.string   "visibility"
+    t.boolean  "active",      default: true
+    t.integer  "position"
+    t.integer  "user_id"
+    t.integer  "views",       default: 0,    null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "saved_queries", ["user_id"], name: "index_saved_queries_on_user_id"
 
   create_table "searches", force: :cascade do |t|
     t.text     "query_params"

@@ -78,6 +78,7 @@ Revs::Application.routes.draw do
   end
 
   resources :galleries
+  resources :lists
   resources :saved_items do
     collection do
       get 'cancel/:id', :to => 'saved_items#cancel', :as=>'cancel'
@@ -101,6 +102,11 @@ Revs::Application.routes.draw do
     resources :users do
       collection do
         post 'bulk_update_role', :to => 'users#bulk_update_role'
+      end
+    end
+    resources :saved_queries do
+      collection do
+        post 'sort', :to => 'saved_queries#sort', :as=>'sort'
       end
     end
     resources :ontologies do

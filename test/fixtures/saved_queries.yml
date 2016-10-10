@@ -1,0 +1,38 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+public_list:
+  title: 'Public query'
+  description: 'A description of the test query'
+  query: 'q=marlboro'
+  visibility: 'public'
+  thumbnail: 'https://stacks.stanford.edu/image/iiif/qt854jh3199%2F2012-027NADI-1966-b1_1.0_0002/full/!400,400/0/default.jpg'
+  active: true
+  slug: public-query
+  position: 1
+  user: admin
+
+curator_list:
+  title: 'Curators query'
+  description: 'A description of the test query for curators'
+  query: 'q=ford'
+  slug: curators-query
+  visibility: 'curator'
+  thumbnail: 'https://stacks.stanford.edu/image/iiif/td830rb1584%2F2012-027NADI-1966-b1_2.0_0021/full/!400,400/0/default.jpg'
+  active: true
+  position: 2
+  user: curator
+
+inactive_list:
+  title: 'Inactive query'
+  description: 'Unused'
+  query: 'q=whatevs'
+  slug: inactive-query
+  visibility: 'public'
+  thumbnail: nil
+  active: false
+  position: 3
+  user: admin

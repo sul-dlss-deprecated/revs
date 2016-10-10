@@ -19,4 +19,17 @@ describe("Home Page",:type=>:request,:integration=>true) do
       expect(page).to have_xpath("//a[contains(@href, \"/contact\")]")
     end
 
+    it "should show a link to the saved queries if they exist" do
+      visit root_path
+      expect(page).to have_content I18n.t('revs.nav.saved_queries_home_page_overview')
+      expect(page).to_not have_content I18n.t('revs.nav.video_tutorials')
+    end
+
+    it "should not show a link to the saved queries if there are none, and should show video tutorials instead" do
+      SavedQuery.where(:active=>true).where(:visibility=>'public').each {|s| s.update_attributes(:active=>false)}
+      visit root_path
+      expect(page).to_not have_content I18n.t('revs.nav.saved_queries_home_page_overview')
+      expect(page).to have_content I18n.t('revs.nav.video_tutorials')
+    end
+    
 end

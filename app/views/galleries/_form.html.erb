@@ -23,7 +23,7 @@
       <%= f.radio_button :visibility, :private, :class => "radio", checked: @gallery.visibility == "private" %>
       <%= t('revs.user_galleries.private') %>
     </label>
-    <% if %w{curator admin}.include? current_user.role %>
+    <% if can? :curate, :all %>
       <label class="radio-inline">
         <%= f.radio_button :visibility, :curator, :class => "radio", checked: @gallery.visibility == "curator" %>
         <%= t('revs.user_galleries.curator') %>

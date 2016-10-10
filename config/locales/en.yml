@@ -17,6 +17,10 @@ en:
           attributes:
             druid:
               cannot_be_more_than_one_saved_item_per_druid_per_gallery: 'you cannot saved the same item twice to the same gallery'
+        saved_query:
+          attributes:
+            visibility:
+              must_be_selected: 'must be selected.'
   helpers:
     page_entries_info:
       more_pages:
@@ -59,6 +63,9 @@ en:
       not_shown: 'not shown'
       view_all: 'View all'
       created: 'Created'
+      new: 'New'
+      create_new: 'Create New'
+      create_new_query: 'Create new saved query'
       created_by: 'Created by'
       switch_on: "On"
       switch_off: "Off"
@@ -74,6 +81,7 @@ en:
       switch_no: "no"
       status: "Status"
       showing: "Showing"
+      unencoded: "Unencoded"
       no_editing_allowed: "IMPORTANT NOTE: the website is currently undergoing mainteance and no editing is allowed at this time."
       search_affected: "IMPORTANT NOTE: the website is currently undergoing maintenace and text searches may not produce the expected results or may be missing results until completed."
       reorder: "Drag and drop to reorder"
@@ -139,6 +147,8 @@ en:
       help: "Use the Flag action to tell us about a correction to the metadata for this item. To report more general problems, please use the Feedback link at the top of the web site."
     nav:
       home: 'Home'
+      move: 'Move'
+      lists: 'Lists'
       collections: 'Collections'
       galleries: 'Galleries'
       select_all: 'Select all'
@@ -150,7 +160,9 @@ en:
       update: 'Update'
       create: 'Create'
       submit: 'Submit'
+      image: 'Image'
       send: 'Send'
+      save_query_button: '[save this query]'
       cancel: 'Cancel'
       go_back: 'Go back'
       feedback: 'Feedback'
@@ -169,6 +181,9 @@ en:
       more_to_explore: "More to Explore"
       more_galleries: "More galleries"
       video_tutorials: "Video tutorials"
+      saved_queries: "Help Identify Images"
+      saved_queries_home_page_overview: 'View items that need more information and identification.'
+      saved_queries_overview: 'The lists below contain groups of items that need more information and identification. Use the "Flag correction to this item" feature on an item page to submit suggestions and corrections to the Revs curators.'
       video_titles:
         overview: "Revs overview"
         account: "Create an account"
@@ -245,6 +260,10 @@ en:
       administer_users: "Manage Users"
       find_users: "Find users"
       update_users: "Update users"
+      administer_saved_queries:
+        title: "Saved Queries"
+        description: "Saved queries can be shown to users as a way to direct them to specific items."
+        items: "queries"
       administer_highlights:
         title: "Feature Collections"
         description: "To feature a collection on the home page, check the box next to its name.  The collections are shown in the order they are checked (last checked shown first)."
@@ -295,6 +314,7 @@ en:
         administer_ontologies: "Manage Autocomplete Terms"
         administer_highlights: "Feature Collections"
         administer_galleries: "Feature Galleries"
+        administer_saved_queries: "Saved Queries"
       registered_users: "registered users"
     curator:
       not_found: 'Item not found'
@@ -483,6 +503,7 @@ en:
         title: 'Limit your search'
         filter: 'Filter'
         clear: 'Clear'
+
     sidebar:
       navigation:
         title: 'Navigation'
@@ -500,6 +521,7 @@ en:
       vehicle_information: "Vehicle Information"
       race_information: "Race Information"
       source_information_html: "Sources, Notes, &amp; Technical Information"
+      query: "Query"
       label_title: "Title"
       label_collection: "Collection"
       label_archive: "Archive"

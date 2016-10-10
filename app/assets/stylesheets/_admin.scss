@@ -143,6 +143,33 @@
   }
 }
 
+#admin-saved_queries .button_to {
+  display: inline-block;
+  margin-top: 0;
+
+  .btn {
+    line-height: 19px;
+    padding: 0;
+    vertical-align: initial;
+  }
+}
+
+.admin.saved-query {
+  label {
+    font-weight: 700;
+    text-align: right;
+  }
+
+  .form-group.buttons {
+    margin-top: 30px;
+  }
+
+  input[type=submit] {
+    margin-right: 12px;
+  }
+}
+
+
 // Responsive styles
 @media screen and (max-width: 1199px) {
   .admin.table {
@@ -182,6 +209,12 @@
 
     .btn-small {
       margin-left: 0;
+    }
+
+    &.saved-query {
+      label {
+        text-align: left;
+      }
     }
   }
 }
