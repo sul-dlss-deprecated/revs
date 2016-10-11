@@ -1,4 +1,4 @@
-<% cache("home", :expires_in=>6.hours)  do %>
+<% cache("home", :expires_in=>6.hours, :skip_digest => true)  do %>
   <!-- begin collection carousel for JavaScript users -->
   <div class="row slideshow showOnLoad" style="display:none;">
     <div class="col-md-12">
@@ -152,6 +152,8 @@
               </h4>
             </div>
           </li>
+<% end # end cached part of page%>
+          
           <% if (can?(:curate, :all) && SavedQuery.all_lists.size > 0) || SavedQuery.public_lists.size > 0 %>
             <!-- Saved Queries -->
             <li class="image-item item-2">
@@ -188,4 +190,3 @@
     </div>
   </div>
 
-<% end %>
