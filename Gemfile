@@ -102,8 +102,7 @@ gem "bootstrap-sass"
 gem "font-awesome-rails"
 gem 'autoprefixer-rails', '~> 5.1.11'
 
-gem 'squash_ruby', :require => 'squash/ruby'
-gem 'squash_rails', :require => 'squash/rails'
+gem 'honeybadger', '~> 2.0'
 
 #Bulk Metadata Loading Gems
 gem 'countries'

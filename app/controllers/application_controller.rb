@@ -1,5 +1,4 @@
 # encoding: utf-8
-require 'squash/rails'
 require 'addressable/uri'
 
 class ApplicationController < ActionController::Base
@@ -12,9 +11,6 @@ class ApplicationController < ActionController::Base
 
    require 'blacklight/catalog/search_context'
    include Blacklight::Catalog::SearchContext
-
-   # include squash.io
-   include Squash::Ruby::ControllerMethods
 
   rescue_from Exception, :with=>:exception_on_website
 
@@ -332,7 +328,7 @@ class ApplicationController < ActionController::Base
   def exception_on_website(exception)
 
     @exception=exception
-    notify_squash exception
+    Honeybadger.notify(exception)
 
     if Revs::Application.config.exception_error_page
         logger.error(@exception.message)

@@ -82,8 +82,3 @@ Revs::Application.configure do
   config.featured_contributors=['Doug Nye','tvc15','enzonz','Bergeleven','trigwell','Rupertlt1','Duncan'] # array of usernames of featured contributors for about top contributors page...will be shown in this order, use an empty array if none
 
 end
-
-Squash::Ruby.configure :api_host => 'https://sul-squash-prod.stanford.edu',
-                       :api_key => 'a22b8edb-fc4a-446b-9ae6-54186b53c0d0',
-                       :disabled => false,
-                       :revision_file => 'REVISION'
