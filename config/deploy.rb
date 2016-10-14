@@ -22,6 +22,8 @@ set :tag, ask("Tag to deploy (make sure to push the tag first): [default: #{defa
 
 set :branch, fetch(:tag)
 
+before 'deploy:restart', 'shared_configs:update'
+
 namespace :jetty do
   task :start do
     on roles(:app) do
