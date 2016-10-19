@@ -3,8 +3,7 @@ Revs::Application.configure do
   config.eager_load = false
 
   # Settings specified here will take precedence over those in config/application.rb
-  config.exception_error_page = false # show a friendly 500 error page if true
-  config.exception_recipients = '' # list of email addresses, comma separated, that will be notified when an exception occurs - leave blank for no emails
+  config.exception_error_page = false # show a friendly 500 error page and send notification exceptions if true
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 
   # In the development environment your application's code is reloaded on
