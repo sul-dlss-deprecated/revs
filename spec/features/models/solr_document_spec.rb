@@ -3,17 +3,39 @@ require "rails_helper"
 describe SolrDocument, :integration => true do
 
   describe "rights and copyright" do
-
-    it "should retrieve the default rights and copyright statements if not found in solr document" do
-      doc=SolrDocument.find('bb004bn8654') # fixture with none specified
-      expect(doc.use_and_reproduction).to eq("Users must contact The Revs Institute for Automotive Research, Inc. for re-use and reproduction information.")
-      expect(doc.copyright).to eq("Courtesy of The Revs Institute for Automotive Research, Inc. All rights reserved unless otherwise indicated.")
+    it "should set the correct speciality revs rights statement even if rights found in solr document" do
+      doc=SolrDocument.find('bb004bn8654') # fixture with no copyright or rights specified
+      expect(doc.use_and_reproduction).to eq("To request access or purchase this image, please review the <a target=\"_new\" href=\"http://revsinstitute.org/order-images/\">permission to use requirements </a>and contact <a href=\"/contact?from=%2Fcatalog%2Fbb004bn8654&amp;message=Request+to+purchase+image+image+ID+2012-027NADI-1966-b1_4.3_0015+at+https%3A%2F%2Frevslib.stanford.edu%2Fcatalog%2Fbb004bn8654&amp;subject=terms+of+use\">The Revs Institute for Automotive Research, Inc.</a>")
+      expect(doc.copyright).to eq("Courtesy of The Revs Institute for Automotive Research, Inc. All rights reserved unless otherwise indicated.") # default copyright
     end
 
-    it "should retrieve the rights and copyright statements if found in solr document" do
+    it "should retrieve the copyright statements if found in solr document" do
       doc=SolrDocument.find('td830rb1584') # fixtures with values specified
-      expect(doc.use_and_reproduction).to eq("This is the use and reproduction statement - different from default.")
+      expect(doc.use_and_reproduction).to eq("To request access or purchase this image, please review the <a target=\"_new\" href=\"http://revsinstitute.org/order-images/\">permission to use requirements </a>and contact <a href=\"/contact?from=%2Fcatalog%2Ftd830rb1584&amp;message=Request+to+purchase+image+image+ID+2012-027NADI-1966-b1_2.0_0021+at+https%3A%2F%2Frevslib.stanford.edu%2Fcatalog%2Ftd830rb1584&amp;subject=terms+of+use\">The Revs Institute for Automotive Research, Inc.</a>")
       expect(doc.copyright).to eq("This is the copyright statement - different from default.")
+    end
+
+    it "should retrieve the rights and copyright statement from the solr document for non-revs items but blank out the copyright statement" do
+      doc=SolrDocument.find('bd969sj1904') # an R&T item
+      expect(doc.use_and_reproduction).to eq("This is the Road and Track use and reproduction statement.")
+      expect(doc['copyright_ss']).to eq("This is the Road and Track copyright statement.") # its in the solr doc, but won't appear in the page
+      expect(doc.copyright).to eq("") # the copyright statement is set to blank for R&T items since it is actually contained in the use and reproduction statements in SDR
+    end
+    it "should set the specialty rights statement for not available for commercial reproduction for a collection specified to have one" do
+      doc=SolrDocument.find('xg271zb5261') # a revs item with special rights
+      expect(doc.use_and_reproduction).to eq("Due to copyright restrictions, this item is not available for reproduction.") # special statement
+      expect(doc.copyright).to eq("Courtesy of The Revs Institute for Automotive Research, Inc. All rights reserved unless otherwise indicated.") # default copyright
+    end
+    it "should set the specialty rights statement for not available for commercial reproduction without contacinting us for a collection specified to have one" do
+      previous_collections_available_for_noncommerical_reproduction = Revs::Application.config.collections_available_for_noncommerical_reproduction
+      previous_collections_available_for_noncommerical_reproduction_or_permission = Revs::Application.config.collections_available_for_noncommerical_reproduction_or_permission
+      Revs::Application.config.collections_available_for_noncommerical_reproduction_or_permission = ['wz243gf4151'] # manually set this item's collection as a special one just for the test
+      Revs::Application.config.collections_available_for_noncommerical_reproduction = []
+      doc=SolrDocument.find('xg271zb5261') # a revs item with special rights
+      expect(doc.use_and_reproduction).to eq("This item is not available for reproduction for commerical use.  Contact us for non-commerical use.") # special statement
+      expect(doc.copyright).to eq("Courtesy of The Revs Institute for Automotive Research, Inc. All rights reserved unless otherwise indicated.") # default copyright
+      Revs::Application.config.collections_available_for_noncommerical_reproduction = previous_collections_available_for_noncommerical_reproduction
+      Revs::Application.config.collections_available_for_noncommerical_reproduction_or_permission = previous_collections_available_for_noncommerical_reproduction_or_permission
     end
 
   end
@@ -469,13 +491,13 @@ describe SolrDocument, :integration => true do
 
     describe "all_objects" do
       it "should return the total number of objects" do
-        expect(SolrDocument.total_images).to eq(18) # default is visible
-        expect(SolrDocument.total_images(:visible)).to eq(18)
+        expect(SolrDocument.total_images).to eq(19) # default is visible
+        expect(SolrDocument.total_images(:visible)).to eq(19)
         expect(SolrDocument.total_images(:hidden)).to eq(1)
-        expect(SolrDocument.total_images(:all)).to eq(19)
-        expect(SolrDocument.score_stats['count']).to eq(19)
-        expect(SolrDocument.score_stats['mean']).to be_between(26,28).inclusive # UGH: include some fuziness here since there seem to be solr docs changing in the tests and not getting reset and the exact amount is not super important, Peter 6/3/2015
-        expect(SolrDocument.score_stats['sum']).to be_between(505,540).inclusive # ditto
+        expect(SolrDocument.total_images(:all)).to eq(20)
+        expect(SolrDocument.score_stats['count']).to eq(20)
+        expect(SolrDocument.score_stats['mean']).to be_between(25,29).inclusive # UGH: include some fuziness here since there seem to be solr docs changing in the tests and not getting reset and the exact amount is not super important, Peter 6/3/2015
+        expect(SolrDocument.score_stats['sum']).to be_between(500,550).inclusive # ditto
       end
     end
 
@@ -488,7 +510,7 @@ describe SolrDocument, :integration => true do
 
     describe "all_collections" do
       it "should return an array of collection SolrDocuments" do
-        expect(SolrDocument.all_collections.length).to eq(3)
+        expect(SolrDocument.all_collections.length).to eq(4)
         SolrDocument.all_collections.each do |doc|
           expect(doc.is_collection?).to be_truthy
           expect(doc).to be_a SolrDocument

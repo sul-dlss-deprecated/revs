@@ -214,8 +214,8 @@ en:
       spambot_label: 'Leave blank'
       spambot: 'Please leave this field blank - it is used to prevent spam submissions'
       default_revs_copyright: "Courtesy of The Revs Institute for Automotive Research, Inc. All rights reserved unless otherwise indicated."
-      default_revs_rights_statement: "Users must contact The Revs Institute for Automotive Research, Inc. for re-use and reproduction information."
-      image_not_available_for_reproduction: "Due to copyright restrictions, this item is not available for reproduction."
+      image_available_for_noncommercial_use_only: "Due to copyright restrictions, this item is not available for reproduction."
+      image_available_for_noncommercial_use_only_contact_us: "This item is not available for reproduction for commerical use.  Contact us for non-commerical use."
       describe_problem: 'Please describe your question or problem.'
       image_license_agreement: "permission to use requirements "
       image_reuse_agreement: "To request access or purchase this image, please review the %{license_agreement_link}"

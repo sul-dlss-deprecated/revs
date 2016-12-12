@@ -45,12 +45,6 @@ class SolrDocument
 
   self.unique_key = 'id'
 
-  ########################
-  # The methods below need to be set to use Activesolr
-  # a hash of attribute names to solr document field names, used by Activesolr to create automatic setters and getters
-  # attributes in lowercase symbols; set to a hash with :field denothing the solr field name, and the optional :default denoting the value to set if solr field is blank
-  #  set :editstore to false if you don't want the change to propogate to DOR in any scenario
-
   def self.use_editstore
     Revs::Application.config.use_editstore # set to true to propogate changes to editstore when the .save method is called
   end
@@ -103,30 +97,39 @@ class SolrDocument
     archive_name.downcase.include?('road & track')
   end
 
-  # some collections are not available for reproduction and will have their use and reproduction statement overriden on the website display to reduce re-use requests -- it can be done per collection
-  # set the collections this applies for in config/application.rb
-  def reproduction_not_available?
-    !collections.blank? && !(collections & Revs::Application.config.collections_not_available_for_reproduction).blank?
-  end
-
   # override the copyright statement in the solr document as necessary
   def copyright
-    value=self['copyright_ss']
-    value = I18n.t('revs.contact.default_revs_copyright') if (value.blank? && revs_item?) # default revs value if not supplied
-    value = "" if road_and_track_item? # set the copyright to blank for road & track since the actual use and reproduction statement includes copyright and it is otherwise repetitive
-    return value
+    if road_and_track_item? # set the copyright to blank for road & track since the actual use and reproduction statement includes copyright and it is otherwise repetitive
+      value = ""
+    else
+      value=self['copyright_ss'] || I18n.t('revs.contact.default_revs_copyright')  # default revs value if not supplied
+    end
+    value
   end
 
-  # revs items will be overridden in the view so we can add a link to the contact us page
   def use_and_reproduction
-    if reproduction_not_available?
-      value=I18n.t('revs.contact.image_not_available_for_reproduction')
-    elsif self['use_and_reproduction_ss'].blank?
-      value=I18n.t('revs.contact.default_revs_rights_statement')
-    else
-      value=self['use_and_reproduction_ss']
-    end
-    return value
+    if revs_item? # revs items get a specific message set, either a special reproduction statements per collection or the default with links
+      if !(collections & Revs::Application.config.collections_available_for_noncommerical_reproduction).blank?
+        value=I18n.t('revs.contact.image_available_for_noncommercial_use_only')
+      elsif !(collections & Revs::Application.config.collections_available_for_noncommerical_reproduction_or_permission).blank?
+        value=I18n.t('revs.contact.image_available_for_noncommercial_use_only_contact_us')
+      else  # all other revs items have a special contact link embedded in the message
+        value=I18n.t('revs.contact.image_reuse_agreement',
+          :license_agreement_link => ActionController::Base.helpers.link_to(I18n.t('revs.contact.image_license_agreement'),
+          Revs::Application.config.revs_reuse_link,:target=>'_new')).html_safe
+        value += I18n.t('revs.contact.reuse_contact',
+          :reuse_contact_link => ActionController::Base.helpers.link_to(I18n.t('revs.contact.contact_linktext_html'),
+          Rails.application.routes.url_helpers.contact_us_path(:subject=>'terms of use',
+                          :from=>Rails.application.routes.url_helpers.catalog_path(id),
+                          :message=> I18n.t('revs.contact.reuse_contact_message',
+                            :reuse_contact_message_doc => self.identifier,
+                            :reuse_contact_message_url => Rails.application.routes.url_helpers.catalog_url(id,:host=>'https://revslib.stanford.edu')
+                            )))).html_safe
+      end # end check for special collections
+    else # all other non-Revs items get pulled from the solr doc
+      value=self['use_and_reproduction_ss'] || ""
+    end # end check for revs item
+    value
   end
 
   # a helper that makes it easy to show the document location as a single string
@@ -280,7 +283,7 @@ class SolrDocument
                                  }
                                )
                              )
-                             
+
   end
 
   def images(size=:default)
@@ -570,10 +573,10 @@ class SolrDocument
         "random_#{Random.new.rand(10000)} asc"
       when "score"
         "score_isi asc"
-      end  
+      end
       sort_field
   end
-  
+
   def self.config
     CatalogController.blacklight_config
   end

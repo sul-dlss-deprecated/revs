@@ -32,6 +32,10 @@ class AboutController < ApplicationController
   # this is the special contact us page
   def contact
 
+    @from=params[:from]
+    @subject=params[:subject]
+    @message=params[:message]
+
     show
 
   end
@@ -58,7 +62,7 @@ class AboutController < ApplicationController
     else
 
       if valid_submission?
-      
+
         if @subject=='metadata'  # don't bother creating a jira ticket for a metadata update, since we will create an anonymous flag anyway and add the email address and name into a private comment
           flash[:notice]=t("revs.about.contact_message_sent_about_metadata")
           unless @from.blank? # create a flag for this if its feedback that is coming from a specific druid page

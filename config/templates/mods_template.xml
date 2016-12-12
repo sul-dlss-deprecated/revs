@@ -44,6 +44,13 @@
 			</subject>
 		<% end %>
   <% end %>
+  <% [:people1,:people2,:people3,:people4,:people5,:people6,:people7,:people8,:people9,:people10].each do |alt_people_col| %>
+    <% if !manifest_row[alt_people_col].blank? %>
+      <subject displayLabel="People" authority="local">
+        <name type="personal"><namePart><%=manifest_row[alt_people_col].strip%></namePart></name>
+      </subject>
+    <% end %>
+  <% end %>
 	<% if !manifest_row[:entrant].blank? %>
 	  <% manifest_row[:entrant].split('|').each do |entrant| %>
   		<subject id="entrant" displayLabel="Entrant" authority="local">

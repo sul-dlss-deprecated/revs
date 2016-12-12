@@ -9,7 +9,7 @@
 	<%= hidden_field_tag 'auto_response',@auto_response || true%>
 	<%= hidden_field_tag 'loadtime',Time.now%>
 
-	<% if Revs::Application.config.contact_us_topics.size > 1 %>
+  <% if Revs::Application.config.contact_us_topics.size > 1 %>
 		<div class="form-group">
 		  <label class="control-label col-xs-12 col-sm-3 col-md-2" for="subject"><%=t('revs.contact.subject')%></label>
 		  <div class="col-xs-8 col-sm-6 col-md-5">
