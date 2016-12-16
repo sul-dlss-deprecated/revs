@@ -46,7 +46,3 @@ Revs::Application.configure do
 
   config.featured_contributors=['curator1','admin1','user1'] # array of usernames of featured contributors for about top contributors page...will be shown in this order, use an empty array if none
 end
-
-Squash::Ruby.configure :api_host => 'https://squash-dev.stanford.edu',
-                       :api_key => '20f28544-89ff-42f8-b310-4d79a70a9b29',
-                       :disabled => true

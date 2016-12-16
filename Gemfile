@@ -91,6 +91,7 @@ group :deployment do
   gem 'capistrano-rails'
   gem 'dlss-capistrano'
   gem 'capistrano-rvm'
+  gem 'capistrano-shared_configs'
 end
 
 gem 'jquery-rails'
@@ -102,8 +103,7 @@ gem "bootstrap-sass"
 gem "font-awesome-rails"
 gem 'autoprefixer-rails', '~> 5.1.11'
 
-gem 'squash_ruby', :require => 'squash/ruby'
-gem 'squash_rails', :require => 'squash/rails'
+gem 'honeybadger', '~> 2.0'
 
 #Bulk Metadata Loading Gems
 gem 'countries'
