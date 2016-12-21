@@ -213,15 +213,12 @@ en:
       message: 'Message'
       spambot_label: 'Leave blank'
       spambot: 'Please leave this field blank - it is used to prevent spam submissions'
-      default_revs_copyright: "Courtesy of The Revs Institute for Automotive Research, Inc. All rights reserved unless otherwise indicated."
-      image_available_for_noncommercial_use_only: "Due to copyright restrictions, this item is not available for reproduction."
-      image_available_for_noncommercial_use_only_contact_us: "This item is not available for reproduction for commerical use.  Contact us for non-commerical use."
+      default_revs_copyright: "Courtesy of The Revs Institute. All rights reserved unless otherwise indicated."
+      image_reuse_agreement: "To request this image for commercial or non-commercial use, please contact "
+      contact_linktext_html: "The Revs Institute."
+      image_available_for_noncommercial_use_only: "Due to copyright restrictions, this item is available for non-commercial use only. To request this image, please contact "
+      image_uncertain: "Due to copyright restrictions, this item may not be available for commercial use. To request this image, please contact "
       describe_problem: 'Please describe your question or problem.'
-      image_license_agreement: "permission to use requirements "
-      image_reuse_agreement: "To request access or purchase this image, please review the %{license_agreement_link}"
-      reuse_contact: "and contact %{reuse_contact_link}"
-      contact_linktext_html: "The Revs Institute for Automotive Research, Inc."
-      reuse_contact_message: "Request to purchase image image ID %{reuse_contact_message_doc} at %{reuse_contact_message_url}"
       thanks: 'Thanks for contacting the Revs Digital Library'
     authentication:
       new_user: 'New user?'

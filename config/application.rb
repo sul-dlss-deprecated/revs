@@ -88,18 +88,23 @@ module Revs
 
     # these collections are only available for non-commerical reproduction and will show a special statement instead of the use and reproduction statement in the item itself
     config.collections_available_for_noncommerical_reproduction =
-      ['td221fy0182',
-        'jh550nq3200',
-        'ch493nk3954',
-        'zg796vp9147',
-        'qn776mq9014',
-        'vm027cv8758',
-        'wt886dn0556',
-        'my206bq1956',
-        'wz243gf4151']
+      [ 'jh550nq3200', # Worner
+        'zq905ny4367', # Grand Prix
+        'ch493nk3954', # Tubbs
+        'zg796vp9147', # European Motorsport
+        'qn776mq9014', # Cabart
+        'vm027cv8758', # Richley
+        'wt886dn0556', # Derauw
+        'wz243gf4151', # Chambers
+        'my206bq1956'  # Royal Automobile Trophy
+      ]
 
-    # these collections are only available for non-commerical reproduction or special permission granted and will show a special statement instead of the use and reproduction statement in the item itself
-    config.collections_available_for_noncommerical_reproduction_or_permission = []
+    # these collections have uncertain rights and we will show a special statement instead of the use and reproduction statement in the item itself
+    config.collection_rights_uncertain =
+      [ 'td221fy0182', # Breslauer
+        'gw676ck6589', # Ludvigsen
+        'yt502zj0924', # Craig
+      ]
 
     config.revs_reuse_link='http://revsinstitute.org/order-images/'
 

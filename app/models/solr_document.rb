@@ -101,8 +101,10 @@ class SolrDocument
   def copyright
     if road_and_track_item? # set the copyright to blank for road & track since the actual use and reproduction statement includes copyright and it is otherwise repetitive
       value = ""
+    elsif revs_item?
+      value=I18n.t('revs.contact.default_revs_copyright')  # just use default revs value if not supplied
     else
-      value=self['copyright_ss'] || I18n.t('revs.contact.default_revs_copyright')  # default revs value if not supplied
+      value=self['copyright_ss'] || "" # pull from document
     end
     value
   end
@@ -110,23 +112,14 @@ class SolrDocument
   def use_and_reproduction
     if revs_item? # revs items get a specific message set, either a special reproduction statements per collection or the default with links
       if !(collections & Revs::Application.config.collections_available_for_noncommerical_reproduction).blank?
-        value=I18n.t('revs.contact.image_available_for_noncommercial_use_only')
-      elsif !(collections & Revs::Application.config.collections_available_for_noncommerical_reproduction_or_permission).blank?
-        value=I18n.t('revs.contact.image_available_for_noncommercial_use_only_contact_us')
-      else  # all other revs items have a special contact link embedded in the message
-        value=I18n.t('revs.contact.image_reuse_agreement',
-          :license_agreement_link => ActionController::Base.helpers.link_to(I18n.t('revs.contact.image_license_agreement'),
-          Revs::Application.config.revs_reuse_link,:target=>'_new')).html_safe
-        value += I18n.t('revs.contact.reuse_contact',
-          :reuse_contact_link => ActionController::Base.helpers.link_to(I18n.t('revs.contact.contact_linktext_html'),
-          Rails.application.routes.url_helpers.contact_us_path(:subject=>'terms of use',
-                          :from=>Rails.application.routes.url_helpers.catalog_path(id),
-                          :message=> I18n.t('revs.contact.reuse_contact_message',
-                            :reuse_contact_message_doc => self.identifier,
-                            :reuse_contact_message_url => Rails.application.routes.url_helpers.catalog_url(id,:host=>'https://revslib.stanford.edu')
-                            )))).html_safe
+        value = I18n.t('revs.contact.image_available_for_noncommercial_use_only')
+      elsif !(collections & Revs::Application.config.collection_rights_uncertain).blank?
+        value = I18n.t('revs.contact.image_uncertain').html_safe
+      else  # all other revs items
+        value = I18n.t('revs.contact.image_reuse_agreement').html_safe
       end # end check for special collections
-    else # all other non-Revs items get pulled from the solr doc
+      value += ActionController::Base.helpers.link_to(I18n.t('revs.contact.contact_linktext_html'),Revs::Application.config.revs_reuse_link,:target=>'_new').html_safe # add the contact link
+    else # all other (non-Revs) items get pulled from the solr doc if available
       value=self['use_and_reproduction_ss'] || ""
     end # end check for revs item
     value

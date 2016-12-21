@@ -5,14 +5,15 @@ describe SolrDocument, :integration => true do
   describe "rights and copyright" do
     it "should set the correct speciality revs rights statement even if rights found in solr document" do
       doc=SolrDocument.find('bb004bn8654') # fixture with no copyright or rights specified
-      expect(doc.use_and_reproduction).to eq("To request access or purchase this image, please review the <a target=\"_new\" href=\"http://revsinstitute.org/order-images/\">permission to use requirements </a>and contact <a href=\"/contact?from=%2Fcatalog%2Fbb004bn8654&amp;message=Request+to+purchase+image+image+ID+2012-027NADI-1966-b1_4.3_0015+at+https%3A%2F%2Frevslib.stanford.edu%2Fcatalog%2Fbb004bn8654&amp;subject=terms+of+use\">The Revs Institute for Automotive Research, Inc.</a>")
-      expect(doc.copyright).to eq("Courtesy of The Revs Institute for Automotive Research, Inc. All rights reserved unless otherwise indicated.") # default copyright
+      expect(doc.use_and_reproduction).to eq("To request this image for commercial or non-commercial use, please contact <a target=\"_new\" href=\"http://revsinstitute.org/order-images/\">The Revs Institute.</a>")
+      expect(doc.copyright).to eq("Courtesy of The Revs Institute. All rights reserved unless otherwise indicated.") # default copyright
     end
 
-    it "should retrieve the copyright statements if found in solr document" do
+    it "should set the default copyright statement for a revs item even if found in solr document" do
       doc=SolrDocument.find('td830rb1584') # fixtures with values specified
-      expect(doc.use_and_reproduction).to eq("To request access or purchase this image, please review the <a target=\"_new\" href=\"http://revsinstitute.org/order-images/\">permission to use requirements </a>and contact <a href=\"/contact?from=%2Fcatalog%2Ftd830rb1584&amp;message=Request+to+purchase+image+image+ID+2012-027NADI-1966-b1_2.0_0021+at+https%3A%2F%2Frevslib.stanford.edu%2Fcatalog%2Ftd830rb1584&amp;subject=terms+of+use\">The Revs Institute for Automotive Research, Inc.</a>")
-      expect(doc.copyright).to eq("This is the copyright statement - different from default.")
+      expect(doc.use_and_reproduction).to eq("To request this image for commercial or non-commercial use, please contact <a target=\"_new\" href=\"http://revsinstitute.org/order-images/\">The Revs Institute.</a>")
+      expect(doc['copyright_ss']).to eq("This is the copyright statement - different from default.")
+      expect(doc.copyright).to eq("Courtesy of The Revs Institute. All rights reserved unless otherwise indicated.") # default copyright
     end
 
     it "should retrieve the rights and copyright statement from the solr document for non-revs items but blank out the copyright statement" do
@@ -23,19 +24,19 @@ describe SolrDocument, :integration => true do
     end
     it "should set the specialty rights statement for not available for commercial reproduction for a collection specified to have one" do
       doc=SolrDocument.find('xg271zb5261') # a revs item with special rights
-      expect(doc.use_and_reproduction).to eq("Due to copyright restrictions, this item is not available for reproduction.") # special statement
-      expect(doc.copyright).to eq("Courtesy of The Revs Institute for Automotive Research, Inc. All rights reserved unless otherwise indicated.") # default copyright
+      expect(doc.use_and_reproduction).to eq("Due to copyright restrictions, this item is available for non-commercial use only. To request this image, please contact <a target=\"_new\" href=\"http://revsinstitute.org/order-images/\">The Revs Institute.</a>") # special statement
+      expect(doc.copyright).to eq("Courtesy of The Revs Institute. All rights reserved unless otherwise indicated.") # default copyright
     end
     it "should set the specialty rights statement for not available for commercial reproduction without contacinting us for a collection specified to have one" do
       previous_collections_available_for_noncommerical_reproduction = Revs::Application.config.collections_available_for_noncommerical_reproduction
-      previous_collections_available_for_noncommerical_reproduction_or_permission = Revs::Application.config.collections_available_for_noncommerical_reproduction_or_permission
-      Revs::Application.config.collections_available_for_noncommerical_reproduction_or_permission = ['wz243gf4151'] # manually set this item's collection as a special one just for the test
+      previous_collection_rights_uncertain = Revs::Application.config.collection_rights_uncertain
+      Revs::Application.config.collection_rights_uncertain = ['wz243gf4151'] # manually set this item's collection as a special one just for the test
       Revs::Application.config.collections_available_for_noncommerical_reproduction = []
       doc=SolrDocument.find('xg271zb5261') # a revs item with special rights
-      expect(doc.use_and_reproduction).to eq("This item is not available for reproduction for commerical use.  Contact us for non-commerical use.") # special statement
-      expect(doc.copyright).to eq("Courtesy of The Revs Institute for Automotive Research, Inc. All rights reserved unless otherwise indicated.") # default copyright
+      expect(doc.use_and_reproduction).to eq("Due to copyright restrictions, this item may not be available for commercial use. To request this image, please contact <a target=\"_new\" href=\"http://revsinstitute.org/order-images/\">The Revs Institute.</a>") # special statement
+      expect(doc.copyright).to eq("Courtesy of The Revs Institute. All rights reserved unless otherwise indicated.") # default copyright
       Revs::Application.config.collections_available_for_noncommerical_reproduction = previous_collections_available_for_noncommerical_reproduction
-      Revs::Application.config.collections_available_for_noncommerical_reproduction_or_permission = previous_collections_available_for_noncommerical_reproduction_or_permission
+      Revs::Application.config.collection_rights_uncertain = previous_collection_rights_uncertain
     end
 
   end
