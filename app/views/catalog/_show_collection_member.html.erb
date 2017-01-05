@@ -15,7 +15,7 @@
                                          'availableSizes': [<%=raw available_sizes%>],
                                          'zoomOnClick': true,
                                          'disableKeyboardShortcuts': true,
-                                         'displayNote': '<%=@document.copyright %> <%= @use_and_reproduction.html_safe %>',
+                                         'displayNote': '<%=@document.copyright %> <%= @document.use_and_reproduction.html_safe %>',
                                          'showDisplayNoteOnlyOnFullScreen': true,
                                      'tooltipTexts': {
                                      '<%= I18n.locale %>': {
@@ -277,7 +277,7 @@
 
         <div class="license-image">
           <%=@document.copyright %>
-          <%=@use_and_reproduction.html_safe %>
+          <%=@document.use_and_reproduction.html_safe %>
         </div>
 
       </div>

@@ -38,4 +38,6 @@
   <field name="image_id_ssm">bd969sj1904_00_0030</field>
   <field name="visibility_isi">1</field>
   <field name="score_isi">0</field>
+  <field name="copyright_ss">This is the Road and Track copyright statement.</field>
+  <field name="use_and_reproduction_ss">This is the Road and Track use and reproduction statement.</field>
 </doc>
