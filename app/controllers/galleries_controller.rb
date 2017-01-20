@@ -16,7 +16,7 @@ class GalleriesController < ApplicationController
       when 'user'
         @galleries=Gallery.regular_users.page(@current_page).per(@per_page)
     end
-    @num_to_show_in_filmstrip=100
+    @num_to_show_in_filmstrip=20
     respond_to do |format|
       format.html
       format.json { render :json => @galleries.to_json(:only=>[:id,:title,:gallery_type,:saved_items_count,:user_id]) }

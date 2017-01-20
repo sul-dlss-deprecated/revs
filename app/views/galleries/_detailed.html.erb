@@ -8,9 +8,9 @@
       <div class="col-md-12 collection-title">
         <h5 class="index_title">
           <%= link_to(gallery.title,gallery_path(gallery)) %>
-          <% if gallery.saved_items(current_user).size > 0 %>
+          <% if num_items_in_gallery > 0 %>
             <span class="text-muted">
-              (<%= pluralize(gallery.saved_items.size, t('revs.user_galleries.item')) %>)
+              (<%= pluralize(num_items_in_gallery, t('revs.user_galleries.item')) %>)
             </span>
           <% end %>
         </h5>
