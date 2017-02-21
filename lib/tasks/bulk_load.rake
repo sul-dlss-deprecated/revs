@@ -224,6 +224,105 @@ namespace :revs do
 
   end
 
+  desc "Batch update a single specified field with a single specified value based on results from a supplied query -- if the field to update is multivalued, you MUST also provide an old value to search for to avoid replacing the entire field"
+  #Run Me: RAILS_ENV=production rake revs:bulk_update_field solr_query='photographer_ssi:"Rudolfo Mailander"' field_to_update="photographer" new_value="Rodolfo Mailander" collection="John Dugdale Collection" # limited to a collection
+  #Run Me: RAILS_ENV=production rake revs:bulk_update_field solr_query='photographer_ssi:"Rudolfo Mailander"' field_to_update="photographer" new_value="Rodolfo Mailander" dry_run=true # dry run, no updates
+  #Run Me: RAILS_ENV=production rake revs:bulk_update_field solr_query='photographer_ssi:"Rudolfo Mailander"' field_to_update="photographer" new_value="Rodolfo Mailander" limit=100 # sets a limit of number of items
+  #Run Me: RAILS_ENV=production rake revs:bulk_update_field solr_query='photographer_ssi:"Rudolfo Mailander"' field_to_update="photographer" new_value="Rodolfo Mailander" old_value="Rudolfo Mailander" # ensure that only entries with this old value are replaced (essential for mulivalued fields)
+  # you can mix and match those parameters
+  task :bulk_update_field => :environment do |t, args|
+
+    limit = ENV['limit'] || '' # if passed, limits to this many items only
+    dry_run = ENV['dry_run'] || false # if passed, no updates are sent to editstore
+    collection = ENV['collection'] || '' # if passed, limits to this collection only
+    field_to_update= ENV['field_to_update']
+    new_value= ENV['new_value']
+    old_value= ENV['old_value'] || ''
+    solr_query= ENV['solr_query']
+
+    raise "**** Need to supply the field to update, the new value, and the docs to search for" if field_to_update.blank? || new_value.blank? || solr_query.blank?
+
+    num_updated=0
+    num_not_sent=0
+    num_errors=0
+
+    start_time=Time.now
+
+    q=solr_query
+    q+=" AND collection_ssim:\"#{collection}\"" unless collection.blank?
+    rows = limit.blank? ? "1000000" : limit
+
+    @all_docs = Blacklight.default_index.connection.select(:params => {:q => q, :rows=>rows})
+
+    total_docs=@all_docs['response']['docs'].size
+    n=0
+
+    puts ""
+    puts "Started at #{start_time}, #{total_docs} docs returned from query #{solr_query}"
+    puts " limited to collection: #{collection}" unless collection.blank?
+    puts " limited to #{limit} items" unless limit.blank?
+    puts " dry run" if dry_run
+    puts "field to update: #{field_to_update}"
+    puts "new value to set: #{new_value}"
+    puts "old value: #{old_value}"
+
+    puts "solr: #{Blacklight.default_index.connection.options[:url]}"
+    puts "editstore enabled: #{Revs::Application.config.use_editstore}"
+    puts "***********WARNING: Editstore is not enabled" unless Revs::Application.config.use_editstore
+    puts ""
+
+    @all_docs['response']['docs'].each do |doc|
+
+      n+=1
+
+    begin
+
+        unless dry_run # if we are not a dry run
+          item=SolrDocument.new(doc)
+          if old_value.blank? # no old value specified, just update the field
+            item.send("#{field_to_update}=",new_value)
+          else # old value was specified, see if this is a multivalued field that needs a pinpoint update
+            current_values = item.send(field_to_update)
+            if current_values.class == Array # it is multivalued!
+              updated_values = current_values.map {|element| (element == old_value) ? new_value : element } # replace the old value with the new value in the array
+              item.send("#{field_to_update}=",updated_values)
+            else # it is not multivalued, update it if it matches
+              item.send("#{field_to_update}=",new_value) if current_values == old_value
+            end
+          end
+          if item.unsaved_edits.blank? # no changes
+            puts "...Skipping #{doc['id']}"
+            num_not_sent+=1
+          else
+            result=item.save
+            if result
+              puts "...Updated #{doc['id']}"
+              num_updated+=1
+            else
+              puts "...***FAILED TO SAVE #{doc['id']}"
+              num_errors+=1
+            end
+          end
+        else
+          puts "...Dry run for #{doc['id']}"
+          num_not_sent+=1
+        end
+
+      rescue
+        num_errors+=1
+        puts "...ERROR #{doc['id']}!"
+      end
+
+    end
+
+    end_time=Time.now
+
+    puts ""
+    puts "Finished at #{Time.now}, run lasted #{((end_time-start_time)/60).round} minutes, #{total_docs} checked, #{num_errors} errors, #{num_updated} updated, #{num_not_sent} updates not sent (dry run or no changes needed)"
+    puts ""
+
+  end
+
   desc "Apply missing dates in MODs from solr documents - fixing previous bug where dates were not making it to editstore"
   #Run Me: RAILS_ENV=production rake revs:fix_missing_dates collection="John Dugdale Collection" # limited to a collection
   #Run Me: RAILS_ENV=production rake revs:fix_missing_dates dry_run=true # dry run, no updates
@@ -247,7 +346,7 @@ namespace :revs do
 
     q="#{date_field}:[* TO *]"
     q+=" AND collection_ssim:\"#{collection}\"" unless collection.blank?
-    rows = limit.blank? ? "100000" : limit
+    rows = limit.blank? ? "1000000" : limit
 
     @all_docs = Blacklight.default_index.connection.select(:params => {:q => q, :rows=>rows})
 
@@ -297,8 +396,7 @@ namespace :revs do
           puts "#{item.id} has a value of #{item.full_date} which is a NOT a valid full date"
         end
 
-      rescue e
-
+      rescue
         num_errors+=1
         puts "  error!"
 
@@ -357,7 +455,7 @@ namespace :revs do
         item.save
         num_updated+=1
 
-      rescue e
+      rescue
 
         num_errors+=1
         puts "  error!"
