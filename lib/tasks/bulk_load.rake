@@ -59,6 +59,7 @@ namespace :revs do
     puts " limited to #{limit} items" unless limit.blank?
     puts " limited to only those docs with a score of 0" unless zero_score_only.blank?
     puts " fixing collection name" unless update_collection_name.blank?
+    puts " found #{total_docs} items"
 
     puts ""
     puts q
@@ -262,9 +263,10 @@ namespace :revs do
     puts " limited to collection: #{collection}" unless collection.blank?
     puts " limited to #{limit} items" unless limit.blank?
     puts " dry run" if dry_run
-    puts "field to update: #{field_to_update}"
-    puts "new value to set: #{new_value}"
-    puts "old value: #{old_value}"
+    puts " field to update: #{field_to_update}"
+    puts " new value to set: #{new_value}"
+    puts " old value: #{old_value}"
+    puts " found #{total_docs} items"
 
     puts "solr: #{Blacklight.default_index.connection.options[:url]}"
     puts "editstore enabled: #{Revs::Application.config.use_editstore}"
@@ -358,6 +360,7 @@ namespace :revs do
     puts " limited to collection: #{collection}" unless collection.blank?
     puts " limited to #{limit} items" unless limit.blank?
     puts " dry run" if dry_run
+    puts " found #{total_docs} items"
     puts "field checked: #{date_field}"
     puts "solr: #{Blacklight.default_index.connection.options[:url]}"
     puts "editstore enabled: #{Revs::Application.config.use_editstore}"
@@ -440,6 +443,7 @@ namespace :revs do
     puts "Started at #{start_time}, #{total_docs} docs returned"
     puts " limited to collection: #{collection}" unless collection.blank?
     puts " limited to #{limit} items" unless limit.blank?
+    puts " found #{total_docs} items"
     puts "field checked: #{group_field}"
     puts "solr: #{Blacklight.default_index.connection.options[:url]}"
     puts ""
