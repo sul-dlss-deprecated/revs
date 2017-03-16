@@ -17,4 +17,23 @@ namespace :revs do
       user.destroy
     end
   end
+
+  desc "Inactivate the provided users and destroy any of their contributions, e.g. galleries, annotations, flags (useful for spam users)"
+  #Run Me: RAILS_ENV=production bundle exec rake revs:inactivate_users users="user1,some_spammy_guy,another_bad_dude"
+  task :inactivate_users => :environment do |t,args|
+    users = ENV['users']
+    raise '*** no users supplied, pass in a users="username1,username2" parameter' if users.blank?
+    usernames=users.split(',')
+    puts "Inactivating #{usernames.size} users"
+    usernames.each do |username|
+      user = User.find_by_username(username.strip)
+      if user
+        puts "...inactivating '#{username}'"
+        user.ban
+      else
+        puts "*** '#{username}' not found"
+      end
+    end
+  end
+
 end

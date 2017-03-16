@@ -88,6 +88,16 @@ class User < ActiveRecord::Base
 
   #### class level methods
 
+  # used for spammy users; will set their account to inactive and destroy any of the galleries, flags and annotations
+  def ban
+    self.active = false
+    self.public = false
+    save
+    all_galleries.destroy_all
+    all_annotations.destroy_all
+    all_flags.destroy_all
+  end
+
   def curator?
     %w{admin curator}.include? role
   end
