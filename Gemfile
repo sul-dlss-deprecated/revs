@@ -14,7 +14,7 @@ gem 'nokogiri', '>=1.7.1'
 gem 'is_it_working-cbeer', require: 'is_it_working'
 
 # user authentication and roles
-gem 'devise', '>=3.5.4'
+gem 'devise', '>=3.5.4', '< 4'
 gem 'omniauth'
 gem 'cancan'
 
