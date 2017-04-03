@@ -9,12 +9,12 @@ gem 'revs-utils', '>= 2.1.22'
 
 gem 'rails', '~> 4.2', '>= 4.2.5.2'
 gem 'responders', '~> 2.0'
-gem 'nokogiri', '>=1.6.7.2'
+gem 'nokogiri', '>=1.7.1'
 
 gem 'is_it_working-cbeer', require: 'is_it_working'
 
 # user authentication and roles
-gem 'devise', '>=3.5.4'
+gem 'devise', '>=3.5.4', '< 4'
 gem 'omniauth'
 gem 'cancan'
 
