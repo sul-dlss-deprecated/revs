@@ -219,7 +219,7 @@ namespace :revs do
           n+=1
           puts "#{n} of #{total} : #{model.druid}" if verbose
           solr_doc=model.solr_document
-          solr_doc.update_item
+          solr_doc.update_item if solr_doc
        end
     end
 

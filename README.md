@@ -34,29 +34,22 @@ and are trying to run the code, see the special section below before continuing 
 
         rake revs:config
 
-1. Create and migrate the databases:
-
-        rake db:create:all
-        rake db:migrate
-
-1. Seed the databases:
-
-        rake db:seed
-
-  This will give you collection highlights for the home page and MUST BE/IS SAFE to run in all environments for the site to work.
-
-1. Load the fixture data:
-
-        rake db:fixtures:load
-        rake revs:update_item_title
-
-  This will give you a few test users to work with and should only be used in development.
-  See the test/fixtures/users.yml files for usernames/passwords.  
-
-1. Start the development solr (you should first stop any other jetty processes if you have
+1. Start jetty, create and migrate the databases (note you should first stop any other jetty processes that are running if you have
    multiple jetty-related projects):
 
         rake jetty:start
+        rake db:create:all
+        rake db:migrate
+
+1. Seed the databases - this will give you collection highlights for the home page and MUST BE/IS SAFE to run in all environments for the site to work:
+
+        rake db:seed
+
+1. Load the fixture data - this will give you a few test users to work with and should only be used in development.
+  See the test/fixtures/users.yml files for usernames/passwords.
+
+        rake db:fixtures:load
+        rake revs:update_item_title
 
 1. To index the records into an environment's core, ensure jetty is running (it may take a few extra seconds after the jetty:start command is issued), then:
 
