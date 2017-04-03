@@ -65,19 +65,19 @@ class Rack::Attack
     end
 end
 
-Rack::Attack.whitelist('allow from localhost') do |req|
+Rack::Attack.safelist('allow from localhost') do |req|
   # Requests are allowed if the return value is truthy
   '127.0.0.1' == req.ip
 end
 
-Rack::Attack.blacklist('block banned IPs') do |req|
+Rack::Attack.blocklist('block banned IPs') do |req|
   # Requests are blocked if the return value is truthy
   !(req.ip =~ Regexp.union(BANNED_IPS)).nil?
 end
 
 # Block requests containing '/etc/password' in the params.
 # After 3 blocked requests in 10 minutes, block all requests from that IP for 5 minutes.
-Rack::Attack.blacklist('fail2ban pentesters') do |req|
+Rack::Attack.blocklist('fail2ban pentesters') do |req|
   # `filter` returns truthy value if request fails, or if it's from a previously banned IP
   # so the request is blocked
   Rack::Attack::Fail2Ban.filter(req.ip, :maxretry => 3, :findtime => 10.minutes, :bantime => 5.minutes) do
