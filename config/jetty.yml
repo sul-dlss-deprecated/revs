@@ -5,14 +5,14 @@ development: &dev
       - "-Xmx256m"
 
 test: &test
-  jetty_port: <%= ENV["TEST_JETTY_PORT"] || '8888' %>
+  jetty_port: <%= ENV["TEST_JETTY_PORT"] || '8983' %>
   startup_wait: 200
   java_opts:
       - "-XX:MaxPermSize=128m"
       - "-Xmx256m"
-      
-staging: 
+
+staging:
   <<: *dev
-  
-production: 
+
+production:
   <<: *dev
