@@ -104,12 +104,13 @@ want the user to see the terms dialog box again for a specific period of time (w
 Before deploying to production, update the VERSION file, and then tag the release with a version.  We use date based tags, typically month-year (eg. september-2013) for monthly releases.
 
 Bump VERSION file by editing it in master
-  git co master
-  git ci -m 'bump version to VERSION-NUMBER-HERE'
-  git push
 
-  git tag VERSION-NUMBER-HERE
-  git push --tags
+    git co master
+    git ci -m 'bump version to VERSION-NUMBER-HERE'
+    git push
+
+    git tag VERSION-NUMBER-HERE
+    git push --tags
 
 
 ### Deploying
