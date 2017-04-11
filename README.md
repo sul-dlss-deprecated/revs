@@ -103,9 +103,9 @@ want the user to see the terms dialog box again for a specific period of time (w
 
 Before deploying to production, update the VERSION file, and then tag the release with a version.  We use date based tags, typically month-year (eg. september-2013) for monthly releases.
 
-  # bump VERSION file by editing it in master
+Bump VERSION file by editing it in master
   git co master
-  git ci -m 'bump version'
+  git ci -m 'bump version to VERSION-NUMBER-HERE'
   git push
 
   git tag VERSION-NUMBER-HERE
@@ -114,11 +114,11 @@ Before deploying to production, update the VERSION file, and then tag the releas
 
 ### Deploying
 
-    bundle exec cap production deploy   # for production  (revslib.stanford.edu)
-    bundle exec cap staging deploy      # for staging     (revs-stage.stanford.edu)
-    bundle exec cap development deploy  # for development (revs-dev.stanford.edu)
+    bundle exec cap prod deploy     # for production  (revslib.stanford.edu)
+    bundle exec cap stage deploy    # for staging     (revs-stage.stanford.edu, only visible when VPNed)
+    bundle exec cap dev deploy      # for development (revs-dev.stanford.edu, only visible when VPNed)
 
-You must specify a branch to deploy.  You can deploy the latest by specifying "master".
+You must specify a branch to deploy.  You can deploy the latest by specifying "master".  You should never be deploying anything except master to prod.
 
 ## Testing
 
