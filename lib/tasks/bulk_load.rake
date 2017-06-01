@@ -224,6 +224,72 @@ namespace :revs do
     end
 
   end
+  
+  desc "Add source id to various model records that have druids -- should only need to be run once"
+  #Run Me: RAILS_ENV=production nohup bundle exec rake revs:add_source_id &
+  task :add_source_id => :environment do |t, args|
+
+    puts "Started at #{Time.now}"
+    count_flag = success_flag = error_flag = 0
+    count_annotation = success_annotation = error_annotation = 0
+    count_saved_item = success_saved_item = error_saved_item = 0
+    count_item = success_item = error_item = 0
+      
+    puts "Updating flags..."
+    Flag.find_each do |flag|
+      count_flag += 1
+      begin
+        flag.update_attributes(:source_id => flag.solr_document['source_id_ssi'])
+        success_flag += 1
+      rescue => e
+        error_flag +=1
+        puts "*** ERROR ON flag #{flag.id} - #{e.message}"
+      end
+    end
+
+    puts "Updating annotations..."
+    Annotation.find_each do |annotation|
+      count_annotation += 1
+      begin
+        annotation.update_attributes(:source_id => annotation.solr_document['source_id_ssi'])
+        success_annotation += 1
+      rescue => e
+        error_annotation +=1
+        puts "*** ERROR ON annotation #{annotation.id} - #{e.message}"
+      end
+    end
+
+    puts "Updating saved_items..."
+    SavedItem.find_each do |saved_item|
+      count_saved_item += 1
+      begin
+        saved_item.update_attributes(:source_id => saved_item.solr_document['source_id_ssi'])
+        success_saved_item += 1
+      rescue => e
+        error_saved_item +=1
+        puts "*** ERROR ON saved_item #{saved_item.id} - #{e.message}"
+      end
+    end    
+
+    puts "Updating items..."
+    Item.find_each do |item|
+      count_item += 1
+      begin
+        item.update_attributes(:source_id => item.solr_document['source_id_ssi'])
+        success_item += 1
+      rescue => e
+        error_item +=1
+        puts "*** ERROR ON item #{item.id} - #{e.message}"
+      end
+    end 
+    
+    puts "Successful flags: #{success_flag}.  Errored flags: #{error_flag}.  Total flags: #{count_flag}."
+    puts "Successful annotations: #{success_annotation}.  Errored annotations: #{error_annotation}.  Total annotations: #{count_annotation}."
+    puts "Successful saved items: #{success_saved_item}.  Errored saved items: #{error_saved_item}.  Total saved items: #{count_saved_item}."
+    puts "Successful items: #{success_item}.  Errored items: #{error_item}.  Total items: #{count_item}."
+    puts "Ended at #{Time.now}"
+    
+  end
 
   desc "Batch update a single specified field with a single specified value based on results from a supplied query -- if the field to update is multivalued, you MUST also provide an old value to search for to avoid replacing the entire field"
   #Run Me: RAILS_ENV=production rake revs:bulk_update_field solr_query='photographer_ssi:"Rudolfo Mailander"' field_to_update="photographer" new_value="Rodolfo Mailander" collection="John Dugdale Collection" # limited to a collection
