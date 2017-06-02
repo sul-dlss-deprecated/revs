@@ -110,7 +110,7 @@ module Revs
 
     config.collier_archive_name = 'Revs Institute® Archives' # this is the name of the collier archive, it will be added to records if it does not yet exist when saving for remediating records that existed before we had multiple archives
 
-    config.disable_editing = false # if set to true, will disallow metadata editing, changing visibility and placeholder, and the creation of annotations - the things that can update a solr document
+    config.disable_editing = false # if set to true, will disallow metadata editing, changing visibility and placeholder, the creation of annotations and flags - the things that can update a solr document or add to the metadata editing load
     config.num_latest_user_activity = 3 # the latest number of flags/annotations to show on the user profile page
     config.num_flags_per_item_per_user = 5 # the number of times each user is allowed to flag a particular item
     #config.flag_sort_display = {FLAG_STATES[:open]=> I18n.t('revs.flags.open_state_display_name'),FLAG_STATES[:fixed]=> I18n.t('revs.flags.fixed_state_display_name'),FLAG_STATES[:wont_fix]=> I18n.t('revs.flags.wont_fix_state_display_name')}
