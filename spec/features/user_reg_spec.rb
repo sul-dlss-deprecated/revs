@@ -61,29 +61,6 @@ describe("User Registration",:type=>:request,:integration=>true) do
       expect(user.email).to eq(@email)
 
     end
-
-    it "should register a new user and send an email to join the Revs Institute Mailing list if selected" do
-
-        expect(RevsMailer).to receive(:revs_institute_mailing_list_signup)
-        expect(RevsMailer).not_to receive(:mailing_list_signup)
-
-        @username='testing3'
-        @email="#{@username}@test.com" 
-        # register a new user
-        register_new_user(@username,@password,@email) 
-        check 'user_subscribe_to_revs_mailing_list'
-        sleep 6.seconds
-        click_button 'Sign up'
-
-        should_register_ok
-       
-        # check the database
-        user=User.last
-        expect(user.role).to eq('user')
-        expect(user.username).to eq(@username)
-        expect(user.email).to eq(@email)
-
-      end
  
      it "should create a username as the sunetID when a new Stanford user signs in via webauth" do
     

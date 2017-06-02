@@ -31,7 +31,7 @@ en:
     me: me
     today: today
   revs:
-    digital_library: 'Revs Digital Library'
+    digital_library: 'Automotive Digital Library'
     tagline: 'Connecting the past, present and future of the automobile'
     revs_program: 'Revs Program at Stanford'
     revs_institute: 'The Revs Institute'
@@ -47,7 +47,7 @@ en:
       action_search_html: "Search or browse from the %{href}"
       action_search_linktext: '%{project} homepage'
       action_browse_collections_html: "Browse one of the %{href}"
-      action_browse_collections_linktext: 'Revs collections'
+      action_browse_collections_linktext: 'Automotive collections'
       tell_us_html: '%{href} what you were looking for'
       tell_us_linktext: 'Tell us'
       unexpected: "An unexpected error has occurred. If you have made changes, they might not have been saved."
@@ -87,7 +87,7 @@ en:
       reorder: "Drag and drop to reorder"
       changes_not_saved: "Please note, in %{rails_env} your metadata changes will NOT be permanently saved."
       not_authorized: 'You are not authorized to perform this action.'
-      in_beta_not_authorized_html: "The Revs Digital Library is currently in limited beta release.  If you have an account, <a href='/users/sign_in'>please sign in</a> (Stanford users should <a href='/users/webauth_login'>sign in via webauth</a>). If you do not have an account and would like to be notified when the site is public, please <a href='/users/sign_up'>sign up</a> and request to be added to the mailing lists."
+      in_beta_not_authorized_html: "The Automotive Digital Library is currently in limited beta release.  If you have an account, <a href='/users/sign_in'>please sign in</a> (Stanford users should <a href='/users/webauth_login'>sign in via webauth</a>). If you do not have an account and would like to be notified when the site is public, please <a href='/users/sign_up'>sign up</a> and request to be added to the mailing lists."
       validation_error: "The values you entered were not valid for the field you selected."
       bulk_update_instructions: "To apply a bulk update, select the action to perform, the field to perform it on, enter new and search vaules (if necessary), select some items with the checkboxes and then click update.  Search and new values must be at least 3 characters."
       set_top_priority: "This image is now set to represent its collection."
@@ -123,7 +123,7 @@ en:
       comment_optional: 'Comment (optional)'
       notify_me: 'Email me when resolved'
       comment: 'Comment'
-      resolved_message: 'A flag you created on the Revs Digital Library has been updated'
+      resolved_message: 'A flag you created on the Digital Library has been updated'
       singular: 'Flag'
       plural: 'Flags'
       resolve: 'Resolve'
@@ -184,9 +184,9 @@ en:
       video_tutorials: "Video tutorials"
       saved_queries: "Help Identify Images"
       saved_queries_home_page_overview: 'View items that need more information and identification.'
-      saved_queries_overview: 'The lists below contain groups of items that need more information and identification. Use the "Flag correction to this item" feature on an item page to submit suggestions and corrections to the Revs curators.'
+      saved_queries_overview: 'The lists below contain groups of items that need more information and identification. Use the "Flag correction to this item" feature on an item page to submit suggestions and corrections to the curators.'
       video_titles:
-        overview: "Revs overview"
+        overview: "Library overview"
         account: "Create an account"
         gallery: "Create a gallery"
       models: "Models"
@@ -199,8 +199,8 @@ en:
       filter_archive_sr_only: 'Filter collections by archive'
     contact:
       us: 'contact us'
-      instructions_html: 'If you would like to purchase an image, please read the Copyright and Reuse Statement to the right of the image first.  For images from The Revs Institute® Archives, please see the policies and Image Order Forms here: %{reuse_link} or if you have questions, select "Contact The Revs Institute Image Sales Department."  For questions about images from The Road & Track Archives, select "Contact Stanford University Library Special Collections".  If you have corrections to metadata or content on the site, please use the "Flag correction to this item" link next to the image.'
-      permission_information_html: 'permission information and contact The Revs Institute'
+      instructions_html: 'If you would like to purchase an image, please read the Copyright and Reuse Statement to the right of the image first.  For questions about images from The Road & Track Archives, select "Contact Stanford University Library Special Collections".  If you have corrections to metadata or content on the site, please use the "Flag correction to this item" link next to the image.'
+      permission_information_html: 'permission information and contact us'
       select_topic: 'Select a topic...'
       problem: 'Problem with the website'
       other_questions: 'Other questions'
@@ -220,7 +220,7 @@ en:
       image_available_for_noncommercial_use_only: "Due to copyright restrictions, this item is available for non-commercial use only. To request this image, please contact "
       image_uncertain: "Due to copyright restrictions, this item may not be available for commercial use. To request this image, please contact "
       describe_problem: 'Please describe your question or problem.'
-      thanks: 'Thanks for contacting the Revs Digital Library'
+      thanks: 'Thanks for contacting the Automotive Digital Library'
     authentication:
       new_user: 'New user?'
       sign_in: 'Sign in'
@@ -243,7 +243,7 @@ en:
       stanford_email_warning2: "Your username cannot be a Stanford email address."
       stanford_user: "Stanford user"
       profile_page_is: "Profile page is"
-      users_username_public: "The user's username is publicly visible on the Revs site"
+      users_username_public: "The user's username is publicly visible on the web site"
       users_if_profile_public: "If the user's profile page is public, the user's first and last name entered below (instead of username) is used to identify the user on the site."
       sidebar:
         actions: 'Actions'
@@ -466,7 +466,7 @@ en:
       curator: 'Curators only'
       no_description: 'No gallery description'
       more_items: ' more'
-      tooltip: 'Featured galleries are selected by the Revs curators from galleries created by Revs users. You can create your own galleries by registering for a free Revs account and then signing in to your account.'
+      tooltip: 'Featured galleries are selected by the curators from galleries created by users. You can create your own galleries by registering for a free account and then signing in to your account.'
     collection:
       collection_detail: 'Collection Detail'
       member_detail: 'Item Detail'
@@ -585,7 +585,7 @@ en:
       new_password_confirm: "Confirm new password"
       forgot_password: "Forgot your password?"
       send_password_instructions: "Send me reset password instructions"
-      profile_page: 'Your Revs profile page'
+      profile_page: 'Your profile page'
       user_dashboard: '%{name} Dashboard'
       curator_dashboard: 'Curator Dashboard'
       admin_dashboard: 'Administrator Dashboard'
@@ -597,9 +597,9 @@ en:
       your_password: "your password"
       welcome: "Welcome"
       hello: "Hello"
-      confirm_instructions: "Welcome to the Revs Digital Library.  In order to create an account, you need to confirm your email address.  Please click the link to confirm your address."
+      confirm_instructions: "Welcome to the Automotive Digital Library.  In order to create an account, you need to confirm your email address.  Please click the link to confirm your address."
       confirm_linktext: "Confirm my account"
-      change_password_instructions: "You have requested a link to change your password on the Revs Digital Library website. You can do this by clicking the link below."
+      change_password_instructions: "You have requested a link to change your password on the Automotive Digital Library website. You can do this by clicking the link below."
       change_password_linktext: "Change my password"
       change_password_post_instructions_html: |
         <p>If you didn't request this, please ignore this email.</p>
@@ -608,13 +608,13 @@ en:
       didnt_receive_confirmation: "Didn't receive confirmation instructions?"
       didnt_receive_unlock: "Didn't receive unlock instructions?"
       set_password: "minimum of 8 characters"
-      account_locked: "Your account on the Revs Digital Library has been locked due to an excessive number of unsuccessful sign in attempts"
+      account_locked: "Your account on the Automotive Digital Library has been locked due to an excessive number of unsuccessful sign in attempts"
       account_locked_instructions: "Click the link below to unlock your account"
       account_locked_linktext: "Unlock my account"
       update_your_profile: "Update Your Profile"
       username_taken: "Username is taken - please select a new one"
       username_stanford_note: 'You may wish to change your default username to avoid including your SUNET ID or Stanford email address.'
-      username_public: "Your username is publicly visible on the Revs site and is used to identify your profile"
+      username_public: "Your username is publicly visible on the site and is used to identify your profile"
       username_public_warning: "If you make your profile page public, your first and last name is also used to identify you on the site"
       twitter_account: "Twitter account"
       website_url: "Website URL"
@@ -663,7 +663,7 @@ en:
     help:
       videos:
         titles:
-          overview: "Introduction to the Revs Digital Library"
+          overview: "Introduction to the Automotive Digital Library"
           account: "Creating an account and logging in"
           flags: "Flagging metadata issues"
           gallery: "Saving favorites and creating galleries"
