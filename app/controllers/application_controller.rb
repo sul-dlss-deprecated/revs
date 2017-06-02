@@ -344,7 +344,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:password,:password_confirmation,:username, :email,:subscribe_to_revs_mailing_list,:subscribe_to_mailing_list) }
+    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:password,:password_confirmation,:username, :email,:subscribe_to_mailing_list) }
   end
 
 end

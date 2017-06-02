@@ -12,7 +12,7 @@ describe ApplicationHelper do
   end
 
   it "should have the correct application_name" do
-    expect(@app.application_name).to eq("Revs Digital Library")
+    expect(@app.application_name).to eq("Automotive Digital Library")
   end
   
   it "should format years correctly" do
