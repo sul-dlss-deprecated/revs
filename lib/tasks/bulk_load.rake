@@ -1034,8 +1034,8 @@ namespace :revs do
 
   desc "Bulk hide or show images from a given collection"
   task :change_visibility_collection, [:collection_name, :visibility_value, :update_timestamp] => :environment do |t, args|
-    # call with RAILS_ENV=production rake revs:change_visibility_collection["Albert R. Bochroch Photographic Archive",1,true] to show all images in the collection and update the timestamp; note the collection itself is unaffected
-    # call with RAILS_ENV=production rake revs:change_visibility_collection["Albert R. Bochroch Photographic Archive",0,false] to hide all images in the collection and do not update the timestamp; note the collection itself is unaffected
+    # call with RAILS_ENV=production rake revs:change_visibility_collection["Albert R. Bochroch Photographic Archive",1,true] to show all images in the collection and update the timestamp (including the collection itself)
+    # call with RAILS_ENV=production rake revs:change_visibility_collection["Albert R. Bochroch Photographic Archive",0,false] to hide all images in the collection and do not update the timestamp  (including the collection itself)
 
     Revs::Application.config.use_editstore = false
 
