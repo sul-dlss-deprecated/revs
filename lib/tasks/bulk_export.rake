@@ -25,12 +25,13 @@ namespace :revs do
   # You *must* provide a collection.
   #Run Me: RAILS_ENV=production bundle exec rake revs:export_metadata_to_txt collection="John Dugdale Collection" # must be limited to a collection
   #Run Me: RAILS_ENV=production bundle exec rake revs:export_metadata_to_txt collection="John Dugdale Collection" limit=100 # optionally sets a limit of number of items (defaults to no limit)
-  #Run Me: RAILS_ENV=production bundle exec rake revs:export_metadata_to_txt collection="John Dugdale Collection" rows=1000 # optionally sets maximum number of rows per spreadsheet (autosplit based on this number, defaults to 1000)
+  #Run Me: RAILS_ENV=production bundle exec rake revs:export_metadata_to_txt collection="John Dugdale Collection" max_rows=1000 # optionally sets maximum number of rows per spreadsheet (autosplit based on this number, defaults to 1000)
   #Run Me: RAILS_ENV=production bundle exec rake revs:export_metadata_to_txt collection="John Dugdale Collection" visibility="visible" # only visible images are exported (defaults to "all", can also pass "hidden")
   #Run Me: RAILS_ENV=production nohup bundle exec rake revs:export_metadata_to_txt collection="John Dugdale Collection" > export.log 2>&1& # nohup mode with logged output
 
   task :export_metadata_to_txt  => :environment do |t, args|
 
+    include ActionView::Helpers::NumberHelper # for nice display output and time computations in output
     limit = ENV['limit'] || '' # if passed, limits to this many items only
     max_rows = ENV['max_rows'] || 1000 # if passed, limits to this many items only
     collection = ENV['collection'] || '' # limits to this collection only
@@ -56,14 +57,16 @@ namespace :revs do
     n=1
     file_number=0
     num_errors=0
+    output_each=200
     delimiter = "; " # delimiter for multivalued fields
     delimiter_replace = "," # when the delimiter exists in actual values, it will replaced with this character
     max_rows = max_rows.to_i # maximum number of rows in any given spreadsheet
     excluded_fields = ['car_group','car_class','group_class','timestamp','priority','resaved_at','identifier','single_year','archive_name','collections','highlighted','subjects'] # exclude these fields in output
+    files = []
     csv = nil
     
-    base_output_file = "log/#{collection.gsub(" ","_")}_#{visibility}_#{Time.now.strftime('%Y-%m-%dT%H:%M:%S.%LZ')}" # base name for output file(s)
-  
+    base_output_file = "log/#{collection.gsub(" ","_")}_#{visibility}_#{Time.now.strftime('%Y-%m-%dT%H-%M-%S')}" # base name for output file(s)
+
     puts ""
     puts "Started at #{start_time}, #{total_docs} docs returned"
     puts " limited to collection: #{collection}" 
@@ -71,6 +74,7 @@ namespace :revs do
     puts " found #{total_docs} items"
     puts " maximum rows per file: #{max_rows}"
     puts " visibility: #{visibility}"
+    puts " base output file to #{base_output_file}"
     puts ""
 
     number_of_files = (total_docs.to_f / max_rows).ceil
@@ -84,14 +88,17 @@ namespace :revs do
       if n % max_rows == 1 # the start of a new file
         file_number += 1
         output_file = "#{base_output_file}_#{file_number}.txt"      
-        csv = CSV.open(output_file, "wb", {:col_sep => "\t", encoding: 'iso-8859-1:UTF-8'}) 
+        files << output_file
+        csv = CSV.open(output_file, "wb", {:col_sep => "\t", encoding: 'UTF-8'}) 
         puts "Writing file #{file_number} of #{number_of_files}: #{output_file}"
         csv << ['druid','identifier'] + header_row + ['group_class','filename'] # add extra columns we need
       end
       
       id=doc['id']
-      puts "#{n} of #{total_docs}: #{id}"      
       n+=1
+      if n % output_each == 0 # provide some feedback every X docs
+        puts "...#{Time.now}: on document #{number_with_delimiter(n)} of #{number_with_delimiter(total_docs)}"
+      end
       begin
          s=SolrDocument.find(id)
          data_row = []
@@ -119,8 +126,8 @@ namespace :revs do
 
     puts ""
     puts "Finished at #{Time.now}, total files: #{number_of_files}, run lasted #{((end_time-start_time)/60).round} minutes, #{total_docs} exported, #{num_errors} errors"
-    puts " base output file to #{base_output_file}"
     puts ""
-
+    puts "#{number_of_files} files created: "
+    files.each {|file| puts file}
   end
 end
