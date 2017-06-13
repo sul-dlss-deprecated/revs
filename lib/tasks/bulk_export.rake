@@ -32,11 +32,10 @@ namespace :revs do
   task :export_metadata_to_txt  => :environment do |t, args|
 
     include ActionView::Helpers::NumberHelper # for nice display output and time computations in output
-    limit = ENV['limit'] || '' # if passed, limits to this many items only
-    max_rows = ENV['max_rows'] || 1000 # if passed, limits to this many items only
     collection = ENV['collection'] || '' # limits to this collection only
-    visibility = ENV['visibility'] || "all" # can be passed as "all" (default), "visible" or "hidden".  
-
+    limit = ENV['limit'] || '' # if passed, limits to this many items only (default is no limit)
+    max_rows = ENV['max_rows'] || 1000 # if passed, limits to this many items only (default is 1000)
+    visibility = ENV['visibility'] || "all" # can be passed as "all" (default), "visible" or "hidden".  Filters images by their visibility  
     raise "you must provide a collection" if collection.blank?
     
     q="*:*"
@@ -47,10 +46,9 @@ namespace :revs do
        when "hidden"
          q+= " AND visibility_isi:#{SolrDocument.visibility_mappings[:hidden]}"
      end
-    puts q
     rows = limit.blank? ? "1000000" : limit
 
-    @all_docs = Blacklight.default_index.connection.select(:params => {:q => q, :fl=>'id', :rows=>rows})
+    @all_docs = Blacklight.default_index.connection.select(:params => {:q => q, :fl=>'id', :rows=>rows, :sort=>'source_id_ssi ASC'})
     total_docs=@all_docs['response']['docs'].size
 
     start_time=Time.now
@@ -61,7 +59,7 @@ namespace :revs do
     delimiter = "; " # delimiter for multivalued fields
     delimiter_replace = "," # when the delimiter exists in actual values, it will replaced with this character
     max_rows = max_rows.to_i # maximum number of rows in any given spreadsheet
-    excluded_fields = ['car_group','car_class','group_class','timestamp','priority','resaved_at','identifier','single_year','archive_name','collections','highlighted','subjects'] # exclude these fields in output
+    excluded_fields = ['car_group','car_class','group_class','timestamp','priority','resaved_at','identifier','years','full_date','single_year','archive_name','collections','highlighted','subjects'] # exclude these fields in output
     files = []
     csv = nil
     
@@ -80,8 +78,8 @@ namespace :revs do
     number_of_files = (total_docs.to_f / max_rows).ceil
 
     revs_field_mappings = SolrDocument.new.revs_field_mappings.with_indifferent_access
-    header_row = []
-    revs_field_mappings.each { |field, config| header_row << field.to_s unless excluded_fields.include? field.to_s } # write out all fields to the header that are not excluded
+    header_columns = []
+    revs_field_mappings.each { |field, config| header_columns << field.to_s unless excluded_fields.include? field.to_s } # write out all fields to the header that are not excluded
 
     @all_docs['response']['docs'].each do |doc|
 
@@ -91,7 +89,9 @@ namespace :revs do
         files << output_file
         csv = CSV.open(output_file, "wb", {:col_sep => "\t", encoding: 'UTF-8'}) 
         puts "Writing file #{file_number} of #{number_of_files}: #{output_file}"
-        csv << ['druid','identifier'] + header_row + ['group_class','filename'] # add extra columns we need
+        header_row = ['druid','identifier']
+        header_row += header_columns + ['date','group_class','filename']  # add extra columns we need
+        csv << header_row
       end
       
       id=doc['id']
@@ -103,17 +103,21 @@ namespace :revs do
          s=SolrDocument.find(id)
          data_row = []
          data_row += [s.id,s.identifier] # add druid and source id
-         header_row.each do |column|  # go throught the rest of the columns
-           value = s[revs_field_mappings[column][:field]]
-           if column == 'full_date' # format full date to contentDM standard, assuming it is a standard format
-             data_row << (s.revs_is_valid_datestring?(s.full_date) && !s.full_date.blank? ? Chronic.parse(s.full_date).to_date.strftime('%m/%d/%Y') : nil)
-           elsif revs_field_mappings[column][:multi_valued] == true && !value.blank? # multi_valued field
+         header_columns.each do |column|  # go through the rest of the columns
+           value = s.send(column)
+           if revs_field_mappings[column][:multi_valued] == true && value.class == Array # multi_valued field
              data_row << value.map {|val| cleanup_export_value(val,delimiter,delimiter_replace)}.join(delimiter)
            else # any other non-multivalued or special field
              data_row << cleanup_export_value(value,delimiter,delimiter_replace) 
            end
          end
-         data_row += [[s.group_class,s.car_group,s.car_class].flatten.join(', ')] # recombined separate group and class fields and combine with group_class field and make single valued again
+         # combine years and/or full date into a single field and format full date to contentDM standard, assuming it is a standard format
+         if (s.revs_is_valid_datestring?(s.full_date) && !s.full_date.blank?)  # if we have an exact date, use that                
+           data_row << Chronic.parse(s.full_date).to_date.strftime('%Y-%m-%d')
+         else # if no exact date, just put in any years joined with a comma
+           data_row << (s.years.class == Array ? s.years.join(delimiter) : s.years)
+         end
+         data_row += [[s.group_class,s.car_group,s.car_class].flatten.reject(&:blank?).join(', ')]#.reject(&:blank?) # recombined separate group and class fields and combine with group_class field and make single valued again
          data_row += ["#{s['image_id_ssm'].first}.tif"] # add filename (it is a multi_valued field, but revs image always only have a single image)
          csv << data_row
       rescue => e
