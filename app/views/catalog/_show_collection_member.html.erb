@@ -303,7 +303,7 @@
               <div class="col-md-3 col-md-offset-1 controls">
                 <%= link_to(t('revs.collection_members_grid.collection_link'), catalog_path(@document[blacklight_config.collection_member_identifying_field])) %>
                 |
-                <%= link_to(t('revs.collection_members_grid.members_link'), catalog_index_path( {:f => { blacklight_config.collection_member_collection_title_field => @document.siblings(:include_hidden=>can?(:view_hidden, SolrDocument)).first[blacklight_config.collection_member_collection_title_field]  } } ))%>
+                <%= all_collection_items_link(document) %>
               </div>
           </div>
         </div>

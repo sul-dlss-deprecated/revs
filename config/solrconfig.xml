@@ -73,7 +73,7 @@
       <str name="mm">2&lt;80% 4&lt;70%</str>
       <int name="qs">1</int>
       <int name="ps">0</int>
-      <str name="sort">score desc, title_tsi asc</str>
+      <str name="sort">score desc, title_sort asc</str>
       <str name="qf">
         id
         title_tsi

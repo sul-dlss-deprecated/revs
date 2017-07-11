@@ -465,7 +465,7 @@ class SolrDocument
        default_sort="highlighted_dti desc"
        fq+=" AND highlighted_ssi:\"true\""
      else
-       default_sort="title_tsi asc"
+       default_sort="title_sort asc"
      end
      sort=params[:sort] || default_sort
 

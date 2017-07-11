@@ -15,6 +15,8 @@
 
     <field name="text" type="text" stored="false" indexed="true" multiValued="true"/>
 
+    <field name="title_sort" type="alphaSort" stored="false" indexed="true" multiValued="false"/>
+
     <field name="lat" type="tdouble" stored="true" indexed="true" multiValued="false"/>
     <field name="lng" type="tdouble" stored="true" indexed="true" multiValued="false"/>
 
@@ -216,5 +218,6 @@
   <copyField source = "pub_year_isim" dest="pub_year_tim"/>
   <copyField source = "group_ssim" dest="group_tim"/>
   <copyField source = "class_ssi" dest="class_ti"/>
+  <copyField source = "title_tsi" dest="title_sort"/>
 
 </schema>
