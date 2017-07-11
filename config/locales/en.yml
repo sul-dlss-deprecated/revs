@@ -82,8 +82,8 @@ en:
       status: "Status"
       showing: "Showing"
       unencoded: "Unencoded"
-      no_editing_allowed: "IMPORTANT NOTE: the website is currently undergoing mainteance and no editing is allowed at this time."
-      search_affected: "IMPORTANT NOTE: the website is currently undergoing maintenace and text searches may not produce the expected results or may be missing results until completed."
+      no_editing_allowed: "IMPORTANT NOTE: We apologize, but the website is not able to accept suggestions, annotations or updates to metadata until further notice."
+      search_affected: "IMPORTANT NOTE: the website is currently undergoing maintenance and text searches may not produce the expected results or may be missing results until completed."
       reorder: "Drag and drop to reorder"
       changes_not_saved: "Please note, in %{rails_env} your metadata changes will NOT be permanently saved."
       not_authorized: 'You are not authorized to perform this action.'

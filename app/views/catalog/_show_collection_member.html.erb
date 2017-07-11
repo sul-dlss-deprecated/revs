@@ -144,7 +144,12 @@
             "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>"_new", :class => "purl") %>
           </li>
 
-          <% if (can?(:read, Flag) || can?(:add_new_flag_to, @document)) %>
+         <% if Revs::Application.config.disable_editing %>
+                <li>
+                  <%=t('revs.messages.no_editing_allowed')%>
+                </li>
+          <% end %>
+          <% if (can?(:read, Flag) || can?(:add_new_flag_to, @document)) && !Revs::Application.config.disable_editing%>
               <li>
 
                 <div id="flags_link">
@@ -199,7 +204,7 @@
                 <% end # end check for a logged in user having resolved flags %>
             <% end # end check for user has ability to add flags%>
 
-              <% if !user_signed_in? && can?(:add_new_flag_to, @document) %>
+              <% if !user_signed_in? && can?(:add_new_flag_to, @document) && !Revs::Application.config.disable_editing %>
               <li>
                 <span id="feedback_link">
                   <%= t('revs.nav.content_corrections', :create_an_account_link => link_to(t('revs.nav.create_an_account'), new_user_session_path), :feedback_link => link_to(t('revs.nav.feedback'), contact_us_path(:from => request.path, :subject => 'metadata', :message => "Correction to \"#{@document.title}\" (identifier: #{@document.identifier})"))).html_safe %>
@@ -213,11 +218,6 @@
         <% if can? :curate, :all %>
           <ul class="nav list-unstyled item-actions curator-actions showOnLoad hidden-offscreen">
             <li class="nav-header"><%= t('revs.curator.curator_actions') %></li>
-          <% if Revs::Application.config.disable_editing %>
-            <li>
-              <%=t('revs.messages.no_editing_allowed')%>
-            </li>
-          <% end %>
             <% if can?(:update_metadata, :all) && !Revs::Application.config.disable_editing
                 edit_mode_link_text = in_curator_edit_mode ? t('revs.curator.leave_edit_mode') : t('revs.curator.enter_edit_mode')
                 %>
