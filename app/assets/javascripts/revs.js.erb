@@ -501,6 +501,13 @@ function ajax_loading_done(element) {
     }
 }
 
+// if there are any ajax errors (e.g. 500 or timeout on the server), show a generic error message so the user
+// knows something bad happened,  e.g. when a curator is editing metadata, they submit ajax forms
+$(document).ajaxError(function myErrorHandler(event, xhr, ajaxOptions, thrownError) {
+	$('#main-flashes').html('<div class="alert alert-danger"><a class="close" href="#" data-dismiss="alert">x</a><%=I18n.t('revs.errors.unexpected')%></div>');
+	window.scrollTo(0,0);
+});
+
 // if the user clicks cancel on a confirm box, we need to hide the ajax loader
 $(document).on('confirm:complete', function(e,answer) {
 	element=$(e.target);
