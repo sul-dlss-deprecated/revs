@@ -55,7 +55,7 @@
           <%= render :partial=>'/catalog/metadata_field', :locals=>{:document=>document, :field_name=>'people', :label=>t('revs.show.label_people'), :multivalued=>true, :editable=>true, :facet=>true, :separator=>'; ', :autocomplete=>'people', :input_type=>'text_area'} %>
 
           <%= render "/catalog/item_edit_errors" %>
-          <%= button_tag t('revs.nav.save_changes'), class: 'btn btn-default btn-sm' if in_curator_edit_mode %>
+          <%= button_tag t('revs.nav.save_changes'), class: 'btn btn-default btn-sm', data: { disable_with: t('revs.nav.please_wait') } if in_curator_edit_mode %>
 
         </dl>
 
@@ -95,7 +95,7 @@
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'vehicle_markings',:label=>t('revs.show.label_vehicle_markings'),:simple_format=>true,:editable=>true, :input_type=>'text_area'} %>
 
           <%= render "/catalog/item_edit_errors" %>
-          <%= button_tag t('revs.nav.save_changes'), class: 'btn btn-default btn-sm' if in_curator_edit_mode %>
+          <%= button_tag t('revs.nav.save_changes'), class: 'btn btn-default btn-sm', data: { disable_with: t('revs.nav.please_wait') } if in_curator_edit_mode %>
 
         </dl>
       </div>
@@ -126,7 +126,7 @@
           <%= render :partial=>'/catalog/metadata_field',:locals=>{:document=>document,:field_name=>'race_data',:label=>t('revs.show.label_race_data'),:simple_format=>true,:editable=>true,:input_type=>'text_area'} %>
 
           <%= render "/catalog/item_edit_errors" %>
-          <%= button_tag t('revs.nav.save_changes'), class: 'btn btn-default btn-sm' if in_curator_edit_mode %>
+          <%= button_tag t('revs.nav.save_changes'), class: 'btn btn-default btn-sm', data: { disable_with: t('revs.nav.please_wait') } if in_curator_edit_mode %>
 
         </dl>
       </div>
@@ -174,7 +174,7 @@
           <% end %>
 
           <%= render "/catalog/item_edit_errors" %>
-          <%= button_tag t('revs.nav.save_changes'), class: 'btn btn-default btn-sm' if in_curator_edit_mode %>
+          <%= button_tag t('revs.nav.save_changes'), class: 'btn btn-default btn-sm', data: { disable_with: t('revs.nav.please_wait') } if in_curator_edit_mode %>
 
         </dl>
       </div>

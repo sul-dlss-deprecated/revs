@@ -157,6 +157,7 @@ en:
       remove: 'Remove'
       replace: 'Find and Replace'
       save_changes: 'Save Changes'
+      please_wait: 'Please wait...'
       update: 'Update'
       create: 'Create'
       submit: 'Submit'
