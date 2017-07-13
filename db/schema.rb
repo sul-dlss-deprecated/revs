@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170601224210) do
+ActiveRecord::Schema.define(version: 20160928213450) do
 
   create_table "annotations", force: :cascade do |t|
     t.integer  "user_id"
@@ -21,7 +21,6 @@ ActiveRecord::Schema.define(version: 20170601224210) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.integer  "image_number", default: 0
-    t.string   "source_id"
   end
 
   add_index "annotations", ["druid"], name: "index_annotations_on_druid"
@@ -65,7 +64,6 @@ ActiveRecord::Schema.define(version: 20170601224210) do
     t.string   "state",              default: "open"
     t.string   "notification_state"
     t.text     "private_comment"
-    t.string   "source_id"
   end
 
   add_index "flags", ["druid"], name: "index_flags_on_druid"
@@ -102,7 +100,6 @@ ActiveRecord::Schema.define(version: 20170601224210) do
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.string   "title",            limit: 400
-    t.string   "source_id"
   end
 
   add_index "items", ["druid"], name: "index_items_on_druid", unique: true
@@ -124,7 +121,6 @@ ActiveRecord::Schema.define(version: 20170601224210) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "position"
-    t.string   "source_id"
   end
 
   add_index "saved_items", ["druid"], name: "index_saved_items_on_druid"
