@@ -2,7 +2,6 @@
 
 require 'jettywrapper' unless (Rails.env.production? || Rails.env.staging?)
 require 'rest_client'
-require 'csv'
 require 'countries'
 require 'pathname'
 require 'revs-utils'
@@ -36,6 +35,8 @@ namespace :revs do
     limit = ENV['limit'] || '' # if passed, limits to this many items only (default is no limit)
     max_rows = ENV['max_rows'] || 1000 # if passed, limits to this many items only (default is 1000)
     visibility = ENV['visibility'] || "all" # can be passed as "all" (default), "visible" or "hidden".  Filters images by their visibility  
+    additional_query = ENV['additional_query'] || nil # an additional solr query you can pass it to further restrict the results
+
     raise "you must provide a collection" if collection.blank?
     
     q="*:*"
@@ -46,6 +47,8 @@ namespace :revs do
        when "hidden"
          q+= " AND visibility_isi:#{SolrDocument.visibility_mappings[:hidden]}"
      end
+    q+=" AND #{additional_query}" if additional_query
+
     rows = limit.blank? ? "1000000" : limit
 
     @all_docs = Blacklight.default_index.connection.select(:params => {:q => q, :fl=>'id', :rows=>rows, :sort=>'source_id_ssi ASC'})
@@ -61,9 +64,9 @@ namespace :revs do
     max_rows = max_rows.to_i # maximum number of rows in any given spreadsheet
     excluded_fields = ['car_group','car_class','group_class','timestamp','priority','resaved_at','identifier','single_year','archive_name','collections','highlighted','subjects'] # exclude these fields in output
     files = []
-    csv = nil
+    output_file = nil
     
-    base_output_file = "log/#{collection.gsub(" ","_")}_#{visibility}_#{Time.now.strftime('%Y-%m-%dT%H-%M-%S')}" # base name for output file(s)
+    base_output_filename = "log/#{collection.gsub(" ","_")}_#{visibility}_#{Time.now.strftime('%Y-%m-%dT%H-%M-%S')}" # base name for output file(s)
 
     puts ""
     puts "Started at #{start_time}, #{total_docs} docs returned"
@@ -72,7 +75,9 @@ namespace :revs do
     puts " found #{total_docs} items"
     puts " maximum rows per file: #{max_rows}"
     puts " visibility: #{visibility}"
-    puts " base output file to #{base_output_file}"
+    puts " base output file to #{base_output_filename}"
+    puts ""
+    puts "query: #{q}"
     puts ""
 
     number_of_files = (total_docs.to_f / max_rows).ceil
@@ -85,13 +90,14 @@ namespace :revs do
 
       if n % max_rows == 1 # the start of a new file
         file_number += 1
-        output_file = "#{base_output_file}_#{file_number}.txt"      
-        files << output_file
-        csv = CSV.open(output_file, "wb", {:col_sep => "\t", encoding: 'UTF-8'}) 
-        puts "Writing file #{file_number} of #{number_of_files}: #{output_file}"
+        output_filename = "#{base_output_filename}_#{file_number}.txt"
+        files << output_filename
+        output_file.close unless output_file.nil?
+        output_file = File.open(output_filename, 'wb:UTF-8')
+        puts "Writing file #{file_number} of #{number_of_files}: #{output_filename}"
         header_row = ['druid','identifier']
         header_row += header_columns + ['group_class','filename','filename_repeat']  # add extra columns we need
-        csv << header_row
+        output_file.write header_row.join("\t")+"\n"
       end
       
       id=doc['id']
@@ -113,10 +119,10 @@ namespace :revs do
              data_row << cleanup_export_value(value,delimiter,delimiter_replace) 
            end
          end
-         data_row += [[s.group_class,s.car_group,s.car_class].flatten.reject(&:blank?).join(', ')]#.reject(&:blank?) # recombined separate group and class fields and combine with group_class field and make single valued again
-         filename = "#{s['image_id_ssm'].first}.tif"
-         data_row += [filename,filename] # add filename twice (it is a multi_valued field, but revs image always only have a single image)
-         csv << data_row
+         data_row += [[s.group_class,s.car_group,s.car_class].flatten.reject(&:blank?).join(', ')] # recombined separate group and class fields and combine with group_class field and make single valued again
+         filename = "#{s['image_id_ssm'].first}.tif" # the filename is a multi_valued field, but revs image always only have a single image so grab the first
+         data_row += [filename,filename] # add filename twice
+         output_file.write data_row.join("\t")+"\n"
       rescue => e
          puts " *** ERROR #{e.message}: #{id}"
          num_errors+=1
