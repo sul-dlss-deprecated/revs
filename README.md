@@ -1,8 +1,8 @@
 [![Build Status](https://travis-ci.org/sul-dlss/revs.svg?branch=master)](https://travis-ci.org/sul-dlss/revs)
 
-# Revs Digital Library
+# Automotive Digital Library
 
-This is a Blacklight Application for the Revs Digital Library at Stanford University.
+This is a Blacklight Application for the Automotive Digital Library at Stanford University.
 
 ## Getting Setup
 
@@ -82,7 +82,7 @@ Your local development SolrWrapper must be started for this to work.  If your lo
 ## Non-Stanford Users
 
 The code has not been tested outside of Stanford University and while it should work, there may be some internal dependencies.
-We believe that making the small modifications listed below will enable the Revs Digital Library code to work outside of Stanford:
+We believe that making the small modifications listed below will enable the Automotive Digital Library code to work outside of Stanford:
 
 1. Open the Gemfile at the root of the project and comment out the following line (in the  ":deployment" group).
 
@@ -133,9 +133,9 @@ Bump VERSION file by editing it in master
 
 ### Deploying
 
-    bundle exec cap prod deploy     # for production  (revslib.stanford.edu)
-    bundle exec cap stage deploy    # for staging     (revs-stage.stanford.edu, only visible when VPNed)
-    bundle exec cap dev deploy      # for development (revs-dev.stanford.edu, only visible when VPNed)
+    bundle exec cap prod deploy     # for production  
+    bundle exec cap stage deploy    # for staging     
+    bundle exec cap dev deploy      # for development 
 
 You must specify a branch to deploy.  You can deploy the latest by specifying "master".  You should never be deploying anything except master to prod.
 
@@ -149,11 +149,11 @@ We use feature/task based branches with pull requests that are merged to master 
 ## Maintaining the fields in the solr document
 
 If you need to add or remove a field that is in the solr document (i.e. associated with an object), there are many
-codebases that need to be edited because of the nature of the metadata editing that is somewhat unique to the Revs
+codebases that need to be edited because of the nature of the metadata editing that is somewhat unique to the Automotive
 Digital Library.  For example, if you wanted to add a new field, you need to:
 
 1. Be sure the MODs template gets updated to the new field is stored appropriately during accessioning.  The MODs templates are in /config/templates.
-2. Ensure the new field has a column in the metadata spreadsheet supplied by Revs. The name of the column in the spreadsheet should match what is in the MODs template you edited in step 1.
+2. Ensure the new field has a column in the metadata spreadsheet supplied. The name of the column in the spreadsheet should match what is in the MODs template you edited in step 1.
 3. Update the Revs template in editstore-updater to be sure metadata edits coming from the site make it to the MODs correctly.  In the editstore-updater code  (https://github.com/sul-dlss/editstore-updater), this is in the app/models/template/revs.rb file in the "field_definitions" method.  Configure with the name of the solr field and the location in the MODs template.  After deploying editstore-updater, be sure to visit the UI (https://revslib.stanford.edu/editstore/projects/2) and confirm you see the fields in the list.
 4. Update the revs-indexing-service code (https://github.com/sul-dlss/revs-indexer-service) to be sure the MODs is correctly indexed into solr.  You'll need to update the lib/revs_mapper.rb class (in the convert_to_solr_doc method).
 5. Update the revs-utils gem, which has shared configuration around available fields.
