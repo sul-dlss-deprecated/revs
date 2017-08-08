@@ -49,16 +49,16 @@ en:
         You may also %{copyright_infringement_link}.
       team_text_html: |
         <ul>
-          <li><a href="http://library.stanford.edu/people/rns">Robert Schwarzwalder</a> - Associate University Librarian for Science & Engineering Director, Library Technologies</li>
-          <li><a href="http://library.stanford.edu/people/tcramer">Tom Cramer</a> - Chief Technology Strategist & Associate Director, Digital Library Systems & Services</li>
+          <li><a href="http://library.stanford.edu/people/rns">Robert Schwarzwalder</a> - Associate University Librarian for Science & Engineering</li>
+          <li><a href="http://library.stanford.edu/people/tcramer">Tom Cramer</a> - Associate University Librarian for Technology, Chief Technology Strategist</li>
           <li><a href="http://library.stanford.edu/people/snydman">Stuart Snydman</a> - Associate Director for Digital Strategy, Digital Library Systems & Services</li>
-          <li><a href="http://library.stanford.edu/people/petucket">Peter Mangiafico</a> - Product Manager</li>
+          <li><a href="http://library.stanford.edu/people/petucket">Peter Mangiafico</a> - Product Manager, Software Engineer</li>
           <li>Gary Geisler - User Experience Designer/Digital Library Web Developer</li>
           <li><a href="http://library.stanford.edu/people/jkeck">Jessie Keck</a> - Digital Library Software Engineer</li>
         </ul>
       project_text_html: |
         <p>
-           The %{revs_program} is producing research data and generating course materials.  The primary goal of the %{stanford_library} is to ensure these materials are indexed, preserved and made
+           The primary goal of the %{stanford_library} is to ensure that the automobility related digital assets of Stanford University are indexed, preserved and made
            available to library patrons, researchers and the general public.  By digitizing materials and making them discoverable, content that was once available to a select few becomes useful and
            discoverable for a wide range of researchers.
         </p>

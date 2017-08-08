@@ -1,7 +1,7 @@
 <div id="documents" class="gallery">
   <ul class="image-grid">
     <% @collections.each do |collection|
-      collection_title=fix_revs_institute_name(collection.title.html_safe)%>
+      collection_title=collection.title.html_safe%>
       <li class="image-item">
         <div class="blacklight-collection document collections-result">
           <%= link_to_document(collection,

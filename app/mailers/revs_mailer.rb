@@ -15,7 +15,7 @@ class RevsMailer < ActionMailer::Base
     @username=params[:username]
     to=Revs::Application.config.contact_us_recipients[@subject]
     cc=Revs::Application.config.contact_us_cc_recipients[@subject]
-    mail(:to=>to, :cc=>cc, :subject=>"Contact Message from Revs Digital Library - #{@subject}") unless to.nil? || !valid_email?(to) # only send an email if we have a valid to address (if user has tampered with subject params, this might not be the case)
+    mail(:to=>to, :cc=>cc, :subject=>"Contact Message from Automotive Digital Library - #{@subject}") unless to.nil? || !valid_email?(to) # only send an email if we have a valid to address (if user has tampered with subject params, this might not be the case)
   end
 
   def auto_response(opts={})
