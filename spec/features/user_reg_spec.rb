@@ -21,6 +21,7 @@ describe("User Registration",:type=>:request,:integration=>true) do
     fill_in 'register-username', :with=> @username
     fill_in 'user_password', :with=> @password
     fill_in 'user_password_confirmation', :with=> @password
+    sleep 6.seconds
     click_button 'Sign up'
     
     should_register_ok
@@ -48,6 +49,7 @@ describe("User Registration",:type=>:request,:integration=>true) do
       # register a new user
       register_new_user(@username,@password,@email)    
       check 'user_subscribe_to_mailing_list'
+      sleep 6.seconds
       click_button 'Sign up'
 
       should_register_ok
@@ -70,6 +72,7 @@ describe("User Registration",:type=>:request,:integration=>true) do
         # register a new user
         register_new_user(@username,@password,@email) 
         check 'user_subscribe_to_revs_mailing_list'
+        sleep 6.seconds
         click_button 'Sign up'
 
         should_register_ok
@@ -117,6 +120,7 @@ describe("User Registration",:type=>:request,:integration=>true) do
       @username="somesunet"
       @email="#{@username}@test.com" 
       register_new_user(@username,@password,@email) 
+      sleep 6.seconds
       click_button 'Sign up' 
 
       should_register_ok
@@ -140,6 +144,8 @@ describe("User Registration",:type=>:request,:integration=>true) do
 
         # try to register a new user with a stanford email address
         register_new_user(@username,@password,@email) 
+        sleep 6.seconds
+
         click_button 'Sign up'
 
         expect(current_path).to eq(root_path)
@@ -153,6 +159,8 @@ describe("User Registration",:type=>:request,:integration=>true) do
         # try to register a new stanford user with a stanford email address as the username
         visit new_user_registration_path
         register_new_user(@email,@password,"#{@username}@example.com") 
+        sleep 6.seconds
+
         click_button 'Sign up'
 
         expect(current_path).to eq(root_path)
@@ -175,6 +183,43 @@ describe("User Registration",:type=>:request,:integration=>true) do
           expect(current_path).to eq(root_path)
           expect(page).to have_content 'Stanford users need to login via webauth with their SunetID to access their account. You cannot reset your SunetID password here.'
 
-        end      
+      end      
   
+      it "should detect a spammer as someone who submits the form too quickly" do
+
+        user_count = User.count
+        @username='testing2'
+        @email="#{@username}@test.com" 
+        # register a new user
+        register_new_user(@username,@password,@email)    
+
+        click_button 'Sign up'
+
+        expect(page).to have_content(I18n.t("revs.about.contact_message_spambot"))
+        expect(current_path).to eq(root_path)
+        expect(User.count).to eq(user_count) # no new users
+        
+      end
+
+      it "should detect a spammer as someone who fills in the hidden form field" do
+
+        user_count = User.count
+        @username='testing2'
+        @email="#{@username}@test.com" 
+        # register a new user
+        register_new_user(@username,@password,@email)  
+        within('#main-container') do    
+          fill_in 'email_confirm', :with=>'hidden field'
+        end
+        
+        sleep 6.seconds
+
+        click_button 'Sign up'
+        
+        expect(page).to have_content(I18n.t("revs.about.contact_message_spambot"))
+        expect(current_path).to eq(root_path)
+        expect(User.count).to eq(user_count) # no new users
+
+      end
+      
 end

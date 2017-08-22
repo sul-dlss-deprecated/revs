@@ -11,6 +11,7 @@
   <%= form_tag({:controller=>'registrations', :action=>'create'}, :method=>'post',
       :id => 'new_user', :class => 'form-horizontal') do %>
     <%= devise_error_messages! %>
+    <%= hidden_field_tag 'loadtime',Time.now%>
 
     <div class="form-group">
       <label class="control-label col-xs-12 col-sm-4 col-md-3" for="user_email"><%= t('revs.authentication.email') %></label>
@@ -43,6 +44,13 @@
       </div>
     </div>
 
+    <div class="form-group hidden">
+  	  <label class="control-label col-xs-12 col-sm-3 col-md-2" for="email"><%=t('revs.contact.spambot_label')%></label>
+  	  <div class="col-xs-8 col-sm-6 col-md-5">
+  	    <%=text_field_tag 'email_confirm', "", :placeholder => t('revs.contact.spambot'), :class => "form-control" %>
+  	  </div>
+  	</div>
+    
     <div class="form-group">
       <label class="control-label col-xs-12 col-sm-4 col-md-3" for="user_password"><%= t('revs.authentication.password') %></label>
       <div class="col-xs-8 col-sm-6 col-md-5">
