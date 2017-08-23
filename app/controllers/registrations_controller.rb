@@ -14,14 +14,25 @@ class RegistrationsController < Devise::RegistrationsController
     
   # sign up form submit method  
   def create
-    if params[:user][:email].include?("@stanford.edu") || params[:user][:username].include?("@stanford.edu") # anyone who tries to register with a stanford email address or username will get an error
+    @spammer=params[:email_confirm] # if this hidden field is filled in, its a spam bot
+    @loadtime=params[:loadtime] # this is the time the page was rendered, if it is submitted too fast, its a spammer
+
+    if is_spammer?
+
+      flash[:notice]=t("revs.about.contact_message_spambot") # show a friendly but different message to suspected spambots
+      # spammers begone to the home page to make it harder to submit the form again
+      redirect_to root_path
+      
+    elsif params[:user][:email].include?("@stanford.edu") || params[:user][:username].include?("@stanford.edu") # anyone who tries to register with a stanford email address or username will get an error
       redirect_to :root, :alert=>t('revs.authentication.stanford_create_warning')
       return false
+      
     else
       @username=params[:user][:username]
       @email=params[:user][:email]
       super
     end
+    
   end
 
   # override devise update profile page so that user is not required to enter the current password
