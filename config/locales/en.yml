@@ -13,6 +13,10 @@ en:
               cannot_be_more_than_one_favorites_list_per_user: 'there cannot be more than one favorites list per user'
             visibility:
               must_be_selected: 'must be selected.'
+        user:
+          attributes:
+            registration_answer:
+              not_correct: 'is not correct.  Please answer the question to register -- this is used to reduce spurious user registrations.'
         saved_item:
           attributes:
             druid:
@@ -242,6 +246,7 @@ en:
       stanford_email_warning1: "Your username cannot be a Stanford email address other than your own."
       stanford_email_warning2: "Your username cannot be a Stanford email address."
       stanford_user: "Stanford user"
+      registration_question: "Please answer the question to register."
       profile_page_is: "Profile page is"
       users_username_public: "The user's username is publicly visible on the Revs site"
       users_if_profile_public: "If the user's profile page is public, the user's first and last name entered below (instead of username) is used to identify the user on the site."

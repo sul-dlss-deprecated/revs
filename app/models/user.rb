@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
          :lockable, :timeoutable, :omniauthable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessor :subscribe_to_mailing_list, :subscribe_to_revs_mailing_list # not persisted, just used on the signup form
+  attr_accessor :subscribe_to_mailing_list, :subscribe_to_revs_mailing_list, :registration_question_number, :registration_answer # not persisted, just used on the signup form
   attr_accessor :login # virtual method that will refer to either email or username
 
   # all "regular" has_many associations are done via custom methods below so we can add visibility filtering for items
@@ -42,6 +42,7 @@ class User < ActiveRecord::Base
   after_save :create_default_favorites_list # create the default favorites list if it doesn't exist when a user logs in
 
   validate :check_role_name
+  validate :registration_answer_correct, :on => :create, :if=>lambda{Revs::Application.config.spam_reg_checks == true}
   validates :username, :uniqueness => { :case_sensitive => false }
   validates :username, :length => { :in => 5..50}
   validates :username, :format => { :with => /\A\D.+/,:message => "must start with a letter" }
@@ -227,6 +228,10 @@ class User < ActiveRecord::Base
 
   def check_role_name
     errors.add(:role, :not_valid) unless ROLES.include? role.to_s
+  end
+
+  def registration_answer_correct
+    errors.add(:registration_answer, :not_correct) unless !registration_answer.blank? && (registration_answer.strip.downcase == Revs::Application.config.reg_questions[registration_question_number.to_i][:answer].downcase)
   end
 
   def no_name_entered?

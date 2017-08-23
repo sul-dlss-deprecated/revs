@@ -123,6 +123,13 @@ module Revs
 #    config.site_message="The website will be down for scheduled maintenance today, July 8, at 3pm Pacific Time for approximately 30 minutes." # set to some string to show a message on the top of each message (like to advertise a known site outage) , leave blank for no message
 
     config.site_message = ""
+    # if the following configuration is not nil or a blank array, one of these questions will be asked at random when user's register to try and block spammy registrations
+    # format is an array of hashes, the answer is not case sensitive
+    config.reg_questions = [
+      {:question=>'What is the name of the car company that manufacturers the Mustang?',:answer=>'Ford'},
+      {:question=>'What is the first name of the founder of Ferrari?',:answer=>'Enzo'}
+    ]
+    config.spam_reg_checks = true # set to false to skip spam registration checks (useful in testing)
 
   end
 end
