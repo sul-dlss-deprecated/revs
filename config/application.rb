@@ -86,30 +86,7 @@ module Revs
     config.contact_us_recipients = {'default'=>'digcoll@jirasul.stanford.edu','metadata'=>'digcoll@jirasul.stanford.edu','error'=>'digcoll@jirasul.stanford.edu','other'=>'digcoll@jirasul.stanford.edu','special collections'=>'specialcollections@stanford.edu'} # sets the email address for each contact us topic configed aboveend
     config.contact_us_cc_recipients = {'default'=>'revs-other@jirasul.stanford.edu', 'metadata'=>'revs-metadata-comment@jirasul.stanford.edu', 'error'=>'revs-problems@jirasul.stanford.edu','other'=>'revs-other@jirasul.stanford.edu'} # sets the CC email address for each contact us topic configed above
 
-    # these collections are only available for non-commerical reproduction and will show a special statement instead of the use and reproduction statement in the item itself
-    config.collections_available_for_noncommerical_reproduction =
-      [ 'jh550nq3200', # Worner
-        'zq905ny4367', # Grand Prix
-        'ch493nk3954', # Tubbs
-        'zg796vp9147', # European Motorsport
-        'qn776mq9014', # Cabart
-        'vm027cv8758', # Richley
-        'wt886dn0556', # Derauw
-        'wz243gf4151', # Chambers
-        'my206bq1956'  # Royal Automobile Trophy
-      ]
-
-    # these collections have uncertain rights and we will show a special statement instead of the use and reproduction statement in the item itself
-    config.collection_rights_uncertain =
-      [ 'td221fy0182', # Breslauer
-        'gw676ck6589', # Ludvigsen
-        'yt502zj0924', # Craig
-      ]
-
-    config.revs_reuse_link='http://revsinstitute.org/order-images/'
-
-    config.collier_archive_name = 'Revs Institute® Archives' # this is the name of the collier archive, it will be added to records if it does not yet exist when saving for remediating records that existed before we had multiple archives
-
+    config.show_item_counts_in_header = false # if set to true, we will show total item and collection counts in the header
     config.disable_editing = false # if set to true, will disallow metadata editing, changing visibility and placeholder, the creation of annotations and flags - the things that can update a solr document or add to the metadata editing load
     config.num_latest_user_activity = 3 # the latest number of flags/annotations to show on the user profile page
     config.num_flags_per_item_per_user = 5 # the number of times each user is allowed to flag a particular item

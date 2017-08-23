@@ -3,40 +3,12 @@ require "rails_helper"
 describe SolrDocument, :integration => true do
 
   describe "rights and copyright" do
-    it "should set the correct speciality revs rights statement even if rights found in solr document" do
-      doc=SolrDocument.find('bb004bn8654') # fixture with no copyright or rights specified
-      expect(doc.use_and_reproduction).to eq("To request this image for commercial or non-commercial use, please contact <a target=\"_new\" href=\"http://revsinstitute.org/order-images/\">The Revs Institute.</a>")
-      expect(doc.copyright).to eq("Courtesy of The Revs Institute. All rights reserved unless otherwise indicated.") # default copyright
-    end
 
-    it "should set the default copyright statement for a revs item even if found in solr document" do
-      doc=SolrDocument.find('td830rb1584') # fixtures with values specified
-      expect(doc.use_and_reproduction).to eq("To request this image for commercial or non-commercial use, please contact <a target=\"_new\" href=\"http://revsinstitute.org/order-images/\">The Revs Institute.</a>")
-      expect(doc['copyright_ss']).to eq("This is the copyright statement - different from default.")
-      expect(doc.copyright).to eq("Courtesy of The Revs Institute. All rights reserved unless otherwise indicated.") # default copyright
-    end
-
-    it "should retrieve the rights and copyright statement from the solr document for non-revs items but blank out the copyright statement" do
+    it "should retrieve the rights and copyright statement from the solr document for road & track items but blank out the copyright statement" do
       doc=SolrDocument.find('bd969sj1904') # an R&T item
       expect(doc.use_and_reproduction).to eq("This is the Road and Track use and reproduction statement.")
       expect(doc['copyright_ss']).to eq("This is the Road and Track copyright statement.") # its in the solr doc, but won't appear in the page
       expect(doc.copyright).to eq("") # the copyright statement is set to blank for R&T items since it is actually contained in the use and reproduction statements in SDR
-    end
-    it "should set the specialty rights statement for not available for commercial reproduction for a collection specified to have one" do
-      doc=SolrDocument.find('xg271zb5261') # a revs item with special rights
-      expect(doc.use_and_reproduction).to eq("Due to copyright restrictions, this item is available for non-commercial use only. To request this image, please contact <a target=\"_new\" href=\"http://revsinstitute.org/order-images/\">The Revs Institute.</a>") # special statement
-      expect(doc.copyright).to eq("Courtesy of The Revs Institute. All rights reserved unless otherwise indicated.") # default copyright
-    end
-    it "should set the specialty rights statement for not available for commercial reproduction without contacinting us for a collection specified to have one" do
-      previous_collections_available_for_noncommerical_reproduction = Revs::Application.config.collections_available_for_noncommerical_reproduction
-      previous_collection_rights_uncertain = Revs::Application.config.collection_rights_uncertain
-      Revs::Application.config.collection_rights_uncertain = ['wz243gf4151'] # manually set this item's collection as a special one just for the test
-      Revs::Application.config.collections_available_for_noncommerical_reproduction = []
-      doc=SolrDocument.find('xg271zb5261') # a revs item with special rights
-      expect(doc.use_and_reproduction).to eq("Due to copyright restrictions, this item may not be available for commercial use. To request this image, please contact <a target=\"_new\" href=\"http://revsinstitute.org/order-images/\">The Revs Institute.</a>") # special statement
-      expect(doc.copyright).to eq("Courtesy of The Revs Institute. All rights reserved unless otherwise indicated.") # default copyright
-      Revs::Application.config.collections_available_for_noncommerical_reproduction = previous_collections_available_for_noncommerical_reproduction
-      Revs::Application.config.collection_rights_uncertain = previous_collection_rights_uncertain
     end
 
   end

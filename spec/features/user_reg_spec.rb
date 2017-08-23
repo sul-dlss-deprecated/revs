@@ -5,13 +5,11 @@ describe("User Registration",:type=>:request,:integration=>true) do
   before :each do
     @password='password'
     RevsMailer.stub_chain(:mailing_list_signup,:deliver).and_return('a mailer')
-    RevsMailer.stub_chain(:revs_institute_mailing_list_signup,:deliver).and_return('a mailer')
   end
   
   it "should register a new user with the default role and defaulting to public profile as hidden" do
 
     expect(RevsMailer).not_to receive(:mailing_list_signup)
-    expect(RevsMailer).not_to receive(:revs_institute_mailing_list_signup)
 
     @username='testing'
     @email="#{@username}@test.com"
@@ -42,7 +40,6 @@ describe("User Registration",:type=>:request,:integration=>true) do
   it "should register a new user and send an email to join the Revs Program list if selected" do
 
       expect(RevsMailer).to receive(:mailing_list_signup)
-      expect(RevsMailer).not_to receive(:revs_institute_mailing_list_signup)
         
       @username='testing2'
       @email="#{@username}@test.com" 
@@ -114,7 +111,6 @@ describe("User Registration",:type=>:request,:integration=>true) do
     it "should NOT register a new user via the web page if they have a Stanford email address or try a username with a Stanford email address" do
 
         expect(RevsMailer).not_to receive(:mailing_list_signup)
-        expect(RevsMailer).not_to receive(:revs_institute_mailing_list_signup)
 
         @username='testguy'
         @email="#{@username}@stanford.edu" 

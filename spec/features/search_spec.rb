@@ -40,8 +40,8 @@ describe("Search Pages",:type=>:request,:integration=>true) do
     visit search_path(:q=>'photo')
     expect(page).to have_content('Results')
     expect(page).to have_content('1 - 2 of 2')
-    expect(page).to have_content('The David Nadig Collection of the Revs Institute')
-    expect(page).to have_content('The John Dugdale Collection of the Revs Institute')
+    expect(page).to have_content('The David Nadig Collection of The Revs Institute')
+    expect(page).to have_content('The John Dugdale Collection of The Revs Institute')
   end
 
   it "should show 2 results for both chevy and chevrolet due to synonym matching" do
