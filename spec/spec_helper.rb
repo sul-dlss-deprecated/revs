@@ -401,8 +401,8 @@ def search_multiple_results(search, expected)
   expect(page).to have_content('Results')
   expect(page).to have_content("1 - #{expected} of #{expected}") if expected <= 25
   expect(page).to have_content("1 - #{expected} of #{25}") if expected > 25
-  expect(page).to have_content('The David Nadig Collection of the Revs Institute')
-  expect(page).to have_content('The John Dugdale Collection of the Revs Institute')
+  expect(page).to have_content('The David Nadig Collection of The Revs Institute')
+  expect(page).to have_content('The John Dugdale Collection of The Revs Institute')
 end
 
 def searches_multiple_results(search, expected, complex)

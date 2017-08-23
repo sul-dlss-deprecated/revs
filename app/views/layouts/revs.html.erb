@@ -27,7 +27,7 @@
     <% if @document %>
       <meta name="description" content="<%=@document.meta_tag_description%>">
     <% elsif on_home_page %>
-      <meta name="description" content="The Stanford University Revs Digital Library provides a web based platform for discovery of automotive research and images, connecting the past, prevent and future of the automobile.">
+      <meta name="description" content="The Stanford University Automotive Digital Library provides a web based platform for discovery of automotive research and images, connecting the past, prevent and future of the automobile.">
     <% end %>
     <%= raw(google_analytics) if Rails.env.production? %>
     <%= stylesheet_link_tag "application", :media => "all" %>

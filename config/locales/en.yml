@@ -38,8 +38,6 @@ en:
     digital_library: 'Automotive Digital Library'
     tagline: 'Connecting the past, present and future of the automobile'
     revs_program: 'Revs Program at Stanford'
-    revs_institute: 'The Revs Institute'
-    revs_institute_for_auto_research: 'The Revs Institute'
     stanford_library: 'Stanford University Libraries'
     routing_error: "Sorry, the page you were looking for was not found."
     repository_counts_html: |
@@ -208,7 +206,6 @@ en:
       select_topic: 'Select a topic...'
       problem: 'Problem with the website'
       other_questions: 'Other questions'
-      terms_of_use: 'Contact The Revs Institute Image Sales Department'
       special_collections: 'Contact Stanford University Library Special Collections'
       metadata_issue: 'Corrections to content'
       name: 'Your name'
@@ -218,11 +215,6 @@ en:
       message: 'Message'
       spambot_label: 'Leave blank'
       spambot: 'Please leave this field blank - it is used to prevent spam submissions'
-      default_revs_copyright: "Courtesy of The Revs Institute. All rights reserved unless otherwise indicated."
-      image_reuse_agreement: "To request this image for commercial or non-commercial use, please contact "
-      contact_linktext_html: "The Revs Institute."
-      image_available_for_noncommercial_use_only: "Due to copyright restrictions, this item is available for non-commercial use only. To request this image, please contact "
-      image_uncertain: "Due to copyright restrictions, this item may not be available for commercial use. To request this image, please contact "
       describe_problem: 'Please describe your question or problem.'
       thanks: 'Thanks for contacting the Automotive Digital Library'
       notification_new_users: 'New users have registered on the website.'

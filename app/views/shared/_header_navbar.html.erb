@@ -33,7 +33,7 @@
           <span class="hidden-sm">
             <%= t('revs.repository_counts_html',
                 :total_images => number_with_delimiter(@total_images),
-                :number_collections => number_with_delimiter(@total_collections)) %>
+                :number_collections => number_with_delimiter(@total_collections)) if Revs::Application.config.show_item_counts_in_header %>
           </span>
         </small>
       </div>

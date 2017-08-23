@@ -88,11 +88,6 @@ class SolrDocument
     parsed_date == false ? full_date : parsed_date.to_date.strftime("%B %-d, %Y")
   end
 
-  # helper to determine if this is a revs_item
-  def revs_item?
-    archive_name.downcase.include?('revs')
-  end
-
   def road_and_track_item?
     archive_name.downcase.include?('road & track')
   end
@@ -101,8 +96,6 @@ class SolrDocument
   def copyright
     if road_and_track_item? # set the copyright to blank for road & track since the actual use and reproduction statement includes copyright and it is otherwise repetitive
       value = ""
-    elsif revs_item?
-      value=I18n.t('revs.contact.default_revs_copyright')  # just use default revs value if not supplied
     else
       value=self['copyright_ss'] || "" # pull from document
     end
@@ -110,19 +103,7 @@ class SolrDocument
   end
 
   def use_and_reproduction
-    if revs_item? # revs items get a specific message set, either a special reproduction statements per collection or the default with links
-      if !(collections & Revs::Application.config.collections_available_for_noncommerical_reproduction).blank?
-        value = I18n.t('revs.contact.image_available_for_noncommercial_use_only')
-      elsif !(collections & Revs::Application.config.collection_rights_uncertain).blank?
-        value = I18n.t('revs.contact.image_uncertain').html_safe
-      else  # all other revs items
-        value = I18n.t('revs.contact.image_reuse_agreement').html_safe
-      end # end check for special collections
-      value += ActionController::Base.helpers.link_to(I18n.t('revs.contact.contact_linktext_html'),Revs::Application.config.revs_reuse_link,:target=>'_new').html_safe # add the contact link
-    else # all other (non-Revs) items get pulled from the solr doc if available
-      value=self['use_and_reproduction_ss'] || ""
-    end # end check for revs item
-    value
+    self['use_and_reproduction_ss'] || ""
   end
 
   # a helper that makes it easy to show the document location as a single string
@@ -389,7 +370,6 @@ class SolrDocument
     no_update_db=params[:no_update_db] || false # skip database updates when saving item, potentially useful when running bulk saves across the whole system; default to false
     add_changelog(user)
     self.score = compute_score
-    self.archive_name = Revs::Application.config.collier_archive_name if self.archive_name.blank?
     update_item unless no_update_db # propogate unique information to database as well when saving solr document
     super
   end

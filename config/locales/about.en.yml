@@ -45,7 +45,7 @@ en:
       terms_of_use_text_html: |
         Any of the content displayed on this site may be under copyright, and it is up to the user to comply with the content's specific copyright provisions.
         Each piece of content may have a different license and re-use requirement, which may be shown with the content.  If a license is not shown, you
-        should assume full rights remain with the owner.  For questions about terms of use, you may %{contact_us_link}, review the %{reuse_link} and review the %{terms_of_use_link}.
+        should assume full rights remain with the owner.  For questions about terms of use, you may %{contact_us_link}, and review the %{terms_of_use_link}.
         You may also %{copyright_infringement_link}.
       team_text_html: |
         <ul>
