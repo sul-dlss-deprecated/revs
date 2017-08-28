@@ -6,7 +6,8 @@ describe("User Registration",:type=>:request,:integration=>true) do
   
     before :each do
       @password='password'
-      Revs::Application.config.spam_reg_checks = false # disable spam checks for testing
+      Revs::Application.config.spam_reg_checks = false # disable spam checks for these tests
+      Revs::Application.config.require_manual_account_activation = false # disable manual activation for these tests
       RevsMailer.stub_chain(:mailing_list_signup,:deliver).and_return('a mailer')
       RevsMailer.stub_chain(:revs_institute_mailing_list_signup,:deliver).and_return('a mailer')
     end
@@ -190,6 +191,7 @@ describe("User Registration",:type=>:request,:integration=>true) do
       before :each do
         @password='password'
         Revs::Application.config.spam_reg_checks = true # enable spam checks for these tests
+        Revs::Application.config.require_manual_account_activation = false # disable manual activation for these tests
       end
 
       it "should detect a spammer as someone who submits the form too quickly" do
@@ -274,5 +276,29 @@ describe("User Registration",:type=>:request,:integration=>true) do
         should_register_ok
 
       end
+    end
+    
+    context 'manual activation for registration' do
+
+      before :each do
+        @password='password'
+        Revs::Application.config.spam_reg_checks = false # disable spam checks for these tests
+        Revs::Application.config.require_manual_account_activation = true # enable manual activation for these tests
+      end
+      
+      it "should register a new user but inactivate their account" do
+        @username='testing'
+        @email="#{@username}@test.com"
+        visit new_user_registration_path
+        fill_in 'register-email', :with=> @email
+        fill_in 'register-username', :with=> @username
+        fill_in 'user_password', :with=> @password
+        fill_in 'user_password_confirmation', :with=> @password
+        click_button 'Sign up'
+        expect(current_path).to eq(root_path)
+        expect(page).to have_content I18n.t('devise.registrations.user.signed_up_but_account_has_been_deactivated')
+        expect(User.last.active).to be_falsey
+      end
+      
     end
 end

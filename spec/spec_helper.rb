@@ -62,6 +62,7 @@ end
 def should_register_ok
    expect(current_path).to eq(root_path)
    expect(page).to have_content I18n.t('devise.registrations.signed_up_but_unconfirmed')
+   expect(User.last.active).to be_truthy
 end
 
 def login_as(login, password = nil)

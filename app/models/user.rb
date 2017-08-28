@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
   after_create :signup_for_mailing_list, :if=>lambda{subscribe_to_mailing_list=='1'}
   after_create :signup_for_revs_institute_mailing_list, :if=>lambda{subscribe_to_revs_mailing_list=='1'}
   after_create :create_default_favorites_list # create the default favorites list when accounts are created
-
+  after_create :inactivate_account, :if=>lambda{Revs::Application.config.require_manual_account_activation == true}
   after_save :create_default_favorites_list # create the default favorites list if it doesn't exist when a user logs in
 
   validate :check_role_name
@@ -165,6 +165,14 @@ class User < ActiveRecord::Base
     end
   end
 
+  def inactivate_account
+    self.update_attribute(:active,false)
+  end
+
+  def activate_account
+    self.update_attribute(:active,true)
+  end
+
   # determines if account is active (could be locked or manually made inactive)
   def active_for_authentication?
     super && active
@@ -175,8 +183,10 @@ class User < ActiveRecord::Base
   end
 
   def after_database_authentication
-    self.increment!(:login_count)
-    create_default_favorites_list
+    if active_for_authentication?
+      self.increment!(:login_count)
+      create_default_favorites_list
+    end
   end
 
   # override devise method --- stanford users are never timed out; regular users are timed out according to devise rules

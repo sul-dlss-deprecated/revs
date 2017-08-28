@@ -101,7 +101,7 @@ Revs::Application.routes.draw do
   namespace :admin do
     resources :users do
       collection do
-        post 'bulk_update_role', :to => 'users#bulk_update_role'
+        post 'bulk_update_status', :to => 'users#bulk_update_status'
       end
     end
     resources :saved_queries do

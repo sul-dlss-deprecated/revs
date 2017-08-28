@@ -2,11 +2,11 @@ class Admin::UsersController < AdminController
 
   def index
     get_paging_params
-    @role = params[:role] || 'curator'
+    @status = params[:status] || 'true'
     @filter = filter_field(params[:filter])
     @filter_role = params[:filter_role] || "all"
     @filter_visibility = filter_field(params[:filter_visibility])
-
+    @filter_status = params[:filter_status] || "all"
     @users = User.all
 
     if !@search.blank?
@@ -27,6 +27,14 @@ class Admin::UsersController < AdminController
       @users=@users.where(:public => true)
     elsif @filter_visibility == 'private'
       @users=@users.where(:public => false)
+    end
+
+    if @filter_status == 'active'
+      @users=@users.where(:active => true)
+    elsif @filter_status == 'inactive'
+      @users=@users.where(:active => false)
+    elsif @filter_status == 'inactive_new'
+      @users=@users.where(:active => false, :login_count => 0)
     end
 
     @users=@users.order(@order).page(@current_page).per(@per_page)
@@ -56,21 +64,21 @@ class Admin::UsersController < AdminController
     end
   end
 
-  def bulk_update_role
+  def bulk_update_status
     get_paging_params
-    @role=params[:role]
+    @status=params[:status]
     @selected_users=params[:selected_users]
     if @selected_users
       @selected_users.each do |user_id|
           user=User.find(user_id)
-          user.role=@role
+          user.active=@status
           user.save
        end
-      flash[:success]=t('revs.admin.user_roles_updated',:num=>@selected_users.size,:role=>@role)
+      flash[:success]=t('revs.admin.user_status_updated',:num=>@selected_users.size,:status=>@status)
     else
-      flash[:error]=t('revs.admin.no_user_roles_updated')
+      flash[:error]=t('revs.admin.no_users_updated')
     end
-    redirect_to admin_users_path(paging_params({:email=>params[:email],:role=>@role}))
+    redirect_to admin_users_path(paging_params({:email=>params[:email],:status=>@status}))
   end
 
   def destroy

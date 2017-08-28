@@ -225,6 +225,7 @@ en:
       image_uncertain: "Due to copyright restrictions, this item may not be available for commercial use. To request this image, please contact "
       describe_problem: 'Please describe your question or problem.'
       thanks: 'Thanks for contacting the Revs Digital Library'
+      notification_new_users: 'New users have registered on the website.'
     authentication:
       new_user: 'New user?'
       sign_in: 'Sign in'
@@ -295,19 +296,21 @@ en:
       name: "Name"
       stanford: "Stanford?"
       role: "Role"
+      active: "Active"
       per_page: "Per page"
       login_count: "Logins"
       filter_role: "By role"
       filter_type: "By type"
+      filter_status: "By status"
       filter_visibility: "By visibility"
       registered_on: "Registered"
       confirmed: "Confirmed?"
       no_users_found: "No users were found with your search criteria."
       none_found: "None found"
       feature_on_home_page: "Feature"
-      user_roles_updated: "Successfully updated %{num} users to the role '%{role}'"
-      no_user_roles_updated: "You did not select any users to update"
-      set_checked_users: "Update selected to role"
+      user_status_updated: "Successfully updated %{num} users to the account status '%{status}'"
+      no_users_updated: "You did not select any users to update"
+      set_checked_users: "Update selected to account status"
       last_sign_in: 'Last sign in'
       num_logins: 'Number of logins'
       sidebar:

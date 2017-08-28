@@ -18,6 +18,12 @@ class RevsMailer < ActionMailer::Base
     mail(:to=>to, :cc=>cc, :subject=>"Contact Message from Revs Digital Library - #{@subject}") unless to.nil? || !valid_email?(to) # only send an email if we have a valid to address (if user has tampered with subject params, this might not be the case)
   end
 
+  def new_users_notification(opts={})
+    @num_users=opts[:num_users]
+    to=Revs::Application.config.new_registration_notification
+    mail(:to=>to,:subject=>I18n.t('revs.contact.notification_new_users')) if valid_email?(to)
+  end
+  
   def auto_response(opts={})
     @email=opts[:email]
     @subject=opts[:subject]

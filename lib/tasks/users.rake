@@ -25,6 +25,25 @@ namespace :revs do
     end
   end
 
+  desc "Destroy any non-SUNET users older than 2 weeks who are inactive and who have not logged in (i.e. required manual activation but did not receive it)"
+  task :purge_inactive_users => :environment do |t,args|
+    unconfirmed_users=User.where(:active=>false,:sunet=>'',:login_count=>0).where("updated_at < ?",2.weeks.ago)
+    puts "Destroying #{unconfirmed_users.size} inactive and non logged in users"
+    unconfirmed_users.each do |user|
+      puts "...destroying '#{user.username}'"
+      user.destroy
+    end
+  end
+
+  desc "Notify administrator of new registrants"
+  task :notify_new_registrations => :environment do |t,args|
+    num_unconfirmed_users=User.where(:active=>false,:sunet=>'',:login_count=>0).where('updated_at < ?',Date.tomorrow).size
+    if num_unconfirmed_users > 0 
+      RevsMailer.new_users_notification(:num_users=>num_unconfirmed_users).deliver
+      puts "Found #{num_unconfirmed_users} users."
+    end
+  end
+  
   desc "Inactivate the provided users and destroy any of their contributions, e.g. galleries, annotations, flags (useful for spam users)"
   #Run Me: RAILS_ENV=production bundle exec rake revs:inactivate_users users="user1,some_spammy_guy,another_bad_dude"
   task :inactivate_users => :environment do |t,args|
