@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
   after_save :create_default_favorites_list # create the default favorites list if it doesn't exist when a user logs in
 
   validate :check_role_name
-  validate :registration_answer_correct, :on => :create, :if=>lambda{Revs::Application.config.spam_reg_checks == true}
+  validate :registration_answer_correct, :on => :create, :if=>lambda{Revs::Application.config.spam_reg_checks == true && !Revs::Application.config.reg_questions.blank?}
   validates :username, :uniqueness => { :case_sensitive => false }
   validates :username, :length => { :in => 5..50}
   validates :username, :format => { :with => /\A\D.+/,:message => "must start with a letter" }

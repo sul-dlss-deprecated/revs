@@ -126,10 +126,10 @@ module Revs
     config.site_message = ""
     # if the following configuration is not nil or a blank array, one of these questions will be asked at random when user's register to try and block spammy registrations
     # format is an array of hashes, the answer is not case sensitive
-    config.reg_questions = [
-      {:question=>'What is the name of the car company that manufacturers the Mustang?',:answer=>'Ford'},
-      {:question=>'What is the first name of the founder of Ferrari?',:answer=>'Enzo'}
-    ]
+    config.reg_questions = []
+    #   {:question=>'What is the name of the car company that manufacturers the Mustang?',:answer=>'Ford'},
+    #   {:question=>'What is the first name of the founder of Ferrari?',:answer=>'Enzo'}
+    # ]
     config.require_manual_account_activation = true # set to true to require an admin to manually activate any new account registrations
     config.new_registration_notification = 'petucket@stanford.edu' # email address to receive daily notifications of new registrations
     config.spam_reg_checks = true # set to false to skip spam registration checks (useful in testing)

@@ -191,6 +191,10 @@ describe("User Registration",:type=>:request,:integration=>true) do
       before :each do
         @password='password'
         Revs::Application.config.spam_reg_checks = true # enable spam checks for these tests
+        Revs::Application.config.reg_questions = [
+          {:question=>'What is the name of the car company that manufacturers the Mustang?',:answer=>'Ford'},
+          {:question=>'What is the first name of the founder of Ferrari?',:answer=>'Enzo'}
+        ]
         Revs::Application.config.require_manual_account_activation = false # disable manual activation for these tests
       end
 
@@ -271,6 +275,22 @@ describe("User Registration",:type=>:request,:integration=>true) do
         fill_in 'user_password_confirmation', :with=> @password
         question_number = page.all("input#user_registration_question_number", :visible => false).first.value.to_i
         fill_in 'user_registration_answer', :with=> Revs::Application.config.reg_questions[question_number][:answer]
+        sleep 4.seconds
+        click_button 'Sign up'
+        should_register_ok
+
+      end
+      
+      it "should register a new user if there are no reg questions configured" do
+
+        @username='testing'
+        @email="#{@username}@test.com"
+        Revs::Application.config.reg_questions = []
+        visit new_user_registration_path
+        fill_in 'register-email', :with=> @email
+        fill_in 'register-username', :with=> @username
+        fill_in 'user_password', :with=> @password
+        fill_in 'user_password_confirmation', :with=> @password
         sleep 4.seconds
         click_button 'Sign up'
         should_register_ok
