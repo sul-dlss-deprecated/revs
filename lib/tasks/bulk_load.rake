@@ -1136,6 +1136,24 @@ namespace :revs do
     end
   end
 
+  desc "Export flags to CSV file, run with rake revs:export_flags['open']"
+  task :export_flags, [:state] => :environment do |t, args|
+    state = args[:state]
+    full_output_path = File.join(Rails.root,"tmp","flags_#{state}.csv")
+    flags = Flag.includes(:user).where(:state=>state)
+
+    puts "Exporting #{flags.count} flags with state #{state} to #{full_output_path}"
+
+    CSV.open(full_output_path, "wb") do |csv|
+      csv << ["id","druid","sourceid","item title","comment","username","user_role","date_created","state"]
+      flags.each do |flag|
+        username = flag.user.blank? ? "anonymous" : flag.user.username
+        user_role = flag.user.blank? ? "n/a" : flag.user.role
+        csv << [flag.id,flag.druid,flag.item.title,flag.solr_document['source_id_ssi'],flag.comment,username,user_role,flag.created_at,flag.state]
+      end
+    end
+  end
+
   desc "Move annotations to flags for a user, run with rake revs:move_annotations_to_flags['Doug Nye']"
   task :move_annotations_to_flags, [:username] => :environment do |t, args|
       username=args[:username]

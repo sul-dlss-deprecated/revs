@@ -1,12 +1,19 @@
 namespace :revs do
-  desc "Show all users of this role on the screen for easy saving to CSV file"
+  desc "Export all users of this role to a CSV file"
   #Run Me: RAILS_ENV=production bundle exec rake revs:export_users role="curator"
   task :export_users => :environment do |t, args|
     role = ENV['role'] || 'curator' # limit to this role, curator by default
+    full_output_path = File.join(Rails.root,"tmp","users_#{role}.csv")
     active_users=User.where(:role=>role,:active=>true)
-    puts "full_name,username,email,registered,last_sign_in,total_logins"
-    active_users.each {|user| puts "#{user.full_name},#{user.username},#{user.email},#{user.created_at},#{user.last_sign_in_at},#{user.login_count}"}
+    puts "Exporting #{active_users.count} active users of role #{role} to #{full_output_path}"
+    CSV.open(full_output_path, "wb") do |csv|
+      csv << ["full_name","username","email","registered","last_sign_in","total_logins"]
+      active_users.each do |user| 
+        csv << [user.full_name,user.username,user.email,user.created_at,user.last_sign_in_at,user.login_count]
+      end
+    end
   end
+
 
   desc "Destroy any non-SUNET users older than 1 month who have never logged in or confirmed their accounts"
   task :purge_unconfirmed_users => :environment do |t,args|
