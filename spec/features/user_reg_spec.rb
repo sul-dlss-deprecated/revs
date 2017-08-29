@@ -208,7 +208,7 @@ describe("User Registration",:type=>:request,:integration=>true) do
 
         click_button 'Sign up'
 
-        expect(page).to have_content(I18n.t("revs.about.contact_message_spambot"))
+        expect(page).to have_content(I18n.t("revs.user.spam_registration"))
         expect(current_path).to eq(root_path)
         expect(User.count).to eq(user_count) # no new users
         
@@ -228,12 +228,28 @@ describe("User Registration",:type=>:request,:integration=>true) do
         sleep 4.seconds
         click_button 'Sign up'
         
-        expect(page).to have_content(I18n.t("revs.about.contact_message_spambot"))
+        expect(page).to have_content(I18n.t("revs.user.spam_registration"))
         expect(current_path).to eq(root_path)
         expect(User.count).to eq(user_count) # no new users
 
       end
 
+      it "should detect a spammer as someone who fits a specific username pattern" do
+
+        user_count = User.count
+        @username='m9tlbdv809'
+        @email="#{@username}@test.com" 
+        # register a new user
+        register_new_user(@username,@password,@email)        
+        sleep 4.seconds
+        click_button 'Sign up'
+        
+        expect(page).to have_content(I18n.t("revs.user.spam_registration"))
+        expect(current_path).to eq(root_path)
+        expect(User.count).to eq(user_count) # no new users
+
+      end
+      
       it "should not register a new user if they do not answer the reg question correctly or at all" do
 
         user_count = User.count

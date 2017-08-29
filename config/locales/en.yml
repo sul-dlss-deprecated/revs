@@ -566,6 +566,7 @@ en:
       label_metadata_sources: "Metadata Sources"
       label_more_metadata: "Has more metadata"
     user:
+      spam_registration: 'Your IP address has been reported as a suspected malicious registration and your account has been deleted.'
       stanford_warning_html: '<strong>Important:</strong> Stanford users should not create a new account or enter their SUNET ID or passwords on this website.  %{webauth_link}'
       stanford_email_sunet_warning_html: ' <strong>Note</strong>.  You have not changed your default username, which is your Stanford SUNET ID.'
       stanford_email_sunet_warning2_html: 'Since your username may appear on the website, you may want to <a href="/users/edit">change this</a> to avoid other users guessing your email address easily.'
