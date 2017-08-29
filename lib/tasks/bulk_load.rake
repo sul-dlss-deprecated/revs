@@ -1215,7 +1215,7 @@ namespace :revs do
       flags.each do |flag|
         username = flag.user.blank? ? "anonymous" : flag.user.username
         user_role = flag.user.blank? ? "n/a" : flag.user.role
-        csv << [flag.id,flag.druid,flag.item.title,flag.solr_document['source_id_ssi'],flag.comment,username,user_role,flag.created_at,flag.state]
+        csv << [flag.id,flag.druid,flag.item.title,flag.source_id,flag.comment,username,user_role,flag.created_at,flag.state]
       end
     end
   end
