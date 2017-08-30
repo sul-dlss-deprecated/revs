@@ -13,6 +13,10 @@ en:
               cannot_be_more_than_one_favorites_list_per_user: 'there cannot be more than one favorites list per user'
             visibility:
               must_be_selected: 'must be selected.'
+        user:
+          attributes:
+            registration_answer:
+              not_correct: 'is not correct.  Please answer the question to register -- this is used to reduce spurious user registrations.'
         saved_item:
           attributes:
             druid:
@@ -213,6 +217,7 @@ en:
       spambot: 'Please leave this field blank - it is used to prevent spam submissions'
       describe_problem: 'Please describe your question or problem.'
       thanks: 'Thanks for contacting the Automotive Digital Library'
+      notification_new_users: 'New users have registered on the website.'
     authentication:
       new_user: 'New user?'
       sign_in: 'Sign in'
@@ -234,6 +239,7 @@ en:
       stanford_email_warning1: "Your username cannot be a Stanford email address other than your own."
       stanford_email_warning2: "Your username cannot be a Stanford email address."
       stanford_user: "Stanford user"
+      registration_question: "Please answer the question to register."
       profile_page_is: "Profile page is"
       users_username_public: "The user's username is publicly visible on the web site"
       users_if_profile_public: "If the user's profile page is public, the user's first and last name entered below (instead of username) is used to identify the user on the site."
@@ -282,19 +288,21 @@ en:
       name: "Name"
       stanford: "Stanford?"
       role: "Role"
+      active: "Active"
       per_page: "Per page"
       login_count: "Logins"
       filter_role: "By role"
       filter_type: "By type"
+      filter_status: "By status"
       filter_visibility: "By visibility"
       registered_on: "Registered"
       confirmed: "Confirmed?"
       no_users_found: "No users were found with your search criteria."
       none_found: "None found"
       feature_on_home_page: "Feature"
-      user_roles_updated: "Successfully updated %{num} users to the role '%{role}'"
-      no_user_roles_updated: "You did not select any users to update"
-      set_checked_users: "Update selected to role"
+      user_status_updated: "Successfully updated %{num} users to the account status '%{status}'"
+      no_users_updated: "You did not select any users to update"
+      set_checked_users: "Update selected to account status"
       last_sign_in: 'Last sign in'
       num_logins: 'Number of logins'
       sidebar:
@@ -550,6 +558,7 @@ en:
       label_metadata_sources: "Metadata Sources"
       label_more_metadata: "Has more metadata"
     user:
+      spam_registration: 'Your IP address has been reported as a suspected malicious registration and your account has been deleted.'
       stanford_warning_html: '<strong>Important:</strong> Stanford users should not create a new account or enter their SUNET ID or passwords on this website.  %{webauth_link}'
       stanford_email_sunet_warning_html: ' <strong>Note</strong>.  You have not changed your default username, which is your Stanford SUNET ID.'
       stanford_email_sunet_warning2_html: 'Since your username may appear on the website, you may want to <a href="/users/edit">change this</a> to avoid other users guessing your email address easily.'

@@ -14,7 +14,7 @@
     <%= hidden_field_tag 'loadtime',Time.now%>
 
     <div class="form-group hidden">
-  	  <label class="control-label col-xs-12 col-sm-4 col-md-3" for="email"><%=t('revs.contact.spambot_label')%></label>
+  	  <label class="control-label col-xs-12 col-sm-4 col-md-3" for="email_confirm"><%=t('revs.contact.spambot_label')%></label>
   	  <div class="col-xs-8 col-sm-6 col-md-5">
   	    <%=text_field_tag 'email_confirm', "", :placeholder => t('revs.contact.spambot'), :class => "form-control", :autocomplete => 'off' %>
   	  </div>
@@ -66,6 +66,17 @@
             :placeholder => t('revs.user.confirm_password'), :class => "form-control" %>
       </div>
     </div>
+
+    <% unless Revs::Application.config.reg_questions.blank? %>
+    <% question_number = rand(Revs::Application.config.reg_questions.size) %>
+    <%= hidden_field_tag 'user[registration_question_number]',question_number%>
+      <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-4 col-md-3" for="user_registration_answer"><%= Revs::Application.config.reg_questions[question_number][:question] %></label>
+        <div class="col-xs-8 col-sm-6 col-md-5">
+          <%=text_field_tag 'user[registration_answer]', "", :placeholder => t('revs.authentication.registration_question'), :class => "form-control", :autocomplete => 'off' %>
+        </div>
+      </div>
+    <% end %>
 
     <div class="form-group">
       <div class="col-sm-offset-4 col-sm-9 col-md-offset-3">
