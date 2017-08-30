@@ -54,6 +54,15 @@
         </div>
       </div>
 
+      <div class="form-group">
+        <label for="filter_status" class="control-label col-sm-4 col-lg-3">
+          <%= t('revs.admin.filter_status') %>
+        </label>
+        <div class="col-xs-4 col-md-2">
+          <%= select_tag 'filter_status', options_for_select({'all'=>'all','Active only'=>'active','Inactive only'=>'inactive','Inactive new users'=>'inactive_new'}, @filter_status), class:"form-control" %>
+        </div>
+      </div>
+
       <%= render :partial=>'shared/per_page_dropdown' %>
 
       <div class="form-group">
@@ -65,7 +74,7 @@
   <% end %>
 
   <% if @users.size > 0 %>
-    <%= form_tag(bulk_update_role_admin_users_path, method: 'post', class:'form-inline update-users') do %>
+    <%= form_tag(bulk_update_status_admin_users_path, method: 'post', class:'form-inline update-users') do %>
     <fieldset>
       <legend><%= t('revs.admin.update_users')%></legend>
 
@@ -73,7 +82,7 @@
           <label for="role">
             <%=t('revs.admin.set_checked_users')%>
           </label>
-            <%= select_tag 'role', options_for_select(User.roles,@role), class:"form-control input-sm" %>
+            <%= select_tag 'status', options_for_select({'Active'=>'true','Inactive'=>'false'} , @status), class:"form-control input-sm" %>
             <!--<input type="checkbox" name="select-all" id="admin-select-all-users"> --> <%#=t('revs.nav.select_all')%>
         </div>
         <%= submit_tag t('revs.nav.submit'), :class => 'btn btn-default btn-sm' %>
@@ -110,6 +119,10 @@
           <%= link_to t('revs.admin.role'),
                 admin_users_path(:order=>'role', :search=>@search, :filter=>@filter, :per_page=>@per_page) %>
         </th>
+        <th>
+          <%= link_to t('revs.admin.active'),
+                admin_users_path(:order=>'active', :search=>@search, :filter=>@filter, :per_page=>@per_page) %>
+        </th>
         <th class="right">
           <%= link_to t('revs.admin.login_count'),
                 admin_users_path(:order=>'login_count_desc', :search=>@search, :filter=>@filter, :per_page=>@per_page) %>
@@ -134,12 +147,13 @@
          <td><%= user.full_name %></td>
          <td class="centered"><%= user.sunet_user? ? t('revs.messages.switch_yes') : t('revs.messages.switch_no') %></td>
          <td><%= user.role %></td>
+         <td><%= user.active %></td>
          <td class="right"><%= user.login_count %></td>
          <td><%= show_as_date(user.created_at.in_time_zone) %></td>
          <td class="centered"><%= user.confirmed_at.blank? ? t('revs.messages.switch_no') : t('revs.messages.switch_yes') %></td>
          <td class="centered">
-           <%= link_to "#{t('revs.actions.edit')}", edit_admin_user_path(user.id),:id=>"edit-#{user.id}" %>
-           <%= link_to "#{t('revs.user.view_profile')}", user_path(user), :class => "admin-action-link" %>
+           <%= link_to "#{t('revs.actions.edit')}", edit_admin_user_path(user.id),:id=>"edit-#{user.id}" %> |
+           <%= link_to "#{t('revs.user.profile')}", user_path(user), :class => "admin-action-link" %>
          </td>
        </tr>
       <% end %>

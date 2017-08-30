@@ -85,7 +85,8 @@ module Revs
     config.contact_us_topics = {'default'=>'revs.contact.select_topic', 'metadata'=>'revs.contact.metadata_issue','terms of use'=>'revs.contact.terms_of_use', 'special collections'=>'revs.contact.special_collections','error'=>'revs.contact.problem','other'=>'revs.contact.other_questions'} # sets the list of topics shown in the contact us page
     config.contact_us_recipients = {'default'=>'digcoll@jirasul.stanford.edu', 'terms of use'=>'library@revsinstitute.org','metadata'=>'digcoll@jirasul.stanford.edu','error'=>'digcoll@jirasul.stanford.edu','other'=>'digcoll@jirasul.stanford.edu','special collections'=>'specialcollections@stanford.edu'} # sets the email address for each contact us topic configed aboveend
     config.contact_us_cc_recipients = {'default'=>'revs-other@jirasul.stanford.edu', 'metadata'=>'revs-metadata-comment@jirasul.stanford.edu', 'error'=>'revs-problems@jirasul.stanford.edu','other'=>'revs-other@jirasul.stanford.edu'} # sets the CC email address for each contact us topic configed above
-
+    config.new_registration_notification = 'petucket@stanford.edu'
+    
     # these collections are only available for non-commerical reproduction and will show a special statement instead of the use and reproduction statement in the item itself
     config.collections_available_for_noncommerical_reproduction =
       [ 'jh550nq3200', # Worner
@@ -123,6 +124,15 @@ module Revs
 #    config.site_message="The website will be down for scheduled maintenance today, July 8, at 3pm Pacific Time for approximately 30 minutes." # set to some string to show a message on the top of each message (like to advertise a known site outage) , leave blank for no message
 
     config.site_message = ""
+    # if the following configuration is not nil or a blank array, one of these questions will be asked at random when user's register to try and block spammy registrations
+    # format is an array of hashes, the answer is not case sensitive
+    config.reg_questions = []
+    #   {:question=>'What is the name of the car company that manufacturers the Mustang?',:answer=>'Ford'},
+    #   {:question=>'What is the first name of the founder of Ferrari?',:answer=>'Enzo'}
+    # ]
+    config.require_manual_account_activation = true # set to true to require an admin to manually activate any new account registrations
+    config.new_registration_notification = 'petucket@stanford.edu' # email address to receive daily notifications of new registrations
+    config.spam_reg_checks = true # set to false to skip spam registration checks (useful in testing)
 
   end
 end

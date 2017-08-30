@@ -1,3 +1,5 @@
+require 'io/console'
+
 namespace :revs do
   desc "Export all users of this role to a CSV file"
   #Run Me: RAILS_ENV=production bundle exec rake revs:export_users role="curator"
@@ -23,6 +25,54 @@ namespace :revs do
       puts "...destroying '#{user.username}'"
       user.destroy
     end
+  end
+
+  desc "Destroy any non-SUNET users older than 2 weeks who are inactive and who have not logged in (i.e. required manual activation but did not receive it)"
+  task :purge_inactive_users => :environment do |t,args|
+    unconfirmed_users=User.where(:active=>false,:sunet=>'',:login_count=>0).where("updated_at < ?",2.weeks.ago)
+    puts "Destroying #{unconfirmed_users.size} inactive and non logged in users"
+    unconfirmed_users.each do |user|
+      puts "...destroying '#{user.username}'"
+      user.destroy
+    end
+  end
+
+  desc "Destroy users with confirmation"
+  task :cleanup_users => :environment do |t,args|
+    $stdout.sync = true
+    deleted = 0
+    users = User.where('sunet = ""').order('created_at asc')
+    total = users.count
+    puts
+    puts "#{total} total users.  Press y to delete"
+    users.each do |user|
+        print "#{user.created_at}\t#{user.username}\t#{user.email}\t#{user.url}\t#{user.bio}\t#{user.saved_items.count} saved items\t#{user.login_count} logins: "
+        input = STDIN.getch
+        puts input
+        if input.chomp == 'y'
+          deleted += 1
+          user.destroy
+          puts "***DELETED"
+        end
+    end
+    puts
+    puts "#{total} total users; #{deleted} were deleted."
+  end
+
+  desc "Notify administrator of new registrants"
+  task :notify_new_registrations => :environment do |t,args|
+    num_unconfirmed_users=User.where(:active=>false,:sunet=>'',:login_count=>0).where('updated_at < ?',Date.tomorrow).size
+    if num_unconfirmed_users > 0 
+      RevsMailer.new_users_notification(:num_users=>num_unconfirmed_users).deliver
+      puts "Found #{num_unconfirmed_users} users."
+    end
+  end
+  
+  desc "Purge inactive new registrants"
+  task :purge_new_registrations => :environment do |t,args|
+    users = User.where(:active=>false,:sunet=>'',:login_count=>0).where('updated_at < ?',Date.tomorrow)
+    puts "Destroyed #{users.size} users."
+    users.destroy_all if users.size > 0 
   end
 
   desc "Inactivate the provided users and destroy any of their contributions, e.g. galleries, annotations, flags (useful for spam users)"
