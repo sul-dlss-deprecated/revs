@@ -111,7 +111,7 @@ module Revs
 
     config.collier_archive_name = 'Revs Institute® Archives' # this is the name of the collier archive, it will be added to records if it does not yet exist when saving for remediating records that existed before we had multiple archives
 
-    config.disable_editing = false # if set to true, will disallow metadata editing, changing visibility and placeholder, the creation of annotations and flags - the things that can update a solr document or add to the metadata editing load
+    config.disable_editing = true # if set to true, will disallow metadata editing, changing visibility and placeholder, the creation of annotations and flags - the things that can update a solr document or add to the metadata editing load
     config.num_latest_user_activity = 3 # the latest number of flags/annotations to show on the user profile page
     config.num_flags_per_item_per_user = 5 # the number of times each user is allowed to flag a particular item
     #config.flag_sort_display = {FLAG_STATES[:open]=> I18n.t('revs.flags.open_state_display_name'),FLAG_STATES[:fixed]=> I18n.t('revs.flags.fixed_state_display_name'),FLAG_STATES[:wont_fix]=> I18n.t('revs.flags.wont_fix_state_display_name')}
@@ -123,7 +123,7 @@ module Revs
 
 #    config.site_message="The website will be down for scheduled maintenance today, July 8, at 3pm Pacific Time for approximately 30 minutes." # set to some string to show a message on the top of each message (like to advertise a known site outage) , leave blank for no message
 
-    config.site_message = ""
+    config.site_message = 'Note: Content from The Revs Institute will be moved away from this website later in the year.  <a href="http://bit.ly/revsnotice">See the notice</a> for more information.  To faciliate this transition, flagging and some other features have been disabled until the move is complete.'
     # if the following configuration is not nil or a blank array, one of these questions will be asked at random when user's register to try and block spammy registrations
     # format is an array of hashes, the answer is not case sensitive
     config.reg_questions = []
