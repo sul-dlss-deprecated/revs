@@ -14,7 +14,7 @@
             :class=>"#{'active' if session[:preferred_view] == 'detailed'}") %>
         </li>
 
-        <% if can? :curate, :all  %>
+        <% if Revs::Application.config.disable_editing == false && can?(:curate, :all) %>
           <li>
             <%= link_to(t('revs.search.gallery_toggle.curator'),
               catalog_index_path(params.symbolize_keys.merge(:view => 'curator')),

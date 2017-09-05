@@ -4,6 +4,7 @@ describe("User registration system",:type=>:request,:integration=>true) do
 
   before :each do
     logout
+    Revs::Application.config.disable_editing = false # be sure editing is enabled for tests
   end
 
   it "should allow a user to login" do

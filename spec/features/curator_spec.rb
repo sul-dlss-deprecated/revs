@@ -6,6 +6,7 @@ describe("Curator Section",:type=>:request,:integration=>true) do
     logout
     @comment_field='flag_comment'
     @flag_button=I18n.t('revs.flags.flag')
+    Revs::Application.config.disable_editing = false # be sure editing is enabled for tests
   end
 
 
