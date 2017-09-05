@@ -5,6 +5,7 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
   before :each do
     logout
     @starting_page=catalog_path('qb957rw1430')
+    Revs::Application.config.disable_editing = false # be sure editing is enabled for tests
   end
 
   it "should not show the annotations for a disabled user" do
@@ -16,6 +17,19 @@ describe("Annotation of images",:type=>:request,:integration=>true) do
     expect(first(".num-annotations-badge")).to have_content("1")   # the user annotation is not visible
     expect(page).to have_content('Guy in the background looking sideways') #admin annotation, still there
     expect(page).not_to have_content('air intake?') # user annotation, now hidden
+  end
+  
+  it "should not show the annotations link to non-logged in and logged in users when editing is disabled" do
+
+    Revs::Application.config.disable_editing = true 
+    druid='xf058ys1313'
+    visit catalog_path(druid)
+    should_not_allow_annotations
+
+    login_as_user_and_goto_druid(user_login,druid)
+    visit catalog_path(druid)
+    should_not_allow_annotations
+    
   end
   
   it "should show the number of annotations in an image and allow logged in users to add a new one" do

@@ -70,7 +70,7 @@ class CatalogController < ApplicationController
 
       end
 
-    elsif can?(:bulk_update_metadata,:all) && params[:bulk_edit] && request.post? # user submitted a bulk update operation and has the rights to do it
+    elsif can?(:bulk_update_metadata,:all) && params[:bulk_edit] && request.post? && Revs::Application.config.disable_editing == false # user submitted a bulk update operation and has the rights to do it
 
       not_authorized unless can?(:bulk_update_metadata,:all)
 
