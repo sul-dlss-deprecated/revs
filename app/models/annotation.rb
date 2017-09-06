@@ -8,6 +8,7 @@ class Annotation < WithSolrDocument
   belongs_to :item, :foreign_key=>:druid, :primary_key=>:druid
     
   after_create :add_annotation_to_solr
+  before_create :update_source_id
   after_update :update_annotation_in_solr
   after_destroy :update_annotation_in_solr
   after_save :update_item

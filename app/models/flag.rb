@@ -9,6 +9,7 @@ class Flag < WithSolrDocument
 
   FLAG_STATES={ open: 'open', fixed: 'fixed', review: 'review', wont_fix: 'wont fix'}  #add a potential spam state here if desired
 
+  before_create :update_source_id
   after_save :update_item
 
   validates :druid, :is_druid=>true
