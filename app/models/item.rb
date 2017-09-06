@@ -1,12 +1,11 @@
 class Item < WithSolrDocument
-
- attr_accessor :solr_document
     
  has_many :annotations, :foreign_key=>:druid, :primary_key=>:druid
  has_many :flags, :foreign_key=>:druid, :primary_key=>:druid
  has_many :saved_items, :foreign_key=>:druid, :primary_key=>:druid
  has_many :change_logs, :foreign_key=>:druid, :primary_key=>:druid
  
+  before_create :update_source_id
   validates :druid, :is_druid=>true
   validates :druid, :uniqueness=>true
   validate :check_visibility_value

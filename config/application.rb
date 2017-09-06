@@ -88,6 +88,7 @@ module Revs
     config.new_registration_notification = 'petucket@stanford.edu'
     config.show_item_counts_in_header = false # if set to true, we will show total item and collection counts in the header
     config.disable_editing = false # if set to true, will disallow metadata editing, changing visibility and placeholder, the creation of annotations and flags - the things that can update a solr document or add to the metadata editing load
+
     config.num_latest_user_activity = 3 # the latest number of flags/annotations to show on the user profile page
     config.num_flags_per_item_per_user = 5 # the number of times each user is allowed to flag a particular item
     #config.flag_sort_display = {FLAG_STATES[:open]=> I18n.t('revs.flags.open_state_display_name'),FLAG_STATES[:fixed]=> I18n.t('revs.flags.fixed_state_display_name'),FLAG_STATES[:wont_fix]=> I18n.t('revs.flags.wont_fix_state_display_name')}
@@ -98,8 +99,8 @@ module Revs
                                        # 1 day = 86400 seconds
 
 #    config.site_message="The website will be down for scheduled maintenance today, July 8, at 3pm Pacific Time for approximately 30 minutes." # set to some string to show a message on the top of each message (like to advertise a known site outage) , leave blank for no message
-
-    config.site_message = ""
+    config.site_message=""
+    
     # if the following configuration is not nil or a blank array, one of these questions will be asked at random when user's register to try and block spammy registrations
     # format is an array of hashes, the answer is not case sensitive
     config.reg_questions = []

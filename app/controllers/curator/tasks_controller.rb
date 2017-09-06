@@ -168,6 +168,7 @@ class Curator::TasksController < ApplicationController
 
    # an ajax call for user submitted in-place edit
    def edit_metadata
+      not_authorized if Revs::Application.config.disable_editing == true
       @document=SolrDocument.find(params[:id])
       updates=params[:document]
       updates.each {|field,value| @document.send("#{field}=",value)}

@@ -6,6 +6,7 @@ class SavedItem < WithSolrDocument
   include RankedModel
   ranks :row_order,:column => :position, :with_same => :gallery_id
   
+  before_create :update_source_id
   after_save :update_gallery_last_updated
   after_save :update_item
 

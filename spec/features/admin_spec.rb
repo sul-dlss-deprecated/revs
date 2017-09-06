@@ -4,6 +4,7 @@ describe("Admin Section",:type=>:request,:integration=>true) do
   
   before :each do
     logout
+    Revs::Application.config.disable_editing = false # be sure editing is enabled for tests
   end
   
   it "should allow an admin user to login and see the admin dashboard" do
