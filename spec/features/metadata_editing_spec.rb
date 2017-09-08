@@ -3,6 +3,7 @@ require "rails_helper"
 describe("Metadata Editing",:type=>:request,:integration=>true) do
   
   before :each do
+    Revs::Application.config.disable_editing = false # be sure editing is enabled for tests
   	@facet_link_to_click='black-and-white negatives' # a facet link
     cleanup_editstore_changes
     logout
