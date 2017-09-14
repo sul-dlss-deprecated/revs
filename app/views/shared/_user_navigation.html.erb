@@ -35,6 +35,8 @@
 <% else %>
   <%=link_to t('revs.user.sign_in'),new_user_session_path%>
   <span class="nav-element-divider">|</span>
-  <%=link_to t('revs.user.sign_up'),new_user_registration_path%>
-  <span class="nav-element-divider">|</span>
+  <% unless Revs::Application.config.disable_new_registrations %>
+    <%=link_to t('revs.user.sign_up'),new_user_registration_path %>
+    <span class="nav-element-divider">|</span>
+  <% end %>
 <% end %>

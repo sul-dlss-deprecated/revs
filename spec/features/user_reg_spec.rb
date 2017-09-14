@@ -1,12 +1,13 @@
 require "rails_helper"
 
 describe("User Registration",:type=>:request,:integration=>true) do
-  
+
   context 'regular registration' do
-  
+
     before :each do
       @password='password'
       Revs::Application.config.spam_reg_checks = false # disable spam checks for these tests
+      Revs::Application.config.disable_new_registrations = false # be sure registration is enabled for these tests
       Revs::Application.config.require_manual_account_activation = false # disable manual activation for these tests
       RevsMailer.stub_chain(:mailing_list_signup,:deliver).and_return('a mailer')
       RevsMailer.stub_chain(:revs_institute_mailing_list_signup,:deliver).and_return('a mailer')
@@ -48,7 +49,7 @@ describe("User Registration",:type=>:request,:integration=>true) do
         expect(RevsMailer).not_to receive(:revs_institute_mailing_list_signup)
 
         @username='testing2'
-        @email="#{@username}@test.com" 
+        @email="#{@username}@test.com"
         # register a new user
         register_new_user(@username,@password,@email)
         check 'user_subscribe_to_mailing_list'
@@ -85,7 +86,7 @@ describe("User Registration",:type=>:request,:integration=>true) do
           expect(user.email).to eq(@email)
 
         end
-  
+
        it "should create a username as the sunetID when a new Stanford user signs in via webauth" do
 
         @username="somesunet"
@@ -191,6 +192,7 @@ describe("User Registration",:type=>:request,:integration=>true) do
       before :each do
         @password='password'
         Revs::Application.config.spam_reg_checks = true # enable spam checks for these tests
+        Revs::Application.config.disable_new_registrations = false # be sure registration is enabled for these tests
         Revs::Application.config.reg_questions = [
           {:question=>'What is the name of the car company that manufacturers the Mustang?',:answer=>'Ford'},
           {:question=>'What is the first name of the founder of Ferrari?',:answer=>'Enzo'}
@@ -202,7 +204,7 @@ describe("User Registration",:type=>:request,:integration=>true) do
 
         user_count = User.count
         @username='testing2'
-        @email="#{@username}@test.com" 
+        @email="#{@username}@test.com"
         # register a new user
         register_new_user(@username,@password,@email)
 
@@ -211,23 +213,23 @@ describe("User Registration",:type=>:request,:integration=>true) do
         expect(page).to have_content(I18n.t("revs.user.spam_registration"))
         expect(current_path).to eq(root_path)
         expect(User.count).to eq(user_count) # no new users
-        
+
       end
 
       it "should detect a spammer as someone who fills in the hidden form field" do
 
         user_count = User.count
         @username='testing2'
-        @email="#{@username}@test.com" 
+        @email="#{@username}@test.com"
         # register a new user
         register_new_user(@username,@password,@email)
-        within('#main-container') do    
+        within('#main-container') do
           fill_in 'email_confirm', :with=>'hidden field'
         end
-        
+
         sleep 4.seconds
         click_button 'Sign up'
-        
+
         expect(page).to have_content(I18n.t("revs.user.spam_registration"))
         expect(current_path).to eq(root_path)
         expect(User.count).to eq(user_count) # no new users
@@ -238,18 +240,18 @@ describe("User Registration",:type=>:request,:integration=>true) do
 
         user_count = User.count
         @username='m9tlbdv809'
-        @email="#{@username}@test.com" 
+        @email="#{@username}@test.com"
         # register a new user
-        register_new_user(@username,@password,@email)        
+        register_new_user(@username,@password,@email)
         sleep 4.seconds
         click_button 'Sign up'
-        
+
         expect(page).to have_content(I18n.t("revs.user.spam_registration"))
         expect(current_path).to eq(root_path)
         expect(User.count).to eq(user_count) # no new users
 
       end
-      
+
       it "should not register a new user if they do not answer the reg question correctly or at all" do
 
         user_count = User.count
@@ -296,7 +298,7 @@ describe("User Registration",:type=>:request,:integration=>true) do
         should_register_ok
 
       end
-      
+
       it "should register a new user if there are no reg questions configured" do
 
         @username='testing'
@@ -313,15 +315,16 @@ describe("User Registration",:type=>:request,:integration=>true) do
 
       end
     end
-    
+
     context 'manual activation for registration' do
 
       before :each do
         @password='password'
         Revs::Application.config.spam_reg_checks = false # disable spam checks for these tests
+        Revs::Application.config.disable_new_registrations = false # be sure registration is enabled for these tests
         Revs::Application.config.require_manual_account_activation = true # enable manual activation for these tests
       end
-      
+
       it "should register a new user but inactivate their account" do
         @username='testing'
         @email="#{@username}@test.com"
@@ -335,6 +338,28 @@ describe("User Registration",:type=>:request,:integration=>true) do
         expect(page).to have_content I18n.t('devise.registrations.user.signed_up_but_account_has_been_deactivated')
         expect(User.last.active).to be_falsey
       end
-      
+
+    end
+
+    context 'registration closed' do
+
+      before :each do
+        @password='password'
+        Revs::Application.config.spam_reg_checks = false # disable spam checks for these tests
+        Revs::Application.config.disable_new_registrations = true # testing registration closed
+        Revs::Application.config.require_manual_account_activation = true # enable manual activation for these tests
+      end
+
+      it "should not allow new registrations" do
+        visit new_user_registration_path
+        expect(current_path).to eq(root_path)
+        expect(page).to have_content I18n.t('revs.user.registration_closed')
+      end
+
+      it "should not allow new registrations" do
+        visit root_path
+        expect(page).to_not have_content I18n.t('revs.user.sign_up')
+      end
+
     end
 end
