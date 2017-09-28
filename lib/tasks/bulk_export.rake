@@ -112,7 +112,7 @@ namespace :revs do
          header_columns.each do |column|  # go through the rest of the columns
            value = s.send(column)
            if column == 'full_date' # format full date to contentDM standard, assuming it is a standard format
-             data_row << (s.revs_is_valid_datestring?(s.full_date) && !s.full_date.blank? ? Chronic.parse(s.full_date).to_date.strftime('%Y-%m-%d') : "")
+             data_row << (s.get_full_date(s.full_date) ? Chronic.parse(s.full_date).to_date.strftime('%Y-%m-%d') : "")
            elsif revs_field_mappings[column][:multi_valued] == true && value.class == Array # multi_valued field
              data_row << value.map {|val| cleanup_export_value(val,delimiter,delimiter_replace)}.join(delimiter)
            else # any other non-multivalued or special field
