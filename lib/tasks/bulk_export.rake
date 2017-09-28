@@ -25,7 +25,7 @@ namespace :revs do
   #Run Me: RAILS_ENV=production bundle exec rake revs:export_metadata_to_txt collection="John Dugdale Collection" # must be limited to a collection
   #Run Me: RAILS_ENV=production bundle exec rake revs:export_metadata_to_txt collection="John Dugdale Collection" limit=100 # optionally sets a limit of number of items (defaults to no limit)
   #Run Me: RAILS_ENV=production bundle exec rake revs:export_metadata_to_txt collection="John Dugdale Collection" max_rows=1000 # optionally sets maximum number of rows per spreadsheet (autosplit based on this number, defaults to 1000)
-  #Run Me: RAILS_ENV=production bundle exec rake revs:export_metadata_to_txt collection="John Dugdale Collection" visibility="visible" # only visible images are exported (defaults to "all", can also pass "hidden")
+  #Run Me: RAILS_ENV=production bundle exec rake revs:export_metadata_to_txt collection="John Dugdale Collection" visibility="visible" # only visible images are exported (defaults to "visible", can also pass "all" or "hidden")
   #Run Me: RAILS_ENV=production nohup bundle exec rake revs:export_metadata_to_txt collection="John Dugdale Collection" > export.log 2>&1& # nohup mode with logged output
 
   task :export_metadata_to_txt  => :environment do |t, args|
@@ -34,13 +34,13 @@ namespace :revs do
     collection = ENV['collection'] || '' # limits to this collection only
     limit = ENV['limit'] || '' # if passed, limits to this many items only (default is no limit)
     max_rows = ENV['max_rows'] || 1000 # if passed, limits to this many items only (default is 1000)
-    visibility = ENV['visibility'] || "all" # can be passed as "all" (default), "visible" or "hidden".  Filters images by their visibility  
+    visibility = ENV['visibility'] || "visible" # can be passed as "all", "visible" (default) or "hidden".  Filters images by their visibility
     additional_query = ENV['additional_query'] || nil # an additional solr query you can pass it to further restrict the results
 
     raise "you must provide a collection" if collection.blank?
-    
+
     q="*:*"
-    q+=" AND collection_ssim:\"#{collection}\"" 
+    q+=" AND collection_ssim:\"#{collection}\""
     case visibility
        when "visible"
          q+= " AND -visibility_isi:#{SolrDocument.visibility_mappings[:hidden]}"
@@ -65,12 +65,12 @@ namespace :revs do
     excluded_fields = ['car_group','car_class','group_class','timestamp','priority','resaved_at','identifier','single_year','archive_name','collections','highlighted','subjects'] # exclude these fields in output
     files = []
     output_file = nil
-    
+
     base_output_filename = "log/#{collection.gsub(" ","_")}_#{visibility}_#{Time.now.strftime('%Y-%m-%dT%H-%M-%S')}" # base name for output file(s)
 
     puts ""
     puts "Started at #{start_time}, #{total_docs} docs returned"
-    puts " limited to collection: #{collection}" 
+    puts " limited to collection: #{collection}"
     puts " limited to #{limit} items" unless limit.blank?
     puts " found #{total_docs} items"
     puts " maximum rows per file: #{max_rows}"
@@ -99,7 +99,7 @@ namespace :revs do
         header_row += header_columns + ['group_class','filename','filename_repeat']  # add extra columns we need
         output_file.write header_row.join("\t")+"\n"
       end
-      
+
       id=doc['id']
       n+=1
       if n % output_each == 0 # provide some feedback every X docs
@@ -116,7 +116,7 @@ namespace :revs do
            elsif revs_field_mappings[column][:multi_valued] == true && value.class == Array # multi_valued field
              data_row << value.map {|val| cleanup_export_value(val,delimiter,delimiter_replace)}.join(delimiter)
            else # any other non-multivalued or special field
-             data_row << cleanup_export_value(value,delimiter,delimiter_replace) 
+             data_row << cleanup_export_value(value,delimiter,delimiter_replace)
            end
          end
          data_row += [[s.group_class,s.car_group,s.car_class].flatten.reject(&:blank?).join(', ')] # recombined separate group and class fields and combine with group_class field and make single valued again
