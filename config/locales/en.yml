@@ -35,7 +35,7 @@ en:
     me: me
     today: today
   revs:
-    digital_library: 'Automotive Digital Library'
+    digital_library: 'Automobility Archive'
     tagline: 'Connecting the past, present and future of the automobile'
     revs_program: 'Revs Program at Stanford'
     stanford_library: 'Stanford University Libraries'
@@ -89,7 +89,7 @@ en:
       reorder: "Drag and drop to reorder"
       changes_not_saved: "Please note, in %{rails_env} your metadata changes will NOT be permanently saved."
       not_authorized: 'You are not authorized to perform this action.'
-      in_beta_not_authorized_html: "The Automotive Digital Library is currently in limited beta release.  If you have an account, <a href='/users/sign_in'>please sign in</a> (Stanford users should <a href='/users/webauth_login'>sign in via webauth</a>). If you do not have an account and would like to be notified when the site is public, please <a href='/users/sign_up'>sign up</a> and request to be added to the mailing lists."
+      in_beta_not_authorized_html: "The Automobility Archive is currently in limited beta release.  If you have an account, <a href='/users/sign_in'>please sign in</a> (Stanford users should <a href='/users/webauth_login'>sign in via webauth</a>). If you do not have an account and would like to be notified when the site is public, please <a href='/users/sign_up'>sign up</a> and request to be added to the mailing lists."
       validation_error: "The values you entered were not valid for the field you selected."
       bulk_update_instructions: "To apply a bulk update, select the action to perform, the field to perform it on, enter new and search vaules (if necessary), select some items with the checkboxes and then click update.  Search and new values must be at least 3 characters."
       set_top_priority: "This image is now set to represent its collection."
@@ -216,7 +216,7 @@ en:
       spambot_label: 'Leave blank'
       spambot: 'Please leave this field blank - it is used to prevent spam submissions'
       describe_problem: 'Please describe your question or problem.'
-      thanks: 'Thanks for contacting the Automotive Digital Library'
+      thanks: 'Thanks for contacting the Automobility Archive'
       notification_new_users: 'New users have registered on the website.'
     authentication:
       new_user: 'New user?'
@@ -599,9 +599,9 @@ en:
       your_password: "your password"
       welcome: "Welcome"
       hello: "Hello"
-      confirm_instructions: "Welcome to the Automotive Digital Library.  In order to create an account, you need to confirm your email address.  Please click the link to confirm your address."
+      confirm_instructions: "Welcome to the Automobility Archive.  In order to create an account, you need to confirm your email address.  Please click the link to confirm your address."
       confirm_linktext: "Confirm my account"
-      change_password_instructions: "You have requested a link to change your password on the Automotive Digital Library website. You can do this by clicking the link below."
+      change_password_instructions: "You have requested a link to change your password on the Automobility Archive website. You can do this by clicking the link below."
       change_password_linktext: "Change my password"
       change_password_post_instructions_html: |
         <p>If you didn't request this, please ignore this email.</p>
@@ -610,7 +610,7 @@ en:
       didnt_receive_confirmation: "Didn't receive confirmation instructions?"
       didnt_receive_unlock: "Didn't receive unlock instructions?"
       set_password: "minimum of 8 characters"
-      account_locked: "Your account on the Automotive Digital Library has been locked due to an excessive number of unsuccessful sign in attempts"
+      account_locked: "Your account on the Automobility Archive has been locked due to an excessive number of unsuccessful sign in attempts"
       account_locked_instructions: "Click the link below to unlock your account"
       account_locked_linktext: "Unlock my account"
       update_your_profile: "Update Your Profile"
@@ -665,7 +665,7 @@ en:
     help:
       videos:
         titles:
-          overview: "Introduction to the Automotive Digital Library"
+          overview: "Introduction to the Automobility Archive"
           account: "Creating an account and logging in"
           flags: "Flagging metadata issues"
           gallery: "Saving favorites and creating galleries"

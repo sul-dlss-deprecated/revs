@@ -2,7 +2,7 @@ en:
   revs:
     about:
       word: 'About'
-      project_title: 'About the Automotive Digital Library'
+      project_title: 'About the Automobility Archive'
       related_sites: 'Related Sites'
       contact_us: 'Contact Us'
       contact_title: 'Contact Us'
@@ -16,7 +16,7 @@ en:
       team_title: 'Project Team'
       version_title: 'Application Version'
       terms_dialog_title: 'Notice'
-      terms_of_use_message: 'The Automotive Digital Library is under development and contains content that has not been reviewed by curators. By continuing, I acknowledge I understand and that I can provide feedback about the site and about content.'
+      terms_of_use_message: 'The Automobility Archive is under development and contains content that has not been reviewed by curators. By continuing, I acknowledge I understand and that I can provide feedback about the site and about content.'
       terms_continue: 'Continue'
       terms_disagree: 'Do not continue'
       acknowledgements_text_html: |
@@ -68,13 +68,13 @@ en:
           Libraries' online catalog, <a href="http://searchworks.stanford.edu">SearchWorks</a>.
         </p>
         <p>
-        	The Automotive Digital Library is built on top of the Stanford Digital Repository to provide a web based platform for discovery of automotive research and images. The Digital Library is developed
+        	The Automobility Archive is built on top of the Stanford Digital Repository to provide a web based platform for discovery of automotive research and images. The Digital Library is developed
           in <a href="http://www.rubyonrails.org">Ruby on Rails</a> using open source technologies, including <a href="http://projectblacklight.org/">Blacklight</a>, <a href="http://projecthydra.org/">Hydra</a>,
           and <a href="http://fedora-commons.org/">Fedora Commons</a> and allows for curator restricted in-line metadata editing, provides community features, annotation, and other tools for researchers to further utilize the data.
         </p>
       homepage_about_counts_linktext: " collections"
       homepage_about_counts_html: |
-          The Automotive Digital Library currently contains <strong>%{total_images} items</strong> from
+          The Automobility Archive currently contains <strong>%{total_images} items</strong> from
           <strong>%{number_collections}</strong>.
       homepage_about_hidden_counts_html: |
           This total includes <strong>%{total_images} hidden items</strong>.
@@ -88,7 +88,7 @@ en:
         intro_html: |
           <p>
             We would like to acknowledge and specifically thank the following users of
-            the Automotive Digital Library website, who have provided many suggested edits
+            the Automobility Archive website, who have provided many suggested edits
             and helped improve the information on many of the images.
           </p>
         flags: "fixed flags"
