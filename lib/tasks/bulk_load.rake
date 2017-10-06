@@ -224,7 +224,7 @@ namespace :revs do
     end
 
   end
-  
+
   desc "Add source id to various model records that have druids -- should only need to be run once"
   #Run Me: RAILS_ENV=production nohup bundle exec rake revs:add_source_id &
   task :add_source_id => :environment do |t, args|
@@ -234,7 +234,7 @@ namespace :revs do
     count_annotation = success_annotation = error_annotation = 0
     count_saved_item = success_saved_item = error_saved_item = 0
     count_item = success_item = error_item = 0
-      
+
     puts "Updating flags..."
     Flag.find_each do |flag|
       count_flag += 1
@@ -269,7 +269,7 @@ namespace :revs do
         error_saved_item +=1
         puts "*** ERROR ON saved_item #{saved_item.id} - #{e.message}"
       end
-    end    
+    end
 
     puts "Updating items..."
     Item.find_each do |item|
@@ -281,14 +281,14 @@ namespace :revs do
         error_item +=1
         puts "*** ERROR ON item #{item.id} - #{e.message}"
       end
-    end 
-    
+    end
+
     puts "Successful flags: #{success_flag}.  Errored flags: #{error_flag}.  Total flags: #{count_flag}."
     puts "Successful annotations: #{success_annotation}.  Errored annotations: #{error_annotation}.  Total annotations: #{count_annotation}."
     puts "Successful saved items: #{success_saved_item}.  Errored saved items: #{error_saved_item}.  Total saved items: #{count_saved_item}."
     puts "Successful items: #{success_item}.  Errored items: #{error_item}.  Total items: #{count_item}."
     puts "Ended at #{Time.now}"
-    
+
   end
 
   desc "Batch update a single specified field with a single specified value based on results from a supplied query -- if the field to update is multivalued, you MUST also provide an old value to search for to avoid replacing the entire field"
@@ -1206,16 +1206,16 @@ namespace :revs do
   task :export_flags, [:state] => :environment do |t, args|
     state = args[:state]
     full_output_path = File.join(Rails.root,"tmp","flags_#{state}.csv")
-    flags = Flag.includes(:user).where(:state=>state)
+    flag_counts = Flag.where(:state=>state).count
 
-    puts "Exporting #{flags.count} flags with state #{state} to #{full_output_path}"
+    puts "Exporting #{flag_counts} flags with state #{state} to #{full_output_path}"
 
     CSV.open(full_output_path, "wb") do |csv|
       csv << ["id","druid","sourceid","item title","comment","username","user_role","date_created","state"]
-      flags.each do |flag|
+      Flag.where(:state=>state).find_each do |flag|
         username = flag.user.blank? ? "anonymous" : flag.user.username
         user_role = flag.user.blank? ? "n/a" : flag.user.role
-        csv << [flag.id,flag.druid,flag.item.title,flag.source_id,flag.comment,username,user_role,flag.created_at,flag.state]
+        csv << [flag.id,flag.druid,flag.source_id,flag.item.title,flag.comment,username,user_role,flag.created_at,flag.state]
       end
     end
   end

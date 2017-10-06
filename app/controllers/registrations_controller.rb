@@ -4,15 +4,16 @@ class RegistrationsController < Devise::RegistrationsController
   prepend_before_filter :authenticate_scope!, :only => [:edit, :update, :destroy, :edit_account, :update_account]
   before_filter :no_sunet_users, :only=>[ :edit_account, :update_account]
   before_filter :ajax_only, :only=>[:check_username,:check_email]
-  
+  before_filter :registration_closed, :only=>[:new,:create], :if=>lambda{Revs::Application.config.disable_new_registrations == true}
+
   # sign up form
   def new
     return if redirect_home_if_signed_in
     store_referred_page
     super
   end
-    
-  # sign up form submit method  
+
+  # sign up form submit method
   def create
     @spammer=params[:email_confirm] # if this hidden field is filled in, its a spam bot
     @loadtime=params[:loadtime] # this is the time the page was rendered, if it is submitted too fast, its a spammer
@@ -28,31 +29,31 @@ class RegistrationsController < Devise::RegistrationsController
 
     else
       super
-      
+
     end
 
   end
 
   # override devise update profile page so that user is not required to enter the current password
   def update
-    
+
     @user = User.find(current_user.id)
 
     params[:user].delete(:password)  # these aren't on the form, but let's remove them anyway to prevent hacking attempt
     params[:user].delete(:password_confirmation)  # these aren't on the form, but let's remove them anyway to prevent hacking attempt
     params[:user].delete(:current_password)  # these aren't on the form, but let's remove them anyway to prevent hacking attempt
     params[:user].delete(:email)
-    
+
     # check to be sure they aren't changing their username to something that includes @stanford.edu
-    
+
     if params[:user][:username].include?('@stanford.edu') && @user.sunet_user? && params[:user][:username] != "#{@user.sunet}@stanford.edu"
         @user.errors.add(:base,t('revs.authentication.stanford_email_warning1'))
         successfully_updated = false
     elsif params[:user][:username].include?('@stanford.edu') && !@user.sunet_user?
         @user.errors.add(:base,t('revs.authentication.stanford_email_warning2'))
-        successfully_updated = false      
+        successfully_updated = false
     else
-      successfully_updated = @user.update_without_password(user_params)      
+      successfully_updated = @user.update_without_password(user_params)
     end
 
     if successfully_updated
@@ -64,8 +65,8 @@ class RegistrationsController < Devise::RegistrationsController
       render "edit"
     end
 
-  end    
-  
+  end
+
   # logged in user edit email/password form
   def edit_account
     @user = User.find(current_user.id)
@@ -88,16 +89,16 @@ class RegistrationsController < Devise::RegistrationsController
     end
 
   end
-  
+
   # ajax call to check usernames
   def check_username
-    @user=User.where('username=?',params[:username])    
+    @user=User.where('username=?',params[:username])
     @user=[] if user_signed_in? && @user && @user.first==current_user  # this means they are editing their username and its themselves, that is ok
   end
-  
+
   # ajax call to check emails
   def check_email
-    @user=User.where('email=?',params[:email])    
+    @user=User.where('email=?',params[:email])
     @user=[] if user_signed_in? && @user && @user.first==current_user  # this means they are editing their email address and its themselves, that is ok
   end
 
@@ -107,6 +108,11 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   private
+  def registration_closed
+    flash[:alert]=t('revs.user.registration_closed')
+    redirect_to root_path
+  end
+
   def user_params
     params.require(:user).permit(:username, :email, :sunet, :password, :password_confirmation, :current_password, :remember_me,
                   :role, :bio, :first_name, :last_name, :public, :url, :twitter, :login,
