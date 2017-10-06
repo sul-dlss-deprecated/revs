@@ -1,8 +1,8 @@
 [![Build Status](https://travis-ci.org/sul-dlss/revs.svg?branch=master)](https://travis-ci.org/sul-dlss/revs)
 
-# Automotive Digital Library
+# Automobility Archive
 
-This is a Blacklight Application for the Automotive Digital Library at Stanford University.
+This is a Blacklight Application for the Automobility Archive at Stanford University.
 
 ## Getting Started
 
@@ -64,7 +64,7 @@ and are trying to run the code, see the special section below before continuing 
 ## Non-Stanford Users
 
 The code has not been tested outside of Stanford University and while it should work, there may be some internal dependencies.
-We believe that making the small modifications listed below will enable the Automotive Digital Library code to work outside of Stanford:
+We believe that making the small modifications listed below will enable the Automobility Archive code to work outside of Stanford:
 
 1. Open the Gemfile at the root of the project and comment out the following line (in the  ":deployment" group).
 

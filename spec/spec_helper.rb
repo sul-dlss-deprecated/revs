@@ -158,7 +158,7 @@ end
 def should_deny_access_for_beta(path)
   visit path
   expect(current_path).to eq(root_path)
-  expect(page).to have_content('The Automotive Digital Library is currently in limited beta release.')
+  expect(page).to have_content('The Automobility Archive is currently in limited beta release.')
 end
 
 def should_allow_admin_section
