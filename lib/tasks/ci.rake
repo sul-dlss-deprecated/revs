@@ -12,8 +12,10 @@ task :ci do
   Rails.env='test'
   ENV['RAILS_ENV']='test'
   Rake::Task["revs:config"].invoke
-  SolrWrapper.wrap do
-    Rake::Task["local_ci"].invoke
+  SolrWrapper.wrap do |solr|
+    solr.with_collection do
+      Rake::Task["local_ci"].invoke
+    end
   end
 end
 
