@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema name="revs" version="1.5">
   <uniqueKey>id</uniqueKey>
-  <!-- defaultSearchField is DEPRECATED; use df in requestHandler -->
-  <defaultSearchField>text</defaultSearchField>
-  <!-- defaultOperator is DEPRECATED; use q.op in requestHandler -->
-  <solrQueryParser defaultOperator="AND"/>
-
   <fields>
 
 
@@ -130,7 +125,7 @@
       http://wiki.apache.org/solr/SolrAdaptersForLuceneSpatial4
     -->
     <fieldType name="location_rpt" class="solr.SpatialRecursivePrefixTreeFieldType"
-      geo="true" distErrPct="0.025" maxDistErr="0.000009" units="degrees" />
+      geo="true" distErrPct="0.025" maxDistErr="0.000009" distanceUnits="degrees" />
 
       <fieldType name="text" class="solr.TextField" autoGeneratePhraseQueries="false" positionIncrementGap="100" omitNorms="false">
         <analyzer>

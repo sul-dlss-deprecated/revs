@@ -1,32 +1,21 @@
-require 'jettywrapper' unless (Rails.env.production? || Rails.env.staging?)
-require 'rest_client'
-
 # before doing stuff with fixtures, be sure we are not running in production or pointing to a actual real solr server
 def allowed_solr?
-  !Rails.env.production? && Blacklight.default_index.connection.uri.port != 8080 && !Blacklight.default_index.connection.uri.to_s.include?('sul-solr') && !Blacklight.default_index.connection.uri.to_s.include?('stanford.edu')
+  !Rails.env.production?
 end
 
-namespace :jetty do
+require 'solr_wrapper/rake_task' if allowed_solr?
+require 'rest_client'
 
-  desc "Restart jetty with new settings and reload fixtures"
-  task :reset do
-    Rake::Task["jetty:stop"].invoke
-    Rake::Task["revs:config"].invoke
-    sleep 3
-    Rake::Task["jetty:start"].invoke
-    sleep 1
-    Rake::Task["revs:refresh_fixtures"].invoke
-  end
-end
 
 desc "Run continuous integration suite"
 task :ci do
   Rails.env='test'
   ENV['RAILS_ENV']='test'
-  Rake::Task["jetty:clean"].invoke
   Rake::Task["revs:config"].invoke
-  Jettywrapper.wrap(Jettywrapper.load_config) do
-    Rake::Task["local_ci"].invoke
+  SolrWrapper.wrap do |solr|
+    solr.with_collection do
+      Rake::Task["local_ci"].invoke
+    end
   end
 end
 
@@ -56,16 +45,8 @@ namespace :revs do
 
   desc "Copy configuration files"
   task :config do
-
     config_files = %w{database.yml blacklight.yml secrets.yml}
     config_files.each {|config_file| cp("#{Rails.root}/config/#{config_file}.example", "#{Rails.root}/config/#{config_file}") unless File.exists?("#{Rails.root}/config/#{config_file}.yml")}
-
-    solr_files = %w{synonyms.txt schema.xml solrconfig.xml}
-    solr_files.each do |solr_file|
-      cp("#{Rails.root}/config/#{solr_file}", "#{Rails.root}/jetty/solr/development-core/conf/#{solr_file}")
-      cp("#{Rails.root}/config/#{solr_file}", "#{Rails.root}/jetty/solr/test-core/conf/#{solr_file}")
-    end
-
   end
 
   desc "Delete and index all fixtures in solr"

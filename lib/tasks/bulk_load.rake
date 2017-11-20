@@ -1,6 +1,5 @@
 # encoding: UTF-8
 
-require 'jettywrapper' unless (Rails.env.production? || Rails.env.staging?)
 require 'rest_client'
 require 'csv'
 require 'countries'
