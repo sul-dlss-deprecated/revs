@@ -76,7 +76,7 @@ group :test do
 end
 
 group :development, :test do
-  gem 'jettywrapper'
+  gem 'solr_wrapper'
   gem 'sqlite3'
 end
 

@@ -111,8 +111,6 @@ GEM
       mime-types (>= 1.16)
     case_transform (0.2)
       activesupport
-    childprocess (0.6.3)
-      ffi (~> 1.0, >= 1.0.11)
     chronic (0.10.2)
     coderay (1.1.1)
     coffee-rails (4.2.1)
@@ -152,7 +150,8 @@ GEM
     erubis (2.7.0)
     eventmachine (1.2.3)
     execjs (2.7.0)
-    ffi (1.9.18)
+    faraday (0.13.1)
+      multipart-post (>= 1.2, < 3)
     font-awesome-rails (4.7.0.1)
       railties (>= 3.2, < 5.1)
     friendly_id (5.2.0)
@@ -167,12 +166,6 @@ GEM
       domain_name (~> 0.5)
     i18n (0.8.6)
     is_it_working-cbeer (1.0.16)
-    jettywrapper (2.0.4)
-      activesupport (>= 3.0.0)
-      childprocess
-      i18n
-      logger
-      rubyzip (~> 1.0)
     jquery-rails (4.3.1)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
@@ -195,7 +188,6 @@ GEM
       addressable (~> 2.3)
     libv8 (3.16.14.19)
     link_header (0.0.8)
-    logger (1.2.8)
     lograge (0.4.1)
       actionpack (>= 4, < 5.1)
       activesupport (>= 4, < 5.1)
@@ -212,6 +204,7 @@ GEM
     mini_magick (4.7.0)
     mini_portile2 (2.3.0)
     minitest (5.10.3)
+    multipart-post (2.0.0)
     mysql2 (0.4.5)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
@@ -279,6 +272,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
+    retriable (3.1.1)
     revs-utils (2.1.24)
       actionpack (~> 4)
       chronic
@@ -304,6 +298,7 @@ GEM
       rspec-mocks (~> 3.5.0)
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
+    ruby-progressbar (1.9.0)
     rubyzip (1.2.1)
     sass (3.4.23)
     sass-rails (5.0.6)
@@ -316,6 +311,11 @@ GEM
     sitemap_generator (5.3.1)
       builder (~> 3.0)
     slop (3.6.0)
+    solr_wrapper (1.1.0)
+      faraday
+      retriable
+      ruby-progressbar
+      rubyzip
     sprockets (3.7.1)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
@@ -384,7 +384,6 @@ DEPENDENCIES
   friendly_id (>= 5.0.0)
   honeybadger (~> 2.0)
   is_it_working-cbeer
-  jettywrapper
   jquery-rails
   json (~> 1.8)
   kaminari
@@ -408,6 +407,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails (~> 5.0.0.beta1)
   sitemap_generator
+  solr_wrapper
   sqlite3
   therubyracer
   thin
