@@ -457,7 +457,7 @@ class SolrDocument
      rows=params[:rows] || "10000"
      visibility=params[:visibility] || :visible
      fq="#{self.config.collection_identifying_field}:\"#{self.config.collection_identifying_value}\""
-     fq+=self.images_query(visibility)
+     fq+= " AND #{self.images_query(visibility)}" if self.images_query(visibility).present?
      unless archive.blank?
          fq+=" AND archive_ssi:\"#{archive}\""
      end
