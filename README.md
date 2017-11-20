@@ -26,18 +26,18 @@ and are trying to run the code, see the special section below before continuing 
 
         bundle install
 
-1. Get jetty setup
+1. Get SolrWrapper setup
 
-        rake jetty:clean
+        rake solr:clean
 
-1. Copy the .yml example files and the jetty config files:
+1. Copy the .yml example files and the Solr config files:
 
         rake revs:config
 
-1. Start jetty, create and migrate the databases (note you should first stop any other jetty processes that are running if you have
-   multiple jetty-related projects):
+1. Start SolrWrapper, create and migrate the databases (note you should first stop any other SolrWrapper processes that are running if you have
+   multiple Solr-related projects):
 
-        rake jetty:start
+        rake solr:start
         rake db:create:all
         rake db:migrate
 
@@ -51,7 +51,7 @@ and are trying to run the code, see the special section below before continuing 
         rake db:fixtures:load
         rake revs:update_item_title
 
-1. To index the records into an environment's core, ensure jetty is running (it may take a few extra seconds after the jetty:start command is issued), then:
+1. To index the records into an environment's core, ensure Solr is running (it may take a few extra seconds after the solr:start command is issued), then:
 
         rake revs:index_fixtures
 
@@ -127,9 +127,9 @@ You can run the test suite locally by running:
 
     rake local_ci
 
-Your local development jetty must be started for this to work.  If your local jetty is stopped, start it with:
+Your local development SolrWrapper must be started for this to work.  If your local SolrWrapper is stopped, start it with:
 
-    rake jetty:start
+    rake solr:start
 
 ## Git Development Strategy
 
