@@ -100,7 +100,7 @@ module Revs
 
 #    config.site_message="The website will be down for scheduled maintenance today, July 8, at 3pm Pacific Time for approximately 30 minutes." # set to some string to show a message on the top of each message (like to advertise a known site outage) , leave blank for no message
     config.site_message=""
-    
+
     # if the following configuration is not nil or a blank array, one of these questions will be asked at random when user's register to try and block spammy registrations
     # format is an array of hashes, the answer is not case sensitive
     config.reg_questions = []
@@ -108,6 +108,8 @@ module Revs
     #   {:question=>'What is the first name of the founder of Ferrari?',:answer=>'Enzo'}
     # ]
     config.disable_new_registrations = true # set to true to disable new users from registering (useful in conjunction with disable_editing or if there is a sustained period of bogus registrations)
+    config.disable_more_to_explore = true # set to true to disable more to explore on the home page
+    config.disable_featured_galleries = true # set to true to disable featured galleries on the home page
     config.require_manual_account_activation = true # set to true to require an admin to manually activate any new account registrations
     config.new_registration_notification = 'petucket@stanford.edu' # email address to receive daily notifications of new registrations
     config.spam_reg_checks = true # set to false to skip spam registration checks (useful in testing)
