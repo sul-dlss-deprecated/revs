@@ -4,28 +4,6 @@
   <% if !in_search_result? && !from_gallery? && !from_favorites?%>
     var timeout = setTimeout(function() {loadCollectionMembersGrid('<%=document.id%>','item')}, 3000);
   <% end %>
-
-  $(document).ready(function(){
-    $("#image_workspace").embedPurl({'server': '<%=Revs::Application.config.purl_plugin_server%>',
-                                     'druid': '<%= document.id %>',
-                                     'size': 'thumb',
-                                     'width': 425,
-                                     'height': 460,
-                                         'layout': 'thumbs-nav-bottom',
-                                         'availableSizes': [<%=raw available_sizes%>],
-                                         'zoomOnClick': true,
-                                         'disableKeyboardShortcuts': true,
-                                         'displayNote': '<%=@document.copyright %> <%= @document.use_and_reproduction.html_safe %>',
-                                         'showDisplayNoteOnlyOnFullScreen': true,
-                                     'tooltipTexts': {
-                                     '<%= I18n.locale %>': {
-                                       'OpenInFullScreen': '<%= t('revs.show.open_in_full_screen') %>',
-                                       'Close': '<%= t('revs.show.close') %>'
-                                       }
-                                     }
-                                   });
-  });
-
 </script>
 
 <div class="row">
@@ -36,13 +14,15 @@
 
 <div class="row">
   <div class="col-sm-7">
-    <div id="image_workspace" class="showOnLoad hidden"><%= t('revs.show.wait') %></div>
+    <div id="image_workspace" class="showOnLoad hidden">
+      <iframe src='<%=Revs::Application.config.embed_location%>/<%=@document[:id]%>&hide_title=true&hide_embed=true' height='480px' width='100%' frameborder='0' marginwidth='0' marginheight='0' scrolling='no' allowfullscreen></iframe>
+    </div>
     <div id="annotatable_workspace" class="hidden annotation-image">
       <%= render :partial=>'/annotations/annotate_image', :locals=>{:image_number=>0} %>
     </div>
 
     <noscript>
-        <%= link_to(image_tag(@document.images(:large).first), "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>'_new') %>
+        <%= link_to(image_tag(@document.images(:large).first), @document.purl_page,:target=>'_new') %>
     </noscript>
 
     <div class="revs-identifier">
@@ -141,7 +121,7 @@
 
           <li>
             <%= link_to("<i class='fa fa-picture-o'></i> #{sunet_user_signed_in? ? t('revs.citations.view_and_download') : t('revs.citations.view')}".html_safe,
-            "#{Revs::Application.config.purl}/#{@document[:id]}",:target=>"_new", :class => "purl") %>
+            @document.purl_page,:target=>"_new", :class => "purl") %>
           </li>
 
          <% if Revs::Application.config.disable_editing %>

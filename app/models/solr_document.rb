@@ -78,6 +78,10 @@ class SolrDocument
     id
   end
 
+  def purl_page
+    "#{Revs::Application.config.purl}/#{druid}"
+  end
+
   def score
     self['score_isi'].blank? ? 0 : self['score_isi'].to_i
   end
