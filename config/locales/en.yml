@@ -201,7 +201,7 @@ en:
       filter_archive_sr_only: 'Filter collections by archive'
     contact:
       us: 'contact us'
-      instructions_html: 'If you would like to purchase an image, please read the Copyright and Reuse Statement to the right of the image first.  For questions about images from The Road & Track Archives, select "Contact Stanford University Library Special Collections".  If you have corrections to metadata or content on the site, please use the "Flag correction to this item" link next to the image.'
+      instructions_html: 'For questions about images from The Road & Track Archives, select "Contact Stanford University Library Special Collections".  If you have corrections to metadata or content on the site, please use the "Flag correction to this item" link next to the image.'
       permission_information_html: 'permission information and contact us'
       select_topic: 'Select a topic...'
       problem: 'Problem with the website'
