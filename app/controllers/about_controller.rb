@@ -112,6 +112,7 @@ class AboutController < ApplicationController
   end
 
   def tutorials
+    redirect_to :root
   end
 
   protected
