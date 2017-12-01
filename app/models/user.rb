@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
          :lockable, :timeoutable, :omniauthable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessor :subscribe_to_mailing_list, :subscribe_to_revs_mailing_list, :registration_question_number, :registration_answer # not persisted, just used on the signup form
+  attr_accessor :subscribe_to_mailing_list, :registration_question_number, :registration_answer # not persisted, just used on the signup form
   attr_accessor :login # virtual method that will refer to either email or username
 
   # all "regular" has_many associations are done via custom methods below so we can add visibility filtering for items
@@ -36,7 +36,6 @@ class User < ActiveRecord::Base
   before_validation :assign_default_role, :if=>lambda{no_role?}
   before_save :trim_names
   after_create :signup_for_mailing_list, :if=>lambda{subscribe_to_mailing_list=='1'}
-  after_create :signup_for_revs_institute_mailing_list, :if=>lambda{subscribe_to_revs_mailing_list=='1'}
   after_create :create_default_favorites_list # create the default favorites list when accounts are created
   after_create :inactivate_account, :if=>lambda{Revs::Application.config.require_manual_account_activation == true}
   after_save :create_default_favorites_list # create the default favorites list if it doesn't exist when a user logs in
@@ -230,10 +229,6 @@ class User < ActiveRecord::Base
 
   def signup_for_mailing_list
     RevsMailer.mailing_list_signup(:from=>email).deliver
-  end
-
-  def signup_for_revs_institute_mailing_list
-    RevsMailer.revs_institute_mailing_list_signup(:from=>email).deliver
   end
 
   def check_role_name

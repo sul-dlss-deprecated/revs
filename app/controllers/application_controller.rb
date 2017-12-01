@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
   prepend_before_filter :simulate_sunet, :if=>lambda{Rails.env !='production' && !session["WEBAUTH_USER"].blank?} # to simulate sunet login in development, set a parameter in config/environments/ENVIRONMENT.rb
   before_filter :signin_sunet_user, :if=>lambda{sunet_user_signed_in? && !user_signed_in?} # signin a sunet user if they are webauthed but not yet logged into the site
 
-  before_filter :repository_counts, :if=>lambda{!fragment_exist?("navbar")} # fragment cache counts for performance
+  before_filter :repository_counts, :if=>lambda{!fragment_exist?("navbar") && Revs::Application.config.show_item_counts_in_header} # fragment cache counts for performance
 
   rescue_from CanCan::AccessDenied do |exception|
     not_authorized(:additional_message=>exception.message)
@@ -344,7 +344,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:password,:password_confirmation,:username, :email,:subscribe_to_revs_mailing_list,:subscribe_to_mailing_list) }
+    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:password,:password_confirmation,:username, :email,:subscribe_to_mailing_list) }
   end
 
 end

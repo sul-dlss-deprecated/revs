@@ -10,13 +10,11 @@ describe("User Registration",:type=>:request,:integration=>true) do
       Revs::Application.config.disable_new_registrations = false # be sure registration is enabled for these tests
       Revs::Application.config.require_manual_account_activation = false # disable manual activation for these tests
       RevsMailer.stub_chain(:mailing_list_signup,:deliver).and_return('a mailer')
-      RevsMailer.stub_chain(:revs_institute_mailing_list_signup,:deliver).and_return('a mailer')
     end
 
     it "should register a new user with the default role and defaulting to public profile as hidden" do
 
       expect(RevsMailer).not_to receive(:mailing_list_signup)
-      expect(RevsMailer).not_to receive(:revs_institute_mailing_list_signup)
 
       @username='testing'
       @email="#{@username}@test.com"
@@ -46,7 +44,6 @@ describe("User Registration",:type=>:request,:integration=>true) do
     it "should register a new user and send an email to join the Revs Program list if selected" do
 
         expect(RevsMailer).to receive(:mailing_list_signup)
-        expect(RevsMailer).not_to receive(:revs_institute_mailing_list_signup)
 
         @username='testing2'
         @email="#{@username}@test.com"
@@ -64,28 +61,6 @@ describe("User Registration",:type=>:request,:integration=>true) do
         expect(user.email).to eq(@email)
 
       end
-
-      it "should register a new user and send an email to join the Revs Institute Mailing list if selected" do
-
-          expect(RevsMailer).to receive(:revs_institute_mailing_list_signup)
-          expect(RevsMailer).not_to receive(:mailing_list_signup)
-
-          @username='testing3'
-          @email="#{@username}@test.com"
-          # register a new user
-          register_new_user(@username,@password,@email)
-          check 'user_subscribe_to_revs_mailing_list'
-          click_button 'Sign up'
-
-          should_register_ok
-
-          # check the database
-          user=User.last
-          expect(user.role).to eq('user')
-          expect(user.username).to eq(@username)
-          expect(user.email).to eq(@email)
-
-        end
 
        it "should create a username as the sunetID when a new Stanford user signs in via webauth" do
 
@@ -138,7 +113,6 @@ describe("User Registration",:type=>:request,:integration=>true) do
       it "should NOT register a new user via the web page if they have a Stanford email address or try a username with a Stanford email address" do
 
           expect(RevsMailer).not_to receive(:mailing_list_signup)
-          expect(RevsMailer).not_to receive(:revs_institute_mailing_list_signup)
 
           @username='testguy'
           @email="#{@username}@stanford.edu"

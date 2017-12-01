@@ -116,7 +116,7 @@ class RegistrationsController < Devise::RegistrationsController
   def user_params
     params.require(:user).permit(:username, :email, :sunet, :password, :password_confirmation, :current_password, :remember_me,
                   :role, :bio, :first_name, :last_name, :public, :url, :twitter, :login,
-                  :subscribe_to_mailing_list, :subscribe_to_revs_mailing_list, :active,
+                  :subscribe_to_mailing_list, :active, 
                   :avatar, :avatar_cache, :remove_avatar, :login_count, :favorites_public,
                   :registration_answer, :registration_question_number)
   end

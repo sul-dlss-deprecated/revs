@@ -82,36 +82,13 @@ module Revs
 
     # Revs App Specific Configuration
     config.stacks_url = YAML.load_file("#{Rails.root}/config/stacks.yml")[Rails.env]["url"]
-    config.contact_us_topics = {'default'=>'revs.contact.select_topic', 'metadata'=>'revs.contact.metadata_issue','terms of use'=>'revs.contact.terms_of_use', 'special collections'=>'revs.contact.special_collections','error'=>'revs.contact.problem','other'=>'revs.contact.other_questions'} # sets the list of topics shown in the contact us page
-    config.contact_us_recipients = {'default'=>'digcoll@jirasul.stanford.edu', 'terms of use'=>'library@revsinstitute.org','metadata'=>'digcoll@jirasul.stanford.edu','error'=>'digcoll@jirasul.stanford.edu','other'=>'digcoll@jirasul.stanford.edu','special collections'=>'specialcollections@stanford.edu'} # sets the email address for each contact us topic configed aboveend
+    config.contact_us_topics = {'default'=>'revs.contact.select_topic', 'metadata'=>'revs.contact.metadata_issue', 'special collections'=>'revs.contact.special_collections','error'=>'revs.contact.problem','other'=>'revs.contact.other_questions'} # sets the list of topics shown in the contact us page
+    config.contact_us_recipients = {'default'=>'digcoll@jirasul.stanford.edu','metadata'=>'digcoll@jirasul.stanford.edu','error'=>'digcoll@jirasul.stanford.edu','other'=>'digcoll@jirasul.stanford.edu','special collections'=>'specialcollections@stanford.edu'} # sets the email address for each contact us topic configed aboveend
     config.contact_us_cc_recipients = {'default'=>'revs-other@jirasul.stanford.edu', 'metadata'=>'revs-metadata-comment@jirasul.stanford.edu', 'error'=>'revs-problems@jirasul.stanford.edu','other'=>'revs-other@jirasul.stanford.edu'} # sets the CC email address for each contact us topic configed above
     config.new_registration_notification = 'petucket@stanford.edu'
-    
-    # these collections are only available for non-commerical reproduction and will show a special statement instead of the use and reproduction statement in the item itself
-    config.collections_available_for_noncommerical_reproduction =
-      [ 'jh550nq3200', # Worner
-        'zq905ny4367', # Grand Prix
-        'ch493nk3954', # Tubbs
-        'zg796vp9147', # European Motorsport
-        'qn776mq9014', # Cabart
-        'vm027cv8758', # Richley
-        'wt886dn0556', # Derauw
-        'wz243gf4151', # Chambers
-        'my206bq1956'  # Royal Automobile Trophy
-      ]
+    config.show_item_counts_in_header = false # if set to true, we will show total item and collection counts in the header
+    config.disable_editing = false # if set to true, will disallow metadata editing, changing visibility and placeholder, the creation of annotations and flags - the things that can update a solr document or add to the metadata editing load
 
-    # these collections have uncertain rights and we will show a special statement instead of the use and reproduction statement in the item itself
-    config.collection_rights_uncertain =
-      [ 'td221fy0182', # Breslauer
-        'gw676ck6589', # Ludvigsen
-        'yt502zj0924', # Craig
-      ]
-
-    config.revs_reuse_link='http://revsinstitute.org/order-images/'
-
-    config.collier_archive_name = 'Revs Institute® Archives' # this is the name of the collier archive, it will be added to records if it does not yet exist when saving for remediating records that existed before we had multiple archives
-
-    config.disable_editing = true # if set to true, will disallow metadata editing, changing visibility and placeholder, the creation of annotations and flags - the things that can update a solr document or add to the metadata editing load
     config.num_latest_user_activity = 3 # the latest number of flags/annotations to show on the user profile page
     config.num_flags_per_item_per_user = 5 # the number of times each user is allowed to flag a particular item
     #config.flag_sort_display = {FLAG_STATES[:open]=> I18n.t('revs.flags.open_state_display_name'),FLAG_STATES[:fixed]=> I18n.t('revs.flags.fixed_state_display_name'),FLAG_STATES[:wont_fix]=> I18n.t('revs.flags.wont_fix_state_display_name')}
@@ -122,8 +99,8 @@ module Revs
                                        # 1 day = 86400 seconds
 
 #    config.site_message="The website will be down for scheduled maintenance today, July 8, at 3pm Pacific Time for approximately 30 minutes." # set to some string to show a message on the top of each message (like to advertise a known site outage) , leave blank for no message
+    config.site_message=""
 
-    config.site_message = 'Note: Content from The Revs Institute will be moved away from this website later in the year.  <a href="http://bit.ly/revsnotice">See the notice</a> for more information.  To faciliate this transition, flagging and some other features have been disabled until the move is complete.'
     # if the following configuration is not nil or a blank array, one of these questions will be asked at random when user's register to try and block spammy registrations
     # format is an array of hashes, the answer is not case sensitive
     config.reg_questions = []
@@ -131,6 +108,8 @@ module Revs
     #   {:question=>'What is the first name of the founder of Ferrari?',:answer=>'Enzo'}
     # ]
     config.disable_new_registrations = true # set to true to disable new users from registering (useful in conjunction with disable_editing or if there is a sustained period of bogus registrations)
+    config.disable_more_to_explore = true # set to true to disable more to explore on the home page
+    config.disable_featured_galleries = true # set to true to disable featured galleries on the home page
     config.require_manual_account_activation = true # set to true to require an admin to manually activate any new account registrations
     config.new_registration_notification = 'petucket@stanford.edu' # email address to receive daily notifications of new registrations
     config.spam_reg_checks = true # set to false to skip spam registration checks (useful in testing)
