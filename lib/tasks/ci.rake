@@ -6,6 +6,17 @@ end
 require 'solr_wrapper/rake_task' if allowed_solr?
 require 'rest_client'
 
+desc "Start a development server"
+task :server do
+  Rails.env='development'
+  ENV['RAILS_ENV']='development'
+  SolrWrapper.wrap do |solr|
+    solr.with_collection do
+      Rake::Task["revs:refresh_fixtures"].invoke
+      system('bundle exec rails server')
+    end
+  end
+end
 
 desc "Run continuous integration suite"
 task :ci do

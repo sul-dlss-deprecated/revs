@@ -4,7 +4,7 @@
 
 This is a Blacklight Application for the Revs Digital Library at Stanford University.
 
-## Getting Started
+## Getting Setup
 
 1. Checkout the code:
 
@@ -34,10 +34,10 @@ and are trying to run the code, see the special section below before continuing 
 
         rake revs:config
 
-1. Start SolrWrapper, create and migrate the databases (note you should first stop any other SolrWrapper processes that are running if you have
-   multiple Solr-related projects):
+1. Start SolrWrapper, create and migrate the databases
+ (note you should first stop any other SolrWrapper processes that are running if you have multiple Solr-related projects):
 
-        rake solr:start
+        bundle exec solr_wrapper
         rake db:create:all
         rake db:migrate
 
@@ -60,6 +60,24 @@ and are trying to run the code, see the special section below before continuing 
         rails s
 
 1. Go to <http://localhost:3000>
+
+## Running the app once it is setup
+
+1. This rake task will spin up solr, reindex fixtures and start the app
+
+        rake server
+
+Note that you can run the tests using "local_ci" while the rails server is running, but it will force a reindex of fixtures.
+
+## Running tests
+
+You can run the test suite locally by running:
+
+    rake local_ci
+
+Your local development SolrWrapper must be started for this to work.  If your local SolrWrapper is stopped, start it with:
+
+    rake solr:start
 
 ## Non-Stanford Users
 
@@ -120,16 +138,6 @@ Bump VERSION file by editing it in master
     bundle exec cap dev deploy      # for development (revs-dev.stanford.edu, only visible when VPNed)
 
 You must specify a branch to deploy.  You can deploy the latest by specifying "master".  You should never be deploying anything except master to prod.
-
-## Testing
-
-You can run the test suite locally by running:
-
-    rake local_ci
-
-Your local development SolrWrapper must be started for this to work.  If your local SolrWrapper is stopped, start it with:
-
-    rake solr:start
 
 ## Git Development Strategy
 
