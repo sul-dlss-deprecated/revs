@@ -50,10 +50,10 @@
             <li class="<%="active" if on_home_page %>">
               <%= link_to t('revs.nav.home').upcase, root_path %>
             </li>
-            <li class="<%="active" if on_collections_page %>">
-              <%= link_to t('revs.nav.collections').upcase, all_collections_path%>
-            </li>
             <% if Revs::Application.config.show_galleries_in_nav %>
+              <li class="<%="active" if on_collections_page %>">
+                <%= link_to t('revs.nav.collections').upcase, all_collections_path%>
+              </li>
               <li class="<%="active" if on_galleries_page %>">
                 <%= link_to t('revs.nav.galleries').upcase, galleries_path %>
               </li>

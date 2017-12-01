@@ -75,8 +75,7 @@ Revs::Application.configure do
   config.purl = "//purl.stanford.edu"
   config.restricted_beta = false # if set to true, then only beta users (and sunet users) can view the site
   config.use_editstore = false # if set to true, then all changes will be saved to editstore database (SHOULD BE TRUE IN PRODUCTION AND TEST!)
-  config.show_galleries_in_nav = true # if set to true, then galleries is shown in top navigation
 
-  config.featured_contributors=['curator1','admin1','user1'] # array of usernames of featured contributors for about top contributors page...will be shown in this order, use an empty array if none
+  config.featured_contributors=[] #['curator1','admin1','user1'] # array of usernames of featured contributors for about top contributors page...will be shown in this order, use an empty array if none
 
 end
