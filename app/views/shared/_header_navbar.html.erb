@@ -1,11 +1,7 @@
 <!-- Brandbar snippet start -->
 <div id="brandbar">
   <div class="container">
-    <%= link_to 'http://library.stanford.edu', {class: "sul-logo"} do %>
-      <%= content_tag :span, "Stanford University Libraries", class: "sr-only" %>
-      <%= image_tag "sul-logo-white-text.png", class: "hidden-xs", alt: "", height: 25 %>
-      <%= image_tag "sul-logo-small-white-text.png", class: "visible-xs", alt: "", height: 25 %>
-    <% end %>
+    <%= link_to "Stanford University Libraries", "http://library.stanford.edu/", class: "sul-logo" %>
     <span id="report-problem">
       <%= render :partial=>'shared/user_navigation' %>
 	    <%= link_to(

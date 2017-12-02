@@ -16,9 +16,23 @@
     padding: 0;
   }
 
+  .sul-logo {
+    @extend .text-hide;
+
+    background: transparent image-url("StanfordLibraries-logo-whitetext.svg") no-repeat center left;
+    background-size: contain;
+    display: inline-block;
+    height: 38px;
+    overflow: hidden;
+    padding: 7.5px 15px;
+    vertical-align: middle;
+    width: 189px;
+  }
+
   #report-problem {
     float: right;
-    margin-top: 6px;
+    padding-bottom: 7.5px;
+    padding-top: 7.5px;
 
     #contact_us_link {
       vertical-align: middle;
@@ -315,11 +329,6 @@ $menu-link-background-color-hover: rgba(255, 255, 255, 0.15);
 }
 
 @media screen and (max-width: $screen-xs-max) {
-  a.sul-logo {
-    display: inline;
-    float: left;
-  }
-
   #report-problem {
     margin-right: 15px;
   }
