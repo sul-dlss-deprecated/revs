@@ -99,21 +99,21 @@ module Revs
 
 #    config.site_message="The website will be down for scheduled maintenance today, July 8, at 3pm Pacific Time for approximately 30 minutes." # set to some string to show a message on the top of each message (like to advertise a known site outage) , leave blank for no message
 
-    config.site_message = 'Note: Content from The Revs Institute will be moved away from this website later in the year.  <a href="http://bit.ly/revsnotice">See the notice</a> for more information.  To faciliate this transition, flagging and some other features have been disabled until the move is complete.'
+    config.site_message = 'Note: Content from The Revs Institute has now been removed from this website.  Revs Institute content can be found on the new Revs Digital Library at <a href="http://library.revsinstitute.org">http://library.revsinstitute.org</a>.  The Road & Track Collection is still available on this website, which is now called the Automobility Archive.'
     # if the following configuration is not nil or a blank array, one of these questions will be asked at random when user's register to try and block spammy registrations
     # format is an array of hashes, the answer is not case sensitive
     config.reg_questions = []
     #   {:question=>'What is the name of the car company that manufacturers the Mustang?',:answer=>'Ford'},
     #   {:question=>'What is the first name of the founder of Ferrari?',:answer=>'Enzo'}
     # ]
-    config.disable_new_registrations = true # set to true to disable new users from registering (useful in conjunction with disable_editing or if there is a sustained period of bogus registrations)
+    config.disable_new_registrations = false # set to true to disable new users from registering (useful in conjunction with disable_editing or if there is a sustained period of bogus registrations)
     config.disable_more_to_explore = true # set to true to disable more to explore on the home page
     config.disable_featured_galleries = true # set to true to disable featured galleries on the home page
     config.require_manual_account_activation = true # set to true to require an admin to manually activate any new account registrations
     config.new_registration_notification = 'petucket@stanford.edu' # email address to receive daily notifications of new registrations
     config.spam_reg_checks = true # set to false to skip spam registration checks (useful in testing)
     config.show_item_counts_in_header = false # if set to true, we will show total item and collection counts in the header
-    config.disable_editing = true # if set to true, will disallow metadata editing, changing visibility and placeholder, the creation of annotations and flags - the things that can update a solr document or add to the metadata editing load
+    config.disable_editing = false # if set to true, will disallow metadata editing, changing visibility and placeholder, the creation of annotations and flags - the things that can update a solr document or add to the metadata editing load
     config.show_galleries_in_nav = false # if set to true, then galleries and collections are shown in top navigation
 
   end
