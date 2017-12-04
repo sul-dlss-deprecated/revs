@@ -1,12 +1,3 @@
-@mixin masthead-background-containers() {
-  position: absolute;
-  left: 0;
-  right: 0;
-  display: block;
-  width: auto;
-  height: inherit;
-}
-
 #brandbar {
   font-family: 'Source Sans Pro',Arial,sans-serif;
   font-size: 14px;
@@ -122,14 +113,14 @@
   }
 }
 
-$masthead-height: 186px;
-$masthead-image-blur: 2px;
+$masthead-height: 165px;
 $menu-link-background-color-active: rgba(255, 255, 255, 0.25);
 $menu-link-background-color-hover: rgba(255, 255, 255, 0.15);
 
 #revs-masthead {
+  background-color: #5f574f;
   height: $masthead-height;
-  margin-bottom: -46px;
+  margin-bottom: -45px;
   padding: 0;
   position: static;
 
@@ -171,37 +162,6 @@ $menu-link-background-color-hover: rgba(255, 255, 255, 0.15);
       font-style: normal;
       text-shadow: none;
     }
-  }
-
-  // This is to add a background image to the masthead, in a way that
-  // enables the site title and subtitle text to be visible above it.
-  .background-container {
-    @include masthead-background-containers();
-    background-repeat: no-repeat;
-    background-size: cover;
-    // Add small amount of blur to help text stand out
-    -webkit-filter: blur($masthead-image-blur);
-    filter: blur($masthead-image-blur);
-    // Shift image slightly to hide blurred edge of image
-    margin-left: -$masthead-image-blur;
-    margin-top: -$masthead-image-blur - 1;
-    overflow: hidden;
-    // Add right border to image to hide lighter blurred edge
-    border-right: 1px solid $gray-base;
-  }
-
-  // Include gradient to improve text legibility,
-  // especially on light background images.
-  .background-container-gradient {
-    @include masthead-background-containers();
-    background:
-     linear-gradient(
-       rgba(0, 0, 0, 0.0),
-       rgba(0, 0, 0, 0.2),
-       rgba(0, 0, 0, 0.3)
-     );
-     // Compensate for negative top margin of background-container
-     height: $masthead-height - $masthead-image-blur;
   }
 }
 
