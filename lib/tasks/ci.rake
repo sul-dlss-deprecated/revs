@@ -1,6 +1,6 @@
 # before doing stuff with fixtures, be sure we are not running in production or pointing to a actual real solr server
 def allowed_solr?
-  !Rails.env.production?
+  !Rails.env.production? && !Rails.env.staging?
 end
 
 require 'solr_wrapper/rake_task' if allowed_solr?
