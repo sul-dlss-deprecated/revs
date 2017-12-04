@@ -19,8 +19,6 @@
 
 <% cache("navbar", :expires_in=>6.hours, :skip_digest=>true) do %>
   <div id="revs-masthead">
-    <span class='background-container' style="background-image: url('<%= image_path('masthead-image-1800.jpg') %>')"></span>
-    <span class='background-container-gradient'></span>
     <div class="container">
       <div class="site-title h1">
         <%= link_to application_name, root_path %>
