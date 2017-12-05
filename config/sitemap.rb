@@ -1,5 +1,5 @@
 # Set the host name for URL creation
-SitemapGenerator::Sitemap.default_host = "http://revslib.stanford.edu"
+SitemapGenerator::Sitemap.default_host = "https://automobility.stanford.edu"
 
 SitemapGenerator::Sitemap.create do
 

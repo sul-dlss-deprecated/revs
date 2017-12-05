@@ -135,7 +135,7 @@ Bump VERSION file by editing it in master
 
     bundle exec cap prod deploy     # for production  
     bundle exec cap stage deploy    # for staging     
-    bundle exec cap dev deploy      # for development 
+    bundle exec cap dev deploy      # for development
 
 You must specify a branch to deploy.  You can deploy the latest by specifying "master".  You should never be deploying anything except master to prod.
 
@@ -154,13 +154,13 @@ Digital Library.  For example, if you wanted to add a new field, you need to:
 
 1. Be sure the MODs template gets updated to the new field is stored appropriately during accessioning.  The MODs templates are in /config/templates.
 2. Ensure the new field has a column in the metadata spreadsheet supplied. The name of the column in the spreadsheet should match what is in the MODs template you edited in step 1.
-3. Update the Revs template in editstore-updater to be sure metadata edits coming from the site make it to the MODs correctly.  In the editstore-updater code  (https://github.com/sul-dlss/editstore-updater), this is in the app/models/template/revs.rb file in the "field_definitions" method.  Configure with the name of the solr field and the location in the MODs template.  After deploying editstore-updater, be sure to visit the UI (https://revslib.stanford.edu/editstore/projects/2) and confirm you see the fields in the list.
+3. Update the Revs template in editstore-updater to be sure metadata edits coming from the site make it to the MODs correctly.  In the editstore-updater code  (https://github.com/sul-dlss/editstore-updater), this is in the app/models/template/revs.rb file in the "field_definitions" method.  Configure with the name of the solr field and the location in the MODs template.  After deploying editstore-updater, be sure to visit the UI (https://automobility.stanford.edu/editstore/projects/2) and confirm you see the fields in the list.
 4. Update the revs-indexing-service code (https://github.com/sul-dlss/revs-indexer-service) to be sure the MODs is correctly indexed into solr.  You'll need to update the lib/revs_mapper.rb class (in the convert_to_solr_doc method).
 5. Update the revs-utils gem, which has shared configuration around available fields.
  -- add the new fields in the lib/revs-utils.rb file in the "revs_field_mapping" method.  Configuration specifies the accessor name along with the solr field name.
  -- update config/manifest_headers.yml to add the new columns that will appear in spreadsheets
  -- bump and release the gem
-6. Update the revs digital library website code (this codebase) to show the new field and make it editable (if necessary), and add it as a facet (if necessary).
+6. Update the website code (this codebase) to show the new field and make it editable (if necessary), and add it as a facet (if necessary).
  -- add facets in the catalog controller if necessary
  -- update the "bulk_update_fields" method in ApplicationHelper if this new field is available for bulk updating by curators
  -- update the app/views/catalog/_show_default_collection_member.html.erb view to add the new field to the appropriate part of the interface

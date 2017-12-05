@@ -2,7 +2,7 @@ class RevsMailer < ActionMailer::Base
 
   helper :application
   include ApplicationHelper
-  default from: "no-reply@revslib.stanford.edu"
+  default from: "no-reply@automobility.stanford.edu"
 
   def contact_message(opts={})
     params=opts[:params]
@@ -23,20 +23,20 @@ class RevsMailer < ActionMailer::Base
     to=Revs::Application.config.new_registration_notification
     mail(:to=>to,:subject=>I18n.t('revs.contact.notification_new_users')) if valid_email?(to)
   end
-  
+
   def auto_response(opts={})
     @email=opts[:email]
     @subject=opts[:subject]
     mail(:to=>@email,:subject=>I18n.t('revs.contact.thanks')) if valid_email?(@email)
   end
-  
+
   def flag_resolved(flag)
     @flag=flag
     mail(:to=>flag.user.email,:subject=>I18n.t('revs.flags.resolved_message')) if flag.user && flag.user.email && valid_email?(flag.user.email)
   end
-  
+
   def mailing_list_signup(opts={})
     mail(:to=>"revs-program-join@lists.stanford.edu",:from=>opts[:from],:subject=>"Request to be added to the Revs Program Mailing List",:body=>"Subscribe")
   end
-  
+
 end

@@ -1,5 +1,5 @@
 <p>
-You previously flagged a correction to an item in the Revs Digital Library 
+You previously flagged a correction to an item in the Automobility Archive
 <% unless @flag.comment.blank? %> with the comment '<%=@flag.comment%>' <% end %> and the flag was resolved on <%=show_as_date(@flag.resolved_time)%> by <%=@flag.resolved_by.to_s%> with the status '<%=@flag.state_display_name%>'.
 <% unless @flag.resolution.blank? %> The curator also added a comment of '<%=@flag.resolution%>'.<% end %>
 </p>
