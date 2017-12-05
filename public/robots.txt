@@ -19,4 +19,4 @@ User-Agent: *
 Disallow: /catalog/range_limit
 Disallow: /catalog/facet
 
-Sitemap: http://revslib.stanford.edu/sitemap.xml.gz
+Sitemap: https://automobility.stanford.edu/sitemap.xml.gz

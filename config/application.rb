@@ -119,5 +119,5 @@ module Revs
   end
 end
 
-GOOGLE_ANALYTICS_CODE = "UA-7219229-17" # revs digital library
+GOOGLE_ANALYTICS_CODE = "UA-7219229-17" # automobility archive
 EDITSTORE_PROJECT='Revs'  # the name of your project in the editstore database -- this must exist in the edistore database "projects" table in both production and development to work properly
