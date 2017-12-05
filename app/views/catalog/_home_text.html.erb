@@ -65,128 +65,131 @@
     </div>
   </noscript>
   <!-- end single image for non JavaScript users -->
+  <% end # end cached part of page%>
 
   <%# Featured Galleries row %>
-  <div class="row">
-    <div class="col-md-12 highlight-list">
-      <h3 class="section-heading">
-        <%= t('revs.user_galleries.heading_featured') %>
-        <span class="more-link">
-          <%= link_to t('revs.nav.more_galleries'), galleries_path %>
-        </span>
-        <a href="#" class="help showOnLoad" data-placement="right" data-title="<%=t('revs.user_galleries.tooltip')%>" data-toggle="tooltip" data-original-title="" title="">
-          <i class="fa fa-question-circle"></i>
-        </a>
-      </h3>
-        <ul class="image-grid">
-          <% @highlighted_galleries.each_with_index do |gallery, index| %>
-            <li class="image-item item-<%= index %>">
+  <% unless Revs::Application.config.disable_featured_galleries %>
+    <div class="row">
+      <div class="col-md-12 highlight-list">
+        <h3 class="section-heading">
+          <%= t('revs.user_galleries.heading_featured') %>
+          <span class="more-link">
+            <%= link_to t('revs.nav.more_galleries'), galleries_path %>
+          </span>
+          <a href="#" class="help showOnLoad" data-placement="right" data-title="<%=t('revs.user_galleries.tooltip')%>" data-toggle="tooltip" data-original-title="" title="">
+            <i class="fa fa-question-circle"></i>
+          </a>
+        </h3>
+          <ul class="image-grid">
+            <% @highlighted_galleries.each_with_index do |gallery, index| %>
+              <li class="image-item item-<%= index %>">
+                <div class="image-wrapper">
+                  <a href="<%= gallery_path(gallery) %>">
+                    <%= image_tag(gallery.image(:size=>:large)) %>
+                  </a>
+                  <h4>
+                    <%= link_to(truncate(gallery.title, :length => 50),gallery_path(gallery)) %>
+                    <span class="text-muted">
+                      <%= pluralize(gallery.saved_items.size, t('revs.user_galleries.item')) %>
+                    </span>
+                  </h4>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <% unless Revs::Application.config.disable_more_to_explore %>
+    <%# More to Explore row %>
+    <div class="row">
+      <div class="col-md-12 highlight-list explore">
+        <h3 class="section-heading">
+          <%= t('revs.nav.more_to_explore') %>
+        </h3>
+          <ul class="image-grid">
+            <!-- People -->
+            <li class="image-item item-0">
               <div class="image-wrapper">
-                <a href="<%= gallery_path(gallery) %>">
-                  <%= image_tag(gallery.image(:size=>:large)) %>
-                </a>
+                <%= image_tag("facets/people-color.jpg", alt: t('revs.nav.people')) %>
                 <h4>
-                  <%= link_to(truncate(gallery.title, :length => 50),gallery_path(gallery)) %>
-                  <span class="text-muted">
-                    <%= pluralize(gallery.saved_items.size, t('revs.user_galleries.item')) %>
+                  <%= link_to t('revs.nav.people'), catalog_facet_path('people_ssim'), class: "more_facets_link" %>
+                  <span class="item-links">
+                    <%= link_to "Stirling Moss", "/?f%5Bpeople_ssim%5D%5B%5D=Moss%2C+Stirling" %>,
+                    <%= link_to "Dan Gurney", "/?f%5Bpeople_ssim%5D%5B%5D=Gurney%2C+Dan" %>,
+                    <%= link_to "Jackie Stewart", "/?f%5Bpeople_ssim%5D%5B%5D=Stewart%2C+Jackie" %>,
+                    <%= link_to "Mario Andretti", "/?f%5Bpeople_ssim%5D%5B%5D=Andretti%2C+Mario" %>,
+                    <%= link_to t('blacklight.search.facets.more'), catalog_facet_path('people_ssim'), class: "more_facets_link" %>
                   </span>
                 </h4>
               </div>
             </li>
-          <% end %>
-        </ul>
-    </div>
-  </div>
-
-  <%# More to Explore row %>
-  <div class="row">
-    <div class="col-md-12 highlight-list explore">
-      <h3 class="section-heading">
-        <%= t('revs.nav.more_to_explore') %>
-      </h3>
-        <ul class="image-grid">
-          <!-- People -->
-          <li class="image-item item-0">
-            <div class="image-wrapper">
-              <%= image_tag("facets/people-color.jpg", alt: t('revs.nav.people')) %>
-              <h4>
-                <%= link_to t('revs.nav.people'), catalog_facet_path('people_ssim'), class: "more_facets_link" %>
-                <span class="item-links">
-                  <%= link_to "Stirling Moss", "/?f%5Bpeople_ssim%5D%5B%5D=Moss%2C+Stirling" %>,
-                  <%= link_to "Dan Gurney", "/?f%5Bpeople_ssim%5D%5B%5D=Gurney%2C+Dan" %>,
-                  <%= link_to "Jackie Stewart", "/?f%5Bpeople_ssim%5D%5B%5D=Stewart%2C+Jackie" %>,
-                  <%= link_to "Mario Andretti", "/?f%5Bpeople_ssim%5D%5B%5D=Andretti%2C+Mario" %>,
-                  <%= link_to t('blacklight.search.facets.more'), catalog_facet_path('people_ssim'), class: "more_facets_link" %>
-                </span>
-              </h4>
-            </div>
-          </li>
-          <!-- Models -->
-          <li class="image-item item-1">
-            <div class="image-wrapper">
-              <%= image_tag("facets/models-black-and-white.jpg", alt: t('revs.nav.models')) %>
-              <h4>
-                <%= link_to t('revs.nav.models'), catalog_facet_path('model_ssim'), class: "more_facets_link" %>
-                <span class="item-links">
-                  <%= link_to "Chevrolet Corvette", "/?f%5Bmodel_ssim%5D%5B%5D=Chevrolet+Corvette" %>,
-                  <%= link_to "Ford Mustang", "/?f%5Bmodel_ssim%5D%5B%5D=Ford+Mustang" %>,
-                  <%= link_to "BMW 2002", "/?f%5Bmodel_ssim%5D%5B%5D=BMW+2002" %>,
-                  <%= link_to "Porsche 911", "/?f%5Bmodel_ssim%5D%5B%5D=Porsche+911" %>,
-                  <%= link_to t('blacklight.search.facets.more'), catalog_facet_path('model_ssim'), class: "more_facets_link" %>
-                </span>
-              </h4>
-            </div>
-          </li>
-          <!-- Events -->
-          <li class="image-item item-3">
-            <div class="image-wrapper">
-              <%= image_tag("facets/events-color.jpg", alt: t('revs.nav.events')) %>
-              <h4>
-                <%= link_to t('revs.nav.events'), catalog_facet_path('event_ssi'), class: "more_facets_link" %>
-                <span class="item-links">
-                  <%= link_to "Indianapolis 500", "/?f%5Bevent_ssi%5D%5B%5D=Indianapolis+500" %>,
-                  <%= link_to "24 Hours of Le Mans", "/?f%5Bevent_ssi%5D%5B%5D=24+Hours+of+Le+Mans" %>,
-                  <%= link_to "Geneva Motor Show", "/?f%5Bevent_ssi%5D%5B%5D=Geneva+Motor+Show" %>,
-                  <%= link_to t('blacklight.search.facets.more'), catalog_facet_path('event_ssi'), class: "more_facets_link" %>
-                </span>
-              </h4>
-            </div>
-          </li>
-<% end # end cached part of page%>
-          
-          <% if (can?(:curate, :all) && SavedQuery.all_lists.size > 0) || SavedQuery.public_lists.size > 0 %>
-            <!-- Saved Queries -->
-            <li class="image-item item-2">
+            <!-- Models -->
+            <li class="image-item item-1">
               <div class="image-wrapper">
-                <%= image_tag("help-us.png",
-                  alt: t('revs.nav.saved_queries')) %>
-                  <h4>
-                    <%= link_to t('revs.nav.saved_queries'), lists_path %>
-                    <span class="item-links">
-                      <%= link_to t('revs.nav.saved_queries_home_page_overview'),lists_path %>
-                    </span>
-                  </h4>
+                <%= image_tag("facets/models-black-and-white.jpg", alt: t('revs.nav.models')) %>
+                <h4>
+                  <%= link_to t('revs.nav.models'), catalog_facet_path('model_ssim'), class: "more_facets_link" %>
+                  <span class="item-links">
+                    <%= link_to "Chevrolet Corvette", "/?f%5Bmodel_ssim%5D%5B%5D=Chevrolet+Corvette" %>,
+                    <%= link_to "Ford Mustang", "/?f%5Bmodel_ssim%5D%5B%5D=Ford+Mustang" %>,
+                    <%= link_to "BMW 2002", "/?f%5Bmodel_ssim%5D%5B%5D=BMW+2002" %>,
+                    <%= link_to "Porsche 911", "/?f%5Bmodel_ssim%5D%5B%5D=Porsche+911" %>,
+                    <%= link_to t('blacklight.search.facets.more'), catalog_facet_path('model_ssim'), class: "more_facets_link" %>
+                  </span>
+                </h4>
               </div>
             </li>
-          <% else %>
-            <!-- Video Tutorials -->
-            <li class="image-item item-2">
+            <!-- Events -->
+            <li class="image-item item-3">
               <div class="image-wrapper">
-                <%= image_tag("revs-tutorials.png",
-                  alt: t('revs.nav.video_tutorials')) %>
-                  <h4>
-                    <%= link_to t('revs.nav.video_tutorials'), tutorials_path %>
-                    <span class="item-links">
-                      <%= link_to t('revs.nav.video_titles.overview'), "https://www.youtube.com/watch?v=rVBI_VCfWYg" %>,
-                      <%= link_to t('revs.nav.video_titles.account'), "https://www.youtube.com/watch?v=1KK7egnD6Ko" %>,
-                      <%= link_to t('revs.nav.video_titles.gallery'), "https://www.youtube.com/watch?v=pePDoEA6-rk" %>,
-                      <%= link_to t('blacklight.search.facets.more'), tutorials_path, class: "more-link" %>
-                    </span>
-                  </h4>
+                <%= image_tag("facets/events-color.jpg", alt: t('revs.nav.events')) %>
+                <h4>
+                  <%= link_to t('revs.nav.events'), catalog_facet_path('event_ssi'), class: "more_facets_link" %>
+                  <span class="item-links">
+                    <%= link_to "Indianapolis 500", "/?f%5Bevent_ssi%5D%5B%5D=Indianapolis+500" %>,
+                    <%= link_to "24 Hours of Le Mans", "/?f%5Bevent_ssi%5D%5B%5D=24+Hours+of+Le+Mans" %>,
+                    <%= link_to "Geneva Motor Show", "/?f%5Bevent_ssi%5D%5B%5D=Geneva+Motor+Show" %>,
+                    <%= link_to t('blacklight.search.facets.more'), catalog_facet_path('event_ssi'), class: "more_facets_link" %>
+                  </span>
+                </h4>
               </div>
             </li>
-          <% end %>
-        </ul>
-    </div>
-  </div>
 
+            <% if (can?(:curate, :all) && SavedQuery.all_lists.size > 0) || SavedQuery.public_lists.size > 0 %>
+              <!-- Saved Queries -->
+              <li class="image-item item-2">
+                <div class="image-wrapper">
+                  <%= image_tag("help-us.png",
+                    alt: t('revs.nav.saved_queries')) %>
+                    <h4>
+                      <%= link_to t('revs.nav.saved_queries'), lists_path %>
+                      <span class="item-links">
+                        <%= link_to t('revs.nav.saved_queries_home_page_overview'),lists_path %>
+                      </span>
+                    </h4>
+                </div>
+              </li>
+            <% else %>
+              <!-- Video Tutorials -->
+              <li class="image-item item-2">
+               <!--  <div class="image-wrapper">
+                  <%#= image_tag("revs-tutorials.png",
+                    alt: t('revs.nav.video_tutorials')) %>
+                    <h4>
+                      <%#= link_to t('revs.nav.video_tutorials'), tutorials_path %>
+                      <span class="item-links">
+                        <%#= link_to t('revs.nav.video_titles.overview'), "https://www.youtube.com/watch?v=rVBI_VCfWYg" %>,
+                        <%#= link_to t('revs.nav.video_titles.account'), "https://www.youtube.com/watch?v=1KK7egnD6Ko" %>,
+                        <%#= link_to t('revs.nav.video_titles.gallery'), "https://www.youtube.com/watch?v=pePDoEA6-rk" %>,
+                        <%#= link_to t('blacklight.search.facets.more'), tutorials_path, class: "more-link" %>
+                      </span>
+                    </h4>
+                </div>-->
+              </li>
+            <% end %>
+          </ul>
+      </div>
+    </div>
+<% end %>

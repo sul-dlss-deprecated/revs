@@ -76,7 +76,7 @@ describe("About Pages",:type=>:request,:integration=>true) do
     expect(page).to have_content(@project_team_title)
   end
 
-  it "should show the video tutorials page" do
+  xit "should show the video tutorials page" do
     visit '/about/tutorials'
     expect(page).to have_content(@video_tutorials)
     # update link URL when Overview video is updated/replaced

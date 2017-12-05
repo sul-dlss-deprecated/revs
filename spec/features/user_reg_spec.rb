@@ -2,46 +2,43 @@ require "rails_helper"
 
 describe("User Registration",:type=>:request,:integration=>true) do
 
-  context 'regular registration' do
+  before :each do
+    @password='password'
+    Revs::Application.config.spam_reg_checks = false # disable spam checks for these tests
+    Revs::Application.config.disable_new_registrations = false # be sure registration is enabled for these tests
+    Revs::Application.config.require_manual_account_activation = false # disable manual activation for these tests
+    RevsMailer.stub_chain(:mailing_list_signup,:deliver).and_return('a mailer')
+  end
 
-    before :each do
-      @password='password'
-      Revs::Application.config.spam_reg_checks = false # disable spam checks for these tests
-      Revs::Application.config.disable_new_registrations = false # be sure registration is enabled for these tests
-      Revs::Application.config.require_manual_account_activation = false # disable manual activation for these tests
-      RevsMailer.stub_chain(:mailing_list_signup,:deliver).and_return('a mailer')
-      RevsMailer.stub_chain(:revs_institute_mailing_list_signup,:deliver).and_return('a mailer')
-    end
+  it "should register a new user with the default role and defaulting to public profile as hidden" do
 
-    it "should register a new user with the default role and defaulting to public profile as hidden" do
+    expect(RevsMailer).not_to receive(:mailing_list_signup)
 
-      expect(RevsMailer).not_to receive(:mailing_list_signup)
-      expect(RevsMailer).not_to receive(:revs_institute_mailing_list_signup)
+    @username='testing'
+    @email="#{@username}@test.com"
+    # regsiter a new user
+    visit new_user_registration_path
+    fill_in 'register-email', :with=> @email
+    fill_in 'register-username', :with=> @username
+    fill_in 'user_password', :with=> @password
+    fill_in 'user_password_confirmation', :with=> @password
+    sleep 6.seconds
+    click_button 'Sign up'
 
-      @username='testing'
-      @email="#{@username}@test.com"
-      # register a new user
-      visit new_user_registration_path
-      fill_in 'register-email', :with=> @email
-      fill_in 'register-username', :with=> @username
-      fill_in 'user_password', :with=> @password
-      fill_in 'user_password_confirmation', :with=> @password
-      click_button 'Sign up'
+    should_register_ok
 
-      should_register_ok
+    # check the database
+    user=User.last
+    expect(user.role).to eq('user')
+    expect(user.username).to eq(@username)
+    expect(user.email).to eq(@email)
+    expect(user.public).to eq(false)
 
-      # check the database
-      user=User.last
-      expect(user.role).to eq('user')
-      expect(user.username).to eq(@username)
-      expect(user.email).to eq(@email)
-      expect(user.public).to eq(false)
+    favorites=Gallery.last
+    expect(favorites.gallery_type).to eq('favorites')
+    expect(favorites.user_id).to eq(user.id)
 
-      favorites=Gallery.last
-      expect(favorites.gallery_type).to eq('favorites')
-      expect(favorites.user_id).to eq(user.id)
-
-    end
+  end
 
     it "should register a new user and send an email to join the Revs Program list if selected" do
 
@@ -65,30 +62,8 @@ describe("User Registration",:type=>:request,:integration=>true) do
 
       end
 
-      it "should register a new user and send an email to join the Revs Institute Mailing list if selected" do
-
-          expect(RevsMailer).to receive(:revs_institute_mailing_list_signup)
-          expect(RevsMailer).not_to receive(:mailing_list_signup)
-
-          @username='testing3'
-          @email="#{@username}@test.com"
-          # register a new user
-          register_new_user(@username,@password,@email)
-          check 'user_subscribe_to_revs_mailing_list'
-          click_button 'Sign up'
-
-          should_register_ok
-
-          # check the database
-          user=User.last
-          expect(user.role).to eq('user')
-          expect(user.username).to eq(@username)
-          expect(user.email).to eq(@email)
-
-        end
-
        it "should create a username as the sunetID when a new Stanford user signs in via webauth" do
-
+        expect(RevsMailer).not_to receive(:mailing_list_signup)
         @username="somesunet"
 
         expect(User.where(:username=>@username).size).to eq(0) # doesn't exist yet
@@ -361,5 +336,4 @@ describe("User Registration",:type=>:request,:integration=>true) do
         expect(page).to_not have_content I18n.t('revs.user.sign_up')
       end
 
-    end
-end
+  end

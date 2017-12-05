@@ -1,11 +1,7 @@
 <!-- Brandbar snippet start -->
 <div id="brandbar">
   <div class="container">
-    <%= link_to 'http://library.stanford.edu', {class: "sul-logo"} do %>
-      <%= content_tag :span, "Stanford University Libraries", class: "sr-only" %>
-      <%= image_tag "sul-logo-white-text.png", class: "hidden-xs", alt: "", height: 25 %>
-      <%= image_tag "sul-logo-small-white-text.png", class: "visible-xs", alt: "", height: 25 %>
-    <% end %>
+    <%= link_to "Stanford University Libraries", "http://library.stanford.edu/", class: "sul-logo" %>
     <span id="report-problem">
       <%= render :partial=>'shared/user_navigation' %>
 	    <%= link_to(
@@ -23,8 +19,6 @@
 
 <% cache("navbar", :expires_in=>6.hours, :skip_digest=>true) do %>
   <div id="revs-masthead">
-    <span class='background-container' style="background-image: url('<%= image_path('masthead-image-1800.jpg') %>')"></span>
-    <span class='background-container-gradient'></span>
     <div class="container">
       <div class="site-title h1">
         <%= link_to application_name, root_path %>
@@ -33,7 +27,7 @@
           <span class="hidden-sm">
             <%= t('revs.repository_counts_html',
                 :total_images => number_with_delimiter(@total_images),
-                :number_collections => number_with_delimiter(@total_collections)) %>
+                :number_collections => number_with_delimiter(@total_collections)) if Revs::Application.config.show_item_counts_in_header %>
           </span>
         </small>
       </div>
@@ -50,10 +44,10 @@
             <li class="<%="active" if on_home_page %>">
               <%= link_to t('revs.nav.home').upcase, root_path %>
             </li>
-            <li class="<%="active" if on_collections_page %>">
-              <%= link_to t('revs.nav.collections').upcase, all_collections_path%>
-            </li>
             <% if Revs::Application.config.show_galleries_in_nav %>
+              <li class="<%="active" if on_collections_page %>">
+                <%= link_to t('revs.nav.collections').upcase, all_collections_path%>
+              </li>
               <li class="<%="active" if on_galleries_page %>">
                 <%= link_to t('revs.nav.galleries').upcase, galleries_path %>
               </li>

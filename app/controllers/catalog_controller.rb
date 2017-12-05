@@ -338,7 +338,7 @@ class CatalogController < ApplicationController
     config.add_search_field 'title_tsi', :label => 'Title'
 		config.add_search_field 'description_tsim', :label => 'Description'
 		config.add_search_field 'annotations_tsim', :label => 'Annotations'
-		config.add_search_field 'source_id_ssi', :label => 'Source/Revs ID'
+		config.add_search_field 'source_id_ssi', :label => 'Source ID'
 		config.add_search_field 'marque_tim', :label => 'Marque'
 		config.add_search_field 'group_class_tsi', :label => 'Group or Class'
 		config.add_search_field 'model_tim', :label => 'Model'
