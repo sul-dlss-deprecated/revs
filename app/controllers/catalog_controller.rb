@@ -153,6 +153,7 @@ class CatalogController < ApplicationController
   # in all cases, do not show hidden images
   def show_collection_members_grid
     @document=SolrDocument.find(params[:id])
+    return false unless @document
     if params[:on_page] == 'item'
       sort = (user_signed_in? && current_user.curator?) ? "score" : "random"
       @collection_members=@document.siblings(:sort=>sort,:include_hidden=>false)
