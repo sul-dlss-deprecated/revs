@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
   before_save :trim_names
   after_create :signup_for_mailing_list, :if=>lambda{subscribe_to_mailing_list=='1'}
   after_create :create_default_favorites_list # create the default favorites list when accounts are created
-  after_create :inactivate_account, :if=>lambda{Revs::Application.config.require_manual_account_activation == true}
+  after_create :inactivate_account, :if=>lambda{Revs::Application.config.require_manual_account_activation == true && !sunet_user?}
   after_save :create_default_favorites_list # create the default favorites list if it doesn't exist when a user logs in
 
   validate :check_role_name
