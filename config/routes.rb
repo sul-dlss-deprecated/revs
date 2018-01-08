@@ -102,6 +102,7 @@ Revs::Application.routes.draw do
     resources :users do
       collection do
         post 'bulk_update_status', :to => 'users#bulk_update_status'
+        post 'purge_inactive_users', :to => 'users#purge_inactive_users'
       end
     end
     resources :saved_queries do

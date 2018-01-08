@@ -86,6 +86,18 @@ class User < ActiveRecord::Base
     (user.blank? || user.cannot?(:view_hidden, SolrDocument)) ? things.joins("LEFT OUTER JOIN items on items.druid = #{class_name}.druid").where("items.visibility_value = #{SolrDocument.visibility_mappings[:visible]} OR items.visibility_value is null") : things
   end
 
+  # inactive and never logged in users older than this timeframe will be removed (default to 2 weeks)
+  def self.purge_inactive(timeframe=2.weeks.ago)
+    unconfirmed_users=User.where(:active=>false,:sunet=>'',:login_count=>0).where("updated_at < ?",timeframe)
+    num_users = unconfirmed_users.size
+    puts "Destroying #{num_users} inactive and non logged in users older than #{timeframe}"
+    unconfirmed_users.each do |user|
+      puts "...destroying '#{user.username}'"
+      user.destroy
+    end
+    return num_users
+  end
+
   #### class level methods
 
   # used for spammy users; will set their account to inactive and destroy any of the galleries, flags and annotations
