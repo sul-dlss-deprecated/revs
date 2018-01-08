@@ -18,6 +18,7 @@ default_tag='master'
 set :tag, ask("Tag to deploy (make sure to push the tag first): [default: #{default_tag}, last tag: #{last_tag}] ", default_tag)
 
 set :branch, fetch(:tag)
+#set :keep_releases, 25
 
 before 'deploy:restart', 'shared_configs:update'
 
