@@ -11,11 +11,11 @@ if ['production','staging'].include? @environment
   end
 
   every 1.days, :at => '2:00 am' do
-    rake "users:purge_unconfirmed_users"
+    rake "revs:purge_unconfirmed_users"
   end
 
   every 1.days, :at => '3:00 am' do
-    rake "users:purge_inactive_users"
+    rake "revs:purge_inactive_users"
   end
 
 

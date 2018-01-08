@@ -303,6 +303,10 @@ en:
       user_status_updated: "Successfully updated %{num} users to the account status '%{status}'"
       no_users_updated: "You did not select any users to update"
       set_checked_users: "Update selected to account status"
+      inactive_users_purged: 'Successfully purged %{num} inactive and never logged in users'
+      purge_inactive_users: 'Purge inactive users that have never logged in'
+      destroy_user: 'Delete this user and all of their created content'
+      user_deleted: 'The user was completely removed the system.'
       last_sign_in: 'Last sign in'
       num_logins: 'Number of logins'
       sidebar:

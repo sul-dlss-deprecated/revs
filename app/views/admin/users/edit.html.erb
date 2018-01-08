@@ -39,7 +39,10 @@
             </span>
             <%=@user.login_count %>
           </li>
+					<p><%= link_to "[#{t('revs.admin.destroy_user')}]", admin_user_path(@user), method: 'delete', data: {confirm: t('revs.actions.confirm_delete')} %></p>
+
         </ul>
+
       </div>
 
       <%= form_for(@user, :url => admin_user_path, :html => { :method => :put, :class => "form-horizontal" }) do |f| %>

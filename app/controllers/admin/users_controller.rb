@@ -83,6 +83,14 @@ class Admin::UsersController < AdminController
 
   def destroy
     @user=User.find(params[:id]).destroy
+    flash[:success]=t('revs.admin.user_deleted')
+    redirect_to admin_users_path(paging_params({:email=>params[:email],:status=>@status}))
+  end
+
+  def purge_inactive_users
+    num_users = User.purge_inactive(Time.now)
+    flash[:success]=t('revs.admin.inactive_users_purged',:num=>num_users)
+    redirect_to admin_users_path(paging_params({:email=>params[:email],:status=>@status}))
   end
 
   private
