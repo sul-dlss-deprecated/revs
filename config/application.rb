@@ -100,8 +100,9 @@ module Revs
                                        # 1 day = 86400 seconds
 
 #    config.site_message="The website will be down for scheduled maintenance today, July 8, at 3pm Pacific Time for approximately 30 minutes." # set to some string to show a message on the top of each message (like to advertise a known site outage) , leave blank for no message
+#    config.site_message = 'Note: Content from The Revs Institute has now been removed from this website.  Revs Institute content can be found on the new Revs Digital Library at <a href="http://library.revsinstitute.org">http://library.revsinstitute.org</a>.  The Road & Track Collection is still available on this website, which is now called the Automobility Archive.'
+    config.site_message = ''
 
-    config.site_message = 'Note: Content from The Revs Institute has now been removed from this website.  Revs Institute content can be found on the new Revs Digital Library at <a href="http://library.revsinstitute.org">http://library.revsinstitute.org</a>.  The Road & Track Collection is still available on this website, which is now called the Automobility Archive.'
     # if the following configuration is not nil or a blank array, one of these questions will be asked at random when user's register to try and block spammy registrations
     # format is an array of hashes, the answer is not case sensitive
     config.reg_questions = []
