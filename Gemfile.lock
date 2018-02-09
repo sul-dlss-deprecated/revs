@@ -210,7 +210,7 @@ GEM
       net-ssh (>= 2.6.5)
     net-ssh (4.1.0)
     netrc (0.11.0)
-    nokogiri (1.8.1)
+    nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
     omniauth (1.6.1)
       hashie (>= 3.4.6, < 3.6.0)
@@ -415,4 +415,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.15.4
+   1.16.0
