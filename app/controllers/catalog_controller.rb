@@ -152,8 +152,7 @@ class CatalogController < ApplicationController
   # collection landing pages will always have a random selection
   # in all cases, do not show hidden images
   def show_collection_members_grid
-    @document=SolrDocument.find(params[:id])
-    return false unless @document
+    @document = SolrDocument.find(params[:id])
     if params[:on_page] == 'item'
       sort = (user_signed_in? && current_user.curator?) ? "score" : "random"
       @collection_members=@document.siblings(:sort=>sort,:include_hidden=>false)
@@ -211,6 +210,10 @@ class CatalogController < ApplicationController
       :echoParams => "all"
     }
 
+    config.document_solr_request_handler = nil
+    config.document_solr_path = 'get'
+    config.document_unique_id_param = :ids
+
 
     # various Revs specific collection field configurations
 
@@ -240,12 +243,12 @@ class CatalogController < ApplicationController
     ## Default parameters to send on single-document requests to Solr. These settings are the Blackligt defaults (see SolrHelper#solr_doc_params) or
     ## parameters included in the Blacklight-jetty document requestHandler.
     #
-    config.default_document_solr_params = {
-     :qt => 'standard',
-     :fl => '*',
-     :rows => 1,
-     :q => '{!raw f=id v=$id}'
-    }
+    config.default_document_solr_params = {}
+    #  :qt => 'standard',
+    #  :fl => '*',
+    #  :rows => 1,
+    #  :q => '{!raw f=id v=$id}'
+    # }
 
     # Define our results views.
     # These are in "_document_gallery", "document_detailed", etc.
