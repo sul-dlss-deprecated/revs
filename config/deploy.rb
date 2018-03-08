@@ -20,6 +20,10 @@ set :tag, ask("Tag to deploy (make sure to push the tag first): [default: #{defa
 set :branch, fetch(:tag)
 #set :keep_releases, 25
 
+# honeybadger_env otherwise defaults to rails_env
+# we want prod rather than production
+set :honeybadger_env, fetch(:stage)
+
 before 'deploy:restart', 'shared_configs:update'
 
 namespace :jetty do
