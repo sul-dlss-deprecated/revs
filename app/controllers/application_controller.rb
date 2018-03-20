@@ -143,7 +143,19 @@ class ApplicationController < ActionController::Base
   end
 
   def routing_error
-    # flash.now[:error]=t('revs.routing_error')
+    # if this has an id the user may have been trying to load a previously bookmarked revs page that no longer exists
+    druid = params[:id]
+    if druid # let's try and get the REVS ID from PURL so we can create a helpful link for them
+      response = Faraday.get("#{Revs::Application.config.purl}/#{druid}.mods")
+      if response.status == 200
+        mods_xml = Nokogiri::XML(response.body)
+        revs_id_node = mods_xml.css('identifier[@displayLabel="Revs ID"]')
+        if revs_id_node.size > 0
+          @revs_id = revs_id_node.first.content
+          @search_url = "#{Revs::Application.config.new_revs_digital_library_search_page}/#{@revs_id}"
+        end
+      end
+    end
     render "application/404", :formats=>[:html], :status => :not_found
     return false
   end
