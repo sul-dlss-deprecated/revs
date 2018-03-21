@@ -395,6 +395,7 @@ DEPENDENCIES
   dlss-capistrano
   druid-tools (>= 0.2.0)
   editstore (>= 2.0.2)
+  faraday
   font-awesome-rails
   friendly_id (>= 5.0.0)
   honeybadger (~> 2.0)
