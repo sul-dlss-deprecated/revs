@@ -2,6 +2,13 @@
   <h2><i class='fa fa-exclamation-circle'></i><%= t('revs.errors.sorry') %></h2>
   <p><%= t('revs.errors.404_message') %></p>
   <ul>
+    <% if @revs_id %>
+      <li>
+        <i class='fa fa-search'></i>
+        <%= t('revs.errors.action_search_on_new_website_html',
+          :revs_id => @revs_id, :href => link_to(t('revs.old_digital_library'),@search_url)) %>.
+      </li>
+    <% end %>
     <li>
       <i class='fa fa-search'></i>
       <%= t('revs.errors.action_search_html',
