@@ -17,6 +17,7 @@ gem 'is_it_working-cbeer', require: 'is_it_working'
 gem 'devise', '>=3.5.4', '< 4'
 gem 'omniauth'
 gem 'cancan'
+gem 'faraday'
 
 gem 'active_model_serializers'
 
