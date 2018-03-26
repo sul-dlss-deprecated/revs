@@ -18,7 +18,7 @@ describe("Metadata Editing",:type=>:request,:integration=>true) do
 
     click_link @facet_link_to_click
     expect(page).to have_content(I18n.t('revs.search.search_results'))
-    num_results = (visible ? 15 : 14)
+    num_results = (visible ? 18 : 17)
     expect(page).to have_content("1 - 10 of #{num_results}")
     expect(page).to have_link(I18n.t('revs.search.gallery_toggle.detailed'))
     expect(page).to have_link(I18n.t('revs.search.gallery_toggle.gallery'))
