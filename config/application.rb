@@ -110,7 +110,7 @@ module Revs
     #   {:question=>'What is the name of the car company that manufacturers the Mustang?',:answer=>'Ford'},
     #   {:question=>'What is the first name of the founder of Ferrari?',:answer=>'Enzo'}
     # ]
-    config.disable_new_registrations = false # set to true to disable new users from registering (useful in conjunction with disable_editing or if there is a sustained period of bogus registrations)
+    config.disable_new_registrations = true # set to true to disable new users from registering (useful in conjunction with disable_editing or if there is a sustained period of bogus registrations)
     config.disable_more_to_explore = true # set to true to disable more to explore on the home page
     config.disable_featured_galleries = true # set to true to disable featured galleries on the home page
     config.require_manual_account_activation = true # set to true to require an admin to manually activate any new account registrations
