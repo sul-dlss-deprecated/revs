@@ -14,8 +14,8 @@ describe("Search Pages",:type=>:request,:integration=>true) do
 
   it "should not reset the search when faceting after entering a search term" do
     visit root_path
-    click_link 'David Nadig Collection'
-    expect(page).to have_content('1 - 10 of 14')
+    click_link 'Revs Institute® Archives'
+    expect(page).to have_content('1 - 10 of 17')
     fill_in 'q', :with=>'Ford'
     click_button 'Search'
     expect(page).to have_content('Results')
