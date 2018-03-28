@@ -9,6 +9,10 @@ Crawl-delay: 3
 User-Agent: Yandex
 Disallow: /
 
+User-agent: Baiduspider
+User-agent: baidu
+Disallow: /
+
 User-Agent: Slurp  # yahoo too i think, possibly old
 Disallow: /
 
