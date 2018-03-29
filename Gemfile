@@ -82,7 +82,7 @@ group :development, :test do
 end
 
 group :staging, :production do
-  gem 'mysql2'
+  gem 'mysql2', '~>0.4.0'  #0.5 does not work with rails 4
 end
 
 # gems necessary for capistrano deployment
