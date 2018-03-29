@@ -212,7 +212,7 @@ GEM
     mini_portile2 (2.3.0)
     minitest (5.11.3)
     multipart-post (2.0.0)
-    mysql2 (0.5.0)
+    mysql2 (0.4.10)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (4.2.0)
@@ -406,7 +406,7 @@ DEPENDENCIES
   launchy
   lograge
   mini_magick
-  mysql2
+  mysql2 (~> 0.4.0)
   nokogiri (>= 1.8.1)
   omniauth
   pry-rails
