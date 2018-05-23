@@ -26,7 +26,7 @@ gem 'rails_autolink'
 gem 'ranked-model'
 
 gem 'rack-attack'
-gem 'rack-timeout'
+gem 'rack-timeout', require: 'rack/timeout/base'
 gem 'rack-utf8_sanitizer'
 
 gem 'friendly_id', '>= 5.0.0'
