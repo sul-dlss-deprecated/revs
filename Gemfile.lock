@@ -237,7 +237,7 @@ GEM
     rack-test (0.6.3)
       rack (>= 1.0)
     rack-timeout (0.5.1)
-    rack-utf8_sanitizer (1.5.0)
+    rack-utf8_sanitizer (1.6.0)
       rack (>= 1.0, < 3.0)
     rails (4.2.10)
       actionmailer (= 4.2.10)
@@ -284,7 +284,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
-    retriable (3.1.1)
+    retriable (3.1.2)
     revs-utils (2.2.0)
       actionpack
       chronic
