@@ -55,6 +55,7 @@ class Admin::UsersController < AdminController
       params[:user].delete(:password_confirmation)
     end
     @user=User.find(params[:id])
+    @user.update_account_status(params[:user][:active]) if params[:user][:active] != @user.active
     if @user.update_attributes(user_params)
      @user.update_lock_status(params[:lock])
      flash[:success]=t('revs.messages.saved')
@@ -69,11 +70,7 @@ class Admin::UsersController < AdminController
     @status=params[:status]
     @selected_users=params[:selected_users]
     if @selected_users
-      @selected_users.each do |user_id|
-          user=User.find(user_id)
-          user.active=@status
-          user.save
-       end
+      @selected_users.each { |user_id| User.find(user_id).update_account_status(@status) }
       flash[:success]=t('revs.admin.user_status_updated',:num=>@selected_users.size,:status=>@status)
     else
       flash[:error]=t('revs.admin.no_users_updated')
