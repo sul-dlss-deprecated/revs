@@ -16,7 +16,7 @@ describe("User Registration",:type=>:request,:integration=>true) do
 
     @username='testing'
     @email="#{@username}@test.com"
-    # regsiter a new user
+    # register a new user
     visit new_user_registration_path
     fill_in 'register-email', :with=> @email
     fill_in 'register-username', :with=> @username
@@ -298,9 +298,11 @@ describe("User Registration",:type=>:request,:integration=>true) do
         Revs::Application.config.spam_reg_checks = false # disable spam checks for these tests
         Revs::Application.config.disable_new_registrations = false # be sure registration is enabled for these tests
         Revs::Application.config.require_manual_account_activation = true # enable manual activation for these tests
+        RevsMailer.stub_chain(:account_activated,:deliver).and_return('a mailer')
       end
 
-      it "should register a new user but inactivate their account" do
+      it "should register a new user but inactivate their account and email them when activated" do
+        expect(RevsMailer).to receive(:account_activated)
         @username='testing'
         @email="#{@username}@test.com"
         visit new_user_registration_path
@@ -312,6 +314,7 @@ describe("User Registration",:type=>:request,:integration=>true) do
         expect(current_path).to eq(root_path)
         expect(page).to have_content I18n.t('devise.registrations.user.signed_up_but_account_has_been_deactivated')
         expect(User.last.active).to be_falsey
+        User.last.update_account_status(true)
       end
 
     end

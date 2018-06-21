@@ -35,6 +35,11 @@ class RevsMailer < ActionMailer::Base
     mail(:to=>flag.user.email,:subject=>I18n.t('revs.flags.resolved_message')) if flag.user && flag.user.email && valid_email?(flag.user.email)
   end
 
+  def account_activated(user)
+    @user=user
+    mail(:to=>user.email,:subject=>I18n.t('revs.authentication.account_activated')) if user && user.active && valid_email?(user.email)
+  end
+
   def mailing_list_signup(opts={})
     mail(:to=>"revs-program-join@lists.stanford.edu",:from=>opts[:from],:subject=>"Request to be added to the Revs Program Mailing List",:body=>"Subscribe")
   end

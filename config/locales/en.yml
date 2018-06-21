@@ -254,6 +254,7 @@ en:
          Lock the account immediately by checking the box.
          The user can unlock by verifying their email address or you can unlock by unchecking this box.
       lock_account: "Lock account"
+      account_activated: 'Your account has been activated.'
     admin:
       administer_users: "Manage Users"
       find_users: "Find users"
