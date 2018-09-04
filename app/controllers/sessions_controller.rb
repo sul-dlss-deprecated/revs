@@ -38,7 +38,7 @@ class SessionsController < Devise::SessionsController
     end
     sign_out
     flash[:notice] = t('revs.authentication.stanford_webauth_logout') unless request.env["REMOTE_USER"]
-    redirect_to root_url
+    redirect_to '/Shibboleth.sso/Logout'
   end
 
 end
