@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
-  prepend_before_filter :simulate_sunet, :if=>lambda{Rails.env !='production' && !session["WEBAUTH_USER"].blank?} # to simulate sunet login in development, set a parameter in config/environments/ENVIRONMENT.rb
+  prepend_before_filter :simulate_sunet, :if=>lambda{Rails.env !='production' && !session["REMOTE_USER"].blank?} # to simulate sunet login in development, set a parameter in config/environments/ENVIRONMENT.rb
   before_filter :signin_sunet_user, :if=>lambda{sunet_user_signed_in? && !user_signed_in?} # signin a sunet user if they are webauthed but not yet logged into the site
 
   before_filter :repository_counts, :if=>lambda{!fragment_exist?("navbar") && Revs::Application.config.show_item_counts_in_header} # fragment cache counts for performance
@@ -179,18 +179,18 @@ class ApplicationController < ActionController::Base
 
   # only used for testing sunet in development; sets the environment variable manually for testing purposes
   def simulate_sunet
-    request.env["WEBAUTH_USER"]=session["WEBAUTH_USER"] unless Rails.env=='production'
+    request.env["REMOTE_USER"]=session["REMOTE_USER"] unless Rails.env=='production'
   end
 
   def signin_sunet_user
      # if we have a webauthed user who is not yet signed in, let's sign them in or create them a new user account if needed
-    user=(User.where(:sunet=>request.env["WEBAUTH_USER"]).first || User.create_new_sunet_user(request.env["WEBAUTH_USER"]))
+    user=(User.where(:sunet=>request.env["REMOTE_USER"]).first || User.create_new_sunet_user(request.env["REMOTE_USER"]))
     sign_in user unless request.path==user_session_path
     user.increment!(:login_count)
   end
 
   def sunet_user_signed_in?
-    !request.env["WEBAUTH_USER"].blank?
+    !request.env["REMOTE_USER"].blank?
   end
 
   def on_home_page
