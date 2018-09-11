@@ -128,11 +128,23 @@
       geo="true" distErrPct="0.025" maxDistErr="0.000009" distanceUnits="degrees" />
 
       <fieldType name="text" class="solr.TextField" autoGeneratePhraseQueries="false" positionIncrementGap="100" omitNorms="false">
-        <analyzer>
+        <analyzer type="index">
           <tokenizer class="solr.ICUTokenizerFactory"/>
           <filter class="solr.ICUFoldingFilterFactory"/>  <!-- NFKC, case folding, diacritics removed -->
-          <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
-          <filter class="solr.WordDelimiterFilterFactory"
+          <filter class="solr.SynonymGraphFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
+          <filter class="solr.WordDelimiterGraphFilterFactory"
+            splitOnCaseChange="0" generateWordParts="1" catenateWords="1"
+            splitOnNumerics="1" generateNumberParts="1" catenateNumbers="1"
+            catenateAll="0" preserveOriginal="0" stemEnglishPossessive="1" />
+          <filter class="solr.FlattenGraphFilterFactory"/>
+         <filter class="solr.SnowballPorterFilterFactory" language="English"/>
+         <filter class="solr.RemoveDuplicatesTokenFilterFactory" />
+        </analyzer>
+        <analyzer type="query">
+          <tokenizer class="solr.ICUTokenizerFactory"/>
+          <filter class="solr.ICUFoldingFilterFactory"/>  <!-- NFKC, case folding, diacritics removed -->
+          <filter class="solr.SynonymGraphFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
+          <filter class="solr.WordDelimiterGraphFilterFactory"
             splitOnCaseChange="0" generateWordParts="1" catenateWords="1"
             splitOnNumerics="1" generateNumberParts="1" catenateNumbers="1"
             catenateAll="0" preserveOriginal="0" stemEnglishPossessive="1" />

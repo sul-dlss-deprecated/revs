@@ -66,7 +66,7 @@ describe("Search Pages",:type=>:request,:integration=>true) do
     end
   end
 
-  it "should find different matches for gt-350 and gt 350 based on exact match or not" do
+  it "should find different matches for gt-350 and gt 350 based on exact match or not", pending: true do
     visit search_path(:q=>'gt 350')
     expect(page).to have_content('Results')
     expect(page).to have_content('1 - 2 of 2')
