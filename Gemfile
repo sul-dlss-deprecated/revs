@@ -7,9 +7,9 @@ gem 'sitemap_generator'
 gem 'editstore', '>= 2.0.2'
 gem 'revs-utils', '>= 2.1.22'
 
-gem 'rails', '~> 4.2', '>= 4.2.5.2'
+gem 'rails', '~> 4.2.11', '>= 4.2.11.1'
 gem 'responders', '~> 2.0'
-gem 'nokogiri', '>=1.8.1'
+gem 'nokogiri', '>= 1.10.3'
 
 gem 'is_it_working-cbeer', require: 'is_it_working'
 
@@ -100,9 +100,9 @@ gem 'rest-client', '~>1.7'
 
 gem 'json', '~> 1.8'
 
-gem "bootstrap-sass"
-gem "font-awesome-rails"
-gem 'autoprefixer-rails', '~> 5.1.11'
+gem 'bootstrap-sass', '>= 3.4.1'
+gem 'font-awesome-rails'
+gem 'autoprefixer-rails', '>= 5.2.1'
 
 gem 'honeybadger', '~> 2.0'
 
