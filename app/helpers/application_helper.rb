@@ -28,6 +28,7 @@ module ApplicationHelper
         })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
         ga('create', '#{GOOGLE_ANALYTICS_CODE}', 'stanford.edu');
+        ga('set', 'anonymizeIp', true);
         ga('send', 'pageview');
 
       </script>
