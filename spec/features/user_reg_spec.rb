@@ -7,7 +7,7 @@ describe("User Registration",:type=>:request,:integration=>true) do
     Revs::Application.config.spam_reg_checks = false # disable spam checks for these tests
     Revs::Application.config.disable_new_registrations = false # be sure registration is enabled for these tests
     Revs::Application.config.require_manual_account_activation = false # disable manual activation for these tests
-    RevsMailer.stub_chain(:mailing_list_signup,:deliver).and_return('a mailer')
+    RevsMailer.stub_chain(:mailing_list_signup,:deliver_now).and_return('a mailer')
   end
 
   it "should register a new user with the default role and defaulting to public profile as hidden" do
@@ -298,7 +298,7 @@ describe("User Registration",:type=>:request,:integration=>true) do
         Revs::Application.config.spam_reg_checks = false # disable spam checks for these tests
         Revs::Application.config.disable_new_registrations = false # be sure registration is enabled for these tests
         Revs::Application.config.require_manual_account_activation = true # enable manual activation for these tests
-        RevsMailer.stub_chain(:account_activated,:deliver).and_return('a mailer')
+        RevsMailer.stub_chain(:account_activated,:deliver_now).and_return('a mailer')
       end
 
       it "should register a new user but inactivate their account and email them when activated" do

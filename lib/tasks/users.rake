@@ -59,7 +59,7 @@ namespace :revs do
   task :notify_new_registrations => :environment do |t,args|
     num_unconfirmed_users=User.where(:active=>false,:sunet=>'',:login_count=>0).where('updated_at < ?',Date.tomorrow).size
     if num_unconfirmed_users > 0
-      RevsMailer.new_users_notification(:num_users=>num_unconfirmed_users).deliver
+      RevsMailer.new_users_notification(:num_users=>num_unconfirmed_users).deliver_now
       puts "Found #{num_unconfirmed_users} users."
     end
   end

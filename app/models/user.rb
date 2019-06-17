@@ -178,7 +178,7 @@ class User < ActiveRecord::Base
 
   def update_account_status(account_status = false)
     self.update_attribute(:active,account_status)
-    RevsMailer.account_activated(self).deliver if account_status.to_s.downcase == "true"
+    RevsMailer.account_activated(self).deliver_now if account_status.to_s.downcase == "true"
   end
 
   # determines if account is active (could be locked or manually made inactive)
@@ -237,7 +237,7 @@ class User < ActiveRecord::Base
   end
 
   def signup_for_mailing_list
-    RevsMailer.mailing_list_signup(:from=>email).deliver
+    RevsMailer.mailing_list_signup(:from=>email).deliver_now
   end
 
   def check_role_name

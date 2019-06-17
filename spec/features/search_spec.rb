@@ -75,7 +75,7 @@ describe("Search Pages",:type=>:request,:integration=>true) do
   end
 
   it "should show a facet search result for 1955" do
-    search_params=[{:"f[pub_year_isim][]"=>'1955'},{:"range[pub_year_isim][begin]"=>'1955',:"range[pub_year_isim][end]"=>'1955'}]
+    search_params=[{:"f[pub_year_isim][]"=>'1955'}]
     search_params.each do |search_param|
       visit search_path(search_param)
       expect(page).to have_content('Results')

@@ -14,7 +14,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
     @wont_fix_button=I18n.t('revs.flags.wont_fix')
     @fix_button=I18n.t('revs.flags.fixed')
     @ask_to_notify_checkbox=I18n.t('revs.flags.notify_me')
-    RevsMailer.stub_chain(:flag_resolved,:deliver).and_return('a mailer')
+    RevsMailer.stub_chain(:flag_resolved,:deliver_now).and_return('a mailer')
     Revs::Application.config.disable_editing = false # be sure editing is enabled for tests
   end
 
@@ -27,7 +27,7 @@ describe("Flagging",:type=>:request,:integration=>true) do
 
   it "should not show allow flagging to non-logged in and logged in users when editing is disabled" do
 
-    Revs::Application.config.disable_editing = true 
+    Revs::Application.config.disable_editing = true
     druid='xf058ys1313'
     visit catalog_path(druid)
     expect(page).not_to have_selector('#flag-details-link')
@@ -35,9 +35,9 @@ describe("Flagging",:type=>:request,:integration=>true) do
     login_as_user_and_goto_druid(user_login,druid)
     visit catalog_path(druid)
     expect(page).not_to have_selector('#flag-details-link')
-    
+
   end
-  
+
   it "should allow a non-logged in user to create up to the maximum number of anonymous flag for an object but no more; and should not show the anonymous flags" do
 
     druid='sc411ff4198'

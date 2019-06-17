@@ -421,7 +421,7 @@ class CatalogController < ApplicationController
       end
 
       unless flash[:error]
-        email.deliver
+        email.deliver_now
         flash[:success] = t('revs.about.contact_message_sent')
         if request.xhr?
           render :email_sent, :formats => [:js]
