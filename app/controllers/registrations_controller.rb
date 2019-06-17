@@ -104,7 +104,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   protected
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) << [:email, :username, :password, :password_confirmation, :subscribe_to_mailing_list, :subscribe_to_revs_mailing_list, :registration_answer, :registration_question_number]
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :username, :password, :password_confirmation, :subscribe_to_mailing_list, :subscribe_to_revs_mailing_list, :registration_answer, :registration_question_number])
   end
 
   private
