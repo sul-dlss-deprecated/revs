@@ -43,10 +43,7 @@ gem 'chronic'
 # paging
 gem 'kaminari'
 
-#gem "blacklight", :git => 'https://github.com/projectblacklight/blacklight.git'
 gem 'blacklight', "<=5.14"
-#gem 'blacklight_advanced_search', '>=5'
-gem "blacklight_range_limit", ">=5.1.0"
 gem 'blacklight-marc'
 gem 'druid-tools', '>= 0.2.0'
 

@@ -105,7 +105,6 @@ jQuery.fn.scrollStop = function(callback) {
 };
 
 
-Blacklight.onLoad(function() {
+$(document).ready(function() {
   $('.image-filmstrip').imgFilmStrip();
 });
-

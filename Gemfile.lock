@@ -65,11 +65,6 @@ GEM
       blacklight (~> 5.10)
       marc (>= 0.4.3, < 1.1)
       rails
-    blacklight_range_limit (7.0.0)
-      blacklight
-      jquery-rails
-      rails (>= 3.0)
-      tether-rails
     bootstrap-sass (3.4.1)
       autoprefixer-rails (>= 5.2.1)
       sassc (>= 2.0.0)
@@ -349,8 +344,6 @@ GEM
     sshkit (1.18.2)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
-    tether-rails (1.4.0)
-      rails (>= 3.1)
     thin (1.7.2)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
@@ -383,7 +376,6 @@ DEPENDENCIES
   binding_of_caller
   blacklight (<= 5.14)
   blacklight-marc
-  blacklight_range_limit (>= 5.1.0)
   bootstrap-sass (>= 3.4.1)
   bundler (>= 1.2.0)
   cancan

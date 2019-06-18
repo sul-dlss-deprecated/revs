@@ -282,7 +282,7 @@ class CatalogController < ApplicationController
     #
     # :show may be set to false if you don't want the facet to be drawn in the
     # facet bar
-    config.add_facet_field 'pub_year_isim', :label => 'Year', :sort => 'index', :limit => 25, :range => true
+    config.add_facet_field 'pub_year_isim', :label => 'Year', :sort => 'index', :limit => 25
   #  config.add_facet_field 'format_ssim', :label => 'Format'
     config.add_facet_field 'marque_ssim', :label => 'Marque', :limit => 25, :index_pagination=>true
     config.add_facet_field 'model_year_ssim', :label => 'Model Year', :sort => 'index', :limit => 25
