@@ -9,7 +9,6 @@ class ApplicationController < ActionController::Base
    extend DateHelper
    include SolrQueryHelper
 
-   require 'blacklight/catalog/search_context'
    include Blacklight::Catalog::SearchContext
 
   rescue_from Exception, :with=>:exception_on_website
