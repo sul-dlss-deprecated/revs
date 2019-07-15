@@ -7,14 +7,14 @@ gem 'sitemap_generator'
 gem 'editstore', '>= 2.0.2'
 gem 'revs-utils', '>= 2.1.22'
 
-gem 'rails', '~> 4.2', '>= 4.2.5.2'
+gem 'rails', '~> 4.2.11', '>= 4.2.11.1'
 gem 'responders', '~> 2.0'
-gem 'nokogiri', '>=1.8.1'
+gem 'nokogiri', '>= 1.10.3'
 
 gem 'is_it_working-cbeer', require: 'is_it_working'
 
 # user authentication and roles
-gem 'devise', '>=3.5.4', '< 4'
+gem 'devise', '>4'
 gem 'omniauth'
 gem 'cancan'
 gem 'faraday'
@@ -43,10 +43,7 @@ gem 'chronic'
 # paging
 gem 'kaminari'
 
-#gem "blacklight", :git => 'https://github.com/projectblacklight/blacklight.git'
 gem 'blacklight', "<=5.14"
-#gem 'blacklight_advanced_search', '>=5'
-gem "blacklight_range_limit", ">=5.1.0"
 gem 'blacklight-marc'
 gem 'druid-tools', '>= 0.2.0'
 
@@ -56,7 +53,7 @@ gem 'sass-rails', '~> 5.0.0.beta1'
 gem 'coffee-rails', '~> 4.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-gem 'therubyracer', :platforms => :ruby
+gem 'mini_racer'
 
 gem 'uglifier', '>= 1.0.3'
 
@@ -78,7 +75,7 @@ end
 
 group :development, :test do
   gem 'solr_wrapper'
-  gem 'sqlite3'
+  gem 'sqlite3', '~> 1.3.6'
 end
 
 group :staging, :production do
@@ -96,13 +93,13 @@ group :deployment do
 end
 
 gem 'jquery-rails'
-gem 'rest-client', '~>1.7'
+gem 'rest-client', '>2'
 
 gem 'json', '~> 1.8'
 
-gem "bootstrap-sass"
-gem "font-awesome-rails"
-gem 'autoprefixer-rails', '~> 5.1.11'
+gem 'bootstrap-sass', '>= 3.4.1'
+gem 'font-awesome-rails'
+gem 'autoprefixer-rails', '>= 5.2.1'
 
 gem 'honeybadger', '~> 2.0'
 

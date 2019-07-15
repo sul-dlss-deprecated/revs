@@ -50,7 +50,7 @@ class FlagsController < ApplicationController
     @flag.state = {t('revs.flags.fixed')=>Flag.fixed, t('revs.flags.wont_fix')=>Flag.wont_fix, t('revs.flags.fixed')=>Flag.fixed, t('revs.flags.in_review')=>Flag.review}[params[t('revs.flags.resolve')]]
     if @flag.resolved? && @flag.notify_me
       @flag.notification_state='delivered'
-      RevsMailer.flag_resolved(@flag).deliver
+      RevsMailer.flag_resolved(@flag).deliver_now
     end
     @flag.save
     @message={t('revs.flags.fixed')=>t('revs.flags.resolved_fix'), t('revs.flags.wont_fix')=>t('revs.flags.resolved_wont_fix')}[params[t('revs.flags.resolve')]]
