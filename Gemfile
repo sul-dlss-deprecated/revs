@@ -4,6 +4,8 @@ gem 'bundler', '>= 1.2.0'
 
 gem 'sitemap_generator'
 
+gem 'omniauth-rails_csrf_protection' # see https://github.com/cookpad/omniauth-rails_csrf_protection
+
 gem 'editstore', '>= 2.0.2'
 gem 'revs-utils', '>= 2.1.22'
 
