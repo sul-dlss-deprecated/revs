@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   # :token_authenticatable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable,
-         :lockable, :timeoutable, :omniauthable
+         :lockable, :timeoutable
 
   # Setup accessible (or protected) attributes for your model
   attr_accessor :subscribe_to_mailing_list, :registration_question_number, :registration_answer # not persisted, just used on the signup form
