@@ -117,7 +117,7 @@ module Revs
     config.new_registration_notification = 'petucket@stanford.edu' # email address to receive daily notifications of new registrations
     config.spam_reg_checks = true # set to false to skip spam registration checks (useful in testing)
     config.show_item_counts_in_header = false # if set to true, we will show total item and collection counts in the header
-    config.disable_editing = false # if set to true, will disallow metadata editing, changing visibility and placeholder, the creation of annotations and flags - the things that can update a solr document or add to the metadata editing load
+    config.disable_editing = true # if set to true, will disallow metadata editing, changing visibility and placeholder, the creation of annotations and flags - the things that can update a solr document or add to the metadata editing load
     config.show_galleries_in_nav = false # if set to true, then galleries and collections are shown in top navigation
 
   end
