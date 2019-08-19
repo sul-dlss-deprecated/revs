@@ -42,7 +42,7 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.6.0)
       public_suffix (>= 2.0.2, < 4.0)
-    airbrussh (1.3.2)
+    airbrussh (1.3.3)
       sshkit (>= 1.6.1, != 1.7.0)
     arel (6.0.4)
     autoprefixer-rails (9.6.1)
@@ -139,7 +139,8 @@ GEM
       capistrano-shared_configs
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
-    druid-tools (2.0.0)
+    druid-tools (2.1.0)
+      deprecation
     editstore (2.0.4)
       druid-tools (>= 0.2.0)
       rails (>= 4.1)
