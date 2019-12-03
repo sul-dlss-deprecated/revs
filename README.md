@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/sul-dlss/revs.svg?branch=master)](https://travis-ci.org/sul-dlss/revs)
 
+DEPRECATED AND NO LONGER MAINTAINED.  ALL CONTENT AT https://exhibits.stanford.edu/automobility
+
 # Automobility Archive
 
 This is a Blacklight Application for the Automobility Archive at Stanford University.
